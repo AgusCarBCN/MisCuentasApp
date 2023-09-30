@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
@@ -18,7 +19,6 @@ class LoginActivity : AppCompatActivity() {
         val et_password:EditText=findViewById(R.id.et_password)
         if(et_user.text.toString()=="Agustin"){
             if(et_password.text.toString()=="nina1971"){
-
                 val intent= Intent(this,NavActivity::class.java)
                 startActivity(intent)
                 Toast.makeText(this, "Inicio de sesion", Toast.LENGTH_LONG).show()

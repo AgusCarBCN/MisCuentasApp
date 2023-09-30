@@ -3,6 +3,8 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +16,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +38,15 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val newamountlayout: LinearLayout = findViewById(R.id.newamountlayout)
+        newamountlayout.visibility = View.INVISIBLE
         when (item.itemId) {
             R.id.consulta -> Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
-            R.id.nuevoImporte -> Toast.makeText(this, "nuevoImporte", Toast.LENGTH_SHORT).show()
+            R.id.nuevoImporte -> {
+                Toast.makeText(this, "nuevoImporte", Toast.LENGTH_SHORT).show()
+                val newamountlayout: LinearLayout = findViewById(R.id.newamountlayout)
+                newamountlayout.visibility = View.VISIBLE
+            }
             R.id.estadistica -> Toast.makeText(this, "estadistica", Toast.LENGTH_SHORT).show()
             R.id.transferencia -> Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
             R.id.salir ->{Toast.makeText(this, "Saliendo de la aplicación", Toast.LENGTH_LONG).show()
