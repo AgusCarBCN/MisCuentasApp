@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<group>
+    <item android:id="@+id/nuevoImporte"
+          android:title="Nuevo importe"/>
+    <item android:id="@+id/estadistica"
+        android:title="Estadistica"/>
+    <item android:id="@+id/consulta"
+        android:title="Consulta"/>
+    <item android:id="@+id/transferencia"
+        android:title="Transferencia"/>
+    <item android:id="@+id/configuracion"
+        android:title="Configuracion"/>
+    <item android:id="@+id/salir"
+        android:title="Nuevo Salir"/>
+</group>
+</menu>
