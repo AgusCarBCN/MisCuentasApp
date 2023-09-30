@@ -18,7 +18,6 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
-
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
         drawer = findViewById(R.id.draver_layout)
@@ -37,13 +36,13 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.consulta -> Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT)
-            R.id.nuevoImporte -> Toast.makeText(this, "nuevoImporte", Toast.LENGTH_SHORT)
-            R.id.estadistica -> Toast.makeText(this, "estadistica", Toast.LENGTH_SHORT)
-            R.id.transferencia -> Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT)
-            R.id.salir -> Toast.makeText(this, "salir", Toast.LENGTH_SHORT)
-            R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT)
-
+            R.id.consulta -> Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
+            R.id.nuevoImporte -> Toast.makeText(this, "nuevoImporte", Toast.LENGTH_SHORT).show()
+            R.id.estadistica -> Toast.makeText(this, "estadistica", Toast.LENGTH_SHORT).show()
+            R.id.transferencia -> Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
+            R.id.salir ->{Toast.makeText(this, "Saliendo de la aplicación", Toast.LENGTH_LONG).show()
+            finish()}
+            R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
         }
         drawer.closeDrawer(GravityCompat.START)
         return true

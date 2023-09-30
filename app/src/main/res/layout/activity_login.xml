@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E45826"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/tv_txt_wellcome"
@@ -45,24 +45,26 @@
     <EditText
         android:id="@+id/et_text_user"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="104dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="104dp"
         android:background="#E6D5B8"
+        android:contentDescription="Introce el usuario"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_text_user" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="170dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginEnd="140dp"
         android:layout_marginBottom="331dp"
         android:fontFamily="sans-serif"
         android:text="Contraseña"
@@ -79,11 +81,12 @@
     <EditText
         android:id="@+id/et_password"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="104dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="104dp"
         android:background="#E6D5B8"
+        android:contentDescription="Introce la contraseña"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
