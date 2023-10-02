@@ -13,9 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CuentaAppAndroid"
         tools:targetApi="31">
-        <activity
-            android:name=".NewAmountWindow"
-            android:exported="false" />
+
         <activity
             android:name=".NavActivity"
             android:exported="true"

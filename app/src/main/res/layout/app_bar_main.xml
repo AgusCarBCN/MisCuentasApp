@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appcuenta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6d5b8"
@@ -23,10 +25,12 @@
         android:id="@+id/newamountlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:background="#FF5722"
+        android:gravity="top"
         android:orientation="vertical"
         android:visibility="invisible"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/tv_descripcion"
@@ -40,14 +44,23 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_descripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:id="@+id/et_text_user2"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="104dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="104dp"
+            android:background="#E6D5B8"
+            android:contentDescription="Introduce el usuario"
             android:ems="10"
+            android:gravity="center|center_horizontal"
             android:inputType="text"
-            android:text="Name" />
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_importe"
@@ -61,13 +74,95 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_importe"
+            android:id="@+id/et_text_user4"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="104dp"
+            android:background="#E6D5B8"
+            android:contentDescription="Introce el usuario"
+            android:ems="10"
+            android:gravity="center|center_horizontal"
+            android:inputType="text"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_cuentas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:text="Cuentas"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="#E6D5B8"
+            android:gravity="center|center_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_nuevoingreso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="#000000"
+                android:fontFamily="sans-serif"
+                android:text="Nuevo ingreso"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.739"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_password"
+                app:rippleColor="#FFEB3B" />
+
+            <Button
+                android:id="@+id/appwindow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="#000000"
+                android:fontFamily="sans-serif"
+                android:text="Nuevo gasto"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.739"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_password"
+                app:rippleColor="#FFEB3B" />
+        </LinearLayout>
 
     </LinearLayout>
 
