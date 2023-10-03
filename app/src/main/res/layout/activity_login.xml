@@ -67,6 +67,7 @@
             android:layout_marginTop="10dp"
             android:background="#FFD5B8"
             android:ems="10"
+            android:gravity="center"
             android:inputType="text" />
 
         <TextView
@@ -88,6 +89,7 @@
             android:layout_marginTop="10dp"
             android:background="#e6d5b8"
             android:ems="10"
+            android:gravity="center"
             android:inputType="textPassword" />
 
         <Button
