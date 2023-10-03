@@ -3,9 +3,9 @@
     <string name="title_activity_nav">NavActivity</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
-    <string name="wellcome">Wellcome</string>
-    <string name="login">Login</string>
-    <string name="user">User</string>
-    <string name="password">Password</string>
+    <string name="wellcome">Bienvenido</string>
+    <string name="login">Iniciar sesion</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
 
 </resources>
