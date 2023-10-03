@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:gravity="center|start|center_vertical"
+        android:gravity="top"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_descripcion2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Descripcion"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -30,7 +30,6 @@
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="#E6D5B8"
             android:contentDescription="Introduce el usuario"
             android:ems="10"
@@ -58,7 +57,6 @@
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="#E6D5B8"
             android:contentDescription="Introce el usuario"
             android:ems="10"
@@ -86,7 +84,6 @@
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="#E6D5B8"
             android:gravity="center|center_vertical" />
 
@@ -94,18 +91,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginTop="30dp"
-            android:gravity="start|center_horizontal|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center_horizontal|top"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_nuevoingreso"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:layout_weight="1"
                 android:background="#000000"
                 android:fontFamily="sans-serif"
                 android:text="Nuevo ingreso"
@@ -121,12 +118,10 @@
 
             <Button
                 android:id="@+id/btn_nuevogasto"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
                 android:background="#000000"
                 android:fontFamily="sans-serif"
                 android:text="Nuevo gasto"
