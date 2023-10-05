@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -28,5 +29,10 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+    }
+    fun createUser(view: View){
+        val createUser:Button=findViewById(R.id.btn_createuser)
+        val intent=Intent(this,CreateUserActivity::class.java)
+        startActivity(intent)
     }
 }
