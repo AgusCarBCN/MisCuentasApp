@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,9 @@ class CreateUserActivity : AppCompatActivity() {
     fun continuar(view: View){
         val createUser: Button =findViewById(R.id.btn_continue)
         val intent= Intent(this,CreateAccountUserActivity::class.java)
+
+
+
         startActivity(intent)
     }
 }

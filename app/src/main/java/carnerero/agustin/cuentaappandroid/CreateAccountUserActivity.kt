@@ -11,7 +11,7 @@ class CreateAccountUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_account_user)
     }
-    fun create(view: View){
+    fun createAccounts(view: View){
         val createUser: Button =findViewById(R.id.btn_create)
         val intent= Intent(this,LoginActivity::class.java)
         startActivity(intent)

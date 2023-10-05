@@ -19,9 +19,7 @@
         <activity
             android:name=".CreateUserActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".NavActivity"
             android:exported="true"
@@ -29,7 +27,9 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="fullSensor"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

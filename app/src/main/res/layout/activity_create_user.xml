@@ -238,8 +238,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/black"
-        android:text="Continuar"
         android:onClick="continuar"
+        android:text="Crear usuario"
+        android:textAllCaps="false"
         android:textColor="#FFD5B8"
         android:textSize="20sp"
         android:textStyle="bold" />
