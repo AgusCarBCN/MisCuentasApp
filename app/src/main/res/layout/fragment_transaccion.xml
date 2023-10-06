@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +33,7 @@
             android:layout_marginStart="104dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="104dp"
-            android:background="#E6D5B8"
+            android:background="@drawable/style_editetx"
             android:contentDescription="Introduce el usuario"
             android:ems="10"
             android:gravity="center|center_horizontal"
@@ -60,7 +61,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="#E6D5B8"
+            android:background="@drawable/style_editetx"
             android:gravity="center|center_vertical" />
 
         <TextView
@@ -80,7 +81,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="#E6D5B8"
+            android:background="@drawable/style_editetx"
             android:gravity="center|center_vertical" />
 
         <LinearLayout
@@ -97,11 +98,11 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="#000000"
+                android:background="@drawable/style_botton"
                 android:fontFamily="sans-serif"
                 android:text="Aceptar"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,11 +120,11 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="#000000"
+                android:background="@drawable/style_botton"
                 android:fontFamily="sans-serif"
                 android:text="Salir"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 
 
 class LoginActivity : AppCompatActivity() {
@@ -29,14 +30,13 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         else{ Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
-
         }
-
     }
 
     fun createUser(view: View){
-        val createUser:Button=findViewById(R.id.btn_createuser)
-        val intent=Intent(this,CreateUserActivity::class.java)
+
+        val intent = Intent(this, NavActivity::class.java)
+        intent.putExtra("mostrarFragment", "createUser")
         startActivity(intent)
     }
 }

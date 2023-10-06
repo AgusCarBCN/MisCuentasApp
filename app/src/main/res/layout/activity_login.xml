@@ -77,7 +77,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="#FFD5B8"
+                    android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="text" />
@@ -99,7 +99,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="#e6d5b8"
+                    android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="textPassword" />
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:background="#E8AA42"
+                    android:background="@drawable/style_botton"
                     android:gravity="center"
                     android:onClick="login"
                     android:text="@string/login"

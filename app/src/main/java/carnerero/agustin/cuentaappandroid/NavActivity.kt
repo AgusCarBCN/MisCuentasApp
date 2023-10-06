@@ -36,7 +36,15 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
-        fragmentContainer.visibility=View.INVISIBLE
+        // Verifica si se debe mostrar un Fragment y cuál
+        val fragmentAInicio = intent.getStringExtra("mostrarFragment")
+        if ("createUser" == fragmentAInicio) {
+            val fragment = CreateUserFragment() // Reemplaza con tu Fragment real
+            changeFragment(fragment)
+            fragmentContainer.visibility=View.VISIBLE
+        } else {
+            fragmentContainer.visibility=View.INVISIBLE
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -45,25 +53,24 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         //Administracion de  fragments en activity
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        //val newamountlayout: LinearLayout = findViewById(R.id.newamountlayout)
-        //newamountlayout.visibility = View.INVISIBLE
+
         when (item.itemId) {
             R.id.consulta -> {
                 Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
                 val fragmentSearch = ConsultaFragment () // Reemplaza con el nombre de tu fragmento
-                fragmentTransaction.replace(R.id.fcv_main_container, fragmentSearch                )
+                //fragmentTransaction.replace(R.id.fcv_main_container, fragmentSearch                )
+                changeFragment(fragmentSearch)
                 fragmentSearch.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
 
             }
             R.id.nuevoImporte -> {
-                //Toast.makeText(this, "nuevoImporte", Toast.LENGTH_SHORT).show()
-                //val newamountlayout: Fragment = findViewById(R.id.fragmentContainerView)
-                //newamountlayout.visibility = View.VISIBLE
+
                 Toast.makeText(this, "Nuevo Importe", Toast.LENGTH_SHORT).show()
                 // Aquí puedes agregar el fragmento que deseas mostrar
                 val nuevoImporteFragment = NewAmountFragment() // Reemplaza con el nombre de tu fragmento
-                fragmentTransaction.replace(R.id.fcv_main_container, nuevoImporteFragment)
+                //fragmentTransaction.replace(R.id.fcv_main_container, nuevoImporteFragment)
+                changeFragment(nuevoImporteFragment)
                 nuevoImporteFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
             }
@@ -75,7 +82,8 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             R.id.transferencia -> {
                 Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
                 val transferenciaFragment =  TransaccionFragment()// Reemplaza con el nombre de tu fragmento
-                fragmentTransaction.replace(R.id.fcv_main_container, transferenciaFragment)
+                //fragmentTransaction.replace(R.id.fcv_main_container, transferenciaFragment)
+                changeFragment(transferenciaFragment)
                 transferenciaFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
 
@@ -102,11 +110,15 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
-        if(toggle.onOptionsItemSelected(item)){
+       /* if(toggle.onOptionsItemSelected(item)){
             return true
         }
-        return super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item)*/
     }
-
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fcv_main_container, fragment)
+            .commit()
+    }
 
 }
