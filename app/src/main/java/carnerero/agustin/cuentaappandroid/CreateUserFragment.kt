@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -46,6 +47,7 @@ class CreateUserFragment : Fragment() {
         //Acceso a los editText de Usuario
         val name:EditText=rootview.findViewById(R.id.et_name)
         val dni:EditText=rootview.findViewById(R.id.et_dni)
+        val address:EditText=rootview.findViewById(R.id.et_address)
         val city:EditText=rootview.findViewById(R.id.et_City)
         val zipCode:EditText=rootview.findViewById(R.id.et_postalAddress)
         val phone:EditText=rootview.findViewById(R.id.et_textphone)
@@ -57,6 +59,34 @@ class CreateUserFragment : Fragment() {
         val secondaryAmount:EditText=rootview.findViewById(R.id.et_secondaryamount)
 
         cancel.setOnClickListener(){
+            startActivity(intent)
+        }
+        confirm.setOnClickListener(){
+            //Se crea la base de datos
+            val admin=DataBaseApp(context,"cuentaApp",null,1)
+            //obtengo una base de datos en la que puedo agregar datos
+            val db=admin.writableDatabase
+            //Creo registro, a traves de la cual envio datos
+            val reg=ContentValues()
+            reg.put("dni",dni.text.toString())
+            reg.put("nombre",name.text.toString())
+            reg.put("ciudad",city.text.toString())
+            reg.put("domicilio",address.text.toString())
+            reg.put("telefono",phone.text.toString())
+            reg.put("password",userpass.text.toString())
+            //se inserta registro a tabla usuario
+            db.insert("USUARIO",null,reg)
+            val regAccount1=ContentValues()
+            regAccount1.put("iban",mainAccount.text.toString())
+            regAccount1.put("saldo",mainAmount.text.toString().toDouble())
+            regAccount1.put("dni",dni.text.toString())
+            db.insert("CUENTA",null,regAccount1)
+            val regAccount2=ContentValues()
+            regAccount2.put("iban",secondaryAccount.text.toString())
+            regAccount2.put("saldo",secondaryAmount.text.toString().toDouble())
+            regAccount2.put("dni",dni.text.toString())
+            db.insert("CUENTA",null,regAccount2)
+            db.close()
             startActivity(intent)
         }
         return rootview

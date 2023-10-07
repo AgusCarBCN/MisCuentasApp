@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center|top"
         android:orientation="vertical">
 
@@ -29,7 +29,7 @@
             android:id="@+id/et_name"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Inserta tu nombre"
@@ -86,6 +86,18 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/et_address"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Domicilio"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
             android:id="@+id/et_textphone"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
@@ -101,7 +113,7 @@
             android:id="@+id/tv_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Contraseña"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -112,7 +124,7 @@
             android:id="@+id/et_pass"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Contraseña"
