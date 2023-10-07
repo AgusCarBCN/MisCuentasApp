@@ -43,7 +43,9 @@ class DataBaseApp(
                                         "(id INTEGER PRIMARY KEY,"+
                                         "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    //Definion de  Trigger
+
+    private val CREATE_TRIGGER=
+        "CREATE TRIGGER IF NOT EXISTS insertgastoingreso AFTER INSERT ON MOVIMIENTO\nFOR EACH ROW\nBEGIN\n    -- Verificar si el importe es mayor que 0 (ingreso) o menor que 0 (gasto)\n    INSERT INTO INGRESO (id)\n    SELECT NEW.id\n    WHERE NEW.importe > 0;\n\n    INSERT INTO GASTO (id)\n    SELECT NEW.id\n    WHERE NEW.importe < 0;\nEND;\n"
 
 
     override fun onCreate(database: SQLiteDatabase?) {
@@ -54,6 +56,7 @@ class DataBaseApp(
             database?.execSQL(CREATE_TABLE_MOVIMIENTO)
             database?.execSQL(CREATE_TABLE_INGRESO)
             database?.execSQL(CREATE_TABLE_GASTO)
+            database?.execSQL(CREATE_TRIGGER)
 
     }
 
