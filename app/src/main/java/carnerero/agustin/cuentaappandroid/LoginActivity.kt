@@ -19,19 +19,40 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
 
-    fun login(view: View){
-        val et_user:EditText=findViewById(R.id.et_text_user)
-        val et_password:EditText=findViewById(R.id.et_password)
-        if(et_user.text.toString()=="Agustin"){
-            if(et_password.text.toString()=="nina1971"){
-                val intent= Intent(this,NavActivity::class.java)
-                startActivity(intent)
-                Toast.makeText(this, "Inicio de sesion", Toast.LENGTH_LONG).show()
-            }
+    fun login(view: View) {
+        val et_user: EditText = findViewById(R.id.et_text_user)
+        val et_pass: EditText = findViewById(R.id.et_password)
+
+        // Crear una instancia de la base de datos
+        val admin = DataBaseApp(this, "cuentaApp", null, 1)
+        val db = admin.writableDatabase
+
+        // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
+        val rowUser = db.rawQuery("SELECT dni, password FROM USUARIO WHERE dni='${et_user.text.toString()}' AND password='${et_pass.text.toString()}'", null)
+
+        var user = ""
+        var pass = ""
+
+        if (rowUser.moveToFirst()) {
+            user = rowUser.getString(0)
+            pass = rowUser.getString(1)
         }
-        else{ Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
+
+        // Cerrar la base de datos después de usarla
+        db.close()
+
+        if (et_user.text.toString() == user && et_pass.text.toString() == pass) {
+            // Inicio de sesión exitoso
+            Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+
+             val intent = Intent(this, NavActivity::class.java)
+             startActivity(intent)
+        } else {
+            // Usuario o contraseña incorrectos
+            Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
         }
     }
+
 
     fun createUser(view: View){
 
