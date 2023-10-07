@@ -1,10 +1,13 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +36,30 @@ class CreateUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_user, container, false)
+        val rootview= inflater.inflate(R.layout.fragment_create_user, container, false)
+        val intent=  Intent(context,LoginActivity::class.java)
+        //Acceso a botones
+        val cancel:Button=rootview.findViewById(R.id.btn_cancel)
+        val confirm:Button=rootview.findViewById(R.id.btn_confirm)
+        //Acceso a los editText de Usuario
+        val name:EditText=rootview.findViewById(R.id.et_name)
+        val dni:EditText=rootview.findViewById(R.id.et_dni)
+        val city:EditText=rootview.findViewById(R.id.et_City)
+        val zipCode:EditText=rootview.findViewById(R.id.et_postalAddress)
+        val phone:EditText=rootview.findViewById(R.id.et_textphone)
+        val userpass:EditText=rootview.findViewById(R.id.et_pass)
+        //Acceso a los ediText de las cuentas
+        val mainAccount:EditText=rootview.findViewById(R.id.et_mainAccount)
+        val mainAmount:EditText=rootview.findViewById(R.id.et_mainamount)
+        val secondaryAccount:EditText=rootview.findViewById(R.id.et_secondaryaccount)
+        val secondaryAmount:EditText=rootview.findViewById(R.id.et_secondaryamount)
+
+        cancel.setOnClickListener(){
+            startActivity(intent)
+        }
+        return rootview
     }
 
     companion object {

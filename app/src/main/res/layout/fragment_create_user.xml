@@ -109,7 +109,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_Password"
+            android:id="@+id/et_pass"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -174,7 +174,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/et_secondaryaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -188,7 +188,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextNumberDecimal2"
+                android:id="@+id/et_secondaryamount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -209,7 +209,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -223,7 +223,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/btn_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
