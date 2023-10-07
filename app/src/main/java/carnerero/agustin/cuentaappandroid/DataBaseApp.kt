@@ -44,13 +44,7 @@ class DataBaseApp(
                                         "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
 
     //Definion de  Trigger
-    private val CREATE_TRIGGER_INSERTAR_INGRESO_O_GASTO = "CREATE TRIGGER insertar_ingreso_o_gasto"+
-                                                           "AFTER INSERT ON MOVIMIENTO"+
-                                                           "FOR EACH ROW"+
-                                                                "BEGIN"+
-                                                                    "INSERT INTO INGRESO (id) VALUES (NEW.id) WHERE NEW.importe > 0;"+
-                                                                    "INSERT INTO GASTO (id) VALUES (NEW.id) WHERE NEW.importe <= 0;"+
-                                                                "END;"
+
 
     override fun onCreate(database: SQLiteDatabase?) {
 
@@ -60,7 +54,7 @@ class DataBaseApp(
             database?.execSQL(CREATE_TABLE_MOVIMIENTO)
             database?.execSQL(CREATE_TABLE_INGRESO)
             database?.execSQL(CREATE_TABLE_GASTO)
-            database?.execSQL(CREATE_TRIGGER_INSERTAR_INGRESO_O_GASTO)
+
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
