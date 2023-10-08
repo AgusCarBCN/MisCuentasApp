@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +42,24 @@ class NewAmountFragment : Fragment() {
        //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "")
+        //Recupero Spinner de la vista y creo adapter para cargar los datos de la tabla cuentas del usuario
+        //que inicia sesion.
+        val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
+        val admin=DataBaseApp(context,"cuentaApp",null,1)
+        val db = admin.readableDatabase
+        val cursor = db.rawQuery("SELECT iban FROM CUENTA WHERE dni='${dni}'", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val iban = cursor.getString(cursor.getColumnIndex("iban"))
+                adapter.add(iban)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
 
+        spinnerCuentas.adapter = adapter
 
         return rootview
     }

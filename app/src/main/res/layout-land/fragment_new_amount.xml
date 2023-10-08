@@ -80,7 +80,7 @@
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/sp_cuentas"
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
