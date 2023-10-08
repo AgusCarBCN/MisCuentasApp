@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +35,14 @@ class NewAmountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_amount, container, false)
+
+        val rootview= inflater.inflate(R.layout.fragment_new_amount, container, false)
+       //Recupero dni del usuario que inicio sesion
+        val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
+        val dni = sharedPreferences.getString("dni", "")
+
+
+        return rootview
     }
 
     companion object {

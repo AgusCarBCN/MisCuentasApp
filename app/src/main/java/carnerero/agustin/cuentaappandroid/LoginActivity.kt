@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -32,7 +33,6 @@ class LoginActivity : AppCompatActivity() {
 
         var user = ""
         var pass = ""
-
         if (rowUser.moveToFirst()) {
             user = rowUser.getString(0)
             pass = rowUser.getString(1)
@@ -43,8 +43,14 @@ class LoginActivity : AppCompatActivity() {
 
         if (et_user.text.toString() == user && et_pass.text.toString() == pass) {
             // Inicio de sesión exitoso
-            Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+            // Guardar el DNI en SharedPreferences después del inicio de sesión
+            val dni = et_user.text.toString()
+            val sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("dni", dni)
+            editor.apply()
 
+            Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
              val intent = Intent(this, NavActivity::class.java)
              startActivity(intent)
         } else {
