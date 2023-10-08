@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
             }
         }
-
+    }
 
         fun createUser(view: View) {
 
@@ -82,4 +82,3 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-}
