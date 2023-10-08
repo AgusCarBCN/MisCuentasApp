@@ -29,7 +29,10 @@ class LoginActivity : AppCompatActivity() {
         val db = admin.writableDatabase
 
         // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
-        val rowUser = db.rawQuery("SELECT dni, password FROM USUARIO WHERE dni='${et_user.text.toString()}' AND password='${et_pass.text.toString()}'", null)
+        val rowUser = db.rawQuery(
+            "SELECT dni, password FROM USUARIO WHERE dni='${et_user.text.toString()}' AND password='${et_pass.text.toString()}'",
+            null
+        )
 
         var user = ""
         var pass = ""
@@ -40,30 +43,43 @@ class LoginActivity : AppCompatActivity() {
 
         // Cerrar la base de datos después de usarla
         db.close()
+// Obtén los valores de los campos de usuario y contraseña
+        val username = et_user.text.toString()
+        val password = et_pass.text.toString()
 
-        if (et_user.text.toString() == user && et_pass.text.toString() == pass) {
-            // Inicio de sesión exitoso
-            // Guardar el DNI en SharedPreferences después del inicio de sesión
-            val dni = et_user.text.toString()
-            val sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString("dni", dni)
-            editor.apply()
-
-            Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
-             val intent = Intent(this, NavActivity::class.java)
-             startActivity(intent)
+// Verifica si los campos están vacíos
+        if (username.isEmpty() || password.isEmpty()) {
+            if (username.isEmpty() && password.isEmpty()) {
+                Toast.makeText(this, "Campos vacíos", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Has dejado un campo vacío", Toast.LENGTH_LONG).show()
+            }
         } else {
-            // Usuario o contraseña incorrectos
-            Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
+            // Verifica las credenciales
+            if (username == user && password == pass) {
+                // Inicio de sesión exitoso
+                // Guardar el DNI en SharedPreferences después del inicio de sesión
+                val dni = username
+                val sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putString("dni", dni)
+                editor.apply()
+
+                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+
+                val intent = Intent(this, NavActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
+            }
         }
-    }
 
 
-    fun createUser(view: View){
+        fun createUser(view: View) {
 
-        val intent = Intent(this, NavActivity::class.java)
-        intent.putExtra("mostrarFragment", "createUser")
-        startActivity(intent)
+            val intent = Intent(this, NavActivity::class.java)
+            intent.putExtra("mostrarFragment", "createUser")
+            startActivity(intent)
+        }
     }
 }
