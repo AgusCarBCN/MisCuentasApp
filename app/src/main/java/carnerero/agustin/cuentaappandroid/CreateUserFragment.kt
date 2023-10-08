@@ -70,8 +70,9 @@ class CreateUserFragment : Fragment() {
             val reg=ContentValues()
             reg.put("dni",dni.text.toString())
             reg.put("nombre",name.text.toString())
-            reg.put("ciudad",city.text.toString())
             reg.put("domicilio",address.text.toString())
+            reg.put("ciudad",city.text.toString())
+            reg.put("codigopostal",zipCode.text.toString())
             reg.put("telefono",phone.text.toString())
             reg.put("password",userpass.text.toString())
             //se inserta registro a tabla usuario

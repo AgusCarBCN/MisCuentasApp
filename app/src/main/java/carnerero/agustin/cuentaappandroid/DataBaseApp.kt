@@ -16,8 +16,9 @@ class DataBaseApp(
     private val CREATE_TABLE_USER = "CREATE TABLE USUARIO"+
                                         "(dni TEXT PRIMARY KEY,"+
                                         "nombre TEXT,"+
-                                        "ciudad TEXT,"+
                                         "domicilio TEXT,"+
+                                        "ciudad TEXT,"+
+                                        "codigopostal TEXT,"+
                                         "telefono TEXT,"+
                                         "password TEXT)"
 
