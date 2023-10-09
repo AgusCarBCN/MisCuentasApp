@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
 
                 val intent = Intent(this, NavActivity::class.java)
+
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
@@ -76,9 +77,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
         fun createUser(view: View) {
-
-            val intent = Intent(this, NavActivity::class.java)
-            intent.putExtra("mostrarFragment", "createUser")
+            val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
         }
     }

@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.navigation.NavigationView
 
@@ -35,30 +36,19 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         supportActionBar?.setHomeButtonEnabled(true)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-        val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
-        // Verifica si se debe mostrar un Fragment y cuál
-        val fragmentAInicio = intent.getStringExtra("mostrarFragment")
-        if ("createUser" == fragmentAInicio) {
-            val fragment = CreateUserFragment() // Reemplaza con tu Fragment real
-            changeFragment(fragment)
-            fragmentContainer.visibility=View.VISIBLE
-        } else {
-            fragmentContainer.visibility=View.INVISIBLE
-        }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
-        fragmentContainer.visibility=View.INVISIBLE
-        //Administracion de  fragments en activity
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
+        val fragment= HomeFragment()
+        changeFragment(fragment)
+        fragment.setMenuVisibility(true)
+        fragmentContainer.visibility=View.VISIBLE
         when (item.itemId) {
             R.id.consulta -> {
                 Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
-                val fragmentSearch = ConsultaFragment () // Reemplaza con el nombre de tu fragmento
-                //fragmentTransaction.replace(R.id.fcv_main_container, fragmentSearch                )
+                val fragmentSearch = ConsultaFragment ()
                 changeFragment(fragmentSearch)
                 fragmentSearch.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
@@ -69,7 +59,6 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
                 Toast.makeText(this, "Nuevo Importe", Toast.LENGTH_SHORT).show()
                 // Aquí puedes agregar el fragmento que deseas mostrar
                 val nuevoImporteFragment = NewAmountFragment() // Reemplaza con el nombre de tu fragmento
-                //fragmentTransaction.replace(R.id.fcv_main_container, nuevoImporteFragment)
                 changeFragment(nuevoImporteFragment)
                 nuevoImporteFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
@@ -81,8 +70,8 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             }
             R.id.transferencia -> {
                 Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
-                val transferenciaFragment =  TransaccionFragment()// Reemplaza con el nombre de tu fragmento
-                //fragmentTransaction.replace(R.id.fcv_main_container, transferenciaFragment)
+               val transferenciaFragment =  TransaccionFragment()// Reemplaza con el nombre de tu fragmento
+
                 changeFragment(transferenciaFragment)
                 transferenciaFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
@@ -92,7 +81,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             finish()}
             R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
         }
-        fragmentTransaction.commit()
+
         drawer.closeDrawer(GravityCompat.START)
         return true
 
@@ -104,16 +93,16 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
-       /* if(toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)*/
+
     }
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()

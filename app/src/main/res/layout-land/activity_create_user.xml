@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E45826"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".CreateUserActivity">
+
+    <TextView
+        android:id="@+id/tv_title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Creemos tu cuenta"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center|center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Inserta tu nombre"
+            android:inputType="text"
+            android:textAlignment="viewStart"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_userdni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Inserta tu dni"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_useraddress"
+        android:layout_width="610dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/style_editetx"
+        android:ems="10"
+        android:hint="Domicilio"
+        android:inputType="text"
+        android:textColor="#333333"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_usercity"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Ciudad"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_userzip"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="C.Postal"
+            android:inputType="textPostalAddress"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center|center_horizontal"
+        android:orientation="horizontal"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Contraseña"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_userpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:text="Contraseña"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_userphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Telefono"
+            android:inputType="phone"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_useraccmain"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Cuenta principal"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_amountaccmain"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Saldo"
+            android:inputType="numberDecimal"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_useraccsecond"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Cuenta secundaria"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_amountaccamount"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Saldo"
+            android:inputType="numberDecimal"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_confirmuser"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/style_botton"
+            android:text="Confirmar"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_canceluser"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/style_botton"
+            android:text="Cancelar"
+            android:onClick="cancelCreateUser"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

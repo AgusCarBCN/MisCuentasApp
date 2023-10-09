@@ -29,7 +29,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main_container"
-            android:name="carnerero.agustin.cuentaappandroid.HomeFragment"
+            android:name="carnerero.agustin.cuentaappandroid.NewAmountFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

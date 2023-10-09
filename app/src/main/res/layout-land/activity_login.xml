@@ -130,6 +130,7 @@
                     android:layout_weight="1"
                     android:background="#E45826"
                     android:text="Crear un cuenta"
+                    android:onClick="createUser"
                     android:textAllCaps="false"
                     android:textSize="16sp" />
             </LinearLayout>
