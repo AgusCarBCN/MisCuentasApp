@@ -20,7 +20,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center|center_vertical"
@@ -69,18 +69,17 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_usercity"
-            android:layout_width="120dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="3"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Ciudad"
@@ -90,16 +89,28 @@
 
         <EditText
             android:id="@+id/et_userzip"
-            android:layout_width="70dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="60dp"
-            android:layout_weight="1"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="C.Postal"
             android:inputType="textPostalAddress"
             android:textColor="#333333"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_userphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Telefono"
+            android:inputType="phone"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +119,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center|center_horizontal"
         android:orientation="horizontal"
-        android:paddingRight="10dp">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/textView"
@@ -133,18 +144,6 @@
             android:textColor="#333333"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_userphone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:hint="Telefono"
-            android:inputType="phone"
-            android:textColor="#333333"
-            android:textStyle="bold" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -157,7 +156,6 @@
             android:id="@+id/et_useraccmain"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Cuenta principal"
@@ -167,9 +165,9 @@
 
         <EditText
             android:id="@+id/et_amountaccmain"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Saldo"
@@ -182,7 +180,7 @@
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Cuenta secundaria"
@@ -192,10 +190,9 @@
 
         <EditText
             android:id="@+id/et_amountaccamount"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="Saldo"
@@ -207,7 +204,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -232,8 +229,8 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:background="@drawable/style_botton"
-            android:text="Cancelar"
             android:onClick="cancelCreateUser"
+            android:text="Cancelar"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp"
