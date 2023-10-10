@@ -6,11 +6,13 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import carnerero.agustin.cuentaappandroid.CreateUserActivity
 import carnerero.agustin.cuentaappandroid.DataBaseApp
+import carnerero.agustin.cuentaappandroid.NavActivity
 import carnerero.agustin.cuentaappandroid.model.Usuario
 
-class UsuarioDao(context: Context) {
-    private val admin: DataBaseApp = DataBaseApp(context,"cuentaApp",null,1)
+class UsuarioDao(private val admin: DataBaseApp) {
+
 
     // Método para insertar un usuario en la base de datos
     fun insertarUsuario(usuario: Usuario) {

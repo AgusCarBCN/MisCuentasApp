@@ -12,9 +12,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
+import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
+import carnerero.agustin.cuentaappandroid.model.Usuario
 
 
 class LoginActivity : AppCompatActivity() {
+
+    private val admin=DataBaseApp(this,"cuentaApp",null,1)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -23,14 +27,16 @@ class LoginActivity : AppCompatActivity() {
     fun login(view: View) {
         val et_user: EditText = findViewById(R.id.et_text_user)
         val et_pass: EditText = findViewById(R.id.et_password)
+        val userDni:String=et_user.text.toString()
+        val userPassword:String=et_pass.text.toString()
 
         // Crear una instancia de la base de datos
-        val admin = DataBaseApp(this, "cuentaApp", null, 1)
-        val db = admin.writableDatabase
+        //val admin = DataBaseApp(this, "cuentaApp", null, 1)
+               val db = admin.writableDatabase
 
         // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
         val rowUser = db.rawQuery(
-            "SELECT dni, password FROM USUARIO WHERE dni='${et_user.text.toString()}' AND password='${et_pass.text.toString()}'",
+            "SELECT dni, password FROM USUARIO WHERE dni='${userDni}' AND password='${userPassword}'",
             null
         )
 
@@ -48,15 +54,15 @@ class LoginActivity : AppCompatActivity() {
         val password = et_pass.text.toString()
 
 // Verifica si los campos están vacíos
-        if (username.isEmpty() || password.isEmpty()) {
-            if (username.isEmpty() && password.isEmpty()) {
+        if (userDni.isEmpty() || userPassword.isEmpty()) {
+            if (userDni.isEmpty() && userPassword.isEmpty()) {
                 Toast.makeText(this, "Campos vacíos", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Has dejado un campo vacío", Toast.LENGTH_LONG).show()
             }
         } else {
             // Verifica las credenciales
-            if (username == user && password == pass) {
+            if (username == user && userPassword == pass) {
                 // Inicio de sesión exitoso
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
                 val dni = username

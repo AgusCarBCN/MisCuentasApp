@@ -205,7 +205,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_amountaccamount"
+            android:id="@+id/et_secondccamount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -234,6 +234,7 @@
             android:layout_weight="1"
             android:background="@drawable/style_botton"
             android:text="Confirmar"
+            android:onClick="confirmCreateUser"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp"

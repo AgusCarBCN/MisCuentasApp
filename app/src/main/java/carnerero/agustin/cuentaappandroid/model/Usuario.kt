@@ -8,5 +8,6 @@ data class Usuario(
     val codigoPostal: String,
     val telefono: String,
     val password: String
+
 )
 

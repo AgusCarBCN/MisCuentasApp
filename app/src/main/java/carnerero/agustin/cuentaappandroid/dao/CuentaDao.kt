@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 
-class CuentaDao(context: Context) {
-    private val admin: DataBaseApp = DataBaseApp(context, "cuentaApp", null, 1)
+class CuentaDao(private val admin: DataBaseApp) {
+
 
     // Método para insertar una cuenta en la base de datos
     fun insertarCuenta(cuenta: Cuenta) {

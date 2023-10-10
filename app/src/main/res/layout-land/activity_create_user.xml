@@ -189,7 +189,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_amountaccamount"
+            android:id="@+id/et_secondccamount"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
