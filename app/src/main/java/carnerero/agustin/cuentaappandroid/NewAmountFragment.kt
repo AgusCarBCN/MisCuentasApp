@@ -64,6 +64,7 @@ class NewAmountFragment : Fragment() {
 
         spinnerCuentas.adapter = adapter
 
+
         return rootview
 
     }

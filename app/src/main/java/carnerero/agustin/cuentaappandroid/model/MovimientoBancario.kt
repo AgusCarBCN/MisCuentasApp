@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 data class MovimientoBancario(
-    val id: Long?,
+
     val importe: Double,
     val descripcion: String,
     val iban: String,
