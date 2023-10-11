@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,8 +41,8 @@ class NewAmountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var selectedItem:String?=null
         // Inflate the layout for this fragment
-
         val rootview= inflater.inflate(R.layout.fragment_new_amount, container, false)
        //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
@@ -63,7 +65,24 @@ class NewAmountFragment : Fragment() {
         db.close()
 
         spinnerCuentas.adapter = adapter
-
+        spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedItem = adapter.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedItem",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No es necesario implementar nada aquí si no se desea realizar ninguna acción específica
+            }
+        }
 
         return rootview
 
