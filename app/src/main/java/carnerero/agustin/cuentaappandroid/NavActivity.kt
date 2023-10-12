@@ -79,6 +79,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             R.id.salir ->{Toast.makeText(this, "Saliendo de la aplicación", Toast.LENGTH_LONG).show()
             finish()}
             R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
+
         }
 
         drawer.closeDrawer(GravityCompat.START)
@@ -108,5 +109,10 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             .replace(R.id.fcv_main_container, fragment)
             .commit()
     }
-
+    fun cargarFragmentSaldo() {
+        val fragmentSaldo = SaldoFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.info_container, fragmentSaldo)
+        transaction.commit()
+    }
 }

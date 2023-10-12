@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -96,6 +97,7 @@ class NewAmountFragment : Fragment() {
         }
         nuevoIngreso.setOnClickListener {
             val movDao:MovimientoBancarioDAO=MovimientoBancarioDAO(admin)
+
             val cuentaDao:CuentaDao= CuentaDao(admin)
             if (selectedItem != null) {
                 val movimientoBancario:MovimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
@@ -107,7 +109,10 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(importe.text.toString().toDouble(),selectedItem.toString())
-
+                (activity as NavActivity).cargarFragmentSaldo()
+            /*val intent = Intent(activity, NavActivity::class.java)
+                startActivity(intent)
+                activity?.finish() // Cierra la actividad actual*/
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -115,6 +120,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
         }
         nuevoGasto.setOnClickListener {
             val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
@@ -131,6 +137,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(importeNumerico,selectedItem.toString())
+                (activity as NavActivity).cargarFragmentSaldo()
             } else {
                 Toast.makeText(
                     requireContext(),
