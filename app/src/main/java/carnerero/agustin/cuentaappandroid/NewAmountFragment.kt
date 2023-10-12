@@ -109,7 +109,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(importe.text.toString().toDouble(),selectedItem.toString())
-                (activity as NavActivity).cargarFragmentSaldo()
+                (activity as NavActivity).actualizarFragmentSaldo()
             /*val intent = Intent(activity, NavActivity::class.java)
                 startActivity(intent)
                 activity?.finish() // Cierra la actividad actual*/
@@ -137,7 +137,8 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(importeNumerico,selectedItem.toString())
-                (activity as NavActivity).cargarFragmentSaldo()
+                //actualizar el fragment con saldo actualizados cargando de nuevo el fragment
+                (activity as NavActivity).actualizarFragmentSaldo()
             } else {
                 Toast.makeText(
                     requireContext(),

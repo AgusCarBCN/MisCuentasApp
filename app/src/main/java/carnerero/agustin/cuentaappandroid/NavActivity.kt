@@ -81,7 +81,6 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
 
         }
-
         drawer.closeDrawer(GravityCompat.START)
         return true
 
@@ -93,11 +92,8 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -109,7 +105,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             .replace(R.id.fcv_main_container, fragment)
             .commit()
     }
-    fun cargarFragmentSaldo() {
+    fun actualizarFragmentSaldo() {
         val fragmentSaldo = SaldoFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.info_container, fragmentSaldo)
