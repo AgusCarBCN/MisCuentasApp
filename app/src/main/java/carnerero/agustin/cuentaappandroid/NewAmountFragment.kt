@@ -95,7 +95,7 @@ class NewAmountFragment : Fragment() {
             if (selectedItem != null) {
                 val movimientoBancario:MovimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
                     descripcion.text.toString(),selectedItem.toString())
-                movDao.nuevoIngreso(movimientoBancario)
+                movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
                     "nuevo ingreso en: $selectedItem",
@@ -120,7 +120,7 @@ class NewAmountFragment : Fragment() {
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0 // Convertir a cantidad negativa
 
                 val movimientoBancario = MovimientoBancario(importeNumerico, descripcion.text.toString(), selectedItem.toString())
-                movDao.nuevoIngreso(movimientoBancario)
+                movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
                     "Nuevo gasto en: $selectedItem",

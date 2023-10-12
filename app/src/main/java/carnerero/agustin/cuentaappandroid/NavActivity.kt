@@ -111,4 +111,10 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         transaction.replace(R.id.info_container, fragmentSaldo)
         transaction.commit()
     }
+    fun inicio() {
+        val fragment = LogoFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fcv_main_container, fragment)
+        transaction.commit()
+    }
 }

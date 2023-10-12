@@ -7,7 +7,7 @@ import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
-    fun nuevoIngreso(movimientoBancario: MovimientoBancario) {
+    fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
         val values = ContentValues()
         values.put("importe", movimientoBancario.importe)

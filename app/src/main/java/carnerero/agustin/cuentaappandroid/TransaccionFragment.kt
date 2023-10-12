@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +75,80 @@ class TransaccionFragment : Fragment() {
         //Selecciono los elementos por defecto en origen la cuenta principal y en destino la secundaria
         cuentaOrigen.setSelection(0)
         cuentaDestino.setSelection(1)
+
+        /*este código maneja la selección de elementos en un Spinner y muestra un mensaje de notificación
+         (Toast) para indicar qué elemento ha sido seleccionado. La variable selectedItem se
+         utiliza para almacenar el elemento seleccionado para su uso posterior al confirmar la transferencia
+         con el boton aceptar.*/
+        cuentaOrigen.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedItemOrigen = adapter.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedItemOrigen",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        cuentaDestino.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedItemDestino = adapter.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedItemDestino",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        aceptar.setOnClickListener(){
+            if(selectedItemDestino==selectedItemOrigen){
+                Toast.makeText(
+                    requireContext(),
+                    "No se puede realizar transferencia en una misma cuenta",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }else{
+                Toast.makeText(
+                    requireContext(),
+                    "Transferencia realizada con exito",
+                    Toast.LENGTH_SHORT
+                ).show()
+                val importeText = importe.text.toString()
+                val importeNegativo = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
+                val importePositivo=importeText.toDouble()
+                cuentaDao.actualizarSaldo(importeNegativo,selectedItemOrigen.toString())
+                cuentaDao.actualizarSaldo(importePositivo,selectedItemDestino.toString())
+                //Egreso en cuenta de origen
+                var movimientoBancario= MovimientoBancario(importeNegativo,
+                    "Transaccion realizada",selectedItemOrigen.toString())
+                movimientoBancarioDAO.nuevoImporte(movimientoBancario)
+                //Ingreso en cuenta de destino
+                movimientoBancario=MovimientoBancario(importePositivo,
+                    "Transaccion recibida",selectedItemDestino.toString())
+                movimientoBancarioDAO.nuevoImporte(movimientoBancario)
+
+                (activity as NavActivity).actualizarFragmentSaldo()
+            }
+        }
+        salir.setOnClickListener(){
+            (activity as NavActivity).inicio()
+        }
         return rootview
     }
 
