@@ -35,29 +35,37 @@ class UsuarioDao(private val admin: DataBaseApp) {
         db.close()
     }
 
-    // Método para obtener un usuario por DNI y contraseña
+    /* Método para obtener un usuario por DNI y contraseña
+    *Estos cambios mejoran la seguridad de la consulta y hacen que el código sea
+    * más limpio y legible. Además, protege contra la inyección SQL al usar consultas
+    *  parametrizadas en lugar de concatenar directamente los valores en la consulta. */
     fun obtenerUsuarioPorDniYPassword(dni: String, password: String): Usuario? {
         val db = admin.readableDatabase
-        val query = "SELECT dni, password FROM USUARIO WHERE dni='${dni}' AND password='${password}'"
-        val cursor: Cursor = db.rawQuery(query, arrayOf(dni, password))
+        val query = "SELECT dni, nombre, domicilio, ciudad, codigopostal, telefono, password FROM USUARIO WHERE dni = ? AND password = ?"
+        val cursor = db.rawQuery(query, arrayOf(dni, password))
 
         var usuario: Usuario? = null
 
-        if (cursor.moveToFirst()) {
-            usuario = Usuario(
-                cursor.getString(cursor.getColumnIndexOrThrow("dni")),
-                cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-                cursor.getString(cursor.getColumnIndexOrThrow("domicilio")),
-                cursor.getString(cursor.getColumnIndexOrThrow("ciudad")),
-                cursor.getString(cursor.getColumnIndexOrThrow("codigopostal")),
-                cursor.getString(cursor.getColumnIndexOrThrow("telefono")),
-                cursor.getString(cursor.getColumnIndexOrThrow("password"))
-            )
+        try {
+            if (cursor.moveToFirst()) {
+                usuario = Usuario(
+                    cursor.getString(cursor.getColumnIndexOrThrow("dni")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("domicilio")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("ciudad")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("codigopostal")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("telefono")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("password"))
+                )
+            }
+        } finally {
+            cursor.close()
+            db.close()
         }
-        cursor.close()
-        db.close()
+
         return usuario
     }
+
 
     // Método para borrar un usuario por DNI y contraseña
     fun borrarUsuarioPorDniYPassword(dni: String, password: String) {

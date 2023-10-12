@@ -29,13 +29,16 @@ class LoginActivity : AppCompatActivity() {
         val et_pass: EditText = findViewById(R.id.et_password)
         val userDni:String=et_user.text.toString()
         val userPassword:String=et_pass.text.toString()
-
+        val userDao=UsuarioDao(admin)
+        val user=userDao.obtenerUsuarioPorDniYPassword(userDni,userPassword)
+        var usuarioLogin=user?.dni
+        var passwordLogin=user?.password
         // Crear una instancia de la base de datos
         //val admin = DataBaseApp(this, "cuentaApp", null, 1)
-        val db = admin.writableDatabase
+        //val db = admin.writableDatabase
 
         // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
-        val rowUser = db.rawQuery(
+        /*val rowUser = db.rawQuery(
             "SELECT dni, password FROM USUARIO WHERE dni='${userDni}' AND password='${userPassword}'",
             null
         )
@@ -49,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Cerrar la base de datos después de usarla
         db.close()
-
+*/
 
 
 // Verifica si los campos están vacíos
