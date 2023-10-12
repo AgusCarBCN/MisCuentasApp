@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Crear una instancia de la base de datos
         //val admin = DataBaseApp(this, "cuentaApp", null, 1)
-               val db = admin.writableDatabase
+        val db = admin.writableDatabase
 
         // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
         val rowUser = db.rawQuery(
@@ -40,18 +40,17 @@ class LoginActivity : AppCompatActivity() {
             null
         )
 
-        var user = ""
-        var pass = ""
+        var usuarioLogin =""
+        var passwordLogin =""
         if (rowUser.moveToFirst()) {
-            user = rowUser.getString(0)
-            pass = rowUser.getString(1)
+            usuarioLogin = rowUser.getString(0)
+            passwordLogin = rowUser.getString(1)
         }
 
         // Cerrar la base de datos después de usarla
         db.close()
-// Obtén los valores de los campos de usuario y contraseña
-        val username = et_user.text.toString()
-        val password = et_pass.text.toString()
+
+
 
 // Verifica si los campos están vacíos
         if (userDni.isEmpty() || userPassword.isEmpty()) {
@@ -62,19 +61,16 @@ class LoginActivity : AppCompatActivity() {
             }
         } else {
             // Verifica las credenciales
-            if (username == user && userPassword == pass) {
+            if (userDni == usuarioLogin && userPassword == passwordLogin) {
                 // Inicio de sesión exitoso
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
-                val dni = username
+                val dni = usuarioLogin
                 val sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
                 editor.putString("dni", dni)
                 editor.apply()
-
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
-
                 val intent = Intent(this, NavActivity::class.java)
-
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
@@ -85,5 +81,7 @@ class LoginActivity : AppCompatActivity() {
         fun createUser(view: View) {
             val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
+
         }
+
     }
