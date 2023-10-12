@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,8 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.FragmentContainerView
+import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,14 +49,18 @@ class NewAmountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var selectedItem:String?=null
+
         // Inflate the layout for this fragment
         val rootview= inflater.inflate(R.layout.fragment_new_amount, container, false)
-       //Recupero dni del usuario que inicio sesion
+
+        //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "")
-        //Recupero Spinner de la vista y creo adapter para cargar los datos de la tabla cuentas del usuario
-        //que inicia sesion.
         val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
+        val nuevoIngreso:Button=rootview.findViewById(R.id.btn_nuevoingreso)
+        val nuevoGasto:Button=rootview.findViewById(R.id.btn_nuevogasto)
+        val descripcion:EditText=rootview.findViewById(R.id.et_descripcion)
+        val importe:EditText=rootview.findViewById(R.id.et_importe)
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=DataBaseApp(context,"cuentaApp",null,1)
@@ -83,7 +94,51 @@ class NewAmountFragment : Fragment() {
                 // No es necesario implementar nada aquí si no se desea realizar ninguna acción específica
             }
         }
+        nuevoIngreso.setOnClickListener {
+            val movDao:MovimientoBancarioDAO=MovimientoBancarioDAO(admin)
+            val cuentaDao:CuentaDao= CuentaDao(admin)
+            if (selectedItem != null) {
+                val movimientoBancario:MovimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
+                    descripcion.text.toString(),selectedItem.toString())
+                movDao.nuevoIngreso(movimientoBancario)
+                Toast.makeText(
+                    requireContext(),
+                    "nuevo ingreso en: $selectedItem",
+                    Toast.LENGTH_SHORT
+                ).show()
+                cuentaDao.actualizarSaldo(importe.text.toString().toDouble(),selectedItem.toString())
 
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Ningún elemento seleccionado",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        nuevoGasto.setOnClickListener {
+            val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
+            val cuentaDao:CuentaDao=CuentaDao(admin)
+            if (selectedItem != null) {
+                val importeText = importe.text.toString()
+                val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0 // Convertir a cantidad negativa
+
+                val movimientoBancario = MovimientoBancario(importeNumerico, descripcion.text.toString(), selectedItem.toString())
+                movDao.nuevoIngreso(movimientoBancario)
+                Toast.makeText(
+                    requireContext(),
+                    "Nuevo gasto en: $selectedItem",
+                    Toast.LENGTH_SHORT
+                ).show()
+                cuentaDao.actualizarSaldo(importeNumerico,selectedItem.toString())
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Ningún elemento seleccionado",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
         return rootview
 
     }

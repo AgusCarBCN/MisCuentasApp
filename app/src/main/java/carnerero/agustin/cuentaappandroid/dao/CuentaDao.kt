@@ -67,4 +67,11 @@ class CuentaDao(private val admin: DataBaseApp) {
         }
         return cuentas
     }
+    fun actualizarSaldo(importe: Double, iban: String) {
+        val db = admin.writableDatabase
+        val query = "UPDATE cuenta SET saldo = saldo + '${importe}' WHERE iban ='${iban}'"
+        db.execSQL(query)
+        db.close()
+    }
+
 }

@@ -26,7 +26,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_amountdes"
+            android:id="@+id/et_descripcion"
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -53,7 +53,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal"
+            android:id="@+id/et_importe"
             android:layout_width="360dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
