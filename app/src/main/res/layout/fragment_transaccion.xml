@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_text_user4"
+            android:id="@+id/et_importetrans"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -54,7 +54,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinner5"
+                android:id="@+id/sp_cuentaorigen"
                 android:layout_width="220dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
@@ -84,7 +84,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinner6"
+                android:id="@+id/sp_cuentadestino"
                 android:layout_width="220dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
