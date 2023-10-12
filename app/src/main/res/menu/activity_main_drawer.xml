@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
 <group>
     <item
         android:id="@+id/configuracion"
@@ -12,7 +13,8 @@
     <item
         android:id="@+id/estadistica"
         android:icon="@drawable/estadistica"
-        android:title="Estadistica" />
+        android:title="Estadistica"
+        />
     <item
         android:id="@+id/consulta"
         android:icon="@drawable/consulta"

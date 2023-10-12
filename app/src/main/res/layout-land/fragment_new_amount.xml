@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="center|top"
+        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,7 +32,7 @@
                 android:gravity="center|center_horizontal"
                 android:hint="Descripcion del importe"
                 android:inputType="text"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
@@ -68,6 +68,7 @@
                 android:ems="10"
                 android:gravity="center|center_horizontal"
                 android:inputType="text"
+                android:textAlignment="center"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

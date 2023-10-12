@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.navigation.NavigationView
 
@@ -41,7 +40,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
-        val fragment= HomeFragment()
+        val fragment= SaldoFragment()
         changeFragment(fragment)
         fragment.setMenuVisibility(true)
         fragmentContainer.visibility=View.VISIBLE

@@ -5,37 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff5722"
-    tools:context=".HomeFragment" >
+    tools:context=".SaldoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal|top"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Saldo de tus cuentas"
+            android:layout_marginTop="20dp"
+            android:text="Tus cuentas"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_weight="1"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_cuenta1"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_cuenta"
                 android:gravity="center"
                 android:text="Cuenta1"
@@ -47,7 +46,7 @@
             <TextView
                 android:id="@+id/tv_saldo1"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_saldo"
                 android:gravity="center"
                 android:text="Saldo1"
@@ -58,16 +57,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_weight="1"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_cuenta2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_cuenta"
                 android:gravity="center"
                 android:text="Cuenta2"
@@ -79,7 +78,7 @@
             <TextView
                 android:id="@+id/tv_saldo2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_saldo"
                 android:gravity="center"
                 android:text="Saldo2"
