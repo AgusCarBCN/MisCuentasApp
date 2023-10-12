@@ -56,7 +56,8 @@ class NewAmountFragment : Fragment() {
 
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
-        val dni = sharedPreferences.getString("dni", "")
+        //val dni = sharedPreferences.getString("dni", "")
+        val dni = sharedPreferences.getString("dni", "") ?: ""
         val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
         val nuevoIngreso:Button=rootview.findViewById(R.id.btn_nuevoingreso)
         val nuevoGasto:Button=rootview.findViewById(R.id.btn_nuevogasto)
@@ -65,16 +66,10 @@ class NewAmountFragment : Fragment() {
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=DataBaseApp(context,"cuentaApp",null,1)
-        val db = admin.readableDatabase
-        val cursor = db.rawQuery("SELECT iban FROM CUENTA WHERE dni='${dni}'", null)
-        if (cursor.moveToFirst()) {
-            do {
-                val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
-                adapter.add(iban)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
+        val cuentaDao=CuentaDao(admin)
+        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        adapter.add(cuentas.get(0).iban)
+        adapter.add(cuentas.get(1).iban)
 
         spinnerCuentas.adapter = adapter
         spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -97,8 +92,6 @@ class NewAmountFragment : Fragment() {
         }
         nuevoIngreso.setOnClickListener {
             val movDao:MovimientoBancarioDAO=MovimientoBancarioDAO(admin)
-
-            val cuentaDao:CuentaDao= CuentaDao(admin)
             if (selectedItem != null) {
                 val movimientoBancario:MovimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
                     descripcion.text.toString(),selectedItem.toString())
@@ -110,9 +103,7 @@ class NewAmountFragment : Fragment() {
                 ).show()
                 cuentaDao.actualizarSaldo(importe.text.toString().toDouble(),selectedItem.toString())
                 (activity as NavActivity).actualizarFragmentSaldo()
-            /*val intent = Intent(activity, NavActivity::class.java)
-                startActivity(intent)
-                activity?.finish() // Cierra la actividad actual*/
+
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -124,7 +115,6 @@ class NewAmountFragment : Fragment() {
         }
         nuevoGasto.setOnClickListener {
             val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
-            val cuentaDao:CuentaDao=CuentaDao(admin)
             if (selectedItem != null) {
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0 // Convertir a cantidad negativa
@@ -148,7 +138,6 @@ class NewAmountFragment : Fragment() {
             }
         }
         return rootview
-
     }
 
     companion object {

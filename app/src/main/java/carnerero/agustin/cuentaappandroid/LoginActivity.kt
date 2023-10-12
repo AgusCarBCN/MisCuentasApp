@@ -33,26 +33,6 @@ class LoginActivity : AppCompatActivity() {
         val user=userDao.obtenerUsuarioPorDniYPassword(userDni,userPassword)
         var usuarioLogin=user?.dni
         var passwordLogin=user?.password
-        // Crear una instancia de la base de datos
-        //val admin = DataBaseApp(this, "cuentaApp", null, 1)
-        //val db = admin.writableDatabase
-
-        // Corregir la consulta SQL para usar un solo WHERE y un solo parámetro
-        /*val rowUser = db.rawQuery(
-            "SELECT dni, password FROM USUARIO WHERE dni='${userDni}' AND password='${userPassword}'",
-            null
-        )
-
-        var usuarioLogin =""
-        var passwordLogin =""
-        if (rowUser.moveToFirst()) {
-            usuarioLogin = rowUser.getString(0)
-            passwordLogin = rowUser.getString(1)
-        }
-
-        // Cerrar la base de datos después de usarla
-        db.close()
-*/
 
 
 // Verifica si los campos están vacíos

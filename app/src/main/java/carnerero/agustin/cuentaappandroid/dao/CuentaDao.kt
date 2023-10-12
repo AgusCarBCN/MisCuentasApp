@@ -31,23 +31,50 @@ class CuentaDao(private val admin: DataBaseApp) {
     // Método para obtener una cuenta por IBAN
     fun obtenerCuentaPorIban(iban: String): Cuenta? {
         val db = admin.readableDatabase
-        val query = "SELECT * FROM CUENTA WHERE iban = ?"
-        val cursor: Cursor = db.rawQuery(query, arrayOf(iban))
+
+        val query = "SELECT iban, saldo, dni FROM CUENTA WHERE iban = ?"
+        val selectionArgs = arrayOf(iban)
+
+        val cursor = db.rawQuery(query, selectionArgs)
 
         var cuenta: Cuenta? = null
 
-        if (cursor.moveToFirst()) {
-            cuenta = Cuenta(
-                cursor.getString(cursor.getColumnIndexOrThrow("iban")),
-                cursor.getDouble(cursor.getColumnIndexOrThrow("saldo")),
-                cursor.getString(cursor.getColumnIndexOrThrow("dni"))
-            )
+        try {
+            if (cursor.moveToFirst()) {
+                cuenta = Cuenta(
+                    cursor.getString(cursor.getColumnIndexOrThrow("iban")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("saldo")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("dni"))
+                )
+            }
+        } finally {
+            cursor.close()
         }
-
-        cursor.close()
-        db.close()
         return cuenta
     }
+
+    fun obtenerCuentaPorDni(dni: String): Cuenta? {
+        val db = admin.readableDatabase
+
+        val query = "SELECT iban, saldo, dni FROM CUENTA WHERE dni = ?"
+        val selectionArgs = arrayOf(dni)
+        val cursor = db.rawQuery(query, selectionArgs)
+        var cuenta: Cuenta? = null
+        try {
+            if (cursor.moveToFirst()) {
+                cuenta = Cuenta(
+                    cursor.getString(cursor.getColumnIndexOrThrow("iban")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("saldo")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("dni"))
+                )
+            }
+        } finally {
+            cursor.close()
+        }
+
+        return cuenta
+    }
+
     fun listarTodasLasCuentas(): List<Cuenta> {
         val cuentas = mutableListOf<Cuenta>()
 
@@ -67,11 +94,33 @@ class CuentaDao(private val admin: DataBaseApp) {
         }
         return cuentas
     }
+    fun listarCuentasPorDNI(dni: String): List<Cuenta> {
+        val cuentas = mutableListOf<Cuenta>()
+
+        admin.readableDatabase.use { db ->
+            val query = "SELECT iban, saldo, dni FROM CUENTA WHERE dni = ?"
+            val selectionArgs = arrayOf(dni)
+            val cursor = db.rawQuery(query, selectionArgs)
+
+            while (cursor.moveToNext()) {
+                val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
+                val saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
+
+                val cuenta = Cuenta(iban, saldo, dni)
+                cuentas.add(cuenta)
+            }
+            cursor.close()
+        }
+
+        return cuentas
+    }
+
     fun actualizarSaldo(importe: Double, iban: String) {
         val db = admin.writableDatabase
         val query = "UPDATE cuenta SET saldo = saldo + '${importe}' WHERE iban ='${iban}'"
         db.execSQL(query)
         db.close()
     }
+
 
 }

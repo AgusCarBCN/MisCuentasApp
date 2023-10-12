@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.Context
 import android.content.Intent
 import android.icu.text.NumberFormat
 import android.os.Bundle
@@ -41,11 +42,16 @@ class SaldoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootview= inflater.inflate(R.layout.fragment_saldo, container, false)
-
+        val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
+        /*El operador ?: se utiliza para proporcionar un valor predeterminado
+        ("" en este caso) en caso de que sharedPreferences.getString("dni", "")
+        devuelva un valor nulo. Esto asegura que dni sea un String no nulo que puedes
+        pasar a la función listarCuentasPorDNI.*/
+        val dni = sharedPreferences.getString("dni", "") ?: ""
         val admin=DataBaseApp(context,"cuentaApp",null,1)
         val dao:CuentaDao= CuentaDao(admin)
         val intent:Intent
-        val cuentas:List<Cuenta> =dao.listarTodasLasCuentas()
+        val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
         val cuenta1:TextView=rootview.findViewById(R.id.tv_cuenta1)
         val cuenta2:TextView=rootview.findViewById(R.id.tv_cuenta2)
         val saldo1:TextView=rootview.findViewById(R.id.tv_saldo1)
