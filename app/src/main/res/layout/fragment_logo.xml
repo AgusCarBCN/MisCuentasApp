@@ -8,6 +8,7 @@
     tools:context=".LogoFragment" >
 
     <TextView
+        android:id="@+id/tv_wellcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

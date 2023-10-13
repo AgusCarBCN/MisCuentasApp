@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         val user=userDao.obtenerUsuarioPorDniYPassword(userDni,userPassword)
         var usuarioLogin=user?.dni
         var passwordLogin=user?.password
-
+        var usuarioName=user?.nombre
 
 // Verifica si los campos están vacíos
         if (userDni.isEmpty() || userPassword.isEmpty()) {
@@ -43,9 +43,12 @@ class LoginActivity : AppCompatActivity() {
                 // Inicio de sesión exitoso
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
                 val dni = usuarioLogin
-                val sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
+                val nombre=usuarioName
+                //Guarda dni y nombre en sharedpreferences de Android
+                val sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
                 editor.putString("dni", dni)
+                editor.putString("nombre",nombre)
                 editor.apply()
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, NavActivity::class.java)

@@ -51,8 +51,8 @@ class NewAmountFragment : Fragment() {
         val rootview= inflater.inflate(R.layout.fragment_new_amount, container, false)
 
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences = requireContext().getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE)
-        //val dni = sharedPreferences.getString("dni", "")
+        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+
         val dni = sharedPreferences.getString("dni", "") ?: ""
         val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
         val nuevoIngreso:Button=rootview.findViewById(R.id.btn_nuevoingreso)
