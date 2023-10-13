@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +14,8 @@ import carnerero.agustin.cuentaappandroid.model.Usuario
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
-    private val admin=DataBaseApp(this,"cuentaApp",null,1)
+    private val admin=DataBaseAppSingleton.getInstance(this)
+    //DataBaseApp(this,"cuentaApp",null,1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

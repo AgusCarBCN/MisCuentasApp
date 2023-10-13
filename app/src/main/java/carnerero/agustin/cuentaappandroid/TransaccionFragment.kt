@@ -61,7 +61,9 @@ class TransaccionFragment : Fragment() {
         //Creo  un adaptador de cadena (String) para llenar un Spinner
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
-        val admin=DataBaseApp(context,"cuentaApp",null,1)
+
+        val admin=DataBaseAppSingleton.getInstance(context)
+       //DataBaseApp(context,"cuentaApp",null,1)
         val cuentaDao= CuentaDao(admin)
         val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
         //Obtengo las cuentas del usuario logeado con el dni

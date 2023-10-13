@@ -1,8 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,9 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
@@ -65,7 +61,8 @@ class NewAmountFragment : Fragment() {
         val importe:EditText=rootview.findViewById(R.id.et_importe)
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
-        val admin=DataBaseApp(context,"cuentaApp",null,1)
+        val admin=   DataBaseAppSingleton.getInstance(context)
+        //val admin=DataBaseApp(context,"cuentaApp",null,1)
         val cuentaDao=CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         adapter.add(cuentas.get(0).iban)

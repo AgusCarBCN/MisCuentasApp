@@ -2,23 +2,18 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
-import carnerero.agustin.cuentaappandroid.model.Usuario
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private val admin=DataBaseApp(this,"cuentaApp",null,1)
+    private val admin=DataBaseAppSingleton.getInstance(this)
+        //DataBaseApp(this,"cuentaApp",null,1)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
