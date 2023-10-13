@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:background="#FF5722"
-    tools:context=".LogoFragment" >
+    tools:context=".LogoFragment">
 
     <TextView
         android:id="@+id/tv_wellcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="Bienvenido"
         android:textAlignment="center"

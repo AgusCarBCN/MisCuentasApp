@@ -59,7 +59,7 @@ class NewAmountFragment : Fragment() {
         val nuevoGasto:Button=rootview.findViewById(R.id.btn_nuevogasto)
         val descripcion:EditText=rootview.findViewById(R.id.et_descripcion)
         val importe:EditText=rootview.findViewById(R.id.et_importe)
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=   DataBaseAppSingleton.getInstance(context)
         //val admin=DataBaseApp(context,"cuentaApp",null,1)

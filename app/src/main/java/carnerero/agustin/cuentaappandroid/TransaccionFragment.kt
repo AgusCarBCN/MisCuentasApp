@@ -59,7 +59,7 @@ class TransaccionFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "") ?: ""
         //Creo  un adaptador de cadena (String) para llenar un Spinner
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
 
         val admin=DataBaseAppSingleton.getInstance(context)

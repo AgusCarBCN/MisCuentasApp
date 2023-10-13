@@ -13,7 +13,7 @@ import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 class LoginActivity : AppCompatActivity() {
 
     private val admin=DataBaseAppSingleton.getInstance(this)
-        //DataBaseApp(this,"cuentaApp",null,1)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -42,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
             if (userDni == usuarioLogin && userPassword == passwordLogin) {
                 // Inicio de sesión exitoso
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
+                //Las SharedPreferences son una forma de almacenar datos clave-valor en Android
+                //de manera sencilla y eficiente
                 val dni = usuarioLogin
                 val nombre=usuarioName
                 //Guarda dni y nombre en sharedpreferences de Android
