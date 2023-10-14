@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import carnerero.agustin.cuentaappandroid.controller.AdapterMov
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +27,8 @@ class ListOfMovFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var adaptermovimientos: AdapterMov
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,23 @@ class ListOfMovFragment : Fragment() {
 
 
         return rootview
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager=LinearLayoutManager(context)
+        recyclerView=view.findViewById(R.id.rv_movimientos)
+        recyclerView.layoutManager=layoutManager
+        recyclerView.setHasFixedSize(true)
+        adaptermovimientos= AdapterMov(getMovList())
+        recyclerView.adapter=adaptermovimientos
+    }
+
+    fun getMovList():ArrayList<MovimientoBancario>{
+        val admin=   DataBaseAppSingleton.getInstance(context)
+        val movDao:MovimientoBancarioDAO= MovimientoBancarioDAO(admin)
+        val movList:ArrayList<MovimientoBancario> =movDao.listarMovimientos()
+        return movList
     }
 
     companion object {
