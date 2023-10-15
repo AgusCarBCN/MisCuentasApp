@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -9,9 +10,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.SearchView
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,9 +51,35 @@ class ConsultaFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
+        //Variable que contendra la opcion seleccionada en spinner
+        var selectedItem:String?=null
+        //Obtenemos los componentes del fragment
         val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
         val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
+        val searchView:SearchView=rootview.findViewById(R.id.searchimporte)
+        val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
+        val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
+        val ingresosygastos:RadioButton=rootview.findViewById(R.id.rb_ingresosygastos)
+        val importeDesde:EditText=rootview.findViewById(R.id.et_importedesde)
+        val importeHasta:EditText=rootview.findViewById(R.id.et_importehasta)
+        val spConsulta:Spinner=rootview.findViewById(R.id.sp_consulta)
+        val buscar:Button=rootview.findViewById(R.id.btn_search)
+        //Recupero dni del usuario que inicio sesion
+        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+        val dni = sharedPreferences.getString("dni", "") ?: ""
+        //Rellenar spiner spConsulta
+        //Creo adapter
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
+        val admin=   DataBaseAppSingleton.getInstance(context)
+        //val admin=DataBaseApp(context,"cuentaApp",null,1)
+        val cuentaDao= CuentaDao(admin)
+        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        adapter.add(cuentas.get(0).iban)
+        adapter.add(cuentas.get(1).iban)
+        spConsulta.adapter = adapter
 
+        //Muestra DatePickerDialog al cliquear edit text
         etDateFrom.setOnClickListener(){
             showDatePickerDialog(etDateFrom)
 
@@ -52,6 +87,24 @@ class ConsultaFragment : Fragment() {
         etDateTo.setOnClickListener(){
             showDatePickerDialog(etDateTo)
         }
+        spConsulta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedItem = adapter.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedItem",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
         return rootview
     }
     private fun showDatePickerDialog(editText: EditText) {
