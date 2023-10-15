@@ -23,7 +23,7 @@
             <SearchView
                 android:id="@+id/frameSearch"
                 android:layout_width="360dp"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:background="@drawable/style_editetx"
                 android:queryHint="descripcion" />
         </LinearLayout>
@@ -32,60 +32,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="FECHA"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                <EditText
+                    android:id="@+id/et_datefrom"
+                    android:layout_width="160dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/style_editetx"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Fecha desde"
+                    android:inputType="date"
+                    android:textColor="@color/grey" />
 
-                    <EditText
-                        android:id="@+id/et_datefrom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/style_editetx"
-                        android:ems="10"
-                        android:hint="Fecha desde"
-                        android:inputType="date"
-                        android:textColor="@color/grey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/et_dateto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/style_editetx"
-                        android:ems="10"
-                        android:hint="Fecha hasta"
-                        android:inputType="date" />
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/et_dateto"
+                    android:layout_width="160dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/style_editetx"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Fecha hasta"
+                    android:inputType="date" />
 
             </LinearLayout>
         </LinearLayout>
@@ -110,13 +88,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@color/orange"
                 android:gravity="center|top"
                 android:orientation="horizontal">
 
                 <RadioGroup
-                    android:id="@+id/selectImporte"
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/style_botton"
@@ -159,19 +136,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/et_importedesde"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_width="160dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
@@ -181,10 +157,9 @@
 
                 <EditText
                     android:id="@+id/et_importehasta"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_width="150dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
@@ -213,8 +188,8 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="320dp"
-                android:layout_height="42dp"
+                android:layout_width="360dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="@drawable/style_editetx"
                 android:gravity="center" />
@@ -222,10 +197,10 @@
 
         <Button
             android:id="@+id/btn_search"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/style_botton"
             android:gravity="center|center_vertical"
             android:text="Buscar"

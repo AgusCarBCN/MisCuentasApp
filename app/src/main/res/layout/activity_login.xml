@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E45826"
+    android:background="@color/orange"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#1A1B17"
+                android:background="@color/darkBrown"
                 android:orientation="vertical">
 
                 <ImageView

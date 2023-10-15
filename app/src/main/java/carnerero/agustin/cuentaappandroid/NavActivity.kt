@@ -47,7 +47,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         when (item.itemId) {
             R.id.consulta -> {
                 Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
-                val fragmentSearch = ListOfMovFragment ()
+                val fragmentSearch = ConsultaFragment ()
                 //val fragmentResul=ResultFragment()
                 changeFragmentMain(fragmentSearch)
                 //changeFragmentInfo(fragmentResul)

@@ -3,7 +3,7 @@
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="53dp"
-    android:background="#E8AA42"
+    android:background="@color/lightOrange"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
