@@ -5,13 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import carnerero.agustin.cuentaappandroid.controller.AdapterMov
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,15 +13,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ListOfMovFragment.newInstance] factory method to
+ * Use the [ResultFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListOfMovFragment : Fragment() {
+class ResultFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var adaptermovimientos: AdapterMov
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,27 +34,7 @@ class ListOfMovFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_list_of_mov, container, false)
-
-
-        return rootview
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val layoutManager=LinearLayoutManager(context)
-        recyclerView=view.findViewById(R.id.rv_movimientos)
-        recyclerView.layoutManager=layoutManager
-        recyclerView.setHasFixedSize(false)
-        adaptermovimientos= AdapterMov(getMovList())
-        recyclerView.adapter=adaptermovimientos
-    }
-
-    fun getMovList():ArrayList<MovimientoBancario>{
-        val admin=   DataBaseAppSingleton.getInstance(context)
-        val movDao:MovimientoBancarioDAO= MovimientoBancarioDAO(admin)
-        val movList:ArrayList<MovimientoBancario> =movDao.listarMovimientos()
-        return movList
+        return inflater.inflate(R.layout.fragment_result, container, false)
     }
 
     companion object {
@@ -73,12 +44,12 @@ class ListOfMovFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ListOfMovFragment.
+         * @return A new instance of fragment ResultFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ListOfMovFragment().apply {
+            ResultFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

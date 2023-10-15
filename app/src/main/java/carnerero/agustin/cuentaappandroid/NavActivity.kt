@@ -41,14 +41,16 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
         val fragment= SaldoFragment()
-        changeFragment(fragment)
+        changeFragmentMain(fragment)
         fragment.setMenuVisibility(true)
         fragmentContainer.visibility=View.VISIBLE
         when (item.itemId) {
             R.id.consulta -> {
                 Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
                 val fragmentSearch = ListOfMovFragment ()
-                changeFragment(fragmentSearch)
+                //val fragmentResul=ResultFragment()
+                changeFragmentMain(fragmentSearch)
+                //changeFragmentInfo(fragmentResul)
                 fragmentSearch.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
 
@@ -58,7 +60,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
                 Toast.makeText(this, "Nuevo Importe", Toast.LENGTH_SHORT).show()
                 // Aquí puedes agregar el fragmento que deseas mostrar
                 val nuevoImporteFragment = NewAmountFragment() // Reemplaza con el nombre de tu fragmento
-                changeFragment(nuevoImporteFragment)
+                changeFragmentMain(nuevoImporteFragment)
                 nuevoImporteFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
             }
@@ -71,7 +73,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
                 Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
                val transferenciaFragment =  TransaccionFragment()// Reemplaza con el nombre de tu fragmento
 
-                changeFragment(transferenciaFragment)
+                changeFragmentMain(transferenciaFragment)
                 transferenciaFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
 
@@ -100,9 +102,14 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         return super.onOptionsItemSelected(item)
 
     }
-    private fun changeFragment(fragment: Fragment) {
+    private fun changeFragmentMain(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_main_container, fragment)
+            .commit()
+    }
+    private fun changeFragmentInfo(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.info_container, fragment)
             .commit()
     }
     fun actualizarFragmentSaldo() {

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal|top"
         android:orientation="vertical">
 
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/tv_cuenta1"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_cuenta"
                 android:gravity="center"
                 android:text="Cuenta1"
@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/tv_saldo1"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_saldo"
                 android:gravity="center"
                 android:text="Saldo1"
@@ -66,7 +66,7 @@
             <TextView
                 android:id="@+id/tv_cuenta2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_cuenta"
                 android:gravity="center"
                 android:text="Cuenta2"
@@ -78,7 +78,7 @@
             <TextView
                 android:id="@+id/tv_saldo2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/style_box_saldo"
                 android:gravity="center"
                 android:text="Saldo2"
