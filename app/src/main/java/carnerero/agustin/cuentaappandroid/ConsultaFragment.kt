@@ -20,6 +20,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
@@ -54,6 +55,7 @@ class ConsultaFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
+
         //Variable que contendra la opcion seleccionada en spinner
         var selectedItem:String?=null
         //Obtenemos los componentes del fragment
@@ -111,6 +113,9 @@ class ConsultaFragment : Fragment() {
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+        }
+        buscar.setOnClickListener(){
+
         }
 
         return rootview
