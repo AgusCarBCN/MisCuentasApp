@@ -54,6 +54,7 @@ class ListOfMovFragment : Fragment() {
         val layoutManager=LinearLayoutManager(context)
         recyclerView=view.findViewById(R.id.rv_movimientos)
         recyclerView.layoutManager=layoutManager
+        recyclerView.setNestedScrollingEnabled(true)
         recyclerView.setHasFixedSize(true)
         adaptermovimientos= AdapterMov(getMovList())
         recyclerView.adapter=adaptermovimientos
