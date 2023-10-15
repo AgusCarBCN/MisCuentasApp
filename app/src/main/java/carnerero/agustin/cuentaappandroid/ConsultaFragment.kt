@@ -21,6 +21,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,6 +81,11 @@ class ConsultaFragment : Fragment() {
         adapter.add(cuentas.get(0).iban)
         adapter.add(cuentas.get(1).iban)
         spConsulta.adapter = adapter
+        //Obtener todos los movimientos de la base de datos
+        val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
+        //val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
+        val movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
+        //Filtrar los movimientos obtenidos
 
         //Muestra DatePickerDialog al cliquear edit text
         etDateFrom.setOnClickListener(){
@@ -133,6 +141,8 @@ class ConsultaFragment : Fragment() {
 
         datePickerDialog.show()
     }
+
+
 
     companion object {
         /**

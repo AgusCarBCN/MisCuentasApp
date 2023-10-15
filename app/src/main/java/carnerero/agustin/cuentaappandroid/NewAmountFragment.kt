@@ -14,6 +14,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -62,7 +63,6 @@ class NewAmountFragment : Fragment() {
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=   DataBaseAppSingleton.getInstance(context)
-        //val admin=DataBaseApp(context,"cuentaApp",null,1)
         val cuentaDao=CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         adapter.add(cuentas.get(0).iban)
@@ -88,11 +88,12 @@ class NewAmountFragment : Fragment() {
             }
         }
         nuevoIngreso.setOnClickListener {
-            val movDao:MovimientoBancarioDAO=MovimientoBancarioDAO(admin)
+            val movDao=MovimientoBancarioDAO(admin)
+            val movDaoProxy=MovimientoBancarioDAOProxy(movDao)
             if (selectedItem != null) {
-                val movimientoBancario:MovimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
+                val movimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
                     descripcion.text.toString(),selectedItem.toString())
-                movDao.nuevoImporte(movimientoBancario)
+                movDaoProxy.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
                     "nuevo ingreso en: $selectedItem",
