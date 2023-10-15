@@ -63,10 +63,12 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/style_editetx"
+                        android:clickable="true"
                         android:ems="10"
+                        android:focusable="false"
                         android:hint="Fecha desde"
                         android:inputType="date"
-                        android:textColor="@color/grey" />
+                        android:textColor="@color/darkBrown" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -82,9 +84,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/style_editetx"
+                        android:clickable="true"
                         android:ems="10"
+                        android:focusable="false"
                         android:hint="Fecha hasta"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:textColor="@color/darkBrown" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -177,7 +182,7 @@
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     android:text="Importe desde"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/darkBrown" />
 
                 <EditText
                     android:id="@+id/et_importehasta"
@@ -190,7 +195,7 @@
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     android:text="Importe hasta"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/darkBrown" />
             </LinearLayout>
 
         </LinearLayout>

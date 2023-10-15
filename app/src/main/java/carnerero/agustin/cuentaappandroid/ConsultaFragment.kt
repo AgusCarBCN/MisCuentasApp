@@ -1,10 +1,17 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.DatePickerDialog
+import android.graphics.Color
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +41,44 @@ class ConsultaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_consulta, container, false)
+        val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
+        val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
+        val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
+
+        etDateFrom.setOnClickListener(){
+            showDatePickerDialog(etDateFrom)
+
+        }
+        etDateTo.setOnClickListener(){
+            showDatePickerDialog(etDateTo)
+        }
+        return rootview
+    }
+    private fun showDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            R.style.AppTheme_DialogTheme,
+
+
+            { _, year, month, dayOfMonth ->
+                val selectedDate = "$year-${month + 1}-$dayOfMonth" // Formato de fecha deseado
+                editText.setText(selectedDate)
+            },
+            year,
+            month,
+            day
+        )
+        val window = datePickerDialog.window
+
+        //Color de fondo
+        window?.setBackgroundDrawableResource(R.color.lightYellow)
+
+        datePickerDialog.show()
     }
 
     companion object {

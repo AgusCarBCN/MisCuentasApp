@@ -51,8 +51,10 @@
                     android:ems="10"
                     android:gravity="center"
                     android:hint="Fecha desde"
+                    android:textColor="@color/grey"
                     android:inputType="date"
-                    android:textColor="@color/grey" />
+                    android:focusable="false"
+                    android:clickable="true"/>
 
                 <EditText
                     android:id="@+id/et_dateto"
@@ -63,7 +65,11 @@
                     android:ems="10"
                     android:gravity="center"
                     android:hint="Fecha hasta"
-                    android:inputType="date" />
+                    android:textColor="@color/grey"
+                    android:inputType="date"
+                    android:focusable="false"
+                    android:clickable="true"
+                    />
 
             </LinearLayout>
         </LinearLayout>

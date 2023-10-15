@@ -12,4 +12,19 @@
     </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        ....
+        <item name="android:dialogTheme">@style/AppTheme.DialogTheme</item>
+        <item name="android:datePickerDialogTheme">@color/lightOrange</item>
+    </style>
+    //Personalizacion del DatePickerDialog
+    <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Put the two options, colorAccent and android:colorAccent. -->
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:colorPrimary">@color/lightOrange</item>
+        <item name="android:colorPrimaryDark">@color/orange</item>
+        <item name="android:colorAccent">@color/orange</item>
+    </style>
+
 </resources>
