@@ -61,20 +61,21 @@ class ConsultaFragment : Fragment() {
         //Obtenemos los componentes del fragment
         val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
         val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
-        val searchView:SearchView=rootview.findViewById(R.id.searchimporte)
+        val searchView:EditText=rootview.findViewById(R.id.et_search)
         val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
         val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
         val ingresosygastos:RadioButton=rootview.findViewById(R.id.rb_ingresosygastos)
         val importeDesde:EditText=rootview.findViewById(R.id.et_importedesde)
         val importeHasta:EditText=rootview.findViewById(R.id.et_importehasta)
         val spConsulta:Spinner=rootview.findViewById(R.id.sp_consulta)
-        val buscar:Button=rootview.findViewById(R.id.btn_search)
+        val buscar:Button=rootview.findViewById(R.id.btn_buscar)
+        val cancel:Button=rootview.findViewById(R.id.btn_cancelabuscar)
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "") ?: ""
         //Rellenar spiner spConsulta
         //Creo adapter
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=   DataBaseAppSingleton.getInstance(context)
         //val admin=DataBaseApp(context,"cuentaApp",null,1)

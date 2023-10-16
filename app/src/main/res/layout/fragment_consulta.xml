@@ -9,24 +9,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/style_editetx"
+            android:ems="10"
+            android:hint="Descripcion del importe"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:textAlignment="center">
-
-            <SearchView
-                android:id="@+id/searchimporte"
-                android:layout_width="360dp"
-                android:layout_height="48dp"
-                android:background="@drawable/style_editetx"
-                android:queryHint="descripcion" />
-        </LinearLayout>
+            android:textAlignment="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,62 +39,39 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="FECHA"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                <EditText
+                    android:id="@+id/et_datefrom"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/style_editetx"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Fecha desde"
+                    android:inputType="date"
+                    android:textColor="@color/darkBrown" />
 
-                    <EditText
-                        android:id="@+id/et_datefrom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/style_editetx"
-                        android:clickable="true"
-                        android:ems="10"
-                        android:focusable="false"
-                        android:hint="Fecha desde"
-                        android:inputType="date"
-                        android:textColor="@color/darkBrown" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/et_dateto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/style_editetx"
-                        android:clickable="true"
-                        android:ems="10"
-                        android:focusable="false"
-                        android:hint="Fecha hasta"
-                        android:inputType="date"
-                        android:textColor="@color/darkBrown" />
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/et_dateto"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/style_editetx"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Fecha hasta"
+                    android:inputType="date"
+                    android:textColor="@color/darkBrown" />
 
             </LinearLayout>
         </LinearLayout>
@@ -99,19 +80,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="top"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="IMPORTE"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,19 +136,19 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/et_importedesde"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
@@ -186,10 +158,10 @@
 
                 <EditText
                     android:id="@+id/et_importehasta"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
@@ -206,36 +178,48 @@
             android:layout_weight="1.5"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_cuentas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cuentas"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
             <Spinner
                 android:id="@+id/sp_consulta"
-                android:layout_width="320dp"
-                android:layout_height="42dp"
+                android:layout_width="360dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/style_editetx"
                 android:gravity="center" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/style_botton"
-            android:gravity="center|center_vertical"
-            android:text="Buscar"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_buscar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/style_botton"
+                android:text="Buscar"
+                android:textAllCaps="false"
+                android:textColor="@color/darkBrown"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_cancelabuscar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/style_botton"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textColor="@color/darkBrown"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
