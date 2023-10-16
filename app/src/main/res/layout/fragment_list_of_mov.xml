@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:background="@drawable/style_headcell"
-                android:text="Fecha: "
+                android:text="Fecha"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"

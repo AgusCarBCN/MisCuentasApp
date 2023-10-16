@@ -118,7 +118,9 @@ class ConsultaFragment : Fragment() {
         buscar.setOnClickListener(){
 
         }
-
+        cancel.setOnClickListener(){
+            (activity as NavActivity).inicio()
+        }
         return rootview
     }
     private fun showDatePickerDialog(editText: EditText) {
