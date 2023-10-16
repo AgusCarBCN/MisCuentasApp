@@ -51,6 +51,7 @@ class ListOfMovFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val layoutManager=LinearLayoutManager(context)
         recyclerView=view.findViewById(R.id.rv_movimientos)
         recyclerView.layoutManager=layoutManager
