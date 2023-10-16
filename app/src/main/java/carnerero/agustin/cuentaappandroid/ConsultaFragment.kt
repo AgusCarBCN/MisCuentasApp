@@ -123,7 +123,7 @@ class ConsultaFragment : Fragment() {
                 R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos())
                 R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos())
                 R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos())
-                // Puedes agregar más casos según tus necesidades
+
             }
         }
 
@@ -139,6 +139,7 @@ class ConsultaFragment : Fragment() {
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
         buscar.setOnClickListener(){
+
             val bundle = Bundle()
             bundle.putParcelableArrayList("clave_movimientos", movList)
             val fragmentList = ListOfMovFragment()
@@ -147,7 +148,7 @@ class ConsultaFragment : Fragment() {
             transaction.replace(R.id.fcv_main_container, fragmentList)
             transaction.addToBackStack(null)
             transaction.commit()
-            //(activity as NavActivity).loadListOfMov()
+
         }
 
         return rootview

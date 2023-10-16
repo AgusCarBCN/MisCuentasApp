@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.controller.AdapterMov
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,27 +49,16 @@ class ListOfMovFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager=LinearLayoutManager(context)
-        val movimientos = arguments?.getParcelableArrayList<MovimientoBancario>("clave_movimientos")
+        //val movimientos = arguments?.getParcelableArrayList<MovimientoBancario>("clave_movimientos")
+        val movimientos = arguments?.getParcelableArrayList("clave_movimientos",MovimientoBancario::class.java)
 
         recyclerView=view.findViewById(R.id.rv_movimientos)
         recyclerView.layoutManager=layoutManager
         recyclerView.setHasFixedSize(false)
         adaptermovimientos= movimientos?.let { AdapterMov(it) }!!
         recyclerView.adapter=adaptermovimientos
-       /* val layoutManager=LinearLayoutManager(context)
-        recyclerView=view.findViewById(R.id.rv_movimientos)
-        recyclerView.layoutManager=layoutManager
-        recyclerView.setHasFixedSize(false)
-        adaptermovimientos= AdapterMov(getMovList())
-        recyclerView.adapter=adaptermovimientos*/
     }
 
-    /*fun getMovList():ArrayList<MovimientoBancario>{
-       /* val admin=   DataBaseAppSingleton.getInstance(context)
-        val movDao:MovimientoBancarioDAO= MovimientoBancarioDAO(admin)
-        val movList:ArrayList<MovimientoBancario> =movDao.listarMovimientos()
-        return movList*/
-    }*/
 
     companion object {
         /**
