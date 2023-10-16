@@ -116,7 +116,14 @@ class ConsultaFragment : Fragment() {
             }
         }
         buscar.setOnClickListener(){
-
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("clave_movimientos", movList)
+            val fragmentList = ListOfMovFragment()
+            fragmentList.arguments = bundle
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fcv_main_container, fragmentList)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
         cancel.setOnClickListener(){
             (activity as NavActivity).inicio()
