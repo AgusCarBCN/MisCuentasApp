@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.TextView
@@ -62,6 +63,7 @@ class ConsultaFragment : Fragment() {
         val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
         val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
         val searchView:EditText=rootview.findViewById(R.id.et_search)
+        val select:RadioGroup=rootview.findViewById(R.id.selectImporte)
         val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
         val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
         val ingresosygastos:RadioButton=rootview.findViewById(R.id.rb_ingresosygastos)
@@ -115,6 +117,27 @@ class ConsultaFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+        fun updateMovList() {
+            movList.clear()
+            when (select.checkedRadioButtonId) {
+                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarMovimientos())
+                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarMovimientos())
+                R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos())
+                // Puedes agregar más casos según tus necesidades
+            }
+        }
+
+        // Asignar un listener al grupo de RadioButtons
+        select.setOnCheckedChangeListener { _, _ ->
+            updateMovList()
+        }
+
+
+        //Enviamos el arrayList movList desde este fragmento al fragmento ListOfMovFragment
+        //Crear un Bundle y agregar el ArrayList como argumento
+        //val bundle = Bundle()
+        //bundle.putParcelableArrayList("clave_movimientos", movList)
+        //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
         buscar.setOnClickListener(){
             val bundle = Bundle()
             bundle.putParcelableArrayList("clave_movimientos", movList)
@@ -124,10 +147,10 @@ class ConsultaFragment : Fragment() {
             transaction.replace(R.id.fcv_main_container, fragmentList)
             transaction.addToBackStack(null)
             transaction.commit()
+            //(activity as NavActivity).loadListOfMov()
         }
-        cancel.setOnClickListener(){
-            (activity as NavActivity).inicio()
-        }
+
+        return rootview
         return rootview
     }
     private fun showDatePickerDialog(editText: EditText) {
