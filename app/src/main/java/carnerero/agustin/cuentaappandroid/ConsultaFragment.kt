@@ -133,7 +133,7 @@ class ConsultaFragment : Fragment() {
 
 
             { _, year, month, dayOfMonth ->
-                val selectedDate = "$year-${month + 1}-$dayOfMonth" // Formato de fecha deseado
+                val selectedDate = "$dayOfMonth-${month + 1}-$year" // Formato de fecha deseado
                 editText.setText(selectedDate)
             },
             year,
