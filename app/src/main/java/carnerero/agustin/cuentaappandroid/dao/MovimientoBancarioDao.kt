@@ -8,7 +8,9 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
-
+    private val SELECT_ALL="SELECT * FROM MOVIMIENTO"
+    private val SELECT_INCOME="SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id "
+    private val SELECT_BILLS="SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id "
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
         val values = ContentValues()
@@ -23,10 +25,24 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
         }
         db.close()
     }
-    fun listarMovimientos(): ArrayList<MovimientoBancario> {
+    fun getAll():ArrayList<MovimientoBancario>{
+        val movimientos = listarMovimientos(SELECT_ALL)
+        return movimientos
+    }
+    fun getIncome():ArrayList<MovimientoBancario>{
+        val movimientos = listarMovimientos(SELECT_INCOME)
+        return movimientos
+    }
+    fun getBills():ArrayList<MovimientoBancario>{
+        val movimientos = listarMovimientos(SELECT_BILLS)
+        return movimientos
+    }
+
+    private fun listarMovimientos(query:String): ArrayList<MovimientoBancario> {
         val movimientos = ArrayList<MovimientoBancario>()
         val db = admin.readableDatabase
-        val selectQuery = "SELECT * FROM MOVIMIENTO"
+        val selectQuery = query
+
 
         try {
             val cursor: Cursor = db.rawQuery(selectQuery, null)
@@ -51,6 +67,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
         return movimientos
     }
+
 
     }
 

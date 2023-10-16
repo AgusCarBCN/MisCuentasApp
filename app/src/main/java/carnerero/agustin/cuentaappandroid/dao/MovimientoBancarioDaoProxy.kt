@@ -16,9 +16,27 @@ class MovimientoBancarioDAOProxy(private val movimientoBancarioDAO: MovimientoBa
     }
 
     fun listarMovimientos(): ArrayList<MovimientoBancario> {
-        val movimientos = ArrayList<MovimientoBancario>()
+        var movimientos = ArrayList<MovimientoBancario>()
         try {
-        var  movimientos = movimientoBancarioDAO.listarMovimientos()
+         movimientos = movimientoBancarioDAO.getAll()
+        } catch (e: SQLException) {
+
+        }
+        return movimientos
+    }
+    fun listarIngresos(): ArrayList<MovimientoBancario> {
+        var movimientos = ArrayList<MovimientoBancario>()
+        try {
+             movimientos = movimientoBancarioDAO.getIncome()
+        } catch (e: SQLException) {
+
+        }
+        return movimientos
+    }
+    fun listarGastos(): ArrayList<MovimientoBancario> {
+        var movimientos = ArrayList<MovimientoBancario>()
+        try {
+            movimientos = movimientoBancarioDAO.getBills()
         } catch (e: SQLException) {
 
         }
@@ -51,10 +69,10 @@ class MovimientoBancarioDAOProxy(private val movimientoBancarioDAO: MovimientoBa
         }
     }
     fun getByDescription(textSearch: String, movimientos: List<MovimientoBancario>): List<MovimientoBancario> {
-        return movimientos.filter { it.descripcion.contains(textSearch) }
+        return movimientos.filter { it.descripcion.equals(textSearch) }
     }
     fun getByDateRange(movimientos: ArrayList<MovimientoBancario>, fechaDesde: String, fechaHasta: String): List<MovimientoBancario> {
-        return movimientos.filter { it.fechaImporte in fechaDesde..fechaHasta }
+        return movimientos.filter { it.fechaImporte.toString() in fechaDesde..fechaHasta }
     }
 
 }

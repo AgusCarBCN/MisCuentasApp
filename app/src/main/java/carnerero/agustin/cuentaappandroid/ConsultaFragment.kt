@@ -120,8 +120,8 @@ class ConsultaFragment : Fragment() {
         fun updateMovList() {
             movList.clear()
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarMovimientos())
-                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarMovimientos())
+                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos())
+                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos())
                 R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos())
                 // Puedes agregar más casos según tus necesidades
             }

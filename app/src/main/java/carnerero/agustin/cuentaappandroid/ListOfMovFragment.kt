@@ -51,21 +51,28 @@ class ListOfMovFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val layoutManager=LinearLayoutManager(context)
+        val movimientos = arguments?.getParcelableArrayList<MovimientoBancario>("clave_movimientos")
+
+        recyclerView=view.findViewById(R.id.rv_movimientos)
+        recyclerView.layoutManager=layoutManager
+        recyclerView.setHasFixedSize(false)
+        adaptermovimientos= movimientos?.let { AdapterMov(it) }!!
+        recyclerView.adapter=adaptermovimientos
+       /* val layoutManager=LinearLayoutManager(context)
         recyclerView=view.findViewById(R.id.rv_movimientos)
         recyclerView.layoutManager=layoutManager
         recyclerView.setHasFixedSize(false)
         adaptermovimientos= AdapterMov(getMovList())
-        recyclerView.adapter=adaptermovimientos
+        recyclerView.adapter=adaptermovimientos*/
     }
 
-    fun getMovList():ArrayList<MovimientoBancario>{
-        val admin=   DataBaseAppSingleton.getInstance(context)
+    /*fun getMovList():ArrayList<MovimientoBancario>{
+       /* val admin=   DataBaseAppSingleton.getInstance(context)
         val movDao:MovimientoBancarioDAO= MovimientoBancarioDAO(admin)
         val movList:ArrayList<MovimientoBancario> =movDao.listarMovimientos()
-        return movList
-    }
+        return movList*/
+    }*/
 
     companion object {
         /**
