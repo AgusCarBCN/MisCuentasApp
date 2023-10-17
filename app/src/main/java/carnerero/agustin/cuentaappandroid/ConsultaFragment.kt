@@ -77,12 +77,13 @@ class ConsultaFragment : Fragment() {
         val dni = sharedPreferences.getString("dni", "") ?: ""
         //Rellenar spiner spConsulta
         //Creo adapter
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1)
+       val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_dropdown_item )
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         val admin=   DataBaseAppSingleton.getInstance(context)
-        //val admin=DataBaseApp(context,"cuentaApp",null,1)
+
         val cuentaDao= CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+
         adapter.add("Selecciona una cuenta")
         adapter.add(cuentas.get(0).iban)
         adapter.add(cuentas.get(1).iban)
@@ -174,7 +175,7 @@ class ConsultaFragment : Fragment() {
         }
 
         return rootview
-        return rootview
+
     }
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
