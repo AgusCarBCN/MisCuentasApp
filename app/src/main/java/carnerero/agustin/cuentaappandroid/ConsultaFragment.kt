@@ -83,8 +83,10 @@ class ConsultaFragment : Fragment() {
         //val admin=DataBaseApp(context,"cuentaApp",null,1)
         val cuentaDao= CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        adapter.add("Selecciona una cuenta")
         adapter.add(cuentas.get(0).iban)
         adapter.add(cuentas.get(1).iban)
+        selectedItem=adapter.getItem(0)
         spConsulta.adapter = adapter
         //Obtener todos los movimientos de la base de datos
         val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
@@ -108,11 +110,25 @@ class ConsultaFragment : Fragment() {
                 id: Long
             ) {
                 selectedItem = adapter.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedItem",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (position == 0) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Selecciona una cuenta para habilitar la busqueda",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                   ingresos.isEnabled=false
+                    gastos.isEnabled=false
+                    ingresosygastos.isEnabled=false
+                }else {
+                    ingresos.isEnabled=true
+                    gastos.isEnabled=true
+                    ingresosygastos.isEnabled=true
+                    Toast.makeText(
+                        requireContext(),
+                        "Elemento seleccionado: $selectedItem",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -139,16 +155,22 @@ class ConsultaFragment : Fragment() {
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
         buscar.setOnClickListener(){
-
-            val bundle = Bundle()
-            bundle.putParcelableArrayList("clave_movimientos", movList)
-            val fragmentList = ListOfMovFragment()
-            fragmentList.arguments = bundle
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fcv_main_container, fragmentList)
-            transaction.addToBackStack(null)
-            transaction.commit()
-
+            if(selectedItem.toString().equals("Selecciona una cuenta")){
+                Toast.makeText(
+                    requireContext(),
+                    "Debes seleccionar una cuenta para mostrar resultados",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("clave_movimientos", movList)
+                val fragmentList = ListOfMovFragment()
+                fragmentList.arguments = bundle
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fcv_main_container, fragmentList)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
         }
 
         return rootview
@@ -180,6 +202,7 @@ class ConsultaFragment : Fragment() {
 
         datePickerDialog.show()
     }
+
 
 
 
