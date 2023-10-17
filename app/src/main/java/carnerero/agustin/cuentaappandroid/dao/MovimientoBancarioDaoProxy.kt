@@ -14,29 +14,37 @@ class MovimientoBancarioDAOProxy(private val movimientoBancarioDAO: MovimientoBa
             // Manejar la excepción
         }
     }
-
     fun listarMovimientos(): ArrayList<MovimientoBancario> {
         var movimientos = ArrayList<MovimientoBancario>()
         try {
-         movimientos = movimientoBancarioDAO.getAll()
+            movimientos = movimientoBancarioDAO.getAll()
         } catch (e: SQLException) {
 
         }
         return movimientos
     }
-    fun listarIngresos(): ArrayList<MovimientoBancario> {
+    fun listarMovimientos(iban:String): ArrayList<MovimientoBancario> {
         var movimientos = ArrayList<MovimientoBancario>()
         try {
-             movimientos = movimientoBancarioDAO.getIncome()
+         movimientos = movimientoBancarioDAO.getIncomeandBills(iban)
         } catch (e: SQLException) {
 
         }
         return movimientos
     }
-    fun listarGastos(): ArrayList<MovimientoBancario> {
+    fun listarIngresos(iban:String): ArrayList<MovimientoBancario> {
         var movimientos = ArrayList<MovimientoBancario>()
         try {
-            movimientos = movimientoBancarioDAO.getBills()
+             movimientos = movimientoBancarioDAO.getIncome(iban)
+        } catch (e: SQLException) {
+
+        }
+        return movimientos
+    }
+    fun listarGastos(iban:String): ArrayList<MovimientoBancario> {
+        var movimientos = ArrayList<MovimientoBancario>()
+        try {
+            movimientos = movimientoBancarioDAO.getBills(iban)
         } catch (e: SQLException) {
 
         }

@@ -89,7 +89,7 @@ class ConsultaFragment : Fragment() {
         //Obtener todos los movimientos de la base de datos
         val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
         //val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
-        val movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
+        var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
         //Filtrar los movimientos obtenidos
 
         //Muestra DatePickerDialog al cliquear edit text
@@ -120,9 +120,9 @@ class ConsultaFragment : Fragment() {
         fun updateMovList() {
             movList.clear()
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos())
-                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos())
-                R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos())
+                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos(selectedItem.toString()))
+                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos(selectedItem.toString()))
+                R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos(selectedItem.toString()))
 
             }
         }

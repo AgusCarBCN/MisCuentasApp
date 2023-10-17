@@ -8,44 +8,48 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
-    private val SELECT_ALL="SELECT * FROM MOVIMIENTO"
-    private val SELECT_INCOME="SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id "
-    private val SELECT_BILLS="SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id "
+    private val SELECT_ALL = "SELECT * FROM MOVIMIENTO"
+    private val SELECT_ALL2 = "SELECT * FROM MOVIMIENTO WHERE iban=?"
+    private val SELECT_INCOME = "SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id WHERE m.iban = ?"
+    private val SELECT_BILLS = "SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id WHERE m.iban = ?"
+
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
         val values = ContentValues()
         values.put("importe", movimientoBancario.importe)
         values.put("descripcion", movimientoBancario.descripcion)
         values.put("iban", movimientoBancario.iban)
-        values.put("fechaImporte",movimientoBancario.fechaImporte)
+        values.put("fechaImporte", movimientoBancario.fechaImporte)
         try {
             db.insert("MOVIMIENTO", null, values)
         } catch (e: SQLException) {
-
+            // Manejo de errores
+        } finally {
+            db.close()
         }
-        db.close()
-    }
-    fun getAll():ArrayList<MovimientoBancario>{
-        val movimientos = listarMovimientos(SELECT_ALL)
-        return movimientos
-    }
-    fun getIncome():ArrayList<MovimientoBancario>{
-        val movimientos = listarMovimientos(SELECT_INCOME)
-        return movimientos
-    }
-    fun getBills():ArrayList<MovimientoBancario>{
-        val movimientos = listarMovimientos(SELECT_BILLS)
-        return movimientos
     }
 
-    private fun listarMovimientos(query:String): ArrayList<MovimientoBancario> {
+    fun getAll(): ArrayList<MovimientoBancario> {
+        return listarMovimientos(SELECT_ALL, null)
+    }
+
+    fun getIncome(iban: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(SELECT_INCOME, iban)
+    }
+    fun getIncomeandBills(iban: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(SELECT_ALL2, iban)
+    }
+    fun getBills(iban: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(SELECT_BILLS, iban)
+    }
+
+    private fun listarMovimientos(query: String, iban: String?): ArrayList<MovimientoBancario> {
         val movimientos = ArrayList<MovimientoBancario>()
         val db = admin.readableDatabase
         val selectQuery = query
 
-
         try {
-            val cursor: Cursor = db.rawQuery(selectQuery, null)
+            val cursor: Cursor = db.rawQuery(selectQuery, if (iban != null) arrayOf(iban) else null)
 
             if (cursor.moveToFirst()) {
                 do {
@@ -67,7 +71,4 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
         return movimientos
     }
-
-
-    }
-
+}
