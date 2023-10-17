@@ -28,7 +28,7 @@
             android:ems="10"
             android:gravity="center|center_horizontal"
             android:hint="Introduce el importe"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
