@@ -41,7 +41,10 @@ class ConsultaFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val admin=  DataBaseAppSingleton.getInstance(context)
+    private var selectedItem :String?=null
+    private val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
+    private var movList:ArrayList<MovimientoBancario> =ArrayList<MovimientoBancario>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -58,7 +61,7 @@ class ConsultaFragment : Fragment() {
         val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
 
         //Variable que contendra la opcion seleccionada en spinner
-        var selectedItem:String?=null
+        //var selectedItem:String?=null
         //Obtenemos los componentes del fragment
         val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
         val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
@@ -79,7 +82,7 @@ class ConsultaFragment : Fragment() {
         //Creo adapter
        val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_dropdown_item )
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
-        val admin=   DataBaseAppSingleton.getInstance(context)
+        //val admin=   DataBaseAppSingleton.getInstance(context)
 
         val cuentaDao= CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
@@ -90,9 +93,9 @@ class ConsultaFragment : Fragment() {
         selectedItem=adapter.getItem(0)
         spConsulta.adapter = adapter
         //Obtener todos los movimientos de la base de datos
-        val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
+         //movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
         //val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
-        var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
+        //var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
         //Filtrar los movimientos obtenidos
 
         //Muestra DatePickerDialog al cliquear edit text
@@ -135,12 +138,20 @@ class ConsultaFragment : Fragment() {
             }
         }
         fun updateMovList() {
-            movList.clear()
+            val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
+            val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
+            val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
+            val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
+
+            // Primero, aplicamos el filtro de importes
+            if (importeDesdeNum != null && importeHastaNum != null) {
+                movList = movList?.filter { Math.abs(it.importe) >= importeDesdeNum && Math.abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
+            }
+            //movList.clear()
             when (select.checkedRadioButtonId) {
                 R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos(selectedItem.toString()))
                 R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos(selectedItem.toString()))
                 R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos(selectedItem.toString()))
-
             }
         }
 
