@@ -151,8 +151,8 @@
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
+                    android:hint="Importe desde"
                     android:inputType="numberDecimal"
-                    android:text="Importe desde"
                     android:textColor="@color/darkBrown" />
 
                 <EditText
@@ -164,8 +164,8 @@
                     android:background="@drawable/style_editetx"
                     android:ems="10"
                     android:gravity="center"
+                    android:hint="Importe hasta"
                     android:inputType="numberDecimal"
-                    android:text="Importe hasta"
                     android:textColor="@color/darkBrown" />
             </LinearLayout>
 
