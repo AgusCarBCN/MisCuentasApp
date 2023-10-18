@@ -44,7 +44,7 @@ class ConsultaFragment : Fragment() {
     private val admin=  DataBaseAppSingleton.getInstance(context)
     private var selectedItem :String?=null
     private val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
-    private var movList:ArrayList<MovimientoBancario> =ArrayList<MovimientoBancario>()
+    private var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -138,21 +138,14 @@ class ConsultaFragment : Fragment() {
             }
         }
         fun updateMovList() {
-            val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
-            val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
-            val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
-            val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
 
-            // Primero, aplicamos el filtro de importes
-            if (importeDesdeNum != null && importeHastaNum != null) {
-                movList = movList?.filter { Math.abs(it.importe) >= importeDesdeNum && Math.abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
-            }
-            //movList.clear()
+
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.addAll(movDaoProxy.listarIngresos(selectedItem.toString()))
-                R.id.rb_gastos -> movList.addAll(movDaoProxy.listarGastos(selectedItem.toString()))
-                R.id.rb_ingresosygastos -> movList.addAll(movDaoProxy.listarMovimientos(selectedItem.toString()))
+                R.id.rb_ingresos -> movList.retainAll(movDaoProxy.listarIngresos(selectedItem.toString()))
+                R.id.rb_gastos -> movList.retainAll(movDaoProxy.listarGastos(selectedItem.toString()))
+                R.id.rb_ingresosygastos -> movList.retainAll(movDaoProxy.listarMovimientos(selectedItem.toString()))
             }
+
         }
 
         // Asignar un listener al grupo de RadioButtons
@@ -167,6 +160,10 @@ class ConsultaFragment : Fragment() {
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
         buscar.setOnClickListener(){
+            val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
+            val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
+            val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
+            val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
             if(selectedItem.toString().equals("Selecciona una cuenta")){
                 Toast.makeText(
                     requireContext(),
@@ -174,6 +171,11 @@ class ConsultaFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }else {
+                if (importeDesdeNum != null && importeHastaNum != null) {
+                    var movListFilter = movList?.filter { Math.abs(it.importe) >= importeDesdeNum && Math.abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
+                    movList.clear() // Limpia la lista actual
+                    movList.addAll(movListFilter)
+                }
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("clave_movimientos", movList)
                 val fragmentList = ListOfMovFragment()
