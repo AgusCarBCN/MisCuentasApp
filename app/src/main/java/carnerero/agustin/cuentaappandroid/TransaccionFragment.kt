@@ -14,7 +14,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,7 +65,7 @@ class TransaccionFragment : Fragment() {
         val admin=DataBaseAppSingleton.getInstance(context)
         val cuentaDao= CuentaDao(admin)
         val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
-        val movDaoProxy=MovimientoBancarioDAOProxy(movimientoBancarioDAO)
+        //val movDaoProxy=MovimientoBancarioDAOProxy(movimientoBancarioDAO)
         //Obtengo las cuentas del usuario logeado con el dni
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         //Lleno los dos spinners
@@ -144,7 +143,7 @@ class TransaccionFragment : Fragment() {
                 //Ingreso en cuenta de destino
                 movimientoBancario=MovimientoBancario(importePositivo,
                     "Transaccion recibida",selectedItemDestino.toString())
-                movDaoProxy.nuevoImporte(movimientoBancario)
+                movimientoBancarioDAO.nuevoImporte(movimientoBancario)
 
                 (activity as NavActivity).actualizarFragmentSaldo()
             }

@@ -15,7 +15,6 @@ class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
     private val admin=DataBaseAppSingleton.getInstance(this)
-    //DataBaseApp(this,"cuentaApp",null,1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

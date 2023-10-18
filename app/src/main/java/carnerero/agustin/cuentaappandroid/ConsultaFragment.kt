@@ -2,10 +2,8 @@ package carnerero.agustin.cuentaappandroid
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +14,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.SearchView
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,8 +36,8 @@ class ConsultaFragment : Fragment() {
     private var param2: String? = null
     private val admin=  DataBaseAppSingleton.getInstance(context)
     private var selectedItem :String?=null
-    private val movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
-    private var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
+    private val movDao=MovimientoBancarioDAO (admin)
+    private var movList:ArrayList<MovimientoBancario> =movDao.getAll()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -61,17 +54,14 @@ class ConsultaFragment : Fragment() {
         val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
 
         //Variable que contendra la opcion seleccionada en spinner
-        //var selectedItem:String?=null
+
         //Obtenemos los componentes del fragment
         val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
         val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
-        val searchView:EditText=rootview.findViewById(R.id.et_search)
         val select:RadioGroup=rootview.findViewById(R.id.selectImporte)
         val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
         val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
         val ingresosygastos:RadioButton=rootview.findViewById(R.id.rb_ingresosygastos)
-        val importeDesde:EditText=rootview.findViewById(R.id.et_importedesde)
-        val importeHasta:EditText=rootview.findViewById(R.id.et_importehasta)
         val spConsulta:Spinner=rootview.findViewById(R.id.sp_consulta)
         val buscar:Button=rootview.findViewById(R.id.btn_buscar)
         val cancel:Button=rootview.findViewById(R.id.btn_cancelabuscar)
@@ -141,9 +131,9 @@ class ConsultaFragment : Fragment() {
 
 
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.retainAll(movDaoProxy.listarIngresos(selectedItem.toString()))
-                R.id.rb_gastos -> movList.retainAll(movDaoProxy.listarGastos(selectedItem.toString()))
-                R.id.rb_ingresosygastos -> movList.retainAll(movDaoProxy.listarMovimientos(selectedItem.toString()))
+                R.id.rb_ingresos -> movList.retainAll(movDao.getIncome(selectedItem.toString()))
+                R.id.rb_gastos -> movList.retainAll(movDao.getBills(selectedItem.toString()))
+                R.id.rb_ingresosygastos -> movList.retainAll(movDao.getIncomeandBills(selectedItem.toString()))
             }
 
         }
@@ -201,7 +191,9 @@ class ConsultaFragment : Fragment() {
                 transaction.commit()
             }
         }
-
+        cancel.setOnClickListener(){
+            (activity as NavActivity).inicio()
+        }
         return rootview
 
     }

@@ -14,7 +14,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAOProxy
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -89,11 +88,11 @@ class NewAmountFragment : Fragment() {
         }
         nuevoIngreso.setOnClickListener {
             val movDao=MovimientoBancarioDAO(admin)
-            val movDaoProxy=MovimientoBancarioDAOProxy(movDao)
+            //val movDaoProxy=MovimientoBancarioDAOProxy(movDao)
             if (selectedItem != null) {
                 val movimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
                     descripcion.text.toString(),selectedItem.toString())
-                movDaoProxy.nuevoImporte(movimientoBancario)
+                movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
                     "nuevo ingreso en: $selectedItem",
