@@ -160,10 +160,16 @@ class ConsultaFragment : Fragment() {
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
         buscar.setOnClickListener(){
+            //Importes
             val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
             val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
             val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
+            //Fechas
+            val fechaDesde: EditText = rootview.findViewById(R.id.et_datefrom)
+            val fechaHasta: EditText = rootview.findViewById(R.id.et_dateto)
+            val fechaDesdeStr: String = fechaDesde.text.toString()
+            val fechaHastaStr: String = fechaHasta.text.toString()
             if(selectedItem.toString().equals("Selecciona una cuenta")){
                 Toast.makeText(
                     requireContext(),
@@ -175,6 +181,9 @@ class ConsultaFragment : Fragment() {
                     var movListFilter = movList?.filter { Math.abs(it.importe) >= importeDesdeNum && Math.abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
                     movList.clear() // Limpia la lista actual
                     movList.addAll(movListFilter)
+                }
+                if (!fechaDesdeStr.isNullOrBlank() && !fechaHastaStr.isNullOrBlank() ) {
+                    movList = movList?.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
                 }
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("clave_movimientos", movList)
