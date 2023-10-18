@@ -170,6 +170,9 @@ class ConsultaFragment : Fragment() {
             val fechaHasta: EditText = rootview.findViewById(R.id.et_dateto)
             val fechaDesdeStr: String = fechaDesde.text.toString()
             val fechaHastaStr: String = fechaHasta.text.toString()
+            //por texto
+            val searchByText:EditText=rootview.findViewById(R.id.et_search)
+            val searchText:String=searchByText.text.toString()
             if(selectedItem.toString().equals("Selecciona una cuenta")){
                 Toast.makeText(
                     requireContext(),
@@ -184,6 +187,9 @@ class ConsultaFragment : Fragment() {
                 }
                 if (!fechaDesdeStr.isNullOrBlank() && !fechaHastaStr.isNullOrBlank() ) {
                     movList = movList?.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
+                }
+                if(!searchText.isNullOrBlank()){
+                    movList=movList?.filter { it.descripcion.contains(searchText)}as ArrayList<MovimientoBancario>
                 }
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("clave_movimientos", movList)
