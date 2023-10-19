@@ -13,7 +13,7 @@ class DataBaseApp(
 
     //Definción de sentencias para crear tablas
 
-    private val CREATE_TABLE_USER = "CREATE TABLE USUARIO"+
+    private val createUserTable = "CREATE TABLE USUARIO"+
                                         "(dni TEXT PRIMARY KEY,"+
                                         "nombre TEXT,"+
                                         "domicilio TEXT,"+
@@ -22,13 +22,13 @@ class DataBaseApp(
                                         "telefono TEXT,"+
                                         "password TEXT)"
 
-    private val CREATE_TABLE_CUENTA = "CREATE TABLE CUENTA "+
+    private val createAccountTable = "CREATE TABLE CUENTA "+
                                         "(iban TEXT PRIMARY KEY,"+
                                         "saldo DECIMAL(10, 2),"+
                                         "dni TEXT,"+
                                         "FOREIGN KEY (dni) REFERENCES USUARIO (dni) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    private val CREATE_TABLE_MOVIMIENTO = "CREATE TABLE MOVIMIENTO"+
+    private val createMovTable = "CREATE TABLE MOVIMIENTO"+
                                           "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                                           "importe REAL,"+
                                           "descripcion TEXT,"+
@@ -36,28 +36,34 @@ class DataBaseApp(
                                           "fechaImporte DATE,"+
                                           "FOREIGN KEY (iban) REFERENCES CUENTA (iban) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    private val CREATE_TABLE_INGRESO = "CREATE TABLE INGRESO"+
+    private val createIncomeTable = "CREATE TABLE INGRESO"+
                                         "(id INTEGER PRIMARY KEY,"+
                                         "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    private val CREATE_TABLE_GASTO = "CREATE TABLE GASTO"+
+    private val createBillTable = "CREATE TABLE GASTO"+
                                         "(id INTEGER PRIMARY KEY,"+
                                         "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
 
 
-    private val CREATE_TRIGGER=
-        "CREATE TRIGGER IF NOT EXISTS insertgastoingreso AFTER INSERT ON MOVIMIENTO\nFOR EACH ROW\nBEGIN\n    -- Verificar si el importe es mayor que 0 (ingreso) o menor que 0 (gasto)\n    INSERT INTO INGRESO (id)\n    SELECT NEW.id\n    WHERE NEW.importe > 0;\n\n    INSERT INTO GASTO (id)\n    SELECT NEW.id\n    WHERE NEW.importe < 0;\nEND;\n"
-
+    private val createTrigger = buildString {
+        append("CREATE TRIGGER IF NOT EXISTS insertgastoingreso ")
+        append("AFTER INSERT ON MOVIMIENTO ")
+        append("FOR EACH ROW ")
+        append("BEGIN ")
+        append("   INSERT INTO INGRESO (id) SELECT NEW.id WHERE NEW.importe > 0; ")
+        append("   INSERT INTO GASTO (id) SELECT NEW.id WHERE NEW.importe < 0; ")
+        append("END;")
+    }
 
     override fun onCreate(database: SQLiteDatabase?) {
 
 
-            database?.execSQL(CREATE_TABLE_USER)
-            database?.execSQL(CREATE_TABLE_CUENTA)
-            database?.execSQL(CREATE_TABLE_MOVIMIENTO)
-            database?.execSQL(CREATE_TABLE_INGRESO)
-            database?.execSQL(CREATE_TABLE_GASTO)
-            database?.execSQL(CREATE_TRIGGER)
+            database?.execSQL(createUserTable)
+            database?.execSQL(createAccountTable)
+            database?.execSQL(createMovTable)
+            database?.execSQL(createIncomeTable)
+            database?.execSQL(createBillTable)
+            database?.execSQL(createTrigger)
 
     }
 

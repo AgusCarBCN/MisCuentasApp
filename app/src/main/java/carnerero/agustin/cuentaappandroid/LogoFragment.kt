@@ -40,7 +40,7 @@ class LogoFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val nombre = sharedPreferences.getString("nombre", "") ?: ""
         val wellcome=rootview.findViewById<TextView>(R.id.tv_wellcome)
-        wellcome.setText("Bienvenido "+nombre)
+        "Bienvenido $nombre".also { wellcome.text = it }
         return rootview
     }
 

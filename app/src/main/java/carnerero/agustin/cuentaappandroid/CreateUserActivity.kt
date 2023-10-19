@@ -3,7 +3,6 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
@@ -23,12 +22,12 @@ class CreateUserActivity : AppCompatActivity() {
 
     }
 
-    fun cancelCreateUser(view: View) {
+    fun cancelCreateUser() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 
-    fun confirmCreateUser(view: View) {
+    fun confirmCreateUser() {
 
         val intent = Intent(this, LoginActivity::class.java)
         //Acceso a los editText de Usuario
@@ -45,7 +44,7 @@ class CreateUserActivity : AppCompatActivity() {
         val secondaryAccount: EditText = findViewById(R.id.et_useraccsecond)
         val secondaryAmount: EditText = findViewById(R.id.et_secondccamount)
         //Creo objetos Usuario y Cuenta
-        val user: Usuario = Usuario(
+        val user = Usuario(
             dni.text.toString(),
             name.text.toString(),
             address.text.toString(),
@@ -54,12 +53,12 @@ class CreateUserActivity : AppCompatActivity() {
             phone.text.toString(),
             userpass.text.toString()
         )
-        val cuenta1: Cuenta = Cuenta(
+        val cuenta1 = Cuenta(
             mainAccount.text.toString(),
             mainAmount.text.toString().toDouble(),
             dni.text.toString()
         )
-        val cuenta2: Cuenta = Cuenta(
+        val cuenta2 = Cuenta(
             secondaryAccount.text.toString(),
             secondaryAmount.text.toString().toDouble(),
             dni.text.toString()

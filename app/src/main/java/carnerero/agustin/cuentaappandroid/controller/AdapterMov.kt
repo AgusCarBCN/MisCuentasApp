@@ -38,11 +38,11 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
     //Aqui se obtienen los movimientos que se han realizado en la cuenta
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
-        var idMov:Int=0
+        //var idMov:Int=0
         var importeitem: TextView=itemView.findViewById(R.id.tv_importeitem)
         var descripcionitem: TextView=itemView.findViewById(R.id.tv_descripcionitem)
         var fechaitem: TextView=itemView.findViewById(R.id.tv_fechaimporteitem)
-        var mov:Int=0
+        //var mov:Int=0
 
     }
 }

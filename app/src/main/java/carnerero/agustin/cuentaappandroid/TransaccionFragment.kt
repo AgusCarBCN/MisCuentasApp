@@ -69,8 +69,8 @@ class TransaccionFragment : Fragment() {
         //Obtengo las cuentas del usuario logeado con el dni
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         //Lleno los dos spinners
-        adapter.add(cuentas.get(0).iban)
-        adapter.add(cuentas.get(1).iban)
+        adapter.add(cuentas[0].iban)
+        adapter.add(cuentas[1].iban)
 
         cuentaOrigen.adapter = adapter
         cuentaDestino.adapter=adapter
@@ -117,7 +117,7 @@ class TransaccionFragment : Fragment() {
 
             }
         }
-        aceptar.setOnClickListener(){
+        aceptar.setOnClickListener{
             if(selectedItemDestino==selectedItemOrigen){
                 Toast.makeText(
                     requireContext(),
@@ -148,7 +148,7 @@ class TransaccionFragment : Fragment() {
                 (activity as NavActivity).actualizarFragmentSaldo()
             }
         }
-        salir.setOnClickListener(){
+        salir.setOnClickListener{
             (activity as NavActivity).inicio()
         }
         return rootview

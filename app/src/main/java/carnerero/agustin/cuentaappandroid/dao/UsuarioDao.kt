@@ -1,14 +1,8 @@
 package carnerero.agustin.cuentaappandroid.dao
 
 import android.content.ContentValues
-import android.content.Context
-import android.database.Cursor
 import android.database.SQLException
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
-import carnerero.agustin.cuentaappandroid.CreateUserActivity
 import carnerero.agustin.cuentaappandroid.DataBaseApp
-import carnerero.agustin.cuentaappandroid.NavActivity
 import carnerero.agustin.cuentaappandroid.model.Usuario
 
 class UsuarioDao(private val admin: DataBaseApp) {
@@ -28,7 +22,7 @@ class UsuarioDao(private val admin: DataBaseApp) {
 
         try {
             db.insert("USUARIO", null, values)
-        } catch (e: SQLException) {
+        } catch (_: SQLException) {
 
         }
 
@@ -68,10 +62,10 @@ class UsuarioDao(private val admin: DataBaseApp) {
 
 
     // Método para borrar un usuario por DNI y contraseña
-    fun borrarUsuarioPorDniYPassword(dni: String, password: String) {
+    /*fun borrarUsuarioPorDniYPassword(dni: String, password: String) {
         val db = admin.writableDatabase
         db.delete("USUARIO", "$dni = ? AND $password = ?", arrayOf(dni, password))
         db.close()
-    }
+    }*/
     }
 

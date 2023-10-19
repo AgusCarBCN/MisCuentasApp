@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
-import android.content.Intent
 import android.icu.text.NumberFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -60,10 +59,10 @@ class SaldoFragment : Fragment() {
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
 
-        cuenta1.setText(cuentas.get(0).iban.toString())
-        cuenta2.setText(cuentas.get(1).iban.toString())
-        saldo1.setText(currencyFormat.format(cuentas.get(0).saldo).toString())
-        saldo2.setText(currencyFormat.format(cuentas.get(1).saldo).toString())
+        cuenta1.text = cuentas[0].iban
+        cuenta2.text = cuentas[1].iban
+        saldo1.text = currencyFormat.format(cuentas[0].saldo).toString()
+        saldo2.text = currencyFormat.format(cuentas[1].saldo).toString()
         return rootview
     }
 

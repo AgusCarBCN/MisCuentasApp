@@ -1,10 +1,7 @@
 package carnerero.agustin.cuentaappandroid.dao
 
 import android.content.ContentValues
-import android.content.Context
-import android.database.Cursor
 import android.database.SQLException
-import android.database.sqlite.SQLiteDatabase
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 
@@ -29,7 +26,7 @@ class CuentaDao(private val admin: DataBaseApp) {
     }
 
     // Método para obtener una cuenta por IBAN
-    fun obtenerCuentaPorIban(iban: String): Cuenta? {
+  /* fun obtenerCuentaPorIban(iban: String): Cuenta? {
         val db = admin.readableDatabase
 
         val query = "SELECT iban, saldo, dni FROM CUENTA WHERE iban = ?"
@@ -51,9 +48,9 @@ class CuentaDao(private val admin: DataBaseApp) {
             cursor.close()
         }
         return cuenta
-    }
+    }*/
 
-    fun obtenerCuentaPorDni(dni: String): Cuenta? {
+    /*fun obtenerCuentaPorDni(dni: String): Cuenta? {
         val db = admin.readableDatabase
 
         val query = "SELECT iban, saldo, dni FROM CUENTA WHERE dni = ?"
@@ -73,9 +70,9 @@ class CuentaDao(private val admin: DataBaseApp) {
         }
 
         return cuenta
-    }
+    }*/
 
-    fun listarTodasLasCuentas(): List<Cuenta> {
+    /*fun listarTodasLasCuentas(): List<Cuenta> {
         val cuentas = mutableListOf<Cuenta>()
 
         admin.readableDatabase.use { db ->
@@ -93,7 +90,7 @@ class CuentaDao(private val admin: DataBaseApp) {
             cursor.close()
         }
         return cuentas
-    }
+    }*/
     fun listarCuentasPorDNI(dni: String): List<Cuenta> {
         val cuentas = mutableListOf<Cuenta>()
 

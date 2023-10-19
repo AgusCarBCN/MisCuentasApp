@@ -4,14 +4,13 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.SQLException
 import carnerero.agustin.cuentaappandroid.DataBaseApp
-import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
-    private val SELECT_ALL = "SELECT * FROM MOVIMIENTO"
-    private val SELECT_ALL2 = "SELECT * FROM MOVIMIENTO WHERE iban=?"
-    private val SELECT_INCOME = "SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id WHERE m.iban = ?"
-    private val SELECT_BILLS = "SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id WHERE m.iban = ?"
+    private val selectAll = "SELECT * FROM MOVIMIENTO"
+    private val selectAllByIban = "SELECT * FROM MOVIMIENTO WHERE iban=?"
+    private val selectIncomes = "SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id WHERE m.iban = ?"
+    private val selectBills = "SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id WHERE m.iban = ?"
 
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
@@ -30,26 +29,25 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     }
 
     fun getAll(): ArrayList<MovimientoBancario> {
-        return listarMovimientos(SELECT_ALL, null)
+        return listarMovimientos(selectAll, null)
     }
 
     fun getIncome(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(SELECT_INCOME, iban)
+        return listarMovimientos(selectIncomes, iban)
     }
     fun getIncomeandBills(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(SELECT_ALL2, iban)
+        return listarMovimientos(selectAllByIban, iban)
     }
     fun getBills(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(SELECT_BILLS, iban)
+        return listarMovimientos(selectBills, iban)
     }
 
     private fun listarMovimientos(query: String, iban: String?): ArrayList<MovimientoBancario> {
         val movimientos = ArrayList<MovimientoBancario>()
         val db = admin.readableDatabase
-        val selectQuery = query
 
         try {
-            val cursor: Cursor = db.rawQuery(selectQuery, if (iban != null) arrayOf(iban) else null)
+            val cursor: Cursor = db.rawQuery(query, if (iban != null) arrayOf(iban) else null)
 
             if (cursor.moveToFirst()) {
                 do {

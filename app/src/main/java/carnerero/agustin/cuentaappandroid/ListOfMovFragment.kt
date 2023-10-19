@@ -40,10 +40,10 @@ class ListOfMovFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_list_of_mov, container, false)
+         return  inflater.inflate(R.layout.fragment_list_of_mov, container, false)
 
 
-        return rootview
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -19,6 +19,7 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,8 +57,8 @@ class ConsultaFragment : Fragment() {
         //Variable que contendra la opcion seleccionada en spinner
 
         //Obtenemos los componentes del fragment
-        val etDateFrom=rootview.findViewById<EditText>(R.id.et_datefrom)
-        val etDateTo=rootview.findViewById<EditText>(R.id.et_dateto)
+        val etDateFrom:EditText=rootview.findViewById(R.id.et_datefrom)
+        val etDateTo:EditText=rootview.findViewById(R.id.et_dateto)
         val select:RadioGroup=rootview.findViewById(R.id.selectImporte)
         val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
         val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
@@ -78,8 +79,8 @@ class ConsultaFragment : Fragment() {
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
 
         adapter.add("Selecciona una cuenta")
-        adapter.add(cuentas.get(0).iban)
-        adapter.add(cuentas.get(1).iban)
+        adapter.add(cuentas[0].iban)
+        adapter.add(cuentas[1].iban)
         selectedItem=adapter.getItem(0)
         spConsulta.adapter = adapter
         //Obtener todos los movimientos de la base de datos
@@ -89,11 +90,11 @@ class ConsultaFragment : Fragment() {
         //Filtrar los movimientos obtenidos
 
         //Muestra DatePickerDialog al cliquear edit text
-        etDateFrom.setOnClickListener(){
+        etDateFrom.setOnClickListener{
             showDatePickerDialog(etDateFrom)
 
         }
-        etDateTo.setOnClickListener(){
+        etDateTo.setOnClickListener{
             showDatePickerDialog(etDateTo)
         }
         spConsulta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -131,9 +132,10 @@ class ConsultaFragment : Fragment() {
 
 
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.retainAll(movDao.getIncome(selectedItem.toString()))
-                R.id.rb_gastos -> movList.retainAll(movDao.getBills(selectedItem.toString()))
-                R.id.rb_ingresosygastos -> movList.retainAll(movDao.getIncomeandBills(selectedItem.toString()))
+                R.id.rb_ingresos -> movList.retainAll(movDao.getIncome(selectedItem.toString()).toSet())
+                R.id.rb_gastos -> movList.retainAll(movDao.getBills(selectedItem.toString()).toSet())
+                R.id.rb_ingresosygastos -> movList.retainAll(movDao.getIncomeandBills(selectedItem.toString())
+                    .toSet())
             }
 
         }
@@ -149,21 +151,20 @@ class ConsultaFragment : Fragment() {
         //val bundle = Bundle()
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
-        buscar.setOnClickListener(){
+        buscar.setOnClickListener{
             //Importes
             val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
             val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
             val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
             //Fechas
-            val fechaDesde: EditText = rootview.findViewById(R.id.et_datefrom)
-            val fechaHasta: EditText = rootview.findViewById(R.id.et_dateto)
-            val fechaDesdeStr: String = fechaDesde.text.toString()
-            val fechaHastaStr: String = fechaHasta.text.toString()
+
+            val fechaDesdeStr: String = etDateFrom.text.toString()
+            val fechaHastaStr: String = etDateTo.text.toString()
             //por texto
             val searchByText:EditText=rootview.findViewById(R.id.et_search)
             val searchText:String=searchByText.text.toString()
-            if(selectedItem.toString().equals("Selecciona una cuenta")){
+            if(selectedItem.toString() == "Selecciona una cuenta"){
                 Toast.makeText(
                     requireContext(),
                     "Debes seleccionar una cuenta para mostrar resultados",
@@ -171,15 +172,15 @@ class ConsultaFragment : Fragment() {
                 ).show()
             }else {
                 if (importeDesdeNum != null && importeHastaNum != null) {
-                    var movListFilter = movList?.filter { Math.abs(it.importe) >= importeDesdeNum && Math.abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
+                    val movListFilter = movList.filter { abs(it.importe) >= importeDesdeNum && abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
                     movList.clear() // Limpia la lista actual
                     movList.addAll(movListFilter)
                 }
-                if (!fechaDesdeStr.isNullOrBlank() && !fechaHastaStr.isNullOrBlank() ) {
-                    movList = movList?.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
+                if (fechaDesdeStr.isNotBlank() && fechaHastaStr.isNotBlank()) {
+                    movList = movList.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
                 }
-                if(!searchText.isNullOrBlank()){
-                    movList=movList?.filter { it.descripcion.contains(searchText)}as ArrayList<MovimientoBancario>
+                if(searchText.isNotBlank()){
+                    movList=movList.filter { it.descripcion.contains(searchText)}as ArrayList<MovimientoBancario>
                 }
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("clave_movimientos", movList)
@@ -191,7 +192,7 @@ class ConsultaFragment : Fragment() {
                 transaction.commit()
             }
         }
-        cancel.setOnClickListener(){
+        cancel.setOnClickListener{
             (activity as NavActivity).inicio()
         }
         return rootview
@@ -208,8 +209,8 @@ class ConsultaFragment : Fragment() {
             R.style.AppTheme_DialogTheme,
 
 
-            { _, year, month, dayOfMonth ->
-                val selectedDate = "$dayOfMonth-${month + 1}-$year" // Formato de fecha deseado
+            { _, yearFormat, monthFormat, dayOfMonth ->
+                val selectedDate = "$dayOfMonth-${monthFormat + 1}-$yearFormat" // Formato de fecha deseado
                 editText.setText(selectedDate)
             },
             year,
