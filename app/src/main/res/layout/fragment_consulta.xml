@@ -220,5 +220,4 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>

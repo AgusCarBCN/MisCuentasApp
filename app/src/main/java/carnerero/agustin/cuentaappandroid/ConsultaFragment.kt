@@ -39,10 +39,10 @@ class ConsultaFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val admin=  DataBaseAppSingleton.getInstance(context)
-    private var selectedItem :String?=null
-    private val movDao=MovimientoBancarioDAO (admin)
-    private var movList:ArrayList<MovimientoBancario> =movDao.getAll()
+    private val admin = DataBaseAppSingleton.getInstance(context)
+    private var selectedItem: String? = null
+    private val movDao = MovimientoBancarioDAO(admin)
+    private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,51 +56,53 @@ class ConsultaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_consulta, container, false)
+        val rootview = inflater.inflate(R.layout.fragment_consulta, container, false)
 
         //Variable que contendra la opcion seleccionada en spinner
 
         //Obtenemos los componentes del fragment
-        val etDateFrom:EditText=rootview.findViewById(R.id.et_datefrom)
-        val etDateTo:EditText=rootview.findViewById(R.id.et_dateto)
-        val select:RadioGroup=rootview.findViewById(R.id.selectImporte)
-        val ingresos:RadioButton=rootview.findViewById(R.id.rb_ingresos)
-        val gastos:RadioButton=rootview.findViewById(R.id.rb_gastos)
-        val ingresosygastos:RadioButton=rootview.findViewById(R.id.rb_ingresosygastos)
-        val spConsulta:Spinner=rootview.findViewById(R.id.sp_consulta)
-        val buscar:Button=rootview.findViewById(R.id.btn_buscar)
-        val cancel:Button=rootview.findViewById(R.id.btn_cancelabuscar)
+        val etDateFrom: EditText = rootview.findViewById(R.id.et_datefrom)
+        val etDateTo: EditText = rootview.findViewById(R.id.et_dateto)
+        val select: RadioGroup = rootview.findViewById(R.id.selectImporte)
+        val ingresos: RadioButton = rootview.findViewById(R.id.rb_ingresos)
+        val gastos: RadioButton = rootview.findViewById(R.id.rb_gastos)
+        val ingresosygastos: RadioButton = rootview.findViewById(R.id.rb_ingresosygastos)
+        val spConsulta: Spinner = rootview.findViewById(R.id.sp_consulta)
+        val buscar: Button = rootview.findViewById(R.id.btn_buscar)
+        val cancel: Button = rootview.findViewById(R.id.btn_cancelabuscar)
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "") ?: ""
         //Rellenar spiner spConsulta
         //Creo adapter
-       val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_dropdown_item )
+        val adapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
         //val admin=   DataBaseAppSingleton.getInstance(context)
 
-        val cuentaDao= CuentaDao(admin)
-        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        val cuentaDao = CuentaDao(admin)
+        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
 
         adapter.add("Selecciona una cuenta")
         adapter.add(cuentas[0].iban)
         adapter.add(cuentas[1].iban)
-        selectedItem=adapter.getItem(0)
+        selectedItem = adapter.getItem(0)
         spConsulta.adapter = adapter
         //Obtener todos los movimientos de la base de datos
-         //movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
+        //movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
         //val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
         //var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
         //Filtrar los movimientos obtenidos
 
         //Muestra DatePickerDialog al cliquear edit text
-        etDateFrom.setOnClickListener{
+        etDateFrom.setOnClickListener {
             showDatePickerDialog(etDateFrom)
-
         }
-        etDateTo.setOnClickListener{
+        etDateTo.setOnClickListener {
             showDatePickerDialog(etDateTo)
         }
+
         spConsulta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -115,13 +117,13 @@ class ConsultaFragment : Fragment() {
                         "Selecciona una cuenta para habilitar la busqueda",
                         Toast.LENGTH_SHORT
                     ).show()
-                   ingresos.isEnabled=false
-                    gastos.isEnabled=false
-                    ingresosygastos.isEnabled=false
-                }else {
-                    ingresos.isEnabled=true
-                    gastos.isEnabled=true
-                    ingresosygastos.isEnabled=true
+                    ingresos.isEnabled = false
+                    gastos.isEnabled = false
+                    ingresosygastos.isEnabled = false
+                } else {
+                    ingresos.isEnabled = true
+                    gastos.isEnabled = true
+                    ingresosygastos.isEnabled = true
                     Toast.makeText(
                         requireContext(),
                         "Elemento seleccionado: $selectedItem",
@@ -129,6 +131,7 @@ class ConsultaFragment : Fragment() {
                     ).show()
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -136,10 +139,18 @@ class ConsultaFragment : Fragment() {
 
 
             when (select.checkedRadioButtonId) {
-                R.id.rb_ingresos -> movList.retainAll(movDao.getIncome(selectedItem.toString()).toSet())
-                R.id.rb_gastos -> movList.retainAll(movDao.getBills(selectedItem.toString()).toSet())
-                R.id.rb_ingresosygastos -> movList.retainAll(movDao.getIncomeandBills(selectedItem.toString())
-                    .toSet())
+                R.id.rb_ingresos -> movList.retainAll(
+                    movDao.getIncome(selectedItem.toString()).toSet()
+                )
+
+                R.id.rb_gastos -> movList.retainAll(
+                    movDao.getBills(selectedItem.toString()).toSet()
+                )
+
+                R.id.rb_ingresosygastos -> movList.retainAll(
+                    movDao.getIncomeandBills(selectedItem.toString())
+                        .toSet()
+                )
             }
 
         }
@@ -155,7 +166,7 @@ class ConsultaFragment : Fragment() {
         //val bundle = Bundle()
         //bundle.putParcelableArrayList("clave_movimientos", movList)
         //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
-        buscar.setOnClickListener{
+        buscar.setOnClickListener {
             //Importes
             val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
             val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
@@ -165,56 +176,81 @@ class ConsultaFragment : Fragment() {
 
             val fechaDesdeStr: String = etDateFrom.text.toString()
             val fechaHastaStr: String = etDateTo.text.toString()
-
-
-
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            var fechaValida: Boolean = true
+            var importeValido: Boolean = true
             //por texto
-            val searchByText:EditText=rootview.findViewById(R.id.et_search)
-            val searchText:String=searchByText.text.toString()
-            if(selectedItem.toString() == "Selecciona una cuenta"){
+            val searchByText: EditText = rootview.findViewById(R.id.et_search)
+            val searchText: String = searchByText.text.toString()
+            if (selectedItem.toString() == "Selecciona una cuenta") {
                 Toast.makeText(
                     requireContext(),
                     "Debes seleccionar una cuenta para mostrar resultados",
                     Toast.LENGTH_SHORT
                 ).show()
-            }else {
+            } else {
+
                 if (importeDesdeNum != null && importeHastaNum != null) {
-                    val movListFilter = movList.filter { abs(it.importe) >= importeDesdeNum && abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
-                    movList.clear() // Limpia la lista actual
-                    movList.addAll(movListFilter)
+                    if (importeDesdeNum > importeHastaNum) {
+                        importeValido = false
+                    } else {
+                        val movListFilter =
+                            movList.filter { abs(it.importe) >= importeDesdeNum && abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
+                        movList.clear() // Limpia la lista actual
+                        movList.addAll(movListFilter)
+                    }
                 }
                 if (fechaDesdeStr.isNotBlank() && fechaHastaStr.isNotBlank()) {
-                    val formatter= DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                    //val formatter = SimpleDateFormat("dd/MM/yyyy")
-                    //val fechaTo = formatter.parse(fechaDesdeStr)
-                    //val fechaFrom = formatter.parse(fechaHastaStr)
-                    val fechaTo=LocalDate.parse(fechaDesdeStr,formatter)
-                    val fechaFrom=LocalDate.parse(fechaHastaStr,formatter)
-                   movList = movList.filter {
-                        val fechaMovimiento = LocalDate.parse(it.fechaImporte,formatter)
-                        fechaMovimiento.isAfter(fechaTo.minusDays(1)) && fechaMovimiento.isBefore(fechaFrom.plusDays(1))} as ArrayList<MovimientoBancario>
-
-                   // movList = movList.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
+                    val fechaTo = LocalDate.parse(fechaDesdeStr, formatter)
+                    val fechaFrom = LocalDate.parse(fechaHastaStr, formatter)
+                    if (fechaFrom.isBefore(fechaTo)) {
+                        fechaValida = false
+                    } else {
+                        movList = movList.filter {
+                            val fechaMovimiento = LocalDate.parse(it.fechaImporte, formatter)
+                            fechaMovimiento.isAfter(fechaTo.minusDays(1)) && fechaMovimiento.isBefore(
+                                fechaFrom.plusDays(1)
+                            )
+                        } as ArrayList<MovimientoBancario>
+                    }
                 }
-                if(searchText.isNotBlank()){
-                    movList=movList.filter { it.descripcion.contains(searchText)}as ArrayList<MovimientoBancario>
+                if (searchText.isNotBlank()) {
+                    movList =
+                        movList.filter { it.descripcion.contains(searchText) } as ArrayList<MovimientoBancario>
                 }
-                val bundle = Bundle()
-                bundle.putParcelableArrayList("clave_movimientos", movList)
-                val fragmentList = ListOfMovFragment()
-                fragmentList.arguments = bundle
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fcv_main_container, fragmentList)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                if (!fechaValida || !importeValido) {
+                    // La fecha desde es mayor que la fecha hasta, muestra un mensaje de error
+                    if(!fechaValida){
+                    Toast.makeText(
+                        requireContext(),
+                        "La fecha desde no puede ser mayor que la fecha hasta",
+                        Toast.LENGTH_SHORT
+                    ).show()}
+                    if(!importeValido){
+                        Toast.makeText(
+                            requireContext(),
+                            "El importe desde no puede ser mayor que al importe hasta",
+                            Toast.LENGTH_SHORT
+                        ).show()}
+                } else {
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList("clave_movimientos", movList)
+                    val fragmentList = ListOfMovFragment()
+                    fragmentList.arguments = bundle
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fcv_main_container, fragmentList)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
             }
         }
-        cancel.setOnClickListener{
+        cancel.setOnClickListener {
             (activity as NavActivity).inicio()
         }
         return rootview
 
     }
+
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -227,7 +263,8 @@ class ConsultaFragment : Fragment() {
 
 
             { _, yearFormat, monthFormat, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
+                val selectedDate =
+                    "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
                 editText.setText(selectedDate)
             },
             year,
@@ -241,8 +278,6 @@ class ConsultaFragment : Fragment() {
 
         datePickerDialog.show()
     }
-
-
 
 
     companion object {
