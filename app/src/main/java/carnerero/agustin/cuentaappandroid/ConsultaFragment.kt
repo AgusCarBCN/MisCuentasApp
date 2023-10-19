@@ -19,6 +19,10 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
@@ -161,6 +165,9 @@ class ConsultaFragment : Fragment() {
 
             val fechaDesdeStr: String = etDateFrom.text.toString()
             val fechaHastaStr: String = etDateTo.text.toString()
+
+
+
             //por texto
             val searchByText:EditText=rootview.findViewById(R.id.et_search)
             val searchText:String=searchByText.text.toString()
@@ -177,7 +184,17 @@ class ConsultaFragment : Fragment() {
                     movList.addAll(movListFilter)
                 }
                 if (fechaDesdeStr.isNotBlank() && fechaHastaStr.isNotBlank()) {
-                    movList = movList.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
+                    val formatter= DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                    //val formatter = SimpleDateFormat("dd/MM/yyyy")
+                    //val fechaTo = formatter.parse(fechaDesdeStr)
+                    //val fechaFrom = formatter.parse(fechaHastaStr)
+                    val fechaTo=LocalDate.parse(fechaDesdeStr,formatter)
+                    val fechaFrom=LocalDate.parse(fechaHastaStr,formatter)
+                   movList = movList.filter {
+                        val fechaMovimiento = LocalDate.parse(it.fechaImporte,formatter)
+                        fechaMovimiento.isAfter(fechaTo.minusDays(1)) && fechaMovimiento.isBefore(fechaFrom.plusDays(1))} as ArrayList<MovimientoBancario>
+
+                   // movList = movList.filter { it.fechaImporte in fechaDesdeStr..fechaHastaStr } as ArrayList<MovimientoBancario>
                 }
                 if(searchText.isNotBlank()){
                     movList=movList.filter { it.descripcion.contains(searchText)}as ArrayList<MovimientoBancario>
@@ -210,7 +227,7 @@ class ConsultaFragment : Fragment() {
 
 
             { _, yearFormat, monthFormat, dayOfMonth ->
-                val selectedDate = "$dayOfMonth-${monthFormat + 1}-$yearFormat" // Formato de fecha deseado
+                val selectedDate = "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
                 editText.setText(selectedDate)
             },
             year,
