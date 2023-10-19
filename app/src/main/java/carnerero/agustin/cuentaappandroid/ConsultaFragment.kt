@@ -19,10 +19,8 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
@@ -177,8 +175,8 @@ class ConsultaFragment : Fragment() {
             val fechaDesdeStr: String = etDateFrom.text.toString()
             val fechaHastaStr: String = etDateTo.text.toString()
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            var fechaValida: Boolean = true
-            var importeValido: Boolean = true
+            var fechaValida = true
+            var importeValido= true
             //por texto
             val searchByText: EditText = rootview.findViewById(R.id.et_search)
             val searchText: String = searchByText.text.toString()
@@ -189,7 +187,6 @@ class ConsultaFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-
                 if (importeDesdeNum != null && importeHastaNum != null) {
                     if (importeDesdeNum > importeHastaNum) {
                         importeValido = false
@@ -220,18 +217,20 @@ class ConsultaFragment : Fragment() {
                 }
                 if (!fechaValida || !importeValido) {
                     // La fecha desde es mayor que la fecha hasta, muestra un mensaje de error
-                    if(!fechaValida){
-                    Toast.makeText(
-                        requireContext(),
-                        "La fecha desde no puede ser mayor que la fecha hasta",
-                        Toast.LENGTH_SHORT
-                    ).show()}
-                    if(!importeValido){
+                    if (!fechaValida) {
+                        Toast.makeText(
+                            requireContext(),
+                            "La fecha desde no puede ser mayor que la fecha hasta",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (!importeValido) {
                         Toast.makeText(
                             requireContext(),
                             "El importe desde no puede ser mayor que al importe hasta",
                             Toast.LENGTH_SHORT
-                        ).show()}
+                        ).show()
+                    }
                 } else {
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("clave_movimientos", movList)
@@ -275,7 +274,6 @@ class ConsultaFragment : Fragment() {
 
         //Color de fondo
         window?.setBackgroundDrawableResource(R.color.lightYellow)
-
         datePickerDialog.show()
     }
 
