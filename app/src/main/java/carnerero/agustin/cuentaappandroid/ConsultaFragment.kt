@@ -154,9 +154,9 @@ class ConsultaFragment : Fragment() {
         }
 
         // Asignar un listener al grupo de RadioButtons
-        select.setOnCheckedChangeListener { _, _ ->
+        /*select.setOnCheckedChangeListener { _, _ ->
             updateMovList()
-        }
+        }*/
 
 
         //Enviamos el arrayList movList desde este fragmento al fragmento ListOfMovFragment
@@ -187,6 +187,7 @@ class ConsultaFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                updateMovList()
                 if (importeDesdeNum != null && importeHastaNum != null) {
                     if (importeDesdeNum > importeHastaNum) {
                         importeValido = false
