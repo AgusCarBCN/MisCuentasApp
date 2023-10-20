@@ -153,12 +153,6 @@ class ConsultaFragment : Fragment() {
 
         }
 
-        // Asignar un listener al grupo de RadioButtons
-        /*select.setOnCheckedChangeListener { _, _ ->
-            updateMovList()
-        }*/
-
-
         //Enviamos el arrayList movList desde este fragmento al fragmento ListOfMovFragment
         //Crear un Bundle y agregar el ArrayList como argumento
         //val bundle = Bundle()
