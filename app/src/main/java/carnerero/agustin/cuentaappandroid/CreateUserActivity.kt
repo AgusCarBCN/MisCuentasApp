@@ -3,6 +3,8 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.webkit.WebView
 import android.widget.EditText
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
@@ -22,12 +24,12 @@ class CreateUserActivity : AppCompatActivity() {
 
     }
 
-    fun cancelCreateUser() {
+    fun cancelCreateUser(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 
-    fun confirmCreateUser() {
+    fun confirmCreateUser(view: View) {
 
         val intent = Intent(this, LoginActivity::class.java)
         //Acceso a los editText de Usuario
@@ -71,6 +73,7 @@ class CreateUserActivity : AppCompatActivity() {
 
         startActivity(intent)
     }
+
 
 
 
