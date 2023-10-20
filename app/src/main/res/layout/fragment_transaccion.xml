@@ -56,9 +56,10 @@
             <Spinner
                 android:id="@+id/sp_cuentaorigen"
                 android:layout_width="220dp"
-                android:layout_height="46dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/style_editetx"
+                android:theme="@style/CustomSpinner"
                 android:gravity="center|center_vertical"
                 android:textAlignment="center" />
 
@@ -86,9 +87,10 @@
             <Spinner
                 android:id="@+id/sp_cuentadestino"
                 android:layout_width="220dp"
-                android:layout_height="46dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/style_editetx"
+                android:theme="@style/CustomSpinner"
                 android:gravity="center|center_vertical"
                 android:textAlignment="center" />
 

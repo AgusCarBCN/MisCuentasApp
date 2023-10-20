@@ -64,8 +64,9 @@ class NewAmountFragment : Fragment() {
         val admin=   DataBaseAppSingleton.getInstance(context)
         val cuentaDao=CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
-        adapter.add(cuentas.get(0).iban)
-        adapter.add(cuentas.get(1).iban)
+        adapter.add("Selecciona una cuenta")
+        adapter.add(cuentas[0].iban)
+        adapter.add(cuentas[1].iban)
 
         spinnerCuentas.adapter = adapter
         spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
