@@ -84,12 +84,6 @@ class ConsultaFragment : Fragment() {
         adapter.add(cuentas[1].iban)
         selectedItem = adapter.getItem(0)
         spConsulta.adapter = adapter
-        //Obtener todos los movimientos de la base de datos
-        //movDaoProxy=MovimientoBancarioDAOProxy(MovimientoBancarioDAO (admin))
-        //val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
-        //var movList:ArrayList<MovimientoBancario> =movDaoProxy.listarMovimientos()
-        //Filtrar los movimientos obtenidos
-
         //Muestra DatePickerDialog al cliquear edit text
         etDateFrom.setOnClickListener {
             showDatePickerDialog(etDateFrom)
@@ -183,10 +177,9 @@ class ConsultaFragment : Fragment() {
                     if (importeDesdeNum > importeHastaNum) {
                         importeValido = false
                     } else {
-                        val movListFilter =
+                        movList =
                             movList.filter { abs(it.importe) >= importeDesdeNum && abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
-                        movList.clear() // Limpia la lista actual
-                        movList.addAll(movListFilter)
+
                     }
                 }
                 if (fechaDesdeStr.isNotBlank() && fechaHastaStr.isNotBlank()) {
