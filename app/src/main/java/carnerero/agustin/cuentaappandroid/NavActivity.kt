@@ -66,6 +66,11 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             }
             R.id.estadistica -> {
                 Toast.makeText(this, "estadistica", Toast.LENGTH_SHORT).show()
+                val barChartFragment =  BarChartFragment()// Reemplaza con el nombre de tu fragmento
+
+                changeFragmentMain(barChartFragment)
+                barChartFragment.setMenuVisibility(true)
+                fragmentContainer.visibility=View.VISIBLE
 
 
             }

@@ -46,6 +46,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation ("com.diogobernardino:williamchart:3.10.1")
     //implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     //implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     //implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
