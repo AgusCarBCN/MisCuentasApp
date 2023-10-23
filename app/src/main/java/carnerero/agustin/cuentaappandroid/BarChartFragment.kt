@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -112,11 +113,12 @@ class BarChartFragment : Fragment() {
 
         // on below line we are creating a new bar data set
         barDataSetIngresos = BarDataSet(getBarChartDataForSet1(), "Ingresos")
-        barDataSetIngresos.setColor(R.color.greenPistacho)
+        barDataSetIngresos.color = Color.GREEN
+        //barDataSetIngresos.setColor(R.color.red)
         barDataSetGastos = BarDataSet(getBarChartDataForSet2(), "Gastos")
-        barDataSetGastos.setColor(R.color.red)
+        barDataSetGastos.color=Color.RED
         barDataSetResultados = BarDataSet(getBarChartDataForSet3(), "Resultados")
-        barDataSetResultados.setColor(androidx.appcompat.R.color.material_blue_grey_800)
+        barDataSetResultados.color=Color.BLUE
 
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
 
