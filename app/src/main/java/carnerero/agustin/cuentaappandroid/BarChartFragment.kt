@@ -77,7 +77,7 @@ class BarChartFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBarChartBinding.inflate(inflater, container, false)
         //return inflater.inflate(R.layout.fragment_bar_chart, container, false)
@@ -129,7 +129,7 @@ class BarChartFragment : Fragment() {
         barChart.description.isEnabled = false
 
         // on below line setting x axis
-        var xAxis = barChart.xAxis
+        val xAxis = barChart.xAxis
 
         // below line is to set value formatter to our x-axis and
         // we are adding our days to our x axis.
@@ -145,15 +145,15 @@ class BarChartFragment : Fragment() {
 
         // below line is to set granularity
         // to our x axis labels.
-        xAxis.setGranularity(1f)
+        xAxis.granularity = 1f
 
         // below line is to enable
         // granularity to our x axis.
-        xAxis.setGranularityEnabled(true)
+        xAxis.isGranularityEnabled = true
 
         // below line is to make our
         // bar chart as draggable.
-        barChart.setDragEnabled(true)
+        barChart.isDragEnabled = true
 
         // below line is to make visible
         // range for our bar chart.
