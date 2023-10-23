@@ -8,28 +8,18 @@ class Calculos {
 
     companion object {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        fun calcularIngresoMes(month: Int, year: Int, ingresos: List<MovimientoBancario>): Double {
-            var ingresoTotal = 0.0
+        fun calcularImporteMes(month: Int, year: Int, importes: ArrayList<MovimientoBancario>): Float {
+            var importeTotal = 0.0
 
-            for (ingreso in ingresos) {
-                var fechaImporteDate = LocalDate.parse(ingreso.fechaImporte, formatter)
+            for (mov in importes) {
+                var fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
                 if (fechaImporteDate.monthValue == month && fechaImporteDate.year == year) {
-                    ingresoTotal += ingreso.importe
+                    importeTotal += mov.importe
                 }
             }
-            return ingresoTotal
+            return importeTotal.toFloat()
         }
 
-        fun calcularGastoMes(month: Int, year: Int, gastos: List<MovimientoBancario>): Double {
-            var totalGastos = 0.0
-            for (gasto in gastos) {
-                var fechaImporteDate = LocalDate.parse(gasto.fechaImporte, formatter)
-                if (fechaImporteDate.monthValue == month && fechaImporteDate.year == year) {
-                    totalGastos += gasto.importe
-                }
-            }
-            return totalGastos
-        }
     }
 
 }

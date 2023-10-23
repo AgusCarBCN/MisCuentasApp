@@ -8,15 +8,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
+import carnerero.agustin.cuentaappandroid.utils.Calculos
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,18 +41,15 @@ class BarChartFragment : Fragment() {
     private var selectedIban: String? = null
     private var selectedYear: String? = null
     private val cuentaDao = CuentaDao(admin)
+    private val movDao=MovimientoBancarioDAO(admin)
+    lateinit var ingresosTotales:ArrayList<Float>
+    lateinit var gastosTotales:ArrayList<Float>
+    lateinit var resultados:ArrayList<Float>
     lateinit var barChart: BarChart
-
-    // a variable for bar data
     lateinit var barData: BarData
-
-    // on below line we are creating a
-    // variable for bar data set
     lateinit var barDataSetIngresos: BarDataSet
     lateinit var barDataSetGastos: BarDataSet
     lateinit var barDataSetResultados: BarDataSet
-
-    // on below line we are creating array list for bar data
     lateinit var barEntriesList: ArrayList<BarEntry>
 
     var months = arrayOf(
@@ -108,10 +110,64 @@ class BarChartFragment : Fragment() {
         //Rellena Spinners
         spCuenta.adapter = adapterCuenta
         spYears.adapter = adapterYear
-        // chart data to add data to our array list
+        //este código establece un listener en un Spinner que captura la selección de un iban de una cuenta
+        // muestra un mensaje Toast de la cuenta seleccionado. También tiene una función
+        // de respaldo para cuando no se selecciona ningún element
+        spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedIban = adapterCuenta.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedIban",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        spYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedYear = adapterYear.getItem(position)
+                Toast.makeText(
+                    requireContext(),
+                    "Elemento seleccionado: $selectedYear",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
 
 
-        // on below line we are creating a new bar data set
+        //Obtenemos los ingresos y los gastos
+        val ingresos=movDao.getIncome("BBVA")
+        val gastos=movDao.getBills("BBVA")
+        //Calculo de gastos por mes
+
+
+            val gastoMes= Calculos.calcularImporteMes(10,2023,gastos)
+            gastosTotales=ArrayList<Float>()
+            gastosTotales.add(abs(gastoMes))
+        Toast.makeText(
+            requireContext(),
+            "gasto total ${abs(gastoMes)}",
+            Toast.LENGTH_SHORT
+        ).show()
+
+
+        //Creacion y configuracion del grafico de barras
+        //Creacion de barDataSet de los ingresos,gasto y resultados
         barDataSetIngresos = BarDataSet(getBarChartDataForSet1(), "Ingresos")
         barDataSetIngresos.color = Color.GREEN
         //barDataSetIngresos.setColor(R.color.red)
@@ -119,77 +175,31 @@ class BarChartFragment : Fragment() {
         barDataSetGastos.color=Color.RED
         barDataSetResultados = BarDataSet(getBarChartDataForSet3(), "Resultados")
         barDataSetResultados.color=Color.BLUE
-
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
-
-        // on below line we are setting data to our chart
+        //Configuracion de los datos en el grafico de barras
         barChart.data = barData
-
-        // on below line we are setting description enabled.
         barChart.description.isEnabled = false
-
-        // on below line setting x axis
+        //Configuracion del eje x
         val xAxis = barChart.xAxis
-
-        // below line is to set value formatter to our x-axis and
-        // we are adding our days to our x axis.
+        //Añadir los meses en el eje X y centramos las etiquetas
         xAxis.valueFormatter = IndexAxisValueFormatter(months)
-
-        // below line is to set center axis
-        // labels to our bar chart.
         xAxis.setCenterAxisLabels(true)
-
-        // below line is to set position
-        // to our x-axis to bottom.
+        //Configuracion del ejeX
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        // below line is to set granularity
-        // to our x axis labels.
         xAxis.granularity = 1f
-
-        // below line is to enable
-        // granularity to our x axis.
         xAxis.isGranularityEnabled = true
-
-        // below line is to make our
-        // bar chart as draggable.
         barChart.isDragEnabled = true
-
-        // below line is to make visible
-        // range for our bar chart.
+        //Configuracion del tamaño de las barras y espacio entre ellas
         barChart.setVisibleXRangeMaximum(3f)
-
-        // below line is to add bar
-        // space to our chart.
         val barSpace = 0.065f
-
-        // below line is use to add group
-        // spacing to our bar chart.
         val groupSpace = 0.2f
-
-        // we are setting width of
-        // bar in below line.
         barData.barWidth = 0.20f
-
-
-        // below line is to set minimum
-        // axis to our chart.
         barChart.xAxis.axisMinimum = 0f
-
-        // below line is to
-        // animate our chart.
+        //animacion del grafico.
         barChart.animate()
-
-        // below line is to group bars
-        // and add spacing to it.
         barChart.groupBars(0f, groupSpace, barSpace)
-
-        // below line is to invalidate
-        // our bar chart.
         barChart.invalidate()
-
         return binding.root
-
     }
 
     private fun getBarChartDataForSet1(): ArrayList<BarEntry> {
@@ -197,37 +207,36 @@ class BarChartFragment : Fragment() {
 
         // on below line we are adding data
         // to our bar entries list
-        barEntriesList.add(BarEntry(1f, 1f))
-        barEntriesList.add(BarEntry(2f, 2f))
-        barEntriesList.add(BarEntry(3f, 5f))
-        barEntriesList.add(BarEntry(4f, 4f))
-        barEntriesList.add(BarEntry(5f, 5f))
-        barEntriesList.add(BarEntry(6f, 5f))
-        barEntriesList.add(BarEntry(7f, 5f))
-        barEntriesList.add(BarEntry(8f, 5f))
-        barEntriesList.add(BarEntry(9f, 5f))
-        barEntriesList.add(BarEntry(10f, 5f))
-        barEntriesList.add(BarEntry(11f, 5f))
-        barEntriesList.add(BarEntry(12f, 5f))
+        barEntriesList.add(BarEntry(1f, 1000f))
+        barEntriesList.add(BarEntry(2f, 2000f))
+        barEntriesList.add(BarEntry(3f, 5000f))
+        barEntriesList.add(BarEntry(4f, 4000f))
+        barEntriesList.add(BarEntry(5f, 5000f))
+        barEntriesList.add(BarEntry(6f, 5000f))
+        barEntriesList.add(BarEntry(7f, 5000f))
+        barEntriesList.add(BarEntry(8f, 5000f))
+        barEntriesList.add(BarEntry(9f, 5000f))
+        barEntriesList.add(BarEntry(10f, 5000f))
+        barEntriesList.add(BarEntry(11f, 5000f))
+        barEntriesList.add(BarEntry(12f, 5000f))
         return barEntriesList
     }
 
     private fun getBarChartDataForSet2(): ArrayList<BarEntry> {
         barEntriesList = ArrayList()
-        // on below line we are adding
-        // data to our bar entries list
-        barEntriesList.add(BarEntry(1f, 1f))
-        barEntriesList.add(BarEntry(2f, 2f))
-        barEntriesList.add(BarEntry(3f, 3f))
-        barEntriesList.add(BarEntry(4f, 4f))
-        barEntriesList.add(BarEntry(5f, 5f))
-        barEntriesList.add(BarEntry(6f, 5f))
-        barEntriesList.add(BarEntry(7f, 5f))
-        barEntriesList.add(BarEntry(8f, 5f))
-        barEntriesList.add(BarEntry(9f, 5f))
-        barEntriesList.add(BarEntry(10f, 5f))
-        barEntriesList.add(BarEntry(11f, 5f))
-        barEntriesList.add(BarEntry(12f, 5f))
+
+       barEntriesList.add(BarEntry(1f,2000f))
+        barEntriesList.add(BarEntry(2f, 2000f))
+        barEntriesList.add(BarEntry(3f, 3000f))
+        barEntriesList.add(BarEntry(4f, 4000f))
+        barEntriesList.add(BarEntry(5f, 5000f))
+        barEntriesList.add(BarEntry(6f, 5000f))
+        barEntriesList.add(BarEntry(7f, 5000f))
+        barEntriesList.add(BarEntry(8f, 5000f))
+        barEntriesList.add(BarEntry(9f, 5000f))
+        barEntriesList.add(BarEntry(10f,gastosTotales[0]))
+        barEntriesList.add(BarEntry(11f, 5000f))
+        barEntriesList.add(BarEntry(12f, 5000f))
         return barEntriesList
     }
 
@@ -235,18 +244,18 @@ class BarChartFragment : Fragment() {
         barEntriesList = ArrayList()
         // on below line we are adding data
         // to our bar entries list
-        barEntriesList.add(BarEntry(1f, 2f))
-        barEntriesList.add(BarEntry(2f, 4f))
-        barEntriesList.add(BarEntry(3f, 6f))
-        barEntriesList.add(BarEntry(4f, 8f))
-        barEntriesList.add(BarEntry(5f, 10f))
-        barEntriesList.add(BarEntry(6f, 5f))
-        barEntriesList.add(BarEntry(7f, 5f))
-        barEntriesList.add(BarEntry(8f, 5f))
-        barEntriesList.add(BarEntry(9f, 5f))
-        barEntriesList.add(BarEntry(10f, 5f))
-        barEntriesList.add(BarEntry(11f, 5f))
-        barEntriesList.add(BarEntry(12f, 5f))
+        barEntriesList.add(BarEntry(1f, 2000f))
+        barEntriesList.add(BarEntry(2f, 4000f))
+        barEntriesList.add(BarEntry(3f, 6000f))
+        barEntriesList.add(BarEntry(4f, 8000f))
+        barEntriesList.add(BarEntry(5f, 1000f))
+        barEntriesList.add(BarEntry(6f, 5000f))
+        barEntriesList.add(BarEntry(7f, 500f))
+        barEntriesList.add(BarEntry(8f, 5000f))
+        barEntriesList.add(BarEntry(9f, 5000f))
+        barEntriesList.add(BarEntry(10f, 50f))
+        barEntriesList.add(BarEntry(11f, 5000f))
+        barEntriesList.add(BarEntry(12f, 10000f))
 
         return barEntriesList
     }
