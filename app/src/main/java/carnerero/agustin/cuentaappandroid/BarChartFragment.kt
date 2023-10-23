@@ -34,21 +34,37 @@ class BarChartFragment : Fragment() {
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedIban: String? = null
     private var selectedYear: String? = null
-    private val cuentaDao= CuentaDao(admin)
+    private val cuentaDao = CuentaDao(admin)
     lateinit var barChart: BarChart
+
     // a variable for bar data
-    lateinit var barData:BarData
+    lateinit var barData: BarData
+
     // on below line we are creating a
     // variable for bar data set
-    lateinit var barDataSetIngresos:BarDataSet
-    lateinit var barDataSetGastos:BarDataSet
-    lateinit var barDataSetResultados:BarDataSet
+    lateinit var barDataSetIngresos: BarDataSet
+    lateinit var barDataSetGastos: BarDataSet
+    lateinit var barDataSetResultados: BarDataSet
+
     // on below line we are creating array list for bar data
     lateinit var barEntriesList: ArrayList<BarEntry>
 
-    var months = arrayOf("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio")
+    var months = arrayOf(
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    )
 
-    private var _binding:FragmentBarChartBinding?=null
+    private var _binding: FragmentBarChartBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,20 +75,19 @@ class BarChartFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding= FragmentBarChartBinding.inflate(inflater,container,false)
+        _binding = FragmentBarChartBinding.inflate(inflater, container, false)
         //return inflater.inflate(R.layout.fragment_bar_chart, container, false)
-        barChart=binding.barChart
-        val spCuenta=binding.spCuenta
-        val spYears=binding.spYear
+        barChart = binding.barChart
+        val spCuenta = binding.spCuenta
+        val spYears = binding.spYear
         val sharedPreferences =
             requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "") ?: ""
-        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
-        val years=arrayOf("2023","2024","2025","2026","2027")
+        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
+        val years = arrayOf("2023", "2024", "2025", "2026", "2027")
         //Creo adapters
         //Creo adapter
         val adapterCuenta =
@@ -86,7 +101,7 @@ class BarChartFragment : Fragment() {
         adapterCuenta.add(cuentas[1].iban)
 
         adapterYear.add("Seleccion año")
-        for (i in 0..<years.size){
+        for (i in 0..<years.size) {
             adapterYear.add(years[i])
         }
         //Rellena Spinners
@@ -100,13 +115,12 @@ class BarChartFragment : Fragment() {
         barDataSetIngresos.setColor(R.color.greenPistacho)
         barDataSetGastos = BarDataSet(getBarChartDataForSet2(), "Gastos")
         barDataSetGastos.setColor(R.color.red)
-        barDataSetResultados = BarDataSet(getBarChartDataForSet3(), "Gastos")
+        barDataSetResultados = BarDataSet(getBarChartDataForSet3(), "Resultados")
         barDataSetResultados.setColor(androidx.appcompat.R.color.material_blue_grey_800)
 
-        // on below line we are initializing our bar data
+        barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
 
-        barData = BarData(barDataSetIngresos,barDataSetGastos,barDataSetResultados)
-// on below line we are setting data to our chart
+        // on below line we are setting data to our chart
         barChart.data = barData
 
         // on below line we are setting description enabled.
@@ -114,7 +128,11 @@ class BarChartFragment : Fragment() {
 
         // on below line setting x axis
         var xAxis = barChart.xAxis
+
+        // below line is to set value formatter to our x-axis and
+        // we are adding our days to our x axis.
         xAxis.valueFormatter = IndexAxisValueFormatter(months)
+
         // below line is to set center axis
         // labels to our bar chart.
         xAxis.setCenterAxisLabels(true)
@@ -141,15 +159,16 @@ class BarChartFragment : Fragment() {
 
         // below line is to add bar
         // space to our chart.
-        val barSpace = 0.1f
+        val barSpace = 0.065f
 
         // below line is use to add group
         // spacing to our bar chart.
-        val groupSpace = 0.5f
+        val groupSpace = 0.2f
 
         // we are setting width of
         // bar in below line.
-        barData.barWidth = 0.15f
+        barData.barWidth = 0.20f
+
 
         // below line is to set minimum
         // axis to our chart.
@@ -166,15 +185,12 @@ class BarChartFragment : Fragment() {
         // below line is to invalidate
         // our bar chart.
         barChart.invalidate()
-        // on below line we are setting data to our bar chart
-
-
-
 
         return binding.root
 
     }
-    private fun getBarChartDataForSet1():ArrayList<BarEntry> {
+
+    private fun getBarChartDataForSet1(): ArrayList<BarEntry> {
         barEntriesList = ArrayList()
 
         // on below line we are adding data
@@ -184,8 +200,16 @@ class BarChartFragment : Fragment() {
         barEntriesList.add(BarEntry(3f, 5f))
         barEntriesList.add(BarEntry(4f, 4f))
         barEntriesList.add(BarEntry(5f, 5f))
-    return barEntriesList
+        barEntriesList.add(BarEntry(6f, 5f))
+        barEntriesList.add(BarEntry(7f, 5f))
+        barEntriesList.add(BarEntry(8f, 5f))
+        barEntriesList.add(BarEntry(9f, 5f))
+        barEntriesList.add(BarEntry(10f, 5f))
+        barEntriesList.add(BarEntry(11f, 5f))
+        barEntriesList.add(BarEntry(12f, 5f))
+        return barEntriesList
     }
+
     private fun getBarChartDataForSet2(): ArrayList<BarEntry> {
         barEntriesList = ArrayList()
         // on below line we are adding
@@ -195,6 +219,13 @@ class BarChartFragment : Fragment() {
         barEntriesList.add(BarEntry(3f, 3f))
         barEntriesList.add(BarEntry(4f, 4f))
         barEntriesList.add(BarEntry(5f, 5f))
+        barEntriesList.add(BarEntry(6f, 5f))
+        barEntriesList.add(BarEntry(7f, 5f))
+        barEntriesList.add(BarEntry(8f, 5f))
+        barEntriesList.add(BarEntry(9f, 5f))
+        barEntriesList.add(BarEntry(10f, 5f))
+        barEntriesList.add(BarEntry(11f, 5f))
+        barEntriesList.add(BarEntry(12f, 5f))
         return barEntriesList
     }
 
@@ -207,8 +238,17 @@ class BarChartFragment : Fragment() {
         barEntriesList.add(BarEntry(3f, 6f))
         barEntriesList.add(BarEntry(4f, 8f))
         barEntriesList.add(BarEntry(5f, 10f))
+        barEntriesList.add(BarEntry(6f, 5f))
+        barEntriesList.add(BarEntry(7f, 5f))
+        barEntriesList.add(BarEntry(8f, 5f))
+        barEntriesList.add(BarEntry(9f, 5f))
+        barEntriesList.add(BarEntry(10f, 5f))
+        barEntriesList.add(BarEntry(11f, 5f))
+        barEntriesList.add(BarEntry(12f, 5f))
+
         return barEntriesList
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -220,12 +260,11 @@ class BarChartFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BarChartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance(param1: String, param2: String) = BarChartFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM1, param1)
+                putString(ARG_PARAM2, param2)
             }
+        }
     }
 }
