@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import java.time.LocalDate
 import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,10 +43,10 @@ class BarChartFragment : Fragment() {
     private var selectedIban: String? = null
     private var selectedYear: String? = null
     private val cuentaDao = CuentaDao(admin)
-    private val movDao=MovimientoBancarioDAO(admin)
-    lateinit var ingresosTotales:ArrayList<Float>
-    lateinit var gastosTotales:ArrayList<Float>
-    lateinit var resultados:ArrayList<Float>
+    private val movDao = MovimientoBancarioDAO(admin)
+    lateinit var ingresosTotales: ArrayList<Float>
+    lateinit var gastosTotales: ArrayList<Float>
+    lateinit var resultados: ArrayList<Float>
     lateinit var barChart: BarChart
     lateinit var barData: BarData
     lateinit var barDataSetIngresos: BarDataSet
@@ -100,13 +101,13 @@ class BarChartFragment : Fragment() {
         val adapterYear =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         //Agrega elementos a adaptadores
-        adapterCuenta.add("Selecciona una cuenta")
+
         adapterCuenta.add(cuentas[0].iban)
         adapterCuenta.add(cuentas[1].iban)
 
-        adapterYear.add("Seleccion año")
-        for (i in 0..<years.size) {
+        for(i in 0..4) {
             adapterYear.add(years[i])
+
         }
         //Rellena Spinners
         spCuenta.adapter = adapterCuenta
@@ -121,13 +122,25 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                selectedIban = adapterCuenta.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedIban",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                if (position == 0) {
+                    updateChart(cuentas[0].iban, years[0].toInt())
+                    // El usuario seleccionó el hint, puedes manejarlo si es necesario
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Has seleccionado la cuenta ${selectedIban.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    barChart.clear()
+                    // El usuario seleccionó una cuenta real
+                    selectedIban = adapterCuenta.getItem(position)
+                    updateChart(selectedIban.toString(), years[0].toInt())
+                }
+
+
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -138,66 +151,64 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                selectedYear = adapterYear.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedYear",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                if (position == 0) {
+                    updateChart(cuentas[0].iban, years[0].toInt())
+                    // El usuario seleccionó el hint, puedes manejarlo si es necesario
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "No hay datos para este año aun",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    barChart.clear()
+                    // El usuario seleccionó una cuenta real
+                    selectedYear = adapterYear.getItem(position)
+                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                }
+
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
         }
 
 
-        //Obtenemos los ingresos y los gastos
-        //val ingresos=movDao.getIncome(cuentas[0].iban)
 
-        val yearSelect:Int
-        val ibanSelect:String
-        if((selectedIban==null && selectedYear==null)||selectedIban==null || selectedYear==null){
-            yearSelect=years[0].toInt()
-            ibanSelect=cuentas[0].iban
-        }else{
-            ibanSelect=selectedIban.toString()
-            yearSelect=selectedYear.toString().toInt()
-        }
-        calculateResult(ibanSelect,yearSelect)
 
-        createBarChart()
+
 
         return binding.root
     }
 
-    private fun calculateResult(iban :String,year:Int){
-        gastosTotales=ArrayList<Float>()
-        ingresosTotales=ArrayList<Float>()
-        resultados=ArrayList<Float>()
+    private fun calculateResult(iban: String, year: Int) {
+        gastosTotales = ArrayList<Float>()
+        ingresosTotales = ArrayList<Float>()
+        resultados = ArrayList<Float>()
 
-        var ingresos=movDao.getIncome(iban)
-        var gastos=movDao.getBills(iban)
+        var ingresos = movDao.getIncome(iban)
+        var gastos = movDao.getBills(iban)
 
-        for(i in 1..12) {
-            val gastoMes = Calculos.calcularImporteMes(i,year, gastos)
-            val ingresoMes=Calculos.calcularImporteMes(i,year,ingresos)
-            var resultadoMes=ingresoMes+gastoMes
+        for (i in 1..12) {
+            val gastoMes = Calculos.calcularImporteMes(i, year, gastos)
+            val ingresoMes = Calculos.calcularImporteMes(i, year, ingresos)
+            var resultadoMes = ingresoMes + gastoMes
             ingresosTotales.add(ingresoMes)
             gastosTotales.add(abs(gastoMes))
             resultados.add(resultadoMes)
         }
     }
 
-    private fun createBarChart(){
+    private fun createBarChart() {
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados
         barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
         barDataSetIngresos.color = Color.GREEN
         //barDataSetIngresos.setColor(R.color.red)
         barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-        barDataSetGastos.color=Color.RED
+        barDataSetGastos.color = Color.RED
         barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-        barDataSetResultados.color=Color.BLUE
+        barDataSetResultados.color = Color.BLUE
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
         //Configuracion de los datos en el grafico de barras
         barChart.data = barData
@@ -224,13 +235,33 @@ class BarChartFragment : Fragment() {
         barChart.invalidate()
     }
 
-    private fun getBarChartData(listOfAmount:ArrayList<Float>):ArrayList<BarEntry>{
-        barEntriesList=ArrayList()
-        for(i in 0..<listOfAmount.size){
-            barEntriesList.add(BarEntry(i.toFloat(),listOfAmount[i]))
+    private fun getBarChartData(listOfAmount: ArrayList<Float>): ArrayList<BarEntry> {
+        barEntriesList = ArrayList()
+        for (i in 0..<listOfAmount.size) {
+            barEntriesList.add(BarEntry(i.toFloat(), listOfAmount[i]))
         }
         return barEntriesList
     }
+
+
+
+    private fun updateChart(iban: String, year: Int) {
+        if (iban != "Selecciona una cuenta" && year > 0 && year != 0) {
+            // Realiza el cálculo de datos según la cuenta y el año seleccionados
+            calculateResult(iban, year)
+
+            // Actualiza el gráfico con los nuevos datos
+            createBarChart()
+        } else {
+            // Manejar el caso en el que los valores seleccionados no son válidos
+            Toast.makeText(
+                requireContext(),
+                "Selecciona una cuenta y un año válidos para actualizar el gráfico",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
 
     companion object {
         /**
