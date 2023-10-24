@@ -151,29 +151,52 @@ class BarChartFragment : Fragment() {
 
 
         //Obtenemos los ingresos y los gastos
-        val ingresos=movDao.getIncome("BBVA")
-        val gastos=movDao.getBills("BBVA")
+        //val ingresos=movDao.getIncome(cuentas[0].iban)
+
+        val yearSelect:Int
+        val ibanSelect:String
+        if((selectedIban==null && selectedYear==null)||selectedIban==null || selectedYear==null){
+            yearSelect=years[0].toInt()
+            ibanSelect=cuentas[0].iban
+        }else{
+            ibanSelect=selectedIban.toString()
+            yearSelect=selectedYear.toString().toInt()
+        }
+        val ingresos=movDao.getIncome(ibanSelect)
+        val gastos=movDao.getBills(ibanSelect)
+
         //Calculo de gastos por mes
-
-
-            val gastoMes= Calculos.calcularImporteMes(10,2023,gastos)
-            gastosTotales=ArrayList<Float>()
-            gastosTotales.add(abs(gastoMes))
+        gastosTotales=ArrayList<Float>()
+        ingresosTotales=ArrayList<Float>()
+        resultados=ArrayList<Float>()
+         for(i in 1..12) {
+             val gastoMes = Calculos.calcularImporteMes(i,yearSelect, gastos)
+             val ingresoMes=Calculos.calcularImporteMes(i,yearSelect,ingresos)
+             var resultadoMes=ingresoMes+gastoMes
+             ingresosTotales.add(ingresoMes)
+             gastosTotales.add(abs(gastoMes))
+             resultados.add(resultadoMes)
+         }
         Toast.makeText(
             requireContext(),
-            "gasto total ${abs(gastoMes)}",
+            "gasto total ${gastosTotales[9]}",
             Toast.LENGTH_SHORT
         ).show()
 
+        createBarChart()
 
+        return binding.root
+    }
+
+    private fun createBarChart(){
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados
-        barDataSetIngresos = BarDataSet(getBarChartDataForSet1(), "Ingresos")
+        barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
         barDataSetIngresos.color = Color.GREEN
         //barDataSetIngresos.setColor(R.color.red)
-        barDataSetGastos = BarDataSet(getBarChartDataForSet2(), "Gastos")
+        barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
         barDataSetGastos.color=Color.RED
-        barDataSetResultados = BarDataSet(getBarChartDataForSet3(), "Resultados")
+        barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
         barDataSetResultados.color=Color.BLUE
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
         //Configuracion de los datos en el grafico de barras
@@ -199,64 +222,12 @@ class BarChartFragment : Fragment() {
         barChart.animate()
         barChart.groupBars(0f, groupSpace, barSpace)
         barChart.invalidate()
-        return binding.root
     }
-
-    private fun getBarChartDataForSet1(): ArrayList<BarEntry> {
-        barEntriesList = ArrayList()
-
-        // on below line we are adding data
-        // to our bar entries list
-        barEntriesList.add(BarEntry(1f, 1000f))
-        barEntriesList.add(BarEntry(2f, 2000f))
-        barEntriesList.add(BarEntry(3f, 5000f))
-        barEntriesList.add(BarEntry(4f, 4000f))
-        barEntriesList.add(BarEntry(5f, 5000f))
-        barEntriesList.add(BarEntry(6f, 5000f))
-        barEntriesList.add(BarEntry(7f, 5000f))
-        barEntriesList.add(BarEntry(8f, 5000f))
-        barEntriesList.add(BarEntry(9f, 5000f))
-        barEntriesList.add(BarEntry(10f, 5000f))
-        barEntriesList.add(BarEntry(11f, 5000f))
-        barEntriesList.add(BarEntry(12f, 5000f))
-        return barEntriesList
-    }
-
-    private fun getBarChartDataForSet2(): ArrayList<BarEntry> {
-        barEntriesList = ArrayList()
-
-       barEntriesList.add(BarEntry(1f,2000f))
-        barEntriesList.add(BarEntry(2f, 2000f))
-        barEntriesList.add(BarEntry(3f, 3000f))
-        barEntriesList.add(BarEntry(4f, 4000f))
-        barEntriesList.add(BarEntry(5f, 5000f))
-        barEntriesList.add(BarEntry(6f, 5000f))
-        barEntriesList.add(BarEntry(7f, 5000f))
-        barEntriesList.add(BarEntry(8f, 5000f))
-        barEntriesList.add(BarEntry(9f, 5000f))
-        barEntriesList.add(BarEntry(10f,gastosTotales[0]))
-        barEntriesList.add(BarEntry(11f, 5000f))
-        barEntriesList.add(BarEntry(12f, 5000f))
-        return barEntriesList
-    }
-
-    private fun getBarChartDataForSet3(): ArrayList<BarEntry> {
-        barEntriesList = ArrayList()
-        // on below line we are adding data
-        // to our bar entries list
-        barEntriesList.add(BarEntry(1f, 2000f))
-        barEntriesList.add(BarEntry(2f, 4000f))
-        barEntriesList.add(BarEntry(3f, 6000f))
-        barEntriesList.add(BarEntry(4f, 8000f))
-        barEntriesList.add(BarEntry(5f, 1000f))
-        barEntriesList.add(BarEntry(6f, 5000f))
-        barEntriesList.add(BarEntry(7f, 500f))
-        barEntriesList.add(BarEntry(8f, 5000f))
-        barEntriesList.add(BarEntry(9f, 5000f))
-        barEntriesList.add(BarEntry(10f, 50f))
-        barEntriesList.add(BarEntry(11f, 5000f))
-        barEntriesList.add(BarEntry(12f, 10000f))
-
+    private fun getBarChartData(listOfAmount:ArrayList<Float>):ArrayList<BarEntry>{
+        barEntriesList=ArrayList()
+        for(i in 0..<listOfAmount.size){
+            barEntriesList.add(BarEntry(i.toFloat(),listOfAmount[i]))
+        }
         return barEntriesList
     }
 
