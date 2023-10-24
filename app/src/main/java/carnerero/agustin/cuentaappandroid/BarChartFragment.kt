@@ -14,6 +14,7 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Calculos
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -162,30 +163,29 @@ class BarChartFragment : Fragment() {
             ibanSelect=selectedIban.toString()
             yearSelect=selectedYear.toString().toInt()
         }
-        val ingresos=movDao.getIncome(ibanSelect)
-        val gastos=movDao.getBills(ibanSelect)
-
-        //Calculo de gastos por mes
-        gastosTotales=ArrayList<Float>()
-        ingresosTotales=ArrayList<Float>()
-        resultados=ArrayList<Float>()
-         for(i in 1..12) {
-             val gastoMes = Calculos.calcularImporteMes(i,yearSelect, gastos)
-             val ingresoMes=Calculos.calcularImporteMes(i,yearSelect,ingresos)
-             var resultadoMes=ingresoMes+gastoMes
-             ingresosTotales.add(ingresoMes)
-             gastosTotales.add(abs(gastoMes))
-             resultados.add(resultadoMes)
-         }
-        Toast.makeText(
-            requireContext(),
-            "gasto total ${gastosTotales[9]}",
-            Toast.LENGTH_SHORT
-        ).show()
+        calculateResult(ibanSelect,yearSelect)
 
         createBarChart()
 
         return binding.root
+    }
+
+    private fun calculateResult(iban :String,year:Int){
+        gastosTotales=ArrayList<Float>()
+        ingresosTotales=ArrayList<Float>()
+        resultados=ArrayList<Float>()
+
+        var ingresos=movDao.getIncome(iban)
+        var gastos=movDao.getBills(iban)
+
+        for(i in 1..12) {
+            val gastoMes = Calculos.calcularImporteMes(i,year, gastos)
+            val ingresoMes=Calculos.calcularImporteMes(i,year,ingresos)
+            var resultadoMes=ingresoMes+gastoMes
+            ingresosTotales.add(ingresoMes)
+            gastosTotales.add(abs(gastoMes))
+            resultados.add(resultadoMes)
+        }
     }
 
     private fun createBarChart(){
@@ -223,6 +223,7 @@ class BarChartFragment : Fragment() {
         barChart.groupBars(0f, groupSpace, barSpace)
         barChart.invalidate()
     }
+
     private fun getBarChartData(listOfAmount:ArrayList<Float>):ArrayList<BarEntry>{
         barEntriesList=ArrayList()
         for(i in 0..<listOfAmount.size){
