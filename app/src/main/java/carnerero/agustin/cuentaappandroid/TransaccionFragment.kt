@@ -89,11 +89,7 @@ class TransaccionFragment : Fragment() {
                 id: Long
             ) {
                 selectedItemOrigen = adapter.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedItemOrigen",
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -106,47 +102,58 @@ class TransaccionFragment : Fragment() {
                 id: Long
             ) {
                 selectedItemDestino = adapter.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedItemDestino",
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         }
-        aceptar.setOnClickListener{
-            if(selectedItemDestino==selectedItemOrigen){
+        aceptar.setOnClickListener {
+            val importeText = importe.text.toString().trim() // Usamos trim para eliminar espacios en blanco al principio o al final
+            if (importeText.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "No se puede realizar transferencia en una misma cuenta",
+                    "El campo de importe no puede estar vacío",
                     Toast.LENGTH_SHORT
                 ).show()
+            } else if (selectedItemDestino == selectedItemOrigen) {
+                Toast.makeText(
+                    requireContext(),
+                    "No se puede realizar una transferencia en la misma cuenta",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                // Aquí puedes continuar con el proceso de transferencia ya que el campo de importe no está vacío
+                Toast.makeText(
+                    requireContext(),
+                    "Transferencia realizada con éxito",
+                    Toast.LENGTH_SHORT
+                ).show()
+                val importeNegativo = -importeText.toDouble()
+                val importePositivo = importeText.toDouble()
+                cuentaDao.actualizarSaldo(importeNegativo, selectedItemOrigen.toString())
+                cuentaDao.actualizarSaldo(importePositivo, selectedItemDestino.toString())
 
-            }else{
-                Toast.makeText(
-                    requireContext(),
-                    "Transferencia realizada con exito",
-                    Toast.LENGTH_SHORT
-                ).show()
-                val importeText = importe.text.toString()
-                val importeNegativo = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
-                val importePositivo=importeText.toDouble()
-                cuentaDao.actualizarSaldo(importeNegativo,selectedItemOrigen.toString())
-                cuentaDao.actualizarSaldo(importePositivo,selectedItemDestino.toString())
-                //Egreso en cuenta de origen
-                var movimientoBancario= MovimientoBancario(importeNegativo,
-                    "Transaccion realizada",selectedItemOrigen.toString())
+                // Egreso en cuenta de origen
+                var movimientoBancario = MovimientoBancario(
+                    importeNegativo,
+                    "Transacción realizada",
+                    selectedItemOrigen.toString()
+                )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
-                //Ingreso en cuenta de destino
-                movimientoBancario=MovimientoBancario(importePositivo,
-                    "Transaccion recibida",selectedItemDestino.toString())
+
+                // Ingreso en cuenta de destino
+                movimientoBancario = MovimientoBancario(
+                    importePositivo,
+                    "Transacción recibida",
+                    selectedItemDestino.toString()
+                )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
 
                 (activity as NavActivity).actualizarFragmentSaldo()
             }
         }
+
         salir.setOnClickListener{
             (activity as NavActivity).inicio()
         }

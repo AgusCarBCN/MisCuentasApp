@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/orange"
     tools:context=".ConsultaFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -221,4 +224,5 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </FrameLayout>

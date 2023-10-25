@@ -126,11 +126,6 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Has seleccionado la cuenta ${selectedIban.toString()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     barChart.clear()
                     // El usuario seleccionó una cuenta real
                     selectedIban = adapterCuenta.getItem(position)
@@ -146,11 +141,6 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                    Toast.makeText(
-                        requireContext(),
-                        "No hay datos para este año aun",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     barChart.clear()
                     // El usuario seleccionó una cuenta real
                     selectedYear = adapterYear.getItem(position)
