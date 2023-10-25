@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
@@ -186,12 +187,11 @@ class BarChartFragment : Fragment() {
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados
         barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
-        barDataSetIngresos.color = Color.GREEN
-        //barDataSetIngresos.setColor(R.color.red)
+        barDataSetIngresos.color = context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!
         barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-        barDataSetGastos.color = Color.RED
+        barDataSetGastos.color = context?.let { ContextCompat.getColor(it, R.color.red) }!!
         barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-        barDataSetResultados.color = Color.BLUE
+        barDataSetResultados.color = context?.let { ContextCompat.getColor(it, R.color.blue) }!!
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
         //Configuracion de los datos en el grafico de barras
         barChart.data = barData
