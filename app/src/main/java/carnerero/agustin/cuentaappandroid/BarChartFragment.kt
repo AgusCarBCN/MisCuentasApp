@@ -115,7 +115,7 @@ class BarChartFragment : Fragment() {
         //este código establece un listener en un Spinner que captura la selección de un iban de una cuenta
         // muestra un mensaje Toast de la cuenta seleccionado. También tiene una función
         // de respaldo para cuando no se selecciona ningún element
-
+        //Inicializamos en año 0 y cuenta principal
         selectedYear=years[0]
         selectedIban=cuentas[0].iban
         spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -125,8 +125,6 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-
-
                     Toast.makeText(
                         requireContext(),
                         "Has seleccionado la cuenta ${selectedIban.toString()}",
@@ -136,11 +134,7 @@ class BarChartFragment : Fragment() {
                     // El usuario seleccionó una cuenta real
                     selectedIban = adapterCuenta.getItem(position)
                     updateChart(selectedIban.toString(), selectedYear.toString().toInt())
-
-
-
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -151,7 +145,6 @@ class BarChartFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-
                     Toast.makeText(
                         requireContext(),
                         "No hay datos para este año aun",
@@ -162,13 +155,11 @@ class BarChartFragment : Fragment() {
                     selectedYear = adapterYear.getItem(position)
                     updateChart(selectedIban.toString(), selectedYear.toString().toInt())
 
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-
 
         return binding.root
     }
