@@ -16,8 +16,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -30,7 +29,8 @@ class NewAmountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val admin=   DataBaseAppSingleton.getInstance(context)
+    private val movDao=MovimientoBancarioDAO(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,14 +60,11 @@ class NewAmountFragment : Fragment() {
         val descripcion:EditText=rootview.findViewById(R.id.et_descripcion)
         val importe:EditText=rootview.findViewById(R.id.et_importe)
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
-        val admin=   DataBaseAppSingleton.getInstance(context)
         val cuentaDao=CuentaDao(admin)
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         adapter.add("Selecciona una cuenta")
         adapter.add(cuentas[0].iban)
         adapter.add(cuentas[1].iban)
-
         spinnerCuentas.adapter = adapter
         spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -77,64 +74,43 @@ class NewAmountFragment : Fragment() {
                 id: Long
             ) {
                 selectedItem = adapter.getItem(position)
-                Toast.makeText(
-                    requireContext(),
-                    "Elemento seleccionado: $selectedItem",
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No es necesario implementar nada aquí si no se desea realizar ninguna acción específica
+
             }
         }
         nuevoIngreso.setOnClickListener {
-            val movDao=MovimientoBancarioDAO(admin)
-            //val movDaoProxy=MovimientoBancarioDAOProxy(movDao)
-            if (selectedItem != null) {
-                val movimientoBancario=MovimientoBancario(importe.text.toString().toDouble(),
-                    descripcion.text.toString(),selectedItem.toString())
-                movDao.nuevoImporte(movimientoBancario)
-                Toast.makeText(
-                    requireContext(),
-                    "nuevo ingreso en: $selectedItem",
-                    Toast.LENGTH_SHORT
-                ).show()
-                cuentaDao.actualizarSaldo(importe.text.toString().toDouble(),selectedItem.toString())
-                (activity as NavActivity).actualizarFragmentSaldo()
-
+            if (selectedItem == "Selecciona una cuenta") {
+                Toast.makeText(requireContext(), "Debes seleccionar una cuenta para añadir un nuevo ingreso", Toast.LENGTH_SHORT).show()
+            } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
+                Toast.makeText(requireContext(), "Los campos de importe y descripción no pueden estar vacíos", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Ningún elemento seleccionado",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val movimientoBancario = MovimientoBancario(importe.text.toString().toDouble(), descripcion.text.toString(), selectedItem.toString())
+                movDao.nuevoImporte(movimientoBancario)
+                Toast.makeText(requireContext(), "Nuevo ingreso en: $selectedItem", Toast.LENGTH_SHORT).show()
+                cuentaDao.actualizarSaldo(importe.text.toString().toDouble(), selectedItem.toString())
+                (activity as NavActivity).actualizarFragmentSaldo()
             }
-
         }
-        nuevoGasto.setOnClickListener {
-            val movDao: MovimientoBancarioDAO = MovimientoBancarioDAO(admin)
-            if (selectedItem != null) {
-                val importeText = importe.text.toString()
-                val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0 // Convertir a cantidad negativa
 
+        nuevoGasto.setOnClickListener {
+            if (selectedItem == "Selecciona una cuenta") {
+                Toast.makeText(requireContext(), "Debes seleccionar una cuenta para añadir un nuevo gasto", Toast.LENGTH_SHORT).show()
+            } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
+                Toast.makeText(requireContext(), "Los campos de importe y descripción no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+            } else {
+                val importeText = importe.text.toString()
+                val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
                 val movimientoBancario = MovimientoBancario(importeNumerico, descripcion.text.toString(), selectedItem.toString())
                 movDao.nuevoImporte(movimientoBancario)
-                Toast.makeText(
-                    requireContext(),
-                    "Nuevo gasto en: $selectedItem",
-                    Toast.LENGTH_SHORT
-                ).show()
-                cuentaDao.actualizarSaldo(importeNumerico,selectedItem.toString())
-                //actualizar el fragment con saldo actualizados cargando de nuevo el fragment
+                Toast.makeText(requireContext(), "Nuevo gasto en: $selectedItem", Toast.LENGTH_SHORT).show()
+                cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
                 (activity as NavActivity).actualizarFragmentSaldo()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Ningún elemento seleccionado",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
+
+
         return rootview
     }
 

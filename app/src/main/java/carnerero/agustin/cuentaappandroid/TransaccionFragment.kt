@@ -71,7 +71,6 @@ class TransaccionFragment : Fragment() {
         //Lleno los dos spinners
         adapter.add(cuentas[0].iban)
         adapter.add(cuentas[1].iban)
-
         cuentaOrigen.adapter = adapter
         cuentaDestino.adapter=adapter
         //Selecciono los elementos por defecto en origen la cuenta principal y en destino la secundaria
