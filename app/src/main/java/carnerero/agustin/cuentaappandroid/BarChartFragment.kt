@@ -115,6 +115,9 @@ class BarChartFragment : Fragment() {
         //este código establece un listener en un Spinner que captura la selección de un iban de una cuenta
         // muestra un mensaje Toast de la cuenta seleccionado. También tiene una función
         // de respaldo para cuando no se selecciona ningún element
+
+        selectedYear=years[0]
+        selectedIban=cuentas[0].iban
         spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -123,10 +126,7 @@ class BarChartFragment : Fragment() {
                 id: Long
             ) {
 
-                if (position == 0) {
-                    updateChart(cuentas[0].iban, years[0].toInt())
-                    // El usuario seleccionó el hint, puedes manejarlo si es necesario
-                } else {
+
                     Toast.makeText(
                         requireContext(),
                         "Has seleccionado la cuenta ${selectedIban.toString()}",
@@ -135,8 +135,8 @@ class BarChartFragment : Fragment() {
                     barChart.clear()
                     // El usuario seleccionó una cuenta real
                     selectedIban = adapterCuenta.getItem(position)
-                    updateChart(selectedIban.toString(), years[0].toInt())
-                }
+                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+
 
 
             }
@@ -152,10 +152,6 @@ class BarChartFragment : Fragment() {
                 id: Long
             ) {
 
-                if (position == 0) {
-                    updateChart(cuentas[0].iban, years[0].toInt())
-                    // El usuario seleccionó el hint, puedes manejarlo si es necesario
-                } else {
                     Toast.makeText(
                         requireContext(),
                         "No hay datos para este año aun",
@@ -165,17 +161,13 @@ class BarChartFragment : Fragment() {
                     // El usuario seleccionó una cuenta real
                     selectedYear = adapterYear.getItem(position)
                     updateChart(selectedIban.toString(), selectedYear.toString().toInt())
-                }
+
 
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-
-
-
-
 
 
         return binding.root
