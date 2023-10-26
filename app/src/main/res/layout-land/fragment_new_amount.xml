@@ -42,7 +42,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -94,9 +94,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/style_editetx"
-            android:theme="@style/CustomSpinner"
             android:gravity="center|center_vertical"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:theme="@style/CustomSpinner" />
 
         <LinearLayout
             android:layout_width="match_parent"
