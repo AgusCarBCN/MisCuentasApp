@@ -35,7 +35,6 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         supportActionBar?.setHomeButtonEnabled(true)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -46,51 +45,33 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         fragmentContainer.visibility=View.VISIBLE
         when (item.itemId) {
             R.id.consulta -> {
-                Toast.makeText(this, "Consulta", Toast.LENGTH_SHORT).show()
                 val fragmentSearch = ConsultaFragment ()
-                //val fragmentResul=ResultFragment()
                 changeFragmentMain(fragmentSearch)
-                //changeFragmentInfo(fragmentResul)
                 fragmentSearch.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
-
             }
             R.id.nuevoImporte -> {
-
-                Toast.makeText(this, "Nuevo Importe", Toast.LENGTH_SHORT).show()
-                // Aquí puedes agregar el fragmento que deseas mostrar
-                val nuevoImporteFragment = NewAmountFragment() // Reemplaza con el nombre de tu fragmento
+                val nuevoImporteFragment = NewAmountFragment()
                 changeFragmentMain(nuevoImporteFragment)
                 nuevoImporteFragment.setMenuVisibility(true)
-                fragmentContainer.visibility=View.VISIBLE
-            }
+                fragmentContainer.visibility=View.VISIBLE            }
             R.id.estadistica -> {
-                Toast.makeText(this, "estadistica", Toast.LENGTH_SHORT).show()
-                val barChartFragment =  BarChartFragment()// Reemplaza con el nombre de tu fragmento
-
+                val barChartFragment =  BarChartFragment()
                 changeFragmentMain(barChartFragment)
                 barChartFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
-
-
             }
             R.id.transferencia -> {
-                Toast.makeText(this, "trasnferencia", Toast.LENGTH_SHORT).show()
-               val transferenciaFragment =  TransaccionFragment()// Reemplaza con el nombre de tu fragmento
-
+               val transferenciaFragment =  TransaccionFragment()
                 changeFragmentMain(transferenciaFragment)
                 transferenciaFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
-
             }
-            R.id.salir ->{Toast.makeText(this, "Saliendo de la aplicación", Toast.LENGTH_LONG).show()
-            finish()}
+            R.id.salir ->finish()
             R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
-
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
-
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -103,10 +84,6 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         toggle.onConfigurationChanged(newConfig)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-
-    }
     private fun changeFragmentMain(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_main_container, fragment)

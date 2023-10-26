@@ -127,7 +127,6 @@ class BarChartFragment : Fragment() {
                 id: Long
             ) {
                     barChart.clear()
-                    // El usuario seleccionó una cuenta real
                     selectedIban = adapterCuenta.getItem(position)
                     updateChart(selectedIban.toString(), selectedYear.toString().toInt())
             }
@@ -142,16 +141,12 @@ class BarChartFragment : Fragment() {
                 id: Long
             ) {
                     barChart.clear()
-                    // El usuario seleccionó una cuenta real
                     selectedYear = adapterYear.getItem(position)
                     updateChart(selectedIban.toString(), selectedYear.toString().toInt())
-
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-
         return binding.root
     }
 
@@ -216,13 +211,10 @@ class BarChartFragment : Fragment() {
         return barEntriesList
     }
 
-
-
     private fun updateChart(iban: String, year: Int) {
         if (iban != "Selecciona una cuenta" && year > 0 && year != 0) {
             // Realiza el cálculo de datos según la cuenta y el año seleccionados
             calculateResult(iban, year)
-
             // Actualiza el gráfico con los nuevos datos
             createBarChart()
         } else {
@@ -234,7 +226,6 @@ class BarChartFragment : Fragment() {
             ).show()
         }
     }
-
 
     companion object {
         /**
