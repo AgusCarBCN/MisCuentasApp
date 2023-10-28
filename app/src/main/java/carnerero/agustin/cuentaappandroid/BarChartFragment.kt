@@ -2,7 +2,6 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
-import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Calculos
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -23,7 +20,6 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import java.time.LocalDate
 import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,8 +50,7 @@ class BarChartFragment : Fragment() {
     lateinit var barDataSetGastos: BarDataSet
     lateinit var barDataSetResultados: BarDataSet
     lateinit var barEntriesList: ArrayList<BarEntry>
-
-    var months = arrayOf(
+    val months = arrayOf(
         "Enero",
         "Febrero",
         "Marzo",
@@ -155,13 +150,13 @@ class BarChartFragment : Fragment() {
         ingresosTotales = ArrayList<Float>()
         resultados = ArrayList<Float>()
 
-        var ingresos = movDao.getIncome(iban)
-        var gastos = movDao.getBills(iban)
+        val ingresos = movDao.getIncome(iban)
+        val gastos = movDao.getBills(iban)
 
         for (i in 1..12) {
             val gastoMes = Calculos.calcularImporteMes(i, year, gastos)
             val ingresoMes = Calculos.calcularImporteMes(i, year, ingresos)
-            var resultadoMes = ingresoMes + gastoMes
+            val resultadoMes = ingresoMes + gastoMes
             ingresosTotales.add(ingresoMes)
             gastosTotales.add(abs(gastoMes))
             resultados.add(resultadoMes)
@@ -178,6 +173,7 @@ class BarChartFragment : Fragment() {
         barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
         barDataSetResultados.color = context?.let { ContextCompat.getColor(it, R.color.blue) }!!
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
+        barData.setValueTextSize(12f)
         //Configuracion de los datos en el grafico de barras
         barChart.data = barData
         barChart.description.isEnabled = false
@@ -186,6 +182,7 @@ class BarChartFragment : Fragment() {
         //Añadir los meses en el eje X y centramos las etiquetas
         xAxis.valueFormatter = IndexAxisValueFormatter(months)
         xAxis.setCenterAxisLabels(true)
+        xAxis.textSize = 12f
         //Configuracion del ejeX
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
@@ -201,6 +198,10 @@ class BarChartFragment : Fragment() {
         barChart.animate()
         barChart.groupBars(0f, groupSpace, barSpace)
         barChart.invalidate()
+        barChart.setDrawValueAboveBar(true) // Muestra los valores encima de las barras
+        barChart.isHighlightFullBarEnabled = true // Permite que se destaquen barras individuales al tocarlas
+        barChart.setDrawMarkers(true) // Muestra tooltips cuando se toca una barra
+
     }
 
     private fun getBarChartData(listOfAmount: ArrayList<Float>): ArrayList<BarEntry> {
@@ -212,19 +213,9 @@ class BarChartFragment : Fragment() {
     }
 
     private fun updateChart(iban: String, year: Int) {
-        if (iban != "Selecciona una cuenta" && year > 0 && year != 0) {
-            // Realiza el cálculo de datos según la cuenta y el año seleccionados
             calculateResult(iban, year)
             // Actualiza el gráfico con los nuevos datos
             createBarChart()
-        } else {
-            // Manejar el caso en el que los valores seleccionados no son válidos
-            Toast.makeText(
-                requireContext(),
-                "Selecciona una cuenta y un año válidos para actualizar el gráfico",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     companion object {

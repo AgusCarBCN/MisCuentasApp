@@ -244,8 +244,6 @@ class ConsultaFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             R.style.AppTheme_DialogTheme,
-
-
             { _, yearFormat, monthFormat, dayOfMonth ->
                 val selectedDate =
                     "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
