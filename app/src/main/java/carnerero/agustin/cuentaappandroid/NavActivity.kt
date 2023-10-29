@@ -47,28 +47,33 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             R.id.consulta -> {
                 val fragmentSearch = ConsultaFragment ()
                 changeFragmentMain(fragmentSearch)
+                showSaldo()
                 fragmentSearch.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
             }
             R.id.nuevoImporte -> {
                 val nuevoImporteFragment = NewAmountFragment()
                 changeFragmentMain(nuevoImporteFragment)
+                showSaldo()
                 nuevoImporteFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE            }
             R.id.estadistica -> {
                 val barChartFragment =  BarChartFragment()
                 changeFragmentMain(barChartFragment)
+                showSaldo()
                 barChartFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
             }
             R.id.transferencia -> {
                val transferenciaFragment =  TransaccionFragment()
                 changeFragmentMain(transferenciaFragment)
+                showSaldo()
                 transferenciaFragment.setMenuVisibility(true)
                 fragmentContainer.visibility=View.VISIBLE
             }
             R.id.salir ->finish()
-            R.id.configuracion -> Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
+            R.id.configuracion ->{ Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
+            showSaldo()}
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
@@ -89,9 +94,10 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
             .replace(R.id.fcv_main_container, fragment)
             .commit()
     }
-    private fun changeFragmentInfo(fragment: Fragment) {
+    private fun showSaldo() {
+        val fragmentSaldo=SaldoFragment()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.info_container, fragment)
+            .replace(R.id.info_container, fragmentSaldo)
             .commit()
     }
     fun actualizarFragmentSaldo() {

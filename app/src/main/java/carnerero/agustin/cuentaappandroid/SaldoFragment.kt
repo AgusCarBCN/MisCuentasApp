@@ -3,11 +3,14 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Context
 import android.icu.text.NumberFormat
 import android.os.Bundle
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import java.util.Locale
@@ -49,20 +52,21 @@ class SaldoFragment : Fragment() {
         val dni = sharedPreferences.getString("dni", "") ?: ""
         val admin=DataBaseApp(context,"cuentaApp",null,1)
         val dao= CuentaDao(admin)
-
         val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
         val cuenta1:TextView=rootview.findViewById(R.id.tv_cuenta1)
         val cuenta2:TextView=rootview.findViewById(R.id.tv_cuenta2)
         val saldo1:TextView=rootview.findViewById(R.id.tv_saldo1)
         val saldo2:TextView=rootview.findViewById(R.id.tv_saldo2)
-
+        val result=rootview.findViewById<LinearLayout>(R.id.layoutresult)
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-
+        result.visibility=View.INVISIBLE
         cuenta1.text = cuentas[0].iban
         cuenta2.text = cuentas[1].iban
         saldo1.text = currencyFormat.format(cuentas[0].saldo).toString()
         saldo2.text = currencyFormat.format(cuentas[1].saldo).toString()
+        saldo1.setTextColor(context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!)
+        saldo2.setTextColor(context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!)
         return rootview
     }
 

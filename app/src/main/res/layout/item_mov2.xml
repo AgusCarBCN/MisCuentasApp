@@ -2,21 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style_cell"
+        android:background="@android:color/transparent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_dateitem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:background="@color/lightYellow"
+            android:background="@android:color/transparent"
             android:paddingLeft="10dp"
             android:textAlignment="viewStart"
             android:textColor="@color/darkBrown"
@@ -27,31 +29,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_desitem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="5"
+                android:background="@android:color/transparent"
                 android:gravity="start"
                 android:text="Nomina"
                 android:textColor="@color/blue"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/tv_impitem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:inputType="numberDecimal"
                 android:text="300 €"
-                android:textSize="20sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

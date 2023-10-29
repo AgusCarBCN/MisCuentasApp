@@ -15,6 +15,7 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import kotlin.math.abs
 
 
 private const val ARG_PARAM1 = "param1"
@@ -29,8 +30,8 @@ class NewAmountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val admin=   DataBaseAppSingleton.getInstance(context)
-    private val movDao=MovimientoBancarioDAO(admin)
+    private val admin = DataBaseAppSingleton.getInstance(context)
+    private val movDao = MovimientoBancarioDAO(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,23 +46,28 @@ class NewAmountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var selectedItem:String?=null
+        var selectedItem: String? = null
 
         // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_new_amount, container, false)
+        val rootview = inflater.inflate(R.layout.fragment_new_amount, container, false)
 
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
 
         val dni = sharedPreferences.getString("dni", "") ?: ""
         val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
-        val nuevoIngreso:Button=rootview.findViewById(R.id.btn_nuevoingreso)
-        val nuevoGasto:Button=rootview.findViewById(R.id.btn_nuevogasto)
-        val descripcion:EditText=rootview.findViewById(R.id.et_descripcion)
-        val importe:EditText=rootview.findViewById(R.id.et_importe)
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val cuentaDao=CuentaDao(admin)
-        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        val nuevoIngreso: Button = rootview.findViewById(R.id.btn_nuevoingreso)
+        val nuevoGasto: Button = rootview.findViewById(R.id.btn_nuevogasto)
+        val descripcion: EditText = rootview.findViewById(R.id.et_descripcion)
+        val importe: EditText = rootview.findViewById(R.id.et_importe)
+        val adapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        val cuentaDao = CuentaDao(admin)
+        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
+        val saldo1 = cuentas[0].saldo
+        val saldo2 = cuentas[1].saldo
+
         adapter.add("Selecciona una cuenta")
         adapter.add(cuentas[0].iban)
         adapter.add(cuentas[1].iban)
@@ -76,37 +82,82 @@ class NewAmountFragment : Fragment() {
                 selectedItem = adapter.getItem(position)
 
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         }
         nuevoIngreso.setOnClickListener {
             if (selectedItem == "Selecciona una cuenta") {
-                Toast.makeText(requireContext(), "Debes seleccionar una cuenta para añadir un nuevo ingreso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Debes seleccionar una cuenta para añadir un nuevo ingreso",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
-                Toast.makeText(requireContext(), "Los campos de importe y descripción no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Los campos de importe y descripción no pueden estar vacíos",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                val movimientoBancario = MovimientoBancario(importe.text.toString().toDouble(), descripcion.text.toString(), selectedItem.toString())
+                val movimientoBancario = MovimientoBancario(
+                    importe.text.toString().toDouble(),
+                    descripcion.text.toString(),
+                    selectedItem.toString()
+                )
                 movDao.nuevoImporte(movimientoBancario)
-                Toast.makeText(requireContext(), "Nuevo ingreso en: $selectedItem", Toast.LENGTH_SHORT).show()
-                cuentaDao.actualizarSaldo(importe.text.toString().toDouble(), selectedItem.toString())
+                Toast.makeText(
+                    requireContext(),
+                    "Nuevo ingreso en: $selectedItem",
+                    Toast.LENGTH_SHORT
+                ).show()
+                cuentaDao.actualizarSaldo(
+                    importe.text.toString().toDouble(),
+                    selectedItem.toString()
+                )
                 (activity as NavActivity).actualizarFragmentSaldo()
             }
         }
 
         nuevoGasto.setOnClickListener {
             if (selectedItem == "Selecciona una cuenta") {
-                Toast.makeText(requireContext(), "Debes seleccionar una cuenta para añadir un nuevo gasto", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Debes seleccionar una cuenta para añadir un nuevo gasto",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
-                Toast.makeText(requireContext(), "Los campos de importe y descripción no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Los campos de importe y descripción no pueden estar vacíos",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
-                val movimientoBancario = MovimientoBancario(importeNumerico, descripcion.text.toString(), selectedItem.toString())
-                movDao.nuevoImporte(movimientoBancario)
-                Toast.makeText(requireContext(), "Nuevo gasto en: $selectedItem", Toast.LENGTH_SHORT).show()
-                cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
-                (activity as NavActivity).actualizarFragmentSaldo()
+                //Controlo que el importe no sea superior a saldos de las cuentas
+                if (abs(importeNumerico) > saldo1 || abs(importeNumerico) > saldo2) {
+                    Toast.makeText(
+                        requireContext(),
+                        "El importe del gasto no puede ser mayor que el saldo actual de la cuenta",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val movimientoBancario = MovimientoBancario(
+                        importeNumerico,
+                        descripcion.text.toString(),
+                        selectedItem.toString()
+                    )
+                    movDao.nuevoImporte(movimientoBancario)
+                    Toast.makeText(
+                        requireContext(),
+                        "Nuevo gasto en: $selectedItem",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
+                    (activity as NavActivity).actualizarFragmentSaldo()
+                }
             }
         }
 

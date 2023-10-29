@@ -44,9 +44,9 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
             // Formatear la fecha en un formato amigable solo si es diferente al elemento anterior
             holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
         } else {
-            //holder.fechaitem.text = "" // Dejar el campo de fecha vacío para elementos repetidos
-            //holder.fechaitem.layoutParams.height = 0
-            //holder.fechaitem.layoutParams.width=0
+            holder.fechaitem.text = "" // Dejar el campo de fecha vacío para elementos repetidos
+            holder.fechaitem.layoutParams.height = 0
+            holder.fechaitem.layoutParams.width=0
 
         }
 
