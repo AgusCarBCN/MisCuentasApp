@@ -39,6 +39,7 @@ class ConsultaFragment : Fragment() {
     private var param2: String? = null
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedItem: String? = null
+    private var result=0.0
     private val movDao = MovimientoBancarioDAO(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,7 +157,6 @@ class ConsultaFragment : Fragment() {
             val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
             //Fechas
-
             val fechaDesdeStr: String = etDateFrom.text.toString()
             val fechaHastaStr: String = etDateTo.text.toString()
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -165,6 +165,8 @@ class ConsultaFragment : Fragment() {
             //por texto
             val searchByText: EditText = rootview.findViewById(R.id.et_search)
             val searchText: String = searchByText.text.toString()
+            //Resultado de los importes totales
+
             if (selectedItem.toString() == "Selecciona una cuenta") {
                 Toast.makeText(
                     requireContext(),
@@ -217,12 +219,17 @@ class ConsultaFragment : Fragment() {
                         ).show()
                     }
                 } else {
+                    result=calculateResult(movList)
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("clave_movimientos", movList)
+                    bundle.putDouble("Result",result)
                     val fragmentList = ListOfMovFragment()
+                    val fragmentSaldo=ResultFragment()
                     fragmentList.arguments = bundle
+                    fragmentSaldo.arguments=bundle
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.fcv_main_container, fragmentList)
+                    transaction.replace(R.id.info_container,fragmentSaldo)
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }
@@ -244,8 +251,6 @@ class ConsultaFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             R.style.AppTheme_DialogTheme,
-
-
             { _, yearFormat, monthFormat, dayOfMonth ->
                 val selectedDate =
                     "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
@@ -262,6 +267,13 @@ class ConsultaFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    private fun calculateResult(movList:ArrayList<MovimientoBancario>):Double{
+        var result=0.0
+        for(i in 0..<movList.size){
+            result+=movList[i].importe
+        }
+        return result
+    }
 
     companion object {
         /**
@@ -282,4 +294,5 @@ class ConsultaFragment : Fragment() {
                 }
             }
     }
+
 }
