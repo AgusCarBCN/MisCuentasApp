@@ -5,12 +5,19 @@ import android.database.Cursor
 import android.database.SQLException
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.util.StringTokenizer
+
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     private val selectAll = "SELECT * FROM MOVIMIENTO"
     private val selectAllByIban = "SELECT * FROM MOVIMIENTO WHERE iban=?"
-    private val selectIncomes = "SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id WHERE m.iban = ?"
-    private val selectBills = "SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id WHERE m.iban = ?"
+    private val selectIncomes =
+        "SELECT * FROM MOVIMIENTO m JOIN INGRESO i ON m.id=i.id WHERE m.iban = ?"
+    private val selectBills =
+        "SELECT * FROM MOVIMIENTO m JOIN GASTO g ON m.id=g.id WHERE m.iban = ?"
 
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
@@ -28,6 +35,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
         }
     }
 
+
     fun getAll(): ArrayList<MovimientoBancario> {
         return listarMovimientos(selectAll, null)
     }
@@ -35,9 +43,11 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     fun getIncome(iban: String): ArrayList<MovimientoBancario> {
         return listarMovimientos(selectIncomes, iban)
     }
+
     fun getIncomeandBills(iban: String): ArrayList<MovimientoBancario> {
         return listarMovimientos(selectAllByIban, iban)
     }
+
     fun getBills(iban: String): ArrayList<MovimientoBancario> {
         return listarMovimientos(selectBills, iban)
     }
@@ -69,6 +79,36 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
         return movimientos
     }
+
+    fun readCsv(inputStream: InputStreamReader): List<MovimientoBancario> {
+        val reader = BufferedReader(inputStream)
+        val movimientos = mutableListOf<MovimientoBancario>()
+
+        // Saltar la primera línea (encabezado) si es necesario
+        // val header = reader.readLine()
+
+        reader.forEachLine { line ->
+            if (line.isNotBlank()) {
+                val tokens = StringTokenizer(line, ",")
+                if (tokens.countTokens() == 4) {
+                    val importe = tokens.nextToken().trim().toDouble()
+                    val descripcion = tokens.nextToken().trim()
+                    val iban = tokens.nextToken().trim()
+                    val fechaImporte = tokens.nextToken().trim().removeSurrounding("\"")
+                    val movimiento = MovimientoBancario(importe, descripcion, iban, fechaImporte)
+                    movimientos.add(movimiento)
+                } else {
+                    println("Línea con un formato incorrecto: $line")
+                }
+            }
+        }
+
+        return movimientos
+    }
+
+
+
+
 
 
 

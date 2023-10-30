@@ -12,12 +12,14 @@ data class MovimientoBancario(
     val iban: String,
     val fechaImporte: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readDouble(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: SimpleDateFormat("dd/MM/yyyy").format(Date())
     )
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeDouble(importe)

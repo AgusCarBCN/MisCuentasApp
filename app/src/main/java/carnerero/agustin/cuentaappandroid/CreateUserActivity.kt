@@ -6,19 +6,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.Usuario
+import java.io.InputStreamReader
 
 
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
     private val admin=DataBaseAppSingleton.getInstance(this)
-
+    private val movDAO=MovimientoBancarioDAO(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+        val input= InputStreamReader(assets.open("mov.csv"))
 
 
     }
@@ -69,6 +72,12 @@ class CreateUserActivity : AppCompatActivity() {
         usuarioDao.insertarUsuario(user)
         cuentaDao.insertarCuenta(cuenta1)
         cuentaDao.insertarCuenta(cuenta2)
+        val input= InputStreamReader(assets.open("mov.csv"))
+        val mov=movDAO.readCsv(input)
+        //insertar importes
+        for(i in 0..<mov.size){
+            movDAO.nuevoImporte(mov.get(i))
+        }
 
         startActivity(intent)
     }

@@ -7,16 +7,20 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 
 class LoginActivity : AppCompatActivity() {
 
     private val admin=DataBaseAppSingleton.getInstance(this)
-
+    private val movDAO=MovimientoBancarioDAO(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
     }
 
     fun login(view: View) {
@@ -55,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, NavActivity::class.java)
                 startActivity(intent)
+
             } else {
                 Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
             }
