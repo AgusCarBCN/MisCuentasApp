@@ -57,10 +57,8 @@ class SaldoFragment : Fragment() {
         val cuenta2:TextView=rootview.findViewById(R.id.tv_cuenta2)
         val saldo1:TextView=rootview.findViewById(R.id.tv_saldo1)
         val saldo2:TextView=rootview.findViewById(R.id.tv_saldo2)
-        val result=rootview.findViewById<LinearLayout>(R.id.layoutresult)
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-        result.visibility=View.INVISIBLE
         cuenta1.text = cuentas[0].iban
         cuenta2.text = cuentas[1].iban
         saldo1.text = currencyFormat.format(cuentas[0].saldo).toString()
