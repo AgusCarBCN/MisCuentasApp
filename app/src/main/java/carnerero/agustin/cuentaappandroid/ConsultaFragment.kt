@@ -21,6 +21,7 @@ import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
@@ -242,6 +243,7 @@ class ConsultaFragment : Fragment() {
 
     }
 
+    //Formato de fecha 01/09/2023
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -252,8 +254,9 @@ class ConsultaFragment : Fragment() {
             requireContext(),
             R.style.AppTheme_DialogTheme,
             { _, yearFormat, monthFormat, dayOfMonth ->
-                val selectedDate =
-                    "$dayOfMonth/${monthFormat + 1}/$yearFormat" // Formato de fecha deseado
+                val dayFormatted = String.format(Locale.getDefault(), "%02d", dayOfMonth)
+                val monthFormatted = String.format(Locale.getDefault(), "%02d", monthFormat + 1)
+                val selectedDate = "$dayFormatted/$monthFormatted/$yearFormat"
                 editText.setText(selectedDate)
             },
             year,
@@ -262,10 +265,11 @@ class ConsultaFragment : Fragment() {
         )
         val window = datePickerDialog.window
 
-        //Color de fondo
+        // Color de fondo
         window?.setBackgroundDrawableResource(R.color.lightYellow)
         datePickerDialog.show()
     }
+
 
     private fun calculateResult(movList:ArrayList<MovimientoBancario>):Double{
         var result=0.0
