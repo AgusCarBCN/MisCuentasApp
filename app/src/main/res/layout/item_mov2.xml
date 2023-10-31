@@ -22,7 +22,7 @@
             android:paddingLeft="10dp"
             android:textAlignment="viewStart"
             android:textColor="@color/darkBrown"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold|italic" />
 
         <LinearLayout

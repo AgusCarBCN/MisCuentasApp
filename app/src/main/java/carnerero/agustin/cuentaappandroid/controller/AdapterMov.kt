@@ -2,7 +2,7 @@ package carnerero.agustin.cuentaappandroid.controller
 
 import android.content.Context
 import android.icu.text.NumberFormat
-import android.opengl.Visibility
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+
 import java.util.Locale
 
 class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView.Adapter<AdapterMov.ViewHolder>() {
@@ -32,16 +31,15 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val euroLocale = Locale("es", "ES")
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        //val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val mov = movList[position]
         holder.descripcionitem.text = mov.descripcion
-        // Formatear la fecha en el formato "23 de marzo de 2023"
-        //holder.fechaitem.text = mov.fechaImporte
-        // Formatear la fecha en un formato amigable
-        //holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
-        // Comprobar si la fecha es la misma que la del elemento anterior
-
+        // Mostrar la fecha si es diferente de la fecha anterior
+        if (position == 0 || mov.fechaImporte != movList[position - 1].fechaImporte) {
             holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
+            holder.fechaitem.visibility = View.VISIBLE
+        } else {
+            holder.fechaitem.visibility = View.GONE       }
 
 
         val importeSinSigno = if (mov.importe < 0) -mov.importe else mov.importe
