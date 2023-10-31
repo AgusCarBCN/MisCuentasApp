@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import android.os.Parcel
 import android.os.Parcelable
+import java.time.format.DateTimeFormatter
 
 data class MovimientoBancario(
     val importe: Double,

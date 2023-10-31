@@ -15,6 +15,8 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.text.SimpleDateFormat
+import java.util.Date
 import kotlin.math.abs
 
 
@@ -88,6 +90,7 @@ class NewAmountFragment : Fragment() {
             }
         }
         nuevoIngreso.setOnClickListener {
+            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
             if (selectedItem == "Selecciona una cuenta") {
                 Toast.makeText(
                     requireContext(),
@@ -104,7 +107,8 @@ class NewAmountFragment : Fragment() {
                 val movimientoBancario = MovimientoBancario(
                     importe.text.toString().toDouble(),
                     descripcion.text.toString(),
-                    selectedItem.toString()
+                    selectedItem.toString(),
+                    fechaImporte
                 )
                 movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
@@ -121,6 +125,7 @@ class NewAmountFragment : Fragment() {
         }
 
         nuevoGasto.setOnClickListener {
+            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
             if (selectedItem == "Selecciona una cuenta") {
                 Toast.makeText(
                     requireContext(),
@@ -147,7 +152,8 @@ class NewAmountFragment : Fragment() {
                     val movimientoBancario = MovimientoBancario(
                         importeNumerico,
                         descripcion.text.toString(),
-                        selectedItem.toString()
+                        selectedItem.toString(),
+                        fechaImporte
                     )
                     movDao.nuevoImporte(movimientoBancario)
                     Toast.makeText(

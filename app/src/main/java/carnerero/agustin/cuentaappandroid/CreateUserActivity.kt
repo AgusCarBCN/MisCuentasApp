@@ -5,23 +5,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.model.Usuario
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import java.io.BufferedReader
+
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
 
 
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
-    private val admin=DataBaseAppSingleton.getInstance(this)
-    private val movDAO=MovimientoBancarioDAO(admin)
+    private val admin = DataBaseAppSingleton.getInstance(this)
+    private val movDAO = MovimientoBancarioDAO(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
-        val input= InputStreamReader(assets.open("mov.csv"))
+
 
 
     }
@@ -67,22 +74,37 @@ class CreateUserActivity : AppCompatActivity() {
             secondaryAmount.text.toString().toDouble(),
             dni.text.toString()
         )
-        usuarioDao=UsuarioDao(admin)
-        cuentaDao=CuentaDao(admin)
+        usuarioDao = UsuarioDao(admin)
+        cuentaDao = CuentaDao(admin)
         usuarioDao.insertarUsuario(user)
         cuentaDao.insertarCuenta(cuenta1)
         cuentaDao.insertarCuenta(cuenta2)
-        val input= InputStreamReader(assets.open("mov.csv"))
-        val mov=movDAO.readCsv(input)
-        //insertar importes
-        for(i in 0..<mov.size){
-            movDAO.nuevoImporte(mov.get(i))
+        val listMov=readFileCsv()
+        for(element in listMov){
+            movDAO.nuevoImporte(element)
         }
-
         startActivity(intent)
     }
 
-
-
-
+    private fun readFileCsv():MutableList<MovimientoBancario> {
+        val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
+        val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
+        val list = mutableListOf<MovimientoBancario>()
+        val formatoFecha = SimpleDateFormat("dd/MM/yyyy")
+        for (record in csvParser) {
+            try {
+                val id = record.get(0).toLong()
+                val importe = record.get(1).toDouble()
+                val descripcion = record.get(2)
+                val iban = record.get(3)
+                val fechaImporte = record.get(4)
+                val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
+                list.add(movimientoBancario)
+            } catch (e: Exception) {
+                // Manejar errores al analizar los datos CSV
+                e.printStackTrace()
+            }
+        }
+    return list
+    }
 }

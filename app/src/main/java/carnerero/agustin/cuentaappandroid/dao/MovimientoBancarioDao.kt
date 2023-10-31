@@ -80,31 +80,6 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
         return movimientos
     }
 
-    fun readCsv(inputStream: InputStreamReader): List<MovimientoBancario> {
-        val reader = BufferedReader(inputStream)
-        val movimientos = mutableListOf<MovimientoBancario>()
-
-        // Saltar la primera línea (encabezado) si es necesario
-        // val header = reader.readLine()
-
-        reader.forEachLine { line ->
-            if (line.isNotBlank()) {
-                val tokens = StringTokenizer(line, ",")
-                if (tokens.countTokens() == 4) {
-                    val importe = tokens.nextToken().trim().toDouble()
-                    val descripcion = tokens.nextToken().trim()
-                    val iban = tokens.nextToken().trim()
-                    val fechaImporte = tokens.nextToken().trim().removeSurrounding("\"")
-                    val movimiento = MovimientoBancario(importe, descripcion, iban, fechaImporte)
-                    movimientos.add(movimiento)
-                } else {
-                    println("Línea con un formato incorrecto: $line")
-                }
-            }
-        }
-
-        return movimientos
-    }
 
 
 

@@ -15,6 +15,8 @@ import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.text.SimpleDateFormat
+import java.util.Date
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -109,6 +111,7 @@ class TransaccionFragment : Fragment() {
             }
         }
         aceptar.setOnClickListener {
+            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
             val importeText = importe.text.toString().trim() // Usamos trim para eliminar espacios en blanco al principio o al final
             if (importeText.isEmpty()) {
                 Toast.makeText(
@@ -138,7 +141,7 @@ class TransaccionFragment : Fragment() {
                 var movimientoBancario = MovimientoBancario(
                     importeNegativo,
                     "Transacción realizada",
-                    selectedItemOrigen.toString()
+                    selectedItemOrigen.toString(),fechaImporte
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
 
@@ -146,7 +149,7 @@ class TransaccionFragment : Fragment() {
                 movimientoBancario = MovimientoBancario(
                     importePositivo,
                     "Transacción recibida",
-                    selectedItemDestino.toString()
+                    selectedItemDestino.toString(),fechaImporte
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
 

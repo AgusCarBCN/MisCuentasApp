@@ -32,7 +32,7 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val euroLocale = Locale("es", "ES")
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val mov = movList[position]
         holder.descripcionitem.text = mov.descripcion
         // Formatear la fecha en el formato "23 de marzo de 2023"
@@ -40,15 +40,9 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
         // Formatear la fecha en un formato amigable
         //holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
         // Comprobar si la fecha es la misma que la del elemento anterior
-        if (position == 0 || mov.fechaImporte != movList[position - 1].fechaImporte) {
-            // Formatear la fecha en un formato amigable solo si es diferente al elemento anterior
-            holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
-        } else {
-            holder.fechaitem.text = "" // Dejar el campo de fecha vacío para elementos repetidos
-            holder.fechaitem.layoutParams.height = 0
-            holder.fechaitem.layoutParams.width=0
 
-        }
+            holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
+
 
         val importeSinSigno = if (mov.importe < 0) -mov.importe else mov.importe
         holder.importeitem.text =currencyFormat.format(importeSinSigno)
