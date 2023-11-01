@@ -90,37 +90,46 @@
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/style_botton"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                   >
 
                     <RadioButton
                         android:id="@+id/rb_ingresos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/orange"
                         android:text="Ingresos"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:theme="@style/CustomSpinner" />
+
 
                     <RadioButton
                         android:id="@+id/rb_gastos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/orange"
                         android:text="Gastos"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:theme="@style/CustomSpinner" />
 
                     <RadioButton
                         android:id="@+id/rb_ingresosygastos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/orange"
                         android:text="Ingresos y gasto"
-                        android:textColor="@color/black"
+                        android:textColor="@color/darkBrown"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:theme="@style/CustomSpinner" />
+
 
                 </RadioGroup>
 
@@ -215,5 +224,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
+
 
 </FrameLayout>

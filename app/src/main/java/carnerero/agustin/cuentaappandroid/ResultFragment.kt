@@ -1,6 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.graphics.Color
+
 import android.icu.text.NumberFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,9 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import carnerero.agustin.cuentaappandroid.R.color.red
 import java.util.Locale
-import kotlin.math.abs
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,14 +49,18 @@ class ResultFragment : Fragment() {
         //Le damos formato al resultado como valor absoluto y con formato de divisa euro
         val resultFormatted = currencyFormat.format(Math.abs(result))
         // Usando String.format para mostrar solo dos decimales y con la divisa del euro
-        resultView.text=resultFormatted.toString()
-        if(result<0){
-            //Si result es menor que 0 se mostrara de color verde
-            resultView.setTextColor(context?.let { ContextCompat.getColor(it, R.color.red) }!!)
-        }else{
-            resultView.setTextColor(context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!)
+        /*La función run se utiliza para ejecutar un bloque de código en el contexto del objeto receptor .
+        * actualiza el texto de la vista resultView y cambia su color en función del valor de result.
+        *  Si result es negativo, el color del texto se establece en rojo; si es no negativo,
+        *  se establece en verde oscuro.*/
+        resultView.apply {
+            text = resultFormatted.toString()
+            if (result < 0) {
+                setTextColor(ContextCompat.getColor(context, R.color.red))
+            } else {
+                setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+            }
         }
-
 
 
         return rootview

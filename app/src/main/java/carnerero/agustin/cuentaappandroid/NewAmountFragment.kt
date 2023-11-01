@@ -105,7 +105,7 @@ class NewAmountFragment : Fragment() {
                 ).show()
             } else {
                 val movimientoBancario = MovimientoBancario(
-                    importe.text.toString().toDouble(),
+                    importe.text.toString().trim().toDouble(),
                     descripcion.text.toString(),
                     selectedItem.toString(),
                     fechaImporte
@@ -117,7 +117,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(
-                    importe.text.toString().toDouble(),
+                    importe.text.toString().trim().toDouble(),
                     selectedItem.toString()
                 )
                 (activity as NavActivity).actualizarFragmentSaldo()

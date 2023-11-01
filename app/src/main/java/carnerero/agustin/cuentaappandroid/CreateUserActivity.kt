@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
@@ -15,8 +14,6 @@ import carnerero.agustin.cuentaappandroid.model.Usuario
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
-
-import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 
 
@@ -90,10 +87,10 @@ class CreateUserActivity : AppCompatActivity() {
         val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
         val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
         val list = mutableListOf<MovimientoBancario>()
-        val formatoFecha = SimpleDateFormat("dd/MM/yyyy")
+        //val formatoFecha = SimpleDateFormat("dd/MM/yyyy")
         for (record in csvParser) {
             try {
-                val id = record.get(0).toLong()
+                //val id = record.get(0).toLong()
                 val importe = record.get(1).toDouble()
                 val descripcion = record.get(2)
                 val iban = record.get(3)

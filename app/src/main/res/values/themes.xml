@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CuentaAppAndroid" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:colorPrimary">@color/lightOrange</item>
+        <item name="android:colorPrimaryDark">@color/orange</item>
+        <item name="android:colorAccent">@color/lightYellow</item>
+        <item name="android:textColor">@color/darkBrown</item>
     </style>
 
     <style name="Theme.CuentaAppAndroid" parent="Base.Theme.CuentaAppAndroid" />
@@ -13,11 +15,17 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        ....
+        <!-- Customize your theme here. -->        ....
         <item name="android:dialogTheme">@style/AppTheme.DialogTheme</item>
         <item name="android:datePickerDialogTheme">@color/lightOrange</item>
     </style>
+    <style name="RadioButtonStyle">
+        <item name="android:textColor">@color/lightYellow</item> <!-- Color del texto cuando no está seleccionado -->
+        <item name="android:textColorHighlight">@color/orange</item> <!-- Color del texto cuando está seleccionado -->
+        <item name="android:buttonTint">@color/orange</item> <!-- Color del botón (círculo) cuando está seleccionado -->
+    </style>
+
+
     //Personalizacion del DatePickerDialog
     <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <!-- Put the two options, colorAccent and android:colorAccent. -->
@@ -26,6 +34,8 @@
         <item name="android:colorPrimaryDark">@color/orange</item>
         <item name="android:colorAccent">@color/orange</item>
     </style>
+
+
     <style name="CustomSpinner">
         <item name="android:background">@color/lightOrange</item>
         <item name="android:gravity">center</item>

@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
+import android.graphics.Color
 import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.text.Layout
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.model.Cuenta
@@ -61,12 +63,19 @@ class SaldoFragment : Fragment() {
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
         cuenta1.text = cuentas[0].iban
         cuenta2.text = cuentas[1].iban
-        saldo1.text = currencyFormat.format(cuentas[0].saldo).toString()
-        saldo2.text = currencyFormat.format(cuentas[1].saldo).toString()
-        saldo1.setTextColor(context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!)
-        saldo2.setTextColor(context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!)
+        saldo1.apply {
+            text=currencyFormat.format(cuentas[0].saldo).toString()
+            setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+        }
+
+        saldo2.apply {
+            text=currencyFormat.format(cuentas[0].saldo).toString()
+            setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+        }
+
         return rootview
     }
+
 
     companion object {
         /**
