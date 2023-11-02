@@ -18,7 +18,7 @@
         <EditText
             android:id="@+id/et_importetrans"
             android:layout_width="360dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/box"
             android:layout_gravity="center"
             android:layout_marginStart="0dp"
             android:layout_marginTop="20dp"
@@ -50,13 +50,13 @@
                 android:text="Cuenta origen"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/common"
                 android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/sp_cuentaorigen"
                 android:layout_width="220dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/box"
                 android:layout_gravity="center"
                 android:background="@drawable/style_editetx"
                 android:gravity="center|center_vertical"
@@ -81,13 +81,13 @@
                 android:text="Cuenta destino"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/common"
                 android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/sp_cuentadestino"
                 android:layout_width="220dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/box"
                 android:layout_gravity="center"
                 android:background="@drawable/style_editetx"
                 android:gravity="center|center_vertical"
@@ -117,7 +117,7 @@
                 android:text="Aceptar"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
@@ -139,7 +139,7 @@
                 android:text="Salir"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"

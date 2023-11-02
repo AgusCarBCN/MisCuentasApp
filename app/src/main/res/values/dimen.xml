@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <dimen name="small" >14dp</dimen>
+        <dimen name="common" >16dp</dimen>
+        <dimen name="login" >20dp</dimen>
+        <dimen name="botton" >20dp</dimen>
+        <dimen name="textView" >20dp</dimen>
+        <dimen name="head" >24dp</dimen>
+        <dimen name="wellcome" >34dp</dimen>
+        <dimen name="boxh" >42dp</dimen>
+        <dimen name="box" >48dp</dimen>
+
+</resources>

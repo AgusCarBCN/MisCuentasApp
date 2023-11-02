@@ -43,13 +43,13 @@
                     android:layout_marginRight="20dp"
                     android:text="Selecciona una cuenta"
                     android:textColor="@color/darkBrown"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/common"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/sp_cuenta"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/box"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/style_editetx"
                     android:theme="@style/CustomSpinner" />
@@ -70,13 +70,13 @@
                     android:layout_marginLeft="0dp"
                     android:text="Selecciona un año"
                     android:textColor="@color/darkBrown"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/common"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/sp_year"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/box"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="0dp"
                     android:background="@drawable/style_editetx"

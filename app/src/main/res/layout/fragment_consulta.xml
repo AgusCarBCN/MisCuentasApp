@@ -16,7 +16,7 @@
         <EditText
             android:id="@+id/et_search"
             android:layout_width="360dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/box"
             android:layout_weight="1"
             android:background="@drawable/style_editetx"
             android:ems="10"
@@ -40,7 +40,7 @@
                 <EditText
                     android:id="@+id/et_datefrom"
                     android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/box"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/style_editetx"
@@ -54,7 +54,7 @@
                 <EditText
                     android:id="@+id/et_dateto"
                     android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/box"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/style_editetx"
@@ -88,7 +88,7 @@
                 <RadioGroup
                     android:id="@+id/selectImporte"
                     android:layout_width="360dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/box"
                     android:background="@drawable/style_botton"
                     android:orientation="horizontal"
                    >
@@ -101,7 +101,7 @@
                         android:buttonTint="@color/orange"
                         android:text="Ingresos"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
 
@@ -109,24 +109,24 @@
                     <RadioButton
                         android:id="@+id/rb_gastos"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/wellcome"
                         android:layout_weight="1"
                         android:buttonTint="@color/orange"
                         android:text="Gastos"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
 
                     <RadioButton
                         android:id="@+id/rb_ingresosygastos"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/wellcome"
                         android:layout_weight="1"
                         android:buttonTint="@color/orange"
                         android:text="Ingresos y gasto"
                         android:textColor="@color/darkBrown"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
 
@@ -146,7 +146,7 @@
                 <EditText
                     android:id="@+id/et_importedesde"
                     android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/box"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
@@ -160,7 +160,7 @@
                 <EditText
                     android:id="@+id/et_importehasta"
                     android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/box"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/style_editetx"
@@ -183,7 +183,7 @@
             <Spinner
                 android:id="@+id/sp_consulta"
                 android:layout_width="360dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/box"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/style_editetx"
@@ -207,7 +207,7 @@
                 android:text="Buscar"
                 android:textAllCaps="false"
                 android:textColor="@color/darkBrown"
-                android:textSize="20sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold" />
 
             <Button
@@ -220,7 +220,7 @@
                 android:text="Cancelar"
                 android:textAllCaps="false"
                 android:textColor="@color/darkBrown"
-                android:textSize="20sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

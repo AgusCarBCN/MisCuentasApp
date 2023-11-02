@@ -19,7 +19,7 @@
         <EditText
             android:id="@+id/et_importetrans"
             android:layout_width="360dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/box"
             android:layout_gravity="center"
             android:background="@drawable/style_editetx"
             android:contentDescription="Introduce el usuario"
@@ -41,13 +41,13 @@
             android:text="Cuenta origen"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/head"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_cuentaorigen"
             android:layout_width="360dp"
-            android:layout_height="46dp"
+            android:layout_height="@dimen/box"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/style_editetx"
@@ -63,13 +63,13 @@
             android:text="Cuenta destino"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/head"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_cuentadestino"
             android:layout_width="360dp"
-            android:layout_height="46dp"
+            android:layout_height="@dimen/box"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/style_editetx"
@@ -78,7 +78,7 @@
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
@@ -97,7 +97,7 @@
                 android:text="Aceptar"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
@@ -117,7 +117,7 @@
                 android:text="Salir"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"

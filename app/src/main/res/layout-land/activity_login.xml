@@ -50,7 +50,7 @@
                 android:text="@string/wellcome"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="34sp"
+                android:textSize="@dimen/wellcome"
                 android:textStyle="bold" />
 
             <TextView
@@ -61,13 +61,13 @@
                 android:text="@string/user"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/head"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_text_user"
                 android:layout_width="320dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/box"
                 android:background="@drawable/style_editetx"
                 android:ems="10"
                 android:gravity="center"
@@ -77,7 +77,7 @@
                 android:id="@+id/tv_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/head"
                 android:text="@string/password"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -87,7 +87,7 @@
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="320dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/box"
                 android:background="@drawable/style_editetx"
                 android:ems="10"
                 android:gravity="center"
@@ -104,7 +104,7 @@
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="@dimen/botton"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -120,7 +120,7 @@
                     android:text="¿Eres un nuevo usuario?"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/common"
                     android:textStyle="bold" />
 
                 <Button
@@ -132,7 +132,7 @@
                     android:onClick="createUser"
                     android:text="Crear un cuenta"
                     android:textAllCaps="false"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/common" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

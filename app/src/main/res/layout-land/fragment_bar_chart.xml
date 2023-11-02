@@ -38,7 +38,7 @@
                 <Spinner
                     android:id="@+id/sp_cuenta"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/box"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/style_editetx"
                     android:theme="@style/CustomSpinner" />
@@ -54,7 +54,7 @@
                 <Spinner
                     android:id="@+id/sp_year"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/box"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="0dp"
                     android:background="@drawable/style_editetx"
