@@ -114,6 +114,7 @@ class BarChartFragment : Fragment() {
         //Inicializamos en año 0 y cuenta principal
         selectedYear=years[0]
         selectedIban=cuentas[0].iban
+
         spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -149,10 +150,8 @@ class BarChartFragment : Fragment() {
         gastosTotales = ArrayList<Float>()
         ingresosTotales = ArrayList<Float>()
         resultados = ArrayList<Float>()
-
         val ingresos = movDao.getIncome(iban)
         val gastos = movDao.getBills(iban)
-
         for (i in 1..12) {
             val gastoMes = Calculos.calcularImporteMes(i, year, gastos)
             val ingresoMes = Calculos.calcularImporteMes(i, year, ingresos)
@@ -167,11 +166,11 @@ class BarChartFragment : Fragment() {
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados
         barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
-        barDataSetIngresos.color = context?.let { ContextCompat.getColor(it, R.color.darkgreen) }!!
+        barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkgreen)
         barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-        barDataSetGastos.color = context?.let { ContextCompat.getColor(it, R.color.red) }!!
+        barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
         barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-        barDataSetResultados.color = context?.let { ContextCompat.getColor(it, R.color.blue) }!!
+        barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
         barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
         barData.setValueTextSize(12f)
         //Configuracion de los datos en el grafico de barras
@@ -194,8 +193,8 @@ class BarChartFragment : Fragment() {
         val groupSpace = 0.2f
         barData.barWidth = 0.20f
         barChart.xAxis.axisMinimum = 0f
-        //animacion del grafico.
         barChart.animate()
+        barChart.setNoDataText("")
         barChart.groupBars(0f, groupSpace, barSpace)
         barChart.invalidate()
         barChart.setDrawValueAboveBar(true) // Muestra los valores encima de las barras

@@ -67,12 +67,10 @@ class SaldoFragment : Fragment() {
             text=currencyFormat.format(cuentas[0].saldo).toString()
             setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
         }
-
         saldo2.apply {
-            text=currencyFormat.format(cuentas[0].saldo).toString()
+            text=currencyFormat.format(cuentas[1].saldo).toString()
             setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
         }
-
         return rootview
     }
 
