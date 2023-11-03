@@ -64,34 +64,48 @@
                 android:textSize="@dimen/head"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_text_user"
-                android:layout_width="320dp"
-                android:layout_height="@dimen/box"
-                android:background="@drawable/style_editetx"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/til_text_user"
+                app:startIconDrawable="@drawable/person">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_text_user"
+                    android:layout_width="320dp"
+                    android:layout_height="@dimen/box"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/style_editetx"
+                    android:gravity="center"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tv_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/head"
+                android:layout_marginTop="20dp"
                 android:text="@string/password"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_password"
-                android:layout_width="320dp"
-                android:layout_height="@dimen/box"
-                android:background="@drawable/style_editetx"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPassword" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/til_text_pass"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="320dp"
+                    android:layout_height="@dimen/box"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/style_editetx"
+                    android:gravity="center"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/button"

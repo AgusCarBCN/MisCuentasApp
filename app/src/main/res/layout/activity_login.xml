@@ -24,7 +24,7 @@
                 android:id="@+id/ly_logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                 android:layout_weight="1"
                 android:background="@color/darkBrown"
                 android:orientation="vertical">
 
@@ -60,9 +60,8 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/wellcome"
                     android:textStyle="bold" />
-
                 <TextView
-                    android:id="@+id/tv_user"
+                    android:id="@+id/tv_text_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -72,16 +71,21 @@
                     android:textSize="@dimen/head"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/et_text_user"
-                    android:layout_width="320dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="text" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_text_user"
+                    app:startIconDrawable="@drawable/person">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_text_user"
+                        android:layout_width="320dp"
+                        android:layout_height="@dimen/box"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/style_editetx"
+                        android:gravity="center"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/tv_password"
@@ -93,18 +97,21 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/head"
                     android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="320dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPassword" />
-
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_text_pass"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_password"
+                        android:layout_width="320dp"
+                        android:layout_height="@dimen/box"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/style_editetx"
+                        android:gravity="center"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
                 <Button
                     android:id="@+id/button"
                     android:layout_width="320dp"
@@ -129,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="¿Eres un nuevo usuario?"
+                        android:text="@string/new_user"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/common"
@@ -142,7 +149,7 @@
                         android:layout_weight="1"
                         android:background="@color/orange"
                         android:onClick="createUser"
-                        android:text="Crear un cuenta"
+                        android:text="@string/create_your_account"
                         android:textSize="@dimen/common"
                         android:textAllCaps="false" />
                 </LinearLayout>

@@ -7,7 +7,23 @@
     <string name="login">Login</string>
     <string name="user">User</string>
     <string name="password">Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="balance">Balance</string>
+    <string name="create">Create</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="name">Name</string>
+    <string name="id">ID</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="zipcode">Zip code</string>
+    <string name="phone">Phone</string>
+    <string name="accounts">Accounts</string>
+    <string name="main_account">Main account</string>
+    <string name="second_account">Secondary account</string>
+    <string name="new_user">Are you a new user?</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

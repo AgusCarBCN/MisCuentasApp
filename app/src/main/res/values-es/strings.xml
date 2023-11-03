@@ -7,5 +7,19 @@
     <string name="login">Iniciar sesion</string>
     <string name="user">Usuario</string>
     <string name="password">Contraseña</string>
-
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="balance">Saldo</string>
+    <string name="create">Crear</string>
+    <string name="create_your_account">Crea tu cuenta</string>
+    <string name="name">Nombre</string>
+    <string name="id">Dni</string>
+    <string name="address">Direccion</string>
+    <string name="city">Ciudad</string>
+    <string name="zipcode">C.Postal</string>
+    <string name="phone">Telefono</string>
+    <string name="accounts">Cuentas</string>
+    <string name="main_account">Cuenta principal</string>
+    <string name="second_account">Cuenta auxiliar</string>
+    <string name="new_user">¿Eres un nuevo usuario?</string>
 </resources>
