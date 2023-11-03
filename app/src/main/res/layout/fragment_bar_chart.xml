@@ -39,9 +39,9 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Selecciona una cuenta"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/select_account"
                     android:textColor="@color/darkBrown"
                     android:textSize="@dimen/common"
                     android:textStyle="bold" />
@@ -50,7 +50,7 @@
                     android:id="@+id/sp_cuenta"
                     android:layout_width="150dp"
                     android:layout_height="@dimen/box"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/style_editetx"
                     android:theme="@style/CustomSpinner" />
             </LinearLayout>
@@ -67,8 +67,8 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:text="Selecciona un año"
+                    android:layout_marginStart="0dp"
+                    android:text="@string/select_year"
                     android:textColor="@color/darkBrown"
                     android:textSize="@dimen/common"
                     android:textStyle="bold" />
@@ -77,8 +77,8 @@
                     android:id="@+id/sp_year"
                     android:layout_width="150dp"
                     android:layout_height="@dimen/box"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="0dp"
                     android:background="@drawable/style_editetx"
                     android:theme="@style/CustomSpinner" />
             </LinearLayout>

@@ -22,4 +22,16 @@
     <string name="main_account">Cuenta principal</string>
     <string name="second_account">Cuenta auxiliar</string>
     <string name="new_user">¿Eres un nuevo usuario?</string>
+    <string name="select_account">Selecciona una cuenta</string>
+    <string name="select_year">Selecciona un año</string>
+    <string name="amount">Importe</string>
+    <string name="date_from">Fecha desde</string>
+    <string name="date_to">Fecha hasta</string>
+    <string name="incomes">Ingresos</string>
+    <string name="bills">Gastos</string>
+    <string name="income_and_bills">Ingresos y gastos</string>
+    <string name="amount_from">Importe desde</string>
+    <string name="amount_to">Importe hasta</string>
+    <string name="search">Buscar</string>
+    <string name="amount_text">Descripcion del importe</string>
 </resources>
