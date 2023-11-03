@@ -152,7 +152,7 @@ class TransaccionFragment : Fragment() {
                     selectedItemDestino.toString(),fechaImporte
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
-
+                importe.text.clear()
                 (activity as NavActivity).actualizarFragmentSaldo()
             }
         }

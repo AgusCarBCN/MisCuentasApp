@@ -120,6 +120,8 @@ class NewAmountFragment : Fragment() {
                     importe.text.toString().trim().toDouble(),
                     selectedItem.toString()
                 )
+                importe.text.clear()
+                descripcion.text.clear()
                 (activity as NavActivity).actualizarFragmentSaldo()
             }
         }
@@ -162,7 +164,10 @@ class NewAmountFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
+                    importe.text.clear()
+                    descripcion.text.clear()
                     (activity as NavActivity).actualizarFragmentSaldo()
+
                 }
             }
         }
@@ -170,6 +175,9 @@ class NewAmountFragment : Fragment() {
 
         return rootview
     }
+
+
+
 
     companion object {
         /**
