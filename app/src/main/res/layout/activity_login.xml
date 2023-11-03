@@ -84,7 +84,8 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/style_editetx"
                         android:gravity="center"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:maxLength="10"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView

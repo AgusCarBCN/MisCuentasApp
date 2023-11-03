@@ -24,7 +24,7 @@
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="@string/amount_text"
-            android:inputType="text"
+            android:inputType="textCapWords|textAutoComplete"
             android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"

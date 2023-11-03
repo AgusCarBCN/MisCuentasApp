@@ -39,6 +39,12 @@
     <string name="account">Account</string>
     <string name="from_account">From account</string>
     <string name="to_account">To account</string>
+    <string name="setting">Settings</string>
+    <string name="new_amount">New amount</string>
+    <string name="stadistics">Graphics</string>
+    <string name="searchitem">Search</string>
+    <string name="transferitem">Transfer</string>
+    <string name="logout">Log out</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -39,5 +39,10 @@
     <string name="your_accounts">Tus cuentas</string>
     <string name="from_account">Desde cuenta</string>
     <string name="to_account">Hacia cuenta</string>
-
+    <string name="setting">Ajustes</string>
+    <string name="new_amount">Nuevo importe</string>
+    <string name="stadistics">Graficos</string>
+    <string name="searchitem">Consulta</string>
+    <string name="transferitem">Transferencia</string>
+    <string name="logout">Cerrar sesion</string>
 </resources>

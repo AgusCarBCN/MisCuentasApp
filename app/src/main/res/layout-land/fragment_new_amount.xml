@@ -30,7 +30,7 @@
                 android:ems="10"
                 android:gravity="center|center_horizontal"
                 android:hint="@string/amount_text"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

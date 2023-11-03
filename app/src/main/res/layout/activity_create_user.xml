@@ -31,7 +31,7 @@
         android:background="@drawable/style_editetx"
         android:ems="10"
         android:hint="@string/name"
-        android:inputType="text"
+        android:inputType="textPersonName|textCapWords"
         android:textAlignment="viewStart"
         android:textColor="#333333"
         android:textStyle="bold" />
@@ -47,6 +47,7 @@
         android:ems="10"
         android:hint="@string/id"
         android:inputType="text"
+        android:maxLength="10"
         android:textColor="#333333"
         android:textStyle="bold" />
 
@@ -60,7 +61,7 @@
         android:background="@drawable/style_editetx"
         android:ems="10"
         android:hint="@string/address"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:textColor="#333333"
         android:textStyle="bold" />
 
@@ -80,7 +81,7 @@
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="@string/city"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:textColor="#333333"
             android:textStyle="bold" />
 
@@ -94,6 +95,7 @@
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="@string/zipcode"
+            android:maxLength="6"
             android:inputType="textPostalAddress"
             android:textColor="#333333"
             android:textStyle="bold" />
@@ -135,7 +137,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="Contraseña"
+        android:text="@string/password"
         android:textColor="#333333"
         android:textStyle="bold" />
 

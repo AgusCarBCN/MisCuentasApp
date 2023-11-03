@@ -5,30 +5,30 @@
     <item
         android:id="@+id/configuracion"
         android:icon="@drawable/configuracion"
-        android:title="Configuracion" />
+        android:title="@string/setting" />
     <item
         android:id="@+id/nuevoImporte"
         android:icon="@drawable/importe"
-        android:title="Nuevo importe" />
+        android:title="@string/new_amount" />
     <item
         android:id="@+id/estadistica"
         android:icon="@drawable/estadistica"
-        android:title="Estadistica"
+        android:title="@string/stadistics"
         />
     <item
         android:id="@+id/consulta"
         android:icon="@drawable/consulta"
-        android:title="Consulta" />
+        android:title="@string/searchitem" />
     <item
         android:id="@+id/transferencia"
         android:icon="@drawable/transferencia"
-        android:title="Transferencia" />
+        android:title="@string/transferitem" />
 
 </group>
     <group>
         <item
             android:id="@+id/salir"
             android:icon="@android:drawable/ic_lock_power_off"
-            android:title="Salir" />
+            android:title="@string/logout" />
     </group>
 </menu>
