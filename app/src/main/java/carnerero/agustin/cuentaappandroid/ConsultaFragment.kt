@@ -16,6 +16,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
@@ -78,10 +79,10 @@ class ConsultaFragment : Fragment() {
         //Creo adapter
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-
+        val hint=getString(R.string.select_account)
         val cuentaDao = CuentaDao(admin)
         val cuentas = cuentaDao.listarCuentasPorDNI(dni)
-        adapter.add("Selecciona una cuenta")
+        adapter.add(hint)
         adapter.add(cuentas[0].iban)
         adapter.add(cuentas[1].iban)
         selectedItem = adapter.getItem(0)

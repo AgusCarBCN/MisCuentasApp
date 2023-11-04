@@ -45,4 +45,12 @@
     <string name="searchitem">Consulta</string>
     <string name="transferitem">Transferencia</string>
     <string name="logout">Cerrar sesion</string>
+    <string name="msgincome">Nuevo ingreso en</string>
+    <string name="msgbill">Nuevo gasto en</string>
+    <string name="msgemptiesfield">Campos vacios</string>
+    <string name="msgemptyfield">Campo vacio</string>
+    <string name="msgsucces">Inicio de sesion exitoso</string>
+    <string name="msgnosucces">Inicio de sesion incorrecto</string>
+    <string name="msgtransfersame">No se puede realizar una transferencia en una misma cuenta</string>
+    <string name="msgntransfer">Transferencia completa </string>
 </resources>

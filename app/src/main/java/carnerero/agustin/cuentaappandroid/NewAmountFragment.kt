@@ -113,7 +113,7 @@ class NewAmountFragment : Fragment() {
                 movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
-                    "Nuevo ingreso en: $selectedItem",
+                    "${getString(R.string.msgincome)}: $selectedItem",
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(
@@ -160,7 +160,7 @@ class NewAmountFragment : Fragment() {
                     movDao.nuevoImporte(movimientoBancario)
                     Toast.makeText(
                         requireContext(),
-                        "Nuevo gasto en: $selectedItem",
+                        "${getString(R.string.msgbill)}: $selectedItem",
                         Toast.LENGTH_SHORT
                     ).show()
                     cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())

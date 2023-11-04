@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/orange"
     tools:context=".ConsultaFragment">
 
@@ -37,33 +38,42 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/et_datefrom"
-                    android:layout_width="160dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/style_editetx"
-                    android:clickable="true"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="@string/date_from"
-                    android:inputType="date"
-                    android:textColor="@color/darkBrown" />
-
-                <EditText
-                    android:id="@+id/et_dateto"
-                    android:layout_width="160dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_marginStart="20dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/style_editetx"
-                    android:clickable="true"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="@string/date_to"
-                    android:inputType="date"
-                    android:textColor="@color/darkBrown" />
+                    app:startIconDrawable="@drawable/date">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_datefrom"
+                        android:layout_width="180dp"
+                        android:layout_height="@dimen/box"
+                        android:background="@drawable/style_editetx"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/date_from"
+                        android:inputType="date"
+                        android:textColor="@color/darkBrown" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/date">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_dateto"
+                        android:layout_width="180dp"
+                        android:layout_height="@dimen/box"
+                        android:hint="@string/date_to"
+                        android:background="@drawable/style_editetx"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:textColor="@color/darkBrown"
+                        android:focusable="false"
+                        android:inputType="date"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
 
             </LinearLayout>
         </LinearLayout>

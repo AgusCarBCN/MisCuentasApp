@@ -45,8 +45,14 @@
     <string name="searchitem">Search</string>
     <string name="transferitem">Transfer</string>
     <string name="logout">Log out</string>
-
-
+    <string name="msgincome">New income in</string>
+    <string name="msgbill">New bill in</string>
+    <string name="msgemptiesfield">Empty fields</string>
+    <string name="msgemptyfield">Empty field</string>
+    <string name="msgsucces">Successful login</string>
+    <string name="msgnosucces">Incorrect login</string>
+    <string name="msgtransfersame">You cannot make a transfer to the same account</string>
+    <string name="msgntransfer">Transfer completed </string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

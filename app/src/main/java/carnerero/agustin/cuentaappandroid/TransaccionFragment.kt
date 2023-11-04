@@ -116,20 +116,20 @@ class TransaccionFragment : Fragment() {
             if (importeText.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "El campo de importe no puede estar vacío",
+                    "${getString(R.string.msgemptyfield)}",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (selectedItemDestino == selectedItemOrigen) {
                 Toast.makeText(
                     requireContext(),
-                    "No se puede realizar una transferencia en la misma cuenta",
+                    "${getString(R.string.msgtransfersame)}",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
                 // Aquí puedes continuar con el proceso de transferencia ya que el campo de importe no está vacío
                 Toast.makeText(
                     requireContext(),
-                    "Transferencia realizada con éxito",
+                    "${getString(R.string.msgntransfer)}",
                     Toast.LENGTH_SHORT
                 ).show()
                 val importeNegativo = -importeText.toDouble()

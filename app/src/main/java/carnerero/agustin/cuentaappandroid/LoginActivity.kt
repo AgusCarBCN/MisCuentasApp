@@ -37,9 +37,9 @@ class LoginActivity : AppCompatActivity() {
 // Verifica si los campos están vacíos
         if (userDni.isEmpty() || userPassword.isEmpty()) {
             if (userDni.isEmpty() && userPassword.isEmpty()) {
-                Toast.makeText(this, "Campos vacíos", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Has dejado un campo vacío", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
             }
         } else {
             // Verifica las credenciales
@@ -56,12 +56,12 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString("dni", dni)
                 editor.putString("nombre",nombre)
                 editor.apply()
-                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, NavActivity::class.java)
                 startActivity(intent)
 
             } else {
-                Toast.makeText(this, "Inicio de sesion incorrecto", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${getString(R.string.msgnosucces)}", Toast.LENGTH_LONG).show()
             }
         }
     }
