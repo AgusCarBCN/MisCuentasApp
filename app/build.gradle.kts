@@ -33,8 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
+
+    viewBinding {
+        enable=true
     }
 }
 

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
+import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -17,18 +18,17 @@ class LoginActivity : AppCompatActivity() {
 
     private val admin=DataBaseAppSingleton.getInstance(this)
     private val movDAO=MovimientoBancarioDAO(admin)
+    private val userDao=UsuarioDao(admin)
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
+        binding= ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
-
     fun login(view: View) {
-        val et_user: EditText = findViewById(R.id.et_text_user)
-        val et_pass: EditText = findViewById(R.id.et_password)
-        val userDni:String=et_user.text.toString()
-        val userPassword:String=et_pass.text.toString()
-        val userDao=UsuarioDao(admin)
+
+        val userDni:String=binding.etTextUser.text.toString()
+        val userPassword:String=binding.etPassword.text.toString()
         val user=userDao.obtenerUsuarioPorDniYPassword(userDni,userPassword)
         var usuarioLogin=user?.dni
         var passwordLogin=user?.password
