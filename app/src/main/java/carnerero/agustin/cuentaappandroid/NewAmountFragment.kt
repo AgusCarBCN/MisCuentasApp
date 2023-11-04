@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,37 +30,36 @@ class NewAmountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding:FragmentNewAmountBinding?=null
+    private val binding get() = _binding!!
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
+    private var selectedItem: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var selectedItem: String? = null
-
-        // Inflate the layout for this fragment
-        val rootview = inflater.inflate(R.layout.fragment_new_amount, container, false)
+        _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
 
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences =
             requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-
         val dni = sharedPreferences.getString("dni", "") ?: ""
-        val spinnerCuentas = rootview.findViewById<Spinner>(R.id.sp_cuentas)
-        val nuevoIngreso: Button = rootview.findViewById(R.id.btn_nuevoingreso)
-        val nuevoGasto: Button = rootview.findViewById(R.id.btn_nuevogasto)
-        val descripcion: EditText = rootview.findViewById(R.id.et_descripcion)
-        val importe: EditText = rootview.findViewById(R.id.et_importe)
+        //Acceso a componentes
+        val spinnerCuentas=binding.spCuentas
+        val nuevoIngreso=binding.btnNuevoingreso
+        val nuevoGasto=binding.btnNuevogasto
+        val descripcion=binding.etDescripcion
+        val importe=binding.etImporte
+
+        //Creacion de adapter
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val cuentaDao = CuentaDao(admin)
@@ -173,7 +170,7 @@ class NewAmountFragment : Fragment() {
         }
 
 
-        return rootview
+        return binding.root
     }
 
 
