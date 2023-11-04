@@ -41,16 +41,16 @@ class BarChartFragment : Fragment() {
     private var selectedYear: String? = null
     private val cuentaDao = CuentaDao(admin)
     private val movDao = MovimientoBancarioDAO(admin)
-    lateinit var ingresosTotales: ArrayList<Float>
-    lateinit var gastosTotales: ArrayList<Float>
-    lateinit var resultados: ArrayList<Float>
-    lateinit var barChart: BarChart
-    lateinit var barData: BarData
-    lateinit var barDataSetIngresos: BarDataSet
-    lateinit var barDataSetGastos: BarDataSet
-    lateinit var barDataSetResultados: BarDataSet
-    lateinit var barEntriesList: ArrayList<BarEntry>
-    val months = arrayOf(
+    private lateinit var ingresosTotales: ArrayList<Float>
+    private lateinit var gastosTotales: ArrayList<Float>
+    private lateinit var resultados: ArrayList<Float>
+    private lateinit var barChart: BarChart
+    private lateinit var barData: BarData
+    private lateinit var barDataSetIngresos: BarDataSet
+    private lateinit var barDataSetGastos: BarDataSet
+    private lateinit var barDataSetResultados: BarDataSet
+    private lateinit var barEntriesList: ArrayList<BarEntry>
+    private val months = arrayOf(
         "Enero",
         "Febrero",
         "Marzo",
@@ -147,9 +147,9 @@ class BarChartFragment : Fragment() {
     }
 
     private fun calculateResult(iban: String, year: Int) {
-        gastosTotales = ArrayList<Float>()
-        ingresosTotales = ArrayList<Float>()
-        resultados = ArrayList<Float>()
+        gastosTotales = ArrayList()
+        ingresosTotales = ArrayList()
+        resultados = ArrayList()
         val ingresos = movDao.getIncome(iban)
         val gastos = movDao.getBills(iban)
         for (i in 1..12) {
@@ -161,7 +161,6 @@ class BarChartFragment : Fragment() {
             resultados.add(resultadoMes)
         }
     }
-
     private fun createBarChart() {
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados

@@ -53,4 +53,9 @@
     <string name="msgnosucces">Inicio de sesion incorrecto</string>
     <string name="msgtransfersame">No se puede realizar una transferencia en una misma cuenta</string>
     <string name="msgntransfer">Transferencia completa </string>
+    <string name="msgselectaccount">Selecciona una cuenta para un nuevo</string>
+    <string name="msgalertbalance">El gasto no puede ser mayor que el balance</string>
+    <string name="msgdates">La fecha desde no puede ser superior a la fecha hasta</string>
+    <string name="alertamounts">El importe desde no puede ser superios al importe hasta</string>
+    <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
 </resources>

@@ -14,7 +14,7 @@ import carnerero.agustin.cuentaappandroid.model.Usuario
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
-import java.text.SimpleDateFormat
+
 
 
 class CreateUserActivity : AppCompatActivity() {
@@ -25,9 +25,6 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
-
-
-
     }
 
     fun cancelCreateUser(view: View) {

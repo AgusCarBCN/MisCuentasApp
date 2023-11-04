@@ -72,8 +72,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
                 fragmentContainer.visibility=View.VISIBLE
             }
             R.id.salir ->finish()
-            R.id.configuracion ->{ Toast.makeText(this, "configuracion", Toast.LENGTH_SHORT).show()
-            showSaldo()}
+            R.id.configuracion ->showSaldo()
         }
         drawer.closeDrawer(GravityCompat.START)
         return true

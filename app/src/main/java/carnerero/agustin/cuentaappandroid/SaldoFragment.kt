@@ -1,17 +1,13 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
-import android.graphics.Color
 import android.icu.text.NumberFormat
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.model.Cuenta

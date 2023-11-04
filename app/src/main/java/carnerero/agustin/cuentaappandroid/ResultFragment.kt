@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import java.util.Locale
+import kotlin.math.abs
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +48,7 @@ class ResultFragment : Fragment() {
         //Sacamos el valor double de arguments
         val result:Double= arguments?.getDouble("Result")!!
         //Le damos formato al resultado como valor absoluto y con formato de divisa euro
-        val resultFormatted = currencyFormat.format(Math.abs(result))
+        val resultFormatted = currencyFormat.format(abs(result))
         // Usando String.format para mostrar solo dos decimales y con la divisa del euro
         /*La función run se utiliza para ejecutar un bloque de código en el contexto del objeto receptor .
         * actualiza el texto de la vista resultView y cambia su color en función del valor de result.

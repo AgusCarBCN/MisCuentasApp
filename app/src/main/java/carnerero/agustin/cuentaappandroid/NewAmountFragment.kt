@@ -91,16 +91,16 @@ class NewAmountFragment : Fragment() {
         }
         nuevoIngreso.setOnClickListener {
             val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
-            if (selectedItem == "Selecciona una cuenta") {
+            if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
-                    "Debes seleccionar una cuenta para añadir un nuevo ingreso",
+                    getString(R.string.alertnewamount),
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 Toast.makeText(
                     requireContext(),
-                    "Los campos de importe y descripción no pueden estar vacíos",
+                    getString(R.string.msgemptiesfield),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -128,16 +128,16 @@ class NewAmountFragment : Fragment() {
 
         nuevoGasto.setOnClickListener {
             val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
-            if (selectedItem == "Selecciona una cuenta") {
+            if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
-                    "Debes seleccionar una cuenta para añadir un nuevo gasto",
+                    getString(R.string.alertnewamount) ,
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 Toast.makeText(
                     requireContext(),
-                    "Los campos de importe y descripción no pueden estar vacíos",
+                    getString(R.string.msgemptiesfield),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -147,7 +147,7 @@ class NewAmountFragment : Fragment() {
                 if (abs(importeNumerico) > saldo1 || abs(importeNumerico) > saldo2) {
                     Toast.makeText(
                         requireContext(),
-                        "El importe del gasto no puede ser mayor que el saldo actual de la cuenta",
+                        getString(R.string.alertamounts),
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {

@@ -41,7 +41,7 @@ class LogoFragment : Fragment() {
         val nombre = sharedPreferences.getString("nombre", "") ?: ""
         val wellcome=rootview.findViewById<TextView>(R.id.tv_wellcome)
         val msg="${wellcome.text} $nombre"
-        wellcome.setText(msg)
+        wellcome.text = msg
 
         return rootview
     }

@@ -53,7 +53,9 @@
     <string name="msgnosucces">Incorrect login</string>
     <string name="msgtransfersame">You cannot make a transfer to the same account</string>
     <string name="msgntransfer">Transfer completed </string>
-    <!-- TODO: Remove or change this placeholder text -->
-
-
+    <string name="msgselectaccount">Select an account to a new</string>
+    <string name="msgalertbalance">The expense cannot be greater than the account balance</string>
+    <string name="msgdates">The date from cannot be greater than date to</string>
+    <string name="alertamounts">The amount from cannot be greater than amount to</string>
+    <string name="alertnewamount">you must select an account to add a new entry</string>
 </resources>

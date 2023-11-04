@@ -16,7 +16,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
@@ -106,7 +105,7 @@ class ConsultaFragment : Fragment() {
                 if (position == 0) {
                     Toast.makeText(
                         requireContext(),
-                        "Selecciona una cuenta para habilitar la busqueda",
+                        getString(R.string.select_account),
                         Toast.LENGTH_SHORT
                     ).show()
                     ingresos.isEnabled = false
@@ -144,7 +143,6 @@ class ConsultaFragment : Fragment() {
                         .toSet()
                 )
             }
-
         }
 
         //Enviamos el arrayList movList desde este fragmento al fragmento ListOfMovFragment
@@ -169,10 +167,10 @@ class ConsultaFragment : Fragment() {
             val searchText: String = searchByText.text.toString()
             //Resultado de los importes totales
 
-            if (selectedItem.toString() == "Selecciona una cuenta") {
+            if (selectedItem.toString() == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
-                    "Debes seleccionar una cuenta para mostrar resultados",
+                    getString(R.string.select_account),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -209,14 +207,14 @@ class ConsultaFragment : Fragment() {
                     if (!fechaValida) {
                         Toast.makeText(
                             requireContext(),
-                            "La fecha desde no puede ser mayor que la fecha hasta",
+                            getString(R.string.msgdates),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                     if (!importeValido) {
                         Toast.makeText(
                             requireContext(),
-                            "El importe desde no puede ser mayor que al importe hasta",
+                            getString(R.string.alertamounts),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
