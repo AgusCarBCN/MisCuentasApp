@@ -45,7 +45,7 @@ class NewAmountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
 
         //Recupero dni del usuario que inicio sesion

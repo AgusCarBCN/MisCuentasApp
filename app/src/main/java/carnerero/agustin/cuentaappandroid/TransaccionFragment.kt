@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,7 +30,14 @@ class TransaccionFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    //Variables donde se almacenara el valor de los items selecionados de cada spinner
+    private var selectedItemOrigen:String?=null
+    private var selectedItemDestino:String?=null
+    private val admin=DataBaseAppSingleton.getInstance(context)
+    private val cuentaDao= CuentaDao(admin)
+    private val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
+    private var _binding: FragmentTransaccionBinding?=null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,30 +49,22 @@ class TransaccionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding= FragmentTransaccionBinding.inflate(inflater,container,false)
 
-        //Variables donde se almacenara el valor de los items selecionados de cada spinner
-        var selectedItemOrigen:String?=null
-        var selectedItemDestino:String?=null
-        //Inflate the layout for this fragment
-        val rootview=inflater.inflate(R.layout.fragment_transaccion, container, false)
         //Obtener todos los componentes del fragment
-        val importe: EditText =rootview.findViewById(R.id.et_importetrans)
-        val cuentaOrigen: Spinner =rootview.findViewById(R.id.sp_cuentaorigen)
-        val cuentaDestino:Spinner=rootview.findViewById(R.id.sp_cuentadestino)
-        val aceptar: Button =rootview.findViewById(R.id.btn_aceptar)
-        val salir:Button=rootview.findViewById(R.id.btn_salir)
+        val importe=binding.etImportetrans
+        val cuentaOrigen=binding.spCuentaorigen
+        val cuentaDestino=binding.spCuentadestino
+        val aceptar=binding.btnAceptar
+        val salir=binding.btnSalir
+
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         val dni = sharedPreferences.getString("dni", "") ?: ""
         //Creo  un adaptador de cadena (String) para llenar un Spinner
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        // Conecta a la base de datos y obtén los datos de la tabla "cuentas"
 
-        val admin=DataBaseAppSingleton.getInstance(context)
-        val cuentaDao= CuentaDao(admin)
-        val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
-        //val movDaoProxy=MovimientoBancarioDAOProxy(movimientoBancarioDAO)
         //Obtengo las cuentas del usuario logeado con el dni
         val cuentas=cuentaDao.listarCuentasPorDNI(dni)
         //Lleno los dos spinners
@@ -160,7 +157,7 @@ class TransaccionFragment : Fragment() {
         salir.setOnClickListener{
             (activity as NavActivity).inicio()
         }
-        return rootview
+        return binding.root
     }
 
     companion object {
