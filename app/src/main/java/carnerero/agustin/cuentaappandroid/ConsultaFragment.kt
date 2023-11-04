@@ -10,14 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Spinner
 import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
+import carnerero.agustin.cuentaappandroid.databinding.FragmentConsultaBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,6 +35,8 @@ class ConsultaFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding:FragmentConsultaBinding?=null
+    private val binding get() = _binding!!
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedItem: String? = null
     private var result=0.0
@@ -56,20 +55,22 @@ class ConsultaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        _binding= FragmentConsultaBinding.inflate(inflater,container,false)
+        val view = binding.root
         val rootview = inflater.inflate(R.layout.fragment_consulta, container, false)
 
         //Variable que contendra la opcion seleccionada en spinner
 
         //Obtenemos los componentes del fragment
-        val etDateFrom: EditText = rootview.findViewById(R.id.et_datefrom)
-        val etDateTo: EditText = rootview.findViewById(R.id.et_dateto)
-        val select: RadioGroup = rootview.findViewById(R.id.selectImporte)
-        val ingresos: RadioButton = rootview.findViewById(R.id.rb_ingresos)
-        val gastos: RadioButton = rootview.findViewById(R.id.rb_gastos)
-        val ingresosygastos: RadioButton = rootview.findViewById(R.id.rb_ingresosygastos)
-        val spConsulta: Spinner = rootview.findViewById(R.id.sp_consulta)
-        val buscar: Button = rootview.findViewById(R.id.btn_buscar)
-        val cancel: Button = rootview.findViewById(R.id.btn_cancelabuscar)
+        val etDateFrom=binding.etDatefrom
+        val etDateTo=binding.etDateto
+        val select=binding.selectImporte
+        val ingresos=binding.rbIngresos
+        val gastos=binding.rbGastos
+        val ingresosygastos=binding.rbIngresosygastos
+        val spConsulta=binding.spConsulta
+        val buscar=binding.btnBuscar
+        val cancel=binding.btnCancelabuscar
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences =
             requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
@@ -238,8 +239,12 @@ class ConsultaFragment : Fragment() {
         cancel.setOnClickListener {
             (activity as NavActivity).inicio()
         }
-        return rootview
+        return view
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
     }
 
     //Formato de fecha 01/09/2023

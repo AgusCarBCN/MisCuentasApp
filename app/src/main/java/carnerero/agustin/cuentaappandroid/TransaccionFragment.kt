@@ -49,9 +49,9 @@ class TransaccionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding= FragmentTransaccionBinding.inflate(inflater,container,false)
-
+        val view = binding.root
         //Obtener todos los componentes del fragment
         val importe=binding.etImportetrans
         val cuentaOrigen=binding.spCuentaorigen
@@ -157,8 +157,13 @@ class TransaccionFragment : Fragment() {
         salir.setOnClickListener{
             (activity as NavActivity).inicio()
         }
-        return binding.root
+        return view
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
+
 
     companion object {
         /**

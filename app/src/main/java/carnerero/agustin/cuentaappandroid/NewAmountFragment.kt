@@ -45,9 +45,9 @@ class NewAmountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View ?{
         _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
-
+        val view = binding.root
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences =
             requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
@@ -170,10 +170,13 @@ class NewAmountFragment : Fragment() {
         }
 
 
-        return binding.root
+        return view
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
 
 
     companion object {
