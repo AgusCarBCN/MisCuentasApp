@@ -20,7 +20,7 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
     lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.item_mov2,parent,false)
+        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.item_movimiento,parent,false)
         return ViewHolder(itemView)
     }
 

@@ -11,18 +11,22 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
+import carnerero.agustin.cuentaappandroid.databinding.ActivityNavBinding
 import com.google.android.material.navigation.NavigationView
 
 class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-
+    private lateinit var binding:ActivityNavBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nav)
+        binding= ActivityNavBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
+        drawer=binding.draverLayout
         drawer = findViewById(R.id.draver_layout)
         toggle = ActionBarDrawerToggle(
             this,
@@ -33,7 +37,7 @@ class NavActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedL
         )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        val navigationView=binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
 

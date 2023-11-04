@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.controller.AdapterMov
+import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfMovBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +28,8 @@ class ListOfMovFragment : Fragment() {
     private var param2: String? = null
     private lateinit var adaptermovimientos: AdapterMov
     private lateinit var recyclerView: RecyclerView
-
+    private var _binding: FragmentListOfMovBinding?=null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,24 +43,26 @@ class ListOfMovFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_list_of_mov, container, false)
+        _binding=FragmentListOfMovBinding.inflate(inflater,container,false)
+        val view = binding.root
+        return view
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager=LinearLayoutManager(context)
-        //val movimientos = arguments?.getParcelableArrayList<MovimientoBancario>("clave_movimientos")
         val movimientos = arguments?.getParcelableArrayList("clave_movimientos",MovimientoBancario::class.java)
-
-        recyclerView=view.findViewById(R.id.rv_movimientos)
+        recyclerView=binding.rvMovimientos
         recyclerView.layoutManager=layoutManager
         recyclerView.setHasFixedSize(false)
         adaptermovimientos= movimientos?.let { AdapterMov(it) }!!
         recyclerView.adapter=adaptermovimientos
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
 
     companion object {
         /**

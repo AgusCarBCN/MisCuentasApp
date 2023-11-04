@@ -215,7 +215,10 @@ class BarChartFragment : Fragment() {
             // Actualiza el gráfico con los nuevos datos
             createBarChart()
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

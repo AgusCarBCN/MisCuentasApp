@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.databinding.FragmentSaldoBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import java.util.Locale
 
@@ -27,7 +29,8 @@ class SaldoFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentSaldoBinding?=null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,6 +43,8 @@ class SaldoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding= FragmentSaldoBinding.inflate(inflater,container,false)
+        val view = binding.root
         // Inflate the layout for this fragment
         val rootview= inflater.inflate(R.layout.fragment_saldo, container, false)
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
@@ -51,10 +56,10 @@ class SaldoFragment : Fragment() {
         val admin=DataBaseApp(context,"cuentaApp",null,1)
         val dao= CuentaDao(admin)
         val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
-        val cuenta1:TextView=rootview.findViewById(R.id.tv_cuenta1)
-        val cuenta2:TextView=rootview.findViewById(R.id.tv_cuenta2)
-        val saldo1:TextView=rootview.findViewById(R.id.tv_saldo1)
-        val saldo2:TextView=rootview.findViewById(R.id.tv_saldo2)
+        val cuenta1=binding.tvCuenta1
+        val cuenta2=binding.tvCuenta1
+        val saldo1=binding.tvSaldo1
+        val saldo2=binding.tvSaldo2
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
         cuenta1.text = cuentas[0].iban
@@ -67,9 +72,12 @@ class SaldoFragment : Fragment() {
             text=currencyFormat.format(cuentas[1].saldo).toString()
             setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
         }
-        return rootview
+        return view
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
 
     companion object {
         /**

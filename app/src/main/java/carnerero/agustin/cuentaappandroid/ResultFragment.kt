@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import carnerero.agustin.cuentaappandroid.databinding.FragmentResultBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import java.util.Locale
 import kotlin.math.abs
 
@@ -27,7 +29,8 @@ class ResultFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentResultBinding?=null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,9 +43,9 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_result, container, false)
-        val resultView:TextView=rootview.findViewById(R.id.result)
+        _binding= FragmentResultBinding.inflate(inflater,container,false)
+        val view = binding.root
+        val resultView=binding.result
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
         //Sacamos el valor double de arguments
@@ -64,9 +67,12 @@ class ResultFragment : Fragment() {
         }
 
 
-        return rootview
+        return view
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Importante para evitar fugas de memoria
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
