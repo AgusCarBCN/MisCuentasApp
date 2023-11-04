@@ -4,10 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
+import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateUserBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.model.Usuario
@@ -22,9 +22,11 @@ class CreateUserActivity : AppCompatActivity() {
     private lateinit var cuentaDao: CuentaDao
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val movDAO = MovimientoBancarioDAO(admin)
+    private lateinit var binding:ActivityCreateUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_user)
+        binding= ActivityCreateUserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     fun cancelCreateUser(view: View) {
@@ -36,18 +38,19 @@ class CreateUserActivity : AppCompatActivity() {
 
         val intent = Intent(this, LoginActivity::class.java)
         //Acceso a los editText de Usuario
-        val name: EditText = findViewById(R.id.et_username)
-        val dni: EditText = findViewById(R.id.et_userdni)
-        val address: EditText = findViewById(R.id.et_useraddress)
-        val city: EditText = findViewById(R.id.et_usercity)
-        val zipCode: EditText = findViewById(R.id.et_userzip)
-        val phone: EditText = findViewById(R.id.et_userphone)
-        val userpass: EditText = findViewById(R.id.et_userpass)
+        val name=binding.etUsername
+        val dni=binding.etUserdni
+        val address=binding.etUseraddress
+        val city=binding.etUsercity
+        val zipCode=binding.etUserzip
+        val phone=binding.etUserphone
+        val userpass=binding.etUserpass
         //Acceso a los ediText de las cuentas
-        val mainAccount: EditText = findViewById(R.id.et_useraccmain)
-        val mainAmount: EditText = findViewById(R.id.et_amountaccmain)
-        val secondaryAccount: EditText = findViewById(R.id.et_useraccsecond)
-        val secondaryAmount: EditText = findViewById(R.id.et_secondccamount)
+        val mainAccount=binding.etUseraccmain
+        val mainAmount=binding.etAmountaccmain
+        val secondaryAccount=binding.etUseraccsecond
+        val secondaryAmount=binding.etSecondccamount
+
         //Creo objetos Usuario y Cuenta
         val user = Usuario(
             dni.text.toString(),
