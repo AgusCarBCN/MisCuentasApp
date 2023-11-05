@@ -120,7 +120,7 @@ class NewAmountFragment : Fragment() {
                 )
                 importe.text.clear()
                 descripcion.text.clear()
-                (activity as NavActivity).actualizarFragmentSaldo()
+                (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
 
@@ -164,7 +164,7 @@ class NewAmountFragment : Fragment() {
                     cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
                     importe.text.clear()
                     descripcion.text.clear()
-                    (activity as NavActivity).actualizarFragmentSaldo()
+                    (activity as MainActivity).actualizarFragmentSaldo()
 
                 }
             }

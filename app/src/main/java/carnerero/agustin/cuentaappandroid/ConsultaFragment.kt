@@ -237,7 +237,7 @@ class ConsultaFragment : Fragment() {
             }
         }
         cancel.setOnClickListener {
-            (activity as NavActivity).inicio()
+            (activity as MainActivity).inicio()
         }
         return view
 

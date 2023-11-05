@@ -13,13 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CuentaAppAndroid"
         >
-
         <activity
             android:name=".CreateUserActivity"
             android:exported="false"
             android:screenOrientation="fullSensor" />
         <activity
-            android:name=".NavActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="fullSensor" />
         <activity

@@ -17,7 +17,7 @@
             android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            android:background="@color/lightYellow" />
+            android:background="@color/lightYellow"/>
 
         <LinearLayout
             android:layout_width="match_parent"

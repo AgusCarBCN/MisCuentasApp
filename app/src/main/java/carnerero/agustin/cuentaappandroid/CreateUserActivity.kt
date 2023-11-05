@@ -26,7 +26,9 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityCreateUserBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
+
     }
 
 

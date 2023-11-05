@@ -2,17 +2,13 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 
 class LoginActivity : AppCompatActivity() {
@@ -66,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString("nombre",nombre)
                 editor.apply()
                 Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
-                val intent = Intent(this, NavActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
 
             } else {

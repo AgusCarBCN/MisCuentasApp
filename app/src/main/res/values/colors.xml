@@ -12,4 +12,7 @@
     <color name="greenPistacho">#CDDC39</color>
     <color name="orange">#FF8533</color>
     <color name="lightOrange">#E8AA42</color>
+    <color name="lightblue">#8BB2CB</color>
+    <color name="deepblue">#3A647E</color>
+
 </resources>

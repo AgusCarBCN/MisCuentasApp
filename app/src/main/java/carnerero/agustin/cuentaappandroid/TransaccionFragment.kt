@@ -150,12 +150,12 @@ class TransaccionFragment : Fragment() {
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
                 importe.text.clear()
-                (activity as NavActivity).actualizarFragmentSaldo()
+                (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
 
         salir.setOnClickListener{
-            (activity as NavActivity).inicio()
+            (activity as MainActivity).inicio()
         }
         return view
     }
