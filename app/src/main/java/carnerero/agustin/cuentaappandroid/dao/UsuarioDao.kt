@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.dao
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.database.SQLException
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.Usuario
@@ -19,13 +20,11 @@ class UsuarioDao(private val admin: DataBaseApp) {
         values.put("codigopostal", usuario.codigoPostal)
         values.put("telefono", usuario.telefono)
         values.put("password", usuario.password)
-
         try {
             db.insert("USUARIO", null, values)
         } catch (_: SQLException) {
 
         }
-
         db.close()
     }
 
@@ -59,7 +58,27 @@ class UsuarioDao(private val admin: DataBaseApp) {
 
         return usuario
     }
+    // Función para verificar si existe algún usuario en la base de datos
+    fun existeAlgunUsuario(): Boolean {
+        val db = admin.readableDatabase
+        val query = "SELECT COUNT(*) FROM USUARIO"
+        var cursor: Cursor?=null
 
+        try {
+            cursor = db.rawQuery(query, null)
+            if (cursor.moveToFirst()) {
+                val count = cursor.getInt(0)
+                return count > 0
+            }
+        } catch (e: SQLException) {
+            // Manejar cualquier excepción que pueda ocurrir al ejecutar la consulta.
+        } finally {
+            cursor?.close()
+            db.close()
+        }
+
+        return false
+    }
 
     // Método para borrar un usuario por DNI y contraseña
     /*fun borrarUsuarioPorDniYPassword(dni: String, password: String) {

@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -20,10 +21,18 @@ class LoginActivity : AppCompatActivity() {
     private val movDAO=MovimientoBancarioDAO(admin)
     private val userDao=UsuarioDao(admin)
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var dni:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginBinding.inflate(layoutInflater)
+        val createUser=binding.btnCreateuser
+        val tvcreateUser=binding.tvCreateuser
         setContentView(binding.root)
+        if(userDao.existeAlgunUsuario()){
+            createUser.visibility=View.INVISIBLE
+             tvcreateUser.setText("")
+        }
+
     }
     fun login(view: View) {
 
@@ -48,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
                 //Las SharedPreferences son una forma de almacenar datos clave-valor en Android
                 //de manera sencilla y eficiente
-                val dni = usuarioLogin
+                dni = usuarioLogin
                 val nombre=usuarioName
                 //Guarda dni y nombre en sharedpreferences de Android
                 val sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
@@ -69,7 +78,5 @@ class LoginActivity : AppCompatActivity() {
         fun createUser(view: View) {
             val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
-
         }
-
     }
