@@ -29,6 +29,7 @@ class CreateUserActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+
     fun cancelCreateUser(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)

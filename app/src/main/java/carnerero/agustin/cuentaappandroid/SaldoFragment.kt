@@ -7,11 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentSaldoBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import java.util.Locale
 
@@ -42,11 +40,10 @@ class SaldoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding= FragmentSaldoBinding.inflate(inflater,container,false)
         val view = binding.root
         // Inflate the layout for this fragment
-        val rootview= inflater.inflate(R.layout.fragment_saldo, container, false)
         val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
         /*El operador ?: se utiliza para proporcionar un valor predeterminado
         ("" en este caso) en caso de que sharedPreferences.getString("dni", "")
@@ -57,7 +54,7 @@ class SaldoFragment : Fragment() {
         val dao= CuentaDao(admin)
         val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
         val cuenta1=binding.tvCuenta1
-        val cuenta2=binding.tvCuenta1
+        val cuenta2=binding.tvCuenta2
         val saldo1=binding.tvSaldo1
         val saldo2=binding.tvSaldo2
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros

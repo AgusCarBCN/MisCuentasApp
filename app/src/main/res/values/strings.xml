@@ -58,4 +58,5 @@
     <string name="msgdates">The date from cannot be greater than date to</string>
     <string name="alertamounts">The amount from cannot be greater than amount to</string>
     <string name="alertnewamount">you must select an account to add a new entry</string>
+    <string name="alertdialognewamount">Amount realized</string>
 </resources>

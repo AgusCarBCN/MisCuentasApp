@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -45,7 +46,7 @@ class NewAmountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View ?{
+    ): View {
         _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
         val view = binding.root
         //Recupero dni del usuario que inicio sesion
@@ -177,6 +178,8 @@ class NewAmountFragment : Fragment() {
         super.onDestroyView()
         _binding = null // Importante para evitar fugas de memoria
     }
+
+
 
 
     companion object {

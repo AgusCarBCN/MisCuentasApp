@@ -49,7 +49,7 @@ class TransaccionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding= FragmentTransaccionBinding.inflate(inflater,container,false)
         val view = binding.root
         //Obtener todos los componentes del fragment

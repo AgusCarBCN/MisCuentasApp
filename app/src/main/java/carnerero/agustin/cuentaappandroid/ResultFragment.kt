@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.databinding.FragmentResultBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import java.util.Locale
 import kotlin.math.abs
 
@@ -42,7 +40,7 @@ class ResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding= FragmentResultBinding.inflate(inflater,container,false)
         val view = binding.root
         val resultView=binding.result

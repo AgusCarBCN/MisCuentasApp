@@ -53,7 +53,7 @@ class ConsultaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding= FragmentConsultaBinding.inflate(inflater,container,false)
         val view = binding.root
@@ -89,7 +89,7 @@ class ConsultaFragment : Fragment() {
         spConsulta.adapter = adapter
         //Muestra DatePickerDialog al cliquear edit text
         etDateFrom.setOnClickListener {
-            showDatePickerDialog(etDateFrom)
+        showDatePickerDialog(etDateFrom)
         }
         etDateTo.setOnClickListener {
             showDatePickerDialog(etDateTo)
@@ -273,6 +273,7 @@ class ConsultaFragment : Fragment() {
         window?.setBackgroundDrawableResource(R.color.lightYellow)
         datePickerDialog.show()
     }
+
 
 
     private fun calculateResult(movList:ArrayList<MovimientoBancario>):Double{

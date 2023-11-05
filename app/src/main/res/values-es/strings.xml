@@ -58,4 +58,5 @@
     <string name="msgdates">La fecha desde no puede ser superior a la fecha hasta</string>
     <string name="alertamounts">El importe desde no puede ser superios al importe hasta</string>
     <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
+    <string name="alertdialognewamount">Importe realizado</string>
 </resources>

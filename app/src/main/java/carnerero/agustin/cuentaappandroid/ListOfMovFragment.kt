@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.controller.AdapterMov
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfMovBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,11 +40,10 @@ class ListOfMovFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding=FragmentListOfMovBinding.inflate(inflater,container,false)
-        val view = binding.root
-        return view
+        _binding = FragmentListOfMovBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
