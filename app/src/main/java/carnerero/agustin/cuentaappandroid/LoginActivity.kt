@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 
 class LoginActivity : AppCompatActivity() {
@@ -18,6 +20,9 @@ class LoginActivity : AppCompatActivity() {
     private val userDao=UsuarioDao(admin)
     private lateinit var binding: ActivityLoginBinding
     private lateinit var dni:String
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginBinding.inflate(layoutInflater)
@@ -30,6 +35,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+    override fun onDestroy() {
+        Utils.releaseSound()
+        super.onDestroy()
+    }
+
     fun login(view: View) {
 
         val userDni:String=binding.etTextUser.text.toString()
@@ -38,7 +48,8 @@ class LoginActivity : AppCompatActivity() {
         var usuarioLogin=user?.dni
         var passwordLogin=user?.password
         var usuarioName=user?.nombre
-
+        //Sonido al clickear boton
+        Utils.sound(this)
 // Verifica si los campos están vacíos
         if (userDni.isEmpty() || userPassword.isEmpty()) {
             if (userDni.isEmpty() && userPassword.isEmpty()) {

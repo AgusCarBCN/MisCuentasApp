@@ -3,7 +3,9 @@ package carnerero.agustin.cuentaappandroid
 import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentConsultaBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -42,6 +45,7 @@ class ConsultaFragment : Fragment() {
     private var result=0.0
     private val movDao = MovimientoBancarioDAO(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
+    private var mediaPlayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -167,7 +171,7 @@ class ConsultaFragment : Fragment() {
             val searchByText: EditText = rootview.findViewById(R.id.et_search)
             val searchText: String = searchByText.text.toString()
             //Resultado de los importes totales
-
+            Utils.sound(requireContext())
             if (selectedItem.toString() == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -220,6 +224,7 @@ class ConsultaFragment : Fragment() {
                         ).show()
                     }
                 } else {
+                    Utils.sound(requireContext())
                     result=calculateResult(movList)
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("clave_movimientos", movList)
@@ -237,6 +242,7 @@ class ConsultaFragment : Fragment() {
             }
         }
         cancel.setOnClickListener {
+            Utils.sound(requireContext())
             (activity as MainActivity).inicio()
         }
         return view

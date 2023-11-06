@@ -2,7 +2,9 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
@@ -36,6 +39,7 @@ class NewAmountFragment : Fragment() {
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
     private var selectedItem: String? = null
+    private var mediaPlayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -89,6 +93,7 @@ class NewAmountFragment : Fragment() {
         }
         nuevoIngreso.setOnClickListener {
             val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
+            Utils.sound(requireContext())
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -102,6 +107,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                Utils.sound(requireContext())
                 val movimientoBancario = MovimientoBancario(
                     importe.text.toString().trim().toDouble(),
                     descripcion.text.toString(),
@@ -126,6 +132,7 @@ class NewAmountFragment : Fragment() {
 
         nuevoGasto.setOnClickListener {
             val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
+            Utils.sound(requireContext())
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -139,6 +146,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                Utils.sound(requireContext())
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
                 //Controlo que el importe no sea superior a saldos de las cuentas
@@ -149,6 +157,7 @@ class NewAmountFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
+
                     val movimientoBancario = MovimientoBancario(
                         importeNumerico,
                         descripcion.text.toString(),
@@ -178,7 +187,6 @@ class NewAmountFragment : Fragment() {
         super.onDestroyView()
         _binding = null // Importante para evitar fugas de memoria
     }
-
 
 
 

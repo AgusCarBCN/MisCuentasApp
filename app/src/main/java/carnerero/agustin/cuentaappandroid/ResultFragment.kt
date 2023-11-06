@@ -64,7 +64,6 @@ class ResultFragment : Fragment() {
             }
         }
 
-
         return view
     }
     override fun onDestroyView() {

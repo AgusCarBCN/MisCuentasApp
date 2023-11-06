@@ -1,7 +1,9 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -36,6 +39,7 @@ class TransaccionFragment : Fragment() {
     private val admin=DataBaseAppSingleton.getInstance(context)
     private val cuentaDao= CuentaDao(admin)
     private val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
+    private var mediaPlayer: MediaPlayer? = null
     private var _binding: FragmentTransaccionBinding?=null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +114,7 @@ class TransaccionFragment : Fragment() {
         aceptar.setOnClickListener {
             val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
             val importeText = importe.text.toString().trim() // Usamos trim para eliminar espacios en blanco al principio o al final
+            Utils.sound(requireContext())
             if (importeText.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -123,6 +128,7 @@ class TransaccionFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                Utils.sound(requireContext())
                 // Aquí puedes continuar con el proceso de transferencia ya que el campo de importe no está vacío
                 Toast.makeText(
                     requireContext(),
@@ -141,7 +147,6 @@ class TransaccionFragment : Fragment() {
                     selectedItemOrigen.toString(),fechaImporte
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancario)
-
                 // Ingreso en cuenta de destino
                 movimientoBancario = MovimientoBancario(
                     importePositivo,
@@ -155,6 +160,7 @@ class TransaccionFragment : Fragment() {
         }
 
         salir.setOnClickListener{
+            Utils.sound(requireContext())
             (activity as MainActivity).inicio()
         }
         return view
@@ -162,7 +168,9 @@ class TransaccionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Importante para evitar fugas de memoria
+
     }
+
 
 
     companion object {

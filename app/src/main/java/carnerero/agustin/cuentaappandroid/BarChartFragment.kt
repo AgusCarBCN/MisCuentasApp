@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
-import carnerero.agustin.cuentaappandroid.utils.Calculos
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -154,8 +154,8 @@ class BarChartFragment : Fragment() {
         val ingresos = movDao.getIncome(iban)
         val gastos = movDao.getBills(iban)
         for (i in 1..12) {
-            val gastoMes = Calculos.calcularImporteMes(i, year, gastos)
-            val ingresoMes = Calculos.calcularImporteMes(i, year, ingresos)
+            val gastoMes = Utils.calcularImporteMes(i, year, gastos)
+            val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)
             val resultadoMes = ingresoMes + gastoMes
             ingresosTotales.add(ingresoMes)
             gastosTotales.add(abs(gastoMes))

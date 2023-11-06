@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
@@ -41,7 +42,10 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val navigationView=binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
-
+    override fun onDestroy() {
+        Utils.releaseSound()
+        super.onDestroy()
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
         val fragment= SaldoFragment()
