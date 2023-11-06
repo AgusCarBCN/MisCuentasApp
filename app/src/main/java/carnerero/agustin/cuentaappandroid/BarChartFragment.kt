@@ -80,7 +80,7 @@ class BarChartFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBarChartBinding.inflate(inflater, container, false)
-        //return inflater.inflate(R.layout.fragment_bar_chart, container, false)
+
         barChart = binding.barChart
         val spCuenta = binding.spCuenta
         val spYears = binding.spYear
@@ -143,6 +143,7 @@ class BarChartFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+
         return binding.root
     }
 
@@ -160,6 +161,7 @@ class BarChartFragment : Fragment() {
             gastosTotales.add(abs(gastoMes))
             resultados.add(resultadoMes)
         }
+
     }
     private fun createBarChart() {
         //Creacion y configuracion del grafico de barras

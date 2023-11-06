@@ -10,6 +10,8 @@
     <color name="grey">#999999</color>
     <color name="lightYellow">#FFD5B8</color>
     <color name="greenPistacho">#CDDC39</color>
+    <color name="greenPistachoLight">#E6EE99</color>
+    <color name="darkGreenPistacho">#8BC34A</color>
     <color name="orange">#FF8533</color>
     <color name="lightOrange">#E8AA42</color>
     <color name="lightblue">#8BB2CB</color>
