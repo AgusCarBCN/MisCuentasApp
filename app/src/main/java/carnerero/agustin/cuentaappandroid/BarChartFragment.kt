@@ -45,7 +45,6 @@ class BarChartFragment : Fragment() {
     private lateinit var gastosTotales: ArrayList<Float>
     private lateinit var resultados: ArrayList<Float>
     private lateinit var barChart: BarChart
-    private lateinit var barData: BarData
     private lateinit var barDataSetIngresos: BarDataSet
     private lateinit var barDataSetGastos: BarDataSet
     private lateinit var barDataSetResultados: BarDataSet
@@ -166,42 +165,44 @@ class BarChartFragment : Fragment() {
     private fun createBarChart() {
         //Creacion y configuracion del grafico de barras
         //Creacion de barDataSet de los ingresos,gasto y resultados
-        barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
-        barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkgreen)
-        barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-        barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
-        barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-        barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
-        barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
-        barData.setValueTextSize(12f)
-        //Configuracion de los datos en el grafico de barras
-        barChart.data = barData
-        barChart.description.isEnabled = false
-        //Configuracion del eje x
-        val xAxis = barChart.xAxis
-        //Añadir los meses en el eje X y centramos las etiquetas
-        xAxis.valueFormatter = IndexAxisValueFormatter(months)
-        xAxis.setCenterAxisLabels(true)
-        xAxis.textSize = 12f
-        //Configuracion del ejeX
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
-        xAxis.isGranularityEnabled = true
-        barChart.isDragEnabled = true
-        //Configuracion del tamaño de las barras y espacio entre ellas
-        barChart.setVisibleXRangeMaximum(3f)
-        val barSpace = 0.065f
-        val groupSpace = 0.2f
-        barData.barWidth = 0.20f
-        barChart.xAxis.axisMinimum = 0f
-        barChart.animate()
-        barChart.setNoDataText("")
-        barChart.groupBars(0f, groupSpace, barSpace)
-        barChart.invalidate()
-        barChart.setDrawValueAboveBar(true) // Muestra los valores encima de las barras
-        barChart.isHighlightFullBarEnabled = true // Permite que se destaquen barras individuales al tocarlas
-        barChart.setDrawMarkers(true) // Muestra tooltips cuando se toca una barra
-
+        with(barChart) {
+            barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
+            barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkgreen)
+            barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
+            barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
+            barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
+            barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
+            val barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
+            barData.setValueTextSize(12f)
+            //Configuracion de los datos en el grafico de barras
+            data = barData
+            description.isEnabled = false
+            //Configuracion del eje x
+            val xAxis = barChart.xAxis
+            //Añadir los meses en el eje X y centramos las etiquetas
+            xAxis.valueFormatter = IndexAxisValueFormatter(months)
+            xAxis.setCenterAxisLabels(true)
+            xAxis.textSize = 12f
+            //Configuracion del ejeX
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1f
+            xAxis.isGranularityEnabled = true
+            isDragEnabled = true
+            //Configuracion del tamaño de las barras y espacio entre ellas
+            setVisibleXRangeMaximum(3f)
+            val barSpace = 0.065f
+            val groupSpace = 0.2f
+            barData.barWidth = 0.20f
+            xAxis.axisMinimum = 0f
+            animate()
+            setNoDataText("")
+            groupBars(0f, groupSpace, barSpace)
+            invalidate()
+            setDrawValueAboveBar(true) // Muestra los valores encima de las barras
+            isHighlightFullBarEnabled =
+                true // Permite que se destaquen barras individuales al tocarlas
+            setDrawMarkers(true) // Muestra tooltips cuando se toca una barra
+        }
     }
 
     private fun getBarChartData(listOfAmount: ArrayList<Float>): ArrayList<BarEntry> {

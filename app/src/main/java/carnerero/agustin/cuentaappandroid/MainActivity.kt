@@ -47,45 +47,30 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         super.onDestroy()
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val fragmentContainer:FragmentContainerView=findViewById(R.id.fcv_main_container)
-        val fragment= SaldoFragment()
-        changeFragmentMain(fragment)
-        fragment.setMenuVisibility(true)
-        fragmentContainer.visibility=View.VISIBLE
+        val fragmentContainer: FragmentContainerView = findViewById(R.id.fcv_main_container)
+        val fragment: Fragment
+
         when (item.itemId) {
-            R.id.consulta -> {
-                val fragmentSearch = ConsultaFragment ()
-                changeFragmentMain(fragmentSearch)
-                showSaldo()
-                fragmentSearch.setMenuVisibility(true)
-                fragmentContainer.visibility=View.VISIBLE
+            R.id.consulta -> fragment = ConsultaFragment()
+            R.id.nuevoImporte -> fragment = NewAmountFragment()
+            R.id.estadistica -> fragment = BarChartFragment()
+            R.id.transferencia -> fragment = TransaccionFragment()
+            R.id.salir -> {
+                finish()
+                return true
             }
-            R.id.nuevoImporte -> {
-                val nuevoImporteFragment = NewAmountFragment()
-                changeFragmentMain(nuevoImporteFragment)
-                showSaldo()
-                nuevoImporteFragment.setMenuVisibility(true)
-                fragmentContainer.visibility=View.VISIBLE            }
-            R.id.estadistica -> {
-                val barChartFragment =  BarChartFragment()
-                changeFragmentMain(barChartFragment)
-                showSaldo()
-                barChartFragment.setMenuVisibility(true)
-                fragmentContainer.visibility=View.VISIBLE
-            }
-            R.id.transferencia -> {
-               val transferenciaFragment =  TransaccionFragment()
-                changeFragmentMain(transferenciaFragment)
-                showSaldo()
-                transferenciaFragment.setMenuVisibility(true)
-                fragmentContainer.visibility=View.VISIBLE
-            }
-            R.id.salir ->finish()
-            R.id.configuracion ->{
+            R.id.configuracion -> {
                 val intent = Intent(this, CreateUserActivity::class.java)
                 startActivity(intent)
+                drawer.closeDrawer(GravityCompat.START)
+                return true
             }
+            else -> fragment = SaldoFragment()
         }
+        changeFragmentMain(fragment)
+        showSaldo()
+        fragment.setMenuVisibility(true)
+        fragmentContainer.visibility = View.VISIBLE
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
@@ -94,7 +79,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         super.onPostCreate(savedInstanceState)
         toggle.syncState()
     }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)

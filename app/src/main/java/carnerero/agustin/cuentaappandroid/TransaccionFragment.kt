@@ -139,7 +139,6 @@ class TransaccionFragment : Fragment() {
                 val importePositivo = importeText.toDouble()
                 cuentaDao.actualizarSaldo(importeNegativo, selectedItemOrigen.toString())
                 cuentaDao.actualizarSaldo(importePositivo, selectedItemDestino.toString())
-
                 // Egreso en cuenta de origen
                 var movimientoBancario = MovimientoBancario(
                     importeNegativo,

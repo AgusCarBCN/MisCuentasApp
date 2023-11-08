@@ -19,9 +19,6 @@ class LoginActivity : AppCompatActivity() {
     private val movDAO=MovimientoBancarioDAO(admin)
     private val userDao=UsuarioDao(admin)
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var dni:String
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,14 +61,14 @@ class LoginActivity : AppCompatActivity() {
                 // Guardar el DNI en SharedPreferences después del inicio de sesión
                 //Las SharedPreferences son una forma de almacenar datos clave-valor en Android
                 //de manera sencilla y eficiente
-                dni = usuarioLogin
-                val nombre=usuarioName
                 //Guarda dni y nombre en sharedpreferences de Android
                 val sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
-                editor.putString("dni", dni)
-                editor.putString("nombre",nombre)
-                editor.apply()
+                with(editor) {
+                putString("dni", usuarioLogin)
+                putString("nombre", usuarioName)
+                apply()
+            }
                 Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

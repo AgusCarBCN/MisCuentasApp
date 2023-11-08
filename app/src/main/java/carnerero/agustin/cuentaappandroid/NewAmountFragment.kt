@@ -4,7 +4,6 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +38,6 @@ class NewAmountFragment : Fragment() {
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
     private var selectedItem: String? = null
-    private var mediaPlayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -71,10 +69,11 @@ class NewAmountFragment : Fragment() {
         val cuentas = cuentaDao.listarCuentasPorDNI(dni)
         val saldo1 = cuentas[0].saldo
         val saldo2 = cuentas[1].saldo
-
-        adapter.add("Selecciona una cuenta")
-        adapter.add(cuentas[0].iban)
-        adapter.add(cuentas[1].iban)
+        with(adapter) {
+            add(getString(R.string.select_account))
+            add(cuentas[0].iban)
+            add(cuentas[1].iban)
+        }
         spinnerCuentas.adapter = adapter
         spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -187,7 +186,6 @@ class NewAmountFragment : Fragment() {
         super.onDestroyView()
         _binding = null // Importante para evitar fugas de memoria
     }
-
 
 
     companion object {
