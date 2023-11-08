@@ -45,7 +45,6 @@ class ConsultaFragment : Fragment() {
     private var result=0.0
     private val movDao = MovimientoBancarioDAO(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
-    private var mediaPlayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -75,6 +74,7 @@ class ConsultaFragment : Fragment() {
         val spConsulta=binding.spConsulta
         val buscar=binding.btnBuscar
         val cancel=binding.btnCancelabuscar
+        val searchByText: EditText = binding.etSearch
         //Recupero dni del usuario que inicio sesion
         val sharedPreferences =
             requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
@@ -168,7 +168,6 @@ class ConsultaFragment : Fragment() {
             var fechaValida = true
             var importeValido= true
             //por texto
-            val searchByText: EditText = rootview.findViewById(R.id.et_search)
             val searchText: String = searchByText.text.toString()
             //Resultado de los importes totales
             Utils.sound(requireContext())

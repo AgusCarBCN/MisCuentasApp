@@ -8,6 +8,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateUserBinding
+
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.model.Usuario
@@ -22,7 +23,7 @@ class CreateUserActivity : AppCompatActivity() {
     private lateinit var cuentaDao: CuentaDao
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val movDAO = MovimientoBancarioDAO(admin)
-    private lateinit var binding:ActivityCreateUserBinding
+    private lateinit var binding: ActivityCreateUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityCreateUserBinding.inflate(layoutInflater)

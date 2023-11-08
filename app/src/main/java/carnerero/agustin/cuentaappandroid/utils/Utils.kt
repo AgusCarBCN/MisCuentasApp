@@ -24,7 +24,7 @@ class Utils {
             return importeTotal.toFloat()
         }
         fun sound(contex : Context){
-                mediaPlayer = MediaPlayer.create(contex, R.raw.clicksound)che
+                mediaPlayer = MediaPlayer.create(contex, R.raw.clicksound)
                 mediaPlayer?.start()
         }
         fun releaseSound(){
