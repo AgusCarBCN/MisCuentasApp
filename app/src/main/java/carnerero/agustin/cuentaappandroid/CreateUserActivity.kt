@@ -27,11 +27,8 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityCreateUserBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
     }
-
 
     fun cancelCreateUser(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
@@ -47,7 +44,7 @@ class CreateUserActivity : AppCompatActivity() {
         val address=binding.etUseraddress
         val city=binding.etUsercity
         val zipCode=binding.etUserzip
-        val phone=binding.etUserphone
+        val email=binding.etUseremail
         val userpass=binding.etUserpass
         //Acceso a los ediText de las cuentas
         val mainAccount=binding.etUseraccmain
@@ -62,7 +59,7 @@ class CreateUserActivity : AppCompatActivity() {
             address.text.toString(),
             city.text.toString(),
             zipCode.text.toString(),
-            phone.text.toString(),
+            email.text.toString(),
             userpass.text.toString()
         )
         val cuenta1 = Cuenta(

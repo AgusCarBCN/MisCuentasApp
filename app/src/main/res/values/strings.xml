@@ -17,7 +17,7 @@
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="zipcode">Zip code</string>
-    <string name="phone">Phone</string>
+    <string name="email">email</string>
     <string name="accounts">Accounts</string>
     <string name="main_account">Main account</string>
     <string name="second_account">Secondary account</string>

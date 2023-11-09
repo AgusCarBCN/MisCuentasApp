@@ -28,6 +28,7 @@ class SaldoFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentSaldoBinding?=null
+    private val admin=DataBaseAppSingleton.getInstance(context)
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,6 @@ class SaldoFragment : Fragment() {
         devuelva un valor nulo. Esto asegura que dni sea un String no nulo que puedes
         pasar a la función listarCuentasPorDNI.*/
         val dni = sharedPreferences.getString("dni", "") ?: ""
-        val admin=DataBaseApp(context,"cuentaApp",null,1)
         val dao= CuentaDao(admin)
         val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
         val cuenta1=binding.tvCuenta1

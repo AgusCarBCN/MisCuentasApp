@@ -19,7 +19,7 @@ class DataBaseApp(
                                         "domicilio TEXT,"+
                                         "ciudad TEXT,"+
                                         "codigopostal TEXT,"+
-                                        "telefono TEXT,"+
+                                        "email TEXT,"+
                                         "password TEXT)"
 
     private val createAccountTable = "CREATE TABLE CUENTA "+
@@ -67,8 +67,16 @@ class DataBaseApp(
 
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+    override fun onUpgrade(database: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+       /* if (oldVersion < 2) {
+            // Realiza las actualizaciones necesarias para pasar de la versión 1 a la versión 2
+            // Por ejemplo, podrías cambiar el nombre del campo de 'telefono' a 'email'
+            val renameColumnQuery = "ALTER TABLE USUARIO RENAME COLUMN telefono TO email;"
+            database?.execSQL(renameColumnQuery)
+        }*/
+
+        // Puedes seguir agregando bloques if para manejar actualizaciones de versiones futuras
     }
+
 
 }
