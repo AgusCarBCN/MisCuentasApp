@@ -26,10 +26,10 @@ class LoginActivity : AppCompatActivity() {
         val createUser=binding.btnCreateuser
         val tvcreateUser=binding.tvCreateuser
         setContentView(binding.root)
-        if(userDao.existeAlgunUsuario()){
+        /*if(userDao.existeAlgunUsuario()){
             createUser.visibility=View.INVISIBLE
              tvcreateUser.setText("")
-        }
+        }*/
 
     }
     override fun onDestroy() {
