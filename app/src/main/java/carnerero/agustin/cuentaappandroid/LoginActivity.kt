@@ -2,11 +2,14 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
@@ -19,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private val movDAO=MovimientoBancarioDAO(admin)
     private val userDao=UsuarioDao(admin)
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +31,10 @@ class LoginActivity : AppCompatActivity() {
         val tvcreateUser=binding.tvCreateuser
         setContentView(binding.root)
         if(userDao.existeAlgunUsuario()){
-            createUser.visibility=View.INVISIBLE
+             createUser.setText(getString(R.string.forgetpass))
              tvcreateUser.setText("")
         }
-
+        sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this)
     }
     override fun onDestroy() {
         Utils.releaseSound()
@@ -39,36 +43,30 @@ class LoginActivity : AppCompatActivity() {
 
     fun login(view: View) {
 
-        val userDni:String=binding.etTextUser.text.toString()
-        val userPassword:String=binding.etPassword.text.toString()
-        val user=userDao.obtenerUsuarioPorDniYPassword(userDni,userPassword)
-        var usuarioLogin=user?.dni
-        var passwordLogin=user?.password
-        var usuarioName=user?.nombre
+        val userField:String=binding.etTextUser.text.toString()
+        val passwordField:String=binding.etPassword.text.toString()
+        val user=userDao.obtenerUsuarioPorDniYPassword(userField,passwordField)
+        var userDni=user?.dni
+        var userPassword=user?.password
+        var userName=user?.nombre
         //Sonido al clickear boton
         Utils.sound(this)
 // Verifica si los campos están vacíos
-        if (userDni.isEmpty() || userPassword.isEmpty()) {
-            if (userDni.isEmpty() && userPassword.isEmpty()) {
+        if (userField.isEmpty() || passwordField.isEmpty()) {
+            if (userField.isEmpty() && passwordField.isEmpty()) {
                 Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
             }
         } else {
             // Verifica las credenciales
-            if (userDni == usuarioLogin && userPassword == passwordLogin) {
-                // Inicio de sesión exitoso
-                // Guardar el DNI en SharedPreferences después del inicio de sesión
-                //Las SharedPreferences son una forma de almacenar datos clave-valor en Android
-                //de manera sencilla y eficiente
-                //Guarda dni y nombre en sharedpreferences de Android
-                val sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                with(editor) {
-                putString("dni", usuarioLogin)
-                putString("nombre", usuarioName)
-                apply()
-            }
+            if (userDni == userField && userPassword ==passwordField) {
+
+                sharedPreferences.edit {
+                    putString(getString(R.string.id),userDni)
+                    putString(getString(R.string.name),userName)
+                    putString(getString(R.string.password),userPassword)
+                }
                 Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

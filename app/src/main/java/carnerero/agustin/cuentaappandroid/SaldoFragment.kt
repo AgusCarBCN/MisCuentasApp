@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.icu.text.NumberFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentSaldoBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
@@ -29,6 +31,7 @@ class SaldoFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentSaldoBinding?=null
     private val admin=DataBaseAppSingleton.getInstance(context)
+    private lateinit var sharedPreferences: SharedPreferences
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,28 +48,25 @@ class SaldoFragment : Fragment() {
         _binding= FragmentSaldoBinding.inflate(inflater,container,false)
         val view = binding.root
         // Inflate the layout for this fragment
-        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        /*El operador ?: se utiliza para proporcionar un valor predeterminado
-        ("" en este caso) en caso de que sharedPreferences.getString("dni", "")
-        devuelva un valor nulo. Esto asegura que dni sea un String no nulo que puedes
-        pasar a la función listarCuentasPorDNI.*/
-        val dni = sharedPreferences.getString("dni", "") ?: ""
+        //Recupero dni del usuario que inicio sesion
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni=sharedPreferences.getString(getString(R.string.id),null)
         val dao= CuentaDao(admin)
-        val cuentas:List<Cuenta> =dao.listarCuentasPorDNI(dni)
+        val cuentas: List<Cuenta>? = dni?.let { dao.listarCuentasPorDNI(it) }
         val cuenta1=binding.tvCuenta1
         val cuenta2=binding.tvCuenta2
         val saldo1=binding.tvSaldo1
         val saldo2=binding.tvSaldo2
         val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-        cuenta1.text = cuentas[0].iban
-        cuenta2.text = cuentas[1].iban
+        cuenta1.text = cuentas?.get(0)?.iban
+        cuenta2.text = cuentas?.get(1)?.iban
         saldo1.apply {
-            text=currencyFormat.format(cuentas[0].saldo).toString()
+            text= cuentas?.get(0)?.let { currencyFormat.format(it.saldo).toString() }
             setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
         }
         saldo2.apply {
-            text=currencyFormat.format(cuentas[1].saldo).toString()
+            text= cuentas?.get(1)?.let { currencyFormat.format(it.saldo).toString() }
             setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
         }
         return view

@@ -1,7 +1,8 @@
 package carnerero.agustin.cuentaappandroid
 
 
-import android.content.Context
+import android.app.SharedElementCallback
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
@@ -49,6 +51,7 @@ class BarChartFragment : Fragment() {
     private lateinit var barDataSetGastos: BarDataSet
     private lateinit var barDataSetResultados: BarDataSet
     private lateinit var barEntriesList: ArrayList<BarEntry>
+    private lateinit var sharedPreferences: SharedPreferences
     private val months = arrayOf(
         "Enero",
         "Febrero",
@@ -83,10 +86,9 @@ class BarChartFragment : Fragment() {
         barChart = binding.barChart
         val spCuenta = binding.spCuenta
         val spYears = binding.spYear
-        val sharedPreferences =
-            requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        val dni = sharedPreferences.getString("dni", "") ?: ""
-        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
+        sharedPreferences=PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni=sharedPreferences.getString(getString(R.string.id),null)
+        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         val years = arrayOf("2023", "2024", "2025", "2026", "2027")
         //Creo adapters
         //Creo adapter
@@ -97,8 +99,8 @@ class BarChartFragment : Fragment() {
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         //Agrega elementos a adaptadores
 
-        adapterCuenta.add(cuentas[0].iban)
-        adapterCuenta.add(cuentas[1].iban)
+        adapterCuenta.add(cuentas?.get(0)?.iban)
+        adapterCuenta.add(cuentas?.get(1)?.iban)
 
         for(i in 0..4) {
             adapterYear.add(years[i])
@@ -112,7 +114,7 @@ class BarChartFragment : Fragment() {
         // de respaldo para cuando no se selecciona ningún element
         //Inicializamos en año 0 y cuenta principal
         selectedYear=years[0]
-        selectedIban=cuentas[0].iban
+        selectedIban= cuentas?.get(0)?.iban
 
         spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

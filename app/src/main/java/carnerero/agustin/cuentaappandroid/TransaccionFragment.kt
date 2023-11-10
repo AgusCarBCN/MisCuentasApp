@@ -1,16 +1,15 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.content.Context
-import android.media.MediaPlayer
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
@@ -33,14 +32,15 @@ class TransaccionFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
     //Variables donde se almacenara el valor de los items selecionados de cada spinner
-    private var selectedItemOrigen:String?=null
-    private var selectedItemDestino:String?=null
-    private val admin=DataBaseAppSingleton.getInstance(context)
-    private val cuentaDao= CuentaDao(admin)
-    private val movimientoBancarioDAO= MovimientoBancarioDAO(admin)
-    private var mediaPlayer: MediaPlayer? = null
-    private var _binding: FragmentTransaccionBinding?=null
+    private var selectedItemOrigen: String? = null
+    private var selectedItemDestino: String? = null
+    private val admin = DataBaseAppSingleton.getInstance(context)
+    private val cuentaDao = CuentaDao(admin)
+    private val movimientoBancarioDAO = MovimientoBancarioDAO(admin)
+    private var _binding: FragmentTransaccionBinding? = null
+    private lateinit var sharedPreferences: SharedPreferences
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,28 +54,29 @@ class TransaccionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding= FragmentTransaccionBinding.inflate(inflater,container,false)
+        _binding = FragmentTransaccionBinding.inflate(inflater, container, false)
         val view = binding.root
         //Obtener todos los componentes del fragment
-        val importe=binding.etImportetrans
-        val cuentaOrigen=binding.spCuentaorigen
-        val cuentaDestino=binding.spCuentadestino
-        val aceptar=binding.btnAceptar
-        val salir=binding.btnSalir
-
+        val importe = binding.etImportetrans
+        val cuentaOrigen = binding.spCuentaorigen
+        val cuentaDestino = binding.spCuentadestino
+        val aceptar = binding.btnAceptar
+        val salir = binding.btnSalir
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        val dni = sharedPreferences.getString("dni", "") ?: ""
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni = sharedPreferences.getString(getString(R.string.id), null)
+
         //Creo  un adaptador de cadena (String) para llenar un Spinner
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        val adapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
 
         //Obtengo las cuentas del usuario logeado con el dni
-        val cuentas=cuentaDao.listarCuentasPorDNI(dni)
+        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         //Lleno los dos spinners
-        adapter.add(cuentas[0].iban)
-        adapter.add(cuentas[1].iban)
+        adapter.add(cuentas?.get(0)?.iban)
+        adapter.add(cuentas?.get(1)?.iban)
         cuentaOrigen.adapter = adapter
-        cuentaDestino.adapter=adapter
+        cuentaDestino.adapter = adapter
         //Selecciono los elementos por defecto en origen la cuenta principal y en destino la secundaria
         cuentaOrigen.setSelection(0)
         cuentaDestino.setSelection(1)

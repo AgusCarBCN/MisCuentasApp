@@ -50,6 +50,7 @@ dependencies {
     implementation ("com.diogobernardino:williamchart:3.10.1")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("org.apache.commons:commons-csv:1.5")
+    implementation("androidx.preference:preference-ktx:1.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
