@@ -60,4 +60,10 @@
     <string name="alertnewamount">you must select an account to add a new entry</string>
     <string name="alertdialognewamount">Amount realized</string>
     <string name="forgetpass">Have you forgotten the password?"</string>
+    <string name="step1">Insert your id (step 1)</string>
+    <string name="step2">Insert a new password (step 2)</string>
+    <string name="hintid">Your id</string>
+    <string name="hintnewpass">New password</string>
+    <string name="hintrepeatpass">Repeat password</string>
+
 </resources>

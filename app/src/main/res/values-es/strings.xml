@@ -60,4 +60,9 @@
     <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
     <string name="alertdialognewamount">Importe realizado</string>
     <string name="forgetpass">Olvidaste la contraseña?"</string>
+    <string name="step1">Introduce tu dni (paso 1)</string>
+    <string name="step2">Introduce la nueva contraseña (paso 2)</string>
+    <string name="hintid">Tu dni</string>
+    <string name="hintnewpass">Nueva contraseña</string>
+    <string name="hintrepeatpass">Repite contraseña</string>
 </resources>

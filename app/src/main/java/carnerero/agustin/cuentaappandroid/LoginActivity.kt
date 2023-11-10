@@ -1,9 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,7 +18,8 @@ class LoginActivity : AppCompatActivity() {
 
     private val admin=DataBaseAppSingleton.getInstance(this)
     private val movDAO=MovimientoBancarioDAO(admin)
-    private val userDao=UsuarioDao(admin)
+    private val userDao = UsuarioDao(admin)
+    private var existUser: Boolean = false
     private lateinit var binding: ActivityLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -29,10 +28,11 @@ class LoginActivity : AppCompatActivity() {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         val createUser=binding.btnCreateuser
         val tvcreateUser=binding.tvCreateuser
+        existUser = userDao.existeAlgunUsuario()
         setContentView(binding.root)
-        if(userDao.existeAlgunUsuario()){
-             createUser.setText(getString(R.string.forgetpass))
-             tvcreateUser.setText("")
+        if (existUser) {
+            createUser.setText(getString(R.string.forgetpass))
+            tvcreateUser.setText("")
         }
         sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this)
     }
@@ -78,7 +78,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
         fun createUser(view: View) {
-            val intent = Intent(this, CreateUserActivity::class.java)
-            startActivity(intent)
+            if (!existUser) {
+                val intent = Intent(this, CreateUserActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, NewPasswordActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
