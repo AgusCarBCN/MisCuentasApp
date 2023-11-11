@@ -74,8 +74,8 @@
     <string name="accountconfig">Cuentas</string>
     <string name="notifications">Notificaciones</string>
     <string name="deleteall">Borrar todos los datos</string>
-    <string name="importcvs">Importa a archivo</string>
-    <string name="exportcvs">Exporta a archivo</string>
+    <string name="importcvs">Importa desde archivo externo</string>
+    <string name="exportcvs">Exporta hacia archivo externo</string>
     <string name="about">Acerca de</string>
     <string name="logoutconf">Salir</string>
     <string name="theme">Tema</string>

@@ -50,27 +50,22 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val fragment: Fragment
 
         when (item.itemId) {
-            R.id.consulta, R.id.nuevoImporte, R.id.estadistica, R.id.transferencia -> {
+            R.id.consulta, R.id.nuevoImporte, R.id.estadistica, R.id.transferencia,R.id.configuracion -> {
                 showSaldo()
                 fragment = when (item.itemId) {
                     R.id.consulta -> ConsultaFragment()
                     R.id.nuevoImporte -> NewAmountFragment()
                     R.id.estadistica -> BarChartFragment()
                     R.id.transferencia -> TransaccionFragment()
+                    R.id.configuracion->SettingsFragment()
                     else -> SaldoFragment()
                 }
-            }
-
-            R.id.configuracion -> {
-                hideSaldo()
-                fragment = SettingsFragment()
             }
 
             R.id.salir -> {
                 finish()
                 return true
             }
-
             else -> fragment = SaldoFragment()
         }
 
@@ -103,17 +98,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
             .commit()
     }
 
-    private fun hideSaldo() {
-        val fragmentManager = supportFragmentManager
-        val fragmentSaldo = fragmentManager.findFragmentById(R.id.info_container)
-
-        // Verifica si el fragmento ya está en el contenedor
-        if (fragmentSaldo != null) {
-            val transaction = fragmentManager.beginTransaction()
-            transaction.hide(fragmentSaldo)
-            transaction.commit()
-        }
-    }
 
     fun actualizarFragmentSaldo() {
         val fragmentSaldo = SaldoFragment()

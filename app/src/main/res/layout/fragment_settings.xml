@@ -6,148 +6,253 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingsFragment">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_profile"
-            app:startIconDrawable="@drawable/person">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_profile"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/style_editetx"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:foregroundGravity="center_horizontal"
+                android:src="@drawable/person" />
+
+            <Button
+                android:id="@+id/btn_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
+                android:inputType="text"
+                android:text="@string/profile"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/accounts"
+                android:src="@drawable/ic_account" />
+
+            <Button
+                android:id="@+id/btn_accounts"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/box"
                 android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/profile" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/accountconfig"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_theme"
-            app:startIconDrawable="@drawable/ic_light_mode">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_theme"
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_theme"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_light_mode" />
+
+            <Button
+                android:id="@+id/btn_theme"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/box"
                 android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/theme" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/theme"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_accounts"
-            app:startIconDrawable="@drawable/ic_account">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_text_user"
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_notifications" />
+
+            <Button
+                android:id="@+id/btn_notifications"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/box"
                 android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/accountconfig" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/notifications"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_notifications"
-            app:startIconDrawable="@drawable/ic_notifications">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_notifications"
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_download" />
+
+            <Button
+                android:id="@+id/btn_importcvs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/box"
                 android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:gravity="center_horizontal|left"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/notifications" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/importcvs"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_deleteall"
-            app:startIconDrawable="@drawable/ic_delete">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_deleteall"
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_upload" />
+
+            <Button
+                android:id="@+id/btn_exportcvs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/deleteall" />/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/exportcvs"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_import"
-            app:startIconDrawable="@drawable/ic_import_export">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_import"
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_delete" />
+
+            <Button
+                android:id="@+id/btn_deleteall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/importcvs" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/deleteall"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_export"
-            app:startIconDrawable="@drawable/ic_import_export">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_export"
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_about" />
+
+            <Button
+                android:id="@+id/btn_aboutinfo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/exportcvs" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
+                android:text="@string/about"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_about"
-            app:startIconDrawable="@drawable/ic_about">
+            android:background="@drawable/style_editetx"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
-                android:inputType="text"
-                android:text="@string/about" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/extrabox"
-            android:id="@+id/til_logout"
-            app:startIconDrawable="@drawable/ic_logout">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="20sp"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/ic_logout" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_logout"
+            <Button
+                android:id="@+id/btn_logout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style_editetx"
-                android:gravity="left"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@color/lightYellow"
+                android:gravity="left|center_vertical"
                 android:inputType="text"
-                android:text="@string/logout" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+                android:text="@string/logout"
+                android:textSize="@dimen/extracommon"
+                app:backgroundTint="@color/lightYellow" />
+        </LinearLayout>
+    </LinearLayout>-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/lightYellow"
+        app:menu="@menu/settings_menu" />
 </FrameLayout>

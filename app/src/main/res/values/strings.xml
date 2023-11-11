@@ -74,8 +74,8 @@
     <string name="accountconfig">Accounts</string>
     <string name="notifications">Notifications</string>
     <string name="deleteall">Delete all data</string>
-    <string name="importcvs">Import to file</string>
-    <string name="exportcvs">Export to file</string>
+    <string name="importcvs">Import from a external file</string>
+    <string name="exportcvs">Export to a external file</string>
     <string name="about">About</string>
     <string name="logoutconf">Log out</string>
     <string name="theme">Theme</string>
