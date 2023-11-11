@@ -6,7 +6,7 @@ data class Usuario(
     var domicilio: String,
     var ciudad: String,
     var codigoPostal: String,
-    var telefono: String,
+    var email: String,
     var password: String
 
 )

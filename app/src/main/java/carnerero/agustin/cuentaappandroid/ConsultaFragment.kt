@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.icu.util.Calendar
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentConsultaBinding
@@ -45,6 +47,7 @@ class ConsultaFragment : Fragment() {
     private var result=0.0
     private val movDao = MovimientoBancarioDAO(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -76,19 +79,18 @@ class ConsultaFragment : Fragment() {
         val cancel=binding.btnCancelabuscar
         val searchByText: EditText = binding.etSearch
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences =
-            requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        val dni = sharedPreferences.getString("dni", "") ?: ""
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni=sharedPreferences.getString(getString(R.string.id),null)
         //Rellenar spiner spConsulta
         //Creo adapter
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val hint=getString(R.string.select_account)
         val cuentaDao = CuentaDao(admin)
-        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
+        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         adapter.add(hint)
-        adapter.add(cuentas[0].iban)
-        adapter.add(cuentas[1].iban)
+        adapter.add(cuentas?.get(0)?.iban)
+        adapter.add(cuentas?.get(1)?.iban)
         selectedItem = adapter.getItem(0)
         spConsulta.adapter = adapter
         //Muestra DatePickerDialog al cliquear edit text

@@ -17,7 +17,7 @@
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="zipcode">Zip code</string>
-    <string name="phone">Phone</string>
+    <string name="email">email</string>
     <string name="accounts">Accounts</string>
     <string name="main_account">Main account</string>
     <string name="second_account">Secondary account</string>
@@ -59,4 +59,14 @@
     <string name="alertamounts">The amount from cannot be greater than amount to</string>
     <string name="alertnewamount">you must select an account to add a new entry</string>
     <string name="alertdialognewamount">Amount realized</string>
+    <string name="forgetpass">Have you forgotten the password?"</string>
+    <string name="step1">Inser id (step 1)</string>
+    <string name="step2">new password (step 2)</string>
+    <string name="hintid">Your id</string>
+    <string name="hintnewpass">New password</string>
+    <string name="hintrepeatpass">Repeat password</string>
+    <string name="successnewpass">New password created</string>
+    <string name="passnotequals">Passwords not equals </string>
+    <string name="intronewpass"> To change your password follow the steps.</string>
+
 </resources>

@@ -102,7 +102,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/et_userphone"
+        android:id="@+id/et_useremail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/box"
         android:layout_marginLeft="20dp"
@@ -110,8 +110,8 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/style_editetx"
         android:ems="10"
-        android:hint="@string/phone"
-        android:inputType="phone"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:textColor="#333333"
         android:textStyle="bold" />
 

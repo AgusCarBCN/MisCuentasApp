@@ -1,12 +1,16 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.databinding.FragmentLogoBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,7 +26,9 @@ class LogoFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentLogoBinding?=null
+    private val binding get() = _binding!!
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,14 +42,15 @@ class LogoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootview =inflater.inflate(R.layout.fragment_logo, container, false)
-        val sharedPreferences = requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        val nombre = sharedPreferences.getString("nombre", "") ?: ""
-        val wellcome=rootview.findViewById<TextView>(R.id.tv_wellcome)
-        val msg="${wellcome.text} $nombre"
+        _binding= FragmentLogoBinding.inflate(inflater,container,false)
+        val view = binding.root
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val name=sharedPreferences.getString(getString(R.string.name),null)
+        val wellcome=binding.tvWellcome
+        val msg="${wellcome.text} $name"
         wellcome.text = msg
 
-        return rootview
+     return view
     }
 
     companion object {

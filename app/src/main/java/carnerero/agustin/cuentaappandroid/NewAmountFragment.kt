@@ -1,8 +1,8 @@
 package carnerero.agustin.cuentaappandroid
 
 
-import android.content.Context
-import android.media.MediaPlayer
+
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
@@ -38,6 +39,7 @@ class NewAmountFragment : Fragment() {
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
     private var selectedItem: String? = null
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,9 +54,8 @@ class NewAmountFragment : Fragment() {
         _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
         val view = binding.root
         //Recupero dni del usuario que inicio sesion
-        val sharedPreferences =
-            requireContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-        val dni = sharedPreferences.getString("dni", "") ?: ""
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni=sharedPreferences.getString(getString(R.string.id),null)
         //Acceso a componentes
         val spinnerCuentas=binding.spCuentas
         val nuevoIngreso=binding.btnNuevoingreso
@@ -66,13 +67,13 @@ class NewAmountFragment : Fragment() {
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val cuentaDao = CuentaDao(admin)
-        val cuentas = cuentaDao.listarCuentasPorDNI(dni)
-        val saldo1 = cuentas[0].saldo
-        val saldo2 = cuentas[1].saldo
+        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        val saldo1 = cuentas?.get(0)?.saldo
+        val saldo2 = cuentas?.get(1)?.saldo
         with(adapter) {
             add(getString(R.string.select_account))
-            add(cuentas[0].iban)
-            add(cuentas[1].iban)
+            add(cuentas?.get(0)?.iban)
+            add(cuentas?.get(1)?.iban)
         }
         spinnerCuentas.adapter = adapter
         spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -149,7 +150,7 @@ class NewAmountFragment : Fragment() {
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
                 //Controlo que el importe no sea superior a saldos de las cuentas
-                if (abs(importeNumerico) > saldo1 || abs(importeNumerico) > saldo2) {
+                if (abs(importeNumerico) > saldo1!! || abs(importeNumerico) > saldo2!!) {
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.alertamounts),

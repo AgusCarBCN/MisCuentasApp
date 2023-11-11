@@ -18,7 +18,7 @@ class UsuarioDao(private val admin: DataBaseApp) {
         values.put("domicilio", usuario.domicilio)
         values.put("ciudad", usuario.ciudad)
         values.put("codigopostal", usuario.codigoPostal)
-        values.put("telefono", usuario.telefono)
+        values.put("email", usuario.email)
         values.put("password", usuario.password)
         try {
             db.insert("USUARIO", null, values)
@@ -34,7 +34,7 @@ class UsuarioDao(private val admin: DataBaseApp) {
     *  parametrizadas en lugar de concatenar directamente los valores en la consulta. */
     fun obtenerUsuarioPorDniYPassword(dni: String, password: String): Usuario? {
         val db = admin.readableDatabase
-        val query = "SELECT dni, nombre, domicilio, ciudad, codigopostal, telefono, password FROM USUARIO WHERE dni = ? AND password = ?"
+        val query = "SELECT dni, nombre, domicilio, ciudad, codigopostal, email, password FROM USUARIO WHERE dni = ? AND password = ?"
         val cursor = db.rawQuery(query, arrayOf(dni, password))
 
         var usuario: Usuario? = null
@@ -47,7 +47,7 @@ class UsuarioDao(private val admin: DataBaseApp) {
                     cursor.getString(cursor.getColumnIndexOrThrow("domicilio")),
                     cursor.getString(cursor.getColumnIndexOrThrow("ciudad")),
                     cursor.getString(cursor.getColumnIndexOrThrow("codigopostal")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("telefono")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("email")),
                     cursor.getString(cursor.getColumnIndexOrThrow("password"))
                 )
             }
@@ -78,6 +78,19 @@ class UsuarioDao(private val admin: DataBaseApp) {
         }
 
         return false
+    }
+    fun actualizarPassword(dni: String, newPassword: String) {
+        val db = admin.writableDatabase
+        val values = ContentValues()
+        values.put("password", newPassword)
+
+        try {
+            db.update("USUARIO", values, "dni = ?", arrayOf(dni))
+        } catch (_: SQLException) {
+            // Manejar cualquier excepción que pueda ocurrir al ejecutar la actualización.
+        } finally {
+            db.close()
+        }
     }
 
     // Método para borrar un usuario por DNI y contraseña
