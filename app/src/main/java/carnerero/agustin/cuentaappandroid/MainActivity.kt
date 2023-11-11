@@ -1,11 +1,10 @@
 package carnerero.agustin.cuentaappandroid
-import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -51,24 +50,31 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val fragment: Fragment
 
         when (item.itemId) {
-            R.id.consulta -> fragment = ConsultaFragment()
-            R.id.nuevoImporte -> fragment = NewAmountFragment()
-            R.id.estadistica -> fragment = BarChartFragment()
-            R.id.transferencia -> fragment = TransaccionFragment()
+            R.id.consulta, R.id.nuevoImporte, R.id.estadistica, R.id.transferencia -> {
+                showSaldo()
+                fragment = when (item.itemId) {
+                    R.id.consulta -> ConsultaFragment()
+                    R.id.nuevoImporte -> NewAmountFragment()
+                    R.id.estadistica -> BarChartFragment()
+                    R.id.transferencia -> TransaccionFragment()
+                    else -> SaldoFragment()
+                }
+            }
+
+            R.id.configuracion -> {
+                hideSaldo()
+                fragment = SettingsFragment()
+            }
+
             R.id.salir -> {
                 finish()
                 return true
             }
-            R.id.configuracion -> {
-                val intent = Intent(this, CreateUserActivity::class.java)
-                startActivity(intent)
-                drawer.closeDrawer(GravityCompat.START)
-                return true
-            }
+
             else -> fragment = SaldoFragment()
         }
+
         changeFragmentMain(fragment)
-        showSaldo()
         fragment.setMenuVisibility(true)
         fragmentContainer.visibility = View.VISIBLE
         drawer.closeDrawer(GravityCompat.START)
@@ -89,18 +95,33 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
             .replace(R.id.fcv_main_container, fragment)
             .commit()
     }
+
     private fun showSaldo() {
-        val fragmentSaldo=SaldoFragment()
+        val fragmentSaldo = SaldoFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.info_container, fragmentSaldo)
             .commit()
     }
+
+    private fun hideSaldo() {
+        val fragmentManager = supportFragmentManager
+        val fragmentSaldo = fragmentManager.findFragmentById(R.id.info_container)
+
+        // Verifica si el fragmento ya está en el contenedor
+        if (fragmentSaldo != null) {
+            val transaction = fragmentManager.beginTransaction()
+            transaction.hide(fragmentSaldo)
+            transaction.commit()
+        }
+    }
+
     fun actualizarFragmentSaldo() {
         val fragmentSaldo = SaldoFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.info_container, fragmentSaldo)
         transaction.commit()
     }
+
     fun inicio() {
         val fragment = LogoFragment()
         val transaction = supportFragmentManager.beginTransaction()

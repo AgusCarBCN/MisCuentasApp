@@ -12,6 +12,7 @@
     <string name="balance">Balance</string>
     <string name="create">Create</string>
     <string name="create_your_account">Create your account</string>
+
     <string name="name">Name</string>
     <string name="id">ID</string>
     <string name="address">Address</string>
@@ -68,5 +69,14 @@
     <string name="successnewpass">New password created</string>
     <string name="passnotequals">Passwords not equals </string>
     <string name="intronewpass"> To change your password follow the steps.</string>
-
+    <!-- Fragment configuration -->
+    <string name="profile">Profile</string>
+    <string name="accountconfig">Accounts</string>
+    <string name="notifications">Notifications</string>
+    <string name="deleteall">Delete all data</string>
+    <string name="importcvs">Import to file</string>
+    <string name="exportcvs">Export to file</string>
+    <string name="about">About</string>
+    <string name="logoutconf">Log out</string>
+    <string name="theme">Theme</string>
 </resources>

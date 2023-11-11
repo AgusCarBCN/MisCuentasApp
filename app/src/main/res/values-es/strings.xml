@@ -64,8 +64,19 @@
     <string name="step2">Nueva contraseña (paso 2)</string>
     <string name="hintid">Tu dni</string>
     <string name="hintnewpass">Nueva contraseña</string>
-    <string name="hintrepeatpass">Repite contraseña</string>
+    <string name="hintrepeatpass">Repite la contraseña</string>
     <string name="successnewpass">Contraseña cambiada</string>
     <string name="passnotequals">Las contraseñas no son iguales </string>
     <string name="intronewpass">Para cambiar la contraseña sigue los pasos.</string>
+
+    <!-- Fragment configuration -->
+    <string name="profile">Perfil</string>
+    <string name="accountconfig">Cuentas</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="deleteall">Borrar todos los datos</string>
+    <string name="importcvs">Importa a archivo</string>
+    <string name="exportcvs">Exporta a archivo</string>
+    <string name="about">Acerca de</string>
+    <string name="logoutconf">Salir</string>
+    <string name="theme">Tema</string>
 </resources>

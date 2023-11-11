@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_profile"
+            app:startIconDrawable="@drawable/person">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/profile" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_theme"
+            app:startIconDrawable="@drawable/ic_light_mode">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_theme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/theme" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_accounts"
+            app:startIconDrawable="@drawable/ic_account">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_text_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/accountconfig" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_notifications"
+            app:startIconDrawable="@drawable/ic_notifications">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="center_horizontal|left"
+                android:inputType="text"
+                android:text="@string/notifications" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_deleteall"
+            app:startIconDrawable="@drawable/ic_delete">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_deleteall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/deleteall" />/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_import"
+            app:startIconDrawable="@drawable/ic_import_export">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_import"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/importcvs" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_export"
+            app:startIconDrawable="@drawable/ic_import_export">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_export"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/exportcvs" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_about"
+            app:startIconDrawable="@drawable/ic_about">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/about" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/extrabox"
+            android:id="@+id/til_logout"
+            app:startIconDrawable="@drawable/ic_logout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_editetx"
+                android:gravity="left"
+                android:inputType="text"
+                android:text="@string/logout" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</FrameLayout>
