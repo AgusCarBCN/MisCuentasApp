@@ -59,10 +59,13 @@
     <string name="alertamounts">El importe desde no puede ser superios al importe hasta</string>
     <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
     <string name="alertdialognewamount">Importe realizado</string>
-    <string name="forgetpass">Olvidaste la contraseña?"</string>
-    <string name="step1">Introduce tu dni (paso 1)</string>
-    <string name="step2">Introduce la nueva contraseña (paso 2)</string>
+    <string name="forgetpass">¿Olvidaste la contraseña?"</string>
+    <string name="step1">Tu dni (paso 1)</string>
+    <string name="step2">Nueva contraseña (paso 2)</string>
     <string name="hintid">Tu dni</string>
     <string name="hintnewpass">Nueva contraseña</string>
     <string name="hintrepeatpass">Repite contraseña</string>
+    <string name="successnewpass">Contraseña cambiada</string>
+    <string name="passnotequals">Las contraseñas no son iguales </string>
+    <string name="intronewpass">Para cambiar la contraseña sigue los pasos.</string>
 </resources>

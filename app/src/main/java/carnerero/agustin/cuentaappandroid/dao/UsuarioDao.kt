@@ -79,6 +79,19 @@ class UsuarioDao(private val admin: DataBaseApp) {
 
         return false
     }
+    fun actualizarPassword(dni: String, newPassword: String) {
+        val db = admin.writableDatabase
+        val values = ContentValues()
+        values.put("password", newPassword)
+
+        try {
+            db.update("USUARIO", values, "dni = ?", arrayOf(dni))
+        } catch (_: SQLException) {
+            // Manejar cualquier excepción que pueda ocurrir al ejecutar la actualización.
+        } finally {
+            db.close()
+        }
+    }
 
     // Método para borrar un usuario por DNI y contraseña
     /*fun borrarUsuarioPorDniYPassword(dni: String, password: String) {
