@@ -17,13 +17,13 @@
             android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            android:background="@color/lightYellow"/>
+            android:background="?android:colorSecondary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="@color/lightOrange"
+            android:background="?android:colorPrimary"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -42,7 +42,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="20dp"
                     android:text="@string/select_account"
-                    android:textColor="@color/darkBrown"
+                    android:textColor="?android:textColor"
                     android:textSize="@dimen/common"
                     android:textStyle="bold" />
 
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="@string/select_year"
-                    android:textColor="@color/darkBrown"
+                    android:textColor="?android:textColor"
                     android:textSize="@dimen/common"
                     android:textStyle="bold" />
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     tools:context=".ConsultaFragment">
 
     <LinearLayout
@@ -54,7 +54,7 @@
                         android:focusable="false"
                         android:hint="@string/date_from"
                         android:inputType="date"
-                        android:textColor="@color/darkBrown" />
+                        android:textColor="?android:textColor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +69,7 @@
                         android:background="@drawable/style_editetx"
                         android:clickable="true"
                         android:ems="10"
-                        android:textColor="@color/darkBrown"
+                        android:textColor="?android:textColor"
                         android:focusable="false"
                         android:inputType="date"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/orange"
+                android:background="?android:colorPrimaryDark"
                 android:gravity="center|top"
                 android:orientation="horizontal">
 
@@ -108,9 +108,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="@color/orange"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:text="@string/incomes"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColor"
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
@@ -121,9 +121,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="@color/orange"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:text="@string/bills"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColor"
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
@@ -133,9 +133,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="@color/orange"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:text="@string/income_and_bills"
-                        android:textColor="@color/darkBrown"
+                        android:textColor="?android:textColor"
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
@@ -165,7 +165,7 @@
                     android:gravity="center"
                     android:hint="@string/amount_from"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/darkBrown" />
+                    android:textColor="?android:textColor" />
 
                 <EditText
                     android:id="@+id/et_importehasta"
@@ -178,7 +178,7 @@
                     android:gravity="center"
                     android:hint="@string/amount_to"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/darkBrown" />
+                    android:textColor="?android:textColor" />
             </LinearLayout>
 
         </LinearLayout>
@@ -216,7 +216,7 @@
                 android:background="@drawable/style_botton"
                 android:text="@string/search"
                 android:textAllCaps="false"
-                android:textColor="@color/darkBrown"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold" />
 
@@ -229,7 +229,7 @@
                 android:background="@drawable/style_botton"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/darkBrown"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -169,7 +169,7 @@ class BarChartFragment : Fragment() {
         //Creacion de barDataSet de los ingresos,gasto y resultados
         with(barChart) {
             barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
-            barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkgreen)
+            barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkGreenPistacho)
             barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
             barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
             barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")

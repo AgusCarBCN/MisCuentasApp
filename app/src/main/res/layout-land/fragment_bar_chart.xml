@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_neutral_variant100"
+    android:background="?android:colorPrimaryDark"
     tools:context="Elije una cuenta">
 
 
@@ -17,13 +17,13 @@
             android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:background="@color/lightYellow" />
+            android:background="?android:colorSecondary" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="@color/lightOrange"
+            android:background="?android:colorPrimary"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 

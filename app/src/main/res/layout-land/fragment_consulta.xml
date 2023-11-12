@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="5dp"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     tools:context=".ConsultaFragment">
 
     <LinearLayout
@@ -56,7 +56,7 @@
                         android:focusable="false"
                         android:hint="@string/date_from"
                         android:inputType="date"
-                        android:textColor="@color/darkBrown" />
+                        android:textColor="?android:textColor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +76,7 @@
                         android:focusable="false"
                         android:hint="@string/date_to"
                         android:inputType="date"
-                        android:textColor="@color/darkBrown" />
+                        android:textColor="?android:textColor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/orange"
+                android:background="?android:colorPrimaryDark"
                 android:gravity="center|top"
                 android:orientation="horizontal">
 
@@ -111,8 +111,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/incomes"
-                        android:textColor="@color/black"
-                        android:buttonTint="@color/orange"
+                        android:textColor="?android:textColor"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -122,8 +122,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/bills"
-                        android:textColor="@color/black"
-                        android:buttonTint="@color/orange"
+                        android:textColor="?android:textColor"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -133,8 +133,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/income_and_bills"
-                        android:textColor="@color/black"
-                        android:buttonTint="@color/orange"
+                        android:textColor="?android:textColor"
+                        android:buttonTint="?android:colorPrimaryDark"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -162,7 +162,7 @@
                     android:gravity="center"
                     android:hint="@string/amount_from"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/darkBrown" />
+                    android:textColor="?android:textColor" />
 
                 <EditText
                     android:id="@+id/et_importehasta"
@@ -175,7 +175,7 @@
                     android:gravity="center"
                     android:hint="@string/amount_to"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/darkBrown" />
+                    android:textColor="?android:textColor" />
             </LinearLayout>
 
         </LinearLayout>
@@ -212,7 +212,7 @@
                 android:background="@drawable/style_botton"
                 android:text="@string/search"
                 android:textAllCaps="false"
-                android:textColor="@color/darkBrown"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold" />
 
@@ -225,7 +225,7 @@
                 android:background="@drawable/style_botton"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/darkBrown"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold" />
         </LinearLayout>

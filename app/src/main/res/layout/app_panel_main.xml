@@ -5,7 +5,7 @@
     android:id="@+id/appcuenta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     tools:context=".MainActivity">
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/orange"
+            android:background="?android:colorPrimaryDark"
             android:orientation="vertical">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                     android:id="@+id/toolbar_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/lightOrange"
+                    android:background="?android:colorPrimary"
                     app:layout_scrollFlags="enterAlways" />
             </com.google.android.material.appbar.AppBarLayout>
             <LinearLayout

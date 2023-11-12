@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".CreateUserActivity">
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/password"
-            android:textColor="@color/black"
+            android:textColor="?android:textColor"
             android:textSize="@dimen/head"
             android:textStyle="bold" />
 
@@ -207,7 +207,7 @@
             android:background="@drawable/style_botton"
             android:text="@string/confirm"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="?android:textColor"
             android:textSize="@dimen/botton"
             android:textStyle="bold" />
 
@@ -222,7 +222,7 @@
             android:onClick="cancelCreateUser"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="?android:textColor"
             android:textSize="@dimen/botton"
             android:textStyle="bold" />
     </LinearLayout>

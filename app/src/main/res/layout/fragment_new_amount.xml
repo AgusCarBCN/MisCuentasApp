@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     tools:context=".NewAmountFragment">
 
     <LinearLayout
@@ -76,14 +76,14 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/incomes"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_password"
-                app:rippleColor="#FFEB3B" />
+                />
 
             <Button
                 android:id="@+id/btn_nuevogasto"
@@ -97,14 +97,14 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/bills"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_password"
-                app:rippleColor="#FFEB3B" />
+                 />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

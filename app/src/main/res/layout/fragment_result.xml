@@ -4,7 +4,7 @@
     android:id="@+id/tv_result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
+    android:background="?android:colorPrimaryDark"
     tools:context=".ResultFragment">
 
     <LinearLayout
@@ -26,7 +26,7 @@
                 android:background="@drawable/style_box_cuenta"
                 android:text="@string/result"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/head"
                 android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:background="@drawable/style_box_saldo"
                 android:text="@string/result"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?android:textColor"
                 android:textSize="@dimen/head"
                 android:textStyle="bold" />
         </LinearLayout>

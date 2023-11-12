@@ -47,7 +47,7 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
         holder.importeitem.setTextColor(
             ContextCompat.getColor(
                 holder.importeitem.context,
-                if (mov.importe < 0) R.color.red else R.color.darkgreen
+                if (mov.importe < 0) R.color.red else R.color.darkGreenPistacho
             )
         )
 

@@ -6,13 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
-import androidx.transition.Visibility
-import carnerero.agustin.cuentaappandroid.R.color.lightblue
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
-import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 import carnerero.agustin.cuentaappandroid.databinding.ActivityNewPasswordBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 

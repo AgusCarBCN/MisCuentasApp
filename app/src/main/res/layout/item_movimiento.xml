@@ -21,7 +21,7 @@
             android:background="@android:color/transparent"
             android:paddingLeft="10dp"
             android:textAlignment="viewStart"
-            android:textColor="@color/darkBrown"
+            android:textColor="?android:textColor"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 

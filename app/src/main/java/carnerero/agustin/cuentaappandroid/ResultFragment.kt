@@ -60,7 +60,7 @@ class ResultFragment : Fragment() {
             if (result < 0) {
                 setTextColor(ContextCompat.getColor(context, R.color.red))
             } else {
-                setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+                setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
             }
         }
 

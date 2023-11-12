@@ -63,11 +63,11 @@ class SaldoFragment : Fragment() {
         cuenta2.text = cuentas?.get(1)?.iban
         saldo1.apply {
             text= cuentas?.get(0)?.let { currencyFormat.format(it.saldo).toString() }
-            setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+            setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
         }
         saldo2.apply {
             text= cuentas?.get(1)?.let { currencyFormat.format(it.saldo).toString() }
-            setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+            setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
         }
         return view
     }
