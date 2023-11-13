@@ -1,32 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<group>
     <item
-        android:id="@+id/configuracion"
-        android:icon="@drawable/configuracion"
-        android:title="@string/setting" />
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/person"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications" />
+
     <item
         android:id="@+id/nuevoImporte"
         android:icon="@drawable/importe"
         android:title="@string/new_amount" />
+    <item
+        android:id="@+id/transferencia"
+        android:icon="@drawable/transferencia"
+        android:title="@string/transferitem" />
+
+    <item
+        android:id="@+id/consulta"
+        android:icon="@drawable/ic_search"
+        android:title="@string/searchitem" />
+
     <item
         android:id="@+id/estadistica"
         android:icon="@drawable/estadistica"
         android:title="@string/stadistics"
         />
     <item
-        android:id="@+id/consulta"
-        android:icon="@drawable/consulta"
-        android:title="@string/searchitem" />
+        android:id="@+id/db"
+        android:icon="@drawable/databb"
+        android:title="@string/db" />
+
     <item
-        android:id="@+id/transferencia"
-        android:icon="@drawable/transferencia"
-        android:title="@string/transferitem" />
-</group>
-    <group>
-        <item
+        android:id="@+id/configuracion"
+        android:icon="@drawable/configuracion"
+        android:title="@string/setting" />
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_about"
+        android:title="@string/about" />
+
+    <item
             android:id="@+id/salir"
             android:icon="@android:drawable/ic_lock_power_off"
             android:title="@string/logout" />
-    </group>
+
 </menu>

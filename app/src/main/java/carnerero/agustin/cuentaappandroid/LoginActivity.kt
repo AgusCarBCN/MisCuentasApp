@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
@@ -29,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         val createUser=binding.btnCreateuser
         val tvcreateUser=binding.tvCreateuser
+
         existUser = userDao.existeAlgunUsuario()
         setContentView(binding.root)
         if (existUser) {
@@ -36,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
             tvcreateUser.setText("")
         }
         sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this)
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        applyTheme(enableDarkTheme)
     }
     override fun onDestroy() {
         Utils.releaseSound()
@@ -78,13 +82,22 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-        fun createUser(view: View) {
-            if (!existUser) {
-                val intent = Intent(this, CreateUserActivity::class.java)
-                startActivity(intent)
-            } else {
-                val intent = Intent(this, NewPasswordActivity::class.java)
-                startActivity(intent)
-            }
+    fun createUser(view: View) {
+        if (!existUser) {
+            val intent = Intent(this, CreateUserActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, NewPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
+
+    fun applyTheme(enableDarkTheme: Boolean) {
+        if (enableDarkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+    }
+}
