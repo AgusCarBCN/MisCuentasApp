@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
@@ -30,6 +31,8 @@ class AjustesFragment : Fragment() {
     private var _binding: FragmentAjustesBinding?=null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
+    private val darkModeIcon=R.drawable.ic_dark_mode
+    private val lightModeIcon=R.drawable.ic_light_mode
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,10 +48,20 @@ class AjustesFragment : Fragment() {
         _binding= FragmentAjustesBinding.inflate(inflater,container,false)
         val view = binding.root
         val switch= binding.switchdark
+        val img=binding.imgDarklight
+
         //Recupero dni del usuario que inicio sesion
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
         // Obtiene el estado actual del modo oscuro desde SharedPreferences
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        if(enableDarkTheme){
+            img.setImageResource(lightModeIcon)
+            img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
+
+        }else{
+            img.setImageResource(darkModeIcon)
+            img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.darkBrown))
+        }
         // Establece el estado inicial del Switch
         switch.isChecked = enableDarkTheme
         applyTheme(enableDarkTheme)

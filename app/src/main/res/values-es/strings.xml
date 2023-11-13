@@ -81,6 +81,8 @@
     <string name="theme">Tema</string>
     <string name="home">Inicio</string>
     <string name="db">Base de datos</string>
-    <string name="enabledark">Habilita tema oscuro</string>
+    <string name="darkTheme">Tema Oscuro</string>
+    <string name="lightTheme">Tema Claro</string>
+
     <string name="preferences_enable">enable_dark_mode</string>
 </resources>
