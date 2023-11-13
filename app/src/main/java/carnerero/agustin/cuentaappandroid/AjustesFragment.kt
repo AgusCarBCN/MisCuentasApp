@@ -1,18 +1,20 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.SharedPreferences
+import android.media.VolumeShaper
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
+import java.util.Locale
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +35,9 @@ class AjustesFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private val darkModeIcon=R.drawable.ic_dark_mode
     private val lightModeIcon=R.drawable.ic_light_mode
+    private val englishIcon=R.drawable.english
+    private val spanishIcon=R.drawable.spanish
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,41 +49,64 @@ class AjustesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding= FragmentAjustesBinding.inflate(inflater,container,false)
         val view = binding.root
-        val switch= binding.switchdark
-        val img=binding.imgDarklight
+        val switchTheme= binding.switchdark
+        val imgTheme=binding.imgDarklight
+        val switchLang=binding.switchen
+        val imgLang=binding.imgEnes
 
         //Recupero dni del usuario que inicio sesion
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
         // Obtiene el estado actual del modo oscuro desde SharedPreferences
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang=sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
         if(enableDarkTheme){
-            img.setImageResource(lightModeIcon)
-            img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
+            imgTheme.setImageResource(lightModeIcon)
+            imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
 
         }else{
-            img.setImageResource(darkModeIcon)
-            img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.darkBrown))
+            imgTheme.setImageResource(darkModeIcon)
+            imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.darkBrown))
+
+        }
+        if(enableEnLang){
+            imgLang.setImageResource(spanishIcon)
+        }else{
+            imgLang.setImageResource(englishIcon)
         }
         // Establece el estado inicial del Switch
-        switch.isChecked = enableDarkTheme
+        switchTheme.isChecked = enableDarkTheme
+        switchLang.isChecked=enableEnLang
         applyTheme(enableDarkTheme)
-        switch.setOnCheckedChangeListener { _, isChecked ->
-
+        switchTheme.setOnCheckedChangeListener { _, isChecked ->
             applyTheme(isChecked)
         }
-
+        switchLang.setOnCheckedChangeListener { _, isChecked ->
+            applyLanguage(isChecked)
+            if(isChecked){
+                imgLang.setImageResource(spanishIcon)
+            }else{
+                imgLang.setImageResource(englishIcon)
+            }
+        }
         return view
     }
     override fun onPause() {
         super.onPause()
         // Guarda el estado del Switch en SharedPreferences cuando la actividad se pausa
-        val switch: SwitchCompat = binding.switchdark
-        sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable), switch.isChecked).apply()
+        val switchTheme: SwitchCompat = binding.switchdark
+        val switchLang=binding.switchen
+        sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
+        sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable_lang), switchTheme.isChecked).apply()
     }
-    fun applyTheme(enableDarkTheme: Boolean) {
+
+    override fun onResume() {
+
+        super.onResume()
+    }
+    private fun applyTheme(enableDarkTheme: Boolean) {
         if (enableDarkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
@@ -86,6 +114,20 @@ class AjustesFragment : Fragment() {
         }
 
     }
+    private fun applyLanguage(enableEnLang: Boolean) {
+
+        if (enableEnLang) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+        } else {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
+        }
+
+
+
+    }
+
+    // ... (resto del código)
+
     companion object {
         /**
          * Use this factory method to create a new instance of

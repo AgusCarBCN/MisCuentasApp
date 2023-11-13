@@ -58,10 +58,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     override fun onResume() {
-
-
         super.onResume()
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

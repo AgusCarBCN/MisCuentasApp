@@ -85,4 +85,6 @@
     <string name="lightTheme">Tema Claro</string>
 
     <string name="preferences_enable">enable_dark_mode</string>
+    <string name="preferences_enable_lang">enable_en_lang</string>
+
 </resources>

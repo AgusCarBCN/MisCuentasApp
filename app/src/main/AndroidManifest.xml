@@ -10,7 +10,8 @@
         android:label="CuentaApp"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.CuentaAppAndroid">
+        android:theme="@style/Base.Theme.CuentaAppAndroid"
+        >
         <activity
             android:name=".NewPasswordActivity"
             android:exported="false"
