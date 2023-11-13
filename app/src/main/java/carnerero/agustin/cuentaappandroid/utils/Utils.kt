@@ -12,7 +12,13 @@ class Utils {
     companion object {
         private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         private var mediaPlayer: MediaPlayer? = null
-        fun calcularImporteMes(month: Int, year: Int, importes: ArrayList<MovimientoBancario>): Float {
+        private var lang: String = "es"
+        private var country: String = "ES"
+        fun calcularImporteMes(
+            month: Int,
+            year: Int,
+            importes: ArrayList<MovimientoBancario>
+        ): Float {
             var importeTotal = 0.0
 
             for (mov in importes) {
@@ -23,19 +29,31 @@ class Utils {
             }
             return importeTotal.toFloat()
         }
-        fun sound(contex : Context){
-                mediaPlayer = MediaPlayer.create(contex, R.raw.clicksound)
-                mediaPlayer?.start()
+
+        fun sound(contex: Context) {
+            mediaPlayer = MediaPlayer.create(contex, R.raw.clicksound)
+            mediaPlayer?.start()
         }
-        fun releaseSound(){
+
+        fun releaseSound() {
             if (mediaPlayer != null) {
                 mediaPlayer?.stop(); // Detener la reproducción si está en curso
                 mediaPlayer?.release(); // Liberar los recursos del MediaPlayer
                 mediaPlayer = null; // Establecer el objeto MediaPlayer en nulo
             }
         }
+        fun setLang(newLang: String) {
+            lang = newLang
+        }
 
+        fun setCountry(newCountry: String) {
+            country = newCountry
+        }
+
+        fun getLang(): String = lang
+        fun getCountry(): String = country
     }
 
 
 }
+

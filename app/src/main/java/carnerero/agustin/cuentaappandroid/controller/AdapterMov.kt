@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 
 import java.util.Locale
@@ -29,7 +30,10 @@ class AdapterMov(private val movList:ArrayList<MovimientoBancario>):RecyclerView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val euroLocale = Locale("es", "ES")
+        val lang= Utils.getLang()
+        val country=Utils.getCountry()
+
+        val euroLocale = Locale(lang, country)
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
         //val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val mov = movList[position]

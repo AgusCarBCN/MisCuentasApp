@@ -12,6 +12,7 @@ import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -106,14 +107,15 @@ class AjustesFragment : Fragment() {
                     country = "ES"
                 }
                 R.id.rb_dolar -> {
-                    lang = "us"
+                    lang = "en"
                     country = "US"
                 }
                 R.id.rb_pound -> {
-                    lang = "uk"
+                    lang = "en"
                     country = "GB"
                 }
             }
+
             saveLastSelectedOption(checkedId)
         }
         //Recupera la última opción seleccionada y selecciona el RadioButton correspondiente
@@ -135,6 +137,8 @@ class AjustesFragment : Fragment() {
             .putBoolean(getString(R.string.prefences_select_currency), select.isSelected).apply()
         sharedPreferences.edit().putString(getString(R.string.lang),lang).apply()
         sharedPreferences.edit().putString(getString(R.string.country),country).apply()
+        Utils.setLang(lang)
+        Utils.setCountry(country)
     }
 
     override fun onResume() {
