@@ -87,5 +87,9 @@
     <string name="settingTheme">Configura el tema</string>
     <string name="preferences_enable">enable_dark_mode</string>
     <string name="preferences_enable_lang">enable_en_lang</string>
+    <string name="euro">euro</string>
+    <string name="dolar">dolar</string>
+    <string name="libra">libra</string>
+    <string name="settingcurrency">Seleccion la moneda</string>
 
 </resources>
