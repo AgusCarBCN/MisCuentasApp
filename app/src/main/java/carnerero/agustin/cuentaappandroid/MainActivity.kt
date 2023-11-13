@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
             }
             else -> fragment = SaldoFragment()
         }
+        showSaldo()
         changeFragmentMain(fragment)
         fragment.setMenuVisibility(true)
         fragmentContainer.visibility = View.VISIBLE
