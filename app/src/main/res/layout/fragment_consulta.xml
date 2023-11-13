@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?android:colorPrimaryDark"
+    android:background="?android:colorPrimary"
     tools:context=".ConsultaFragment">
 
     <LinearLayout
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="?android:colorPrimaryDark"
+                android:background="?android:colorPrimary"
                 android:gravity="center|top"
                 android:orientation="horizontal">
 
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/incomes"
                         android:textColor="?android:textColor"
                         android:textSize="@dimen/common"
@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/bills"
                         android:textColor="?android:textColor"
                         android:textSize="@dimen/common"
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/box"
                         android:layout_weight="1"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/income_and_bills"
                         android:textColor="?android:textColor"
                         android:textSize="@dimen/common"

@@ -17,9 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:colorPrimaryDark"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:background="?android:colorPrimaryDark">
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="230dp"
@@ -38,7 +37,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="?android:colorPrimaryDark"
+            android:background="?android:colorPrimary"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -68,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/til_text_user"
-                app:startIconDrawable="@drawable/person">
+                >
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_text_user"
                     android:layout_width="320dp"
@@ -143,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="?android:colorPrimaryDark"
+                    android:background="?android:colorPrimary"
                     android:onClick="createUser"
                     android:text="Crear un cuenta"
                     android:textAllCaps="false"

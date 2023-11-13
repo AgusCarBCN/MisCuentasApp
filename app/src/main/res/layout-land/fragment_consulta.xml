@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="5dp"
-    android:background="?android:colorPrimaryDark"
+    android:background="?android:colorPrimary"
     tools:context=".ConsultaFragment">
 
     <LinearLayout
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:colorPrimaryDark"
+                android:background="?android:colorPrimary"
                 android:gravity="center|top"
                 android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
                         android:layout_weight="1"
                         android:text="@string/incomes"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                         android:layout_weight="1"
                         android:text="@string/bills"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -134,7 +134,7 @@
                         android:layout_weight="1"
                         android:text="@string/income_and_bills"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimaryDark"
+                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
