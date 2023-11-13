@@ -83,7 +83,8 @@
     <string name="db">Base de datos</string>
     <string name="darkTheme">Tema Oscuro</string>
     <string name="lightTheme">Tema Claro</string>
-
+    <string name="settingLang">Configura el idioma</string>
+    <string name="settingTheme">Configura el tema</string>
     <string name="preferences_enable">enable_dark_mode</string>
     <string name="preferences_enable_lang">enable_en_lang</string>
 

@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
     tools:context=".AjustesFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="start"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,6 +37,19 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_settingTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/settingTheme"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/common"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +59,7 @@
 
             <ImageView
                 android:id="@+id/img_enes"
-                android:layout_width="@dimen/extrabox"
+                android:layout_width="@dimen/box"
                 android:layout_height="@dimen/extrabox"
                 android:layout_marginEnd="20dp" />
 
@@ -57,7 +72,18 @@
 
 
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_settingLang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/settingLang"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/common"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </FrameLayout>
