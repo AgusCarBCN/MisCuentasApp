@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val fragmentContainer: FragmentContainerView = findViewById(R.id.fcv_main_container)
 
         when (item.itemId) {
-
+            R.id.home->fragment=LogoFragment()
             R.id.consulta -> fragment = ConsultaFragment()
             R.id.nuevoImporte -> fragment = NewAmountFragment()
             R.id.estadistica -> fragment = BarChartFragment()

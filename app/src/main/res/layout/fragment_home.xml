@@ -12,11 +12,22 @@
         android:id="@+id/tv_wellcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/wellcome"
         android:textAlignment="center"
         android:textColor="?android:textColor"
         android:textSize="24sp"
         android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="50dp"
+        android:background="?android:colorPrimary"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/foto" />
 </FrameLayout>
