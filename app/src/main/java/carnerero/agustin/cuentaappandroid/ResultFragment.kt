@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 
+import android.content.SharedPreferences
 import android.icu.text.NumberFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentResultBinding
 import java.util.Locale
 import kotlin.math.abs
@@ -27,6 +29,7 @@ class ResultFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var sharedPreferences: SharedPreferences
     private var _binding: FragmentResultBinding?=null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +47,11 @@ class ResultFragment : Fragment() {
         _binding= FragmentResultBinding.inflate(inflater,container,false)
         val view = binding.root
         val resultView=binding.result
-        val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        val lang=sharedPreferences.getString(getString(R.string.lang),"es")
+        val country=sharedPreferences.getString(getString(R.string.country),"ES")
+        val euroLocale = Locale(lang, country) // Establecer la Locale a español/españa para formato en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
         //Sacamos el valor double de arguments
         val result:Double= arguments?.getDouble("Result")!!
