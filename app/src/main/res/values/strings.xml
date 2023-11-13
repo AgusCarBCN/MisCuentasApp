@@ -93,5 +93,8 @@
     <string name="dolar">dolar</string>
     <string name="libra">pound</string>
     <string name="settingcurrency">Setting currency\n</string>
+    <string name="prefences_select_currency">preferences_currency</string>
+    <string name="lang">lang</string>
+    <string name="country">country</string>
 
 </resources>

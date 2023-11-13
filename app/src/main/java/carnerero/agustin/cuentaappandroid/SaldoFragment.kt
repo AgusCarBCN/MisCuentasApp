@@ -48,17 +48,19 @@ class SaldoFragment : Fragment() {
         _binding= FragmentSaldoBinding.inflate(inflater,container,false)
         val view = binding.root
         // Inflate the layout for this fragment
-        //Recupero dni del usuario que inicio sesion
+        //Recupero valores de sharedpreferences
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
         val dni=sharedPreferences.getString(getString(R.string.id),null)
+        val lang=sharedPreferences.getString(getString(R.string.lang),"es")
+        val country=sharedPreferences.getString(getString(R.string.country),"ES")
         val dao= CuentaDao(admin)
         val cuentas: List<Cuenta>? = dni?.let { dao.listarCuentasPorDNI(it) }
         val cuenta1=binding.tvCuenta1
         val cuenta2=binding.tvCuenta2
         val saldo1=binding.tvSaldo1
         val saldo2=binding.tvSaldo2
-        val euroLocale = Locale("es", "ES") // Establecer la Locale a español/españa para formato en euros
-        val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
+        val Locale = Locale(lang!!,country!!)
+        val currencyFormat = NumberFormat.getCurrencyInstance(Locale)
         cuenta1.text = cuentas?.get(0)?.iban
         cuenta2.text = cuentas?.get(1)?.iban
         saldo1.apply {

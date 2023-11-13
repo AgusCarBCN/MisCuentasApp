@@ -91,5 +91,8 @@
     <string name="dolar">dolar</string>
     <string name="libra">libra</string>
     <string name="settingcurrency">Seleccion la moneda</string>
+    <string name="prefences_select_currency">preferences_currency</string>
+    <string name="lang">lang</string>
+    <string name="country">country</string>
 
 </resources>

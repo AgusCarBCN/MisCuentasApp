@@ -1,9 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.SharedPreferences
-import android.media.VolumeShaper
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
-import java.util.Locale
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,13 +28,16 @@ class AjustesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentAjustesBinding?=null
+    private var _binding: FragmentAjustesBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
-    private val darkModeIcon=R.drawable.ic_dark_mode
-    private val lightModeIcon=R.drawable.ic_light_mode
-    private val englishIcon=R.drawable.english
-    private val spanishIcon=R.drawable.spanish
+    private lateinit var lang: String
+    private lateinit var country: String
+    private val darkModeIcon = R.drawable.ic_dark_mode
+    private val lightModeIcon = R.drawable.ic_light_mode
+    private val englishIcon = R.drawable.english
+    private val spanishIcon = R.drawable.spanish
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,23 +51,27 @@ class AjustesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding= FragmentAjustesBinding.inflate(inflater,container,false)
+        _binding = FragmentAjustesBinding.inflate(inflater, container, false)
         val view = binding.root
-        val switchTheme= binding.switchdark
-        val imgTheme=binding.imgDarklight
-        val switchLang=binding.switchen
-        val imgLang=binding.imgEnes
+        val switchTheme = binding.switchdark
+        val imgTheme = binding.imgDarklight
+        val switchLang = binding.switchen
+        val imgLang = binding.imgEnes
+        val selectCurrency = binding.selectCurrency
 
-        //Recupero dni del usuario que inicio sesion
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
-        // Obtiene el estado actual del modo oscuro desde SharedPreferences
-        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang=sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
-        if(enableDarkTheme){
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        // Obtiene el estado actual del modo oscuro y el idioma desde SharedPreferences
+        val enableDarkTheme =
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang =
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+
+        if (enableDarkTheme) {
             imgTheme.setImageResource(lightModeIcon)
             imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
 
-        }else{
+        } else {
             imgTheme.setImageResource(darkModeIcon)
             imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.darkBrown))
 
@@ -78,28 +83,58 @@ class AjustesFragment : Fragment() {
         }
         // Establece el estado inicial del Switch
         switchTheme.isChecked = enableDarkTheme
-        switchLang.isChecked=enableEnLang
+        switchLang.isChecked = enableEnLang
         applyTheme(enableDarkTheme)
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
             applyTheme(isChecked)
         }
         switchLang.setOnCheckedChangeListener { _, isChecked ->
             applyLanguage(isChecked)
-            if(isChecked){
+            if (isChecked) {
                 imgLang.setImageResource(spanishIcon)
-            }else{
+            } else {
                 imgLang.setImageResource(englishIcon)
             }
         }
+
+        selectCurrency.setOnCheckedChangeListener { _, checkedId ->
+
+
+            when (checkedId) {
+                R.id.rb_euro -> {
+                    lang = "es"
+                    country = "ES"
+                }
+                R.id.rb_dolar -> {
+                    lang = "us"
+                    country = "US"
+                }
+                R.id.rb_pound -> {
+                    lang = "uk"
+                    country = "GB"
+                }
+            }
+            saveLastSelectedOption(checkedId)
+        }
+        //Recupera la última opción seleccionada y selecciona el RadioButton correspondiente
+        val lastSelectedOption = getLastSelectedOption()
+        selectCurrency.check(lastSelectedOption)
         return view
     }
     override fun onPause() {
         super.onPause()
         // Guarda el estado del Switch en SharedPreferences cuando la actividad se pausa
         val switchTheme: SwitchCompat = binding.switchdark
-        val switchLang=binding.switchen
-        sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
-        sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable_lang), switchTheme.isChecked).apply()
+        val switchLang = binding.switchen
+        val select = binding.selectCurrency
+        sharedPreferences.edit()
+            .putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
+        sharedPreferences.edit()
+            .putBoolean(getString(R.string.preferences_enable_lang), switchLang.isChecked).apply()
+        sharedPreferences.edit()
+            .putBoolean(getString(R.string.prefences_select_currency), select.isSelected).apply()
+        sharedPreferences.edit().putString(getString(R.string.lang),lang).apply()
+        sharedPreferences.edit().putString(getString(R.string.country),country).apply()
     }
 
     override fun onResume() {
@@ -124,6 +159,15 @@ class AjustesFragment : Fragment() {
 
 
 
+    }
+    private fun saveLastSelectedOption(optionId: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt("lastSelectedOption", optionId)
+        editor.apply()
+    }
+
+    private fun getLastSelectedOption(): Int {
+        return sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
     }
 
     // ... (resto del código)
