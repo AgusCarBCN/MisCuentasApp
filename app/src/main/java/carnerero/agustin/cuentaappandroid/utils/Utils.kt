@@ -2,6 +2,8 @@ package carnerero.agustin.cuentaappandroid.utils
 
 import android.content.Context
 import android.media.MediaPlayer
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
@@ -52,6 +54,25 @@ class Utils {
 
         fun getLang(): String = lang
         fun getCountry(): String = country
+        fun applyTheme(enableDarkTheme: Boolean) {
+            if (enableDarkTheme) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+
+        }
+        fun applyLanguage(enableEnLang: Boolean) {
+
+            if (enableEnLang) {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            } else {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
+            }
+
+
+
+        }
     }
 
 

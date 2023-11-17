@@ -39,7 +39,9 @@ class LoginActivity : AppCompatActivity() {
         }
         sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this)
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        applyTheme(enableDarkTheme)
+        val enableEnLang=sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        Utils.applyTheme(enableDarkTheme)
+        Utils.applyLanguage(enableEnLang)
     }
     override fun onDestroy() {
         Utils.releaseSound()
@@ -92,12 +94,5 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun applyTheme(enableDarkTheme: Boolean) {
-        if (enableDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
 
-    }
 }

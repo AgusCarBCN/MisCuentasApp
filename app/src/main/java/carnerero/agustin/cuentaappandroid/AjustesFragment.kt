@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlinx.coroutines.selects.select
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -68,6 +69,8 @@ class AjustesFragment : Fragment() {
         val enableEnLang =
             sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
 
+        val currencySelected=sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
+
         if (enableDarkTheme) {
             imgTheme.setImageResource(lightModeIcon)
             imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
@@ -82,99 +85,55 @@ class AjustesFragment : Fragment() {
         }else{
             imgLang.setImageResource(englishIcon)
         }
-        // Establece el estado inicial del Switch
+        // Establece el estado inicial del Switch y radioGroup
         switchTheme.isChecked = enableDarkTheme
         switchLang.isChecked = enableEnLang
-        applyTheme(enableDarkTheme)
+        selectCurrency.check(currencySelected)
+
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            applyTheme(isChecked)
+            Utils.applyTheme(isChecked)
+            sharedPreferences.edit()
+                .putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
         }
         switchLang.setOnCheckedChangeListener { _, isChecked ->
-            applyLanguage(isChecked)
-            if (isChecked) {
-                imgLang.setImageResource(spanishIcon)
-            } else {
-                imgLang.setImageResource(englishIcon)
-            }
+            Utils.applyLanguage(isChecked)
+            sharedPreferences.edit()
+                .putBoolean(getString(R.string.preferences_enable_lang), switchLang.isChecked).apply()
+            sharedPreferences.edit()
         }
 
         selectCurrency.setOnCheckedChangeListener { _, checkedId ->
-
-
             when (checkedId) {
                 R.id.rb_euro -> {
                     lang = "es"
                     country = "ES"
+
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
+
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
+
                 }
             }
 
-            saveLastSelectedOption(checkedId)
+            sharedPreferences.edit().putInt("lastSelectedOption",checkedId).apply()
+            sharedPreferences.edit().putString(getString(R.string.lang),lang).apply()
+            sharedPreferences.edit().putString(getString(R.string.country),country).apply()
+            Utils.setLang(lang)
+            Utils.setCountry(country)
+            (activity as MainActivity).actualizarFragmentSaldo()
         }
-        //Recupera la última opción seleccionada y selecciona el RadioButton correspondiente
-        val lastSelectedOption = getLastSelectedOption()
-        selectCurrency.check(lastSelectedOption)
+
         return view
     }
-    override fun onPause() {
-        super.onPause()
-        // Guarda el estado del Switch en SharedPreferences cuando la actividad se pausa
-        val switchTheme: SwitchCompat = binding.switchdark
-        val switchLang = binding.switchen
-        val select = binding.selectCurrency
-        sharedPreferences.edit()
-            .putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
-        sharedPreferences.edit()
-            .putBoolean(getString(R.string.preferences_enable_lang), switchLang.isChecked).apply()
-        sharedPreferences.edit()
-            .putBoolean(getString(R.string.prefences_select_currency), select.isSelected).apply()
-        sharedPreferences.edit().putString(getString(R.string.lang),lang).apply()
-        sharedPreferences.edit().putString(getString(R.string.country),country).apply()
-        Utils.setLang(lang)
-        Utils.setCountry(country)
-    }
-
-    override fun onResume() {
-
-        super.onResume()
-    }
-    private fun applyTheme(enableDarkTheme: Boolean) {
-        if (enableDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-    }
-    private fun applyLanguage(enableEnLang: Boolean) {
-
-        if (enableEnLang) {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-        } else {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
-        }
 
 
 
-    }
-    private fun saveLastSelectedOption(optionId: Int) {
-        val editor = sharedPreferences.edit()
-        editor.putInt("lastSelectedOption", optionId)
-        editor.apply()
-    }
-
-    private fun getLastSelectedOption(): Int {
-        return sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
-    }
-
-    // ... (resto del código)
 
     companion object {
         /**
