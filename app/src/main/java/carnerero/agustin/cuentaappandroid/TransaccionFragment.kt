@@ -29,62 +29,76 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class TransaccionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    // Parámetros de la instancia (puedes cambiarlos según tus necesidades)
     private var param1: String? = null
     private var param2: String? = null
 
-    //Variables donde se almacenara el valor de los items selecionados de cada spinner
+    // Variables para almacenar el valor de los elementos seleccionados en los spinners
     private var selectedItemOrigen: String? = null
     private var selectedItemDestino: String? = null
+
+    // Instancia de la base de datos y DAOs necesarios
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao = CuentaDao(admin)
     private val movimientoBancarioDAO = MovimientoBancarioDAO(admin)
+
+    // View Binding para acceder a los componentes de la interfaz de usuario
     private var _binding: FragmentTransaccionBinding? = null
-    private lateinit var sharedPreferences: SharedPreferences
     private val binding get() = _binding!!
+
+    // SharedPreferences para almacenar y recuperar datos de forma sencilla
+    private lateinit var sharedPreferences: SharedPreferences
+
+    // Método llamado cuando se crea el fragmento
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Recuperar los argumentos proporcionados al crear la instancia del fragmento
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
 
+    // Método llamado para crear la vista del fragmento
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Inflar el diseño de fragment_transaccion.xml utilizando View Binding
         _binding = FragmentTransaccionBinding.inflate(inflater, container, false)
         val view = binding.root
-        //Obtener todos los componentes del fragment
+
+        // Obtener todos los componentes del fragmento
         val importe = binding.etImportetrans
         val cuentaOrigen = binding.spCuentaorigen
         val cuentaDestino = binding.spCuentadestino
         val aceptar = binding.btnAceptar
         val salir = binding.btnSalir
-        //Recupero dni del usuario que inicio sesion
+
+        // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val dni = sharedPreferences.getString(getString(R.string.id), null)
 
-        //Creo  un adaptador de cadena (String) para llenar un Spinner
+        // Crear un adaptador de cadena (String) para llenar los Spinners
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
 
-        //Obtengo las cuentas del usuario logeado con el dni
+        // Obtener las cuentas del usuario logeado con el DNI
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
-        //Lleno los dos spinners
+
+        // Llenar los dos Spinners con las cuentas disponibles
         adapter.add(cuentas?.get(0)?.iban)
         adapter.add(cuentas?.get(1)?.iban)
         cuentaOrigen.adapter = adapter
         cuentaDestino.adapter = adapter
-        //Selecciono los elementos por defecto en origen la cuenta principal y en destino la secundaria
+
+        // Seleccionar por defecto la cuenta principal en el Spinner de cuenta origen y la secundaria en cuenta destino
         cuentaOrigen.setSelection(0)
         cuentaDestino.setSelection(1)
 
-        /*este código maneja la selección de elementos en un Spinner y muestra un mensaje de notificación
-         (Toast) para indicar qué elemento ha sido seleccionado. La variable selectedItem se
-         utiliza para almacenar el elemento seleccionado para su uso posterior al confirmar la transferencia
-         con el boton aceptar.*/
+        // Configurar el manejo de eventos al seleccionar elementos en los Spinners
         cuentaOrigen.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -93,11 +107,13 @@ class TransaccionFragment : Fragment() {
                 id: Long
             ) {
                 selectedItemOrigen = adapter.getItem(position)
-
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Manejar el caso cuando no se selecciona nada
             }
         }
+
         cuentaDestino.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -106,16 +122,22 @@ class TransaccionFragment : Fragment() {
                 id: Long
             ) {
                 selectedItemDestino = adapter.getItem(position)
-
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Manejar el caso cuando no se selecciona nada
             }
         }
+
+        // Configurar el evento de clic para el botón "Aceptar"
         aceptar.setOnClickListener {
-            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
-            val importeText = importe.text.toString().trim() // Usamos trim para eliminar espacios en blanco al principio o al final
-            Utils.sound(requireContext())
+            // Obtener la fecha actual en formato dd/MM/yyyy
+            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
+            // Obtener el importe del EditText
+            val importeText = importe.text.toString().trim()
+
+            // Verificar si el campo de importe está vacío
             if (importeText.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -123,56 +145,70 @@ class TransaccionFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (selectedItemDestino == selectedItemOrigen) {
+                // Verificar si las cuentas de origen y destino son las mismas
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgtransfersame),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                // Realizar la transferencia ya que el campo de importe no está vacío
                 Utils.sound(requireContext())
-                // Aquí puedes continuar con el proceso de transferencia ya que el campo de importe no está vacío
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgntransfer),
                     Toast.LENGTH_SHORT
                 ).show()
+
+                // Convertir el importe a valores numéricos (positivo y negativo)
                 val importeNegativo = -importeText.toDouble()
                 val importePositivo = importeText.toDouble()
+
+                // Actualizar saldos de cuentas
                 cuentaDao.actualizarSaldo(importeNegativo, selectedItemOrigen.toString())
                 cuentaDao.actualizarSaldo(importePositivo, selectedItemDestino.toString())
-                // Egreso en cuenta de origen
-                var movimientoBancario = MovimientoBancario(
+
+                // Registrar la transacción en el historial de movimientos
+                val movimientoBancarioOrigen = MovimientoBancario(
                     importeNegativo,
                     "Transacción realizada",
-                    selectedItemOrigen.toString(),fechaImporte
+                    selectedItemOrigen.toString(),
+                    fechaImporte
                 )
-                movimientoBancarioDAO.nuevoImporte(movimientoBancario)
-                // Ingreso en cuenta de destino
-                movimientoBancario = MovimientoBancario(
+                val movimientoBancarioDestino = MovimientoBancario(
                     importePositivo,
                     "Transacción recibida",
-                    selectedItemDestino.toString(),fechaImporte
+                    selectedItemDestino.toString(),
+                    fechaImporte
                 )
-                movimientoBancarioDAO.nuevoImporte(movimientoBancario)
+                movimientoBancarioDAO.nuevoImporte(movimientoBancarioOrigen)
+                movimientoBancarioDAO.nuevoImporte(movimientoBancarioDestino)
+
+                // Limpiar el campo de importe
                 importe.text.clear()
+
+                // Actualizar el fragmento de saldo en la actividad principal
                 (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
 
-        salir.setOnClickListener{
+        // Configurar el evento de clic para el botón "Salir"
+        salir.setOnClickListener {
             Utils.sound(requireContext())
+            // Volver a la pantalla de inicio
             (activity as MainActivity).inicio()
         }
+
         return view
     }
+
+    // Método llamado cuando el fragmento es destruido
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Importante para evitar fugas de memoria
-
     }
 
-
-
+    // Método companion utilizado para crear una nueva instancia del fragmento
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -182,7 +218,6 @@ class TransaccionFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment TransaccionFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             TransaccionFragment().apply {

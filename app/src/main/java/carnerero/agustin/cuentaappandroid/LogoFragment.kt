@@ -10,23 +10,24 @@ import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentHomeBinding
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LogoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class LogoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    // Parámetros opcionales
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding:FragmentHomeBinding?=null
+
+    // View Binding para acceder a las vistas de diseño
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    // SharedPreferences para almacenar y recuperar datos de configuración
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,28 +40,24 @@ class LogoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        _binding= FragmentHomeBinding.inflate(inflater,container,false)
+        // Inflar el diseño del fragmento y asignarlo a _binding
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val name=sharedPreferences.getString(getString(R.string.name),null)
-        val wellcome=binding.tvWellcome
-        val msg="${wellcome.text} $name"
+
+        // Obtener el nombre del usuario almacenado en SharedPreferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val name = sharedPreferences.getString(getString(R.string.name), null)
+
+        // Mostrar un saludo personalizado en el TextView
+        val wellcome = binding.tvWellcome
+        val msg = "${wellcome.text} $name"
         wellcome.text = msg
 
-     return view
+        return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LogoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        // Método factory para crear una nueva instancia de LogoFragment
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             LogoFragment().apply {

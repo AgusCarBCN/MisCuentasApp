@@ -31,68 +31,78 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class NewAmountFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    // Parámetros que podrían ser utilizados en el futuro
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding:FragmentNewAmountBinding?=null
+
+    // Variable para manejar el View Binding
+    private var _binding: FragmentNewAmountBinding? = null
     private val binding get() = _binding!!
+
+    // Instancias necesarias para acceder a la base de datos y realizar operaciones
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
-    private var selectedItem: String? = null
+    private lateinit var selectedItem: String
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Obtener argumentos si los hay
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding= FragmentNewAmountBinding.inflate(inflater,container,false)
+        // Inflar el diseño del fragmento utilizando View Binding
+        _binding = FragmentNewAmountBinding.inflate(inflater, container, false)
         val view = binding.root
-        //Recupero dni del usuario que inicio sesion
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni=sharedPreferences.getString(getString(R.string.id),null)
-        //Acceso a componentes
-        val spinnerCuentas=binding.spCuentas
-        val nuevoIngreso=binding.btnNuevoingreso
-        val nuevoGasto=binding.btnNuevogasto
-        val descripcion=binding.etDescripcion
-        val importe=binding.etImporte
 
-        //Creacion de adapter
+        // Recuperar el DNI del usuario que inició sesión
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni = sharedPreferences.getString(getString(R.string.id), null)
+
+        // Acceso a los componentes de la interfaz
+        val spinnerCuentas = binding.spCuentas
+        val nuevoIngreso = binding.btnNuevoingreso
+        val nuevoGasto = binding.btnNuevogasto
+        val descripcion = binding.etDescripcion
+        val importe = binding.etImporte
+
+        // Creación del adapter para el spinner
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val cuentaDao = CuentaDao(admin)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         val saldo1 = cuentas?.get(0)?.saldo
         val saldo2 = cuentas?.get(1)?.saldo
+
+        // Configuración del adapter y del spinner
         with(adapter) {
             add(getString(R.string.select_account))
             add(cuentas?.get(0)?.iban)
             add(cuentas?.get(1)?.iban)
         }
         spinnerCuentas.adapter = adapter
-        spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedItem = adapter.getItem(position)
 
+        // Listener para el spinner que guarda la cuenta seleccionada
+        spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedItem = adapter.getItem(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                // Acciones a realizar cuando no se selecciona nada
             }
         }
+
+        // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso
         nuevoIngreso.setOnClickListener {
-            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
+            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
             Utils.sound(requireContext())
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
@@ -111,7 +121,7 @@ class NewAmountFragment : Fragment() {
                 val movimientoBancario = MovimientoBancario(
                     importe.text.toString().trim().toDouble(),
                     descripcion.text.toString(),
-                    selectedItem.toString(),
+                    selectedItem,
                     fechaImporte
                 )
                 movDao.nuevoImporte(movimientoBancario)
@@ -122,21 +132,23 @@ class NewAmountFragment : Fragment() {
                 ).show()
                 cuentaDao.actualizarSaldo(
                     importe.text.toString().trim().toDouble(),
-                    selectedItem.toString()
+                    selectedItem
                 )
                 importe.text.clear()
                 descripcion.text.clear()
+                // Actualizar el fragmento de saldo en la actividad principal
                 (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
 
+        // Acciones a realizar cuando se hace clic en el botón de nuevo gasto
         nuevoGasto.setOnClickListener {
-            val fechaImporte= SimpleDateFormat("dd/MM/yyyy").format(Date())
+            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
             Utils.sound(requireContext())
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.alertnewamount) ,
+                    getString(R.string.alertnewamount),
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
@@ -149,7 +161,7 @@ class NewAmountFragment : Fragment() {
                 Utils.sound(requireContext())
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
-                //Controlo que el importe no sea superior a saldos de las cuentas
+                // Controlar que el importe no sea superior a los saldos de las cuentas
                 if (abs(importeNumerico) > saldo1!! || abs(importeNumerico) > saldo2!!) {
                     Toast.makeText(
                         requireContext(),
@@ -157,11 +169,10 @@ class NewAmountFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-
                     val movimientoBancario = MovimientoBancario(
                         importeNumerico,
                         descripcion.text.toString(),
-                        selectedItem.toString(),
+                        selectedItem,
                         fechaImporte
                     )
                     movDao.nuevoImporte(movimientoBancario)
@@ -170,35 +181,28 @@ class NewAmountFragment : Fragment() {
                         "${getString(R.string.msgbill)}: $selectedItem",
                         Toast.LENGTH_SHORT
                     ).show()
-                    cuentaDao.actualizarSaldo(importeNumerico, selectedItem.toString())
+                    cuentaDao.actualizarSaldo(importeNumerico, selectedItem)
                     importe.text.clear()
                     descripcion.text.clear()
+                    // Actualizar el fragmento de saldo en la actividad principal
                     (activity as MainActivity).actualizarFragmentSaldo()
-
                 }
             }
         }
-
 
         return view
     }
 
     override fun onDestroyView() {
+        // Importante para evitar fugas de memoria al destruir la vista del fragmento
         super.onDestroyView()
-        _binding = null // Importante para evitar fugas de memoria
+        _binding = null
     }
-
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewAmountFragment.
+         * Este método estático se puede utilizar para crear una nueva instancia del fragmento.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             NewAmountFragment().apply {
@@ -208,6 +212,4 @@ class NewAmountFragment : Fragment() {
                 }
             }
     }
-
-
 }
