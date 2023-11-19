@@ -5,15 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
-import androidx.core.content.ContextCompat
-import androidx.core.os.LocaleListCompat
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import kotlinx.coroutines.selects.select
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,22 +65,11 @@ class AjustesFragment : Fragment() {
         val enableEnLang =
             sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
 
-        val currencySelected=sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
+        val currencySelected = sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
 
-        if (enableDarkTheme) {
-            imgTheme.setImageResource(lightModeIcon)
-            imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightOrange))
+        setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
+        setIcon(enableEnLang, imgLang, spanishIcon, englishIcon)
 
-        } else {
-            imgTheme.setImageResource(darkModeIcon)
-            imgTheme.setColorFilter(ContextCompat.getColor(requireContext(), R.color.darkBrown))
-
-        }
-        if(enableEnLang){
-            imgLang.setImageResource(spanishIcon)
-        }else{
-            imgLang.setImageResource(englishIcon)
-        }
         // Establece el estado inicial del Switch y radioGroup
         switchTheme.isChecked = enableDarkTheme
         switchLang.isChecked = enableEnLang
@@ -122,8 +107,8 @@ class AjustesFragment : Fragment() {
             }
 
             sharedPreferences.edit().putInt("lastSelectedOption",checkedId).apply()
-            sharedPreferences.edit().putString(getString(R.string.lang),lang).apply()
-            sharedPreferences.edit().putString(getString(R.string.country),country).apply()
+            sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
+            sharedPreferences.edit().putString(getString(R.string.country), country).apply()
             Utils.setLang(lang)
             Utils.setCountry(country)
             (activity as MainActivity).actualizarFragmentSaldo()
@@ -132,6 +117,13 @@ class AjustesFragment : Fragment() {
         return view
     }
 
+    private fun setIcon(enable: Boolean, icon: ImageView, iconEnable: Int, iconDisable: Int) {
+        if (enable) {
+            icon.setImageResource(iconEnable)
+        } else {
+            icon.setImageResource(iconDisable)
+        }
+    }
 
     companion object {
         /**
