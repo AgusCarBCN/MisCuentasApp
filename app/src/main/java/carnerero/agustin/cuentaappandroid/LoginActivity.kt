@@ -15,11 +15,11 @@ import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
-
 class LoginActivity : AppCompatActivity() {
 
-    private val admin=DataBaseAppSingleton.getInstance(this)
-    private val movDAO=MovimientoBancarioDAO(admin)
+    // Instancias de DAO y otros elementos necesarios
+    private val admin = DataBaseAppSingleton.getInstance(this)
+    private val movDAO = MovimientoBancarioDAO(admin)
     private val userDao = UsuarioDao(admin)
     private var existUser: Boolean = false
     private lateinit var binding: ActivityLoginBinding
@@ -27,64 +27,92 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityLoginBinding.inflate(layoutInflater)
-        val createUser=binding.btnCreateuser
-        val tvcreateUser=binding.tvCreateuser
 
+        // Inicialización del enlace de diseño
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        // Referencias a elementos de diseño
+        val createUser = binding.btnCreateuser
+        val tvcreateUser = binding.tvCreateuser
+
+        // Verificar si ya existe un usuario
         existUser = userDao.existeAlgunUsuario()
+
+        // Establecer el diseño de la actividad
         setContentView(binding.root)
+
+        // Configuración del botón y el texto según si existe un usuario
         if (existUser) {
             createUser.setText(getString(R.string.forgetpass))
             tvcreateUser.setText("")
         }
-        sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this)
+
+        // Obtener preferencias compartidas
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        // Obtener configuraciones de preferencias compartidas
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang=sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+
+        // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyTheme(enableDarkTheme)
         Utils.applyLanguage(enableEnLang)
     }
+
     override fun onDestroy() {
+        // Liberar recursos al destruir la actividad
         Utils.releaseSound()
         super.onDestroy()
     }
 
+    // Función para manejar el evento de inicio de sesión
     fun login(view: View) {
+        // Obtener valores de los campos de usuario y contraseña
+        val userField: String = binding.etTextUser.text.toString()
+        val passwordField: String = binding.etPassword.text.toString()
 
-        val userField:String=binding.etTextUser.text.toString()
-        val passwordField:String=binding.etPassword.text.toString()
-        val user=userDao.obtenerUsuarioPorDniYPassword(userField,passwordField)
-        var userDni=user?.dni
-        var userPassword=user?.password
-        var userName=user?.nombre
-        //Sonido al clickear boton
+        // Obtener usuario de la base de datos
+        val user = userDao.obtenerUsuarioPorDniYPassword(userField, passwordField)
+        var userDni = user?.dni
+        var userPassword = user?.password
+        var userName = user?.nombre
+
+        // Sonido al hacer clic en el botón
         Utils.sound(this)
-// Verifica si los campos están vacíos
+
+        // Verificar si los campos están vacíos
         if (userField.isEmpty() || passwordField.isEmpty()) {
             if (userField.isEmpty() && passwordField.isEmpty()) {
+                // Mostrar mensaje si ambos campos están vacíos
                 Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
             } else {
+                // Mostrar mensaje si al menos un campo está vacío
                 Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
             }
         } else {
-            // Verifica las credenciales
-            if (userDni == userField && userPassword ==passwordField) {
-
+            // Verificar las credenciales
+            if (userDni == userField && userPassword == passwordField) {
+                // Almacenar información del usuario en preferencias compartidas
                 sharedPreferences.edit {
-                    putString(getString(R.string.id),userDni)
-                    putString(getString(R.string.name),userName)
-                    putString(getString(R.string.password),userPassword)
+                    putString(getString(R.string.id), userDni)
+                    putString(getString(R.string.name), userName)
+                    putString(getString(R.string.password), userPassword)
                 }
+
+                // Mostrar mensaje de éxito y abrir la actividad principal
                 Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-
             } else {
+                // Mostrar mensaje de error si las credenciales no coinciden
                 Toast.makeText(this, "${getString(R.string.msgnosucces)}", Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    // Función para manejar el evento de creación de usuario
     fun createUser(view: View) {
+        // Abrir la actividad correspondiente según si ya existe un usuario
         if (!existUser) {
             val intent = Intent(this, CreateUserActivity::class.java)
             startActivity(intent)
@@ -93,6 +121,4 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-
 }

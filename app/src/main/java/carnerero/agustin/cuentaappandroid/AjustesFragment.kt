@@ -23,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AjustesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    // Variables de instancia
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentAjustesBinding? = null
@@ -35,7 +35,6 @@ class AjustesFragment : Fragment() {
     private val lightModeIcon = R.drawable.ic_light_mode
     private val englishIcon = R.drawable.english
     private val spanishIcon = R.drawable.spanish
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,72 +50,78 @@ class AjustesFragment : Fragment() {
     ): View {
         _binding = FragmentAjustesBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        // Referencias a elementos de diseño
         val switchTheme = binding.switchdark
         val imgTheme = binding.imgDarklight
         val switchLang = binding.switchen
         val imgLang = binding.imgEnes
         val selectCurrency = binding.selectCurrency
 
-
+        // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        // Obtiene el estado actual del modo oscuro y el idioma desde SharedPreferences
-        val enableDarkTheme =
-            sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang =
-            sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
 
+        // Obtener el estado actual del modo oscuro, idioma y divisa desde SharedPreferences
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
         val currencySelected = sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
 
+        // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
         setIcon(enableEnLang, imgLang, spanishIcon, englishIcon)
 
-        // Establece el estado inicial del Switch y radioGroup
+        // Establecer el estado inicial del Switch y el radioGroup
         switchTheme.isChecked = enableDarkTheme
         switchLang.isChecked = enableEnLang
         selectCurrency.check(currencySelected)
 
+        // Manejar cambios en el Switch de modo oscuro
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
             Utils.applyTheme(isChecked)
-            sharedPreferences.edit()
-                .putBoolean(getString(R.string.preferences_enable), switchTheme.isChecked).apply()
-        }
-        switchLang.setOnCheckedChangeListener { _, isChecked ->
-            Utils.applyLanguage(isChecked)
-            sharedPreferences.edit()
-                .putBoolean(getString(R.string.preferences_enable_lang), switchLang.isChecked).apply()
-            sharedPreferences.edit()
+            sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable), isChecked).apply()
         }
 
+        // Manejar cambios en el Switch de idioma
+        switchLang.setOnCheckedChangeListener { _, isChecked ->
+            Utils.applyLanguage(isChecked)
+            sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable_lang), isChecked).apply()
+        }
+
+        // Manejar cambios en la selección de divisa
         selectCurrency.setOnCheckedChangeListener { _, checkedId ->
+            // Asignar valores de idioma y país según la selección
             when (checkedId) {
                 R.id.rb_euro -> {
                     lang = "es"
                     country = "ES"
-
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
-
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
-
                 }
             }
 
-            sharedPreferences.edit().putInt("lastSelectedOption",checkedId).apply()
+            // Guardar la selección en SharedPreferences
+            sharedPreferences.edit().putInt("lastSelectedOption", checkedId).apply()
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
+
+            // Aplicar idioma y país seleccionados
             Utils.setLang(lang)
             Utils.setCountry(country)
+
+            // Actualizar fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
 
         return view
     }
 
+    // Función para establecer un icono según el estado de una característica
     private fun setIcon(enable: Boolean, icon: ImageView, iconEnable: Int, iconDisable: Int) {
         if (enable) {
             icon.setImageResource(iconEnable)
@@ -134,7 +139,6 @@ class AjustesFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment AjustesFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             AjustesFragment().apply {

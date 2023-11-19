@@ -1,7 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 
-import android.app.SharedElementCallback
+
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -35,7 +35,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class BarChartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    // Variables para parámetros, base de datos, valores seleccionados y componentes del gráfico
     private var param1: String? = null
     private var param2: String? = null
     private val admin = DataBaseAppSingleton.getInstance(context)
@@ -53,22 +54,14 @@ class BarChartFragment : Fragment() {
     private lateinit var barEntriesList: ArrayList<BarEntry>
     private lateinit var sharedPreferences: SharedPreferences
     private val months = arrayOf(
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre"
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     )
 
+    // View binding
     private var _binding: FragmentBarChartBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -80,80 +73,71 @@ class BarChartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        // Inflar el diseño para este fragmento
         _binding = FragmentBarChartBinding.inflate(inflater, container, false)
 
+        // Inicializar el gráfico y los Spinners
         barChart = binding.barChart
         val spCuenta = binding.spCuenta
         val spYears = binding.spYear
-        sharedPreferences=PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni=sharedPreferences.getString(getString(R.string.id),null)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni = sharedPreferences.getString(getString(R.string.id), null)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         val years = arrayOf("2023", "2024", "2025", "2026", "2027")
-        //Creo adapters
-        //Creo adapter
-        val adapterCuenta =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        //Creo adapter
-        val adapterYear =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        //Agrega elementos a adaptadores
 
+        // Crear adaptadores
+        val adapterCuenta = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        val adapterYear = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+
+        // Agregar elementos a los adaptadores
         adapterCuenta.add(cuentas?.get(0)?.iban)
         adapterCuenta.add(cuentas?.get(1)?.iban)
 
-        for(i in 0..4) {
+        for (i in 0..4) {
             adapterYear.add(years[i])
-
         }
-        //Rellena Spinners
+
+        // Establecer adaptadores en los Spinners
         spCuenta.adapter = adapterCuenta
         spYears.adapter = adapterYear
-        //este código establece un listener en un Spinner que captura la selección de un iban de una cuenta
-        // muestra un mensaje Toast de la cuenta seleccionado. También tiene una función
-        // de respaldo para cuando no se selecciona ningún element
-        //Inicializamos en año 0 y cuenta principal
-        selectedYear=years[0]
-        selectedIban= cuentas?.get(0)?.iban
 
+        // Establecer valores predeterminados
+        selectedYear = years[0]
+        selectedIban = cuentas?.get(0)?.iban
+
+        // Escuchadores de los Spinners para la selección de elementos
         spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                    barChart.clear()
-                    selectedIban = adapterCuenta.getItem(position)
-                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                barChart.clear()
+                selectedIban = adapterCuenta.getItem(position)
+                updateChart(selectedIban.toString(), selectedYear.toString().toInt())
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
         spYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                    barChart.clear()
-                    selectedYear = adapterYear.getItem(position)
-                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                barChart.clear()
+                selectedYear = adapterYear.getItem(position)
+                updateChart(selectedIban.toString(), selectedYear.toString().toInt())
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         return binding.root
     }
 
+    // Calcular resultados para la cuenta y el año seleccionados
     private fun calculateResult(iban: String, year: Int) {
         gastosTotales = ArrayList()
         ingresosTotales = ArrayList()
         resultados = ArrayList()
         val ingresos = movDao.getIncome(iban)
         val gastos = movDao.getBills(iban)
+
+        // Calcular resultados mensuales
         for (i in 1..12) {
             val gastoMes = Utils.calcularImporteMes(i, year, gastos)
             val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)
@@ -162,78 +146,82 @@ class BarChartFragment : Fragment() {
             gastosTotales.add(abs(gastoMes))
             resultados.add(resultadoMes)
         }
-
     }
+
+    // Crear y configurar el gráfico de barras
     private fun createBarChart() {
-        //Creacion y configuracion del grafico de barras
-        //Creacion de barDataSet de los ingresos,gasto y resultados
         with(barChart) {
+            // Crear BarDataSets para ingresos, gastos y resultados
             barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
             barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkGreenPistacho)
             barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
             barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
             barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
             barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
+
+            // Crear BarData y configurar el gráfico de barras
             val barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
             barData.setValueTextSize(12f)
-            //Configuracion de los datos en el grafico de barras
             data = barData
             description.isEnabled = false
-            //Configuracion del eje x
+
+            // Configurar el eje X
             val xAxis = barChart.xAxis
-            //Añadir los meses en el eje X y centramos las etiquetas
             xAxis.valueFormatter = IndexAxisValueFormatter(months)
             xAxis.setCenterAxisLabels(true)
             xAxis.textSize = 12f
-            //Configuracion del ejeX
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.granularity = 1f
             xAxis.isGranularityEnabled = true
-            isDragEnabled = true
-            //Configuracion del tamaño de las barras y espacio entre ellas
+
+            // Configurar tamaño de las barras y espaciado
             setVisibleXRangeMaximum(3f)
             val barSpace = 0.065f
             val groupSpace = 0.2f
             barData.barWidth = 0.20f
             xAxis.axisMinimum = 0f
+
+            // Animación y otras configuraciones
             animate()
             setNoDataText("")
             groupBars(0f, groupSpace, barSpace)
             invalidate()
-            setDrawValueAboveBar(true) // Muestra los valores encima de las barras
-            isHighlightFullBarEnabled =
-                true // Permite que se destaquen barras individuales al tocarlas
-            setDrawMarkers(true) // Muestra tooltips cuando se toca una barra
+            setDrawValueAboveBar(true)
+            isHighlightFullBarEnabled = true
+            setDrawMarkers(true)
         }
     }
 
+    // Convertir lista de cantidades a lista de BarEntry
     private fun getBarChartData(listOfAmount: ArrayList<Float>): ArrayList<BarEntry> {
         barEntriesList = ArrayList()
-        for (i in 0..<listOfAmount.size) {
+        for (i in 0 until listOfAmount.size) {
             barEntriesList.add(BarEntry(i.toFloat(), listOfAmount[i]))
         }
         return barEntriesList
     }
 
+    // Actualizar el gráfico con nuevos datos
     private fun updateChart(iban: String, year: Int) {
-            calculateResult(iban, year)
-            // Actualiza el gráfico con los nuevos datos
-            createBarChart()
+        calculateResult(iban, year)
+        createBarChart()
     }
+
+    // Liberar el view binding
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Importante para evitar fugas de memoria
+        _binding = null
     }
+
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         * Utilice este método de fábrica para crear una nueva instancia de
+         * este fragmento utilizando los parámetros proporcionados.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BarChartFragment.
+         * @param param1 Parámetro 1.
+         * @param param2 Parámetro 2.
+         * @return Una nueva instancia de BarChartFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) = BarChartFragment().apply {
             arguments = Bundle().apply {

@@ -40,14 +40,15 @@ class ConsultaFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding:FragmentConsultaBinding?=null
+    private var _binding: FragmentConsultaBinding? = null
     private val binding get() = _binding!!
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedItem: String? = null
-    private var result=0.0
+    private var result = 0.0
     private val movDao = MovimientoBancarioDAO(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -60,32 +61,31 @@ class ConsultaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding= FragmentConsultaBinding.inflate(inflater,container,false)
+        // Inflar el diseño para este fragmento
+        _binding = FragmentConsultaBinding.inflate(inflater, container, false)
         val view = binding.root
         val rootview = inflater.inflate(R.layout.fragment_consulta, container, false)
 
-        //Variable que contendra la opcion seleccionada en spinner
-
-        //Obtenemos los componentes del fragment
-        val etDateFrom=binding.etDatefrom
-        val etDateTo=binding.etDateto
-        val select=binding.selectImporte
-        val ingresos=binding.rbIngresos
-        val gastos=binding.rbGastos
-        val ingresosygastos=binding.rbIngresosygastos
-        val spConsulta=binding.spConsulta
-        val buscar=binding.btnBuscar
-        val cancel=binding.btnCancelabuscar
+        // Componentes del fragmento
+        val etDateFrom = binding.etDatefrom
+        val etDateTo = binding.etDateto
+        val select = binding.selectImporte
+        val ingresos = binding.rbIngresos
+        val gastos = binding.rbGastos
+        val ingresosygastos = binding.rbIngresosygastos
+        val spConsulta = binding.spConsulta
+        val buscar = binding.btnBuscar
+        val cancel = binding.btnCancelabuscar
         val searchByText: EditText = binding.etSearch
-        //Recupero dni del usuario que inicio sesion
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni=sharedPreferences.getString(getString(R.string.id),null)
-        //Rellenar spiner spConsulta
-        //Creo adapter
+
+        // Recuperar DNI del usuario que inició sesión
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni = sharedPreferences.getString(getString(R.string.id), null)
+
+        // Rellenar el spinner spConsulta
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val hint=getString(R.string.select_account)
+        val hint = getString(R.string.select_account)
         val cuentaDao = CuentaDao(admin)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         adapter.add(hint)
@@ -93,21 +93,18 @@ class ConsultaFragment : Fragment() {
         adapter.add(cuentas?.get(1)?.iban)
         selectedItem = adapter.getItem(0)
         spConsulta.adapter = adapter
-        //Muestra DatePickerDialog al cliquear edit text
+
+        // Mostrar DatePickerDialog al hacer clic en el EditText
         etDateFrom.setOnClickListener {
-        showDatePickerDialog(etDateFrom)
+            showDatePickerDialog(etDateFrom)
         }
         etDateTo.setOnClickListener {
             showDatePickerDialog(etDateTo)
         }
 
+        // Listener del spinner
         spConsulta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedItem = adapter.getItem(position)
                 if (position == 0) {
                     Toast.makeText(
@@ -133,9 +130,9 @@ class ConsultaFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+
+        // Función para actualizar la lista de movimientos
         fun updateMovList() {
-
-
             when (select.checkedRadioButtonId) {
                 R.id.rb_ingresos -> movList.retainAll(
                     movDao.getIncome(selectedItem.toString()).toSet()
@@ -152,27 +149,27 @@ class ConsultaFragment : Fragment() {
             }
         }
 
-        //Enviamos el arrayList movList desde este fragmento al fragmento ListOfMovFragment
-        //Crear un Bundle y agregar el ArrayList como argumento
-        //val bundle = Bundle()
-        //bundle.putParcelableArrayList("clave_movimientos", movList)
-        //Inicia ListOfFragment y pasa el arrayList movList como argumento al clickear buscar
+        // Botón de búsqueda
         buscar.setOnClickListener {
-            //Importes
+            // Importes
             val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
             val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
             val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
-            //Fechas
+
+            // Fechas
             val fechaDesdeStr: String = etDateFrom.text.toString()
             val fechaHastaStr: String = etDateTo.text.toString()
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             var fechaValida = true
-            var importeValido= true
-            //por texto
+            var importeValido = true
+
+            // Por texto
             val searchText: String = searchByText.text.toString()
-            //Resultado de los importes totales
+
+            // Resultado de los importes totales
             Utils.sound(requireContext())
+
             if (selectedItem.toString() == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -181,18 +178,20 @@ class ConsultaFragment : Fragment() {
                 ).show()
             } else {
                 updateMovList()
+
                 if (importeDesdeNum != null && importeHastaNum != null) {
                     if (importeDesdeNum > importeHastaNum) {
                         importeValido = false
                     } else {
                         movList =
                             movList.filter { abs(it.importe) >= importeDesdeNum && abs(it.importe) <= importeHastaNum } as ArrayList<MovimientoBancario>
-
                     }
                 }
+
                 if (fechaDesdeStr.isNotBlank() && fechaHastaStr.isNotBlank()) {
                     val fechaTo = LocalDate.parse(fechaDesdeStr, formatter)
                     val fechaFrom = LocalDate.parse(fechaHastaStr, formatter)
+
                     if (fechaFrom.isBefore(fechaTo)) {
                         fechaValida = false
                     } else {
@@ -204,10 +203,12 @@ class ConsultaFragment : Fragment() {
                         } as ArrayList<MovimientoBancario>
                     }
                 }
+
                 if (searchText.isNotBlank()) {
                     movList =
                         movList.filter { it.descripcion.contains(searchText) } as ArrayList<MovimientoBancario>
                 }
+
                 if (!fechaValida || !importeValido) {
                     // La fecha desde es mayor que la fecha hasta, muestra un mensaje de error
                     if (!fechaValida) {
@@ -226,35 +227,39 @@ class ConsultaFragment : Fragment() {
                     }
                 } else {
                     Utils.sound(requireContext())
-                    result=calculateResult(movList)
+                    result = calculateResult(movList)
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("clave_movimientos", movList)
-                    bundle.putDouble("Result",result)
+                    bundle.putDouble("Result", result)
                     val fragmentList = ListOfMovFragment()
-                    val fragmentSaldo=ResultFragment()
+                    val fragmentSaldo = ResultFragment()
                     fragmentList.arguments = bundle
-                    fragmentSaldo.arguments=bundle
+                    fragmentSaldo.arguments = bundle
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.fcv_main_container, fragmentList)
-                    transaction.replace(R.id.info_container,fragmentSaldo)
+                    transaction.replace(R.id.info_container, fragmentSaldo)
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }
             }
         }
+
+        // Botón de cancelar
         cancel.setOnClickListener {
             Utils.sound(requireContext())
             (activity as MainActivity).inicio()
         }
-        return view
 
+        return view
     }
+
+    // Liberar el view binding
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Importante para evitar fugas de memoria
+        _binding = null
     }
 
-    //Formato de fecha 01/09/2023
+    // Formato de fecha 01/09/2023
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -277,30 +282,27 @@ class ConsultaFragment : Fragment() {
         val window = datePickerDialog.window
 
         // Color de fondo
-        window?.setBackgroundDrawableResource(R.color.lightYellow)
+
         datePickerDialog.show()
     }
 
-
-
-    private fun calculateResult(movList:ArrayList<MovimientoBancario>):Double{
-        var result=0.0
-        for(i in 0..<movList.size){
-            result+=movList[i].importe
+    private fun calculateResult(movList: ArrayList<MovimientoBancario>): Double {
+        var result = 0.0
+        for (i in 0 until movList.size) {
+            result += movList[i].importe
         }
         return result
     }
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         * Utilice este método de fábrica para crear una nueva instancia de
+         * este fragmento utilizando los parámetros proporcionados.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ConsultaFragment.
+         * @param param1 Parámetro 1.
+         * @param param2 Parámetro 2.
+         * @return Una nueva instancia de ConsultaFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ConsultaFragment().apply {
@@ -310,5 +312,4 @@ class ConsultaFragment : Fragment() {
                 }
             }
     }
-
 }
