@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="2x10"
+        android:text=""
         android:gravity="center_vertical|end"
         android:background="?android:colorSecondary"
         android:textSize="@dimen/common"/>
@@ -24,7 +24,7 @@
         android:background="?android:colorSecondary"
         android:gravity="center_vertical|end"
         android:padding="10dp"
-        android:text="10.0"
+        android:text=""
         android:textSize="@dimen/head"
         tools:text="10.0" />
 

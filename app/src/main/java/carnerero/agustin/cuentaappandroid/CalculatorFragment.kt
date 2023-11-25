@@ -82,7 +82,14 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment CalculatorFragment.
          */
-        // TODO: Rename and change types and number of parameters
+        const val MULTIPLICAR = "×"
+        const val DIVIDIR = "÷"
+        const val SUMAR = "+"
+        const val RESTAR = "-"
+        const val PORCENTAJE = "%"
+        const val NULL = "null"
+        const val COMA = ","
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             CalculatorFragment().apply {
@@ -103,6 +110,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.btn_result -> {
+                tryResolve(binding.tvOperation.text.toString())
 
             }
 
@@ -115,9 +123,70 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
             else -> run {
+
                 binding.tvOperation.append(strValue)
 
             }
+
         }
+
+    }
+
+    //Extrae el operador de la cadena operacion
+    private fun getOperator(operation: String): String {
+        var operator = ""
+
+        if (operation.contains(MULTIPLICAR)) {
+            operator = MULTIPLICAR
+        } else if (operation.contains(DIVIDIR)) {
+            operator = DIVIDIR
+        } else if (operation.contains(SUMAR)) {
+            operator = SUMAR
+        }  else  {
+            operator = NULL
+        }
+        if(operator==NULL && operation.lastIndexOf(RESTAR)>0){
+            operator=RESTAR
+        }
+        return operator
+    }
+
+    private fun tryResolve(operationRef: String) {
+        val operator = getOperator(operationRef)
+        var values = arrayOfNulls<String>(0)
+        if(operator!=NULL){
+            if(operator== RESTAR){
+                val index=operationRef.lastIndexOf(RESTAR)
+                if(index<operationRef.length-1){
+                values= arrayOfNulls(2)
+                values[0]=operationRef.substring(0,index)
+                values[1]=operationRef.substring(index+1)
+                }else{
+                    values= arrayOfNulls(1)
+                    values[0]=operationRef.substring(0,index)
+                }
+            }else{
+                values=operationRef.split(operator).toTypedArray()
+            }
+        }
+
+        val number1=values[0]!!.toDouble()
+        val number2=values[1]!!.toDouble()
+        binding.tvResult.text=result(number1,number2,operator).toString()
+
+    }
+
+    private fun result(number1: Double, number2: Double, operator: String): Double {
+
+        var resultado = 0.0
+
+        when (operator) {
+            SUMAR -> resultado = number1 + number2
+            RESTAR -> resultado = number1 - number2
+            MULTIPLICAR -> resultado = number1 * number2
+            DIVIDIR -> resultado = number1 / number2
+            PORCENTAJE -> resultado = (number1 / number2) * 100
+        }
+        return resultado
     }
 }
