@@ -81,6 +81,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.estadistica -> fragment = BarChartFragment()
             R.id.transferencia -> fragment = TransaccionFragment()
             R.id.configuracion -> fragment = AjustesFragment()
+            R.id.calculator-> {
+                fragment = CalculatorFragment()
+            }
             R.id.salir -> {
                 // Finalizar la actividad si se selecciona "salir"
                 finish()

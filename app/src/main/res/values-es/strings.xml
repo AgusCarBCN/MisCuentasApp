@@ -114,5 +114,6 @@
     <string name="calc_btn_paren">()</string>
     <string name="calc_btn_porce">%</string>
     <string name="calc_btn_div">÷</string>
+    <string name="calculator">calculadora</string>
 
 </resources>

@@ -12,7 +12,10 @@
         android:id="@+id/notification"
         android:icon="@drawable/ic_notifications"
         android:title="@string/notifications" />
-
+    <item
+        android:id="@+id/calculator"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/calculator" />
     <item
         android:id="@+id/nuevoImporte"
         android:icon="@drawable/importe"
