@@ -4,21 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".CalculatorFragment">
+    tools:context=".CalculatorFragment"
+    >
 
     <TextView
         android:id="@+id/tv_operation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10.0"
+        android:padding="10dp"
+        android:text="2x10"
+        android:gravity="center_vertical|end"
+        android:background="?android:colorSecondary"
         android:textSize="@dimen/common"/>
 
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:colorSecondary"
         android:gravity="center_vertical|end"
-        android:padding="8dp"
+        android:padding="10dp"
         android:text="10.0"
         android:textSize="@dimen/head"
         tools:text="10.0" />
@@ -29,12 +34,14 @@
         android:id="@+id/ly_firstrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
+            android:layout_weight="25"
+            >
 
             <Button
                 android:id="@+id/btn_clear"
@@ -307,11 +314,6 @@
                 android:textSize="@dimen/head"
                 android:background="@drawable/style_botton"/>
         </androidx.cardview.widget.CardView>
-
-
-
-
-
     </LinearLayout>
     <!-- Contenido del quinto LinearLayout -->
     <LinearLayout
