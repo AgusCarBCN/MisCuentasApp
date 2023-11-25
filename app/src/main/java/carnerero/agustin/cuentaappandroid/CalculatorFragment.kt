@@ -135,7 +135,6 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     //Extrae el operador de la cadena operacion
     private fun getOperator(operation: String): String {
         var operator = ""
-
         if (operation.contains(MULTIPLICAR)) {
             operator = MULTIPLICAR
         } else if (operation.contains(DIVIDIR)) {
