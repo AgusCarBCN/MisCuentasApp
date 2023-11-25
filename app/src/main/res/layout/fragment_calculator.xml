@@ -52,7 +52,7 @@
 
 
         <Button
-            android:id="@+id/btnparen"
+            android:id="@+id/btn_retro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -296,7 +296,7 @@
             android:textSize="@dimen/head" />
 
         <Button
-            android:id="@+id/btn_equal"
+            android:id="@+id/btn_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

@@ -1,10 +1,12 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,11 +18,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CalculatorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CalculatorFragment : Fragment() {
+//Para gestionar los eventos de los botones de la calculadora implementamos View.OnClickListener
+class CalculatorFragment : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
+    // Variable para manejar el View Binding
+    private var _binding: FragmentCalculatorBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +39,38 @@ class CalculatorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calculator, container, false)
+        // Inflar el diseño del fragmento utilizando View Binding
+        _binding = FragmentCalculatorBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val listOfButtons=ArrayList<Button>()
+
+
+         // Asignar el click listener a los botones
+        val uno = binding.btn1.setOnClickListener(this)
+        val dos = binding.btn2.setOnClickListener(this)
+        val tres = binding.btn3.setOnClickListener(this)
+        val cuatro = binding.btn4.setOnClickListener(this)
+        val cinco = binding.btn5.setOnClickListener(this)
+        val seis = binding.btn6.setOnClickListener(this)
+        val siete = binding.btn7.setOnClickListener(this)
+        val ocho = binding.btn8.setOnClickListener(this)
+        val nueve = binding.btn9.setOnClickListener(this)
+        val cero = binding.btn0.setOnClickListener(this)
+        val coma=binding.btnComa.setOnClickListener(this)
+        val del=binding.btnRetro.setOnClickListener (this)
+        val clear=binding.btnClear.setOnClickListener(this)
+        val signoigual=binding.btnResult.setOnClickListener(this)
+        //Botones de operaciones
+        val suma=binding.btnPlus.setOnClickListener (this)
+        val resta=binding.btnMinus.setOnClickListener(this)
+        val multiplica=binding.btnTimes.setOnClickListener (this)
+        val divide=binding.btnDiv.setOnClickListener(this)
+        val porcentaje=binding.btnporc.setOnClickListener (this)
+
+        val resultado=binding.tvResult
+        val operation = binding.tvOperation
+
+        return view
     }
 
     companion object {
@@ -55,5 +91,33 @@ class CalculatorFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onClick(view: View?) {
+        var result=0.0
+        val strValue = (view as Button).text.toString()
+        when (view?.id) {
+            R.id.btn_clear -> {
+                binding.tvOperation.text=""
+                binding.tvResult.text=""
+            }
+
+            R.id.btn_result -> {
+
+            }
+
+            R.id.btn_retro -> {
+                val length=binding.tvOperation.text.length
+                if(length>0) {
+                    val newOperation = binding.tvOperation.text.toString().substring(0, length - 1)
+                    binding.tvOperation.text = newOperation
+                }
+            }
+
+            else -> run {
+                binding.tvOperation.append(strValue)
+
+            }
+        }
     }
 }
