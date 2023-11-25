@@ -320,7 +320,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_paren"
+                android:text="@string/calc_btn_retro"
                 android:textSize="@dimen/common" />
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView

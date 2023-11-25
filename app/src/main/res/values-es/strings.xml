@@ -111,7 +111,7 @@
     <string name="calc_btn_9">9</string>
     <string name="calc_btn_times">×</string>
     <string name="calc_C">C</string>
-    <string name="calc_btn_paren">()</string>
+    <string name="calc_btn_retro">"\u232B"</string>
     <string name="calc_btn_porce">%</string>
     <string name="calc_btn_div">÷</string>
     <string name="calculator">calculadora</string>
