@@ -37,71 +37,55 @@
         android:orientation="horizontal"
         >
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="25"
-            >
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_C"
+            android:textColor="@color/red"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btn_clear"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:textColor="@color/red"
-                android:text="@string/calc_C"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnparen"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_retro"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btnparen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_retro"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
+        <Button
+            android:id="@+id/btnporc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_porce"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btnporc"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_porce"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
+        <Button
+            android:id="@+id/btn_div"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_div"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btn_div"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_div"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton" />
-        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
     <!-- Contenido del segundo LinearLayout -->
@@ -111,67 +95,51 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_7"
+            android:textSize="@dimen/head" />
+
+
+        <Button
+            android:id="@+id/btn_8"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_7"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_7"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_8"
+            android:textSize="@dimen/head" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
+        <Button
+            android:id="@+id/btn_9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_9"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btn_8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_8"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_9"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_9"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_times"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_times"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
-
-
-
+        <Button
+            android:id="@+id/btn_times"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_times"
+            android:textSize="@dimen/head" />
 
 
     </LinearLayout>
@@ -182,70 +150,52 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_4"
+            android:textSize="@dimen/head" />
+
+
+        <Button
+            android:id="@+id/btn_5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_4"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_4"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-
-            <Button
-                android:id="@+id/btn_5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_5"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-
-            <Button
-                android:id="@+id/btn_6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_6"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_minus"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_minus"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_5"
+            android:textSize="@dimen/head" />
 
 
+        <Button
+            android:id="@+id/btn_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_6"
+            android:textSize="@dimen/head" />
 
+        <Button
+            android:id="@+id/btn_minus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_minus"
+            android:textSize="@dimen/head" />
 
 
     </LinearLayout>
@@ -256,64 +206,52 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_1"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_1"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_1"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btn_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_2"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_3"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_3"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_plus"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_plus"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_2"
+            android:textSize="@dimen/head" />
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_3"
+            android:textSize="@dimen/head" />
+
+        <Button
+            android:id="@+id/btn_plus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_plus"
+            android:textSize="@dimen/head" />
+
     </LinearLayout>
     <!-- Contenido del quinto LinearLayout -->
     <LinearLayout
@@ -322,67 +260,51 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_sign"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_sign"
+            android:textSize="@dimen/head" />
+
+
+        <Button
+            android:id="@+id/btn0"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_sign"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_sign"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_0"
+            android:textSize="@dimen/head" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
+        <Button
+            android:id="@+id/btn_coma"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_coma"
+            android:textSize="@dimen/head" />
 
-            <Button
-                android:id="@+id/btn0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/style_botton"
-                android:text="@string/calc_btn_0"
-                android:textSize="@dimen/head" />
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_coma"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_coma"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="25">
-            <Button
-                android:id="@+id/btn_equal"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="@string/calc_btn_equal"
-                android:textSize="@dimen/head"
-                android:background="@drawable/style_botton"/>
-        </androidx.cardview.widget.CardView>
-
-
-
+        <Button
+            android:id="@+id/btn_equal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="25"
+            android:background="@drawable/style_botton"
+            android:text="@string/calc_btn_equal"
+            android:textSize="@dimen/head" />
 
 
     </LinearLayout>
