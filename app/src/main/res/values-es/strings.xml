@@ -94,5 +94,25 @@
     <string name="prefences_select_currency">preferences_currency</string>
     <string name="lang">lang</string>
     <string name="country">country</string>
+    <string name="calc_btn_coma">,</string>
+    <string name="calc_sign">+/-</string>
+    <string name="calc_btn_0">0</string>
+    <string name="calc_btn_equal">=</string>
+    <string name="calc_1">1</string>
+    <string name="calc_btn_2">2</string>
+    <string name="calc_btn_3">3</string>
+    <string name="calc_btn_plus">+</string>
+    <string name="calc_4">4</string>
+    <string name="calc_btn_5">5</string>
+    <string name="calc_btn_6">6</string>
+    <string name="calc_btn_minus">-</string>
+    <string name="calc_7">7</string>
+    <string name="calc_btn_8">8</string>
+    <string name="calc_btn_9">9</string>
+    <string name="calc_btn_times">×</string>
+    <string name="calc_C">C</string>
+    <string name="calc_btn_paren">()</string>
+    <string name="calc_btn_porce">%</string>
+    <string name="calc_btn_div">÷</string>
 
 </resources>

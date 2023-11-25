@@ -9,7 +9,10 @@
         <dimen name="wellcome" >34sp</dimen>
         <dimen name="boxh" >42dp</dimen>
         <dimen name="box" >48dp</dimen>
+        <dimen name="extratext">48dp</dimen>
         <dimen name="extrabox">60dp</dimen>
         <dimen name="extracommon" >18sp</dimen>
+        <dimen name="calcbutton">32sp</dimen>
+        <dimen name="extracalcbutton">48sp</dimen>
 
 </resources>
