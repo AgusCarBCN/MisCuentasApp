@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    tools:context=".AjustesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_darklight"
+                android:layout_width="@dimen/extrabox"
+                android:layout_height="@dimen/extrabox"
+                android:layout_marginEnd="20dp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchdark"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/box"
+                android:layout_margin="8dp"
+                android:buttonTint="?android:colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_settingTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/settingTheme"
+                android:textAlignment="center"
+                android:textColor="?android:textColor"
+                android:textSize="@dimen/common"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_enes"
+                android:layout_width="@dimen/box"
+                android:layout_height="@dimen/extrabox"
+                android:layout_marginEnd="20dp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchen"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/box"
+                android:layout_margin="8dp"
+                android:buttonTint="?android:colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_settingLang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/settingLang"
+                android:textAlignment="center"
+                android:textColor="?android:textColor"
+                android:textSize="@dimen/common"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="?android:colorPrimary"
+            android:gravity="center|top"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/selectCurrency"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_botton"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/rb_euro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/box"
+                    android:layout_weight="1"
+                    android:buttonTint="?android:colorPrimary"
+                    android:text="@string/euro"
+                    android:textColor="?android:textColor"
+                    android:textSize="@dimen/common"
+                    android:textStyle="bold"
+                    android:theme="@style/CustomSpinner" />
+
+
+                <RadioButton
+                    android:id="@+id/rb_dolar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/box"
+                    android:layout_weight="1"
+                    android:buttonTint="?android:colorPrimary"
+                    android:text="@string/dolar"
+                    android:textColor="?android:textColor"
+                    android:textSize="@dimen/common"
+                    android:textStyle="bold"
+                    android:theme="@style/CustomSpinner" />
+
+                <RadioButton
+                    android:id="@+id/rb_pound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/box"
+                    android:layout_weight="1"
+                    android:buttonTint="?android:colorPrimary"
+                    android:text="@string/libra"
+                    android:textColor="?android:textColor"
+                    android:textSize="@dimen/common"
+                    android:textStyle="bold"
+                    android:theme="@style/CustomSpinner" />
+
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_settingCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/settingcurrency"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/common"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</FrameLayout>

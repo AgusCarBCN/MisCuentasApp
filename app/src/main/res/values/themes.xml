@@ -2,7 +2,6 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CuentaAppAndroid" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/lightOrange</item>
-
         <item name="colorPrimaryVariant">@color/darkBrown</item>
         <item name="android:previewImage">@color/orange</item>
         <item name="android:colorPrimaryDark">@color/orange</item>
