@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import com.google.android.material.snackbar.Snackbar
@@ -46,8 +47,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         val view = binding.root
 
 
-
-         // Asignar el click listener a los botones
+        // Asignar el click listener a los botones
         val uno = binding.btn1.setOnClickListener(this)
         val dos = binding.btn2.setOnClickListener(this)
         val tres = binding.btn3.setOnClickListener(this)
@@ -72,8 +72,28 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         val resultado = binding.tvResult
         val operation = binding.tvOperation
 
+        //Detectamos cambios en tiempo real en operation para reemplazar el operador cuando se repita
+        operation.addTextChangedListener { charSequence ->
+            if (replaceOperator(charSequence.toString())) {
+                val length = operation.text.length
+                // La idea es reemmplazar el penultimo caracter en el caso de que se añaden dos operadores seguidos en la calculadora
+                val newOperation = operation.text.toString().substring(0, length - 2) +
+                        operation.text.toString().substring(length - 1)
+                operation.text = newOperation
+            }
+        }
         return view
     }
+
+    private fun replaceOperator(charSequence: CharSequence): Boolean {
+
+        if (charSequence.length < 2) return false
+        val lastElement = charSequence[charSequence.length - 1].toString()
+        val penultElement = charSequence[charSequence.length - 2].toString()
+
+        return (lastElement == MULTIPLICAR || lastElement == DIVIDIR || lastElement == SUMAR) && (penultElement == MULTIPLICAR || penultElement == DIVIDIR || penultElement == SUMAR || penultElement==RESTAR)
+    }
+
 
     companion object {
         /**
@@ -124,40 +144,22 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             R.id.btn_minus,
             R.id.btn_times,
             R.id.btn_div -> {
-
-                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
-                // Verificar si strValue es un dígito
-                val soloDigitos = strValue.all { it.isDigit() }
-
                 tryResolve(operation.text.toString())
-
-                if (!ultimoCaracterEsOperador || soloDigitos) {
-                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
-                    operation.append(strValue)
-
-                }
+                val operator = strValue
+                val operationStr = operation.text.toString()
+                addOperator(operator, operationStr)
             }
 
             R.id.btn_coma -> {
 
-
-                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
-                // Verificar si strValue es un dígito
-                val soloDigitos = strValue.all { it.isDigit() }
-
-                if (!ultimoCaracterEsOperador || soloDigitos) {
-                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
-                    operation.append(strValue)
-                }
+                addPoint(strValue,showOperation)
             }
 
             R.id.btn_porc -> {
                 tryResolve(operation.text.toString())
-
                 // Verificar si el último carácter es un operador o si ya hay un porcentaje en la operación
                 val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
                 val contienePorcentaje = showOperation.contains(PORCENTAJE)
-
                 if (!ultimoCaracterEsOperador && !contienePorcentaje) {
                     // Obtener el número antes del porcentaje
                     val numeroAntesDelPorcentaje = try {
@@ -241,8 +243,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     binding.tvOperation.text=binding.tvResult.text
                 }
             }catch (e:NumberFormatException){
-                showMessage(getString(R.string.formaterror))
-                binding.tvOperation.text=""
+                //showMessage(getString(R.string.formaterror))
 
             }
             }
@@ -283,6 +284,45 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         } else {
             if (!operation.isEmpty() && lastElement != PUNTO) {
                 binding.tvOperation.append(operator)
+            }
+        }
+    }
+    //Previene de errores de formato al añadir puntos en las operaciones
+    private fun addPoint(pointStr:String,operation: String ) {
+        //Si el string que muestra la operacion no contiene un punto. Permite añadir un punto
+        if (!operation.contains(PUNTO)) {
+            binding.tvOperation.append(PUNTO)
+            //Verificamos si existe un operador
+        } else {
+            val operator = getOperator(operation)
+            var values = arrayOfNulls<String>(0)
+            if (operator != NULL) {
+                if (operator == RESTAR) {
+                    val index = operation.lastIndexOf(RESTAR)
+                    if (index < operation.length - 1) {
+                        values = arrayOfNulls(2)
+                        values[0] = operation.substring(0, index)
+                        values[1] = operation.substring(index + 1)
+                    } else {
+                        values = arrayOfNulls(1)
+                        values[0] = operation.substring(0, index)
+                    }
+                } else {
+                    values = operation.split(operator).toTypedArray()
+                }
+            }
+            if(values.size>0){
+                val number1=values[0]!!
+                if(values.size>1){
+                    val number2=values[1]!!
+                    if(number1.contains(PUNTO) && !number2.contains(PUNTO)){
+                        binding.tvOperation.append(PUNTO)
+                    }
+                }else{
+                    if(number1.contains(PUNTO)){
+                        binding.tvOperation.append(PUNTO)
+                    }
+                }
             }
         }
     }
