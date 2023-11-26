@@ -90,7 +90,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         const val RESTAR = "-"
         const val PORCENTAJE = "%"
         const val NULL = "null"
-        const val COMA = ","
+        const val PUNTO = "."
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -107,8 +107,8 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         val strValue = (view as Button).text.toString()
         var operation=binding.tvOperation
         var showResult=binding.tvResult
-        var showOperation=operation.text.toString()
-        val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, COMA)
+        var showOperation = operation.text.toString()
+        val OPERADORES = arrayOf(SUMAR, RESTAR, MULTIPLICAR, DIVIDIR, PUNTO)
         when (view?.id) {
             R.id.btn_clear -> {
                 operation.text=""
@@ -120,12 +120,27 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 operation.text = ""
             }
 
-
             R.id.btn_plus,
             R.id.btn_minus,
             R.id.btn_times,
-            R.id.btn_div-> {
+            R.id.btn_div -> {
+
+                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
+                // Verificar si strValue es un dígito
+                val soloDigitos = strValue.all { it.isDigit() }
+
                 tryResolve(operation.text.toString())
+
+                if (!ultimoCaracterEsOperador || soloDigitos) {
+                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
+                    operation.append(strValue)
+
+                }
+            }
+
+            R.id.btn_coma -> {
+
+
                 val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
                 // Verificar si strValue es un dígito
                 val soloDigitos = strValue.all { it.isDigit() }
@@ -135,6 +150,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     operation.append(strValue)
                 }
             }
+
             R.id.btn_porc -> {
                 tryResolve(operation.text.toString())
 
@@ -157,7 +173,6 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 }
             }
 
-
             R.id.btn_retro -> {
                 val length = operation.text.length
                 if (length > 0) {
@@ -165,19 +180,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     operation.text = newOperation
                 }
             }
-
             else -> run {
-                // var showOperation=operation.text.toString()
-                //val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, PORCENTAJE, COMA)
-                // Verificar si el último carácter de showOperation es un operador
-                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
-                // Verificar si strValue es un dígito
-                val soloDigitos = strValue.all { it.isDigit() }
+                operation.append(strValue)
 
-                if (!ultimoCaracterEsOperador||soloDigitos) {
-                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
-                    operation.append(strValue)
-                }
             }
         }
     }
@@ -206,8 +211,8 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         //Si no hay nada en la pantalla de operaciones sale de la funcion ,no se ejecuta el codigo de la funcion tryResolve
         if(operationRef.isEmpty())return
         var operation=operationRef
-        if(operation.contains(COMA) && operation.lastIndexOf(COMA)==operation.length-1){
-            operation=operation.substring(0,operation.length-1)
+        if (operation.contains(PUNTO) && operation.lastIndexOf(PUNTO) == operation.length - 1) {
+            operation = operation.substring(0, operation.length - 1)
         }
         val operator = getOperator(operationRef)
         var values = arrayOfNulls<String>(0)
@@ -237,6 +242,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 }
             }catch (e:NumberFormatException){
                 showMessage(getString(R.string.formaterror))
+                binding.tvOperation.text=""
 
             }
             }
@@ -257,11 +263,27 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             MULTIPLICAR -> resultado = number1 * number2
             DIVIDIR -> resultado = number1 / number2
 
-                    }
+        }
         return resultado
     }
-    private fun showMessage(message:String){
-        Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange)).show()
+
+    private fun showMessage(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange)).show()
     }
 
+    private fun addOperator(operator: String, operation: String) {
+        val lastElement = if (operation.isEmpty()) ""
+        else operation.substring(operation.length - 1)
+
+        if (operator == RESTAR) {
+            if (operation.isEmpty() || lastElement != RESTAR && lastElement != PUNTO) {
+                binding.tvOperation.append(operator)
+            }
+        } else {
+            if (!operation.isEmpty() && lastElement != PUNTO) {
+                binding.tvOperation.append(operator)
+            }
+        }
+    }
 }
