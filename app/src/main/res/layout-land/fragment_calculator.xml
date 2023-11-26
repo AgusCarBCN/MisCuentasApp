@@ -215,7 +215,7 @@
 
 
         <Button
-            android:id="@+id/btnporc"
+            android:id="@+id/btn_porc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -259,7 +259,7 @@
             android:text="@string/calc_btn_retro"
             android:textSize="@dimen/common" />
 
-        <Button
+       <!-- <Button
             android:id="@+id/btn_sign"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -268,7 +268,7 @@
             android:layout_weight="25"
             android:background="@drawable/style_botton"
             android:text="@string/calc_sign"
-            android:textSize="@dimen/common" />
+            android:textSize="@dimen/common" />-->
 
         <Button
             android:id="@+id/btn_coma"

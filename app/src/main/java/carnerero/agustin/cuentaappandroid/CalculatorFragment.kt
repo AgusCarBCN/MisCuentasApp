@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import com.google.android.material.snackbar.Snackbar
@@ -45,7 +44,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         // Inflar el diseño del fragmento utilizando View Binding
         _binding = FragmentCalculatorBinding.inflate(inflater, container, false)
         val view = binding.root
-        val listOfButtons=ArrayList<Button>()
+
 
 
          // Asignar el click listener a los botones
@@ -59,18 +58,18 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         val ocho = binding.btn8.setOnClickListener(this)
         val nueve = binding.btn9.setOnClickListener(this)
         val cero = binding.btn0.setOnClickListener(this)
-        val coma=binding.btnComa.setOnClickListener(this)
-        val del=binding.btnRetro.setOnClickListener (this)
-        val clear=binding.btnClear.setOnClickListener(this)
-        val signoigual=binding.btnResult.setOnClickListener(this)
+        val coma = binding.btnComa.setOnClickListener(this)
+        val del = binding.btnRetro.setOnClickListener(this)
+        val clear = binding.btnClear.setOnClickListener(this)
+        val signoigual = binding.btnResult.setOnClickListener(this)
         //Botones de operaciones
-        val suma=binding.btnPlus.setOnClickListener (this)
-        val resta=binding.btnMinus.setOnClickListener(this)
-        val multiplica=binding.btnTimes.setOnClickListener (this)
-        val divide=binding.btnDiv.setOnClickListener(this)
-        val porcentaje=binding.btnporc.setOnClickListener (this)
+        val suma = binding.btnPlus.setOnClickListener(this)
+        val resta = binding.btnMinus.setOnClickListener(this)
+        val multiplica = binding.btnTimes.setOnClickListener(this)
+        val divide = binding.btnDiv.setOnClickListener(this)
+        val porcentaje = binding.btnPorc.setOnClickListener(this)
 
-        val resultado=binding.tvResult
+        val resultado = binding.tvResult
         val operation = binding.tvOperation
 
         return view
@@ -109,39 +108,66 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         var operation=binding.tvOperation
         var showResult=binding.tvResult
         var showOperation=operation.text.toString()
-        val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, PORCENTAJE, COMA)
+        val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, COMA)
         when (view?.id) {
             R.id.btn_clear -> {
                 operation.text=""
                 showResult.text=""
             }
+
             R.id.btn_result -> {
                 tryResolve(operation.text.toString())
-                operation.text=""
+                operation.text = ""
             }
+
+
             R.id.btn_plus,
             R.id.btn_minus,
             R.id.btn_times,
-            R.id.btn_div ->{
+            R.id.btn_div-> {
                 tryResolve(operation.text.toString())
                 val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
                 // Verificar si strValue es un dígito
                 val soloDigitos = strValue.all { it.isDigit() }
 
-                if (!ultimoCaracterEsOperador||soloDigitos) {
+                if (!ultimoCaracterEsOperador || soloDigitos) {
                     // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
                     operation.append(strValue)
                 }
             }
+            R.id.btn_porc -> {
+                tryResolve(operation.text.toString())
+
+                // Verificar si el último carácter es un operador o si ya hay un porcentaje en la operación
+                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
+                val contienePorcentaje = showOperation.contains(PORCENTAJE)
+
+                if (!ultimoCaracterEsOperador && !contienePorcentaje) {
+                    // Obtener el número antes del porcentaje
+                    val numeroAntesDelPorcentaje = try {
+                        showOperation.toDouble()
+                    } catch (e: NumberFormatException) {
+                        // Manejar la excepción si la cadena no se puede convertir a un número
+                        0.0
+                    }
+
+                    // Calcular el porcentaje y mostrar el resultado en la operación
+                    val resultadoPorcentaje = numeroAntesDelPorcentaje / 100
+                    operation.text = resultadoPorcentaje.toString()
+                }
+            }
+
+
             R.id.btn_retro -> {
-                val length=operation.text.length
-                if(length>0) {
+                val length = operation.text.length
+                if (length > 0) {
                     val newOperation = operation.text.toString().substring(0, length - 1)
                     operation.text = newOperation
                 }
             }
+
             else -> run {
-               // var showOperation=operation.text.toString()
+                // var showOperation=operation.text.toString()
                 //val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, PORCENTAJE, COMA)
                 // Verificar si el último carácter de showOperation es un operador
                 val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
@@ -165,7 +191,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             operator = DIVIDIR
         } else if (operation.contains(SUMAR)) {
             operator = SUMAR
-        }  else  {
+        } else if (operation.contains(PORCENTAJE)) {
+            operator = PORCENTAJE
+        } else {
             operator = NULL
         }
         if(operator==NULL && operation.lastIndexOf(RESTAR)>0){
@@ -228,11 +256,10 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             RESTAR -> resultado = number1 - number2
             MULTIPLICAR -> resultado = number1 * number2
             DIVIDIR -> resultado = number1 / number2
-            PORCENTAJE -> resultado = (number1 / number2) * 100
-        }
+
+                    }
         return resultado
     }
-
     private fun showMessage(message:String){
         Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange)).show()
     }

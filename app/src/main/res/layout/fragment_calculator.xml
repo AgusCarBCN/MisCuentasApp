@@ -4,18 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".CalculatorFragment"
-    >
+    tools:context=".CalculatorFragment">
 
     <TextView
         android:id="@+id/tv_operation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:colorSecondary"
+        android:gravity="center_vertical|end"
         android:padding="10dp"
         android:text=""
-        android:gravity="center_vertical|end"
-        android:background="?android:colorSecondary"
-        android:textSize="@dimen/head"/>
+        android:textSize="@dimen/head" />
 
     <TextView
         android:id="@+id/tv_result"
@@ -34,8 +33,7 @@
         android:id="@+id/ly_firstrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
 
         <Button
@@ -64,7 +62,7 @@
 
 
         <Button
-            android:id="@+id/btnporc"
+            android:id="@+id/btn_porc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -261,7 +259,7 @@
         android:orientation="horizontal">
 
 
-        <Button
+      <!--  <Button
             android:id="@+id/btn_sign"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -270,7 +268,7 @@
             android:layout_weight="25"
             android:background="@drawable/style_botton"
             android:text="@string/calc_sign"
-            android:textSize="@dimen/head" />
+            android:textSize="@dimen/head" />-->
 
 
         <Button
@@ -279,7 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_weight="25"
+            android:layout_weight="50"
             android:background="@drawable/style_botton"
             android:text="@string/calc_btn_0"
             android:textSize="@dimen/head" />
@@ -290,7 +288,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_weight="25"
+            android:layout_weight="50"
             android:background="@drawable/style_botton"
             android:text="@string/calc_btn_coma"
             android:textSize="@dimen/head" />
@@ -301,7 +299,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:background="@drawable/style_botton"
             android:text="@string/calc_btn_equal"
             android:textSize="@dimen/head" />
