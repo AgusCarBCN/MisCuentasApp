@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,33 +106,54 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         var result=0.0
         val strValue = (view as Button).text.toString()
+        var operation=binding.tvOperation
+        var showResult=binding.tvResult
+        var showOperation=operation.text.toString()
+        val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, PORCENTAJE, COMA)
         when (view?.id) {
             R.id.btn_clear -> {
-                binding.tvOperation.text=""
-                binding.tvResult.text=""
+                operation.text=""
+                showResult.text=""
             }
-
             R.id.btn_result -> {
-                tryResolve(binding.tvOperation.text.toString())
-
+                tryResolve(operation.text.toString())
+                operation.text=""
             }
+            R.id.btn_plus,
+            R.id.btn_minus,
+            R.id.btn_times,
+            R.id.btn_div ->{
+                tryResolve(operation.text.toString())
+                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
+                // Verificar si strValue es un dígito
+                val soloDigitos = strValue.all { it.isDigit() }
 
-            R.id.btn_retro -> {
-                val length=binding.tvOperation.text.length
-                if(length>0) {
-                    val newOperation = binding.tvOperation.text.toString().substring(0, length - 1)
-                    binding.tvOperation.text = newOperation
+                if (!ultimoCaracterEsOperador||soloDigitos) {
+                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
+                    operation.append(strValue)
                 }
             }
-
-            else -> run {
-
-                binding.tvOperation.append(strValue)
-
+            R.id.btn_retro -> {
+                val length=operation.text.length
+                if(length>0) {
+                    val newOperation = operation.text.toString().substring(0, length - 1)
+                    operation.text = newOperation
+                }
             }
+            else -> run {
+               // var showOperation=operation.text.toString()
+                //val OPERADORES = arrayOf(SUMAR,RESTAR,MULTIPLICAR,DIVIDIR, PORCENTAJE, COMA)
+                // Verificar si el último carácter de showOperation es un operador
+                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
+                // Verificar si strValue es un dígito
+                val soloDigitos = strValue.all { it.isDigit() }
 
+                if (!ultimoCaracterEsOperador||soloDigitos) {
+                    // Si el último carácter no es un operador, entonces puedes añadir el nuevo valor (strValue)
+                    operation.append(strValue)
+                }
+            }
         }
-
     }
 
     //Extrae el operador de la cadena operacion
@@ -151,28 +175,48 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     }
 
     private fun tryResolve(operationRef: String) {
+        //Si no hay nada en la pantalla de operaciones sale de la funcion ,no se ejecuta el codigo de la funcion tryResolve
+        if(operationRef.isEmpty())return
+        var operation=operationRef
+        if(operation.contains(COMA) && operation.lastIndexOf(COMA)==operation.length-1){
+            operation=operation.substring(0,operation.length-1)
+        }
         val operator = getOperator(operationRef)
         var values = arrayOfNulls<String>(0)
         if(operator!=NULL){
             if(operator== RESTAR){
-                val index=operationRef.lastIndexOf(RESTAR)
+                val index=operation.lastIndexOf(RESTAR)
                 if(index<operationRef.length-1){
                 values= arrayOfNulls(2)
-                values[0]=operationRef.substring(0,index)
-                values[1]=operationRef.substring(index+1)
+                values[0]=operation.substring(0,index)
+                values[1]=operation.substring(index+1)
                 }else{
                     values= arrayOfNulls(1)
-                    values[0]=operationRef.substring(0,index)
+                    values[0]=operation.substring(0,index)
                 }
             }else{
-                values=operationRef.split(operator).toTypedArray()
+                values=operation.split(operator).toTypedArray()
             }
         }
+        //Validamos si tiene los dos elementos para poder realizar la operacion
+        if(values.size>1) {
+            try {
+                val number1 = values[0]!!.toDouble()
+                val number2 = values[1]!!.toDouble()
+                binding.tvResult.text = result(number1, number2, operator).toString()
+                if(binding.tvResult.text.isNotEmpty()){
+                    binding.tvOperation.text=binding.tvResult.text
+                }
+            }catch (e:NumberFormatException){
+                showMessage(getString(R.string.formaterror))
 
-        val number1=values[0]!!.toDouble()
-        val number2=values[1]!!.toDouble()
-        binding.tvResult.text=result(number1,number2,operator).toString()
-
+            }
+            }
+        else {
+            if (operator != NULL) {
+                showMessage(getString(R.string.incorrectExpresion))
+            }
+        }
     }
 
     private fun result(number1: Double, number2: Double, operator: String): Double {
@@ -188,4 +232,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         }
         return resultado
     }
+
+    private fun showMessage(message:String){
+        Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange)).show()
+    }
+
 }

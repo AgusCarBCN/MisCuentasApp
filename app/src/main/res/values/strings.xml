@@ -86,7 +86,7 @@
     <string name="settingLang">Setting language</string>
     <string name="settingTheme">Setting theme</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="preferences_enable">enable_dark_mode</string>
     <string name="preferences_enable_lang">enable_en_lang</string>
     <string name="euro">euro</string>
@@ -96,7 +96,7 @@
     <string name="prefences_select_currency">preferences_currency</string>
     <string name="lang">lang</string>
     <string name="country">country</string>
-    <string name="calc_btn_coma">,</string>
+    <string name="calc_btn_coma">.</string>
     <string name="calc_sign">+/-</string>
     <string name="calc_btn_0">0</string>
     <string name="calc_btn_equal">=</string>
@@ -117,5 +117,6 @@
     <string name="calc_btn_porce">%</string>
     <string name="calc_btn_div">÷</string>
     <string name="calculator">calculator</string>
-
+    <string name="incorrectExpresion">Incorrect expresion</string>
+    <string name="formaterror">Format error</string>
 </resources>

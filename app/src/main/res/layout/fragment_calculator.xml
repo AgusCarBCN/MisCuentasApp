@@ -15,7 +15,7 @@
         android:text=""
         android:gravity="center_vertical|end"
         android:background="?android:colorSecondary"
-        android:textSize="@dimen/common"/>
+        android:textSize="@dimen/head"/>
 
     <TextView
         android:id="@+id/tv_result"
@@ -25,7 +25,7 @@
         android:gravity="center_vertical|end"
         android:padding="10dp"
         android:text=""
-        android:textSize="@dimen/head"
+        android:textSize="@dimen/calcbutton"
         tools:text="10.0" />
 
 
