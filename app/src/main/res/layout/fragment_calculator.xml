@@ -8,290 +8,144 @@
 
     <TextView
         android:id="@+id/tv_operation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorSecondary"
-        android:gravity="center_vertical|end"
-        android:padding="10dp"
-        android:text=""
+        style="@style/TextViewCalc"
         android:textSize="@dimen/head" />
 
     <TextView
         android:id="@+id/tv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorSecondary"
-        android:gravity="center_vertical|end"
-        android:padding="10dp"
-        android:text=""
-        android:textSize="@dimen/calcbutton"
-        tools:text="10.0" />
-
+        style="@style/TextViewCalc"
+        android:textSize="@dimen/calcbutton" />
 
     <!-- Contenido del primer LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_firstrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/LinearLayoutCalc">
 
 
         <Button
             android:id="@+id/btn_clear"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
+            style="@style/ButtonCalcSmall"
             android:text="@string/calc_C"
-            android:textColor="@color/red"
-            android:textSize="@dimen/head" />
-
+            android:textColor="@color/red" />
 
         <Button
             android:id="@+id/btn_retro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_retro"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_retro" />
 
 
         <Button
             android:id="@+id/btn_porc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_porce"
-            android:textSize="@dimen/head" />
-
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_porce" />
 
         <Button
             android:id="@+id/btn_div"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_div"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_div" />
 
 
     </LinearLayout>
     <!-- Contenido del segundo LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_secondrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/LinearLayoutCalc">
 
 
         <Button
             android:id="@+id/btn_7"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_7"
-            android:textSize="@dimen/head" />
-
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_7" />
 
         <Button
             android:id="@+id/btn_8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_8"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_8" />
 
         <Button
             android:id="@+id/btn_9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_9"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_9" />
 
         <Button
             android:id="@+id/btn_times"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_times"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_times" />
 
 
     </LinearLayout>
     <!-- Contenido del tercero LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_thirdrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/LinearLayoutCalc">
 
 
         <Button
             android:id="@+id/btn_4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_4"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_4" />
 
 
         <Button
             android:id="@+id/btn_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_5"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_5" />
 
 
         <Button
             android:id="@+id/btn_6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_6"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_6" />
 
         <Button
             android:id="@+id/btn_minus"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_minus"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_minus" />
 
 
     </LinearLayout>
     <!-- Contenido del cuarto LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_fourthrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/LinearLayoutCalc">
 
 
         <Button
             android:id="@+id/btn_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_1"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_1" />
 
 
         <Button
             android:id="@+id/btn_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_2"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_2" />
 
         <Button
             android:id="@+id/btn_3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_3"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_3" />
 
         <Button
             android:id="@+id/btn_plus"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_plus"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_plus" />
 
     </LinearLayout>
     <!-- Contenido del quinto LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_fithrow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-      <!--  <Button
-            android:id="@+id/btn_sign"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="25"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_sign"
-            android:textSize="@dimen/head" />-->
-
+        style="@style/LinearLayoutCalc">
 
         <Button
             android:id="@+id/btn0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="50"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_0"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_0" />
 
         <Button
             android:id="@+id/btn_coma"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="50"
-            android:background="@drawable/style_botton"
-            android:text="@string/calc_btn_coma"
-            android:textSize="@dimen/head" />
+            style="@style/ButtonCalcSmall"
+            android:text="@string/calc_btn_coma" />
 
         <Button
             android:id="@+id/btn_result"
@@ -299,7 +153,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_weight="33"
+            android:layout_weight="17"
             android:background="@drawable/style_botton"
             android:text="@string/calc_btn_equal"
             android:textSize="@dimen/head" />

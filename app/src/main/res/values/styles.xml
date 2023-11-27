@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Estilos de calculadora-->
+    <style name="TextViewCalc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:colorSecondary</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:padding">@dimen/padding10</item>
+    </style>
+
+    <style name="LinearLayoutCalc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ButtonCalcBase">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">25</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/style_botton</item>
+    </style>
+
+    <style name="ButtonCalcSmall" parent="ButtonCalcBase">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textSize">@dimen/head</item>
+    </style>
+
+    <style name="ButtonCalcSmallLand" parent="ButtonCalcBase">
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">@dimen/common</item>
+    </style>
+
+
+</resources>
