@@ -20,7 +20,7 @@
             android:id="@+id/et_importetrans"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"
-            android:inputType="text"
+            android:inputType="numberDecimal"
              />
 
         <TextView

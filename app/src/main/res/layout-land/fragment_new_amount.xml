@@ -24,7 +24,7 @@
             android:id="@+id/et_importe"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             />
 
         <Spinner
