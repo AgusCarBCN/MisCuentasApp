@@ -102,7 +102,7 @@
                     android:id="@+id/selectImporte"
                     android:layout_width="360dp"
                     android:layout_height="@dimen/boxh"
-                    android:background="@drawable/style_botton"
+                    android:background="@drawable/style_button"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -209,7 +209,7 @@
                 android:layout_height="@dimen/boxh"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="35dp"
-                android:background="@drawable/style_botton"
+                android:background="@drawable/style_button"
                 android:text="@string/search"
                 android:textAllCaps="false"
                 android:textColor="?android:textColor"
@@ -222,7 +222,7 @@
                 android:layout_height="@dimen/boxh"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/style_botton"
+                android:background="@drawable/style_button"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="?android:textColor"

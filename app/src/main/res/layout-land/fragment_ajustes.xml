@@ -97,7 +97,7 @@
                 android:id="@+id/selectCurrency"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/style_botton"
+                android:background="@drawable/style_button"
                 android:orientation="horizontal"
                 >
 
