@@ -14,86 +14,22 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/et_descripcion"
+            style="@style/InputFieldLarge"
+            android:hint="@string/amount_text"
+            android:inputType="textCapWords" />
 
-            <EditText
-                android:id="@+id/et_descripcion"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/box"
-                android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:ems="10"
-                android:gravity="center|center_horizontal"
-                android:hint="@string/amount_text"
-                android:inputType="textCapWords"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
-                tools:visibility="visible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_importe2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="45dp"
-                android:gravity="center"
-                android:text="@string/amount"
-                android:textAlignment="center"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/head"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_importe"
-                android:layout_width="220dp"
-                android:layout_height="@dimen/box"
-                android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:ems="10"
-                android:gravity="center|center_horizontal"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:textSize="@dimen/head"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
-                tools:visibility="visible" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_cuentas2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/your_accounts"
-            android:textAlignment="center"
-            android:textColor="?android:textColor"
-            android:textSize="@dimen/head"
-            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/et_importe"
+            style="@style/InputFieldLarge"
+            android:hint="@string/amount"
+            android:inputType="text"
+            />
 
         <Spinner
             android:id="@+id/sp_cuentas"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/box"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_editetx"
-            android:gravity="center|center_vertical"
-            android:textAlignment="center"
+            style="@style/InputFieldLarge"
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout
@@ -108,41 +44,16 @@
 
             <Button
                 android:id="@+id/btn_nuevoingreso"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
+                style="@style/ButtonStyle"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/style_button"
-                android:fontFamily="sans-serif"
-                android:text="@string/incomes"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                 />
+                android:text="@string/incomes" />
 
             <Button
                 android:id="@+id/btn_nuevogasto"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
+                style="@style/ButtonStyle"
                 android:layout_marginStart="20dp"
-                android:background="@drawable/style_button"
-                android:fontFamily="sans-serif"
                 android:text="@string/bills"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                 />
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </LinearLayout>
