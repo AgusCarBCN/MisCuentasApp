@@ -18,19 +18,10 @@
 
         <EditText
             android:id="@+id/et_importetrans"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/box"
-            android:layout_gravity="center"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:gravity="center|center_horizontal"
+            style="@style/InputFieldLarge"
             android:hint="@string/amount"
             android:inputType="text"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_text_user"
-            tools:visibility="visible" />
+             />
 
         <TextView
             android:id="@+id/tv_importe3"
@@ -40,18 +31,13 @@
             android:text="@string/from_account"
             android:textAlignment="center"
             android:textColor="?android:textColor"
-            android:textSize="@dimen/head"
+            android:textSize="@dimen/common"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_cuentaorigen"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/box"
-            android:layout_gravity="center"
+            style="@style/InputFieldLarge"
             android:layout_marginTop="5dp"
-            android:background="@drawable/style_editetx"
-            android:gravity="center|center_vertical"
-            android:textAlignment="center"
             android:theme="@style/CustomSpinner" />
 
         <TextView
@@ -62,67 +48,35 @@
             android:text="@string/to_account"
             android:textAlignment="center"
             android:textColor="?android:textColor"
-            android:textSize="@dimen/head"
+            android:textSize="@dimen/common"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_cuentadestino"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/box"
-            android:layout_gravity="center"
+            style="@style/InputFieldLarge"
             android:layout_marginTop="5dp"
-            android:background="@drawable/style_editetx"
-            android:gravity="center|center_vertical"
-            android:textAlignment="center"
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout
             android:layout_width="360dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_aceptar"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/style_button"
-                android:fontFamily="sans-serif"
-                android:text="@string/confirm"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                />
+                style="@style/ButtonStyle"
+                android:layout_marginRight="20dp"
+
+                android:text="@string/confirm" />
 
             <Button
                 android:id="@+id/btn_salir"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/style_button"
-                android:fontFamily="sans-serif"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-              />
+                style="@style/ButtonStyle"
+                android:layout_marginLeft="20dp"
+
+                android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>
 
