@@ -78,12 +78,9 @@
                 android:textAllCaps="false"
                 android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                />
+                android:textStyle="bold"/>
+
+
 
             <Button
                 android:id="@+id/btn_nuevogasto"
@@ -100,10 +97,7 @@
                 android:textColor="?android:textColor"
                 android:textSize="@dimen/botton"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
+
                  />
         </LinearLayout>
     </LinearLayout>
