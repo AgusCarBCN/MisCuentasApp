@@ -16,11 +16,7 @@
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/box"
-            android:layout_weight="1"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
+            style="@style/InputFieldLarge"
             android:hint="@string/amount_text"
             android:inputType="textCapWords|textAutoComplete" />
 
@@ -46,15 +42,13 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_datefrom"
-                        android:layout_width="180dp"
-                        android:layout_height="@dimen/box"
-                        android:background="@drawable/style_editetx"
+                        style="@style/InputFieldMedium"
+                        android:layout_width="175dp"
                         android:clickable="true"
-                        android:ems="10"
                         android:focusable="false"
                         android:hint="@string/date_from"
                         android:inputType="date"
-                        android:textColor="?android:textColor" />
+                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -63,13 +57,10 @@
                     app:startIconDrawable="@drawable/date">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_dateto"
-                        android:layout_width="180dp"
-                        android:layout_height="@dimen/box"
+                        style="@style/InputFieldMedium"
+                        android:layout_width="175dp"
                         android:hint="@string/date_to"
-                        android:background="@drawable/style_editetx"
                         android:clickable="true"
-                        android:ems="10"
-                        android:textColor="?android:textColor"
                         android:focusable="false"
                         android:inputType="date"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -155,30 +146,19 @@
 
                 <EditText
                     android:id="@+id/et_importedesde"
-                    android:layout_width="160dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
+                    style="@style/InputFieldMedium"
+                    android:layout_width="170dp"
+                    android:layout_marginRight="10dp"
                     android:hint="@string/amount_from"
-                    android:inputType="numberDecimal"
-                    android:textColor="?android:textColor" />
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/et_importehasta"
-                    android:layout_width="160dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
+                    style="@style/InputFieldMedium"
+                    android:layout_width="170dp"
+                    android:layout_marginLeft="10dp"
                     android:hint="@string/amount_to"
-                    android:inputType="numberDecimal"
-                    android:textColor="?android:textColor" />
+                    android:inputType="numberDecimal" />
             </LinearLayout>
 
         </LinearLayout>
@@ -192,12 +172,8 @@
 
             <Spinner
                 android:id="@+id/sp_consulta"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/box"
-                android:layout_gravity="center"
+                style="@style/InputFieldLarge"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/style_editetx"
-                android:gravity="center"
                 android:theme="@style/CustomSpinner" />
         </LinearLayout>
 
@@ -209,29 +185,15 @@
 
             <Button
                 android:id="@+id/btn_buscar"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="35dp"
-                android:background="@drawable/style_button"
-                android:text="@string/search"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold" />
+                style="@style/ButtonStyle"
+                android:layout_marginRight="20dp"
+                android:text="@string/search" />
 
             <Button
                 android:id="@+id/btn_cancelabuscar"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/style_button"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold" />
+                style="@style/ButtonStyle"
+                android:layout_marginLeft="20dp"
+                android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="0dp"
     android:background="?android:colorPrimary"
     tools:context=".ConsultaFragment">
 
@@ -16,12 +16,9 @@
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="360dp"
-            android:layout_height="@dimen/boxh"
+            style="@style/InputFieldLarge"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
             android:hint="@string/amount_text"
             android:inputType="textCapWords|textAutoComplete" />
 
@@ -47,16 +44,13 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_datefrom"
-                        android:layout_width="160dp"
-
-                        android:layout_height="@dimen/box"
-                        android:background="@drawable/style_editetx"
+                        style="@style/InputFieldMedium"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
                         android:clickable="true"
-                        android:ems="10"
                         android:focusable="false"
                         android:hint="@string/date_from"
-                        android:inputType="date"
-                        android:textColor="?android:textColor" />
+                        android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -66,17 +60,13 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_dateto"
-                        android:layout_width="160dp"
-
-                        android:layout_height="@dimen/box"
-                        android:layout_marginStart="20dp"
-                        android:background="@drawable/style_editetx"
+                        style="@style/InputFieldMedium"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
                         android:clickable="true"
-                        android:ems="10"
                         android:focusable="false"
                         android:hint="@string/date_to"
-                        android:inputType="date"
-                        android:textColor="?android:textColor" />
+                        android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -110,9 +100,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/incomes"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -121,9 +111,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/bills"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -132,9 +122,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="?android:colorPrimary"
                         android:text="@string/income_and_bills"
                         android:textColor="?android:textColor"
-                        android:buttonTint="?android:colorPrimary"
                         android:textSize="@dimen/common"
                         android:textStyle="bold" />
 
@@ -152,82 +142,51 @@
 
                 <EditText
                     android:id="@+id/et_importedesde"
+                    style="@style/InputFieldMedium"
                     android:layout_width="160dp"
-                    android:layout_height="@dimen/boxh"
-                    android:layout_gravity="center"
+                    android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
                     android:hint="@string/amount_from"
-                    android:inputType="numberDecimal"
-                    android:textColor="?android:textColor" />
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/et_importehasta"
+                    style="@style/InputFieldMedium"
                     android:layout_width="160dp"
-                    android:layout_height="@dimen/boxh"
+                    android:layout_height="40dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/style_editetx"
-                    android:ems="10"
-                    android:gravity="center"
                     android:hint="@string/amount_to"
-                    android:inputType="numberDecimal"
-                    android:textColor="?android:textColor" />
+                    android:inputType="numberDecimal" />
             </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
 
             <Spinner
                 android:id="@+id/sp_consulta"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/boxh"
-                android:layout_gravity="center"
-                android:background="@drawable/style_editetx"
-                android:gravity="center"
+                style="@style/InputFieldLarge"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:theme="@style/CustomSpinner" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center">
 
             <Button
                 android:id="@+id/btn_buscar"
-                android:layout_width="140dp"
-                android:layout_height="@dimen/boxh"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="35dp"
-                android:background="@drawable/style_button"
-                android:text="@string/search"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold" />
+                style="@style/ButtonStyle"
+                android:layout_marginRight="20dp"
+                android:text="@string/search" />
 
             <Button
                 android:id="@+id/btn_cancelabuscar"
-                android:layout_width="140dp"
-                android:layout_height="@dimen/boxh"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/style_button"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/botton"
-                android:textStyle="bold" />
+                style="@style/ButtonStyle"
+                android:layout_marginLeft="20dp"
+                android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>
 
