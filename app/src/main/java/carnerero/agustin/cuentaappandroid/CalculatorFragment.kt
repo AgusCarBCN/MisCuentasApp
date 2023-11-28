@@ -136,7 +136,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.btn_result -> {
-                tryResolve(operation.text.toString())
+                tryResolve(operation.text.toString(),true)
                 operation.text = ""
             }
 
@@ -144,7 +144,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             R.id.btn_minus,
             R.id.btn_times,
             R.id.btn_div -> {
-                tryResolve(operation.text.toString())
+                tryResolve(operation.text.toString(),false)
                 val operator = strValue
                 val operationStr = operation.text.toString()
                 addOperator(operator, operationStr)
@@ -156,7 +156,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.btn_porc -> {
-                tryResolve(operation.text.toString())
+                tryResolve(operation.text.toString(),false)
                 // Verificar si el último carácter es un operador o si ya hay un porcentaje en la operación
                 val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
                 val contienePorcentaje = showOperation.contains(PORCENTAJE)
@@ -208,51 +208,52 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         }
         return operator
     }
+    private fun tryResolve(operationRef: String, isResolve: Boolean) {
+        if (operationRef.isEmpty()) return
 
-    private fun tryResolve(operationRef: String) {
-        //Si no hay nada en la pantalla de operaciones sale de la funcion ,no se ejecuta el codigo de la funcion tryResolve
-        if(operationRef.isEmpty())return
-        var operation=operationRef
-        if (operation.contains(PUNTO) && operation.lastIndexOf(PUNTO) == operation.length - 1) {
+        var operation = operationRef
+
+        if (operation.endsWith(PUNTO)) {
             operation = operation.substring(0, operation.length - 1)
         }
+
         val operator = getOperator(operationRef)
-        var values = arrayOfNulls<String>(0)
-        if(operator!=NULL){
-            if(operator== RESTAR){
-                val index=operation.lastIndexOf(RESTAR)
-                if(index<operationRef.length-1){
-                values= arrayOfNulls(2)
-                values[0]=operation.substring(0,index)
-                values[1]=operation.substring(index+1)
-                }else{
-                    values= arrayOfNulls(1)
-                    values[0]=operation.substring(0,index)
+        var values: List<String> = emptyList()
+
+        if (operator != NULL) {
+            values = when (operator) {
+                RESTAR -> {
+                    val index = operation.lastIndexOf(RESTAR)
+                    if (index < operationRef.length - 1) {
+                        listOf(operation.substring(0, index), operation.substring(index + 1))
+                    } else {
+                        listOf(operation.substring(0, index))
+                    }
                 }
-            }else{
-                values=operation.split(operator).toTypedArray()
+                else -> operation.split(operator)
             }
         }
-        //Validamos si tiene los dos elementos para poder realizar la operacion
-        if(values.size>1) {
-            try {
-                val number1 = values[0]!!.toDouble()
-                val number2 = values[1]!!.toDouble()
-                binding.tvResult.text = result(number1, number2, operator).toString()
-                if(binding.tvResult.text.isNotEmpty()){
-                    binding.tvOperation.text=binding.tvResult.text
-                }
-            }catch (e:NumberFormatException){
-                //showMessage(getString(R.string.formaterror))
 
+        if (values.size > 1) {
+            try {
+                val (number1, number2) = values.map { it.toDouble() }
+                binding.tvResult.text = result(number1, number2, operator).toString()
+
+                if (binding.tvResult.text.isNotEmpty() && !isResolve) {
+                    binding.tvOperation.text = binding.tvResult.text
+                }
+            } catch (e: NumberFormatException) {
+                if (isResolve) {
+                    showMessage(getString(R.string.formaterror))
+                }
             }
-            }
-        else {
-            if (operator != NULL) {
+        } else {
+            if (isResolve && operator != NULL) {
                 showMessage(getString(R.string.incorrectExpresion))
             }
         }
     }
+
 
     private fun result(number1: Double, number2: Double, operator: String): Double {
 
