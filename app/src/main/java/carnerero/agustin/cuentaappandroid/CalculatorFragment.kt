@@ -10,6 +10,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import com.google.android.material.snackbar.Snackbar
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -110,7 +112,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         const val RESTAR = "-"
         const val PORCENTAJE = "%"
         const val NULL = "null"
-        const val PUNTO = "."
+        const val COMA = ","
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -128,7 +130,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         var operation=binding.tvOperation
         var showResult=binding.tvResult
         var showOperation = operation.text.toString()
-        val OPERADORES = arrayOf(SUMAR, RESTAR, MULTIPLICAR, DIVIDIR, PUNTO)
+        val OPERADORES = arrayOf(SUMAR, RESTAR, MULTIPLICAR, DIVIDIR, COMA)
         when (view?.id) {
             R.id.btn_clear -> {
                 operation.text=""
@@ -208,12 +210,16 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         }
         return operator
     }
+
+
+
+
     private fun tryResolve(operationRef: String, isResolve: Boolean) {
         if (operationRef.isEmpty()) return
 
         var operation = operationRef
 
-        if (operation.endsWith(PUNTO)) {
+        if (operation.endsWith(COMA)) {
             operation = operation.substring(0, operation.length - 1)
         }
 
@@ -236,8 +242,19 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
         if (values.size > 1) {
             try {
-                val (number1, number2) = values.map { it.toDouble() }
-                binding.tvResult.text = result(number1, number2, operator).toString()
+                // Replace comma with dot in the input numbers
+                val (number1, number2) = values.map { it.replace(',', '.').toDouble() }
+
+                val result = result(number1, number2, operator)
+
+                // Format the result to have two decimal places and a comma
+                val decimalFormatSymbols = DecimalFormatSymbols()
+                decimalFormatSymbols.decimalSeparator = ','
+
+                val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
+                val formattedResult = decimalFormat.format(result)
+
+                binding.tvResult.text = formattedResult
 
                 if (binding.tvResult.text.isNotEmpty() && !isResolve) {
                     binding.tvOperation.text = binding.tvResult.text
@@ -279,11 +296,11 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         else operation.substring(operation.length - 1)
 
         if (operator == RESTAR) {
-            if (operation.isEmpty() || lastElement != RESTAR && lastElement != PUNTO) {
+            if (operation.isEmpty() || lastElement != RESTAR && lastElement != COMA) {
                 binding.tvOperation.append(operator)
             }
         } else {
-            if (!operation.isEmpty() && lastElement != PUNTO) {
+            if (!operation.isEmpty() && lastElement != COMA) {
                 binding.tvOperation.append(operator)
             }
         }
@@ -291,8 +308,8 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     //Previene de errores de formato al añadir puntos en las operaciones
     private fun addPoint(pointStr:String,operation: String ) {
         //Si el string que muestra la operacion no contiene un punto. Permite añadir un punto
-        if (!operation.contains(PUNTO)) {
-            binding.tvOperation.append(PUNTO)
+        if (!operation.contains(COMA)) {
+            binding.tvOperation.append(COMA)
             //Verificamos si existe un operador
         } else {
             val operator = getOperator(operation)
@@ -316,12 +333,12 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 val number1=values[0]!!
                 if(values.size>1){
                     val number2=values[1]!!
-                    if(number1.contains(PUNTO) && !number2.contains(PUNTO)){
-                        binding.tvOperation.append(PUNTO)
+                    if(number1.contains(COMA) && !number2.contains(COMA)){
+                        binding.tvOperation.append(COMA)
                     }
                 }else{
-                    if(number1.contains(PUNTO)){
-                        binding.tvOperation.append(PUNTO)
+                    if(number1.contains(COMA)){
+                        binding.tvOperation.append(COMA)
                     }
                 }
             }

@@ -94,7 +94,7 @@
     <string name="prefences_select_currency">preferences_currency</string>
     <string name="lang">lang</string>
     <string name="country">country</string>
-    <string name="calc_btn_coma">.</string>
+    <string name="calc_btn_coma">,</string>
     <string name="calc_sign">+/-</string>
     <string name="calc_btn_0">0</string>
     <string name="calc_btn_equal">=</string>
