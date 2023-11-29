@@ -48,42 +48,32 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         _binding = FragmentCalculatorBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
-        // Asignar el click listener a los botones
-        val uno = binding.btn1.setOnClickListener(this)
-        val dos = binding.btn2.setOnClickListener(this)
-        val tres = binding.btn3.setOnClickListener(this)
-        val cuatro = binding.btn4.setOnClickListener(this)
-        val cinco = binding.btn5.setOnClickListener(this)
-        val seis = binding.btn6.setOnClickListener(this)
-        val siete = binding.btn7.setOnClickListener(this)
-        val ocho = binding.btn8.setOnClickListener(this)
-        val nueve = binding.btn9.setOnClickListener(this)
-        val cero = binding.btn0.setOnClickListener(this)
-        val coma = binding.btnComa.setOnClickListener(this)
-        val del = binding.btnRetro.setOnClickListener(this)
-        val clear = binding.btnClear.setOnClickListener(this)
-        val signoigual = binding.btnResult.setOnClickListener(this)
-        //Botones de operaciones
-        val suma = binding.btnPlus.setOnClickListener(this)
-        val resta = binding.btnMinus.setOnClickListener(this)
-        val multiplica = binding.btnTimes.setOnClickListener(this)
-        val divide = binding.btnDiv.setOnClickListener(this)
-        val porcentaje = binding.btnPorc.setOnClickListener(this)
-
-        val resultado = binding.tvResult
+        with(binding) {
+            val buttons = listOf(
+                btn1, btn2, btn3, btn4, btn5,
+                btn6, btn7, btn8, btn9, btn0,
+                btnComa, btnRetro, btnClear, btnResult,
+                btnPlus, btnMinus, btnTimes, btnDiv, btnPorc
+            )
+            buttons.forEach { button ->
+                button.setOnClickListener(this@CalculatorFragment)
+            }
+        }
         val operation = binding.tvOperation
 
         //Detectamos cambios en tiempo real en operation para reemplazar el operador cuando se repita
-        operation.addTextChangedListener { charSequence ->
-            if (replaceOperator(charSequence.toString())) {
-                val length = operation.text.length
-                // La idea es reemmplazar el penultimo caracter en el caso de que se añaden dos operadores seguidos en la calculadora
-                val newOperation = operation.text.toString().substring(0, length - 2) +
-                        operation.text.toString().substring(length - 1)
-                operation.text = newOperation
+
+        operation.run {
+            addTextChangedListener { charSequence ->
+                if (replaceOperator(charSequence.toString())) {
+                    val length = text.length
+                    // reemmplazar el penultimo caracter en el caso de que se añaden dos operadores seguidos en la calculadora
+                    val newOperation = "${text.substring(0, length - 2)}${text.substring(length - 1)}"
+                    text = newOperation
+                }
             }
         }
+
         return view
     }
 
