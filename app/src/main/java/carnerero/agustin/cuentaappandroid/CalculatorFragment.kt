@@ -12,6 +12,7 @@ import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,11 +72,15 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     val newOperation = "${text.substring(0, length - 2)}${text.substring(length - 1)}"
                     text = newOperation
                 }
+
+
             }
+
         }
 
         return view
     }
+
 
     private fun replaceOperator(charSequence: CharSequence): Boolean {
 
@@ -85,7 +90,6 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
         return (lastElement == MULTIPLICAR || lastElement == DIVIDIR || lastElement == SUMAR) && (penultElement == MULTIPLICAR || penultElement == DIVIDIR || penultElement == SUMAR || penultElement==RESTAR)
     }
-
 
     companion object {
         /**
@@ -103,6 +107,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         const val PORCENTAJE = "%"
         const val NULL = "null"
         const val COMA = ","
+        const val PUNTO="."
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -233,15 +238,17 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         if (values.size > 1) {
             try {
                 // Replace comma with dot in the input numbers
-                val (number1, number2) = values.map { it.replace(',', '.').toDouble() }
+                val (number1, number2) = values.map {  it.replace(".", "").replace(",", ".").toDouble()}
+
+
 
                 val result = result(number1, number2, operator)
 
                 // Format the result to have two decimal places and a comma
                 val decimalFormatSymbols = DecimalFormatSymbols()
                 decimalFormatSymbols.decimalSeparator = ','
-
-                val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
+                val decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
+                //val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
                 val formattedResult = decimalFormat.format(result)
 
                 binding.tvResult.text = formattedResult
