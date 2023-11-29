@@ -29,7 +29,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
     // Variable para manejar el View Binding
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
@@ -168,7 +168,8 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
                     // Calcular el porcentaje y mostrar el resultado en la operación
                     val resultadoPorcentaje = numeroAntesDelPorcentaje / 100
-                    operation.text = resultadoPorcentaje.toString()
+                    val resultFormat=decimalFormat.format(resultadoPorcentaje)
+                    operation.text = resultFormat.toString()
                 }
             }
 
@@ -247,7 +248,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 // Format the result to have two decimal places and a comma
                 val decimalFormatSymbols = DecimalFormatSymbols()
                 decimalFormatSymbols.decimalSeparator = ','
-                val decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
+                //decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
                 //val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
                 val formattedResult = decimalFormat.format(result)
 
