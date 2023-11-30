@@ -1,22 +1,17 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
-import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.text.NumberFormat
 import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
@@ -49,7 +44,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflar el diseño del fragmento utilizando View Binding
         _binding = FragmentCalculatorBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -110,7 +105,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         const val PORCENTAJE = "%"
         const val NULL = "null"
         const val COMA = ","
-        const val PUNTO="."
+       // const val PUNTO="."
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -125,9 +120,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         var result=0.0
         val strValue = (view as Button).text.toString()
-        var operation=binding.tvOperation
-        var showResult=binding.tvResult
-        var showOperation = operation.text.toString()
+        val operation=binding.tvOperation
+        val showResult=binding.tvResult
+        val operationStr = operation.text.toString()
         val OPERADORES = arrayOf(SUMAR, RESTAR, MULTIPLICAR, DIVIDIR, COMA)
         when (view?.id) {
             R.id.btn_clear -> {
@@ -136,7 +131,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.btn_result -> {
-                tryResolve(operation.text.toString(),true)
+                tryResolve(operationStr,true)
                 operation.text = ""
             }
 
@@ -144,26 +139,24 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             R.id.btn_minus,
             R.id.btn_times,
             R.id.btn_div -> {
-                tryResolve(operation.text.toString(),false)
+                tryResolve(operationStr,false)
                 val operator = strValue
-                val operationStr = operation.text.toString()
                 addOperator(operator, operationStr)
             }
 
             R.id.btn_coma -> {
-
-                addPoint(strValue,showOperation)
+                addPoint(strValue,operationStr)
             }
 
             R.id.btn_porc -> {
-                tryResolve(operation.text.toString(),false)
+                tryResolve(operationStr,false)
                 // Verificar si el último carácter es un operador o si ya hay un porcentaje en la operación
-                val ultimoCaracterEsOperador = OPERADORES.any { showOperation.endsWith(it) }
-                val contienePorcentaje = showOperation.contains(PORCENTAJE)
+                val ultimoCaracterEsOperador = OPERADORES.any { operationStr.endsWith(it) }
+                val contienePorcentaje = operationStr.contains(PORCENTAJE)
                 if (!ultimoCaracterEsOperador && !contienePorcentaje) {
                     // Obtener el número antes del porcentaje
                     val numeroAntesDelPorcentaje = try {
-                        showOperation.toDouble()
+                        operationStr.toDouble()
                     } catch (e: NumberFormatException) {
                         // Manejar la excepción si la cadena no se puede convertir a un número
                         0.0
@@ -178,9 +171,10 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
             R.id.btn_retro -> {
                 val length = operation.text.length
-                if (length > 0) {
-                    val newOperation = operation.text.toString().substring(0, length - 1)
-                    operation.text = newOperation
+                operation.run {
+                    if(text.length>0){
+                        text= operationStr.substring(0, length - 1)
+                    }
                 }
             }
             else -> run {
@@ -237,8 +231,6 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 // Replace comma with dot in the input numbers
                 val (number1, number2) = values.map {  it.replace(".", "").replace(",", ".").toDouble()}
 
-
-
                 val result = result(number1, number2, operator)
 
                 // Format the result to have two decimal places and a comma
@@ -290,7 +282,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 binding.tvOperation.append(operator)
             }
         } else {
-            if (!operation.isEmpty() && lastElement != COMA) {
+            if (operation.isNotEmpty() && lastElement != COMA) {
                 binding.tvOperation.append(operator)
             }
         }
@@ -319,7 +311,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     values = operation.split(operator).toTypedArray()
                 }
             }
-            if(values.size>0){
+            if(values.isNotEmpty()){
                 val number1=values[0]!!
                 if(values.size>1){
                     val number2=values[1]!!
