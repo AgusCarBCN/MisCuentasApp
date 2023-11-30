@@ -248,7 +248,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 // Format the result to have two decimal places and a comma
                 val decimalFormatSymbols = DecimalFormatSymbols()
                 decimalFormatSymbols.decimalSeparator = ','
-                //decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
+
                 //val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
                 val formattedResult = decimalFormat.format(result)
 
