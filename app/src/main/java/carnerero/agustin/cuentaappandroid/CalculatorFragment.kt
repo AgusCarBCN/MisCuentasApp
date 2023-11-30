@@ -1,17 +1,22 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
@@ -81,13 +86,11 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-
     private fun replaceOperator(charSequence: CharSequence): Boolean {
 
         if (charSequence.length < 2) return false
         val lastElement = charSequence[charSequence.length - 1].toString()
         val penultElement = charSequence[charSequence.length - 2].toString()
-
         return (lastElement == MULTIPLICAR || lastElement == DIVIDIR || lastElement == SUMAR) && (penultElement == MULTIPLICAR || penultElement == DIVIDIR || penultElement == SUMAR || penultElement==RESTAR)
     }
 
@@ -189,23 +192,16 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
     //Extrae el operador de la cadena operacion
     private fun getOperator(operation: String): String {
-        var operator = ""
-        if (operation.contains(MULTIPLICAR)) {
-            operator = MULTIPLICAR
-        } else if (operation.contains(DIVIDIR)) {
-            operator = DIVIDIR
-        } else if (operation.contains(SUMAR)) {
-            operator = SUMAR
-        } else if (operation.contains(PORCENTAJE)) {
-            operator = PORCENTAJE
-        } else {
-            operator = NULL
+        return when {
+            operation.contains(MULTIPLICAR) -> MULTIPLICAR
+            operation.contains(DIVIDIR) -> DIVIDIR
+            operation.contains(SUMAR) -> SUMAR
+            operation.contains(PORCENTAJE) -> PORCENTAJE
+            operation.contains(RESTAR) -> RESTAR
+            else -> NULL
         }
-        if(operator==NULL && operation.lastIndexOf(RESTAR)>0){
-            operator=RESTAR
-        }
-        return operator
     }
+
 
 
 
@@ -272,16 +268,12 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
     private fun result(number1: Double, number2: Double, operator: String): Double {
 
-        var resultado = 0.0
-
-        when (operator) {
-            SUMAR -> resultado = number1 + number2
-            RESTAR -> resultado = number1 - number2
-            MULTIPLICAR -> resultado = number1 * number2
-            DIVIDIR -> resultado = number1 / number2
-
+        return when(operator) {
+            SUMAR -> number1 + number2
+            MULTIPLICAR -> number1 * number2
+            DIVIDIR ->  number1 / number2
+            else-> number1 - number2
         }
-        return resultado
     }
 
     private fun showMessage(message: String) {
