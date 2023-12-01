@@ -77,6 +77,8 @@ class ConsultaFragment : Fragment() {
         val buscar = binding.btnBuscar
         val cancel = binding.btnCancelabuscar
         val searchByText: EditText = binding.etSearch
+        val importeDesde=binding.etImportedesde
+        val importeHasta=binding.etImportehasta
 
         // Recuperar DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -152,8 +154,7 @@ class ConsultaFragment : Fragment() {
         // Botón de búsqueda
         buscar.setOnClickListener {
             // Importes
-            val importeDesde: EditText = rootview.findViewById(R.id.et_importedesde)
-            val importeHasta: EditText = rootview.findViewById(R.id.et_importehasta)
+
             val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
 
