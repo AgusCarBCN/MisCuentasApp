@@ -180,7 +180,7 @@ class BarChartFragment : Fragment() {
             val groupSpace = 0.2f
             barData.barWidth = 0.20f
             xAxis.axisMinimum = 0f
-
+            xAxis.setAxisMaximum(barData.getGroupWidth(groupSpace, barSpace)*12)
             // Animación y otras configuraciones
             animate()
             setNoDataText("")
