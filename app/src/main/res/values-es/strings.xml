@@ -117,4 +117,5 @@
     <string name="calculator">calculadora</string>
     <string name="incorrectExpresion">Expresion incorrecta</string>
     <string name="formaterror">Error de formato</string>
+    <string name="labelapp">Mis cuentas</string>
 </resources>

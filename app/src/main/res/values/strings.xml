@@ -119,4 +119,5 @@
     <string name="calculator">calculator</string>
     <string name="incorrectExpresion">Incorrect expresion</string>
     <string name="formaterror">Format error</string>
+    <string name="labelapp">My accounts</string>
 </resources>
