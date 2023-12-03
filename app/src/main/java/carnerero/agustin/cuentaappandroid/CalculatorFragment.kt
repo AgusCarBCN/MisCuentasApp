@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -66,28 +67,19 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
         operation.run {
             addTextChangedListener { charSequence ->
-                if (replaceOperator(charSequence.toString())) {
+                if (Utils.replaceOperator(charSequence.toString())) {
                     val length = text.length
                     // reemmplazar el penultimo caracter en el caso de que se añaden dos operadores seguidos en la calculadora
                     val newOperation = "${text.substring(0, length - 2)}${text.substring(length - 1)}"
                     text = newOperation
                 }
-
-
             }
-
         }
 
         return view
     }
 
-    private fun replaceOperator(charSequence: CharSequence): Boolean {
 
-        if (charSequence.length < 2) return false
-        val lastElement = charSequence[charSequence.length - 1].toString()
-        val penultElement = charSequence[charSequence.length - 2].toString()
-        return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
-    }
 
     companion object {
         /**
