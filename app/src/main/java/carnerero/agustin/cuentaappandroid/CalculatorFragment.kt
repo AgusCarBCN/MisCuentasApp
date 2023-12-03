@@ -103,20 +103,20 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        var result=0.0
+
         val strValue = (view as Button).text.toString()
         val operation=binding.tvOperation
         val showResult=binding.tvResult
         val operationStr = operation.text.toString()
-        val OPERADORES = arrayOf(AppConst.SUMAR, AppConst.RESTAR, AppConst.MULTIPLICAR, AppConst.DIVIDIR, AppConst.COMA)
-        when (view?.id) {
+        val operadores = arrayOf(AppConst.SUMAR, AppConst.RESTAR, AppConst.MULTIPLICAR, AppConst.DIVIDIR, AppConst.COMA)
+        when (view.id) {
             R.id.btn_clear -> {
                 operation.text=""
                 showResult.text=""
             }
 
             R.id.btn_result -> {
-                tryResolve(operationStr,true)
+                showResultOrError(operationStr,true)
                 operation.text = ""
             }
 
@@ -124,19 +124,18 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             R.id.btn_minus,
             R.id.btn_times,
             R.id.btn_div -> {
-                tryResolve(operationStr,false)
-                val operator = strValue
-                addOperator(operator, operationStr)
+                showResultOrError(operationStr,false)
+                addOperator(strValue, operationStr)
             }
 
             R.id.btn_coma -> {
-                addPoint(strValue,operationStr)
+                addPoint(operationStr)
             }
 
             R.id.btn_porc -> {
-                tryResolve(operationStr,false)
+                showResultOrError(operationStr,false)
                 // Verificar si el último carácter es un operador o si ya hay un porcentaje en la operación
-                val ultimoCaracterEsOperador = OPERADORES.any { operationStr.endsWith(it) }
+                val ultimoCaracterEsOperador = operadores.any { operationStr.endsWith(it) }
                 val contienePorcentaje = operationStr.contains(AppConst.PORCENTAJE)
                 if (!ultimoCaracterEsOperador && !contienePorcentaje) {
                     // Obtener el número antes del porcentaje
@@ -157,7 +156,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             R.id.btn_retro -> {
                 val length = operation.text.length
                 operation.run {
-                    if(text.length>0){
+                    if(text.isNotEmpty()){
                         text= operationStr.substring(0, length - 1)
                     }
                 }
@@ -170,54 +169,11 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     }
 
     //Extrae el operador de la cadena operacion
-    private fun getOperator(operation: String): String {
-        return when {
-            operation.contains(AppConst.MULTIPLICAR) -> AppConst.MULTIPLICAR
-            operation.contains(AppConst.DIVIDIR) -> AppConst.DIVIDIR
-            operation.contains(AppConst.SUMAR) -> AppConst.SUMAR
-            operation.contains(AppConst.PORCENTAJE) -> AppConst.PORCENTAJE
-            operation.contains(AppConst.RESTAR) -> AppConst.RESTAR
-            else -> AppConst.NULL
-        }
-    }
 
 
-
-
-
-    private fun tryResolve(operationRef: String, isResolve: Boolean) {
-        if (operationRef.isEmpty()) return
-
-        var operation = operationRef
-
-        if (operation.endsWith(AppConst.COMA)) {
-            operation = operation.substring(0, operation.length - 1)
-        }
-
-        val operator = getOperator(operationRef)
-        var values: List<String> = emptyList()
-
-        if (operator != AppConst.NULL) {
-            values = when (operator) {
-                AppConst.RESTAR -> {
-                    val index = operation.lastIndexOf(AppConst.RESTAR)
-                    if (index < operationRef.length - 1) {
-                        listOf(operation.substring(0, index), operation.substring(index + 1))
-                    } else {
-                        listOf(operation.substring(0, index))
-                    }
-                }
-                else -> operation.split(operator)
-            }
-        }
-
-        if (values.size > 1) {
-            try {
-                // Replace comma with dot in the input numbers
-                val (number1, number2) = values.map {  it.replace(".", "").replace(",", ".").toDouble()}
-
-                val result = result(number1, number2, operator)
-
+    private fun showResultOrError(operation: String, isResolve: Boolean) {
+        Utils.tryResolve(operation,isResolve,object :OnResolveListener{
+            override fun showResult(result: Double) {
                 // Format the result to have two decimal places and a comma
                 val decimalFormatSymbols = DecimalFormatSymbols()
                 decimalFormatSymbols.decimalSeparator = ','
@@ -230,28 +186,15 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 if (binding.tvResult.text.isNotEmpty() && !isResolve) {
                     binding.tvOperation.text = binding.tvResult.text
                 }
-            } catch (e: NumberFormatException) {
-                if (isResolve) {
-                    showMessage(getString(R.string.formaterror))
-                }
             }
-        } else {
-            if (isResolve && operator != AppConst.NULL) {
-                showMessage(getString(R.string.incorrectExpresion))
+            override fun showMessageError(errorMsg: Int) {
+               showMessage(getString(errorMsg))
             }
-        }
+        })
     }
 
 
-    private fun result(number1: Double, number2: Double, operator: String): Double {
 
-        return when(operator) {
-           AppConst.SUMAR -> number1 + number2
-           AppConst.MULTIPLICAR -> number1 * number2
-           AppConst.DIVIDIR ->  number1 / number2
-            else-> number1 - number2
-        }
-    }
 
     private fun showMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
@@ -273,13 +216,13 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
         }
     }
     //Previene de errores de formato al añadir puntos en las operaciones
-    private fun addPoint(pointStr:String,operation: String ) {
+    private fun addPoint(operation: String ) {
         //Si el string que muestra la operacion no contiene un punto. Permite añadir un punto
         if (!operation.contains(AppConst.COMA)) {
             binding.tvOperation.append(AppConst.COMA)
             //Verificamos si existe un operador
         } else {
-            val operator = getOperator(operation)
+            val operator = Utils.getOperator(operation)
             var values = arrayOfNulls<String>(0)
             if (operator != AppConst.NULL) {
                 if (operator == AppConst.RESTAR) {

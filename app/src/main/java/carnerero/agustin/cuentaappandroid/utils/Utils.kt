@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
+import carnerero.agustin.cuentaappandroid.OnResolveListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.text.DecimalFormatSymbols
@@ -73,7 +74,7 @@ class Utils {
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
             }
         }
-        fun tryResolve(operationRef: String, isResolve: Boolean) {
+        fun tryResolve(operationRef: String, isResolve: Boolean,listener :OnResolveListener) {
             if (operationRef.isEmpty()) return
 
             var operation = operationRef
@@ -103,34 +104,23 @@ class Utils {
                 try {
                     // Replace comma with dot in the input numbers
                     val (number1, number2) = values.map {  it.replace(".", "").replace(",", ".").toDouble()}
+                    listener.showResult(result(number1, number2, operator))
 
-                    val result = result(number1, number2, operator)
 
-                    // Format the result to have two decimal places and a comma
-                    val decimalFormatSymbols = DecimalFormatSymbols()
-                    decimalFormatSymbols.decimalSeparator = ','
-
-                    //val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
-                    val formattedResult = decimalFormat.format(result)
-
-                    binding.tvResult.text = formattedResult
-
-                    if (binding.tvResult.text.isNotEmpty() && !isResolve) {
-                        binding.tvOperation.text = binding.tvResult.text
-                    }
                 } catch (e: NumberFormatException) {
                     if (isResolve) {
-                        showMessage(getString(R.string.formaterror))
+                        listener.showMessageError(R.string.formaterror)
+
                     }
                 }
             } else {
                 if (isResolve && operator != AppConst.NULL) {
-                    showMessage(getString(R.string.incorrectExpresion))
+                    listener.showMessageError(R.string.incorrectExpresion)
                 }
             }
         }
 
-        private fun getOperator(operation: String): String {
+        fun getOperator(operation: String): String {
             return when {
                 operation.contains(AppConst.MULTIPLICAR) -> AppConst.MULTIPLICAR
                 operation.contains(AppConst.DIVIDIR) -> AppConst.DIVIDIR
@@ -146,6 +136,15 @@ class Utils {
             val lastElement = charSequence[charSequence.length - 1].toString()
             val penultElement = charSequence[charSequence.length - 2].toString()
             return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
+        }
+        private fun result(number1: Double, number2: Double, operator: String): Double {
+
+            return when(operator) {
+                AppConst.SUMAR -> number1 + number2
+                AppConst.MULTIPLICAR -> number1 * number2
+                AppConst.DIVIDIR ->  number1 / number2
+                else-> number1 - number2
+            }
         }
     }
 
