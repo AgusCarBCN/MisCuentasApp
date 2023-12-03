@@ -29,7 +29,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val decimalFormat = DecimalFormat("#,###.##", DecimalFormatSymbols(Locale.getDefault()))
+    private val decimalFormat = DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY))
     // Variable para manejar el View Binding
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
@@ -282,7 +282,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
     }
     //Previene de errores de formato al añadir puntos en las operaciones
     private fun addPoint(pointStr:String,operation: String ) {
-        //Si el string que muestra la operacion no contiene un punto. Permite añadir un punto
+
         if (!operation.contains(AppConst.COMA)) {
             binding.tvOperation.append(AppConst.COMA)
             //Verificamos si existe un operador
