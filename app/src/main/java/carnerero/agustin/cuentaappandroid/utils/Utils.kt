@@ -8,7 +8,6 @@ import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.OnResolveListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import java.text.DecimalFormatSymbols
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -28,7 +27,7 @@ class Utils {
             var importeTotal = 0.0
 
             for (mov in importes) {
-                var fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
+                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
                 if (fechaImporteDate.monthValue == month && fechaImporteDate.year == year) {
                     importeTotal += mov.importe
                 }
@@ -43,9 +42,9 @@ class Utils {
 
         fun releaseSound() {
             if (mediaPlayer != null) {
-                mediaPlayer?.stop(); // Detener la reproducción si está en curso
-                mediaPlayer?.release(); // Liberar los recursos del MediaPlayer
-                mediaPlayer = null; // Establecer el objeto MediaPlayer en nulo
+                mediaPlayer?.stop() // Detener la reproducción si está en curso
+                mediaPlayer?.release() // Liberar los recursos del MediaPlayer
+                mediaPlayer = null // Establecer el objeto MediaPlayer en nulo
             }
         }
         fun setLang(newLang: String) {
@@ -147,7 +146,5 @@ class Utils {
             }
         }
     }
-
-
 }
 
