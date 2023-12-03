@@ -16,14 +16,7 @@ class Utils {
         private var mediaPlayer: MediaPlayer? = null
         private var lang: String = "es"
         private var country: String = "ES"
-        const val MULTIPLICAR = "×"
-        const val DIVIDIR = "÷"
-        const val SUMAR = "+"
-        const val RESTAR = "-"
-        const val PORCENTAJE = "%"
-        const val NULL = "null"
-        const val COMA = ","
-        const val PUNTO="."
+
         fun calcularImporteMes(
             month: Int,
             year: Int,

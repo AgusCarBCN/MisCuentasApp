@@ -50,14 +50,14 @@ class ListOfMovFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Configuración del RecyclerView y el adaptador
-        val layoutManager = LinearLayoutManager(context)
         val movimientos = arguments?.getParcelableArrayList("clave_movimientos", MovimientoBancario::class.java)
-
         recyclerView = binding.rvMovimientos
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(false)
-        adaptermovimientos = movimientos?.let { AdapterMov(it) }!!
-        recyclerView.adapter = adaptermovimientos
+        recyclerView.apply {
+            this.layoutManager= LinearLayoutManager(context)
+            adaptermovimientos = movimientos?.let { AdapterMov(it) }!!
+            adapter=adaptermovimientos
+        }
+
     }
 
     override fun onDestroyView() {

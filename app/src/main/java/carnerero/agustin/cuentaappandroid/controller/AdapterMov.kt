@@ -1,8 +1,7 @@
 package carnerero.agustin.cuentaappandroid.controller
 
-import android.content.Context
-import android.icu.text.NumberFormat
 
+import android.icu.text.NumberFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>) :
     //Esta clase permite inflar la vista item_movimiento
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+
         val binding = ItemMovimientoBinding.bind(view)
         var importeitem: TextView = binding.tvImpitem
         var descripcionitem: TextView = binding.tvDesitem
@@ -38,14 +38,11 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>) :
 
     override fun getItemCount(): Int = movList.size
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val lang = Utils.getLang()
         val country = Utils.getCountry()
-
         val euroLocale = Locale(lang, country)
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
-        //val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val mov = movList[position]
         holder.descripcionitem.text = mov.descripcion
         // Mostrar la fecha si es diferente de la fecha anterior

@@ -155,7 +155,7 @@ class ConsultaFragment : Fragment() {
         buscar.setOnClickListener {
             // Importes
 
-            val importeDesdeNum: Double? = importeDesde.text.toString().toDoubleOrNull()
+            val importeDesdeNum: Double ?= importeDesde.text.toString().toDoubleOrNull()
             val importeHastaNum: Double? = importeHasta.text.toString().toDoubleOrNull()
 
             // Fechas
