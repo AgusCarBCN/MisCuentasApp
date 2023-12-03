@@ -22,7 +22,6 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>) :
     //Esta clase permite inflar la vista item_movimiento
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
         val binding = ItemMovimientoBinding.bind(view)
         var importeitem: TextView = binding.tvImpitem
         var descripcionitem: TextView = binding.tvDesitem
