@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.estadistica -> fragment = BarChartFragment()
             R.id.transferencia -> fragment = TransaccionFragment()
             R.id.configuracion -> fragment = AjustesFragment()
+            R.id.about->fragment=AboutFragment()
             R.id.calculator-> {
                 fragment = CalculatorFragment()
             }

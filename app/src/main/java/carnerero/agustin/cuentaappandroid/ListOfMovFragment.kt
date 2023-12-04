@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import carnerero.agustin.cuentaappandroid.controller.AdapterMov
+import carnerero.agustin.cuentaappandroid.adapter.AdapterMov
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfMovBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 

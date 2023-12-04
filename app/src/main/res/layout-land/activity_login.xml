@@ -28,7 +28,7 @@
                 android:layout_marginEnd="5dp"
                 android:background="?android:previewImage"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/contabilidad" />
         </LinearLayout>
 
         <LinearLayout

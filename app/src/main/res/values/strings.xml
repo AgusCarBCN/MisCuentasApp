@@ -120,4 +120,9 @@
     <string name="incorrectExpresion">Incorrect expresion</string>
     <string name="formaterror">Format error</string>
     <string name="labelapp">My accounts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="developer">Developer: Agustin Carnerero</string>
+    <string name="atributionicon"> icons created by </string>
+    <string name="atributions">Atributions</string>
 </resources>

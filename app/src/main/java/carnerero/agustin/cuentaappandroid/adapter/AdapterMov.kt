@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.controller
+package carnerero.agustin.cuentaappandroid.adapter
 
 
 import android.icu.text.NumberFormat
