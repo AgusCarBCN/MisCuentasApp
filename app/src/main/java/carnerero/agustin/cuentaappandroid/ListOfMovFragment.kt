@@ -86,8 +86,6 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
             }
     }
 
-    override fun getLocale(): Locale {
+    override fun getLocale(): Locale = Locale(lang.toString(),country.toString())
 
-        return Locale(lang.toString(),country.toString())
-    }
 }

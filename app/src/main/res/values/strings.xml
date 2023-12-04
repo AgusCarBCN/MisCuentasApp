@@ -123,6 +123,6 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="developer">Developer: Agustin Carnerero</string>
-    <string name="atributionicon"> icon created by </string>
+    <string name="atributionicon"> icons created by </string>
     <string name="atributions">Attributions</string>
 </resources>

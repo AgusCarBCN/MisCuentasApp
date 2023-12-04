@@ -60,7 +60,8 @@ class AboutFragment : Fragment() {
         val attributionsList = listOf(
 
             "<a href=\"https://www.flaticon.es/iconos-gratis/contabilidad\" " +
-                    "title=\"contabilidad iconos\">Contabilidad ${attributionText} 2D3ds - Flaticon</a>"
+                    "title=\"contabilidad iconos\">Contabilidad ${attributionText} 2D3ds - Flaticon</a>",
+            "<a href=\"https://www.flaticon.com/free-icons/english\"  "+" title=\"english icons\">English ${attributionText} Freepik - Flaticon</a>"
 
         )
 
