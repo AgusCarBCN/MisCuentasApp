@@ -153,7 +153,7 @@ class TransaccionFragment : Fragment() {
                 ).show()
             } else {
                 // Realizar la transferencia ya que el campo de importe no está vacío
-                Utils.sound(requireContext())
+
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgntransfer),
@@ -194,7 +194,7 @@ class TransaccionFragment : Fragment() {
 
         // Configurar el evento de clic para el botón "Salir"
         salir.setOnClickListener {
-            Utils.sound(requireContext())
+
             // Volver a la pantalla de inicio
             (activity as MainActivity).inicio()
         }

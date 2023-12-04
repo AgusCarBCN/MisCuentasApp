@@ -17,6 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding10"
+            android:layout_marginEnd="@dimen/padding10"
+            android:layout_marginRight="@dimen/padding10"
+            android:layout_marginStart="@dimen/padding10"
             android:textSize="@dimen/extracommon"
             android:textStyle="bold"
             android:text="@string/developer"  />
@@ -26,6 +29,9 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/extracommon"
             android:layout_marginTop="@dimen/padding10"
+            android:layout_marginEnd="@dimen/padding10"
+            android:layout_marginRight="@dimen/padding10"
+            android:layout_marginStart="@dimen/padding10"
             android:textStyle="bold"
             android:text="@string/atributions"  />
         <LinearLayout

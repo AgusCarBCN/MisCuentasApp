@@ -52,7 +52,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
         // Acciones a realizar cuando se hace clic en el botón de confirmar usuario
         btn_confirmUser.setOnClickListener {
-            Utils.sound(this)
+
             if (et_userDni.text.toString() == dni) {
                 et_newPass.isEnabled = true
                 et_repeatPass.isEnabled = true
@@ -66,7 +66,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
         // Acciones a realizar cuando se hace clic en el botón de confirmar nueva contraseña
         btn_confirmNewPass.setOnClickListener {
-            Utils.sound(this)
+
             val newpass = et_newPass.text.toString()
             val repeatPass = et_repeatPass.text.toString()
 

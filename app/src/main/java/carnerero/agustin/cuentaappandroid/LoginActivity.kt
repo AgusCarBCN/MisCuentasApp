@@ -60,8 +60,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // Liberar recursos al destruir la actividad
-        Utils.releaseSound()
+
         super.onDestroy()
     }
 
@@ -77,8 +76,7 @@ class LoginActivity : AppCompatActivity() {
         var userPassword = user?.password
         var userName = user?.nombre
 
-        // Sonido al hacer clic en el botón
-        Utils.sound(this)
+
 
         // Verificar si los campos están vacíos
         if (userField.isEmpty() || passwordField.isEmpty()) {

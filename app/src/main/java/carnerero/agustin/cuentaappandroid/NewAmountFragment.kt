@@ -103,7 +103,7 @@ class NewAmountFragment : Fragment() {
         // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso
         nuevoIngreso.setOnClickListener {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
-            Utils.sound(requireContext())
+
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -117,7 +117,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Utils.sound(requireContext())
+
                 val movimientoBancario = MovimientoBancario(
                     importe.text.toString().trim().toDouble(),
                     descripcion.text.toString(),
@@ -144,7 +144,7 @@ class NewAmountFragment : Fragment() {
         // Acciones a realizar cuando se hace clic en el botón de nuevo gasto
         nuevoGasto.setOnClickListener {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
-            Utils.sound(requireContext())
+
             if (selectedItem == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
@@ -158,7 +158,7 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Utils.sound(requireContext())
+
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
                 // Controlar que el importe no sea superior a los saldos de las cuentas

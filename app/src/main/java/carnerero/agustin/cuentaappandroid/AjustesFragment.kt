@@ -32,9 +32,9 @@ class AjustesFragment : Fragment() {
     private lateinit var lang: String
     private lateinit var country: String
     private val darkModeIcon = R.drawable.ic_dark_mode
-    private val lightModeIcon = R.drawable.ic_light_mode
-    private val englishIcon = R.drawable.english
-    private val spanishIcon = R.drawable.spanish
+    private val lightModeIcon = R.drawable.light_mode_24
+    private val englishIcon = R.drawable.language_gb_english
+    private val spanishIcon = R.drawable.language_spanish
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

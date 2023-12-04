@@ -168,8 +168,7 @@ class ConsultaFragment : Fragment() {
             // Por texto
             val searchText: String = searchByText.text.toString()
 
-            // Resultado de los importes totales
-            Utils.sound(requireContext())
+
 
             if (selectedItem.toString() == getString(R.string.select_account)) {
                 Toast.makeText(
@@ -227,7 +226,7 @@ class ConsultaFragment : Fragment() {
                         ).show()
                     }
                 } else {
-                    Utils.sound(requireContext())
+
                     result = calculateResult(movList)
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("clave_movimientos", movList)
@@ -247,7 +246,7 @@ class ConsultaFragment : Fragment() {
 
         // Botón de cancelar
         cancel.setOnClickListener {
-            Utils.sound(requireContext())
+
             (activity as MainActivity).inicio()
         }
 

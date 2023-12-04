@@ -59,8 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onDestroy() {
-        // Liberar recursos al destruir la actividad
-        Utils.releaseSound()
+
         super.onDestroy()
     }
 

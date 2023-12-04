@@ -15,7 +15,6 @@ class Utils {
 
     companion object {
         private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        private var mediaPlayer: MediaPlayer? = null
         private var lang: String = "es"
         private var country: String = "ES"
 
@@ -35,18 +34,7 @@ class Utils {
             return importeTotal.toFloat()
         }
 
-        fun sound(contex: Context) {
-            mediaPlayer = MediaPlayer.create(contex, R.raw.clicksound)
-            mediaPlayer?.start()
-        }
 
-        fun releaseSound() {
-            if (mediaPlayer != null) {
-                mediaPlayer?.stop() // Detener la reproducción si está en curso
-                mediaPlayer?.release() // Liberar los recursos del MediaPlayer
-                mediaPlayer = null // Establecer el objeto MediaPlayer en nulo
-            }
-        }
         fun setLang(newLang: String) {
             lang = newLang
         }
