@@ -35,16 +35,7 @@ class Utils {
         }
 
 
-        fun setLang(newLang: String) {
-            lang = newLang
-        }
 
-        fun setCountry(newCountry: String) {
-            country = newCountry
-        }
-
-        fun getLang(): String = lang
-        fun getCountry(): String = country
         fun applyTheme(enableDarkTheme: Boolean) {
             if (enableDarkTheme) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

@@ -110,9 +110,7 @@ class AjustesFragment : Fragment() {
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
 
-            // Aplicar idioma y país seleccionados
-            Utils.setLang(lang)
-            Utils.setCountry(country)
+
 
             // Actualizar fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
