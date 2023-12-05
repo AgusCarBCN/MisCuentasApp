@@ -125,9 +125,7 @@
                 android:id="@+id/tvgithublink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/visitGitHub"
                 android:layout_marginLeft="10dp"
-                android:autoLink="web"
                 android:textSize="@dimen/common"
                 android:clickable="true"
                  />
