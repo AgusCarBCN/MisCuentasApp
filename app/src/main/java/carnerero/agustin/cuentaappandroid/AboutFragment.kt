@@ -10,9 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAboutBinding
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
-
+import android.content.pm.PackageManager
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -36,6 +37,7 @@ class AboutFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -47,6 +49,7 @@ class AboutFragment : Fragment() {
         return view
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,13 +59,13 @@ class AboutFragment : Fragment() {
         // Obtén la referencia al contenedor de atribuciones usando View Binding
         val attributionsContainer = binding.attributionsContainer
 
+
         // Lista de atribuciones
         val attributionsList = listOf(
 
             "<a href=\"https://www.flaticon.es/iconos-gratis/contabilidad\" " +
                     "title=\"contabilidad iconos\">Contabilidad ${attributionText} 2D3ds - Flaticon</a>",
-            "<a href=\"https://www.flaticon.com/free-icons/english\"  "+" title=\"english icons\">English ${attributionText} Freepik - Flaticon</a>"
-
+            "<a href=\"https://www.freepik.es/icono/logotipo-github_25231#fromView=search&term=github&page=1&position=2&track=ais&uuid=bca581ff-3f61-49a9-8010-59c21c4b0f7c\">${attributionText} Dave Gandy</a>"
         )
 
         // Itera sobre la lista de atribuciones y crea TextViews dinámicamente
@@ -89,6 +92,7 @@ class AboutFragment : Fragment() {
             // Agrega el TextView al contenedor de atribuciones
             attributionsContainer.addView(attributionTextView)
         }
+
     }
 
 

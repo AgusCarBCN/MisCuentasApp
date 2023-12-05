@@ -123,6 +123,17 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="developer">Developer: Agustin Carnerero</string>
-    <string name="atributionicon"> icons created by </string>
+    <string name="atributionicon"> Icon created by </string>
     <string name="atributions">Attributions</string>
+    <string name="version_1_0">Version 1.0</string>
+    <string name="description">
+    My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for two accounts, add income, record expenses, transfer funds between both accounts, and generate detailed statistics through transaction searches.
+
+    Additionally, the application features a handy integrated calculator, allowing you to perform calculations quickly and easily without leaving the app.
+
+    Streamline your financial management with My Accounts and maintain precise control over your transactions, all in one place.
+</string>
+    <string name="contact_me">Contact me</string>
+<string name="visitGitHub">Visit my gitHub</string>
+
 </resources>

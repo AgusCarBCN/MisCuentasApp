@@ -120,5 +120,15 @@
     <string name="labelapp">Mis cuentas</string>
     <string name="developer">Desarrollador: Agustin Carnerero</string>
     <string name="atributions">Atribuciones</string>
-    <string name="atributionicon"> iconos creados por </string>
+    <string name="atributionicon"> Icono creado por </string>
+    <string name="version_1_0">Version 1.0</string>
+    <string name="description">
+    Mis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de dos cuentas, añadir ingresos, registrar gastos, realizar transferencias entre ambas cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
+
+    Además, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
+
+    Simplifica tu gestión financiera con Mis cuentas y mantén un control preciso de tus transacciones, todo en un solo lugar.
+</string>
+    <string name="contact_me">Contáctame</string>
+    <string name="visitGitHub">Visita mi gitHub</string>
 </resources>

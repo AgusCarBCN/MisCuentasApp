@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +11,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="?android:colorPrimary">
+        <TextView
+            android:id="@+id/tvdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding10"
+            android:layout_marginEnd="@dimen/padding10"
+            android:layout_marginRight="@dimen/padding10"
+            android:layout_marginStart="@dimen/padding10"
+            android:textSize="@dimen/common"
+            android:textStyle="normal"
+            android:text="@string/description"/>
+
+        <TextView
+            android:id="@+id/tvaboutversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding10"
+            android:layout_marginEnd="@dimen/padding10"
+            android:layout_marginRight="@dimen/padding10"
+            android:layout_marginStart="@dimen/padding10"
+            android:textSize="@dimen/common"
+            android:textStyle="bold"
+            android:text="@string/version_1_0"  />
 
 
         <TextView
@@ -20,14 +44,14 @@
             android:layout_marginEnd="@dimen/padding10"
             android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
-            android:textSize="@dimen/extracommon"
+            android:textSize="@dimen/common"
             android:textStyle="bold"
             android:text="@string/developer"  />
         <TextView
             android:id="@+id/tvaboutatributions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/extracommon"
+            android:textSize="@dimen/common"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
             android:layout_marginRight="@dimen/padding10"
@@ -46,8 +70,70 @@
             android:textSize="@dimen/extracommon"
             android:layout_marginLeft="@dimen/padding10">
         </LinearLayout>
+        <TextView
+            android:id="@+id/tvcontactwithme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common"
+            android:layout_marginTop="@dimen/padding10"
+            android:layout_marginEnd="@dimen/padding10"
+            android:layout_marginRight="@dimen/padding10"
+            android:layout_marginStart="@dimen/padding10"
+            android:textStyle="bold"
+            android:text="@string/contact_me"  />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- Correo electrónico -->
+            <ImageView
+                android:id="@+id/imgemail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/email_24" />
+
+            <TextView
+                android:id="@+id/tvemail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:autoLink="email"
+                android:clickable="true"
+                android:onClick="sendEmail"
+                android:text="agusticar@gmail.com" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/common"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- Enlace a GitHub -->
+            <ImageView
+                android:id="@+id/icongithub"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/github" />
+            <TextView
+                android:id="@+id/tvgithublink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/visitGitHub"
+                android:layout_marginLeft="10dp"
+                android:autoLink="web"
+                android:textSize="@dimen/common"
+                android:clickable="true"
+                 />
 
 
 
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
