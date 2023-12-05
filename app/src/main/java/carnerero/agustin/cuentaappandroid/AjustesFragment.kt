@@ -130,8 +130,8 @@ class AjustesFragment : Fragment() {
     }
     private fun setTextLang(enable: Boolean,langText:TextView,en:String,es:String){
         if(enable){
-            langText.text=en
-        }else langText.text=es
+            langText.text=es
+        }else langText.text=en
     }
 
     companion object {
