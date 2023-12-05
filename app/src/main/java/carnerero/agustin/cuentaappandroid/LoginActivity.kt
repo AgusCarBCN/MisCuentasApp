@@ -82,10 +82,13 @@ class LoginActivity : AppCompatActivity() {
         if (userField.isEmpty() || passwordField.isEmpty()) {
             if (userField.isEmpty() && passwordField.isEmpty()) {
                 // Mostrar mensaje si ambos campos están vacíos
-                Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
+                binding.etTextUser.error=getString(R.string.msgemptyfield)
+                binding.etPassword.error=getString(R.string.msgemptyfield)
+                //Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
             } else {
+                binding.etTextUser.error=getString(R.string.msgemptyfield)
                 // Mostrar mensaje si al menos un campo está vacío
-                Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
             }
         } else {
             // Verificar las credenciales
