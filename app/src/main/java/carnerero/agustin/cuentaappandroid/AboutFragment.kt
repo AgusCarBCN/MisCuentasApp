@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAboutBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class AboutFragment : Fragment() {
 
@@ -22,12 +24,17 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        val iconEmail=binding.imgemail
+        val iconGitHub=binding.icongithub
+        if(Utils.isDarkTheme){
+            iconEmail.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
+            iconGitHub.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupGitHubLink()
         setupAttributions()
     }

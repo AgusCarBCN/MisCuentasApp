@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.utils
 
-import android.content.Context
-import android.media.MediaPlayer
+
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
@@ -15,8 +14,7 @@ class Utils {
 
     companion object {
         private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        private var lang: String = "es"
-        private var country: String = "ES"
+        var isDarkTheme=false
 
         fun calcularImporteMes(
             month: Int,
@@ -39,8 +37,10 @@ class Utils {
         fun applyTheme(enableDarkTheme: Boolean) {
             if (enableDarkTheme) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                isDarkTheme=true
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                isDarkTheme=false
             }
 
         }
@@ -115,6 +115,7 @@ class Utils {
             val penultElement = charSequence[charSequence.length - 2].toString()
             return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
         }
+
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
             return when(operator) {
