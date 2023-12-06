@@ -11,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:colorPrimary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+       >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/padding10"
+            android:layout_marginTop="20dp"
             android:text="@string/info"
+            android:layout_marginBottom="40dp"
             android:textSize="@dimen/head"
             android:textStyle="bold" />
 
@@ -29,31 +31,9 @@
                 android:id="@+id/imgid"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/login_24" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout"
-               >
-                <TextView
-                    android:text="@string/id"
-                    style="@style/textViewHead"
-                     />
 
-                <LinearLayout
-                    style="@style/infoTerciaryLayout"
-                    >
-
-                    <EditText
-                        android:id="@+id/etdni"
-                        style="@style/editText"
-                        />
-
-                    <ImageView
-                        android:id="@+id/pencilid"
-                        style="@style/imgPencil"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
+            <TextView android:id="@+id/etdni"
+              style="@style/infoTextView"  />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -64,31 +44,9 @@
                 android:id="@+id/imgname"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/person" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout"
-                >
-                <TextView
-                    android:text="@string/name"
-                    style="@style/textViewHead"
-                    />
 
-                <LinearLayout
-                    style="@style/infoTerciaryLayout"
-                    >
-
-                    <EditText
-                        android:id="@+id/etname"
-                        style="@style/editText"
-                        />
-
-                    <ImageView
-                        android:id="@+id/pencilname"
-                        style="@style/imgPencil"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
+            <TextView android:id="@+id/etname"
+                style="@style/infoTextView" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -99,21 +57,9 @@
                 android:id="@+id/imgemail"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/email_24" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout">
-                <TextView
-                    android:text="@string/email"
-                    style="@style/textViewHead"/>
-                <LinearLayout
-                    style="@style/infoTerciaryLayout">
-                    <EditText
-                        android:id="@+id/etemail"
-                        style="@style/editText"/>
-                    <ImageView
-                        android:id="@+id/pencilemail"
-                        style="@style/imgPencil"/>
-                </LinearLayout>
-            </LinearLayout>
+
+            <TextView android:id="@+id/etemail"
+                style="@style/infoTextView" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -124,21 +70,9 @@
                 android:id="@+id/imgaddress"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_on_24" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout">
-                <TextView
-                    android:text="@string/address"
-                    style="@style/textViewHead"/>
-                <LinearLayout
-                    style="@style/infoTerciaryLayout">
-                    <EditText
-                        android:id="@+id/etaddress"
-                        style="@style/editText"/>
-                    <ImageView
-                        android:id="@+id/penciladdress"
-                        style="@style/imgPencil"/>
-                </LinearLayout>
-            </LinearLayout>
+
+            <TextView android:id="@+id/etaddress"
+                style="@style/infoTextView"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -148,21 +82,9 @@
                 android:id="@+id/imgcity"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_city_24" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout">
-                <TextView
-                    android:text="@string/city"
-                    style="@style/textViewHead"/>
-                <LinearLayout
-                    style="@style/infoTerciaryLayout">
-                    <EditText
-                        android:id="@+id/etcity"
-                        style="@style/editText"/>
-                    <ImageView
-                        android:id="@+id/pencilcity"
-                        style="@style/imgPencil"/>
-                </LinearLayout>
-            </LinearLayout>
+
+            <TextView android:id="@+id/etcity"
+                style="@style/infoTextView"  />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -172,21 +94,9 @@
                 android:id="@+id/imgpass"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/password" />
-            <LinearLayout
-                style="@style/infoSecondaryLayout">
-                <TextView
-                    android:text="@string/password"
-                    style="@style/textViewHead"/>
-                <LinearLayout
-                    style="@style/infoTerciaryLayout">
-                    <EditText
-                        android:id="@+id/etpass"
-                        style="@style/editText"/>
-                    <ImageView
-                        android:id="@+id/pencilpass"
-                        style="@style/imgPencil"/>
-                </LinearLayout>
-            </LinearLayout>
+
+            <TextView android:id="@+id/etpass"
+                style="@style/infoTextView"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>

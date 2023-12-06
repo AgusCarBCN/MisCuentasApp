@@ -171,6 +171,7 @@ class BarChartFragment : Fragment() {
             if(Utils.isDarkTheme){
                 xAxis.textColor=ContextCompat.getColor(requireContext(),R.color.white)
                 barData.setValueTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+
             }
             val xAxis = barChart.xAxis
             xAxis.valueFormatter = IndexAxisValueFormatter(months)
