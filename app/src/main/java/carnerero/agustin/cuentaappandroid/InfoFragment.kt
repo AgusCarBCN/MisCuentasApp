@@ -1,10 +1,15 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
+import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +25,12 @@ class InfoFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var sharedPreferences: SharedPreferences
+    private val admin = DataBaseAppSingleton.getInstance(context)
+    private val userDao=UsuarioDao(admin)
+    // Variable para manejar el View Binding
+    private var _binding: FragmentInfoBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +43,27 @@ class InfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false)
+        _binding = FragmentInfoBinding.inflate(inflater, container, false)
+
+        val view = binding.root
+        // Obtener el nombre del usuario almacenado en SharedPreferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val dni = sharedPreferences.getString(getString(R.string.id), null)!!
+        val pass = sharedPreferences.getString(getString(R.string.password), null)!!
+        val user= userDao.obtenerUsuarioPorDniYPassword(dni,pass)
+        with(binding){
+            val etDni=etdni.setText(user?.dni)
+            val etName=etname.setText(user?.nombre)
+            val etAddress=etaddress.setText(user?.domicilio)
+            val etCity=etcity.setText(user?.ciudad)
+            val etEmail=etemail.setText(user?.email)
+            val etPass=etpass.setText(user?.password)
+        }
+
+
+
+
+       return view
     }
 
     companion object {
