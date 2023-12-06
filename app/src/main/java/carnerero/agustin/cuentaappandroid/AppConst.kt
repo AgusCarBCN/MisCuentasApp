@@ -8,5 +8,6 @@ object AppConst {
     const val PORCENTAJE = "%"
     const val NULL = "null"
     const val COMA = ","
-
+    const val NAMEDB="micuentaApp"
+    const val VERSIONDB=1
 }

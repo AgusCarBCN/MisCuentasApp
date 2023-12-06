@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityNewPasswordBinding
-import carnerero.agustin.cuentaappandroid.utils.Utils
+
 
 class NewPasswordActivity : AppCompatActivity() {
 

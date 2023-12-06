@@ -5,10 +5,7 @@ import android.database.Cursor
 import android.database.SQLException
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.StringTokenizer
+
 
 
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
@@ -21,15 +18,17 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         val db = admin.writableDatabase
-        val values = ContentValues()
-        values.put("importe", movimientoBancario.importe)
-        values.put("descripcion", movimientoBancario.descripcion)
-        values.put("iban", movimientoBancario.iban)
-        values.put("fechaImporte", movimientoBancario.fechaImporte)
+        val values = ContentValues().apply {
+            put("importe", movimientoBancario.importe)
+            put("descripcion", movimientoBancario.descripcion)
+            put("iban", movimientoBancario.iban)
+            put("fechaImporte", movimientoBancario.fechaImporte)
+        }
+
         try {
             db.insert("MOVIMIENTO", null, values)
-        } catch (e: SQLException) {
-            // Manejo de errores
+        } catch (_: SQLException) {
+
         } finally {
             db.close()
         }

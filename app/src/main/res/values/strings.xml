@@ -140,6 +140,9 @@
     Streamline your financial management with My Accounts and maintain precise control over your transactions, all in one place.
 </string>
     <string name="contact_me">Contact me</string>
-<string name="visitGitHub">Visit my gitHub</string>
+    <string name="visitGitHub">Visit my gitHub</string>
+    <string name="info">Account info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

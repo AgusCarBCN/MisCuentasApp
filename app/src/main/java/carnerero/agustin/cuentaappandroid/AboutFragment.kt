@@ -1,8 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Intent
-import android.graphics.Paint
-import android.graphics.PaintFlagsDrawFilter
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
