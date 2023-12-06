@@ -130,6 +130,7 @@
     <string name="attributionicon"> made by </string>
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
+    <string name="iconsdate">Date range icons</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="description">
     My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for two accounts, add income, record expenses, transfer funds between both accounts, and generate detailed statistics through transaction searches.

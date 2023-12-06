@@ -118,12 +118,13 @@
     <string name="incorrectExpresion">Expresion incorrecta</string>
     <string name="formaterror">Error de formato</string>
     <string name="labelapp">Mis cuentas</string>
-    <string name="developer">Desarrollador: Agustin Carnerero</string>
+    <string name="developer">Desarrollador: Agustin Carnerero Peña</string>
     <string name="atributions">Atribuciones</string>
     <string name="iconconta">Icono de contabilidad</string>
     <string name="icongithub">Icono de logotipo de github</string>
     <string name="menuicons">Iconos de menu lateral</string>
     <string name="iconstheme">Iconos de configuracion de tema</string>
+    <string name="iconsdate">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
     <string name="version_1_0">Version 1.0</string>

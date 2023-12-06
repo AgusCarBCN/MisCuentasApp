@@ -52,14 +52,15 @@ class AboutFragment : Fragment() {
         val githubIcon=getString(R.string.icongithub)
         val settingIcons=getString(R.string.iconstheme)
         val sideMenuIcons=getString(R.string.menuicons)
-
+        val dateRangeIcons=getString(R.string.iconsdate)
         val attributionsList = listOf(
-            "<a href=\"https://www.flaticon.es/iconos-gratis/contabilidad\" " +
+            "<a href=\"https://www.flaticon.es/autores/2d3ds\" " +
                     "title=\"contabilidad iconos\">$accountIcon $attributionText 2D3ds - Flaticon</a>",
             "<a href=\"https://www.freepik.es/icono/logotipo-github_25231#fromView=search&term=github&page=1&position=2&track=ais&uuid=bca581ff-3f61-49a9-8010-59c21c4b0f7c\">" +
                     "$githubIcon $attributionText Dave Gandy</a>",
             "<a href=\"https://fonts.google.com/icons\"> $settingIcons $attributionTextPlural Google Fonts</a>",
-            "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>"
+            "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>",
+            "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>"
         )
 
         for (attributionHtml in attributionsList) {
