@@ -7,9 +7,9 @@
         <item name="android:previewImage">@color/dark2</item>
         <item name="android:colorPrimaryDark">@color/dark2</item>
         <item name="android:colorSecondary">@color/grey3</item>
-        <item name="android:colorAccent">@color/lightOrange</item>
+        <item name="android:colorAccent">@color/orange</item>
         <item name="android:textColorLink">@color/lightOrange</item>
-        <item name="android:state_pressed">@color/orange</item>
+        <item name="android:state_pressed">@color/darkOrange</item>
         <item name="android:state_enabled">@color/grey3</item>
         <item name="android:state_empty">@color/greyBlue</item>
         <item name="android:textColor">@color/white</item>
@@ -28,7 +28,7 @@
 
     //Personalizacion del DatePickerDialog
     <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/lightOrange</item>
+        <item name="colorAccent">@color/darkOrange</item>
         <item name="android:colorPrimary">@color/greyBlue</item>
         <item name="android:colorPrimaryDark">@color/orange</item>
         <item name="android:colorAccent">@color/orange</item>
@@ -37,7 +37,7 @@
 
 
     <style name="CustomSpinner">
-        <item name="android:background">@color/lightOrange</item>
+        <item name="android:background">@color/orange</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18dp</item>
