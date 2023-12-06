@@ -46,13 +46,20 @@ class AboutFragment : Fragment() {
 
     private fun setupAttributions() {
         val attributionsContainer = binding.attributionsContainer
-        val attributionText = getString(R.string.atributionicon)
+        val attributionText = getString(R.string.attributionicon)
+        val attributionTextPlural=getString(R.string.attributionicons)
+        val accountIcon=getString(R.string.iconconta)
+        val githubIcon=getString(R.string.icongithub)
+        val settingIcons=getString(R.string.iconstheme)
+        val sideMenuIcons=getString(R.string.menuicons)
 
         val attributionsList = listOf(
             "<a href=\"https://www.flaticon.es/iconos-gratis/contabilidad\" " +
-                    "title=\"contabilidad iconos\">Contabilidad $attributionText 2D3ds - Flaticon</a>",
+                    "title=\"contabilidad iconos\">$accountIcon $attributionText 2D3ds - Flaticon</a>",
             "<a href=\"https://www.freepik.es/icono/logotipo-github_25231#fromView=search&term=github&page=1&position=2&track=ais&uuid=bca581ff-3f61-49a9-8010-59c21c4b0f7c\">" +
-                    "$attributionText Dave Gandy</a>"
+                    "$githubIcon $attributionText Dave Gandy</a>",
+            "<a href=\"https://fonts.google.com/icons\"> $settingIcons $attributionTextPlural Google Fonts</a>",
+            "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>"
         )
 
         for (attributionHtml in attributionsList) {

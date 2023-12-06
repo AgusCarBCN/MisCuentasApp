@@ -122,8 +122,13 @@
     <string name="labelapp">My accounts</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="developer">Developer: Agustin Carnerero</string>
-    <string name="atributionicon"> Icon created by </string>
+    <string name="developer">Developer: Agustin Carnerero Peña</string>
+    <string name="iconconta">Accounting icon</string>
+    <string name="icongithub">Github logo icon</string>
+    <string name="menuicons">Side menu icons</string>
+    <string name="iconstheme">Setting theme icons</string>
+    <string name="attributionicon"> made by </string>
+    <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="description">
