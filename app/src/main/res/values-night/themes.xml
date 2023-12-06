@@ -8,7 +8,7 @@
         <item name="android:colorPrimaryDark">@color/dark2</item>
         <item name="android:colorSecondary">@color/grey3</item>
         <item name="android:colorAccent">@color/orange</item>
-        <item name="android:textColorLink">@color/lightOrange</item>
+        <item name="android:textColorLink">@color/yellow</item>
         <item name="android:state_pressed">@color/darkOrange</item>
         <item name="android:state_enabled">@color/grey3</item>
         <item name="android:state_empty">@color/greyBlue</item>

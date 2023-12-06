@@ -1,6 +1,8 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.content.Intent
+import android.graphics.Paint
+import android.graphics.PaintFlagsDrawFilter
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
@@ -26,6 +28,7 @@ class AboutFragment : Fragment() {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         val iconEmail=binding.imgemail
         val iconGitHub=binding.icongithub
+
         if(Utils.isDarkTheme){
             iconEmail.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
             iconGitHub.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
@@ -99,4 +102,5 @@ class AboutFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

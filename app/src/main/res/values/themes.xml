@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CuentaAppAndroid" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/lightOrange</item>
+        <item name="android:colorPrimary">@color/yellow</item>
         <item name="colorPrimaryVariant">@color/darkBrown</item>
         <item name="android:previewImage">@color/orange</item>
         <item name="android:colorPrimaryDark">@color/orange</item>
@@ -29,7 +29,7 @@
     //Personalizacion del DatePickerDialog
     <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/darkOrange</item>
-        <item name="android:colorPrimary">@color/lightOrange</item>
+        <item name="android:colorPrimary">@color/yellow</item>
         <item name="android:colorPrimaryDark">@color/orange</item>
         <item name="android:colorAccent">@color/orange</item>
         <item name="android:windowBackground">@color/lightYellow</item>
@@ -37,7 +37,7 @@
 
 
     <style name="CustomSpinner">
-        <item name="android:background">@color/lightOrange</item>
+        <item name="android:background">@color/yellow</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/darkBrown</item>
         <item name="android:textSize">18dp</item>
