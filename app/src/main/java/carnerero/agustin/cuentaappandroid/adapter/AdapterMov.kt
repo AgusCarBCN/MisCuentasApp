@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import carnerero.agustin.cuentaappandroid.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.databinding.ItemMovimientoBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 
 import java.util.Locale
 
-class AdapterMov(private var movList: MutableList<MovimientoBancario>) :
+class AdapterMov(private var movList: MutableList<MovimientoBancario>,private val listener :OnLocaleListener) :
     RecyclerView.Adapter<AdapterMov.ViewHolder>() {
 
     //Esta clase permite inflar la vista item_movimiento
@@ -38,10 +38,9 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>) :
     override fun getItemCount(): Int = movList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val lang = Utils.getLang()
-        val country = Utils.getCountry()
-        val euroLocale = Locale(lang, country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
+
+        val locale = listener.getLocale()
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val mov = movList[position]
         holder.descripcionitem.text = mov.descripcion
         // Mostrar la fecha si es diferente de la fecha anterior

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
@@ -31,10 +32,10 @@ class AjustesFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
-    private val darkModeIcon = R.drawable.ic_dark_mode
-    private val lightModeIcon = R.drawable.light_mode_24
-    private val englishIcon = R.drawable.language_gb_english
-    private val spanishIcon = R.drawable.language_spanish
+    private val darkModeIcon = R.drawable.dark_mode_20
+    private val lightModeIcon = R.drawable.light_mode_20
+    private val english ="en"
+    private val spanish = "es"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,7 @@ class AjustesFragment : Fragment() {
         val switchTheme = binding.switchdark
         val imgTheme = binding.imgDarklight
         val switchLang = binding.switchen
-        val imgLang = binding.imgEnes
+        val langText = binding.tvEnes
         val selectCurrency = binding.selectCurrency
 
         // Obtener preferencias compartidas
@@ -68,7 +69,7 @@ class AjustesFragment : Fragment() {
 
         // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
-        setIcon(enableEnLang, imgLang, spanishIcon, englishIcon)
+        setTextLang(enableEnLang,langText,english,spanish)
 
         // Establecer el estado inicial del Switch y el radioGroup
         switchTheme.isChecked = enableDarkTheme
@@ -110,9 +111,7 @@ class AjustesFragment : Fragment() {
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
 
-            // Aplicar idioma y país seleccionados
-            Utils.setLang(lang)
-            Utils.setCountry(country)
+
 
             // Actualizar fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
@@ -128,6 +127,11 @@ class AjustesFragment : Fragment() {
         } else {
             icon.setImageResource(iconDisable)
         }
+    }
+    private fun setTextLang(enable: Boolean,langText:TextView,en:String,es:String){
+        if(enable){
+            langText.text=es
+        }else langText.text=en
     }
 
     companion object {

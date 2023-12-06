@@ -108,6 +108,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     // Función para manejar el evento de creación de usuario
     fun createUser(view: View) {
         // Abrir la actividad correspondiente según si ya existe un usuario
