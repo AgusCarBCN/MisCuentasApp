@@ -18,6 +18,7 @@ import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -159,6 +160,7 @@ class BarChartFragment : Fragment() {
             barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
             barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
 
+
             // Crear BarData y configurar el gráfico de barras
             val barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
             barData.setValueTextSize(12f)
@@ -166,6 +168,10 @@ class BarChartFragment : Fragment() {
             description.isEnabled = false
 
             // Configurar el eje X
+            if(Utils.isDarkTheme){
+                xAxis.textColor=ContextCompat.getColor(requireContext(),R.color.white)
+                barData.setValueTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            }
             val xAxis = barChart.xAxis
             xAxis.valueFormatter = IndexAxisValueFormatter(months)
             xAxis.setCenterAxisLabels(true)

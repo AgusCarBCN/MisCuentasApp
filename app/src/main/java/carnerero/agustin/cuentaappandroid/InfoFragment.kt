@@ -1,15 +1,21 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,11 +65,58 @@ class InfoFragment : Fragment() {
             val etEmail=etemail.setText(user?.email)
             val etPass=etpass.setText(user?.password)
         }
+        val imgId=binding.imgid
+        val imgName=binding.imgname
+        val imgEmail=binding.imgemail
+        val imgAdress=binding.imgaddress
+        val imgCity=binding.imgcity
+        val imgPass=binding.imgpass
+        // Crear una lista de recursos de imágenes
+        val imgList = listOf(imgId, imgName, imgEmail, imgAdress, imgCity, imgPass)
+
+        if(Utils.isDarkTheme){
+            for(imageView in imgList){
+                changeIconColor(imageView)
+            }
+
+
+        }
+        imgId.setOnClickListener(){
+            mostrarDialogoCambiarNombre()
+        }
 
 
 
 
-       return view
+
+    return view
+
+
+
+    }
+    private fun mostrarDialogoCambiarNombre() {
+        val builder = AlertDialog.Builder(context,R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
+
+        builder.setTitle("Cambiar Nombre")
+
+        val editText = EditText(context)
+        builder.setView(editText)
+
+        builder.setPositiveButton("Aceptar") { _, _ ->
+            // Aquí obtienes el nuevo nombre desde el EditText
+            val nuevoNombre = editText.text.toString()
+            // Realiza la acción que desees con el nuevo nombre
+        }
+
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun changeIconColor(img :ImageView){
+        img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
 
     companion object {
