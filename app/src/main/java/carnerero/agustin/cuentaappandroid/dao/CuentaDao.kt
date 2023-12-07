@@ -7,90 +7,23 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 
 class CuentaDao(private val admin: DataBaseApp) {
 
-
     // Método para insertar una cuenta en la base de datos
     fun insertarCuenta(cuenta: Cuenta) {
-        val db = admin.writableDatabase
-        val values = ContentValues()
-        values.put("iban", cuenta.iban)
-        values.put("saldo", cuenta.saldo)
-        values.put("dni", cuenta.dni)
+        admin.writableDatabase.use { db ->
+            val values = ContentValues().apply {
+                put("iban", cuenta.iban)
+                put("saldo", cuenta.saldo)
+                put("dni", cuenta.dni)
+            }
 
-        try {
-            db.insert("CUENTA", null, values)
-        } catch (e: SQLException) {
-            // Manejo de errores al insertar la cuenta
-        } finally {
-            db.close()
+            try {
+                db.insert("CUENTA", null, values)
+            } catch (e: SQLException) {
+                // Manejo de errores al insertar la cuenta
+            }
         }
     }
-
-    // Método para obtener una cuenta por IBAN
-  /* fun obtenerCuentaPorIban(iban: String): Cuenta? {
-        val db = admin.readableDatabase
-
-        val query = "SELECT iban, saldo, dni FROM CUENTA WHERE iban = ?"
-        val selectionArgs = arrayOf(iban)
-
-        val cursor = db.rawQuery(query, selectionArgs)
-
-        var cuenta: Cuenta? = null
-
-        try {
-            if (cursor.moveToFirst()) {
-                cuenta = Cuenta(
-                    cursor.getString(cursor.getColumnIndexOrThrow("iban")),
-                    cursor.getDouble(cursor.getColumnIndexOrThrow("saldo")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("dni"))
-                )
-            }
-        } finally {
-            cursor.close()
-        }
-        return cuenta
-    }*/
-
-    /*fun obtenerCuentaPorDni(dni: String): Cuenta? {
-        val db = admin.readableDatabase
-
-        val query = "SELECT iban, saldo, dni FROM CUENTA WHERE dni = ?"
-        val selectionArgs = arrayOf(dni)
-        val cursor = db.rawQuery(query, selectionArgs)
-        var cuenta: Cuenta? = null
-        try {
-            if (cursor.moveToFirst()) {
-                cuenta = Cuenta(
-                    cursor.getString(cursor.getColumnIndexOrThrow("iban")),
-                    cursor.getDouble(cursor.getColumnIndexOrThrow("saldo")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("dni"))
-                )
-            }
-        } finally {
-            cursor.close()
-        }
-
-        return cuenta
-    }*/
-
-    /*fun listarTodasLasCuentas(): List<Cuenta> {
-        val cuentas = mutableListOf<Cuenta>()
-
-        admin.readableDatabase.use { db ->
-            val query = "SELECT * FROM CUENTA"
-            val cursor = db.rawQuery(query, null)
-
-            while (cursor.moveToNext()) {
-                val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
-                val saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
-                val dni = cursor.getString(cursor.getColumnIndexOrThrow("dni"))
-
-                val cuenta = Cuenta(iban, saldo, dni)
-                cuentas.add(cuenta)
-            }
-            cursor.close()
-        }
-        return cuentas
-    }*/
+    // la función use para gestionar la apertura y cierre de la base de datos de manera segura en cada método
     fun listarCuentasPorDNI(dni: String): List<Cuenta> {
         val cuentas = mutableListOf<Cuenta>()
 
@@ -113,11 +46,17 @@ class CuentaDao(private val admin: DataBaseApp) {
     }
 
     fun actualizarSaldo(importe: Double, iban: String) {
-        val db = admin.writableDatabase
-        val query = "UPDATE cuenta SET saldo = saldo + '${importe}' WHERE iban ='${iban}'"
-        db.execSQL(query)
-        db.close()
+        admin.writableDatabase.use { db ->
+            val query = "UPDATE CUENTA SET saldo = saldo + '$importe' WHERE iban = '$iban'"
+            db.execSQL(query)
+        }
     }
 
-
+    fun borrarCuentaPorIBAN(iban: String) {
+        admin.writableDatabase.use { db ->
+            val whereClause = "iban = ?"
+            val whereArgs = arrayOf(iban)
+            db.delete("CUENTA", whereClause, whereArgs)
+        }
+    }
 }
