@@ -72,9 +72,9 @@ class SaldoFragment : Fragment() {
         val cuentas: List<Cuenta>? = dni?.let { dao.listarCuentasPorDNI(it) }
 
         // Referencias a los TextView en el diseño
-        val cuenta1 = binding.tvCuenta1
+        val cuenta1 = binding.tvCuenta
         val cuenta2 = binding.tvCuenta2
-        val saldo1 = binding.tvSaldo1
+        val saldo1 = binding.tvSaldo
         val saldo2 = binding.tvSaldo2
 
         // Establecer la Locale para el formato de moneda

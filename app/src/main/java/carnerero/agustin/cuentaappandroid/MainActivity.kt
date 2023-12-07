@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 finish()
                 return true
             }
-            else -> fragment = SaldoFragment()
+            else -> fragment = ListOfAccountsFragment()
         }
 
         // Mostrar el fragmento de saldo en el contenedor de información
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showSaldo() {
         // Mostrar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = SaldoFragment()
+        val fragmentSaldo = ListOfAccountsFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.info_container, fragmentSaldo)
             .commit()
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun actualizarFragmentSaldo() {
         // Actualizar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = SaldoFragment()
+        val fragmentSaldo = ListOfAccountsFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.info_container, fragmentSaldo)
         transaction.commit()
