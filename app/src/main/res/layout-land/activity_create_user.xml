@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimaryDark"
+    android:background="?android:colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
+    android:visibility="visible"
     tools:context=".CreateUserActivity">
 
     <LinearLayout
@@ -38,8 +39,8 @@
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="@string/id"
-            android:maxLength="10"
             android:inputType="text"
+            android:maxLength="10"
             android:textColor="#333333"
             android:textStyle="bold" />
     </LinearLayout>
@@ -143,8 +144,8 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/et_useraccmain"
-            android:layout_width="170dp"
+            android:id="@+id/et_useraccount"
+            android:layout_width="270dp"
             android:layout_height="@dimen/box"
             android:background="@drawable/style_editetx"
             android:ems="10"
@@ -154,8 +155,8 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_amountaccmain"
-            android:layout_width="110dp"
+            android:id="@+id/et_amount"
+            android:layout_width="140dp"
             android:layout_height="@dimen/box"
             android:layout_marginStart="20dp"
             android:background="@drawable/style_editetx"
@@ -165,30 +166,15 @@
             android:textColor="#333333"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_useraccsecond"
-            android:layout_width="170dp"
-            android:layout_height="@dimen/box"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:hint="@string/second_account"
-            android:inputType="text"
-            android:textColor="#333333"
-            android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/addaccount"
+            android:layout_width="@dimen/icon32"
+            android:layout_height="@dimen/icon32"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/add_circle_24" />
 
-        <EditText
-            android:id="@+id/et_secondccamount"
-            android:layout_width="110dp"
-            android:layout_height="@dimen/box"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:hint="@string/balance"
-            android:inputType="numberDecimal"
-            android:textColor="#333333"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -219,7 +205,6 @@
             android:layout_marginEnd="50dp"
             android:layout_weight="1"
             android:background="@drawable/style_button"
-            android:onClick="cancelCreateUser"
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="?android:textColor"

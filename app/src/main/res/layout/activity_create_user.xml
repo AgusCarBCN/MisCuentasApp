@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimaryDark"
+    android:background="?android:colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
     android:textAlignment="center"
@@ -95,8 +95,8 @@
             android:background="@drawable/style_editetx"
             android:ems="10"
             android:hint="@string/zipcode"
-            android:maxLength="6"
             android:inputType="textPostalAddress"
+            android:maxLength="6"
             android:textColor="#333333"
             android:textStyle="bold" />
     </LinearLayout>
@@ -141,16 +141,26 @@
         android:textColor="#333333"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_cuentas4"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/accounts"
-        android:textAlignment="center"
-        android:textColor="?android:textColor"
-        android:textSize="@dimen/head"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cuentas4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="@string/add_an_account"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -159,7 +169,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/et_useraccmain"
+            android:id="@+id/et_useraccount"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/box"
             android:layout_marginLeft="20dp"
@@ -173,7 +183,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_amountaccmain"
+            android:id="@+id/et_amount"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/box"
             android:layout_marginStart="10dp"
@@ -185,41 +195,13 @@
             android:inputType="numberDecimal"
             android:textColor="#333333"
             android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/et_useraccsecond"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/box"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:hint="@string/second_account"
-            android:inputType="text"
-            android:textColor="#333333"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_secondccamount"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/box"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="5"
-            android:background="@drawable/style_editetx"
-            android:ems="10"
-            android:hint="@string/balance"
-            android:inputType="numberDecimal"
-            android:textColor="#333333"
-            android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/addaccount"
+            android:layout_width="@dimen/icon32"
+            android:layout_height="@dimen/icon32"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/add_circle_24" />
     </LinearLayout>
 
     <LinearLayout
@@ -236,7 +218,6 @@
             android:layout_marginEnd="25dp"
             android:layout_weight="1"
             android:background="@drawable/style_button"
-            android:onClick="confirmCreateUser"
             android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="?android:textColor"
@@ -251,7 +232,6 @@
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:background="@drawable/style_button"
-            android:onClick="cancelCreateUser"
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="?android:textColor"

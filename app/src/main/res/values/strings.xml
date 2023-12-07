@@ -144,5 +144,6 @@
     <string name="info">Account info</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_an_account">add an account</string>
 
 </resources>
