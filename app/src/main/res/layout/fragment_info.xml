@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoFragment"
+    android:background="?android:colorPrimary">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:colorPrimary"
+        android:orientation="vertical"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/info"
+            android:layout_marginBottom="40dp"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+           >
+            <ImageView
+                android:id="@+id/imgid"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/login_24" />
+
+            <TextView android:id="@+id/tvdni"
+              style="@style/infoTextView"  />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgname"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/person" />
+
+            <TextView android:id="@+id/tvname"
+                style="@style/infoTextView" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgemail"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/email_24" />
+
+            <TextView android:id="@+id/tvEmail"
+                style="@style/infoTextView" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgaddress"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/location_on_24" />
+
+            <TextView android:id="@+id/tvaddress"
+                style="@style/infoTextView"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgzip"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/share_location_24" />
+
+            <TextView android:id="@+id/tvzip"
+                style="@style/infoTextView"  />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgcity"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/location_city_24" />
+
+            <TextView android:id="@+id/tvcity"
+                style="@style/infoTextView"  />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgpass"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/password" />
+
+            <TextView android:id="@+id/tvpass"
+                style="@style/infoTextView"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+</FrameLayout>

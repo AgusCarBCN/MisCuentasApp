@@ -10,7 +10,7 @@ object DataBaseAppSingleton {
         if (instance == null) {
             synchronized(this) {
                 if (instance == null) {
-                    instance = DataBaseApp(context, "micuentaApp", null, 1)
+                    instance = DataBaseApp(context, AppConst.NAMEDB, null, AppConst.VERSIONDB)
                 }
             }
         }

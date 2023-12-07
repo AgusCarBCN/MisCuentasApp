@@ -8,13 +8,13 @@
     <color name="blue">#0047AB</color>
     <color name="darkgreen">#228B22</color>
     <color name="grey">#999999</color>
-    <color name="lightYellow">#FFE0B2</color>
+    <color name="yellow">#FFE0B2</color>
     <color name="greenPistacho">#CDDC39</color>
     <color name="lightGreenPistacho">#E6EE99</color>
     <color name="darkGreenPistacho">#8BC34A</color>
     <color name="darkOrange">#E65100</color>
-    <color name="orange">#F57C00</color>
-    <color name="lightOrange">#FF9800</color>
+    <color name="orange">#FF9800</color>
+    <color name="lightYellow">#FFEAC2</color>
 
     <color name="deepblue">#3A647E</color>
     <!--colores fondo oscuro-->

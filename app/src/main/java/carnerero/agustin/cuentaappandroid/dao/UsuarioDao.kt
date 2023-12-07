@@ -1,8 +1,10 @@
 package carnerero.agustin.cuentaappandroid.dao
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.database.Cursor
 import android.database.SQLException
+import android.util.Log
 import carnerero.agustin.cuentaappandroid.DataBaseApp
 import carnerero.agustin.cuentaappandroid.model.Usuario
 
@@ -79,8 +81,30 @@ class UsuarioDao(private val admin: DataBaseApp) {
 
         return false
     }
+    fun updateUserField(dni: String, columnName: String, newValue: String): Boolean {
+        val db = admin.writableDatabase
+        /*"Las restricciones de clave externa están desactivadas por defecto
+        (por compatibilidad con versiones anteriores), por lo que deben habilitarse
+        por separado para cada conexión a la base de datos*/
+        db?.execSQL("PRAGMA foreign_keys = ON;")
+        val contentValues = ContentValues()
+
+        try {
+            contentValues.put(columnName, newValue)
+            val affectedRows = db.update("USUARIO", contentValues, "dni=?", arrayOf(dni))
+
+            return affectedRows > 0
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating user field: ${e.message}")
+        } finally {
+            db.close()
+        }
+
+        return false
+    }
     fun actualizarPassword(dni: String, newPassword: String) {
         val db = admin.writableDatabase
+        db?.execSQL("PRAGMA foreign_keys = ON;")
         val values = ContentValues()
         values.put("password", newPassword)
 
@@ -91,6 +115,7 @@ class UsuarioDao(private val admin: DataBaseApp) {
         } finally {
             db.close()
         }
+
     }
 
     // Método para borrar un usuario por DNI y contraseña

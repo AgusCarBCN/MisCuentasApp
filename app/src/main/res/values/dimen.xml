@@ -9,6 +9,7 @@
         <dimen name="head" >24sp</dimen>
         <dimen name="wellcome" >34sp</dimen>
         <dimen name="boxh" >42dp</dimen>
+        <dimen name="icon32">32dp</dimen>
         <dimen name="box" >48dp</dimen>
         <dimen name="extratext">48dp</dimen>
         <dimen name="extrabox">60dp</dimen>

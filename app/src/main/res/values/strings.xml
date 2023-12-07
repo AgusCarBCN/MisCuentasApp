@@ -12,7 +12,7 @@
     <string name="balance">Balance</string>
     <string name="create">Create</string>
     <string name="create_your_account">Create your account</string>
-
+    <string name="change">Change</string>
     <string name="name">Name</string>
     <string name="id">ID</string>
     <string name="address">Address</string>
@@ -122,9 +122,15 @@
     <string name="labelapp">My accounts</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="developer">Developer: Agustin Carnerero</string>
-    <string name="atributionicon"> Icon created by </string>
+    <string name="developer">Developer: Agustin Carnerero Peña</string>
+    <string name="iconconta">Accounting icon</string>
+    <string name="icongithub">Github logo icon</string>
+    <string name="menuicons">Side menu icons</string>
+    <string name="iconstheme">Setting theme icons</string>
+    <string name="attributionicon"> made by </string>
+    <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
+    <string name="iconsdate">Date range icons</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="description">
     My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for two accounts, add income, record expenses, transfer funds between both accounts, and generate detailed statistics through transaction searches.
@@ -134,6 +140,9 @@
     Streamline your financial management with My Accounts and maintain precise control over your transactions, all in one place.
 </string>
     <string name="contact_me">Contact me</string>
-<string name="visitGitHub">Visit my gitHub</string>
+    <string name="visitGitHub">Visit my gitHub</string>
+    <string name="info">Account info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -57,7 +57,7 @@ class DataBaseApp(
 
     override fun onCreate(database: SQLiteDatabase?) {
 
-
+            database?.execSQL("PRAGMA foreign_keys = ON;")
             database?.execSQL(createUserTable)
             database?.execSQL(createAccountTable)
             database?.execSQL(createMovTable)
