@@ -12,7 +12,7 @@
     <string name="balance">Balance</string>
     <string name="create">Create</string>
     <string name="create_your_account">Create your account</string>
-
+    <string name="change">Change</string>
     <string name="name">Name</string>
     <string name="id">ID</string>
     <string name="address">Address</string>

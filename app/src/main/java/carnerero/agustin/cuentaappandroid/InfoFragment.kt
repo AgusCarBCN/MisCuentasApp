@@ -3,17 +3,16 @@ package carnerero.agustin.cuentaappandroid
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
-import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
@@ -34,6 +33,7 @@ class InfoFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val userDao=UsuarioDao(admin)
+    private lateinit var dni:String
     // Variable para manejar el View Binding
     private var _binding: FragmentInfoBinding? = null
     private val binding get() = _binding!!
@@ -54,66 +54,67 @@ class InfoFragment : Fragment() {
         val view = binding.root
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.id), null)!!
+         dni = sharedPreferences.getString(getString(R.string.id), null)!!
         val pass = sharedPreferences.getString(getString(R.string.password), null)!!
-        val user= userDao.obtenerUsuarioPorDniYPassword(dni,pass)
-        with(binding){
-            val etDni=etdni.setText(user?.dni)
-            val etName=etname.setText(user?.nombre)
-            val etAddress=etaddress.setText(user?.domicilio)
-            val etCity=etcity.setText(user?.ciudad)
-            val etEmail=etemail.setText(user?.email)
-            val etPass=etpass.setText(user?.password)
-        }
-        val imgId=binding.imgid
-        val imgName=binding.imgname
-        val imgEmail=binding.imgemail
-        val imgAdress=binding.imgaddress
-        val imgCity=binding.imgcity
-        val imgPass=binding.imgpass
-        // Crear una lista de recursos de imágenes
-        val imgList = listOf(imgId, imgName, imgEmail, imgAdress, imgCity, imgPass)
+        val user = userDao.obtenerUsuarioPorDniYPassword(dni, pass)
 
-        if(Utils.isDarkTheme){
-            for(imageView in imgList){
-                changeIconColor(imageView)
+        //Iniciamos textView con la informacion del usuario
+        with(binding){
+            tvdni.text = user?.dni
+            tvname.text=user?.nombre
+            tvaddress.text=user?.domicilio
+            tvcity.text=user?.ciudad
+            tvzip.text=user?.codigoPostal
+            tvEmail.text=user?.email
+            tvpass.text=user?.password
+        }
+
+
+        // Definir listas de elementos de la interfaz de usuario
+        val imgList = listOf(binding.imgid, binding.imgname, binding.imgemail, binding.imgaddress, binding.imgzip,binding.imgcity, binding.imgpass)
+        val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
+        var textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
+        val columnsDataBase=listOf(AppConst.DNI,AppConst.NAME,AppConst.EMAIL,AppConst.ADDRESS,AppConst.ZIP,AppConst.CITY,AppConst.PASSWORD)
+        // Iterar sobre los elementos de imgList
+        for (i in imgList.indices) {
+
+            // Verificar si el tema es oscuro y cambiar el color del ícono
+            if (Utils.isDarkTheme) {
+                changeIconColor(imgList[i])
             }
 
+            // Asignar un OnClickListener a cada elemento de imgList
+            imgList[i].setOnClickListener {
+                // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
+                 changeField(textViewList[i], titleList[i],columnsDataBase[i])
 
+
+            }
         }
-        imgId.setOnClickListener(){
-            mostrarDialogoCambiarNombre()
-        }
 
 
-
-
-
-    return view
-
-
+        return view
 
     }
-    private fun mostrarDialogoCambiarNombre() {
+    private fun changeField(textView:TextView,title:String,column:String) {
         val builder = AlertDialog.Builder(context,R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
-
-        builder.setTitle("Cambiar Nombre")
-
+        builder.setTitle("${getString(R.string.change)} ${title}")
         val editText = EditText(context)
-        builder.setView(editText)
 
+        builder.setView(editText)
         builder.setPositiveButton("Aceptar") { _, _ ->
             // Aquí obtienes el nuevo nombre desde el EditText
-            val nuevoNombre = editText.text.toString()
-            // Realiza la acción que desees con el nuevo nombre
+            val newValue=editText.text.toString()
+            textView.text=newValue
+            userDao.updateUserField(dni,column,newValue)
         }
-
         builder.setNegativeButton("Cancelar") { dialog, _ ->
             dialog.cancel()
-        }
 
+        }
         val dialog = builder.create()
         dialog.show()
+
     }
     private fun changeIconColor(img :ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))

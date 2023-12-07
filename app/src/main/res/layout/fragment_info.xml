@@ -32,7 +32,7 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/login_24" />
 
-            <TextView android:id="@+id/etdni"
+            <TextView android:id="@+id/tvdni"
               style="@style/infoTextView"  />
 
 
@@ -45,7 +45,7 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/person" />
 
-            <TextView android:id="@+id/etname"
+            <TextView android:id="@+id/tvname"
                 style="@style/infoTextView" />
 
 
@@ -58,7 +58,7 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/email_24" />
 
-            <TextView android:id="@+id/etemail"
+            <TextView android:id="@+id/tvEmail"
                 style="@style/infoTextView" />
 
 
@@ -71,8 +71,20 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_on_24" />
 
-            <TextView android:id="@+id/etaddress"
+            <TextView android:id="@+id/tvaddress"
                 style="@style/infoTextView"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout"
+            >
+            <ImageView
+                android:id="@+id/imgzip"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/share_location_24" />
+
+            <TextView android:id="@+id/tvzip"
+                style="@style/infoTextView"  />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -83,7 +95,7 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_city_24" />
 
-            <TextView android:id="@+id/etcity"
+            <TextView android:id="@+id/tvcity"
                 style="@style/infoTextView"  />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -95,7 +107,7 @@
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/password" />
 
-            <TextView android:id="@+id/etpass"
+            <TextView android:id="@+id/tvpass"
                 style="@style/infoTextView"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

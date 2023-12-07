@@ -68,7 +68,7 @@
     <string name="successnewpass">Contraseña cambiada</string>
     <string name="passnotequals">Las contraseñas no son iguales </string>
     <string name="intronewpass">Para cambiar la contraseña sigue los pasos.</string>
-
+    <string name="change">Cambia</string>
     <!-- Fragment configuration -->
     <string name="profile">Perfil</string>
     <string name="accountconfig">Cuentas</string>
