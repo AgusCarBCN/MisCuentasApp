@@ -90,9 +90,13 @@ class BarChartFragment : Fragment() {
         val adapterCuenta = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val adapterYear = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
 
-        // Agregar elementos a los adaptadores
-        adapterCuenta.add(cuentas?.get(0)?.iban)
-        adapterCuenta.add(cuentas?.get(1)?.iban)
+        // Configuración del adapter y del spinner
+        with(adapterCuenta) {
+
+            cuentas?.forEach { cuenta ->
+                add(cuenta.iban)
+            }
+        }
 
         for (i in 0..4) {
             adapterYear.add(years[i])
