@@ -5,12 +5,8 @@ package carnerero.agustin.cuentaappandroid
 
 import android.app.AlertDialog
 import android.content.SharedPreferences
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-
 import android.net.Uri
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +15,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -28,7 +23,6 @@ import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.io.File
 import java.io.FileOutputStream
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -145,7 +139,7 @@ class InfoFragment : Fragment() {
 
     }
 
-    // Método en tu fragmento donde deseas solicitar permisos
+
 
     private fun saveImageToExternalStorage(uri: Uri): String? {
         try {
@@ -158,7 +152,7 @@ class InfoFragment : Fragment() {
             return file.absolutePath
         } catch (e: Exception) {
             e.printStackTrace()
-            // Manejar el error, por ejemplo, mostrando un mensaje al usuario
+
             return null
         }
     }
