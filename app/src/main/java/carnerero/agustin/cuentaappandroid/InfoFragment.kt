@@ -2,9 +2,15 @@ package carnerero.agustin.cuentaappandroid
 
 
 
+
 import android.app.AlertDialog
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+
+import android.net.Uri
 import android.os.Bundle
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +19,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import com.bumptech.glide.Glide
 import java.io.File
+import java.io.FileOutputStream
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,11 +49,23 @@ class InfoFragment : Fragment() {
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val userDao=UsuarioDao(admin)
     private lateinit var dni:String
-    val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
-    if(uri!=null){
-        imgPicture.setImageURI(uri)
-    }
 
+    val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
+        if (uri != null) {
+            // Guardar la imagen en la memoria externa
+            val imagePath = saveImageToExternalStorage(uri)
+            // Verificar si la imagen se guardó correctamente
+            if (imagePath != null) {
+                // Guardar la ruta del archivo en las preferencias compartidas
+                sharedPreferences.edit().putString(getString(R.string.img_photo), imagePath).apply()
+                // Mostrar la imagen en tu ImageView
+                imgPicture.setImageURI(uri)
+            } else {
+                // Manejar el caso en el que no se pudo guardar la imagen
+            }
+        } else {
+            // Manejar el caso en el que la URI es nula
+        }
     }
     // Variable para manejar el View Binding
     private var _binding: FragmentInfoBinding? = null
@@ -59,6 +78,7 @@ class InfoFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -66,15 +86,13 @@ class InfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
-
         val view = binding.root
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
          dni = sharedPreferences.getString(getString(R.string.id), null)!!
         val pass = sharedPreferences.getString(getString(R.string.password), null)!!
-        val photo=sharedPreferences.getString(getString(R.string.img_photo),null)!!
+        val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
         val user = userDao.obtenerUsuarioPorDniYPassword(dni, pass)
-
 
         //Iniciamos textView con la informacion del usuario
         with(binding){
@@ -88,8 +106,10 @@ class InfoFragment : Fragment() {
         }
         // Definir listas de elementos de la interfaz de usuario
         val imgIconCamera=binding.imgiconcamera
-        imgPicture=binding.imgPhoto
+        //Cargar y mostrar imagen
 
+        imgPicture=binding.imgPhoto
+        imgPicture.setImageURI(Uri.parse(imgStr))
 
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgemail, binding.imgaddress, binding.imgzip,binding.imgcity, binding.imgpass)
         val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
@@ -125,8 +145,23 @@ class InfoFragment : Fragment() {
 
     }
 
+    // Método en tu fragmento donde deseas solicitar permisos
 
-
+    private fun saveImageToExternalStorage(uri: Uri): String? {
+        try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val file = File(requireContext().externalCacheDir, "image.jpg")
+            val outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+            return file.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Manejar el error, por ejemplo, mostrando un mensaje al usuario
+            return null
+        }
+    }
 
     private fun changeField(textView:TextView,title:String,column:String) {
         val builder = AlertDialog.Builder(context,R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
