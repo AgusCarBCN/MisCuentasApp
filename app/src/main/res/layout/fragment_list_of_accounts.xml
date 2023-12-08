@@ -14,7 +14,8 @@
         android:gravity="center|center_horizontal|left"
         android:text="@string/your_accounts"
         android:textAlignment="center"
-        android:textSize="@dimen/extracommon" />
+        android:textSize="@dimen/extracommon"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cuentas"

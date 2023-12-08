@@ -60,13 +60,15 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>,private va
         }
         val importeSinSigno = if (mov.importe < 0) -mov.importe else mov.importe
         holder.importeitem.text = currencyFormat.format(importeSinSigno)
-        holder.importeitem.setTextColor(
-            ContextCompat.getColor(
-                holder.importeitem.context,
-                if (mov.importe < 0 && Utils.isDarkTheme) R.color.coralred else if(mov.importe<0) R.color.red
-                 else R.color.darkGreenPistacho
-            )
-        )
+        val textColorResId = when {
+            mov.importe < 0 && Utils.isDarkTheme -> R.color.coralred
+            mov.importe < 0 -> R.color.red
+            mov.importe > 0 && Utils.isDarkTheme -> R.color.darkGreenPistacho
+            else -> R.color.darkgreen
+        }
+
+        val textColor = ContextCompat.getColor(holder.importeitem.context, textColorResId)
+        holder.importeitem.setTextColor(textColor)
 
     }
 

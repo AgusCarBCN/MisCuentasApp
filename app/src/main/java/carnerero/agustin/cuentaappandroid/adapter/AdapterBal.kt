@@ -10,6 +10,7 @@ import carnerero.agustin.cuentaappandroid.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.databinding.ItemSaldoBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class AdapterBal(
     private var accountsList: MutableList<Cuenta>,
@@ -36,11 +37,9 @@ class AdapterBal(
         holder.ibanAccount.text = cuenta.iban
         val balance = cuenta.saldo
         holder.balanceAccount.text = currencyFormat.format(balance)
-        holder.balanceAccount.setTextColor(
-            ContextCompat.getColor(
-                holder.balanceAccount.context,
-                R.color.darkGreenPistacho
-            )
-        )
+        val textColorResId = if (Utils.isDarkTheme) R.color.darkGreenPistacho else R.color.darkgreen
+        val textColor = ContextCompat.getColor(holder.balanceAccount.context, textColorResId)
+        holder.balanceAccount.setTextColor(textColor)
+
     }
 }

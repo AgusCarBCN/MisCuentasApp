@@ -90,14 +90,16 @@ class ResultFragment : Fragment() {
             text = resultFormatted.toString()
             if (result < 0) {
                 setTextColor(ContextCompat.getColor(context, R.color.red))
-                if(Utils.isDarkTheme){
+                if (Utils.isDarkTheme) {
                     setTextColor(ContextCompat.getColor(context, R.color.coralred))
                 }
             } else {
-                setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
+                setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+                if (Utils.isDarkTheme) {
+                    setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
+                }
             }
         }
-
         return view
     }
 
