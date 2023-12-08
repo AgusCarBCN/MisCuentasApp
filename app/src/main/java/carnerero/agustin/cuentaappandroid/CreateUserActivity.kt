@@ -21,25 +21,15 @@ import java.io.BufferedReader
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
+
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var binding: ActivityCreateUserBinding
-
+    private val cuentas:ArrayList<Cuenta> =ArrayList<Cuenta>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-
-    // Método llamado al hacer clic en el botón Cancelar
-    fun cancelCreateUser(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
-
-    // Método llamado al hacer clic en el botón Confirmar
-    fun confirmCreateUser(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
 
         // Acceso a los EditText del Usuario
         val name = binding.etUsername
@@ -51,50 +41,51 @@ class CreateUserActivity : AppCompatActivity() {
         val userpass = binding.etUserpass
 
         // Acceso a los EditText de las cuentas
-        val mainAccount = binding.etUseraccmain
-        val mainAmount = binding.etAmountaccmain
-        val secondaryAccount = binding.etUseraccsecond
-        val secondaryAmount = binding.etSecondccamount
+        val account = binding.etUseraccount
+        val amount = binding.etAmount
+        //Acceso a buttonView
+        val addAccount=binding.addaccount
+        val confirm=binding.btnConfirmuser
+        val cancel=binding.btnCanceluser
 
-        // Creo objetos Usuario y Cuenta
-        val user = Usuario(
-            dni.text.toString(),
-            name.text.toString(),
-            address.text.toString(),
-            city.text.toString(),
-            zipCode.text.toString(),
-            email.text.toString(),
-            userpass.text.toString()
-        )
 
-        val cuenta1 = Cuenta(
-            mainAccount.text.toString(),
-            mainAmount.text.toString().toDouble(),
-            dni.text.toString()
-        )
-
-        val cuenta2 = Cuenta(
-            secondaryAccount.text.toString(),
-            secondaryAmount.text.toString().toDouble(),
-            dni.text.toString()
-        )
-
-        usuarioDao = UsuarioDao(admin)
-        cuentaDao = CuentaDao(admin)
-
-        // Insertar el Usuario y las Cuentas en la base de datos
-        usuarioDao.insertarUsuario(user)
-        cuentaDao.insertarCuenta(cuenta1)
-        cuentaDao.insertarCuenta(cuenta2)
-
-        // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-        val listMov = readFileCsv()
-        for (element in listMov) {
-            movDAO.nuevoImporte(element)
+        addAccount.setOnClickListener {
+            cuentas.add(Cuenta(account.text.toString(),amount.text.toString().toDouble(),dni.text.toString()))
+            account.text.clear()
+            amount.text.clear()
+        }
+        confirm.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            val user = Usuario(
+                dni.text.toString(),
+                name.text.toString(),
+                address.text.toString(),
+                city.text.toString(),
+                zipCode.text.toString(),
+                email.text.toString(),
+                userpass.text.toString()
+            )
+            usuarioDao = UsuarioDao(admin)
+            cuentaDao = CuentaDao(admin)
+            // Insertar el Usuario y las Cuentas en la base de datos
+            usuarioDao.insertarUsuario(user)
+            cuentas.forEach { cuenta ->
+                cuentaDao.insertarCuenta(cuenta)
+            }
+            // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
+            /*val listMov = readFileCsv()
+            for (element in listMov) {
+                movDAO.nuevoImporte(element)
+            }*/
+            startActivity(intent)
+        }
+        cancel.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
 
-        startActivity(intent)
     }
+
 
     // Método para leer el archivo CSV y devolver una lista de MovimientoBancario
     private fun readFileCsv(): MutableList<MovimientoBancario> {

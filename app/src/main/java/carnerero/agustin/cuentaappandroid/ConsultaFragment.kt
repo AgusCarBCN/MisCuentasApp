@@ -90,9 +90,13 @@ class ConsultaFragment : Fragment() {
         val hint = getString(R.string.select_account)
         val cuentaDao = CuentaDao(admin)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
-        adapter.add(hint)
-        adapter.add(cuentas?.get(0)?.iban)
-        adapter.add(cuentas?.get(1)?.iban)
+        // Configuración del adapter y del spinner
+        with(adapter) {
+            add(getString(R.string.select_account))
+            cuentas?.forEach { cuenta ->
+                add(cuenta.iban)
+            }
+        }
         selectedItem = adapter.getItem(0)
         spConsulta.adapter = adapter
 

@@ -4,15 +4,18 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.navigation.NavigationView
@@ -25,7 +28,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var binding: ActivityMainBinding
     private lateinit var fragment: Fragment
     private lateinit var sharedPreferences: SharedPreferences
-
+    // Instancias necesarias para acceder a la base de datos y realizar operaciones
+    private val admin = DataBaseAppSingleton.getInstance(this)
+    private val cuentaDao = CuentaDao(admin)
+    private var numCuentas=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
@@ -56,6 +62,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Obtener instancia compartida de SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val dni = sharedPreferences.getString(getString(R.string.id), null)
+        numCuentas=cuentaDao.contarCuentasUsuario(dni!!)
     }
 
     override fun onDestroy() {
@@ -78,7 +86,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.consulta -> fragment = ConsultaFragment()
             R.id.nuevoImporte -> fragment = NewAmountFragment()
             R.id.estadistica -> fragment = BarChartFragment()
-            R.id.transferencia -> fragment = TransaccionFragment()
+            R.id.transferencia ->{
+                if(numCuentas>1){
+             fragment = TransaccionFragment()}
+            else{
+                    fragment=LogoFragment()
+                    Toast.makeText(this, "opcion deshabilitada para una cuenta", Toast.LENGTH_LONG).show()
+            }}
             R.id.configuracion -> fragment = AjustesFragment()
             R.id.about->fragment=AboutFragment()
             R.id.calculator->fragment = CalculatorFragment()
@@ -88,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 finish()
                 return true
             }
-            else -> fragment = SaldoFragment()
+            else -> fragment = ListOfAccountsFragment()
         }
 
         // Mostrar el fragmento de saldo en el contenedor de información
@@ -123,7 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showSaldo() {
         // Mostrar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = SaldoFragment()
+        val fragmentSaldo = ListOfAccountsFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.info_container, fragmentSaldo)
             .commit()
@@ -131,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun actualizarFragmentSaldo() {
         // Actualizar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = SaldoFragment()
+        val fragmentSaldo = ListOfAccountsFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.info_container, fragmentSaldo)
         transaction.commit()

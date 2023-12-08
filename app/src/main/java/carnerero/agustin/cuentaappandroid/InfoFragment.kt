@@ -1,7 +1,11 @@
 package carnerero.agustin.cuentaappandroid
 
+
+
+
 import android.app.AlertDialog
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +13,16 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.io.File
+import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,31 +39,53 @@ class InfoFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var imgPicture: ImageView
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val userDao=UsuarioDao(admin)
     private lateinit var dni:String
+
+    val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
+        if (uri != null) {
+            // Guardar la imagen en la memoria externa
+            val imagePath = saveImageToExternalStorage(uri)
+            // Verificar si la imagen se guardó correctamente
+            if (imagePath != null) {
+                // Guardar la ruta del archivo en las preferencias compartidas
+                sharedPreferences.edit().putString(getString(R.string.img_photo), imagePath).apply()
+                // Mostrar la imagen en tu ImageView
+                imgPicture.setImageURI(uri)
+            } else {
+                // Manejar el caso en el que no se pudo guardar la imagen
+            }
+        } else {
+            // Manejar el caso en el que la URI es nula
+        }
+    }
     // Variable para manejar el View Binding
     private var _binding: FragmentInfoBinding? = null
     private val binding get() = _binding!!
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
-
         val view = binding.root
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
          dni = sharedPreferences.getString(getString(R.string.id), null)!!
         val pass = sharedPreferences.getString(getString(R.string.password), null)!!
+        val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
         val user = userDao.obtenerUsuarioPorDniYPassword(dni, pass)
 
         //Iniciamos textView con la informacion del usuario
@@ -68,12 +98,16 @@ class InfoFragment : Fragment() {
             tvEmail.text=user?.email
             tvpass.text=user?.password
         }
-
-
         // Definir listas de elementos de la interfaz de usuario
+        val imgIconCamera=binding.imgiconcamera
+        //Cargar y mostrar imagen
+
+        imgPicture=binding.imgPhoto
+        imgPicture.setImageURI(Uri.parse(imgStr))
+
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgemail, binding.imgaddress, binding.imgzip,binding.imgcity, binding.imgpass)
         val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
-        var textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
+        val textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
         val columnsDataBase=listOf(AppConst.DNI,AppConst.NAME,AppConst.EMAIL,AppConst.ADDRESS,AppConst.ZIP,AppConst.CITY,AppConst.PASSWORD)
         // Iterar sobre los elementos de imgList
         for (i in imgList.indices) {
@@ -81,21 +115,48 @@ class InfoFragment : Fragment() {
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
+                changeIconColor(imgIconCamera)
+
             }
 
             // Asignar un OnClickListener a cada elemento de imgList
             imgList[i].setOnClickListener {
                 // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
                  changeField(textViewList[i], titleList[i],columnsDataBase[i])
-
-
             }
         }
 
 
+
+        imgIconCamera.setOnClickListener {
+            if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+
+            }
+        }
+
         return view
 
     }
+
+
+
+    private fun saveImageToExternalStorage(uri: Uri): String? {
+        try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val file = File(requireContext().externalCacheDir, "image.jpg")
+            val outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+            return file.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+            return null
+        }
+    }
+
     private fun changeField(textView:TextView,title:String,column:String) {
         val builder = AlertDialog.Builder(context,R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
         builder.setTitle("${getString(R.string.change)} ${title}")
@@ -116,9 +177,12 @@ class InfoFragment : Fragment() {
         dialog.show()
 
     }
+
     private fun changeIconColor(img :ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
+
+
 
     companion object {
         /**

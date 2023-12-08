@@ -90,9 +90,13 @@ class BarChartFragment : Fragment() {
         val adapterCuenta = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val adapterYear = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
 
-        // Agregar elementos a los adaptadores
-        adapterCuenta.add(cuentas?.get(0)?.iban)
-        adapterCuenta.add(cuentas?.get(1)?.iban)
+        // Configuración del adapter y del spinner
+        with(adapterCuenta) {
+
+            cuentas?.forEach { cuenta ->
+                add(cuenta.iban)
+            }
+        }
 
         for (i in 0..4) {
             adapterYear.add(years[i])
@@ -156,10 +160,11 @@ class BarChartFragment : Fragment() {
             barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
             barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkGreenPistacho)
             barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-            barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
+            if(Utils.isDarkTheme) barDataSetGastos.color =ContextCompat.getColor(requireContext(), R.color.coralred)
+            else barDataSetGastos.color =ContextCompat.getColor(requireContext(), R.color.red)
             barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-            barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
-
+            if(Utils.isDarkTheme) barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.lightblue)
+            else barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
 
             // Crear BarData y configurar el gráfico de barras
             val barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)

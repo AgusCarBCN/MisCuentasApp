@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentResultBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.util.Locale
 import kotlin.math.abs
 
@@ -67,7 +68,7 @@ class ResultFragment : Fragment() {
         val country = sharedPreferences.getString(getString(R.string.country), "ES")
 
         // Establecer la Locale para el formato en euros
-        val euroLocale = Locale(lang, country)
+        val euroLocale = Locale(lang!!, country!!)
 
         // Obtener una instancia de NumberFormat para el formato de moneda en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
@@ -89,11 +90,16 @@ class ResultFragment : Fragment() {
             text = resultFormatted.toString()
             if (result < 0) {
                 setTextColor(ContextCompat.getColor(context, R.color.red))
+                if (Utils.isDarkTheme) {
+                    setTextColor(ContextCompat.getColor(context, R.color.coralred))
+                }
             } else {
-                setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
+                setTextColor(ContextCompat.getColor(context, R.color.darkgreen))
+                if (Utils.isDarkTheme) {
+                    setTextColor(ContextCompat.getColor(context, R.color.darkGreenPistacho))
+                }
             }
         }
-
         return view
     }
 
