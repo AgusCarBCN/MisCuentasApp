@@ -197,11 +197,12 @@
             android:textStyle="bold" />
         <ImageButton
             android:id="@+id/addaccount"
-            android:layout_width="@dimen/icon32"
-            android:layout_height="@dimen/icon32"
+            android:layout_width="@dimen/icon40"
+            android:layout_height="@dimen/icon40"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:background="@drawable/add_circle_24" />
+
     </LinearLayout>
 
     <LinearLayout
