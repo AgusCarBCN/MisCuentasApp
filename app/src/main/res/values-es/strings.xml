@@ -141,4 +141,12 @@
     <string name="add_an_account">añade una cuenta</string>
     <string name="disabledoption">Opcion deshabilitada para una cuenta</string>
     <string name="img_photo">img_photo</string>
+    <string name="databasetitle">Base de datos</string>
+    <string name="add_account">Añadir cuenta</string>
+    <string name="rename_account">Renombrar cuenta</string>
+    <string name="delete_data_account">Borrar datos de una cuenta</string>
+    <string name="delete_an_account">Borrar una cuenta</string>
+    <string name="delete_all">Borrar todo</string>
+    <string name="export_file">Exportar datos a archivo csv</string>
+    <string name="import_file">Cargar datos de un archivo csv</string>
 </resources>

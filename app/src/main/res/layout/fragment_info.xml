@@ -49,15 +49,8 @@
                     android:layout_marginTop="120dp"
                     android:layout_marginStart="215dp"
                     app:srcCompat="@drawable/photo_camera_24" />
-
-
-
         </FrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
-
         <androidx.appcompat.widget.LinearLayoutCompat
             style="@style/infoMainLayout"
            >

@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     fragment=LogoFragment()
                     Toast.makeText(this, "opcion deshabilitada para una cuenta", Toast.LENGTH_LONG).show()
             }}
+            R.id.db->fragment=DBFragment()
             R.id.configuracion -> fragment = AjustesFragment()
             R.id.about->fragment=AboutFragment()
             R.id.calculator->fragment = CalculatorFragment()

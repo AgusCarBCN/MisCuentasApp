@@ -142,8 +142,15 @@
     <string name="contact_me">Contact me</string>
     <string name="visitGitHub">Visit my gitHub</string>
     <string name="info">Account info</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="disabledoption">disabled option for an account</string>
     <string name="add_an_account">add an account</string>
     <string name="img_photo">img_photo</string>
+    <string name="databasetitle">Database</string>
+    <string name="add_account">Add an account</string>
+    <string name="rename_account">Rename an account</string>
+    <string name="delete_data_account">Delete data from an account</string>
+    <string name="delete_an_account">Delete an account</string>
+    <string name="delete_all">Delete all</string>
+    <string name="export_file">Export data to csv file</string>
+    <string name="import_file">Import data from csv file</string>
 </resources>
