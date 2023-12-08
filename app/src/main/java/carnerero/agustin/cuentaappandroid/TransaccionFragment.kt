@@ -88,9 +88,13 @@ class TransaccionFragment : Fragment() {
         // Obtener las cuentas del usuario logeado con el DNI
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
 
+
         // Llenar los dos Spinners con las cuentas disponibles
-        adapter.add(cuentas?.get(0)?.iban)
-        adapter.add(cuentas?.get(1)?.iban)
+        with(adapter) {
+            cuentas?.forEach { cuenta ->
+                add(cuenta.iban)
+            }
+        }
         cuentaOrigen.adapter = adapter
         cuentaDestino.adapter = adapter
 

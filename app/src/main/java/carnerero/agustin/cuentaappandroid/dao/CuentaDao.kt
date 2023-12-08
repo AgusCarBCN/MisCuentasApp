@@ -59,4 +59,21 @@ class CuentaDao(private val admin: DataBaseApp) {
             db.delete("CUENTA", whereClause, whereArgs)
         }
     }
+    fun contarCuentasUsuario(dni: String): Int {
+        var count = 0
+
+        admin.readableDatabase.use { db ->
+            val query = "SELECT COUNT(*) FROM CUENTA WHERE dni = ?"
+            val selectionArgs = arrayOf(dni)
+            val cursor = db.rawQuery(query, selectionArgs)
+
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0)
+            }
+
+            cursor.close()
+        }
+
+        return count
+    }
 }
