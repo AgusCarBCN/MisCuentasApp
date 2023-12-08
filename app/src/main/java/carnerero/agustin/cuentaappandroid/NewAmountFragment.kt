@@ -4,19 +4,19 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
+import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
@@ -78,14 +78,14 @@ class NewAmountFragment : Fragment() {
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val cuentaDao = CuentaDao(admin)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
-        val saldo1 = cuentas?.get(0)?.saldo
-        val saldo2 = cuentas?.get(1)?.saldo
+
 
         // Configuración del adapter y del spinner
         with(adapter) {
             add(getString(R.string.select_account))
-            add(cuentas?.get(0)?.iban)
-            add(cuentas?.get(1)?.iban)
+            cuentas?.forEach { cuenta ->
+                add(cuenta.iban)
+            }
         }
         spinnerCuentas.adapter = adapter
 
@@ -158,11 +158,12 @@ class NewAmountFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-
+                val cuenta=searchAccount(cuentas,selectedItem)
+                val saldo= cuenta?.saldo
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
                 // Controlar que el importe no sea superior a los saldos de las cuentas
-                if (abs(importeNumerico) > saldo1!! || abs(importeNumerico) > saldo2!!) {
+                if (abs(importeNumerico) > saldo!!) {
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.alertamounts),
@@ -212,4 +213,16 @@ class NewAmountFragment : Fragment() {
                 }
             }
     }
+
+    private fun searchAccount(cuentas: List<Cuenta>?, iban: String): Cuenta? {
+
+        for (cuenta in cuentas!!) {
+            if (iban.equals(cuenta.iban)) {
+                return cuenta
+            }
+        }
+        return null
+    }
+
+
 }
