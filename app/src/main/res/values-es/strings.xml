@@ -140,4 +140,5 @@
     <string name="info">Informacion de la cuenta</string>
     <string name="add_an_account">añade una cuenta</string>
     <string name="disabledoption">Opcion deshabilitada para una cuenta</string>
+    <string name="img_photo">img_photo</string>
 </resources>
