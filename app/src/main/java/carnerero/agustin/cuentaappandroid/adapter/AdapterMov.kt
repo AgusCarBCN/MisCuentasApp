@@ -12,6 +12,7 @@ import carnerero.agustin.cuentaappandroid.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.databinding.ItemMovimientoBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 
 import java.util.Locale
@@ -43,6 +44,13 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>,private va
         val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val mov = movList[position]
         holder.descripcionitem.text = mov.descripcion
+        holder.descripcionitem.setTextColor(
+            ContextCompat.getColor(
+                holder.descripcionitem.context,
+                if(Utils.isDarkTheme)R.color.lightblue else R.color.blue
+            )
+
+        )
         // Mostrar la fecha si es diferente de la fecha anterior
         if (position == 0 || mov.fechaImporte != movList[position - 1].fechaImporte) {
             holder.fechaitem.text = formatFriendlyDate(mov.fechaImporte)
@@ -50,14 +58,13 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>,private va
         } else {
             holder.fechaitem.visibility = View.GONE
         }
-
-
         val importeSinSigno = if (mov.importe < 0) -mov.importe else mov.importe
         holder.importeitem.text = currencyFormat.format(importeSinSigno)
         holder.importeitem.setTextColor(
             ContextCompat.getColor(
                 holder.importeitem.context,
-                if (mov.importe < 0) R.color.red else R.color.darkGreenPistacho
+                if (mov.importe < 0 && Utils.isDarkTheme) R.color.coralred else if(mov.importe<0) R.color.red
+                 else R.color.darkGreenPistacho
             )
         )
 

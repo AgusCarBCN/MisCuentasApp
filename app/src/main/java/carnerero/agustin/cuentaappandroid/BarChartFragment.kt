@@ -160,10 +160,11 @@ class BarChartFragment : Fragment() {
             barDataSetIngresos = BarDataSet(getBarChartData(ingresosTotales), "Ingresos")
             barDataSetIngresos.color = ContextCompat.getColor(requireContext(), R.color.darkGreenPistacho)
             barDataSetGastos = BarDataSet(getBarChartData(gastosTotales), "Gastos")
-            barDataSetGastos.color = ContextCompat.getColor(requireContext(), R.color.red)
+            if(Utils.isDarkTheme) barDataSetGastos.color =ContextCompat.getColor(requireContext(), R.color.coralred)
+            else barDataSetGastos.color =ContextCompat.getColor(requireContext(), R.color.red)
             barDataSetResultados = BarDataSet(getBarChartData(resultados), "Resultados")
-            barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
-
+            if(Utils.isDarkTheme) barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.lightblue)
+            else barDataSetResultados.color = ContextCompat.getColor(requireContext(), R.color.blue)
 
             // Crear BarData y configurar el gráfico de barras
             val barData = BarData(barDataSetIngresos, barDataSetGastos, barDataSetResultados)
