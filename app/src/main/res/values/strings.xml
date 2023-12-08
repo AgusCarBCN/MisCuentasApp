@@ -153,4 +153,6 @@
     <string name="delete_all">Delete all</string>
     <string name="export_file">Export data to csv file</string>
     <string name="import_file">Import data from csv file</string>
+    <string name="profile_icons">Icons from profile info</string>
+    <string name="database_icons">Icons from database page</string>
 </resources>

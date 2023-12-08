@@ -149,4 +149,6 @@
     <string name="delete_all">Borrar todo</string>
     <string name="export_file">Exportar datos a archivo csv</string>
     <string name="import_file">Cargar datos de un archivo csv</string>
+    <string name="profile_icons">Iconos de informacion del perfil</string>
+    <string name="database_icons">Iconos de la pagina de base de datos</string>
 </resources>
