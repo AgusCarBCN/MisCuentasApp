@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -156,27 +157,50 @@ class InfoFragment : Fragment() {
             return null
         }
     }
+    private fun changeField(textView: TextView, title: String, column: String) {
+        val builder = AlertDialog.Builder(context)
 
-    private fun changeField(textView:TextView,title:String,column:String) {
-        val builder = AlertDialog.Builder(context,R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
-        builder.setTitle("${getString(R.string.change)} ${title}")
-        val editText = EditText(context)
+        // Inflar el diseño personalizado
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_infodialog, null)
 
-        builder.setView(editText)
-        builder.setPositiveButton("Aceptar") { _, _ ->
-            // Aquí obtienes el nuevo nombre desde el EditText
-            val newValue=editText.text.toString()
-            textView.text=newValue
-            userDao.updateUserField(dni,column,newValue)
-        }
-        builder.setNegativeButton("Cancelar") { dialog, _ ->
-            dialog.cancel()
+        // Obtener referencias a las vistas dentro del diseño personalizado
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
+        val editText = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
+        val msgHint="${getString(R.string.newfield)} ${title}"
+        // Configurar el contenido del AlertDialog con el diseño personalizado
+        builder.setView(dialogView)
 
-        }
+
+        // Configurar propiedades específicas del diseño
+        dialogTitle.text = "${getString(R.string.change)} $title"
+        editText.hint = msgHint
+
+        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
         val dialog = builder.create()
-        dialog.show()
 
+        // Configurar el evento de clic para el botón personalizado de confirmar
+        confirmButton.setOnClickListener {
+            val newValue = editText.text.toString()
+            textView.text = newValue
+            userDao.updateUserField(dni, column, newValue)
+            // Cerrar el AlertDialog
+            dialog.dismiss()
+        }
+
+        // Configurar el evento de clic para el botón personalizado de cancelar
+        cancelButton.setOnClickListener {
+            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
+            dialog.cancel()
+        }
+// Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
+
+
 
     private fun changeIconColor(img :ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
