@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DBFragment">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/databasetitle"
+            android:textAlignment="center"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgaddaccount"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/add_circle_24" />
+            <TextView android:id="@+id/tvaddaccount"
+                style="@style/infoTextView"
+                android:text="@string/add_an_account"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgrename"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/rename_outline_24" />
+            <TextView android:id="@+id/tvrename"
+                style="@style/infoTextView"
+                android:text="@string/rename_account"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgdeletedataaccount"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/delete_24" />
+            <TextView android:id="@+id/tvdeletedataaccount"
+                style="@style/infoTextView"
+                android:text="@string/delete_data_account"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgdeleteaccount"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/delete_forever_24" />
+            <TextView android:id="@+id/tvdeleteaccount"
+                style="@style/infoTextView"
+                android:text="@string/delete_an_account"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgdeleteAll"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/clear_24" />
+            <TextView android:id="@+id/tvdeleteall"
+                style="@style/infoTextView"
+                android:text="@string/delete_all"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgexport"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/upload_24" />
+            <TextView android:id="@+id/tvexportfile"
+                style="@style/infoTextView"
+                android:text="@string/export_file"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/infoMainLayout">
+            <ImageView
+                android:id="@+id/imgimportfile"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/downloading_24" />
+            <TextView android:id="@+id/tvloaddata"
+                style="@style/infoTextView"
+                android:text="@string/import_file"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+</FrameLayout>
+

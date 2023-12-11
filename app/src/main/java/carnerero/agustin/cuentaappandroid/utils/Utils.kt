@@ -1,7 +1,11 @@
 package carnerero.agustin.cuentaappandroid.utils
 
 
+import android.content.Context
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.OnResolveListener
@@ -116,6 +120,7 @@ class Utils {
             return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
         }
 
+
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
             return when(operator) {
@@ -126,5 +131,6 @@ class Utils {
             }
         }
     }
+
 }
 

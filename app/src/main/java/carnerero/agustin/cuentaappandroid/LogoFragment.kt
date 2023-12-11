@@ -49,9 +49,11 @@ class LogoFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val name = sharedPreferences.getString(getString(R.string.name), null)
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
-        val imgUri= Uri.parse(img)
-        val picture=binding.imgPhoto
-        picture.setImageURI(imgUri)
+        if(img!=null) {
+            val imgUri = Uri.parse(img)
+            val picture = binding.imgPhoto
+            picture.setImageURI(imgUri)
+        }
         // Mostrar un saludo personalizado en el TextView
         val wellcome = binding.tvWellcome
         val msg = "${wellcome.text} $name"

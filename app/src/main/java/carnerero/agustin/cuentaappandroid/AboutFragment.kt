@@ -61,6 +61,8 @@ class AboutFragment : Fragment() {
         val settingIcons=getString(R.string.iconstheme)
         val sideMenuIcons=getString(R.string.menuicons)
         val dateRangeIcons=getString(R.string.iconsdate)
+        val infoProfileIcons=getString(R.string.profile_icons)
+        val databaseIcons=getString(R.string.database_icons)
         val attributionsList = listOf(
             "<a href=\"https://www.flaticon.es/autores/2d3ds\" " +
                     "title=\"contabilidad iconos\">$accountIcon $attributionText 2D3ds - Flaticon</a>",
@@ -68,7 +70,9 @@ class AboutFragment : Fragment() {
                     "$githubIcon $attributionText Dave Gandy</a>",
             "<a href=\"https://fonts.google.com/icons\"> $settingIcons $attributionTextPlural Google Fonts</a>",
             "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>",
-            "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>"
+            "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>",
+            "<a href=\"https://fonts.google.com/icons\"> $infoProfileIcons $attributionTextPlural Google Fonts</a>",
+            "<a href=\"https://fonts.google.com/icons\"> $databaseIcons $attributionTextPlural Google Fonts</a>"
         )
 
         for (attributionHtml in attributionsList) {
