@@ -163,13 +163,17 @@ class InfoFragment : Fragment() {
         // Inflar el diseño personalizado
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_infodialog, null)
-
+        var msgHint=""
         // Obtener referencias a las vistas dentro del diseño personalizado
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
         val editText = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
-        val msgHint="${getString(R.string.newfield)} ${title}"
+        if(title.equals(getString(R.string.city))||title.equals(getString(R.string.address))
+            ||title.equals(getString(R.string.password))){
+            msgHint="${getString(R.string.newfieldF)} ${title}"
+            }else{
+        msgHint="${getString(R.string.newfield)} ${title}"}
         // Configurar el contenido del AlertDialog con el diseño personalizado
         builder.setView(dialogView)
 

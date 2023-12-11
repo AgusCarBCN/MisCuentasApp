@@ -151,4 +151,6 @@
     <string name="import_file">Cargar datos de un archivo csv</string>
     <string name="profile_icons">Iconos de informacion del perfil</string>
     <string name="database_icons">Iconos de la pagina de base de datos</string>
+    <string name="newfield">Nuevo</string>
+    <string name="newfieldF">Nueva</string>
 </resources>
