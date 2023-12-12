@@ -80,4 +80,36 @@ class CuentaDao(private val admin: DataBaseApp) {
 
         return count
     }
+    fun cambiarIbanCuenta(ibanActual: String, nuevoIban: String) {
+        admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
+
+            // Actualizar el IBAN en la tabla CUENTA
+            val values = ContentValues().apply {
+                put("iban", nuevoIban)
+            }
+            val whereClause = "iban = ?"
+            val whereArgs = arrayOf(ibanActual)
+            try {
+                db.update("CUENTA", values, whereClause, whereArgs)
+            } catch (e: SQLException) {
+                // Manejo de errores al cambiar el IBAN de la cuenta
+            }
+
+            // Actualizar el IBAN en otras tablas que hacen referencia a la cuenta
+            val tablasReferenciadas = listOf("MOVIMIENTO")  // Agrega más tablas según sea necesario
+
+            for (tabla in tablasReferenciadas) {
+                val updateQuery = "UPDATE $tabla SET iban = ? WHERE iban = ?"
+                val updateArgs = arrayOf(nuevoIban, ibanActual)
+
+                try {
+                    db.execSQL(updateQuery, updateArgs)
+                } catch (e: SQLException) {
+                    // Manejo de errores al cambiar el IBAN en las tablas referenciadas
+                }
+            }
+        }
+    }
+
 }

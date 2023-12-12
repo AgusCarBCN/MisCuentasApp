@@ -152,4 +152,6 @@
     <string name="newfield">Nuevo</string>
     <string name="newfieldF">Nueva</string>
     <string name="hintdeleteaccount">Iban de cuenta a borrar</string>
+    <string name="hintdeletemovaccount">Iban de cuenta a borrar importes</string>
+    <string name="titledelelemov">Borra los movimientos de una cuenta</string>
 </resources>

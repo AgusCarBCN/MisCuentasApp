@@ -76,4 +76,19 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
         return movimientos
     }
+    fun borrarMovimientosPorIBAN(iban: String) {
+        admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
+
+            val whereClause = "iban = ?"
+            val whereArgs = arrayOf(iban)
+
+            try {
+                db.delete("MOVIMIENTO", whereClause, whereArgs)
+            } catch (e: SQLException) {
+                // Manejo de errores al borrar los movimientos de la cuenta
+            }
+        }
+    }
+
 }

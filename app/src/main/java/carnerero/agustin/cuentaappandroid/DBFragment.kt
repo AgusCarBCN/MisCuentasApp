@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
@@ -39,6 +40,7 @@ class DBFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao= CuentaDao(admin)
+    private val movDAO=MovimientoBancarioDAO(admin)
     private lateinit var dni:String
     private var _binding: FragmentDbBinding? = null
     private val binding get() = _binding!!
@@ -72,6 +74,16 @@ class DBFragment : Fragment() {
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
+        imgList[1].setOnClickListener {
+            changeIbanAccount()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
+        imgList[2].setOnClickListener {
+            deleteAllMovInAccount()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
 
         imgList[3].setOnClickListener {
             deleteAnAccount()
@@ -83,7 +95,6 @@ class DBFragment : Fragment() {
 
     private fun insertAccount() {
         val builder = AlertDialog.Builder(context)
-
         // Inflar el diseño personalizado
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
@@ -95,7 +106,6 @@ class DBFragment : Fragment() {
         val et_amount = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
-
         //Hint de edit text
         et_iban.hint = msgHintIban
         et_amount.hint = msgHintAmount
@@ -115,9 +125,7 @@ class DBFragment : Fragment() {
             cuentaDao.insertarCuenta(cuenta)
             // Cerrar el AlertDialog
             dialog.dismiss()
-
         }
-
         // Configurar el evento de clic para el botón personalizado de cancelar
         cancelButton.setOnClickListener {
             // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
@@ -130,7 +138,6 @@ class DBFragment : Fragment() {
     }
     private fun deleteAnAccount() {
         val builder = AlertDialog.Builder(context)
-
         // Inflar el diseño personalizado
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
@@ -143,15 +150,11 @@ class DBFragment : Fragment() {
         msgHint=getString(R.string.hintdeleteaccount)
         // Configurar el contenido del AlertDialog con el diseño personalizado
         builder.setView(dialogView)
-
-
         // Configurar propiedades específicas del diseño
         dialogTitle.text = "${getString(R.string.delete_an_account)}"
         et_iban.hint = msgHint
-
         // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
         val dialog = builder.create()
-
         // Configurar el evento de clic para el botón personalizado de confirmar
         confirmButton.setOnClickListener {
             val iban = et_iban.text.toString()
@@ -159,7 +162,41 @@ class DBFragment : Fragment() {
             // Cerrar el AlertDialog
             dialog.dismiss()
         }
-
+        // Configurar el evento de clic para el botón personalizado de cancelar
+        cancelButton.setOnClickListener {
+            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
+            dialog.cancel()
+        }
+// Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+    private fun deleteAllMovInAccount() {
+        val builder = AlertDialog.Builder(context)
+        // Inflar el diseño personalizado
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
+        var msgHint=""
+        // Obtener referencias a las vistas dentro del diseño personalizado
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
+        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
+        msgHint=getString(R.string.hintdeletemovaccount)
+        // Configurar el contenido del AlertDialog con el diseño personalizado
+        builder.setView(dialogView)
+        // Configurar propiedades específicas del diseño
+        dialogTitle.text = "${getString(R.string.titledelelemov)}"
+        et_iban.hint = msgHint
+        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
+        val dialog = builder.create()
+        // Configurar el evento de clic para el botón personalizado de confirmar
+        confirmButton.setOnClickListener {
+            val iban = et_iban.text.toString()
+            movDAO.borrarMovimientosPorIBAN(iban)
+            // Cerrar el AlertDialog
+            dialog.dismiss()
+        }
         // Configurar el evento de clic para el botón personalizado de cancelar
         cancelButton.setOnClickListener {
             // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
@@ -170,6 +207,49 @@ class DBFragment : Fragment() {
         dialog.show()
     }
 
+    private fun changeIbanAccount() {
+        val builder = AlertDialog.Builder(context)
+        // Inflar el diseño personalizado
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
+        val msgHintIban = "Iban"
+        val msgHintNewIban = "${getString(R.string.newfield)} Iban"
+        // Obtener referencias a las vistas dentro del diseño personalizado
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
+        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
+        val et_newIban = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
+        //Hint de edit text
+        et_iban.hint = msgHintIban
+        et_newIban.hint = msgHintNewIban
+        // Configurar el contenido del AlertDialog con el diseño personalizado
+        builder.setView(dialogView)
+        // Configurar propiedades específicas del diseño
+        dialogTitle.text = getString(R.string.add_an_account)
+
+        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
+        val dialog = builder.create()
+
+        // Configurar el evento de clic para el botón personalizado de confirmar
+        confirmButton.setOnClickListener {
+            val iban = et_iban.text.toString()
+            val newIban = et_newIban.text.toString()
+
+            cuentaDao.cambiarIbanCuenta(iban,newIban)
+            // Cerrar el AlertDialog
+            dialog.dismiss()
+        }
+        // Configurar el evento de clic para el botón personalizado de cancelar
+        cancelButton.setOnClickListener {
+            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
+            dialog.cancel()
+        }
+
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
 
 
 
