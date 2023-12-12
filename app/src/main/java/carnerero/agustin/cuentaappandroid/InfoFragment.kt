@@ -162,7 +162,7 @@ class InfoFragment : Fragment() {
 
         // Inflar el diseño personalizado
         val inflater = LayoutInflater.from(context)
-        val dialogView = inflater.inflate(R.layout.custom_infodialog, null)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
         var msgHint=""
         // Obtener referencias a las vistas dentro del diseño personalizado
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
