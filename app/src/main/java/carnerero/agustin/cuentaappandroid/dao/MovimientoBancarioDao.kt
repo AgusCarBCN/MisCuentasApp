@@ -16,6 +16,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     // Método para insertar un nuevo movimiento bancario en la base de datos
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
             val values = ContentValues().apply {
                 put("importe", movimientoBancario.importe)
                 put("descripcion", movimientoBancario.descripcion)

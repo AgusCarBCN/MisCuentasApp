@@ -73,10 +73,10 @@ class CreateUserActivity : AppCompatActivity() {
                 cuentaDao.insertarCuenta(cuenta)
             }
             // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-            /*val listMov = readFileCsv()
+            val listMov = readFileCsv()
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
-            }*/
+            }
             startActivity(intent)
         }
         cancel.setOnClickListener{

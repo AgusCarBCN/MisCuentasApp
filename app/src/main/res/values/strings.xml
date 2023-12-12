@@ -155,5 +155,6 @@
     <string name="database_icons">Icons from database page</string>
     <string name="newfield">New</string>
     <string name="newfieldF">New</string>
+    <string name="hintdeleteaccount">Iban account to delete</string>
 
 </resources>

@@ -10,6 +10,8 @@ class CuentaDao(private val admin: DataBaseApp) {
     // Método para insertar una cuenta en la base de datos
     fun insertarCuenta(cuenta: Cuenta) {
         admin.writableDatabase.use { db ->
+
+            db.execSQL("PRAGMA foreign_keys = ON;")
             val values = ContentValues().apply {
                 put("iban", cuenta.iban)
                 put("saldo", cuenta.saldo)
@@ -47,6 +49,7 @@ class CuentaDao(private val admin: DataBaseApp) {
 
     fun actualizarSaldo(importe: Double, iban: String) {
         admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
             val query = "UPDATE CUENTA SET saldo = saldo + '$importe' WHERE iban = '$iban'"
             db.execSQL(query)
         }
@@ -54,6 +57,7 @@ class CuentaDao(private val admin: DataBaseApp) {
 
     fun borrarCuentaPorIBAN(iban: String) {
         admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
             val whereClause = "iban = ?"
             val whereArgs = arrayOf(iban)
             db.delete("CUENTA", whereClause, whereArgs)

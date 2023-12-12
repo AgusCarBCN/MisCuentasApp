@@ -72,6 +72,12 @@ class DBFragment : Fragment() {
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
+
+        imgList[3].setOnClickListener {
+            deleteAnAccount()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
         return view
     }
 
@@ -122,6 +128,49 @@ class DBFragment : Fragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
+    private fun deleteAnAccount() {
+        val builder = AlertDialog.Builder(context)
+
+        // Inflar el diseño personalizado
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
+        var msgHint=""
+        // Obtener referencias a las vistas dentro del diseño personalizado
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
+        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
+        msgHint=getString(R.string.hintdeleteaccount)
+        // Configurar el contenido del AlertDialog con el diseño personalizado
+        builder.setView(dialogView)
+
+
+        // Configurar propiedades específicas del diseño
+        dialogTitle.text = "${getString(R.string.delete_an_account)}"
+        et_iban.hint = msgHint
+
+        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
+        val dialog = builder.create()
+
+        // Configurar el evento de clic para el botón personalizado de confirmar
+        confirmButton.setOnClickListener {
+            val iban = et_iban.text.toString()
+            cuentaDao.borrarCuentaPorIBAN(iban)
+            // Cerrar el AlertDialog
+            dialog.dismiss()
+        }
+
+        // Configurar el evento de clic para el botón personalizado de cancelar
+        cancelButton.setOnClickListener {
+            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
+            dialog.cancel()
+        }
+// Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+
 
 
     private fun changeIconColor(img : ImageView){
