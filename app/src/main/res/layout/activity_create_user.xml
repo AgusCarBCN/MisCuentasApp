@@ -177,7 +177,7 @@
             android:layout_weight="1"
             android:background="@drawable/style_editetx"
             android:ems="10"
-            android:hint="@string/main_account"
+            android:hint="@string/add_an_account"
             android:inputType="text"
             android:textColor="#333333"
             android:textStyle="bold" />

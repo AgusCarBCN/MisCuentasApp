@@ -20,7 +20,6 @@
     <string name="zipcode">Zip code</string>
     <string name="email">email</string>
     <string name="accounts">Accounts</string>
-    <string name="main_account">Main account</string>
     <string name="second_account">Secondary account</string>
     <string name="new_user">Are you a new user?</string>
     <string name="select_account">Select an account</string>
@@ -143,10 +142,9 @@
     <string name="visitGitHub">Visit my gitHub</string>
     <string name="info">Account info</string>
     <string name="disabledoption">disabled option for an account</string>
-    <string name="add_an_account">add an account</string>
+    <string name="add_an_account">Add an account</string>
     <string name="img_photo">img_photo</string>
     <string name="databasetitle">Database</string>
-    <string name="add_account">Add an account</string>
     <string name="rename_account">Rename an account</string>
     <string name="delete_data_account">Delete data from an account</string>
     <string name="delete_an_account">Delete an account</string>
@@ -157,4 +155,5 @@
     <string name="database_icons">Icons from database page</string>
     <string name="newfield">New</string>
     <string name="newfieldF">New</string>
+
 </resources>

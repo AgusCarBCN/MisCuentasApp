@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -67,58 +69,60 @@ class DBFragment : Fragment() {
        }
         imgList[0].setOnClickListener {
             insertAccount()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
         }
         return view
     }
+
     private fun insertAccount() {
-        val builder = AlertDialog.Builder(context, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background)
-        builder.setTitle("Insertar una Cuenta")
+        val builder = AlertDialog.Builder(context)
 
-        // Crear los EditText para IBAN y Saldo
-        val ibanEditText = EditText(context)
-        val saldoEditText = EditText(context)
+        // Inflar el diseño personalizado
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
+        val msgHintIban = "Iban"
+        val msgHintAmount = "${getString(R.string.amount)}"
+        // Obtener referencias a las vistas dentro del diseño personalizado
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
+        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
+        val et_amount = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
 
-        // Establecer hints para los EditText
-        ibanEditText.hint = "Iban"
-        saldoEditText.hint = "Saldo"
+        //Hint de edit text
+        et_iban.hint = msgHintIban
+        et_amount.hint = msgHintAmount
+        // Configurar el contenido del AlertDialog con el diseño personalizado
+        builder.setView(dialogView)
+        // Configurar propiedades específicas del diseño
+        dialogTitle.text = getString(R.string.add_an_account)
 
-        // Configurar InputFilter para permitir números reales en el campo de saldo
-        val decimalInputFilter = InputFilter { source, start, end, dest, dstart, dend ->
-            val newString = dest.toString().substring(0, dstart) + source.subSequence(start, end) + dest.toString().substring(dend)
-            val decimalPattern = Regex("^(\\d*\\.?\\d{0,2})?\$")
-            if (decimalPattern.matches(newString)) null else ""
-        }
+        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
+        val dialog = builder.create()
 
-        saldoEditText.filters = arrayOf(decimalInputFilter) // Aplicar el InputFilter al EditText de saldo
-
-        builder.setView(LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(ibanEditText)
-            addView(saldoEditText)
-        })
-
-        builder.setPositiveButton("Aceptar") { _, _ ->
-            // Obtener los nuevos valores desde los EditText
-            val iban = ibanEditText.text.toString()
-            val saldo = saldoEditText.text.toString()
-            val cuenta= Cuenta(iban,saldo.toDouble(),dni)
-            // Realizar la lógica para insertar la cuenta con los valores proporcionados
-            // Puedes llamar a tu método correspondiente para manejar la inserción
+        // Configurar el evento de clic para el botón personalizado de confirmar
+        confirmButton.setOnClickListener {
+            val iban = et_iban.text.toString()
+            val amount = et_amount.text.toString().toDouble()
+            val cuenta = Cuenta(iban, amount, dni)
             cuentaDao.insertarCuenta(cuenta)
+            // Cerrar el AlertDialog
+            dialog.dismiss()
+
         }
-        builder.setNegativeButton("Cancelar") { dialog, _ ->
+
+        // Configurar el evento de clic para el botón personalizado de cancelar
+        cancelButton.setOnClickListener {
+            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
             dialog.cancel()
         }
 
-        val dialog = builder.create()
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
 
-    private fun insertAccountToDatabase(iban: String, saldo: String) {
-        // Aquí deberías realizar la lógica para insertar la cuenta en tu base de datos
-        // Puedes llamar a tu método correspondiente para realizar la inserción
-        // userDao.insertAccount(iban, saldo)
-    }
 
     private fun changeIconColor(img : ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
