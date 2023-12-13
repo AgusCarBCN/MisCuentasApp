@@ -3,7 +3,6 @@ package carnerero.agustin.cuentaappandroid
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.InputFilter
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
@@ -39,9 +35,9 @@ class DBFragment : Fragment() {
     private var param2: String? = null
     private lateinit var sharedPreferences: SharedPreferences
     private val admin = DataBaseAppSingleton.getInstance(context)
-    private val cuentaDao= CuentaDao(admin)
-    private val movDAO=MovimientoBancarioDAO(admin)
-    private lateinit var dni:String
+    private val cuentaDao = CuentaDao(admin)
+    private val movDAO = MovimientoBancarioDAO(admin)
+    private lateinit var dni: String
     private var _binding: FragmentDbBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,14 +57,16 @@ class DBFragment : Fragment() {
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         dni = sharedPreferences.getString(getString(R.string.id), null)!!
-        val imgList= listOf(binding.imgaddaccount,binding.imgrename,
-            binding.imgdeletedataaccount,binding.imgdeleteaccount,binding.imgdeleteAll,
-            binding.imgimportfile,binding.imgexport)
-       if(Utils.isDarkTheme) {
-           for (img in imgList) {
-               changeIconColor(img)
-           }
-       }
+        val imgList = listOf(
+            binding.imgaddaccount, binding.imgrename,
+            binding.imgdeletedataaccount, binding.imgdeleteaccount, binding.imgdeleteAll,
+            binding.imgimportfile, binding.imgexport
+        )
+        if (Utils.isDarkTheme) {
+            for (img in imgList) {
+                changeIconColor(img)
+            }
+        }
         imgList[0].setOnClickListener {
             insertAccount()
             // Actualizar el fragmento de saldo en la actividad principal
@@ -92,170 +90,120 @@ class DBFragment : Fragment() {
         }
         return view
     }
-
     private fun insertAccount() {
-        val builder = AlertDialog.Builder(context)
-        // Inflar el diseño personalizado
-        val inflater = LayoutInflater.from(context)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
-        val msgHintIban = "Iban"
-        val msgHintAmount = "${getString(R.string.amount)}"
-        // Obtener referencias a las vistas dentro del diseño personalizado
-        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
-        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
-        val et_amount = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
-        //Hint de edit text
-        et_iban.hint = msgHintIban
-        et_amount.hint = msgHintAmount
-        // Configurar el contenido del AlertDialog con el diseño personalizado
-        builder.setView(dialogView)
-        // Configurar propiedades específicas del diseño
-        dialogTitle.text = getString(R.string.add_an_account)
-
-        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
-        val dialog = builder.create()
-
-        // Configurar el evento de clic para el botón personalizado de confirmar
-        confirmButton.setOnClickListener {
-            val iban = et_iban.text.toString()
-            val amount = et_amount.text.toString().toDouble()
-            val cuenta = Cuenta(iban, amount, dni)
+        val dialog = createTwoFieldAlertDialogTwoFields(
+            R.string.add_an_account,
+            R.string.iban,
+            R.string.amount
+        ) { iban, amount ->
+            val cuenta = Cuenta(iban, amount.toDouble(), dni)
             cuentaDao.insertarCuenta(cuenta)
-            // Cerrar el AlertDialog
-            dialog.dismiss()
         }
-        // Configurar el evento de clic para el botón personalizado de cancelar
-        cancelButton.setOnClickListener {
-            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
-            dialog.cancel()
-        }
-
-        // Configurar el fondo transparente
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
-    }
-    private fun deleteAnAccount() {
-        val builder = AlertDialog.Builder(context)
-        // Inflar el diseño personalizado
-        val inflater = LayoutInflater.from(context)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
-        var msgHint=""
-        // Obtener referencias a las vistas dentro del diseño personalizado
-        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
-        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
-        msgHint=getString(R.string.hintdeleteaccount)
-        // Configurar el contenido del AlertDialog con el diseño personalizado
-        builder.setView(dialogView)
-        // Configurar propiedades específicas del diseño
-        dialogTitle.text = "${getString(R.string.delete_an_account)}"
-        et_iban.hint = msgHint
-        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
-        val dialog = builder.create()
-        // Configurar el evento de clic para el botón personalizado de confirmar
-        confirmButton.setOnClickListener {
-            val iban = et_iban.text.toString()
-            cuentaDao.borrarCuentaPorIBAN(iban)
-            // Cerrar el AlertDialog
-            dialog.dismiss()
-        }
-        // Configurar el evento de clic para el botón personalizado de cancelar
-        cancelButton.setOnClickListener {
-            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
-            dialog.cancel()
-        }
-// Configurar el fondo transparente
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
-    }
-    private fun deleteAllMovInAccount() {
-        val builder = AlertDialog.Builder(context)
-        // Inflar el diseño personalizado
-        val inflater = LayoutInflater.from(context)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
-        var msgHint=""
-        // Obtener referencias a las vistas dentro del diseño personalizado
-        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
-        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
-        msgHint=getString(R.string.hintdeletemovaccount)
-        // Configurar el contenido del AlertDialog con el diseño personalizado
-        builder.setView(dialogView)
-        // Configurar propiedades específicas del diseño
-        dialogTitle.text = "${getString(R.string.titledelelemov)}"
-        et_iban.hint = msgHint
-        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
-        val dialog = builder.create()
-        // Configurar el evento de clic para el botón personalizado de confirmar
-        confirmButton.setOnClickListener {
-            val iban = et_iban.text.toString()
-            movDAO.borrarMovimientosPorIBAN(iban)
-            // Cerrar el AlertDialog
-            dialog.dismiss()
-        }
-        // Configurar el evento de clic para el botón personalizado de cancelar
-        cancelButton.setOnClickListener {
-            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
-            dialog.cancel()
-        }
-// Configurar el fondo transparente
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
 
     private fun changeIbanAccount() {
-        val builder = AlertDialog.Builder(context)
-        // Inflar el diseño personalizado
-        val inflater = LayoutInflater.from(context)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
-        val msgHintIban = "Iban"
-        val msgHintNewIban = "${getString(R.string.newfield)} Iban"
-        // Obtener referencias a las vistas dentro del diseño personalizado
-        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
-        val et_iban = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
-        val et_newIban = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
-        //Hint de edit text
-        et_iban.hint = msgHintIban
-        et_newIban.hint = msgHintNewIban
-        // Configurar el contenido del AlertDialog con el diseño personalizado
-        builder.setView(dialogView)
-        // Configurar propiedades específicas del diseño
-        dialogTitle.text = getString(R.string.add_an_account)
-
-        // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
-        val dialog = builder.create()
-
-        // Configurar el evento de clic para el botón personalizado de confirmar
-        confirmButton.setOnClickListener {
-            val iban = et_iban.text.toString()
-            val newIban = et_newIban.text.toString()
-
-            cuentaDao.cambiarIbanCuenta(iban,newIban)
-            // Cerrar el AlertDialog
-            dialog.dismiss()
+        val dialog = createTwoFieldAlertDialogTwoFields(
+            R.string.add_an_account,
+            R.string.iban,
+            R.string.newiban
+        ) { iban, newIban ->
+            cuentaDao.cambiarIbanCuenta(iban, newIban)
         }
-        // Configurar el evento de clic para el botón personalizado de cancelar
-        cancelButton.setOnClickListener {
-            // Realizar las acciones deseadas al hacer clic en el botón personalizado de cancelar
-            dialog.cancel()
-        }
-
-        // Configurar el fondo transparente
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
 
+    private fun deleteAnAccount() {
+        val dialog = createAlertDialogOneField(R.string.delete_an_account, R.string.hintdeleteaccount) { iban ->
+            cuentaDao.borrarCuentaPorIBAN(iban)
+        }
+        dialog.show()
+    }
 
+    private fun deleteAllMovInAccount() {
+        val dialog =
+            createAlertDialogOneField(R.string.titledelelemov, R.string.hintdeletemovaccount) { iban ->
+                movDAO.borrarMovimientosPorIBAN(iban)
+            }
+        dialog.show()
+    }
 
     private fun changeIconColor(img : ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
+
+
+    private fun createAlertDialogOneField(
+        titleResId: Int,
+        hintResId: Int,
+        confirmAction: (String) -> Unit
+    ): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
+        val etField = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
+
+        dialogTitle.text = getString(titleResId)
+        etField.hint = getString(hintResId)
+
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        confirmButton.setOnClickListener {
+            confirmAction(etField.text.toString())
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
+    }
+    private fun createTwoFieldAlertDialogTwoFields(
+        titleResId: Int,
+        hintField1ResId: Int,
+        hintField2ResId: Int,
+        confirmAction: (String, String) -> Unit
+    ): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_dialog_two_fields, null)
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
+        val etField1 = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
+        val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
+
+        dialogTitle.text = getString(titleResId)
+        etField1.hint = getString(hintField1ResId)
+        etField2.hint = getString(hintField2ResId)
+
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        confirmButton.setOnClickListener {
+            confirmAction(etField1.text.toString(), etField2.text.toString())
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
+    }
+
+
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
