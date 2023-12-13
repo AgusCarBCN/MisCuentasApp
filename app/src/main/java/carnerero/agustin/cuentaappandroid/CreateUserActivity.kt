@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
@@ -15,7 +16,8 @@ import carnerero.agustin.cuentaappandroid.model.Usuario
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
-
+import java.io.File
+import java.io.FileWriter
 
 
 class CreateUserActivity : AppCompatActivity() {
@@ -111,4 +113,7 @@ class CreateUserActivity : AppCompatActivity() {
 
         return list
     }
+    // Método para escribir una lista de MovimientoBancario a un archivo CSV
+
+
 }
