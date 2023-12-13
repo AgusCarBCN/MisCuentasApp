@@ -3,6 +3,8 @@ package carnerero.agustin.cuentaappandroid
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -38,7 +41,9 @@ class DBFragment : Fragment() {
     private val cuentaDao = CuentaDao(admin)
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var dni: String
+    private lateinit var cuentas:ArrayList<Cuenta>
     private var _binding: FragmentDbBinding? = null
+
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +62,7 @@ class DBFragment : Fragment() {
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         dni = sharedPreferences.getString(getString(R.string.id), null)!!
+        cuentas= cuentaDao.listarCuentasPorDNI(dni) as ArrayList<Cuenta>
         val imgList = listOf(
             binding.imgaddaccount, binding.imgrename,
             binding.imgdeletedataaccount, binding.imgdeleteaccount, binding.imgdeleteAll,
@@ -92,6 +98,7 @@ class DBFragment : Fragment() {
     }
     private fun insertAccount() {
         val dialog = createTwoFieldAlertDialogTwoFields(
+            true,
             R.string.add_an_account,
             R.string.iban,
             R.string.amount
@@ -103,19 +110,31 @@ class DBFragment : Fragment() {
     }
 
     private fun changeIbanAccount() {
+        Log.d("Cambiar Iban", "Cambiando Iban")
         val dialog = createTwoFieldAlertDialogTwoFields(
+            false,
             R.string.add_an_account,
             R.string.iban,
             R.string.newiban
         ) { iban, newIban ->
-            cuentaDao.cambiarIbanCuenta(iban, newIban)
+            if (!existeAccount(iban)) {
+                Toast.makeText(requireActivity().applicationContext, getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
+
+            } else {
+                cuentaDao.cambiarIbanCuenta(iban, newIban)
+            }
         }
+
         dialog.show()
     }
 
     private fun deleteAnAccount() {
         val dialog = createAlertDialogOneField(R.string.delete_an_account, R.string.hintdeleteaccount) { iban ->
-            cuentaDao.borrarCuentaPorIBAN(iban)
+            if (!existeAccount(iban)) {
+                Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
+            } else {
+                cuentaDao.borrarCuentaPorIBAN(iban)
+            }
         }
         dialog.show()
     }
@@ -123,7 +142,11 @@ class DBFragment : Fragment() {
     private fun deleteAllMovInAccount() {
         val dialog =
             createAlertDialogOneField(R.string.titledelelemov, R.string.hintdeletemovaccount) { iban ->
-                movDAO.borrarMovimientosPorIBAN(iban)
+                if (!existeAccount(iban)) {
+                    Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
+                } else {
+                    movDAO.borrarMovimientosPorIBAN(iban)
+                }
             }
         dialog.show()
     }
@@ -141,7 +164,6 @@ class DBFragment : Fragment() {
         val builder = AlertDialog.Builder(context)
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
-
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
         val etField = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
@@ -166,10 +188,12 @@ class DBFragment : Fragment() {
         return dialog
     }
     private fun createTwoFieldAlertDialogTwoFields(
+        isNumber:Boolean,
         titleResId: Int,
         hintField1ResId: Int,
         hintField2ResId: Int,
         confirmAction: (String, String) -> Unit
+
     ): AlertDialog {
         val builder = AlertDialog.Builder(context)
         val inflater = LayoutInflater.from(context)
@@ -177,7 +201,11 @@ class DBFragment : Fragment() {
 
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
         val etField1 = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
+
         val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
+        if (isNumber) {
+            etField2.inputType = InputType.TYPE_CLASS_NUMBER
+        }
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
 
@@ -201,7 +229,9 @@ class DBFragment : Fragment() {
         return dialog
     }
 
-
+    private fun existeAccount(iban: String): Boolean {
+        return cuentas.any { cuenta -> cuenta.iban == iban }
+    }
 
 
     companion object {

@@ -156,4 +156,5 @@
     <string name="titledelelemov">Borra los movimientos de una cuenta</string>
     <string name="iban">IBAN</string>
     <string name="newiban">Nuevo IBAN</string>
+    <string name="existsAccount">No existe una cuenta con este IBAN</string>
 </resources>

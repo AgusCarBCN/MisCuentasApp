@@ -160,4 +160,5 @@
     <string name="titledelelemov">Delete all amounts from an account</string>
     <string name="iban">IBAN</string>
     <string name="newiban">New IBAN</string>
+    <string name="existsAccount">There is no account with this IBAN</string>
 </resources>
