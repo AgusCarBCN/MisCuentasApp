@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.adapter.AdapterBal
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.utils.Utils
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DBFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DBFragment : Fragment() {
+class DBFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,7 +45,6 @@ class DBFragment : Fragment() {
     private lateinit var dni: String
     private lateinit var cuentas:ArrayList<Cuenta>
     private var _binding: FragmentDbBinding? = null
-
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +60,13 @@ class DBFragment : Fragment() {
     ): View {
         _binding = FragmentDbBinding.inflate(inflater, container, false)
         val view = binding.root
+
+
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         dni = sharedPreferences.getString(getString(R.string.id), null)!!
         cuentas= cuentaDao.listarCuentasPorDNI(dni) as ArrayList<Cuenta>
+
         val imgList = listOf(
             binding.imgaddaccount, binding.imgrename,
             binding.imgdeletedataaccount, binding.imgdeleteaccount, binding.imgdeleteAll,
@@ -105,6 +109,7 @@ class DBFragment : Fragment() {
         ) { iban, amount ->
             val cuenta = Cuenta(iban, amount.toDouble(), dni)
             cuentaDao.insertarCuenta(cuenta)
+            (activity as MainActivity).actualizarFragmentSaldo()
         }
         dialog.show()
     }
@@ -122,6 +127,7 @@ class DBFragment : Fragment() {
 
             } else {
                 cuentaDao.cambiarIbanCuenta(iban, newIban)
+                (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
 
@@ -134,6 +140,7 @@ class DBFragment : Fragment() {
                 Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
             } else {
                 cuentaDao.borrarCuentaPorIBAN(iban)
+                (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
         dialog.show()
@@ -146,6 +153,7 @@ class DBFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
                 } else {
                     movDAO.borrarMovimientosPorIBAN(iban)
+                    (activity as MainActivity).actualizarFragmentSaldo()
                 }
             }
         dialog.show()
@@ -253,4 +261,6 @@ class DBFragment : Fragment() {
                 }
             }
     }
+
+
 }

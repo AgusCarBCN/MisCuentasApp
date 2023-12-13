@@ -42,4 +42,6 @@ class AdapterBal(
         holder.balanceAccount.setTextColor(textColor)
 
     }
+
+
 }
