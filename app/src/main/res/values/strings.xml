@@ -161,4 +161,6 @@
     <string name="iban">IBAN</string>
     <string name="newiban">New IBAN</string>
     <string name="existsAccount">There is no account with this IBAN</string>
+    <string name="questiondialog">Do you want to delete all data?</string>
+
 </resources>

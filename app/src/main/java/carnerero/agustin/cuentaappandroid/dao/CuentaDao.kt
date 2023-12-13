@@ -111,5 +111,11 @@ class CuentaDao(private val admin: DataBaseApp) {
             }
         }
     }
+    fun borrarTodasLasCuentas() {
+        admin.writableDatabase.use { db ->
+            db.execSQL("PRAGMA foreign_keys = ON;")
+            db.delete("CUENTA", null, null)
+        }
+    }
 
 }

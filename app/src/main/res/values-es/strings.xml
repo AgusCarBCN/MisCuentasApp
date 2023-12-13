@@ -157,4 +157,5 @@
     <string name="iban">IBAN</string>
     <string name="newiban">Nuevo IBAN</string>
     <string name="existsAccount">No existe una cuenta con este IBAN</string>
+    <string name="questiondialog">¿Quieres borrar todos los datos?</string>
 </resources>

@@ -98,6 +98,12 @@ class DBFragment : Fragment(){
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
+        imgList[4].setOnClickListener {
+            deleteAllAccounts()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
+
         return view
     }
     private fun insertAccount() {
@@ -159,10 +165,41 @@ class DBFragment : Fragment(){
         dialog.show()
     }
 
+    private fun deleteAllAccounts(){
+        val dialog=createAlertDialogSimple(R.string.questiondialog){
+            cuentaDao.borrarTodasLasCuentas()
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
+        dialog.show()
+    }
     private fun changeIconColor(img : ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
+    private fun createAlertDialogSimple(question:Int,
+                                        confirmAction: () -> Unit):AlertDialog{
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_simple_dialog, null)
+        val questiontv=dialogView.findViewById<TextView>(R.id.tv_question)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm0)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel0)
 
+        questiontv.text=getString(question)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        confirmButton.setOnClickListener {
+            confirmAction()
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
+    }
 
     private fun createAlertDialogOneField(
         titleResId: Int,
