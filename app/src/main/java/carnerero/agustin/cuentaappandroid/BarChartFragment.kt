@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -84,52 +85,73 @@ class BarChartFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val dni = sharedPreferences.getString(getString(R.string.userdni), null)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
-        val years = arrayOf("2023", "2024", "2025", "2026", "2027")
+        // Verificar si la lista de cuentas es nula o vacía
+                if (cuentas.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
+                    return binding.root
+                }
+            val years = arrayOf("2023", "2024", "2025", "2026", "2027")
 
-        // Crear adaptadores
-        val adapterCuenta = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val adapterYear = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+            // Crear adaptadores
+            val adapterCuenta = ArrayAdapter<String>(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item
+            )
+            val adapterYear = ArrayAdapter<String>(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item
+            )
 
-        // Configuración del adapter y del spinner
-        with(adapterCuenta) {
+            // Configuración del adapter y del spinner
+            with(adapterCuenta) {
 
-            cuentas?.forEach { cuenta ->
-                add(cuenta.iban)
-            }
-        }
-
-        for (i in 0..4) {
-            adapterYear.add(years[i])
-        }
-
-        // Establecer adaptadores en los Spinners
-        spCuenta.adapter = adapterCuenta
-        spYears.adapter = adapterYear
-
-        // Establecer valores predeterminados
-        selectedYear = years[0]
-        selectedIban = cuentas?.get(0)?.iban
-
-        // Escuchadores de los Spinners para la selección de elementos
-        spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                barChart.clear()
-                selectedIban = adapterCuenta.getItem(position)
-                updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                cuentas?.forEach { cuenta ->
+                    add(cuenta.iban)
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-
-        spYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                barChart.clear()
-                selectedYear = adapterYear.getItem(position)
-                updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+            for (i in 0..4) {
+                adapterYear.add(years[i])
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+            // Establecer adaptadores en los Spinners
+            spCuenta.adapter = adapterCuenta
+            spYears.adapter = adapterYear
+
+            // Establecer valores predeterminados
+            selectedYear = years[0]
+            selectedIban = cuentas?.get(0)?.iban
+
+            // Escuchadores de los Spinners para la selección de elementos
+            spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    barChart.clear()
+                    selectedIban = adapterCuenta.getItem(position)
+                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+            spYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    barChart.clear()
+                    selectedYear = adapterYear.getItem(position)
+                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
 
         return binding.root
     }

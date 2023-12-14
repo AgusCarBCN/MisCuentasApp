@@ -161,7 +161,7 @@
     <string name="newiban">New IBAN</string>
     <string name="existsAccount">There is no account with this IBAN</string>
     <string name="questiondialog">Do you want to delete all data?</string>
-
+    <string name="noaccounts">There are not accounts to show</string>
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>
     <string name="username">username</string>

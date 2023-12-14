@@ -1,4 +1,5 @@
 package carnerero.agustin.cuentaappandroid
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -44,7 +46,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Habilitar el botón de inicio en la barra de herramientas
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
         // Configurar el NavigationView y su escucha de eventos de selección
         val navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Obtener el contenedor de fragmentos
         val fragmentContainer: FragmentContainerView = findViewById(R.id.fcv_main_container)
+
 
         // Determinar el fragmento a mostrar según la selección del usuario en el NavigationView
         when (item.itemId) {
