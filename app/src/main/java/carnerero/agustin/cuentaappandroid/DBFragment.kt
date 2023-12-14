@@ -74,7 +74,7 @@ class DBFragment : Fragment(){
         val imgList = listOf(
             binding.imgaddaccount, binding.imgrename,
             binding.imgdeletedataaccount, binding.imgdeleteaccount, binding.imgdeleteAll,
-            binding.imgimportfile, binding.imgexport
+            binding.imgexport, binding.imgimportfile
         )
         if (Utils.isDarkTheme) {
             for (img in imgList) {
@@ -302,8 +302,8 @@ class DBFragment : Fragment(){
         return cuentas.any { cuenta -> cuenta.iban == iban }
     }
     private fun writeCsvFile(movimientos: MutableList<MovimientoBancario>, context: Context) {
-        val fileName = "movimientos_exportados.csv"
-        val file = File(context.getExternalFilesDir(null), fileName)
+        val fileName = "movimientos_export.csv"
+        val file = File(context.filesDir, fileName)
 
         try {
             BufferedWriter(FileWriter(file)).use { writer ->
@@ -313,12 +313,8 @@ class DBFragment : Fragment(){
                 // Escribir los movimientos bancarios
                 for (movimiento in movimientos) {
                     // Asegúrate de que los datos sean válidos antes de escribirlos
-                    if (movimiento.importe != null && movimiento.descripcion != null
-                        && movimiento.iban != null && movimiento.fechaImporte != null
-                    ) {
-                        val csvLine = "${movimiento.importe},${movimiento.descripcion},${movimiento.iban},${movimiento.fechaImporte}\n"
-                        writer.write(csvLine)
-                    }
+                    val csvLine = "${movimiento.importe},${movimiento.descripcion},${movimiento.iban},${movimiento.fechaImporte}\n"
+                    writer.write(csvLine)
                 }
             }
 
