@@ -26,7 +26,7 @@ class CuentaDao(private val admin: DataBaseApp) {
         }
     }
     // la función use para gestionar la apertura y cierre de la base de datos de manera segura en cada método
-    fun listarCuentasPorDNI(dni: String): List<Cuenta> {
+    fun listarCuentasPorDNI(dni: String): MutableList<Cuenta> {
         val cuentas = mutableListOf<Cuenta>()
 
         admin.readableDatabase.use { db ->

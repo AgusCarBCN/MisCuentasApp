@@ -10,11 +10,8 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.adapter.AdapterBal
-import carnerero.agustin.cuentaappandroid.adapter.AdapterMov
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfAccountsBinding
-import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfMovBinding
-import carnerero.agustin.cuentaappandroid.model.Cuenta
 import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,9 +28,9 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var lang:String?=null
-    private var country:String?=null
-    private var dni:String?=null
+    private lateinit var lang:String
+    private lateinit var country:String
+    private lateinit var dni:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
     private lateinit var adapterCuentas: AdapterBal
@@ -41,7 +38,7 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     // Instancia de la base de datos
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao= CuentaDao(admin)
-    private var cuentas:ArrayList<Cuenta> =ArrayList<Cuenta>()
+
     // View Binding para acceder a las vistas de diseño
     private var _binding:FragmentListOfAccountsBinding? = null
     private val binding get() = _binding!!
@@ -63,21 +60,24 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
         _binding = FragmentListOfAccountsBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        lang = sharedPreferences.getString(getString(R.string.lang), "es")
-        country = sharedPreferences.getString(getString(R.string.country), "ES")
-        dni = sharedPreferences.getString(getString(R.string.id), null)
-        cuentas= dni?.let { cuentaDao.listarCuentasPorDNI(it) } as ArrayList<Cuenta>
-        recyclerView = binding.rvCuentas
-        adapterCuentas=cuentas?.let { AdapterBal(it,this) }!!
-        recyclerView.apply {
-            this.layoutManager= LinearLayoutManager(context)
-            adapter=adapterCuentas
-        }
-
-
+        lang = sharedPreferences.getString(getString(R.string.lang), "es") ?: "es"
+        country = sharedPreferences.getString(getString(R.string.country), "ES") ?: "ES"
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
+        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        recyclerView = binding.rvCuentas
+        if (cuentas != null) {
+            adapterCuentas = AdapterBal(cuentas, this)
+            recyclerView.apply {
+                this.layoutManager = LinearLayoutManager(context)
+                adapter = adapterCuentas
+            }
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -40,14 +40,14 @@ class LogoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflar el diseño del fragmento y asignarlo a _binding
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val name = sharedPreferences.getString(getString(R.string.name), null)
+        val name = sharedPreferences.getString(getString(R.string.username), null)
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
         if(img!=null) {
             val imgUri = Uri.parse(img)

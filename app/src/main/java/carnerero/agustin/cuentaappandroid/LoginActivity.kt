@@ -92,9 +92,9 @@ class LoginActivity : AppCompatActivity() {
             if (userDni == userField && userPassword == passwordField) {
                 // Almacenar información del usuario en preferencias compartidas
                 sharedPreferences.edit {
-                    putString(getString(R.string.id), userDni)
-                    putString(getString(R.string.name), userName)
-                    putString(getString(R.string.password), userPassword)
+                    putString(getString(R.string.userdni), userDni)
+                    putString(getString(R.string.username), userName)
+                    putString(getString(R.string.userpass), userPassword)
                 }
 
                 // Mostrar mensaje de éxito y abrir la actividad principal

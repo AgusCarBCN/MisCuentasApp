@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.adapter.AdapterBal
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
@@ -64,7 +63,7 @@ class DBFragment : Fragment(){
 
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        dni = sharedPreferences.getString(getString(R.string.id), null)!!
+        dni = sharedPreferences.getString(getString(R.string.userdni), null)!!
         cuentas= cuentaDao.listarCuentasPorDNI(dni) as ArrayList<Cuenta>
 
         val imgList = listOf(
@@ -249,7 +248,10 @@ class DBFragment : Fragment(){
 
         val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
         if (isNumber) {
-            etField2.inputType = InputType.TYPE_CLASS_NUMBER
+            if (isNumber) {
+                etField2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            }
+
         }
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)

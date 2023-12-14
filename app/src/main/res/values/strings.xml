@@ -92,9 +92,8 @@
     <string name="dolar">dolar</string>
     <string name="libra">pound</string>
     <string name="settingcurrency">Setting currency\n</string>
-    <string name="prefences_select_currency">preferences_currency</string>
-    <string name="lang">lang</string>
-    <string name="country">country</string>
+
+
     <string name="calc_btn_coma">,</string>
     <string name="calc_sign">+/-</string>
     <string name="calc_btn_0">0</string>
@@ -163,4 +162,11 @@
     <string name="existsAccount">There is no account with this IBAN</string>
     <string name="questiondialog">Do you want to delete all data?</string>
 
+    <!--sharepreferences de usuario-->
+    <string name="userdni">userdni</string>
+    <string name="username">username</string>
+    <string name="userpass">userpass</string>
+    <string name="lang">lang</string>
+    <string name="country">country</string>
+    <string name="prefences_select_currency">preferences_currency</string>
 </resources>

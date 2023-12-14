@@ -82,7 +82,7 @@ class ConsultaFragment : Fragment() {
 
         // Recuperar DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.id), null)
+        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
 
         // Rellenar el spinner spConsulta
         val adapter =

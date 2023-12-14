@@ -82,7 +82,7 @@ class BarChartFragment : Fragment() {
         val spCuenta = binding.spCuenta
         val spYears = binding.spYear
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.id), null)
+        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         val years = arrayOf("2023", "2024", "2025", "2026", "2027")
 
