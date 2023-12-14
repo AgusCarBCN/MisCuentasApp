@@ -86,13 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.consulta -> fragment = ConsultaFragment()
             R.id.nuevoImporte -> fragment = NewAmountFragment()
             R.id.estadistica -> fragment = BarChartFragment()
-            R.id.transferencia ->{
-                if(numCuentas>1){
-             fragment = TransaccionFragment()}
-            else{
-                    fragment=LogoFragment()
-                    Toast.makeText(this, "opcion deshabilitada para una cuenta", Toast.LENGTH_LONG).show()
-            }}
+            R.id.transferencia ->fragment = TransaccionFragment()
             R.id.db->fragment=DBFragment()
             R.id.configuracion -> fragment = AjustesFragment()
             R.id.about->fragment=AboutFragment()
