@@ -64,8 +64,7 @@ class NewAmountFragment : Fragment() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.id), null)
-
+        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
         // Acceso a los componentes de la interfaz
         val spinnerCuentas = binding.spCuentas
         val nuevoIngreso = binding.btnNuevoingreso

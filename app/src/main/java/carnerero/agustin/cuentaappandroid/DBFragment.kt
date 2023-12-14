@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
@@ -20,7 +21,11 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -102,7 +107,11 @@ class DBFragment : Fragment(){
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-
+        imgList[5].setOnClickListener {
+            exportDataAccount()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
         return view
     }
     private fun insertAccount() {
@@ -169,6 +178,19 @@ class DBFragment : Fragment(){
             cuentaDao.borrarTodasLasCuentas()
             (activity as MainActivity).actualizarFragmentSaldo()
         }
+        dialog.show()
+    }
+    private fun exportDataAccount(){
+        val dialog =
+            createAlertDialogOneField(R.string.exportData, R.string.iban) { iban ->
+                if (!existeAccount(iban)) {
+                    Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
+                } else {
+                    val records = movDAO.getAll() // Obtén tus registros de la base de datos
+                    writeCsvFile(records,requireContext())
+                    (activity as MainActivity).actualizarFragmentSaldo()
+                }
+            }
         dialog.show()
     }
     private fun changeIconColor(img : ImageView){
@@ -278,6 +300,41 @@ class DBFragment : Fragment(){
 
     private fun existeAccount(iban: String): Boolean {
         return cuentas.any { cuenta -> cuenta.iban == iban }
+    }
+    private fun writeCsvFile(movimientos: MutableList<MovimientoBancario>, context: Context) {
+        val fileName = "movimientos_exportados.csv"
+        val file = File(context.getExternalFilesDir(null), fileName)
+
+        try {
+            BufferedWriter(FileWriter(file)).use { writer ->
+                // Escribir el encabezado del CSV
+                writer.write("Importe,Descripción,IBAN,FechaImporte\n")
+
+                // Escribir los movimientos bancarios
+                for (movimiento in movimientos) {
+                    // Asegúrate de que los datos sean válidos antes de escribirlos
+                    if (movimiento.importe != null && movimiento.descripcion != null
+                        && movimiento.iban != null && movimiento.fechaImporte != null
+                    ) {
+                        val csvLine = "${movimiento.importe},${movimiento.descripcion},${movimiento.iban},${movimiento.fechaImporte}\n"
+                        writer.write(csvLine)
+                    }
+                }
+            }
+
+            // Indicar al usuario que el archivo se ha exportado correctamente
+            // (puedes mostrar un mensaje o realizar otra acción según tus necesidades)
+            showToast("Archivo CSV exportado correctamente: $fileName", context)
+        } catch (e: Exception) {
+            // Manejar errores al escribir el archivo CSV
+            e.printStackTrace()
+            showToast("Error al exportar el archivo CSV", context)
+        }
+    }
+
+    // Método para escr
+    private fun showToast(message: String, context: Context) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
 

@@ -14,7 +14,6 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -79,7 +78,7 @@ class TransaccionFragment : Fragment() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.id), null)
+        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
 
         // Crear un adaptador de cadena (String) para llenar los Spinners
         val adapter =
@@ -87,7 +86,16 @@ class TransaccionFragment : Fragment() {
 
         // Obtener las cuentas del usuario logeado con el DNI
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
-
+        // Verificar si la lista de cuentas es nula o vacía
+        if (cuentas.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
+            return binding.root
+        //Verifico si solo hay una cuenta
+        }
+        if(cuentas.size==1){
+            Toast.makeText(requireContext(), getString(R.string.oneaccount), Toast.LENGTH_SHORT).show()
+            return binding.root
+        }
 
         // Llenar los dos Spinners con las cuentas disponibles
         with(adapter) {
