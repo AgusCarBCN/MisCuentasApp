@@ -50,14 +50,13 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
         _binding = FragmentListOfMovBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        lang=sharedPreferences.getString(getString(R.string.lang), null)
-        country=sharedPreferences.getString(getString(R.string.country), null)
+        lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
+        country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Configuración del RecyclerView y el adaptador
         val movimientos = arguments?.getParcelableArrayList("clave_movimientos", MovimientoBancario::class.java)
         recyclerView = binding.rvMovimientos
