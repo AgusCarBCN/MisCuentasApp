@@ -3,8 +3,10 @@
     xmlns:tool="http://schemas.android.com/tools"
     package="carnerero.agustin.cuentaappandroid">
     <!-- Agrega la siguiente línea para permiso de lectura externa -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tool:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tool:ignore="ScopedStorage" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

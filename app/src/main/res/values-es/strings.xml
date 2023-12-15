@@ -159,6 +159,7 @@
     <string name="questiondialog">¿Quieres borrar todos los datos?</string>
     <string name="noaccounts">No hay cuentas que mostrar</string>
     <string name="exportData">Exportar datos desde cuenta</string>
+    <string name="importData">Importa datos</string>
     <string name="oneaccount">Opcion no disponible para una cuenta</string>
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>

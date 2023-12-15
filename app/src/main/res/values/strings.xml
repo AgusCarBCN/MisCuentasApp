@@ -164,6 +164,7 @@
     <string name="noaccounts">There are not accounts to show</string>
     <string name="oneaccount">Option not available for an account</string>
     <string name="exportData">Export data from account</string>
+    <string name="importData">Import data</string>
 
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>

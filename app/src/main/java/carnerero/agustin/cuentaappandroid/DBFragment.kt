@@ -31,9 +31,15 @@ import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
+import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 
@@ -56,8 +62,11 @@ class DBFragment : Fragment(){
     private val cuentaDao = CuentaDao(admin)
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var pickerExport: ActivityResultLauncher<Intent>
+    private lateinit var pickerImport: ActivityResultLauncher<Intent>
+
     private lateinit var dni: String
     private lateinit var cuentas:ArrayList<Cuenta>
+
     private var _binding: FragmentDbBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,11 +93,25 @@ class DBFragment : Fragment(){
                             writeCsvFile(records, requireContext(),"$filename.csv" , directory)
                         }
                         dialog.show()
-
                     }
                 }
             }
         }
+
+        pickerImport = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.also { uri ->
+                    val selectedFile = DocumentFile.fromSingleUri(requireContext(), uri)
+                    if (selectedFile != null && selectedFile.isFile) {
+                        // Mostrar la ruta del archivo en un Toast
+                        Toast.makeText(requireContext(),"Ruta del archivo: ${selectedFile.uri}", Toast.LENGTH_SHORT).show()
+
+                        // Aquí puedes realizar otras acciones con el archivo seleccionado
+                    }
+                }
+            }
+        }
+
 
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -132,16 +155,30 @@ class DBFragment : Fragment(){
             (activity as MainActivity).actualizarFragmentSaldo()
         }
         imgList[5].setOnClickListener {
-           pickDirectoryAndExport()
+           exportFileCsv()
+            // Actualizar el fragmento de saldo en la actividad principal
+            (activity as MainActivity).actualizarFragmentSaldo()
+        }
+        imgList[6].setOnClickListener {
+           importFileCsv()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
         return view
     }
-    private fun pickDirectoryAndExport() {
+
+    private fun exportFileCsv() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
         pickerExport.launch(intent)
     }
+    private fun importFileCsv() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "*/*"  // Puedes ajustar el tipo de archivo permitido si es necesario
+        pickerImport.launch(intent)
+    }
+
+
     private fun insertAccount() {
         val dialog = createTwoFieldAlertDialogTwoFields(
             true,
@@ -347,13 +384,72 @@ class DBFragment : Fragment(){
             showToast("Error al exportar el archivo CSV", context)
         }
     }
+    private fun readCsvFile(
+        context: Context,
+        fileUri: Uri
+    ): MutableList<MovimientoBancario> {
+        val list = mutableListOf<MovimientoBancario>()
+
+        try {
+            context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
+
+                for (record in csvParser) {
+                    try {
+                        val importe = record.get(0).toDouble()
+                        val descripcion = record.get(1)
+                        val iban = record.get(2)
+                        val fechaImporte = record.get(3)
+
+                        // Crear objeto MovimientoBancario y agregarlo a la lista
+                        val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
+                        list.add(movimientoBancario)
+                    } catch (e: Exception) {
+                        // Manejar errores al analizar los datos CSV
+                        e.printStackTrace()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            // Manejar errores al abrir el archivo CSV
+            e.printStackTrace()
+            showToast("Error al abrir el archivo CSV", context)
+        }
+
+        return list
+    }
+
+
 
     // Método para escr
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun readFileCsv(path:String): MutableList<MovimientoBancario> {
+        val bufferedReader = BufferedReader(path.reader())
+        val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
+        val list = mutableListOf<MovimientoBancario>()
 
+        for (record in csvParser) {
+            try {
+                val importe = record.get(1).toDouble()
+                val descripcion = record.get(2)
+                val iban = record.get(3)
+                val fechaImporte = record.get(4)
+
+                // Crear objeto MovimientoBancario y agregarlo a la lista
+                val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
+                list.add(movimientoBancario)
+            } catch (e: Exception) {
+                // Manejar errores al analizar los datos CSV
+                e.printStackTrace()
+            }
+        }
+
+        return list
+    }
 
 
 
