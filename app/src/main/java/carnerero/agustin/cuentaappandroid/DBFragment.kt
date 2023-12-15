@@ -88,7 +88,7 @@ class DBFragment : Fragment(){
                 result.data?.data?.also { uri ->
                     val directory = DocumentFile.fromTreeUri(requireContext(), uri)
                     if (directory != null && directory.isDirectory) {
-                        val dialog = createAlertDialogOneField(R.string.exportData, R.string.name) { filename->
+                        val dialog = createAlertDialogOneField(R.string.exportData, R.string.filename) { filename->
                             val records = movDAO.getAll()
                             writeCsvFile(records, requireContext(),"$filename.csv" , directory)
                         }

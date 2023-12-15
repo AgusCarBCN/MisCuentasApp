@@ -161,11 +161,13 @@
     <string name="exportData">Exportar datos desde cuenta</string>
     <string name="importData">Importa datos</string>
     <string name="oneaccount">Opcion no disponible para una cuenta</string>
+    <string name="filename">dale un nombre al archivo csv</string>
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>
     <string name="lang">lang</string>
     <string name="country">country</string>
+
     <string name="prefences_select_currency">preferences_currency</string>
 </resources>
