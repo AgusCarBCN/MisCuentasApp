@@ -55,7 +55,7 @@ class DBFragment : Fragment(){
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao = CuentaDao(admin)
     private val movDAO = MovimientoBancarioDAO(admin)
-    private lateinit var directoryPickerLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pickerExport: ActivityResultLauncher<Intent>
     private lateinit var dni: String
     private lateinit var cuentas:ArrayList<Cuenta>
     private var _binding: FragmentDbBinding? = null
@@ -74,19 +74,17 @@ class DBFragment : Fragment(){
     ): View {
         _binding = FragmentDbBinding.inflate(inflater, container, false)
         val view = binding.root
-        directoryPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        pickerExport = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.also { uri ->
                     val directory = DocumentFile.fromTreeUri(requireContext(), uri)
                     if (directory != null && directory.isDirectory) {
-                        // El usuario ha seleccionado un directorio
-                        // Puedes guardar la información sobre el directorio o utilizarlo directamente
-                        val directoryPath = directory.uri.toString()
+                        val dialog = createAlertDialogOneField(R.string.exportData, R.string.name) { filename->
+                            val records = movDAO.getAll()
+                            writeCsvFile(records, requireContext(),"$filename.csv" , directory)
+                        }
+                        dialog.show()
 
-                        // Aquí puedes realizar la lógica para exportar datos al directorio seleccionado
-                        // Llama a la función writeCsvFile con el directorio obtenido
-                        val records = movDAO.getAll() // Obtén tus registros de la base de datos
-                        writeCsvFile(records, requireContext(), "movimientos_export.csv", directory)
                     }
                 }
             }
@@ -142,7 +140,7 @@ class DBFragment : Fragment(){
     }
     private fun pickDirectoryAndExport() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        directoryPickerLauncher.launch(intent)
+        pickerExport.launch(intent)
     }
     private fun insertAccount() {
         val dialog = createTwoFieldAlertDialogTwoFields(
@@ -356,19 +354,7 @@ class DBFragment : Fragment(){
     }
 
 
-    private fun createFile(pickerInitialUri: Uri) {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/pdf"
-            putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
 
-            // Optionally, specify a URI for the directory that should be opened in
-            // the system file picker before your app creates the document.
-            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
-        }
-        startActivityForResult(intent, CREATE_FILE)
-
-    }
 
 
     companion object {
