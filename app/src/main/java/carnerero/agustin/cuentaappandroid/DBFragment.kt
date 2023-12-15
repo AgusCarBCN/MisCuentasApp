@@ -1,9 +1,13 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +18,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.AppConst.CREATE_FILE
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
@@ -26,6 +34,7 @@ import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
+import java.io.OutputStreamWriter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,6 +55,7 @@ class DBFragment : Fragment(){
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao = CuentaDao(admin)
     private val movDAO = MovimientoBancarioDAO(admin)
+    private lateinit var directoryPickerLauncher: ActivityResultLauncher<Intent>
     private lateinit var dni: String
     private lateinit var cuentas:ArrayList<Cuenta>
     private var _binding: FragmentDbBinding? = null
@@ -64,7 +74,23 @@ class DBFragment : Fragment(){
     ): View {
         _binding = FragmentDbBinding.inflate(inflater, container, false)
         val view = binding.root
+        directoryPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.also { uri ->
+                    val directory = DocumentFile.fromTreeUri(requireContext(), uri)
+                    if (directory != null && directory.isDirectory) {
+                        // El usuario ha seleccionado un directorio
+                        // Puedes guardar la información sobre el directorio o utilizarlo directamente
+                        val directoryPath = directory.uri.toString()
 
+                        // Aquí puedes realizar la lógica para exportar datos al directorio seleccionado
+                        // Llama a la función writeCsvFile con el directorio obtenido
+                        val records = movDAO.getAll() // Obtén tus registros de la base de datos
+                        writeCsvFile(records, requireContext(), "movimientos_export.csv", directory)
+                    }
+                }
+            }
+        }
 
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -108,11 +134,15 @@ class DBFragment : Fragment(){
             (activity as MainActivity).actualizarFragmentSaldo()
         }
         imgList[5].setOnClickListener {
-            exportDataAccount()
+           pickDirectoryAndExport()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
         return view
+    }
+    private fun pickDirectoryAndExport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        directoryPickerLauncher.launch(intent)
     }
     private fun insertAccount() {
         val dialog = createTwoFieldAlertDialogTwoFields(
@@ -180,19 +210,7 @@ class DBFragment : Fragment(){
         }
         dialog.show()
     }
-    private fun exportDataAccount(){
-        val dialog =
-            createAlertDialogOneField(R.string.exportData, R.string.iban) { iban ->
-                if (!existeAccount(iban)) {
-                    Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
-                } else {
-                    val records = movDAO.getAll() // Obtén tus registros de la base de datos
-                    writeCsvFile(records,requireContext())
-                    (activity as MainActivity).actualizarFragmentSaldo()
-                }
-            }
-        dialog.show()
-    }
+
     private fun changeIconColor(img : ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
@@ -301,12 +319,17 @@ class DBFragment : Fragment(){
     private fun existeAccount(iban: String): Boolean {
         return cuentas.any { cuenta -> cuenta.iban == iban }
     }
-    private fun writeCsvFile(movimientos: MutableList<MovimientoBancario>, context: Context) {
-        val fileName = "movimientos_export.csv"
-        val file = File(context.filesDir, fileName)
-
+    private fun writeCsvFile(
+        movimientos: MutableList<MovimientoBancario>,
+        context: Context,
+        fileName: String,
+        directory: DocumentFile
+    ) {
         try {
-            BufferedWriter(FileWriter(file)).use { writer ->
+            val file = directory.createFile("text/csv", fileName)
+            val outputStream = context.contentResolver.openOutputStream(file?.uri!!)
+
+            BufferedWriter(OutputStreamWriter(outputStream)).use { writer ->
                 // Escribir el encabezado del CSV
                 writer.write("Importe,Descripción,IBAN,FechaImporte\n")
 
@@ -319,7 +342,6 @@ class DBFragment : Fragment(){
             }
 
             // Indicar al usuario que el archivo se ha exportado correctamente
-            // (puedes mostrar un mensaje o realizar otra acción según tus necesidades)
             showToast("Archivo CSV exportado correctamente: $fileName", context)
         } catch (e: Exception) {
             // Manejar errores al escribir el archivo CSV
@@ -331,6 +353,21 @@ class DBFragment : Fragment(){
     // Método para escr
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun createFile(pickerInitialUri: Uri) {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
+
+            // Optionally, specify a URI for the directory that should be opened in
+            // the system file picker before your app creates the document.
+            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
+        }
+        startActivityForResult(intent, CREATE_FILE)
+
     }
 
 

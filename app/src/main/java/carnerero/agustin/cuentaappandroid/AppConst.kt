@@ -17,4 +17,5 @@ object AppConst {
     const val ZIP="codigopostal"
     const val EMAIL="email"
     const val PASSWORD="password"
+    const val CREATE_FILE = 1
 }
