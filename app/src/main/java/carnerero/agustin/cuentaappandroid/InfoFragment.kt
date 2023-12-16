@@ -84,8 +84,8 @@ class InfoFragment : Fragment() {
         val view = binding.root
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-         dni = sharedPreferences.getString(getString(R.string.id), null)!!
-        val pass = sharedPreferences.getString(getString(R.string.password), null)!!
+         dni = sharedPreferences.getString(getString(R.string.userdni), null)!!
+        val pass = sharedPreferences.getString(getString(R.string.userpass), null)!!
         val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
         val user = userDao.obtenerUsuarioPorDniYPassword(dni, pass)
 

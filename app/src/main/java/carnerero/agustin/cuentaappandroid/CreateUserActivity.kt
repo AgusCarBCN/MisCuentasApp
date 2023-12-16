@@ -113,7 +113,7 @@ class CreateUserActivity : AppCompatActivity() {
 
         return list
     }
-    // Método para escribir una lista de MovimientoBancario a un archivo CSV
+
 
 
 }

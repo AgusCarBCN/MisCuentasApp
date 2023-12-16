@@ -103,11 +103,14 @@ class DBFragment : Fragment(){
                 result.data?.data?.also { uri ->
                     val selectedFile = DocumentFile.fromSingleUri(requireContext(), uri)
                     if (selectedFile != null && selectedFile.isFile) {
-                        // Mostrar la ruta del archivo en un Toast
-                        Toast.makeText(requireContext(),"Ruta del archivo: ${selectedFile.uri}", Toast.LENGTH_SHORT).show()
 
-                        // Aquí puedes realizar otras acciones con el archivo seleccionado
-                    }
+                        val listMov = readCsvFile(requireContext(),selectedFile.uri)
+                        for (element in listMov) {
+                            movDAO.nuevoImporte(element)
+                        }
+
+                        Toast.makeText(requireContext(),"importando: ${selectedFile.uri}", Toast.LENGTH_SHORT).show()
+                        }
                 }
             }
         }
@@ -419,7 +422,29 @@ class DBFragment : Fragment(){
 
         return list
     }
+    private fun readFileCsv2(path:String): MutableList<MovimientoBancario> {
+        val bufferedReader = BufferedReader(path.reader())
+        val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
+        val list = mutableListOf<MovimientoBancario>()
 
+        for (record in csvParser) {
+            try {
+                val importe = record.get(1).toDouble()
+                val descripcion = record.get(2)
+                val iban = record.get(3)
+                val fechaImporte = record.get(4)
+
+                // Crear objeto MovimientoBancario y agregarlo a la lista
+                val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
+                list.add(movimientoBancario)
+            } catch (e: Exception) {
+                // Manejar errores al analizar los datos CSV
+                e.printStackTrace()
+            }
+        }
+
+        return list
+    }
 
 
     // Método para escr
