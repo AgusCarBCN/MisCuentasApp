@@ -1,12 +1,9 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.SharedPreferences
 import android.icu.util.Calendar
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +17,6 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentConsultaBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -64,7 +60,6 @@ class ConsultaFragment : Fragment() {
         // Inflar el diseño para este fragmento
         _binding = FragmentConsultaBinding.inflate(inflater, container, false)
         val view = binding.root
-        val rootview = inflater.inflate(R.layout.fragment_consulta, container, false)
 
         // Componentes del fragmento
         val etDateFrom = binding.etDatefrom
@@ -87,7 +82,6 @@ class ConsultaFragment : Fragment() {
         // Rellenar el spinner spConsulta
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val hint = getString(R.string.select_account)
         val cuentaDao = CuentaDao(admin)
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         // Configuración del adapter y del spinner
@@ -283,9 +277,7 @@ class ConsultaFragment : Fragment() {
             month,
             day
         )
-        val window = datePickerDialog.window
-
-        // Color de fondo
+        //val window = datePickerDialog.window
 
         datePickerDialog.show()
     }

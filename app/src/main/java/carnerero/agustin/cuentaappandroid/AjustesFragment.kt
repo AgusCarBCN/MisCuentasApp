@@ -69,7 +69,7 @@ class AjustesFragment : Fragment() {
 
         // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
-        setTextLang(enableEnLang,langText,english,spanish)
+        setTextLang(enableEnLang,langText)
 
         // Establecer el estado inicial del Switch y el radioGroup
         switchTheme.isChecked = enableDarkTheme
@@ -128,10 +128,10 @@ class AjustesFragment : Fragment() {
             icon.setImageResource(iconDisable)
         }
     }
-    private fun setTextLang(enable: Boolean,langText:TextView,en:String,es:String){
+    private fun setTextLang(enable: Boolean,langText:TextView){
         if(enable){
-            langText.text=es
-        }else langText.text=en
+            langText.text=spanish
+        }else langText.text=english
     }
 
     companion object {

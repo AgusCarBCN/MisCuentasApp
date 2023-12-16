@@ -36,24 +36,7 @@ class DataBaseApp(
                                           "fechaImporte DATE,"+
                                           "FOREIGN KEY (iban) REFERENCES CUENTA (iban) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    /*private val createIncomeTable = "CREATE TABLE INGRESO"+
-                                        "(id INTEGER PRIMARY KEY,"+
-                                        "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
 
-    private val createBillTable = "CREATE TABLE GASTO"+
-                                        "(id INTEGER PRIMARY KEY,"+
-                                        "FOREIGN KEY (id) REFERENCES MOVIMIENTO (id) ON UPDATE CASCADE ON DELETE CASCADE)"
-
-
-    private val createTrigger = buildString {
-        append("CREATE TRIGGER IF NOT EXISTS insertgastoingreso ")
-        append("AFTER INSERT ON MOVIMIENTO ")
-        append("FOR EACH ROW ")
-        append("BEGIN ")
-        append("   INSERT INTO INGRESO (id) SELECT NEW.id WHERE NEW.importe > 0; ")
-        append("   INSERT INTO GASTO (id) SELECT NEW.id WHERE NEW.importe < 0; ")
-        append("END;")
-    }*/
 
     override fun onCreate(database: SQLiteDatabase?) {
 

@@ -99,7 +99,7 @@ class TransaccionFragment : Fragment() {
 
         // Llenar los dos Spinners con las cuentas disponibles
         with(adapter) {
-            cuentas?.forEach { cuenta ->
+            cuentas.forEach { cuenta ->
                 add(cuenta.iban)
             }
         }

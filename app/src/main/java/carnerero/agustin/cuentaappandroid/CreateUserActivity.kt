@@ -3,31 +3,24 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.view.View
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateUserBinding
-
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.model.Usuario
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
-import java.io.File
-import java.io.FileWriter
-
 
 class CreateUserActivity : AppCompatActivity() {
     private lateinit var usuarioDao: UsuarioDao
     private lateinit var cuentaDao: CuentaDao
-
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var binding: ActivityCreateUserBinding
-    private val cuentas:ArrayList<Cuenta> =ArrayList<Cuenta>()
+    private val cuentas:ArrayList<Cuenta> =ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateUserBinding.inflate(layoutInflater)
@@ -75,10 +68,10 @@ class CreateUserActivity : AppCompatActivity() {
                 cuentaDao.insertarCuenta(cuenta)
             }
             // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-            val listMov = readFileCsv()
+          /*  val listMov = readFileCsv()
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
-            }
+            }*/
             startActivity(intent)
         }
         cancel.setOnClickListener{
@@ -90,7 +83,7 @@ class CreateUserActivity : AppCompatActivity() {
 
 
     // Método para leer el archivo CSV y devolver una lista de MovimientoBancario
-    private fun readFileCsv(): MutableList<MovimientoBancario> {
+   /* private fun readFileCsv(): MutableList<MovimientoBancario> {
         val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
         val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
         val list = mutableListOf<MovimientoBancario>()
@@ -112,7 +105,7 @@ class CreateUserActivity : AppCompatActivity() {
         }
 
         return list
-    }
+    }*/
 
 
 

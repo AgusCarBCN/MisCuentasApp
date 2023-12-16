@@ -19,7 +19,6 @@ import carnerero.agustin.cuentaappandroid.databinding.FragmentBarChartBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -105,7 +104,7 @@ class BarChartFragment : Fragment() {
             // Configuración del adapter y del spinner
             with(adapterCuenta) {
 
-                cuentas?.forEach { cuenta ->
+                cuentas.forEach { cuenta ->
                     add(cuenta.iban)
                 }
             }
@@ -120,7 +119,7 @@ class BarChartFragment : Fragment() {
 
             // Establecer valores predeterminados
             selectedYear = years[0]
-            selectedIban = cuentas?.get(0)?.iban
+            selectedIban = cuentas[0].iban
 
             // Escuchadores de los Spinners para la selección de elementos
             spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -214,7 +213,7 @@ class BarChartFragment : Fragment() {
             val groupSpace = 0.2f
             barData.barWidth = 0.20f
             xAxis.axisMinimum = 0f
-            xAxis.setAxisMaximum(barData.getGroupWidth(groupSpace, barSpace)*12)
+            xAxis.axisMaximum = barData.getGroupWidth(groupSpace, barSpace)*12
             // Animación y otras configuraciones
             animate()
             setNoDataText("")

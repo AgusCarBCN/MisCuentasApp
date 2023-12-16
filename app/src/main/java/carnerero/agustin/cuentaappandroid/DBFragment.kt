@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,21 +23,16 @@ import androidx.core.content.ContextCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.AppConst.CREATE_FILE
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
 import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
@@ -325,12 +319,12 @@ class DBFragment : Fragment(){
         val etField1 = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
 
         val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
-        if (isNumber) {
+
             if (isNumber) {
                 etField2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
             }
 
-        }
+
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
 
@@ -422,61 +416,11 @@ class DBFragment : Fragment(){
 
         return list
     }
-    private fun readFileCsv2(path:String): MutableList<MovimientoBancario> {
-        val bufferedReader = BufferedReader(path.reader())
-        val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
-        val list = mutableListOf<MovimientoBancario>()
-
-        for (record in csvParser) {
-            try {
-                val importe = record.get(1).toDouble()
-                val descripcion = record.get(2)
-                val iban = record.get(3)
-                val fechaImporte = record.get(4)
-
-                // Crear objeto MovimientoBancario y agregarlo a la lista
-                val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
-                list.add(movimientoBancario)
-            } catch (e: Exception) {
-                // Manejar errores al analizar los datos CSV
-                e.printStackTrace()
-            }
-        }
-
-        return list
-    }
-
 
     // Método para escr
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
-
-    private fun readFileCsv(path:String): MutableList<MovimientoBancario> {
-        val bufferedReader = BufferedReader(path.reader())
-        val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
-        val list = mutableListOf<MovimientoBancario>()
-
-        for (record in csvParser) {
-            try {
-                val importe = record.get(1).toDouble()
-                val descripcion = record.get(2)
-                val iban = record.get(3)
-                val fechaImporte = record.get(4)
-
-                // Crear objeto MovimientoBancario y agregarlo a la lista
-                val movimientoBancario = MovimientoBancario(importe, descripcion, iban, fechaImporte)
-                list.add(movimientoBancario)
-            } catch (e: Exception) {
-                // Manejar errores al analizar los datos CSV
-                e.printStackTrace()
-            }
-        }
-
-        return list
-    }
-
-
 
     companion object {
         /**

@@ -45,7 +45,7 @@ class InfoFragment : Fragment() {
     private val userDao=UsuarioDao(admin)
     private lateinit var dni:String
 
-    val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
+    private val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
         if (uri != null) {
             // Guardar la imagen en la memoria externa
             val imagePath = saveImageToExternalStorage(uri)
@@ -130,7 +130,7 @@ class InfoFragment : Fragment() {
 
 
         imgIconCamera.setOnClickListener {
-            if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) {
+            if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(requireContext())) {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
             }
@@ -143,18 +143,18 @@ class InfoFragment : Fragment() {
 
 
     private fun saveImageToExternalStorage(uri: Uri): String? {
-        try {
+        return try {
             val inputStream = requireContext().contentResolver.openInputStream(uri)
             val file = File(requireContext().externalCacheDir, "image.jpg")
             val outputStream = FileOutputStream(file)
             inputStream?.copyTo(outputStream)
             inputStream?.close()
             outputStream.close()
-            return file.absolutePath
+            file.absolutePath
         } catch (e: Exception) {
             e.printStackTrace()
 
-            return null
+            null
         }
     }
     private fun changeField(textView: TextView, title: String, column: String) {
@@ -163,23 +163,25 @@ class InfoFragment : Fragment() {
         // Inflar el diseño personalizado
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_dialog_one_field, null)
-        var msgHint=""
+
         // Obtener referencias a las vistas dentro del diseño personalizado
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle)
         val editText = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
-        if(title.equals(getString(R.string.city))||title.equals(getString(R.string.address))
-            ||title.equals(getString(R.string.password))){
-            msgHint="${getString(R.string.newfieldF)} ${title}"
-            }else{
-        msgHint="${getString(R.string.newfield)} ${title}"}
+        val msgHint = if(title == getString(R.string.city) || title == getString(R.string.address)
+            || title == getString(R.string.password)
+        ){
+            "${getString(R.string.newfieldF)} $title"
+        }else{
+            "${getString(R.string.newfield)} $title"
+        }
         // Configurar el contenido del AlertDialog con el diseño personalizado
         builder.setView(dialogView)
 
-
+        val titleDialog="${getString(R.string.change)} $title"
         // Configurar propiedades específicas del diseño
-        dialogTitle.text = "${getString(R.string.change)} $title"
+        dialogTitle.text = titleDialog
         editText.hint = msgHint
 
         // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante

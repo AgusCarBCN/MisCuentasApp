@@ -68,15 +68,14 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
-        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        val cuentas = dni.let { cuentaDao.listarCuentasPorDNI(it) }
         recyclerView = binding.rvCuentas
-        if (cuentas != null) {
             adapterCuentas = AdapterBal(cuentas, this)
             recyclerView.apply {
                 this.layoutManager = LinearLayoutManager(context)
                 adapter = adapterCuentas
             }
-        }
+
     }
     companion object {
         /**
@@ -98,6 +97,6 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
             }
     }
 
-    override fun getLocale(): Locale = Locale(lang.toString(),country.toString())
+    override fun getLocale(): Locale = Locale(lang,country)
 
 }

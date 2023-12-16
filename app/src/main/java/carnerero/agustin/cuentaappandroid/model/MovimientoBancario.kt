@@ -5,13 +5,15 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import android.os.Parcel
 import android.os.Parcelable
-import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 
 data class MovimientoBancario(
     val importe: Double,
     val descripcion: String,
     val iban: String,
     val fechaImporte: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
