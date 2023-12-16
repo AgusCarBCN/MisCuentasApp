@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
@@ -32,6 +33,8 @@ class AjustesFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
+    private lateinit var currencyTo: String
+    private lateinit var currencyFrom: String
     private val darkModeIcon = R.drawable.dark_mode_20
     private val lightModeIcon = R.drawable.light_mode_20
     private val english ="en"
@@ -66,11 +69,16 @@ class AjustesFragment : Fragment() {
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
         val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
         val currencySelected = sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
-
+        currencyFrom=sharedPreferences.getString(getString(R.string.currencyFrom), null)?:"EUR"
+        currencyTo=sharedPreferences.getString(getString(R.string.currencyTo), null)?:"EUR"
         // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
         setTextLang(enableEnLang,langText)
-
+        Toast.makeText(
+            requireContext(),
+            "$currencyFrom $currencyTo",
+            Toast.LENGTH_SHORT
+        ).show()
         // Establecer el estado inicial del Switch y el radioGroup
         switchTheme.isChecked = enableDarkTheme
         switchLang.isChecked = enableEnLang
@@ -95,14 +103,35 @@ class AjustesFragment : Fragment() {
                 R.id.rb_euro -> {
                     lang = "es"
                     country = "ES"
+                    currencyTo="EUR"
+                    Toast.makeText(
+                        requireContext(),
+                        "$currencyFrom $currencyTo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    currencyFrom=currencyTo
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
+                    currencyTo="USD"
+                    Toast.makeText(
+                        requireContext(),
+                        "$currencyFrom $currencyTo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    currencyFrom=currencyTo
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
+                    currencyTo="GBP"
+                    Toast.makeText(
+                        requireContext(),
+                        "$currencyFrom $currencyTo",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    currencyFrom=currencyTo
                 }
             }
 
@@ -110,6 +139,8 @@ class AjustesFragment : Fragment() {
             sharedPreferences.edit().putInt("lastSelectedOption", checkedId).apply()
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
+            sharedPreferences.edit().putString(getString(R.string.currencyTo),currencyTo).apply()
+            sharedPreferences.edit().putString(getString(R.string.currencyFrom), currencyFrom).apply()
 
 
 
