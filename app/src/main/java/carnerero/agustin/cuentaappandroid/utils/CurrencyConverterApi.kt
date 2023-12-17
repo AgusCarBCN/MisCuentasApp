@@ -1,17 +1,16 @@
 package carnerero.agustin.cuentaappandroid.utils
 
-import carnerero.agustin.cuentaappandroid.model.ConversionResponse
-import retrofit2.Call
+import carnerero.agustin.cuentaappandroid.AppConst
+import carnerero.agustin.cuentaappandroid.model.Currency
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 
 interface CurrencyConverterApi {
-    @GET("v1/convert")
-    fun convertCurrency(
-        @Query("access_key") apiKey: String?,
-        @Query("from") fromCurrency: String?,
-        @Query("to") toCurrency: String?,
-        @Query("amount") amount: Double
-    ): Call<ConversionResponse?>?
+    @GET("v6/${AppConst.KEY}/pair/{fromCurrency}/{toCurrency}")
+    suspend fun convertCurrency(
+        @Path("fromCurrency") fromCurrency: String,
+        @Path("toCurrency") toCurrency: String
+    ): Response<Currency>
 }

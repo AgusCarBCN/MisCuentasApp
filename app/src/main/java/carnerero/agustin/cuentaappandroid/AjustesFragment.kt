@@ -9,25 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentAjustesBinding
+import carnerero.agustin.cuentaappandroid.repo.CurrencyRepo
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlinx.coroutines.launch
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AjustesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AjustesFragment : Fragment() {
-    // Variables de instancia
-    private var param1: String? = null
-    private var param2: String? = null
+
+
+    private val repo=CurrencyRepo()
     private var _binding: FragmentAjustesBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
@@ -43,8 +36,7 @@ class AjustesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -54,7 +46,7 @@ class AjustesFragment : Fragment() {
     ): View {
         _binding = FragmentAjustesBinding.inflate(inflater, container, false)
         val view = binding.root
-
+        //viewModel=ViewModelProvider(this,CurrencyVmFac(repo)).get(CurrencyVm::class.java)
         // Referencias a elementos de diseño
         val switchTheme = binding.switchdark
         val imgTheme = binding.imgDarklight
@@ -104,33 +96,21 @@ class AjustesFragment : Fragment() {
                     lang = "es"
                     country = "ES"
                     currencyTo="EUR"
-                    Toast.makeText(
-                        requireContext(),
-                        "$currencyFrom $currencyTo",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    getConversionRate(currencyFrom,currencyTo)
                     currencyFrom=currencyTo
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
                     currencyTo="USD"
-                    Toast.makeText(
-                        requireContext(),
-                        "$currencyFrom $currencyTo",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    getConversionRate(currencyFrom,currencyTo)
                     currencyFrom=currencyTo
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
                     currencyTo="GBP"
-                    Toast.makeText(
-                        requireContext(),
-                        "$currencyFrom $currencyTo",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    getConversionRate(currencyFrom,currencyTo)
                     currencyFrom=currencyTo
                 }
             }
@@ -159,28 +139,28 @@ class AjustesFragment : Fragment() {
             icon.setImageResource(iconDisable)
         }
     }
+    private fun getConversionRate(from:String,to:String){
+        lifecycleScope.launch {
+            try {
+                val response = repo.getCurrency(from, to)
+                val rate = response.body()?.conversion_rate
+                Toast.makeText(
+                    requireContext(),
+                    "$from $to $rate",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            } catch (e: Exception) {
+                // Manejar errores, como mostrar un mensaje al usuario
+                Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     private fun setTextLang(enable: Boolean,langText:TextView){
         if(enable){
             langText.text=spanish
         }else langText.text=english
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AjustesFragment.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AjustesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

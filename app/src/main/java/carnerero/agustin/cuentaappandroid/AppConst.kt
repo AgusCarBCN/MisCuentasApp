@@ -17,7 +17,7 @@ object AppConst {
     const val ZIP="codigopostal"
     const val EMAIL="email"
     const val PASSWORD="password"
-    const val KEY="d7d172e8ce0f6be8c6c5e7fda3513a4b"
-    const val BASEURL="https://api.exchangeratesapi.io/v1/"
+    const val KEY="1595b9bf3f9cbd914be1c9c3"
+    const val BASEURL= "https://v6.exchangerate-api.com"
 
 }
