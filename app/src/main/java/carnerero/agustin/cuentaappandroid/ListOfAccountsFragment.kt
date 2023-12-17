@@ -31,6 +31,7 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     private lateinit var lang:String
     private lateinit var country:String
     private lateinit var dni:String
+    private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
     private lateinit var adapterCuentas: AdapterBal
@@ -62,6 +63,8 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         lang = sharedPreferences.getString(getString(R.string.lang), "es") ?: "es"
         country = sharedPreferences.getString(getString(R.string.country), "ES") ?: "ES"
+        conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
+
         return binding.root
     }
 
@@ -98,5 +101,8 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     }
 
     override fun getLocale(): Locale = Locale(lang,country)
+    override fun getConversionRate(): Double =conversionRate.toDouble()
+
+
 
 }

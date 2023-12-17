@@ -170,5 +170,6 @@
     <string name="country">country</string>
     <string name="currencyTo">currencyTo</string>
     <string name="currencyFrom">currencyFrom</string>
+    <string name="conversion_rate">conversionrate</string>
     <string name="prefences_select_currency">preferences_currency</string>
 </resources>

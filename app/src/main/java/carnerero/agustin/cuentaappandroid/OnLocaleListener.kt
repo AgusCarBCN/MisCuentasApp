@@ -4,4 +4,5 @@ import java.util.Locale
 
 interface OnLocaleListener {
     fun getLocale(): Locale
+    fun getConversionRate():Double
 }

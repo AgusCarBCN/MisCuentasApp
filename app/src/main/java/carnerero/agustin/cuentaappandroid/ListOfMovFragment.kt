@@ -25,6 +25,7 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
     private var param2: String? = null
     private var lang:String?=null
     private var country:String?=null
+    private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
     private lateinit var adaptermovimientos: AdapterMov
@@ -52,6 +53,7 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
         country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
+        conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
         return binding.root
     }
 
@@ -86,5 +88,6 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
     }
 
     override fun getLocale(): Locale = Locale(lang.toString(),country.toString())
+    override fun getConversionRate(): Double =conversionRate.toDouble()
 
 }

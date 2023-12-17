@@ -39,7 +39,7 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>,private va
     override fun getItemCount(): Int = movList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val conversionRate=listener.getConversionRate()
         val locale = listener.getLocale()
         val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val mov = movList[position]
@@ -59,7 +59,7 @@ class AdapterMov(private var movList: MutableList<MovimientoBancario>,private va
             holder.fechaitem.visibility = View.GONE
         }
         val importeSinSigno = if (mov.importe < 0) -mov.importe else mov.importe
-        holder.importeitem.text = currencyFormat.format(importeSinSigno)
+        holder.importeitem.text = currencyFormat.format(importeSinSigno*conversionRate)
         val textColorResId = when {
             mov.importe < 0 && Utils.isDarkTheme -> R.color.coralred
             mov.importe < 0 -> R.color.red

@@ -96,21 +96,23 @@ class AjustesFragment : Fragment() {
                     lang = "es"
                     country = "ES"
                     currencyTo="EUR"
-                    getConversionRate(currencyFrom,currencyTo)
+
+                    getConversionRate("EUR","EUR")
                     currencyFrom=currencyTo
+
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
                     currencyTo="USD"
-                    getConversionRate(currencyFrom,currencyTo)
+                    getConversionRate("EUR","USD")
                     currencyFrom=currencyTo
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
                     currencyTo="GBP"
-                    getConversionRate(currencyFrom,currencyTo)
+                    getConversionRate("EUR","GBP")
                     currencyFrom=currencyTo
                 }
             }
@@ -125,7 +127,7 @@ class AjustesFragment : Fragment() {
 
 
             // Actualizar fragmento de saldo en la actividad principal
-            (activity as MainActivity).actualizarFragmentSaldo()
+            //(activity as MainActivity).actualizarFragmentSaldo()
         }
 
         return view
@@ -149,7 +151,9 @@ class AjustesFragment : Fragment() {
                     "$from $to $rate",
                     Toast.LENGTH_SHORT
                 ).show()
-
+                sharedPreferences.edit().putString(getString(R.string.conversion_rate), rate.toString()).apply()
+            // Actualizar fragmento de saldo en la actividad principal
+                (activity as MainActivity).actualizarFragmentSaldo()
             } catch (e: Exception) {
                 // Manejar errores, como mostrar un mensaje al usuario
                 Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()

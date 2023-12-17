@@ -66,7 +66,7 @@ class ResultFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val lang = sharedPreferences.getString(getString(R.string.lang), "es")
         val country = sharedPreferences.getString(getString(R.string.country), "ES")
-
+        val rateConversion=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0")
         // Establecer la Locale para el formato en euros
         val euroLocale = Locale(lang!!, country!!)
 
@@ -74,7 +74,7 @@ class ResultFragment : Fragment() {
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
 
         // Sacar el valor double de los argumentos
-        val result: Double = arguments?.getDouble("Result")!!
+        val result: Double = arguments?.getDouble("Result")!!*rateConversion.toString().toDouble()
 
         // Dar formato al resultado como valor absoluto y con formato de moneda euro
         val resultFormatted = currencyFormat.format(abs(result))
