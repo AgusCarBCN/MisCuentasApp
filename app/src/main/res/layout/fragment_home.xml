@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:background="?android:colorPrimary"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/foto" />
+            app:srcCompat="@drawable/person" />
 
     </androidx.cardview.widget.CardView>
 

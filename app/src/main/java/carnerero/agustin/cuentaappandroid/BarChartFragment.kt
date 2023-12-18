@@ -123,6 +123,7 @@ class BarChartFragment : Fragment() {
                 ) {
                     barChart.clear()
                     selectedIban = adapterCuenta.getItem(position)
+                    /*se ejecutará en un hilo diferente al hilo principal, evitando bloquear la interfaz de usuario mientras se realiza la operación.*/
                     lifecycleScope.launch {
                         updateChart(selectedIban.toString(), selectedYear.toString().toInt())
                     }
@@ -152,21 +153,24 @@ class BarChartFragment : Fragment() {
 
     // Calcular resultados para la cuenta y el año seleccionados
     private fun calculateResult(iban: String, year: Int) {
-        gastosTotales = ArrayList()
-        ingresosTotales = ArrayList()
-        resultados = ArrayList()
-        val ingresos = movDao.getIncome(iban)
-        val gastos = movDao.getBills(iban)
 
-        // Calcular resultados mensuales
-        for (i in 1..12) {
-            val gastoMes = Utils.calcularImporteMes(i, year, gastos)*rate.toFloat()
-            val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)*rate.toFloat()
-            val resultadoMes = ingresoMes + gastoMes
-            ingresosTotales.add(ingresoMes)
-            gastosTotales.add(abs(gastoMes))
-            resultados.add(resultadoMes)
-        }
+            gastosTotales = ArrayList()
+            ingresosTotales = ArrayList()
+            resultados = ArrayList()
+            val ingresos = movDao.getIncome(iban)
+            val gastos = movDao.getBills(iban)
+
+            // Calcular resultados mensuales
+            for (i in 1..12) {
+                val gastoMes = Utils.calcularImporteMes(i, year, gastos)*rate.toFloat()
+                val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)*rate.toFloat()
+                val resultadoMes = ingresoMes + gastoMes
+                ingresosTotales.add(ingresoMes)
+                gastosTotales.add(abs(gastoMes))
+                resultados.add(resultadoMes)
+            }
+
+
     }
 
     // Crear y configurar el gráfico de barras

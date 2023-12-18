@@ -108,10 +108,10 @@ class CreateUserActivity : AppCompatActivity() {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
             sharedPreferences.edit().putString(getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency), currency).apply()
             // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-           val listMov = readFileCsv()
+           /*val listMov = readFileCsv()
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
-            }
+            }*/
             startActivity(intent)
         }
         cancel.setOnClickListener{
@@ -123,7 +123,7 @@ class CreateUserActivity : AppCompatActivity() {
 
 
     // Método para leer el archivo CSV y devolver una lista de MovimientoBancario
-    private fun readFileCsv(): MutableList<MovimientoBancario> {
+    /*private fun readFileCsv(): MutableList<MovimientoBancario> {
         val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
         val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
         val list = mutableListOf<MovimientoBancario>()
@@ -146,7 +146,7 @@ class CreateUserActivity : AppCompatActivity() {
 
         return list
     }
-
+*/
 
 
 }
