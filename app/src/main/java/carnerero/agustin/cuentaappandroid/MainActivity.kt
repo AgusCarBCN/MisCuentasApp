@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.home -> fragment = LogoFragment()
             R.id.consulta -> fragment = ConsultaFragment()
             R.id.nuevoImporte -> fragment = NewAmountFragment()
+            R.id.notification->fragment=NotificationsFragment()
             R.id.estadistica -> fragment = BarChartFragment()
             R.id.transferencia ->fragment = TransaccionFragment()
             R.id.db->fragment=DBFragment()
