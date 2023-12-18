@@ -1,5 +1,5 @@
 package carnerero.agustin.cuentaappandroid
-import android.content.SharedPreferences
+
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,7 +11,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -49,8 +48,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Configurar el NavigationView y su escucha de eventos de selección
         val navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
-
-
     }
 
 

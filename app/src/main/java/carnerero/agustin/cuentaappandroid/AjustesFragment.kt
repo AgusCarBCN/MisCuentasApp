@@ -26,8 +26,8 @@ class AjustesFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
-    private lateinit var currencyTo: String
-    private lateinit var currencyFrom: String
+    private lateinit var currency:String
+    private var currencySelected=1
     private val darkModeIcon = R.drawable.dark_mode_20
     private val lightModeIcon = R.drawable.light_mode_20
     private val english ="en"
@@ -60,17 +60,18 @@ class AjustesFragment : Fragment() {
         // Obtener el estado actual del modo oscuro, idioma y divisa desde SharedPreferences
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
         val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
-        val currencySelected = sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
-        currencyFrom=sharedPreferences.getString(getString(R.string.currencyFrom), null)?:"EUR"
-        currencyTo=sharedPreferences.getString(getString(R.string.currencyTo), null)?:"EUR"
+
+        val currency = sharedPreferences.getString(getString(R.string.basecurrency),null).toString()
+        currencySelected = when(currency){
+            "EUR"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
+            "USD"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_dolar)
+            else-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_pound)
+
+        }
         // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
         setTextLang(enableEnLang,langText)
-        Toast.makeText(
-            requireContext(),
-            "$currencyFrom $currencyTo",
-            Toast.LENGTH_SHORT
-        ).show()
+
         // Establecer el estado inicial del Switch y el radioGroup
         switchTheme.isChecked = enableDarkTheme
         switchLang.isChecked = enableEnLang
@@ -95,41 +96,27 @@ class AjustesFragment : Fragment() {
                 R.id.rb_euro -> {
                     lang = "es"
                     country = "ES"
-                    currencyTo="EUR"
-
-                    getConversionRate("EUR","EUR")
-                    currencyFrom=currencyTo
+                    getConversionRate(currency,"EUR")
 
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
-                    currencyTo="USD"
-                    getConversionRate("EUR","USD")
-                    currencyFrom=currencyTo
+                    getConversionRate(currency,"USD")
+
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
-                    currencyTo="GBP"
-                    getConversionRate("EUR","GBP")
-                    currencyFrom=currencyTo
+                    getConversionRate(currency,"GBP")
+
                 }
             }
-
             // Guardar la selección en SharedPreferences
             sharedPreferences.edit().putInt("lastSelectedOption", checkedId).apply()
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
-            sharedPreferences.edit().putString(getString(R.string.currencyTo),currencyTo).apply()
-            sharedPreferences.edit().putString(getString(R.string.currencyFrom), currencyFrom).apply()
-
-
-
-            // Actualizar fragmento de saldo en la actividad principal
-            //(activity as MainActivity).actualizarFragmentSaldo()
         }
-
         return view
     }
 
@@ -143,20 +130,32 @@ class AjustesFragment : Fragment() {
     }
     private fun getConversionRate(from:String,to:String){
         lifecycleScope.launch {
-            try {
-                val response = repo.getCurrency(from, to)
-                val rate = response.body()?.conversion_rate
+            if (from == to) {
+                sharedPreferences.edit().putString(getString(R.string.conversion_rate), "1.0").apply ()
                 Toast.makeText(
                     requireContext(),
-                    "$from $to $rate",
+                    "$from $to 1.0",
                     Toast.LENGTH_SHORT
                 ).show()
-                sharedPreferences.edit().putString(getString(R.string.conversion_rate), rate.toString()).apply()
-            // Actualizar fragmento de saldo en la actividad principal
                 (activity as MainActivity).actualizarFragmentSaldo()
-            } catch (e: Exception) {
-                // Manejar errores, como mostrar un mensaje al usuario
-                Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } else {
+                try {
+                    val response = repo.getCurrency(from, to)
+                    val rate = response.body()?.conversion_rate
+                    Toast.makeText(
+                        requireContext(),
+                        "$from $to $rate",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    sharedPreferences.edit()
+                        .putString(getString(R.string.conversion_rate), rate.toString()).apply()
+                    // Actualizar fragmento de saldo en la actividad principal
+                    (activity as MainActivity).actualizarFragmentSaldo()
+                } catch (e: Exception) {
+                    // Manejar errores, como mostrar un mensaje al usuario
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }

@@ -1,8 +1,14 @@
 package carnerero.agustin.cuentaappandroid
 
+
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
@@ -19,8 +25,14 @@ class CreateUserActivity : AppCompatActivity() {
     private lateinit var cuentaDao: CuentaDao
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val movDAO = MovimientoBancarioDAO(admin)
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var currency:String
     private lateinit var binding: ActivityCreateUserBinding
     private val cuentas:ArrayList<Cuenta> =ArrayList()
+    private val currencies = arrayOf(
+        "EUR", "USD", "GBP"
+    )
+    private lateinit var selectedItem:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateUserBinding.inflate(layoutInflater)
@@ -42,7 +54,31 @@ class CreateUserActivity : AppCompatActivity() {
         val addAccount=binding.addaccount
         val confirm=binding.btnConfirmuser
         val cancel=binding.btnCanceluser
+        //Acceso a spinner
+        val spCurrency=binding.spSelectcurrency
 
+        // Crear adaptadores
+        val adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
+        with(adapter) {
+            currencies.forEach { currency->
+                add(currency)
+            }
+        }
+        spCurrency.adapter=adapter
+        selectedItem=currencies[0]
+        // Listener para el spinner que guarda la divisa seleccionada
+        spCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedItem = adapter.getItem(position).toString()
+
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Acciones a realizar cuando no se selecciona nada
+            }
+        }
 
         addAccount.setOnClickListener {
             cuentas.add(Cuenta(account.text.toString(),amount.text.toString().toDouble(),dni.text.toString()))
@@ -67,11 +103,15 @@ class CreateUserActivity : AppCompatActivity() {
             cuentas.forEach { cuenta ->
                 cuentaDao.insertarCuenta(cuenta)
             }
+            currency=selectedItem
+            //Guadar moneda en sharepreferences
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+            sharedPreferences.edit().putString(getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency), currency).apply()
             // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-          /*  val listMov = readFileCsv()
+           val listMov = readFileCsv()
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
-            }*/
+            }
             startActivity(intent)
         }
         cancel.setOnClickListener{
@@ -83,7 +123,7 @@ class CreateUserActivity : AppCompatActivity() {
 
 
     // Método para leer el archivo CSV y devolver una lista de MovimientoBancario
-   /* private fun readFileCsv(): MutableList<MovimientoBancario> {
+    private fun readFileCsv(): MutableList<MovimientoBancario> {
         val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
         val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
         val list = mutableListOf<MovimientoBancario>()
@@ -105,7 +145,7 @@ class CreateUserActivity : AppCompatActivity() {
         }
 
         return list
-    }*/
+    }
 
 
 

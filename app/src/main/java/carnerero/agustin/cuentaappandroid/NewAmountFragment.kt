@@ -22,18 +22,10 @@ import java.util.Date
 import kotlin.math.abs
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewAmountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class NewAmountFragment : Fragment() {
-    // Parámetros que podrían ser utilizados en el futuro
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     // Variable para manejar el View Binding
     private var _binding: FragmentNewAmountBinding? = null
@@ -49,8 +41,7 @@ class NewAmountFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // Obtener argumentos si los hay
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -199,24 +190,12 @@ class NewAmountFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        /**
-         * Este método estático se puede utilizar para crear una nueva instancia del fragmento.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewAmountFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 
     private fun searchAccount(cuentas: List<Cuenta>?, iban: String): Cuenta? {
 
         for (cuenta in cuentas!!) {
-            if (iban.equals(cuenta.iban)) {
+            if (iban == cuenta.iban) {
                 return cuenta
             }
         }

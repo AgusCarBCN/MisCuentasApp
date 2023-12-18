@@ -165,6 +165,7 @@
     <string name="oneaccount">Option not available for an account</string>
     <string name="exportData">Export data from account</string>
     <string name="importData">Import data</string>
+    <string name="selectCurrency">Select Currency</string>
 
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>
@@ -172,6 +173,7 @@
     <string name="userpass">userpass</string>
     <string name="lang">lang</string>
     <string name="country">country</string>
+    <string name="basecurrency">currency</string>
     <string name="currencyTo">currencyTo</string>
     <string name="currencyFrom">currencyFrom</string>
     <string name="filename">give a name to the csv file</string>

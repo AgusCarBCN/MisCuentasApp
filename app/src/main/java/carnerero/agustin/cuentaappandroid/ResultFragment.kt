@@ -16,16 +16,7 @@ import java.util.Locale
 import kotlin.math.abs
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ResultFragment : Fragment() {
 
     // View Binding para acceder a los componentes de la interfaz de usuario
@@ -34,10 +25,10 @@ class ResultFragment : Fragment() {
 
     // SharedPreferences para almacenar y recuperar datos de forma sencilla
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var currency:String
+    private lateinit var lang:String
+    private lateinit var country:String
 
-    // Parámetros de la instancia (puedes cambiarlos según tus necesidades)
-    private var param1: String? = null
-    private var param2: String? = null
 
     // Método llamado cuando se crea el fragmento
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +36,7 @@ class ResultFragment : Fragment() {
 
         // Recuperar los argumentos proporcionados al crear la instancia del fragmento
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -64,11 +54,24 @@ class ResultFragment : Fragment() {
 
         // Acceder a SharedPreferences para obtener configuraciones de idioma y país
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val lang = sharedPreferences.getString(getString(R.string.lang), "es")
-        val country = sharedPreferences.getString(getString(R.string.country), "ES")
+        currency=sharedPreferences.getString(getString(R.string.basecurrency), null)?:"EUR"
+        when(currency){
+            "EUR"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
+            }
+            "USD"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
+            }else->{
+            lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+            country=sharedPreferences.getString(getString(R.string.country), null)?:"GB"
+        }
+        }
+
         val rateConversion=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0")
         // Establecer la Locale para el formato en euros
-        val euroLocale = Locale(lang!!, country!!)
+        val euroLocale = Locale(lang, country)
 
         // Obtener una instancia de NumberFormat para el formato de moneda en euros
         val currencyFormat = NumberFormat.getCurrencyInstance(euroLocale)
@@ -110,22 +113,5 @@ class ResultFragment : Fragment() {
     }
 
     // Método companion utilizado para crear una nueva instancia del fragmento
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

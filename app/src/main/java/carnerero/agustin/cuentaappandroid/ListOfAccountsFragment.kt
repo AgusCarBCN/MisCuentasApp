@@ -14,22 +14,12 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfAccountsBinding
 import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ListOfAccountsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ListOfAccountsFragment : Fragment(),OnLocaleListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var lang:String
     private lateinit var country:String
+    private lateinit var currency:String
     private lateinit var dni:String
     private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
@@ -47,8 +37,6 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
 
         }
     }
@@ -61,8 +49,21 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
         _binding = FragmentListOfAccountsBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        lang = sharedPreferences.getString(getString(R.string.lang), "es") ?: "es"
-        country = sharedPreferences.getString(getString(R.string.country), "ES") ?: "ES"
+        currency=sharedPreferences.getString(getString(R.string.basecurrency), null)?:"EUR"
+        when(currency){
+            "EUR"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
+            }
+            "USD"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
+            }else->{
+            lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+            country=sharedPreferences.getString(getString(R.string.country), null)?:"GB"
+        }
+        }
+
         conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
 
         return binding.root
@@ -77,26 +78,6 @@ class ListOfAccountsFragment : Fragment(),OnLocaleListener {
             recyclerView.apply {
                 this.layoutManager = LinearLayoutManager(context)
                 adapter = adapterCuentas
-            }
-
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ListOfAccountsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ListOfAccountsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 

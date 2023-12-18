@@ -15,16 +15,13 @@ import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.util.Locale
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 
 class ListOfMovFragment : Fragment() ,OnLocaleListener{
-    // Parámetros que puedes renombrar según su uso
-    private var param1: String? = null
-    private var param2: String? = null
-    private var lang:String?=null
-    private var country:String?=null
+
+    private lateinit var lang:String
+    private lateinit var country:String
+    private lateinit var currency:String
     private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
@@ -38,8 +35,7 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -51,6 +47,20 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
         _binding = FragmentListOfMovBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        currency=sharedPreferences.getString(getString(R.string.basecurrency), null)?:"EUR"
+        when(currency){
+            "EUR"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
+            }
+            "USD"->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
+            }else->{
+                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+                country=sharedPreferences.getString(getString(R.string.country), null)?:"GB"
+            }
+        }
         lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
         country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
         conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
@@ -75,19 +85,9 @@ class ListOfMovFragment : Fragment() ,OnLocaleListener{
         _binding = null // Importante para evitar fugas de memoria
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ListOfMovFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 
-    override fun getLocale(): Locale = Locale(lang.toString(),country.toString())
+    override fun getLocale(): Locale = Locale(lang,country)
     override fun getConversionRate(): Double =conversionRate.toDouble()
 
 }

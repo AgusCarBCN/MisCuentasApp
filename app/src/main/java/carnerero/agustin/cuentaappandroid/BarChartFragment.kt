@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
@@ -23,26 +24,18 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BarChartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BarChartFragment : Fragment() {
 
     // Variables para parámetros, base de datos, valores seleccionados y componentes del gráfico
-    private var param1: String? = null
-    private var param2: String? = null
+
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedIban: String? = null
     private var selectedYear: String? = null
+    private var rate:Double=1.0
     private val cuentaDao = CuentaDao(admin)
     private val movDao = MovimientoBancarioDAO(admin)
     private lateinit var ingresosTotales: ArrayList<Float>
@@ -66,8 +59,7 @@ class BarChartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -83,6 +75,7 @@ class BarChartFragment : Fragment() {
         val spYears = binding.spYear
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val dni = sharedPreferences.getString(getString(R.string.userdni), null)
+        rate=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0").toString().toDouble()
         val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
         // Verificar si la lista de cuentas es nula o vacía
                 if (cuentas.isNullOrEmpty()) {
@@ -103,7 +96,6 @@ class BarChartFragment : Fragment() {
 
             // Configuración del adapter y del spinner
             with(adapterCuenta) {
-
                 cuentas.forEach { cuenta ->
                     add(cuenta.iban)
                 }
@@ -131,9 +123,10 @@ class BarChartFragment : Fragment() {
                 ) {
                     barChart.clear()
                     selectedIban = adapterCuenta.getItem(position)
-                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                    lifecycleScope.launch {
+                        updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                    }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
@@ -146,7 +139,9 @@ class BarChartFragment : Fragment() {
                 ) {
                     barChart.clear()
                     selectedYear = adapterYear.getItem(position)
-                    updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                    lifecycleScope.launch {
+                        updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -165,8 +160,8 @@ class BarChartFragment : Fragment() {
 
         // Calcular resultados mensuales
         for (i in 1..12) {
-            val gastoMes = Utils.calcularImporteMes(i, year, gastos)
-            val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)
+            val gastoMes = Utils.calcularImporteMes(i, year, gastos)*rate.toFloat()
+            val ingresoMes = Utils.calcularImporteMes(i, year, ingresos)*rate.toFloat()
             val resultadoMes = ingresoMes + gastoMes
             ingresosTotales.add(ingresoMes)
             gastosTotales.add(abs(gastoMes))
@@ -246,21 +241,4 @@ class BarChartFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        /**
-         * Utilice este método de fábrica para crear una nueva instancia de
-         * este fragmento utilizando los parámetros proporcionados.
-         *
-         * @param param1 Parámetro 1.
-         * @param param2 Parámetro 2.
-         * @return Una nueva instancia de BarChartFragment.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = BarChartFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_PARAM1, param1)
-                putString(ARG_PARAM2, param2)
-            }
-        }
-    }
 }

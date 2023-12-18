@@ -162,7 +162,9 @@
     <string name="importData">Importa datos</string>
     <string name="oneaccount">Opcion no disponible para una cuenta</string>
     <string name="filename">dale un nombre al archivo csv</string>
+    <string name="selectCurrency">Selecciona una divisa</string>
     <!--sharepreferences de usuario-->
+    <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>
