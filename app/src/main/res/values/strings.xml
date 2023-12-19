@@ -167,6 +167,10 @@
     <string name="importData">Import data</string>
     <string name="selectCurrency">Select Currency</string>
 
+    <string name="weekreport">weekly income and expense report</string>
+    <string name="monthreport">montly income and expense report</string>
+    <string name="lowbalance">Low balance alert</string>
+    <string name="limitexpense">Expense limit</string>
     <!--sharepreferences de usuario-->
     <string name="userdni">userdni</string>
     <string name="username">username</string>
@@ -179,6 +183,11 @@
     <string name="filename">give a name to the csv file</string>
     <string name="prefences_select_currency">preferences_currency</string>
     <string name="conversion_rate">conversionrate</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="switchlimit">checkedSwitchLimit</string>
+    <string name="switchbalance">checkedSwitchBalance</string>
+    <string name="switchweek">checkedSwitchWeek</string>
+    <string name="switchmonth">checkedSwitchMonth</string>
+    <string name="percentview">percentView</string>
+    <string name="seekbar">seekbar</string>
+    <string name="isvisible">isVisible</string>
 </resources>

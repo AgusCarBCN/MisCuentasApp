@@ -163,6 +163,11 @@
     <string name="oneaccount">Opcion no disponible para una cuenta</string>
     <string name="filename">dale un nombre al archivo csv</string>
     <string name="selectCurrency">Selecciona una divisa</string>
+
+    <string name="weekreport">Informe de ingresos y gastos semanales</string>
+    <string name="monthreport">Informe de ingresos y gastos mensuales</string>
+    <string name="lowbalance">Alerta de Saldo bajo</string>
+    <string name="limitexpense">Limite de gasto</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>
@@ -174,4 +179,11 @@
     <string name="currencyFrom">currencyFrom</string>
     <string name="conversion_rate">conversionrate</string>
     <string name="prefences_select_currency">preferences_currency</string>
+    <string name="switchlimit">checkedSwitchLimit</string>
+    <string name="switchbalance">checkedSwitchBalance</string>
+    <string name="switchweek">checkedSwitchWeek</string>
+    <string name="switchmonth">checkedSwitchMonth</string>
+    <string name="percentview">percentView</string>
+    <string name="seekbar">seekbar</string>
+    <string name="isvisible">isVisible</string>
 </resources>
