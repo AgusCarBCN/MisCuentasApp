@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorPrimary"
+    tools:context=".NotificationsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_horizontal"
+        android:layout_margin="@dimen/padding10"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_tittlenotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/notifications"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchweek"
+                android:layout_width="360dp"
+                android:layout_height="@dimen/box"
+                android:layout_margin="8dp"
+                android:textSize="@dimen/extracommon"
+                android:buttonTint="?android:colorPrimary"
+                android:text="@string/weekreport" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchmonth"
+                android:layout_width="360dp"
+                android:layout_height="@dimen/box"
+                android:layout_margin="8dp"
+                android:buttonTint="?android:colorPrimary"
+                android:text="@string/monthreport"
+                android:textSize="@dimen/extracommon" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchalertlimit"
+                    android:layout_width="360dp"
+                    android:layout_height="@dimen/box"
+                    android:layout_gravity="center"
+                    android:buttonTint="?android:colorPrimary"
+                    android:text="@string/limitexpense"
+                    android:textSize="@dimen/extracommon" />
+
+                <TextView
+                    android:id="@+id/tv_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/extracommon"
+                    android:textAlignment="center" />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchalertbalance"
+                android:layout_width="360dp"
+                android:layout_height="@dimen/box"
+                android:textSize="@dimen/extracommon"
+                android:layout_margin="8dp"
+                android:buttonTint="?android:colorPrimary"
+                android:text="@string/lowbalance"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
