@@ -10,6 +10,8 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.WeekFields
+import java.util.Locale
 
 class Utils {
 
@@ -32,7 +34,24 @@ class Utils {
             }
             return importeTotal.toFloat()
         }
+        fun calcularImporteSemanal(
+            week: Int,
+            year: Int,
+            importes: ArrayList<MovimientoBancario>
+        ): Float {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            var importeTotal = 0.0
 
+            for (mov in importes) {
+                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
+                if (fechaImporteDate.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear()) == week
+                    && fechaImporteDate.year == year
+                ) {
+                    importeTotal += mov.importe
+                }
+            }
+            return importeTotal.toFloat()
+        }
 
 
         fun applyTheme(enableDarkTheme: Boolean) {
