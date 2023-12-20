@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AjustesFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -28,10 +29,10 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchdark"
+                style="@style/switchCustom"
                 android:layout_width="100dp"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary" />
+                app:track="@drawable/custom_track"
+                />
 
 
         </LinearLayout>
@@ -70,10 +71,9 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchen"
+                style="@style/switchCustom"
                 android:layout_width="100dp"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary" />
+                app:track="@drawable/custom_track" />
 
 
         </LinearLayout>
