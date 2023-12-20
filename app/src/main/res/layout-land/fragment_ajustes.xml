@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp"
     tools:context=".AjustesFragment">
 
@@ -28,17 +29,15 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchdark"
+                style="@style/switchCustom"
                 android:layout_width="100dp"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary" />
+                app:track="@drawable/custom_track" />
 
             <TextView
                 android:id="@+id/tv_settingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/settingTheme"
                 android:textAlignment="center"
@@ -71,17 +70,17 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchen"
+                style="@style/switchCustom"
                 android:layout_width="100dp"
-                android:layout_height="@dimen/box"
+                app:track="@drawable/custom_track"
                 android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary" />
+                />
 
             <TextView
                 android:id="@+id/tv_settingLang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/settingLang"
                 android:textAlignment="center"

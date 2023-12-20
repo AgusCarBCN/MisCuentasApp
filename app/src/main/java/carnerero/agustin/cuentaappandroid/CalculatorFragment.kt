@@ -75,11 +75,10 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                     val newOperation = "${text.substring(0, length - 2)}${text.substring(length - 1)}"
                     text = newOperation
                 }
+
             }
         }
-        operation.run {
-            addTextChangedListener(SeparateThousands(groupingSeparator = ".", decimalSeparator ="," ))
-        }
+
         return view
     }
 
@@ -182,7 +181,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 val decimalFormatSymbols = DecimalFormatSymbols()
                 decimalFormatSymbols.decimalSeparator = ','
 
-                //val decimalFormat = DecimalFormat("#,##0.00", decimalFormatSymbols)
+
                 val formattedResult = decimalFormat.format(result)
 
                 binding.tvResult.text = formattedResult

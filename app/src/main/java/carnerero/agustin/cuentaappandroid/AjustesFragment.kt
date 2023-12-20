@@ -85,7 +85,7 @@ class AjustesFragment : Fragment() {
 
         // Manejar cambios en el Switch de idioma
         switchLang.setOnCheckedChangeListener { _, isChecked ->
-            Utils.applyLanguage(isChecked)
+            lifecycleScope.launch { Utils.applyLanguage(isChecked) }
             sharedPreferences.edit().putBoolean(getString(R.string.preferences_enable_lang), isChecked).apply()
         }
 
