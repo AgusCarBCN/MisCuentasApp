@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:colorPrimary"
     tools:context=".NotificationsFragment">
 
@@ -37,11 +38,8 @@
             android:orientation="horizontal">
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchweek"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:textSize="@dimen/extracommon"
-                android:buttonTint="?android:colorPrimary"
+                style="@style/switchCustom"
+                app:track="@drawable/custom_track"
                 android:text="@string/weekreport" />
         </LinearLayout>
         <LinearLayout
@@ -53,12 +51,9 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchmonth"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary"
-                android:text="@string/monthreport"
-                android:textSize="@dimen/extracommon" />
+                style="@style/switchCustom"
+                app:track="@drawable/custom_track"
+                android:text="@string/monthreport"/>
 
 
         </LinearLayout>
@@ -68,33 +63,30 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchalertlimit"
-                    android:layout_width="360dp"
-                    android:layout_height="@dimen/box"
-                    android:layout_gravity="center"
-                    android:buttonTint="?android:colorPrimary"
-                    android:text="@string/limitexpense"
-                    android:textSize="@dimen/extracommon" />
+                    style="@style/switchCustom"
+                    app:track="@drawable/custom_track"
+                    android:text="@string/limitexpense"/>
 
                 <TextView
                     android:id="@+id/tv_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="@dimen/extracommon"
-                    android:textAlignment="center" />
-
+                    android:textAlignment="center"
+                    android:textSize="@dimen/extracommon" />
                 <SeekBar
                     android:id="@+id/seekBar"
                     android:layout_width="360dp"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -105,11 +97,8 @@
             android:orientation="horizontal">
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchalertbalance"
-                android:layout_width="360dp"
-                android:layout_height="@dimen/box"
-                android:textSize="@dimen/extracommon"
-                android:layout_margin="8dp"
-                android:buttonTint="?android:colorPrimary"
+                style="@style/switchCustom"
+                app:track="@drawable/custom_track"
                 android:text="@string/lowbalance"/>
         </LinearLayout>
 

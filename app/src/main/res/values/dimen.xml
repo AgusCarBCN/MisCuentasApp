@@ -5,6 +5,7 @@
         <dimen name="large">20sp</dimen>
         <dimen name="login" >20dp</dimen>
         <dimen name="botton" >20dp</dimen>
+        <dimen name="switchCustom" >24dp</dimen>
         <dimen name="textView" >20sp</dimen>
         <dimen name="head" >24sp</dimen>
         <dimen name="wellcome" >34sp</dimen>

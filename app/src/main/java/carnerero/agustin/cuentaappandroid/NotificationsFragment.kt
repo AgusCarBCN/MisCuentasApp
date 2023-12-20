@@ -1,9 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
+
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -17,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
+
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import okhttp3.internal.notify
@@ -31,7 +29,7 @@ class NotificationsFragment : Fragment() {
     }
 
     // Variable para manejar el View Binding
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding:FragmentNotificationsBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -77,7 +75,7 @@ class NotificationsFragment : Fragment() {
         seekBar?.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
         percentTextView?.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
 
-        switchAlertLimit.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchAlertLimit.setOnCheckedChangeListener { _, isChecked ->
 
             //Guardo configuracion en sharedPreferences
             sharedPreferences.edit().putBoolean(getString(R.string.switchlimit), isChecked).apply()
@@ -93,16 +91,13 @@ class NotificationsFragment : Fragment() {
 
         }
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
-            Utils.applyTheme(isChecked)
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
         }
         switchWeeklyReport.setOnCheckedChangeListener { _, isChecked ->
-            Utils.applyTheme(isChecked)
             sharedPreferences.edit().putBoolean(getString(R.string.switchweek), isChecked).apply()
         }
         switchMonthlyReport.setOnCheckedChangeListener { _, isChecked ->
-            Utils.applyTheme(isChecked)
             sharedPreferences.edit().putBoolean(getString(R.string.switchmonth), isChecked).apply()
         }
 

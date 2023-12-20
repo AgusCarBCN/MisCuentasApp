@@ -94,8 +94,13 @@
         <item name="android:layout_marginRight">30dp</item>
     </style>
 
-
-
+    <style name="switchCustom">
+        <item name="android:layout_width">360dp</item>
+        <item name="android:layout_height">@dimen/switchCustom</item>
+        <item name="android:textSize">@dimen/extracommon</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:thumb">@drawable/custom_thumb</item>
+    </style>
 
     <style name="infoTextView">
         <item name="android:layout_width">wrap_content</item>
