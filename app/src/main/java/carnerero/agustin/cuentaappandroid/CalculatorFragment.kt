@@ -77,7 +77,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-
+        operation.run {
+            addTextChangedListener(SeparateThousands(groupingSeparator = ".", decimalSeparator ="," ))
+        }
         return view
     }
 
