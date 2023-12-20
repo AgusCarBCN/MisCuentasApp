@@ -86,9 +86,8 @@
                     android:id="@+id/seekBar"
                     android:layout_width="360dp"
                     android:layout_height="20dp"
-                    android:thumb="@drawable/custom_thumb"
-                    app:track="@drawable/custom_seekbar"
-                    android:progressDrawable="@drawable/custom_thumb_bar"/>
+                    android:thumb="@drawable/custom_thumb_bar"
+                    android:progressDrawable="@drawable/custom_seekbar"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -7,11 +7,15 @@
         <clip>
             <shape
                 android:shape="rectangle" >
-                <size android:height="20dp"/>
+                <size android:height="5dp"/>
                 <corners
-                    android:radius="20dp" />
+                    android:radius="5dp" />
                 <solid android:color="@color/darkGreenPistacho"/>
             </shape>
         </clip>
     </item>
 </layer-list>
+
+
+
+
