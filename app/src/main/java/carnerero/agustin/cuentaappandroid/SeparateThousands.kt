@@ -1,8 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.TextView
-import java.util.StringTokenizer
+
 
 class SeparateThousands(val groupingSeparator: String, val decimalSeparator: String) : TextWatcher {
 

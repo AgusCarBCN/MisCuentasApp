@@ -1,9 +1,14 @@
 package carnerero.agustin.cuentaappandroid
 
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,10 +19,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
-
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
-import carnerero.agustin.cuentaappandroid.utils.Utils
-import okhttp3.internal.notify
+
 
 
 class NotificationsFragment : Fragment() {
@@ -46,21 +49,21 @@ class NotificationsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        var progressValue = 0
-        var switchAlertLimit = binding.switchalertlimit
-        var switchWeeklyReport = binding.switchweek
-        var switchMonthlyReport = binding.switchmonth
-        var switchAlertBalance = binding.switchalertbalance
+
+        val switchAlertLimit = binding.switchalertlimit
+        val switchWeeklyReport = binding.switchweek
+        val switchMonthlyReport = binding.switchmonth
+        val switchAlertBalance = binding.switchalertbalance
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         // Obtener el estado de los switchs de las notificaciones
-        var isCheckedSwitchAlertLimit =
+        val isCheckedSwitchAlertLimit =
             sharedPreferences.getBoolean(getString(R.string.switchlimit), false)
-        var isCheckedSwitchWeek =
+        val isCheckedSwitchWeek =
             sharedPreferences.getBoolean(getString(R.string.switchweek), false)
-        var isCheckedSwitchMonth =
+        val isCheckedSwitchMonth =
             sharedPreferences.getBoolean(getString(R.string.switchmonth), false)
-        var isCheckedSwitchAlertBalance =
+        val isCheckedSwitchAlertBalance =
             sharedPreferences.getBoolean(getString(R.string.switchbalance), false)
 
         //Asigno el estado de los switchs
@@ -70,27 +73,28 @@ class NotificationsFragment : Fragment() {
         switchMonthlyReport.isChecked = isCheckedSwitchMonth
 
         val seekBar = binding.seekBar
-        var percentTextView = binding.tvPercent
+        val percentTextView = binding.tvPercent
         // Aplica la visibilidad de la barra de progreso y el TextView
-        seekBar?.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
-        percentTextView?.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
-
+        seekBar.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
+        percentTextView.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
+        createChannel()
         switchAlertLimit.setOnCheckedChangeListener { _, isChecked ->
 
             //Guardo configuracion en sharedPreferences
             sharedPreferences.edit().putBoolean(getString(R.string.switchlimit), isChecked).apply()
             // Muestra u oculta la barra de progreso según el estado del interruptor
-            seekBar?.visibility = if (isChecked) View.VISIBLE else View.GONE
+            seekBar.visibility = if (isChecked) View.VISIBLE else View.GONE
             // Muestra u oculta el TextView según el estado del interruptor
-            percentTextView?.visibility = if (isChecked) View.VISIBLE else View.GONE
+            percentTextView.visibility = if (isChecked) View.VISIBLE else View.GONE
             if (isChecked) {
-                //createChannel()
-                //createNotification()
+                createNotification()
             }
-
-
         }
+        createChannel()
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                createNotification()
+            }
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
         }
@@ -104,20 +108,15 @@ class NotificationsFragment : Fragment() {
 
         // Asigna un listener de cambio de progreso a la barra de progreso
         // Dentro de tu clase o función donde estás manejando el SeekBar y el TextView
-        seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-
                 // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-                progressValue = progress
-                percentTextView?.text = "$progress%"
-
+                percentTextView.text = "$progress%"
                 // Guarda el progreso en SharedPreferences
                 val editor = sharedPreferences.edit()
                 editor.putInt("progressValue", progress)
                 editor.apply()
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
@@ -126,23 +125,31 @@ class NotificationsFragment : Fragment() {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
         })
-// Recupera el progreso de SharedPreferences cuando se inicia tu actividad o fragmento
+        //Recupera el progreso de SharedPreferences cuando se inicia tu actividad o fragmento
         val savedProgress = sharedPreferences.getInt("progressValue", 0)
-        seekBar?.progress = savedProgress
-        percentTextView?.text = "$savedProgress%"
-        //Lanzamiento de notificacion
+        seekBar.progress = savedProgress
+        percentTextView.text = "$savedProgress%"
 
         return binding.root
 
     }
 
-    /*fun createNotification() {
+   private fun createNotification() {
+        val intent= Intent(requireContext(),MainActivity::class.java).apply {
+            flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val flag=PendingIntent.FLAG_IMMUTABLE
+        val pendingIntent = PendingIntent.getActivity(requireContext(),
+            0, intent,
+             flag)
+
         // Crear un NotificationCompat.Builder
         val builder = NotificationCompat.Builder(requireContext(), CHANEL_ALERT_LIMIT)
-            .setSmallIcon(android.R.drawable.ic_notification_overlay)
+            .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle("Alerta de gastos")
             .setContentText("Esto es una prueba")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
         with(NotificationManagerCompat.from(requireContext())){
 
             if (ActivityCompat.checkSelfPermission(
@@ -162,22 +169,15 @@ class NotificationsFragment : Fragment() {
             notify(1,builder.build())
         }
     }
-    fun createChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    private fun createChannel() {
             val channel = NotificationChannel(
                 CHANEL_ALERT_LIMIT,
                 "channelAlert",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH
             )
-
-            // Puedes configurar más opciones del canal aquí, como la descripción o la importancia.
-            // channel.description = "Descripción del canal"
-
             val notificationManager: NotificationManager =
                 requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             notificationManager.createNotificationChannel(channel)
-        }
-    }*/
-
+    }
 }
