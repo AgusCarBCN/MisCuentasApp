@@ -142,10 +142,9 @@ class NotificationsFragment : Fragment() {
         val pendingIntent = PendingIntent.getActivity(requireContext(),
             0, intent,
              flag)
-
         // Crear un NotificationCompat.Builder
         val builder = NotificationCompat.Builder(requireContext(), CHANEL_ALERT_LIMIT)
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle("Alerta de gastos")
             .setContentText("Esto es una prueba")
             .setContentIntent(pendingIntent)
@@ -157,13 +156,7 @@ class NotificationsFragment : Fragment() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+
                 return
             }
             notify(1,builder.build())
