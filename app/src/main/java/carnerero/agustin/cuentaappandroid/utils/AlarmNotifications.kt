@@ -41,7 +41,7 @@ private fun createNotification(context: Context) {
             flag)
         // Crear un NotificationCompat.Builder
         val notification = NotificationCompat.Builder(context,
-            NotificationsFragment.CHANEL_ALERT_LIMIT
+            NotificationsFragment.CHANEL_NOTIFICATIONS
         )
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle("Alerta de gastos")
@@ -64,7 +64,7 @@ private fun createNotification(context: Context) {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notificationBuilder = NotificationCompat.Builder(context, NotificationsFragment.CHANEL_ALERT_LIMIT)
+        val notificationBuilder = NotificationCompat.Builder(context, NotificationsFragment.CHANEL_NOTIFICATIONS)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
