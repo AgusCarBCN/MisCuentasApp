@@ -1,32 +1,33 @@
 package carnerero.agustin.cuentaappandroid.utils
 
-import android.Manifest
+
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import carnerero.agustin.cuentaappandroid.MainActivity
 import carnerero.agustin.cuentaappandroid.NotificationsFragment
 import carnerero.agustin.cuentaappandroid.R
 
 class AlarmNotifications:BroadcastReceiver() {
-    override fun onReceive(context: Context?, p1: Intent?) {
-        TODO("Not yet implemented")
+    companion object{
+        const val ALARM_LIMIT_NOTIFICATION=1
     }
-    /*private fun createNotification() {
-        val intent= Intent(this, MainActivity::class.java).apply {
+    override fun onReceive(context: Context, p1: Intent?) {
+        createNotification(context)
+    }
+private fun createNotification(context: Context) {
+        val intent= Intent(context, MainActivity::class.java).apply {
             flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val flag= PendingIntent.FLAG_IMMUTABLE
-        val pendingIntent = PendingIntent.getActivity(this,
+        val pendingIntent = PendingIntent.getActivity(context,
             0, intent,
             flag)
         // Crear un NotificationCompat.Builder
-        val builder = NotificationCompat.Builder(this,
+        val notification = NotificationCompat.Builder(context,
             NotificationsFragment.CHANEL_ALERT_LIMIT
         )
             .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -34,17 +35,8 @@ class AlarmNotifications:BroadcastReceiver() {
             .setContentText("Esto es una prueba")
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-        with(NotificationManagerCompat.from(this)){
-
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-
-                return
-            }
-            notify(1,builder.build())
-        }
-    }*/
+            .build()
+        val manager=context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(ALARM_LIMIT_NOTIFICATION,notification)
+    }
 }

@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -16,11 +17,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.app.ActivityCompat
+import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
-
+import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
+import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications.Companion.ALARM_LIMIT_NOTIFICATION
+import java.util.Calendar
 
 
 class NotificationsFragment : Fragment() {
@@ -87,13 +93,13 @@ class NotificationsFragment : Fragment() {
             // Muestra u oculta el TextView según el estado del interruptor
             percentTextView.visibility = if (isChecked) View.VISIBLE else View.GONE
             if (isChecked) {
-                createNotification()
+                scheduleNotification()
             }
         }
         createChannel()
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                createNotification()
+                scheduleNotification()
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
@@ -172,5 +178,25 @@ class NotificationsFragment : Fragment() {
                 requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             notificationManager.createNotificationChannel(channel)
+    }
+    private fun scheduleNotification(){
+        val intent=Intent(requireContext().applicationContext,AlarmNotifications::class.java)
+        val pendingIntent=PendingIntent.getBroadcast(
+            requireContext().applicationContext,
+            ALARM_LIMIT_NOTIFICATION,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager: AlarmManager = context?.getSystemService()!!
+        when {
+            // If permission is granted, proceed with scheduling exact alarms.
+            alarmManager.canScheduleExactAlarms() -> {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,Calendar.getInstance().timeInMillis+10000,pendingIntent)
+            }
+            else -> {
+
+            }
+        }
+
     }
 }
