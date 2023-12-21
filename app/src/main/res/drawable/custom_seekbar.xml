@@ -2,9 +2,16 @@
 
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:id="@android:id/background"
-        android:drawable="@color/orange" >
+    <item>
+    <shape
+        android:shape="rectangle" >
+        <size android:height="5dp"/>
+        <corners
+            android:radius="10dp" />
+        <solid android:color="@color/orange"/>
+    </shape>
+
+
     </item>
 
     <item

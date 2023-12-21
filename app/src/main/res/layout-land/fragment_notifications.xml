@@ -86,7 +86,10 @@
                 <SeekBar
                     android:id="@+id/seekBar"
                     android:layout_width="360dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="10dp"
+                    android:thumb="@drawable/custom_thumb_bar"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
