@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -93,13 +94,13 @@ class NotificationsFragment : Fragment() {
             // Muestra u oculta el TextView según el estado del interruptor
             percentTextView.visibility = if (isChecked) View.VISIBLE else View.GONE
             if (isChecked) {
-                scheduleNotification()
+                scheduleNotification(AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
             }
         }
         createChannel()
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                scheduleNotification()
+                scheduleNotification(AlarmNotifications.ALARM_BALANCE)
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
@@ -179,11 +180,12 @@ class NotificationsFragment : Fragment() {
 
             notificationManager.createNotificationChannel(channel)
     }
-    private fun scheduleNotification(){
+    private fun scheduleNotification(notificationType:Int){
         val intent=Intent(requireContext().applicationContext,AlarmNotifications::class.java)
+        intent.putExtra("notificationType", notificationType)
         val pendingIntent=PendingIntent.getBroadcast(
             requireContext().applicationContext,
-            ALARM_LIMIT_NOTIFICATION,
+            notificationType,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
