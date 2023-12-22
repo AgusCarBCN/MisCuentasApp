@@ -3,6 +3,7 @@
         <dimen name="small" >14sp</dimen>
         <dimen name="common" >16sp</dimen>
         <dimen name="large">20sp</dimen>
+        <dimen name="extralarge">24dp</dimen>
         <dimen name="login" >20dp</dimen>
         <dimen name="botton" >20dp</dimen>
         <dimen name="switchCustom" >24dp</dimen>

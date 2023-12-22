@@ -19,6 +19,13 @@
     <string name="city">Ciudad</string>
     <string name="zipcode">C.Postal</string>
     <string name="email">email</string>
+    <string name="required">*Campo requerido</string>
+    <string name="requiredname">*Nombre</string>
+    <string name="requiredid">*DNI</string>
+    <string name="requiredpassword">*Contraseña</string>
+    <string name="goodmorning">Buenos dias</string>
+    <string name="goodafternoon">Buenas tardes</string>
+    <string name="goodnight">Buenas noches</string>
     <string name="accounts">Cuentas</string>
     <string name="second_account">Cuenta auxiliar</string>
     <string name="new_user">¿Eres un nuevo usuario?</string>

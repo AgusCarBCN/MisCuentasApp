@@ -14,6 +14,7 @@ import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.util.Calendar
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,12 +32,30 @@ class LoginActivity : AppCompatActivity() {
         // Inicialización del enlace de diseño
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
+
+        // Obtener preferencias compartidas
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        // Obtener configuraciones de preferencias compartidas
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val name=sharedPreferences.getString(getString(R.string.username),"usuario")
         // Referencias a elementos de diseño
         val createUser = binding.btnCreateuser
         val tvcreateUser = binding.tvCreateuser
-
+        val wellcome=binding.tvWellcome
         // Verificar si ya existe un usuario
         existUser = userDao.existeAlgunUsuario()
+        // Obtener la hora actual
+        val cal = Calendar.getInstance()
+        val currentHour = cal.get(Calendar.HOUR_OF_DAY)
+        val greeting = when (currentHour) {
+            in 6..11 -> getString(R.string.goodmorning)
+            in 12..17 -> getString(R.string.goodafternoon)
+            else -> getString(R.string.goodnight)
+        }
+        val msgWellcome="$greeting $name"
+        wellcome.text=msgWellcome
 
         // Establecer el diseño de la actividad
         setContentView(binding.root)
@@ -47,12 +66,6 @@ class LoginActivity : AppCompatActivity() {
             tvcreateUser.setText("")
         }
 
-        // Obtener preferencias compartidas
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        // Obtener configuraciones de preferencias compartidas
-        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
 
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyTheme(enableDarkTheme)

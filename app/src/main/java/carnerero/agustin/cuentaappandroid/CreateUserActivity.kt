@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
@@ -51,25 +52,30 @@ class CreateUserActivity : AppCompatActivity() {
         val account = binding.etUseraccount
         val amount = binding.etAmount
         //Acceso a buttonView
-        val addAccount=binding.addaccount
-        val confirm=binding.btnConfirmuser
-        val cancel=binding.btnCanceluser
+        val addAccount = binding.addaccount
+        val confirm = binding.btnConfirmuser
+        val cancel = binding.btnCanceluser
         //Acceso a spinner
-        val spCurrency=binding.spSelectcurrency
+        val spCurrency = binding.spSelectcurrency
 
         // Crear adaptadores
         val adapter =
             ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
         with(adapter) {
-            currencies.forEach { currency->
+            currencies.forEach { currency ->
                 add(currency)
             }
         }
-        spCurrency.adapter=adapter
-        selectedItem=currencies[0]
+        spCurrency.adapter = adapter
+        selectedItem = currencies[0]
         // Listener para el spinner que guarda la divisa seleccionada
         spCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 selectedItem = adapter.getItem(position).toString()
 
 
@@ -81,49 +87,73 @@ class CreateUserActivity : AppCompatActivity() {
         }
 
         addAccount.setOnClickListener {
-            cuentas.add(Cuenta(account.text.toString(),amount.text.toString().toDouble(),dni.text.toString()))
+            cuentas.add(
+                Cuenta(
+                    account.text.toString(),
+                    amount.text.toString().toDouble(),
+                    dni.text.toString()
+                )
+            )
             account.text.clear()
             amount.text.clear()
         }
-        confirm.setOnClickListener{
+        confirm.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            val user = Usuario(
-                dni.text.toString(),
-                name.text.toString(),
-                address.text.toString(),
-                city.text.toString(),
-                zipCode.text.toString(),
-                email.text.toString(),
-                userpass.text.toString()
-            )
-            usuarioDao = UsuarioDao(admin)
-            cuentaDao = CuentaDao(admin)
-            // Insertar el Usuario y las Cuentas en la base de datos
-            usuarioDao.insertarUsuario(user)
-            cuentas.forEach { cuenta ->
-                cuentaDao.insertarCuenta(cuenta)
-            }
-            currency=selectedItem
-            //Guadar moneda en sharepreferences
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-            sharedPreferences.edit().putString(getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency), currency).apply()
-            // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
-           /*val listMov = readFileCsv()
+            if (dni.text.toString().isEmpty() || name.text.toString()
+                    .isEmpty() || userpass.text.toString().isEmpty()
+            ) {
+                if (dni.text.toString().isEmpty())
+                    dni.error = getString(R.string.required)
+                if (name.text.toString().isEmpty())
+                    name.error = getString(R.string.required)
+                if (userpass.text.toString().isEmpty())
+                    userpass.error = getString(R.string.required)
+            } else {
+                val user = Usuario(
+                    dni.text.toString(),
+                    name.text.toString(),
+                    address.text.toString(),
+                    city.text.toString(),
+                    zipCode.text.toString(),
+                    email.text.toString(),
+                    userpass.text.toString()
+                )
+                usuarioDao = UsuarioDao(admin)
+                cuentaDao = CuentaDao(admin)
+                // Insertar el Usuario y las Cuentas en la base de datos
+                usuarioDao.insertarUsuario(user)
+                cuentas.forEach { cuenta ->
+                    cuentaDao.insertarCuenta(cuenta)
+                }
+                currency = selectedItem
+                //Guadar moneda en sharepreferences
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+                sharedPreferences.edit().putString(
+                    getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
+                    currency
+                ).apply()
+                sharedPreferences.edit().putString(
+                    getString(carnerero.agustin.cuentaappandroid.R.string.username),
+                    name.text.toString()
+                ).apply()
+                // Leer el archivo CSV y agregar los movimientos bancarios a la base de datos
+                val listMov = readFileCsv()
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
-            }*/
-            startActivity(intent)
-        }
-        cancel.setOnClickListener{
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+            }
+                startActivity(intent)
+            }
+            cancel.setOnClickListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
 
+        }
     }
 
-
     // Método para leer el archivo CSV y devolver una lista de MovimientoBancario
-    /*private fun readFileCsv(): MutableList<MovimientoBancario> {
+    private fun readFileCsv(): MutableList<MovimientoBancario> {
         val bufferedReader = BufferedReader(assets.open("movimientos.csv").reader())
         val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
         val list = mutableListOf<MovimientoBancario>()
@@ -146,7 +176,7 @@ class CreateUserActivity : AppCompatActivity() {
 
         return list
     }
-*/
+
 
 
 }
