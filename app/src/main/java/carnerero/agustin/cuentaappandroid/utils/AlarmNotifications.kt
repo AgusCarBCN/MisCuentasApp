@@ -65,7 +65,7 @@ private fun createNotification(context: Context) {
         )
 
         val notificationBuilder = NotificationCompat.Builder(context, NotificationsFragment.CHANEL_NOTIFICATIONS)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.contabilidad)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
