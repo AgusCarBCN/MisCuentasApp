@@ -51,8 +51,8 @@ class LoginActivity : AppCompatActivity() {
         val currentHour = cal.get(Calendar.HOUR_OF_DAY)
         val greeting = when (currentHour) {
             in 6..11 -> getString(R.string.goodmorning)
-            in 12..17 -> getString(R.string.goodafternoon)
-            else -> getString(R.string.goodnight)
+            in 12..20 -> getString(R.string.goodafternoon)
+            else -> getString(R.string.goodevening)
         }
         val msgWellcome="$greeting $name"
         wellcome.text=msgWellcome

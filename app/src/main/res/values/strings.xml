@@ -16,7 +16,7 @@
     <string name="required">*Required field</string>
     <string name="goodmorning">Good morning</string>
     <string name="goodafternoon">Good afternoon</string>
-    <string name="goodnight">Good night</string>
+    <string name="goodevening">Good evening</string>
     <string name="requiredname">*Name</string>
     <string name="requiredid">*ID</string>
     <string name="requiredpassword">*Password</string>

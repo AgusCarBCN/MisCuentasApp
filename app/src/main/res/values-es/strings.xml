@@ -25,7 +25,7 @@
     <string name="requiredpassword">*Contraseña</string>
     <string name="goodmorning">Buenos dias</string>
     <string name="goodafternoon">Buenas tardes</string>
-    <string name="goodnight">Buenas noches</string>
+    <string name="goodevening">Buenas noches</string>
     <string name="accounts">Cuentas</string>
     <string name="second_account">Cuenta auxiliar</string>
     <string name="new_user">¿Eres un nuevo usuario?</string>
