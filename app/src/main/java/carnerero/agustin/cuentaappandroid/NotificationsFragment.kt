@@ -17,26 +17,32 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.dao.CuentaDao
+import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
-import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
-import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+
 
 
 class NotificationsFragment : Fragment() {
     companion object {
-        const val CHANEL_NOTIFICATIONS= "Notifications"
+        const val CHANEL_NOTIFICATIONS = "Notifications"
 
     }
 
     // Variable para manejar el View Binding
-    private var _binding:FragmentNotificationsBinding? = null
+    private var _binding: FragmentNotificationsBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var movimientos: ArrayList<MovimientoBancario>
     private val admin = DataBaseAppSingleton.getInstance(context)
-    private val cuentaDao=CuentaDao(admin)
+    private val movDao = MovimientoBancarioDAO(admin)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -50,39 +56,50 @@ class NotificationsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        var incomePerMonth=0.0
-        val switchAlertLimit = binding.switchalertlimit
+
+        val switchDiaryReport = binding.switchday
         val switchWeeklyReport = binding.switchweek
         val switchMonthlyReport = binding.switchmonth
         val switchAlertBalance = binding.switchalertbalance
+        val switchAlertLimit = binding.switchalertlimit
+        val seekBar = binding.seekBar
+        val seekBarBal = binding.seekBarBalance
+        val percentTextView = binding.tvPercent
+        val percentTextViewBal = binding.tvPercentbalance
+
+
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         // Obtener el estado de los switchs de las notificaciones
-        val isCheckedSwitchAlertLimit =
-            sharedPreferences.getBoolean(getString(R.string.switchlimit), false)
+        val isCheckedSwitchDay =
+            sharedPreferences.getBoolean(getString(R.string.switchday), false)
         val isCheckedSwitchWeek =
             sharedPreferences.getBoolean(getString(R.string.switchweek), false)
         val isCheckedSwitchMonth =
             sharedPreferences.getBoolean(getString(R.string.switchmonth), false)
         val isCheckedSwitchAlertBalance =
             sharedPreferences.getBoolean(getString(R.string.switchbalance), false)
-
+        val isCheckedSwitchAlertLimit =
+            sharedPreferences.getBoolean(getString(R.string.switchlimit), false)
         //Asigno el estado de los switchs
+        switchDiaryReport.isChecked = isCheckedSwitchDay
         switchAlertLimit.isChecked = isCheckedSwitchAlertLimit
         switchAlertBalance.isChecked = isCheckedSwitchAlertBalance
         switchWeeklyReport.isChecked = isCheckedSwitchWeek
         switchMonthlyReport.isChecked = isCheckedSwitchMonth
 
-        val seekBar = binding.seekBar
-        val seekBarBal=binding.seekBarBalance
-        val percentTextView = binding.tvPercent
-        val percentTextViewBal=binding.tvPercentbalance
+
         // Aplica la visibilidad de la barra de progreso y el TextView
         seekBar.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
         percentTextView.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
         seekBarBal.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
         percentTextViewBal.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
-       //canal de notificaciones
+        //Ingresos y gastos..prueba para BBVA
+
+        movimientos = movDao.getAll()
+
+
+        //canal de notificaciones
         createChannel()
         //switch de alerta de gastos permisibles
         switchAlertLimit.setOnCheckedChangeListener { _, isChecked ->
@@ -96,7 +113,7 @@ class NotificationsFragment : Fragment() {
             //Obtengo el valor del porcentaje seleccionado del seekbar
 
             if (isChecked) {
-                scheduleNotification(AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
+                //scheduleNotification(AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
             }
         }
 
@@ -105,28 +122,34 @@ class NotificationsFragment : Fragment() {
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
             // Muestra u oculta la barra de progreso según el estado del interruptor
-            seekBarBal.visibility=if (isChecked) View.VISIBLE else View.GONE
+            seekBarBal.visibility = if (isChecked) View.VISIBLE else View.GONE
             // Muestra u oculta el TextView según el estado del interruptor
             percentTextViewBal.visibility = if (isChecked) View.VISIBLE else View.GONE
-            //Obtengo el valor del porcentaje seleccionado del seekbar
-            val percentBal=percentTextViewBal.text.toString().toDouble()
 
 
             //Obtengo saldos de cuentas
             if (isChecked) {
-                scheduleNotification(AlarmNotifications.ALARM_BALANCE)
+                //scheduleNotification(AlarmNotifications.ALARM_BALANCE)
             }
 
         }
+        switchDiaryReport.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val report = showDaylyReport(movimientos)
+                scheduleNotification(AlarmNotifications.REPORT_DAYRY,+1,report)
+            }
+            sharedPreferences.edit().putBoolean(getString(R.string.switchday), isChecked).apply()
+        }
+
         switchWeeklyReport.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                scheduleNotification(AlarmNotifications.REPORT_WEEKLY)
+                //scheduleNotification(AlarmNotifications.REPORT_WEEKLY)
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchweek), isChecked).apply()
         }
         switchMonthlyReport.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                scheduleNotification(AlarmNotifications.REPORT_MONTLY)
+                //scheduleNotification(AlarmNotifications.REPORT_MONTLY)
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchmonth), isChecked).apply()
         }
@@ -137,12 +160,13 @@ class NotificationsFragment : Fragment() {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-                percentTextView.text = "$progress%"
+                percentTextView.text = "${progress}%"
                 // Guarda el progreso en SharedPreferences
                 val editor = sharedPreferences.edit()
                 editor.putInt("progressValue", progress)
                 editor.apply()
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
@@ -161,6 +185,7 @@ class NotificationsFragment : Fragment() {
                 editor.putInt("progressValueBal", progress)
                 editor.apply()
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
@@ -172,11 +197,11 @@ class NotificationsFragment : Fragment() {
 
         //Recupera el progreso de SharedPreferences cuando se inicia tu actividad o fragmento
         val savedProgress = sharedPreferences.getInt("progressValue", 0)
-        val savedProgressBal=sharedPreferences.getInt("progressValueBal",0)
+        val savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
         seekBar.progress = savedProgress
-        seekBarBal.progress=savedProgressBal
+        seekBarBal.progress = savedProgressBal
         percentTextView.text = "$savedProgress%"
-        percentTextViewBal.text="$savedProgressBal%"
+        percentTextViewBal.text = "$savedProgressBal%"
 
         return binding.root
 
@@ -184,20 +209,21 @@ class NotificationsFragment : Fragment() {
 
 
     private fun createChannel() {
-            val channel = NotificationChannel(
-                CHANEL_NOTIFICATIONS,
-                "channelAlert",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            val notificationManager: NotificationManager =
-                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channel = NotificationChannel(
+            CHANEL_NOTIFICATIONS,
+            "channelAlert",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val notificationManager: NotificationManager =
+            requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            notificationManager.createNotificationChannel(channel)
+        notificationManager.createNotificationChannel(channel)
     }
-    private fun scheduleNotification(notificationType:Int){
-        val intent=Intent(requireContext().applicationContext,AlarmNotifications::class.java)
+
+    /*private fun scheduleNotification(notificationType: Int) {
+        val intent = Intent(requireContext().applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", notificationType)
-        val pendingIntent=PendingIntent.getBroadcast(
+        val pendingIntent = PendingIntent.getBroadcast(
             requireContext().applicationContext,
             notificationType,
             intent,
@@ -206,19 +232,28 @@ class NotificationsFragment : Fragment() {
         val alarmManager: AlarmManager = context?.getSystemService()!!
         when {
             // If permission is granted, proceed with scheduling exact alarms.
+
             alarmManager.canScheduleExactAlarms() -> {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP,Calendar.getInstance().timeInMillis+10000,pendingIntent)
+                alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    Calendar.getInstance().timeInMillis + 10000,
+                    pendingIntent
+                )
+
             }
+
             else -> {
 
             }
         }
 
-    }
-    private fun scheduleNotification(notificationType: Int, repeatInterval: Int) {
+    }*/
+
+    private fun scheduleNotification(notificationType: Int,intervalDay:Int,report:String) {
+        //val str = showDaylyReport(movimientos)
         val intent = Intent(requireContext().applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", notificationType)
-
+        intent.putExtra("message", report)
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext().applicationContext,
             notificationType,
@@ -228,17 +263,37 @@ class NotificationsFragment : Fragment() {
 
         val alarmManager: AlarmManager = context?.getSystemService()!!
 
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, repeatInterval) // Avanza la fecha actual según el intervalo especificado
+        // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
+        val startTime = Calendar.getInstance()
+        startTime.set(Calendar.HOUR_OF_DAY, 21) // Hora de inicio (ejemplo: 17:00PM)
+        startTime.set(Calendar.MINUTE, 35)
+        startTime.set(Calendar.SECOND, 0)
 
-        // Configura la notificación para que se repita según el intervalo proporcionado
+        val intervalMillis = AlarmManager.INTERVAL_DAY*intervalDay
+
+
+        // Configurar la notificación para que se repita cada día a la misma hora
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY * repeatInterval.toLong(), // Intervalo de repetición en días
+            startTime.timeInMillis,
+            intervalMillis,
             pendingIntent
         )
+
+
     }
 
-
+    fun showDaylyReport(movimientos: ArrayList<MovimientoBancario>): String {
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val stringBuilder = StringBuilder()
+        for (movimiento in movimientos) {
+            val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
+            val fechaHoy = LocalDate.now()
+            if (fechaImporteDate.isEqual(fechaHoy)) {
+                val fechaFormateada = fechaImporteDate.format(formatter)
+                stringBuilder.append(" ${movimiento.importe}  ${movimiento.descripcion}  ${movimiento.iban}\n")
+            }
+        }
+        return stringBuilder.toString()
+    }
 }

@@ -17,7 +17,7 @@ import java.util.Locale
 class Utils {
 
     companion object {
-        private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         var isDarkTheme=false
 
         fun calcularImporteMes(
@@ -53,7 +53,21 @@ class Utils {
             }
             return importeTotal.toFloat()
         }
+        fun calcularImporteDia(
+            targetDate: LocalDate,
+            importes: ArrayList<MovimientoBancario>
+        ): Float {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            var importeTotal = 0.0
 
+            for (mov in importes) {
+                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
+                if (fechaImporteDate.isEqual(targetDate)) {
+                    importeTotal += mov.importe
+                }
+            }
+            return importeTotal.toFloat()
+        }
 
         fun applyTheme(enableDarkTheme: Boolean) {
             if (enableDarkTheme) {
@@ -145,6 +159,10 @@ class Utils {
         {
             val calendar=Calendar.getInstance()
             return calendar.get(Calendar.WEEK_OF_YEAR)+1
+        }
+        fun getToday():Int{
+            val calendar=Calendar.getInstance()
+            return calendar.get(Calendar.DAY_OF_YEAR)
         }
 
 

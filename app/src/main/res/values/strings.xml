@@ -173,9 +173,9 @@
     <string name="exportData">Export data from account</string>
     <string name="importData">Import data</string>
     <string name="selectCurrency">Select Currency</string>
-
-    <string name="weekreport">weekly income and expense report</string>
-    <string name="monthreport">montly income and expense report</string>
+    <string name="daylyreport">dayly report</string>
+    <string name="weekreport">weekly report</string>
+    <string name="monthreport">montly report</string>
     <string name="lowbalance">Low balance alert</string>
     <string name="limitexpense">Expense limit</string>
     <!--sharepreferences de usuario-->
@@ -193,6 +193,7 @@
     <string name="conversion_rate">conversionrate</string>
     <string name="switchlimit">checkedSwitchLimit</string>
     <string name="switchbalance">checkedSwitchBalance</string>
+    <string name="switchday">checkedSwitchDay</string>
     <string name="switchweek">checkedSwitchWeek</string>
     <string name="switchmonth">checkedSwitchMonth</string>
     <string name="percentview">percentView</string>

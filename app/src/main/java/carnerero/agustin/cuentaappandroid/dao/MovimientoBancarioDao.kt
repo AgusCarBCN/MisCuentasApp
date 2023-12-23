@@ -10,8 +10,9 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     // Consultas SQL predefinidas
     private val selectAll = "SELECT * FROM MOVIMIENTO"
     private val selectAllByIban = "SELECT * FROM MOVIMIENTO WHERE iban=?"
-    private val selectIncomes="SELECT * FROM MOVIMIENTO WHERE iban=? AND importe>=0"
-    private val selectBills="SELECT * FROM MOVIMIENTO WHERE iban=? AND importe<0"
+    private val selectIncomes = "SELECT * FROM MOVIMIENTO WHERE iban=? AND importe>=0"
+    private val selectBills = "SELECT * FROM MOVIMIENTO WHERE iban=? AND importe<0"
+
     // Método para insertar un nuevo movimiento bancario en la base de datos
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
         admin.writableDatabase.use { db ->
@@ -74,6 +75,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
         return movimientos
     }
+
     fun borrarMovimientosPorIBAN(iban: String) {
         admin.writableDatabase.use { db ->
             db.execSQL("PRAGMA foreign_keys = ON;")

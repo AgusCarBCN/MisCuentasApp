@@ -34,6 +34,19 @@
             android:gravity="center"
             android:orientation="horizontal">
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchday"
+                style="@style/switchCustom"
+                app:track="@drawable/custom_track"
+                android:text="@string/daylyreport" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchweek"
                 style="@style/switchCustom"
                 app:track="@drawable/custom_track"

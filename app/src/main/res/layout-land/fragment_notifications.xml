@@ -7,10 +7,7 @@
     android:background="?android:colorPrimary"
     tools:context=".NotificationsFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,6 +34,19 @@
             android:gravity="center"
             android:orientation="horizontal">
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchday"
+                style="@style/switchCustom"
+                app:track="@drawable/custom_track"
+                android:text="@string/daylyreport" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchweek"
                 style="@style/switchCustom"
                 app:track="@drawable/custom_track"
@@ -53,7 +63,8 @@
                 android:id="@+id/switchmonth"
                 style="@style/switchCustom"
                 app:track="@drawable/custom_track"
-                android:text="@string/monthreport"/>
+                android:text="@string/monthreport"
+                 />
 
 
         </LinearLayout>
@@ -73,8 +84,9 @@
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchalertlimit"
                     style="@style/switchCustom"
-                    app:track="@drawable/custom_track"
-                    android:text="@string/limitexpense"/>
+                    android:layout_margin="8dp"
+                    android:text="@string/limitexpense"
+                    app:track="@drawable/custom_track" />
 
                 <TextView
                     android:id="@+id/tv_percent"
@@ -85,11 +97,11 @@
                     android:textSize="@dimen/extracommon" />
                 <SeekBar
                     android:id="@+id/seekBar"
-                    android:layout_width="360dp"
+                    android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:thumb="@drawable/custom_thumb_bar"
-                    android:progressDrawable="@drawable/custom_seekbar"
-                    />
+                    android:progressDrawable="@drawable/custom_seekbar"/>
+
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -117,15 +129,17 @@
                 android:textSize="@dimen/extracommon" />
             <SeekBar
                 android:id="@+id/seekBarBalance"
-                android:layout_width="360dp"
+                android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:thumb="@drawable/custom_thumb_bar"
                 android:progressDrawable="@drawable/custom_seekbar"
                 />
-        </LinearLayout>
+                </LinearLayout>
+
         </LinearLayout>
 
+
     </LinearLayout>
-    </ScrollView>
+
 
 </FrameLayout>
