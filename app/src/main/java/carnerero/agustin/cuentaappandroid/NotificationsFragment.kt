@@ -19,6 +19,7 @@ import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.util.Calendar
 
 
@@ -46,7 +47,7 @@ class NotificationsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-
+        var incomePerMonth=0.0
         val switchAlertLimit = binding.switchalertlimit
         val switchWeeklyReport = binding.switchweek
         val switchMonthlyReport = binding.switchmonth
@@ -70,11 +71,17 @@ class NotificationsFragment : Fragment() {
         switchMonthlyReport.isChecked = isCheckedSwitchMonth
 
         val seekBar = binding.seekBar
+        val seekBarBal=binding.seekBarBalance
         val percentTextView = binding.tvPercent
+        val percentTextViewBal=binding.tvPercentbalance
         // Aplica la visibilidad de la barra de progreso y el TextView
         seekBar.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
         percentTextView.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
+        seekBarBal.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
+        percentTextViewBal.visibility = if (isCheckedSwitchAlertLimit) View.VISIBLE else View.GONE
+       //canal de notificaciones
         createChannel()
+        //switch de alerta de gastos permisibles
         switchAlertLimit.setOnCheckedChangeListener { _, isChecked ->
 
             //Guardo configuracion en sharedPreferences
@@ -83,17 +90,28 @@ class NotificationsFragment : Fragment() {
             seekBar.visibility = if (isChecked) View.VISIBLE else View.GONE
             // Muestra u oculta el TextView según el estado del interruptor
             percentTextView.visibility = if (isChecked) View.VISIBLE else View.GONE
+            //Obtengo el valor del porcentaje seleccionado del seekbar
+
             if (isChecked) {
                 scheduleNotification(AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
             }
+
         }
-        createChannel()
+
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
+            //Guardo configuracion en sharedPreferences
+            sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
+                .apply()
+            // Muestra u oculta la barra de progreso según el estado del interruptor
+            seekBarBal.visibility=if (isChecked) View.VISIBLE else View.GONE
+            // Muestra u oculta el TextView según el estado del interruptor
+            percentTextViewBal.visibility = if (isChecked) View.VISIBLE else View.GONE
+            //Obtengo el valor del porcentaje seleccionado del seekbar
+
             if (isChecked) {
                 scheduleNotification(AlarmNotifications.ALARM_BALANCE)
             }
-            sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
-                .apply()
+
         }
         switchWeeklyReport.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -128,10 +146,33 @@ class NotificationsFragment : Fragment() {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
         })
+
+        seekBarBal.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // Actualiza el valor del progreso y muestra el porcentaje en el TextView
+                percentTextViewBal.text = "$progress%"
+                // Guarda el progreso en SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putInt("progressValueBal", progress)
+                editor.apply()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
+            }
+        })
+
+
         //Recupera el progreso de SharedPreferences cuando se inicia tu actividad o fragmento
         val savedProgress = sharedPreferences.getInt("progressValue", 0)
+        val savedProgressBal=sharedPreferences.getInt("progressValueBal",0)
         seekBar.progress = savedProgress
+        seekBarBal.progress=savedProgressBal
         percentTextView.text = "$savedProgress%"
+        percentTextViewBal.text="$savedProgressBal%"
 
         return binding.root
 
@@ -170,4 +211,30 @@ class NotificationsFragment : Fragment() {
         }
 
     }
+    private fun scheduleNotification(notificationType: Int, repeatInterval: Int) {
+        val intent = Intent(requireContext().applicationContext, AlarmNotifications::class.java)
+        intent.putExtra("notificationType", notificationType)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext().applicationContext,
+            notificationType,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager: AlarmManager = context?.getSystemService()!!
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, repeatInterval) // Avanza la fecha actual según el intervalo especificado
+
+        // Configura la notificación para que se repita según el intervalo proporcionado
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY * repeatInterval.toLong(), // Intervalo de repetición en días
+            pendingIntent
+        )
+    }
+
+
 }

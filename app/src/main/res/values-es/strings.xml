@@ -192,5 +192,6 @@
     <string name="switchmonth">checkedSwitchMonth</string>
     <string name="percentview">percentView</string>
     <string name="seekbar">seekbar</string>
+    <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
 </resources>

@@ -179,6 +179,7 @@
     <string name="lowbalance">Low balance alert</string>
     <string name="limitexpense">Expense limit</string>
     <!--sharepreferences de usuario-->
+
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>
@@ -196,5 +197,6 @@
     <string name="switchmonth">checkedSwitchMonth</string>
     <string name="percentview">percentView</string>
     <string name="seekbar">seekbar</string>
+    <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
 </resources>

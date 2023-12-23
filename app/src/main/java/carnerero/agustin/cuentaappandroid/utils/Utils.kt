@@ -11,6 +11,7 @@ import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
+import java.util.Calendar
 import java.util.Locale
 
 class Utils {
@@ -134,6 +135,16 @@ class Utils {
             val lastElement = charSequence[charSequence.length - 1].toString()
             val penultElement = charSequence[charSequence.length - 2].toString()
             return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
+        }
+        fun getMonth(): Int {
+            val calendar = Calendar.getInstance()
+            return calendar.get(Calendar.MONTH) + 1  // Los meses en Calendar comienzan desde 0, así que sumamos 1.
+        }
+
+        fun getWeek():Int
+        {
+            val calendar=Calendar.getInstance()
+            return calendar.get(Calendar.WEEK_OF_YEAR)+1
         }
 
 
