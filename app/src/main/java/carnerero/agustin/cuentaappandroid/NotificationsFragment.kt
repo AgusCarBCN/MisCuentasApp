@@ -17,7 +17,9 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
+import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.util.Calendar
@@ -33,7 +35,8 @@ class NotificationsFragment : Fragment() {
     private var _binding:FragmentNotificationsBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
-
+    private val admin = DataBaseAppSingleton.getInstance(context)
+    private val cuentaDao=CuentaDao(admin)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -95,7 +98,6 @@ class NotificationsFragment : Fragment() {
             if (isChecked) {
                 scheduleNotification(AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
             }
-
         }
 
         switchAlertBalance.setOnCheckedChangeListener { _, isChecked ->
@@ -107,7 +109,10 @@ class NotificationsFragment : Fragment() {
             // Muestra u oculta el TextView según el estado del interruptor
             percentTextViewBal.visibility = if (isChecked) View.VISIBLE else View.GONE
             //Obtengo el valor del porcentaje seleccionado del seekbar
+            val percentBal=percentTextViewBal.text.toString().toDouble()
 
+
+            //Obtengo saldos de cuentas
             if (isChecked) {
                 scheduleNotification(AlarmNotifications.ALARM_BALANCE)
             }
@@ -164,7 +169,6 @@ class NotificationsFragment : Fragment() {
                 // No es necesario implementar esto, pero puedes hacerlo si lo necesitas
             }
         })
-
 
         //Recupera el progreso de SharedPreferences cuando se inicia tu actividad o fragmento
         val savedProgress = sharedPreferences.getInt("progressValue", 0)

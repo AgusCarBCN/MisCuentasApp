@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.adapter.AdapterMov
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfMovBinding
+import carnerero.agustin.cuentaappandroid.interfaces.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.util.Locale
 
 
 
 
-class ListOfMovFragment : Fragment() ,OnLocaleListener{
+class ListOfMovFragment : Fragment() , OnLocaleListener {
 
     private lateinit var lang:String
     private lateinit var country:String

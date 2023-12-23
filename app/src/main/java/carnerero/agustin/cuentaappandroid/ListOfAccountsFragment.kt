@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.adapter.AdapterBal
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentListOfAccountsBinding
+import carnerero.agustin.cuentaappandroid.interfaces.OnLocaleListener
 import java.util.Locale
 
 
-class ListOfAccountsFragment : Fragment(),OnLocaleListener {
+class ListOfAccountsFragment : Fragment(), OnLocaleListener {
 
     private lateinit var lang:String
     private lateinit var country:String

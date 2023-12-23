@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import carnerero.agustin.cuentaappandroid.OnLocaleListener
+import carnerero.agustin.cuentaappandroid.interfaces.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.databinding.ItemMovimientoBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 
 import java.util.Locale
 
-class AdapterMov(private var movList: MutableList<MovimientoBancario>,private val listener :OnLocaleListener) :
+class AdapterMov(private var movList: MutableList<MovimientoBancario>,private val listener : OnLocaleListener) :
     RecyclerView.Adapter<AdapterMov.ViewHolder>() {
 
     //Esta clase permite inflar la vista item_movimiento

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid
+package carnerero.agustin.cuentaappandroid.interfaces
 
 import java.util.Locale
 

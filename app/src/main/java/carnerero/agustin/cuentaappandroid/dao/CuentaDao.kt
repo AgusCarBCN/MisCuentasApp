@@ -117,5 +117,25 @@ class CuentaDao(private val admin: DataBaseApp) {
             db.delete("CUENTA", null, null)
         }
     }
+    fun listarTodasLasCuentas(): MutableList<Cuenta> {
+        val cuentas = mutableListOf<Cuenta>()
+
+        admin.readableDatabase.use { db ->
+            val query = "SELECT iban, saldo, dni FROM CUENTA"
+            val cursor = db.rawQuery(query, null)
+
+            while (cursor.moveToNext()) {
+                val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
+                val saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
+                val dni = cursor.getString(cursor.getColumnIndexOrThrow("dni"))
+
+                val cuenta = Cuenta(iban, saldo, dni)
+                cuentas.add(cuenta)
+            }
+            cursor.close()
+        }
+
+        return cuentas
+    }
 
 }

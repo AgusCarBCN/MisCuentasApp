@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
+import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
@@ -142,7 +143,7 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
 
 
     private fun showResultOrError(operation: String, isResolve: Boolean) {
-        Utils.tryResolve(operation,isResolve,object :OnResolveListener{
+        Utils.tryResolve(operation,isResolve,object : OnResolveListener {
             override fun showResult(result: Double) {
                 // Format the result to have two decimal places and a comma
                 val decimalFormatSymbols = DecimalFormatSymbols()

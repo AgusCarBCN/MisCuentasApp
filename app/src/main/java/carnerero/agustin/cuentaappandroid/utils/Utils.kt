@@ -5,7 +5,7 @@ package carnerero.agustin.cuentaappandroid.utils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
-import carnerero.agustin.cuentaappandroid.OnResolveListener
+import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
@@ -73,7 +73,7 @@ class Utils {
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
             }
         }
-        fun tryResolve(operationRef: String, isResolve: Boolean,listener :OnResolveListener) {
+        fun tryResolve(operationRef: String, isResolve: Boolean,listener : OnResolveListener) {
             if (operationRef.isEmpty()) return
 
             var operation = operationRef
