@@ -268,10 +268,7 @@ class NotificationsFragment : Fragment() {
         startTime.set(Calendar.HOUR_OF_DAY, 21) // Hora de inicio (ejemplo: 17:00PM)
         startTime.set(Calendar.MINUTE, 35)
         startTime.set(Calendar.SECOND, 0)
-
         val intervalMillis = AlarmManager.INTERVAL_DAY*intervalDay
-
-
         // Configurar la notificación para que se repita cada día a la misma hora
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -279,10 +276,7 @@ class NotificationsFragment : Fragment() {
             intervalMillis,
             pendingIntent
         )
-
-
     }
-
     fun showDaylyReport(movimientos: ArrayList<MovimientoBancario>): String {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val stringBuilder = StringBuilder()

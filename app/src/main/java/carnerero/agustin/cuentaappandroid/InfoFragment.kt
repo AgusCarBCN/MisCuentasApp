@@ -27,7 +27,7 @@ import java.io.FileOutputStream
 
 
 class InfoFragment : Fragment() {
-    
+
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var imgPicture: ImageView
     private val admin = DataBaseAppSingleton.getInstance(context)
@@ -93,43 +93,35 @@ class InfoFragment : Fragment() {
 
         imgPicture=binding.imgPhoto
         imgPicture.setImageURI(Uri.parse(imgStr))
-
+        val lyList = listOf(binding.lyid, binding.lyname, binding.lyemail, binding.lyaddress, binding.lyzipcode,binding.imgcity, binding.lypass)
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgemail, binding.imgaddress, binding.imgzip,binding.imgcity, binding.imgpass)
         val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
         val textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
         val columnsDataBase=listOf(AppConst.DNI,AppConst.NAME,AppConst.EMAIL,AppConst.ADDRESS,AppConst.ZIP,AppConst.CITY,AppConst.PASSWORD)
         // Iterar sobre los elementos de imgList
         for (i in imgList.indices) {
-
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
                 changeIconColor(imgIconCamera)
-
             }
-
-            // Asignar un OnClickListener a cada elemento de imgList
-            imgList[i].setOnClickListener {
-                // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
-                 changeField(textViewList[i], titleList[i],columnsDataBase[i])
+            if (textViewList[i].text.isNullOrEmpty()) {
+                // Asignar un OnClickListener a cada elemento de lyList
+                lyList[i].visibility=View.GONE
+            }
+            lyList[i].setOnClickListener {
+            // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
+            changeField(textViewList[i], titleList[i], columnsDataBase[i])
             }
         }
-
-
 
         imgIconCamera.setOnClickListener {
             if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(requireContext())) {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-
             }
         }
-
         return view
-
     }
-
-
-
     private fun saveImageToExternalStorage(uri: Uri): String? {
         return try {
             val inputStream = requireContext().contentResolver.openInputStream(uri)

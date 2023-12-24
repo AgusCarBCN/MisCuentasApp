@@ -24,118 +24,144 @@
             android:textSize="@dimen/head"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat style="@style/infoMainLayout">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="90dp"
-                app:cardCornerRadius="150dp">
-                <ImageView
-                    android:id="@+id/imgPhoto"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="?android:colorPrimary"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/person" />
-            </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lyimg"
+            style="@style/infoMainLayout">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    app:cardCornerRadius="150dp">
+
+                    <ImageView
+                        android:id="@+id/imgPhoto"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:background="?android:colorPrimary"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/person" />
+                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/imgiconcamera"
                     android:layout_width="@dimen/icon32"
                     android:layout_height="@dimen/icon32"
-                    android:layout_marginTop="120dp"
                     android:layout_marginStart="215dp"
+                    android:layout_marginTop="120dp"
                     app:srcCompat="@drawable/photo_camera_24" />
-        </FrameLayout>
+            </FrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-           >
+            android:id="@+id/lyid"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgid"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/login_24" />
 
-            <TextView android:id="@+id/tvdni"
-              style="@style/infoTextView"  />
+            <TextView
+                android:id="@+id/tvdni"
+                style="@style/infoTextView" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lyname"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgname"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/person" />
 
-            <TextView android:id="@+id/tvname"
+            <TextView
+                android:id="@+id/tvname"
                 style="@style/infoTextView" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lyemail"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgemail"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/email_24" />
 
-            <TextView android:id="@+id/tvEmail"
+            <TextView
+                android:id="@+id/tvEmail"
                 style="@style/infoTextView" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lyaddress"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgaddress"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_on_24" />
 
-            <TextView android:id="@+id/tvaddress"
-                style="@style/infoTextView"/>
+            <TextView
+                android:id="@+id/tvaddress"
+                style="@style/infoTextView" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lyzipcode"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgzip"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/share_location_24" />
 
-            <TextView android:id="@+id/tvzip"
-                style="@style/infoTextView"  />
+            <TextView
+                android:id="@+id/tvzip"
+                style="@style/infoTextView" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lycity"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgcity"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/location_city_24" />
 
-            <TextView android:id="@+id/tvcity"
-                style="@style/infoTextView"  />
+            <TextView
+                android:id="@+id/tvcity"
+                style="@style/infoTextView" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/infoMainLayout"
-            >
+            android:id="@+id/lypass"
+            style="@style/infoMainLayout">
+
             <ImageView
                 android:id="@+id/imgpass"
                 style="@style/infoimageView"
                 app:srcCompat="@drawable/password" />
 
-            <TextView android:id="@+id/tvpass"
-                style="@style/infoTextView"/>
+            <TextView
+                android:id="@+id/tvpass"
+                style="@style/infoTextView" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>
