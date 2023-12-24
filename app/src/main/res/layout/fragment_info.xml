@@ -59,7 +59,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyid"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+            >
 
             <ImageView
                 android:id="@+id/imgid"
@@ -75,7 +76,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyname"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+           >
 
             <ImageView
                 android:id="@+id/imgname"
@@ -88,10 +90,24 @@
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lypass"
+            style="@style/infoMainLayout">
 
+            <ImageView
+                android:id="@+id/imgpass"
+                style="@style/infoimageView"
+                app:srcCompat="@drawable/password" />
+
+            <TextView
+                android:id="@+id/tvpass"
+                style="@style/infoTextView" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyemail"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+            >
 
             <ImageView
                 android:id="@+id/imgemail"
@@ -107,7 +123,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyaddress"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+           >
 
             <ImageView
                 android:id="@+id/imgaddress"
@@ -122,7 +139,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyzipcode"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+          >
 
             <ImageView
                 android:id="@+id/imgzip"
@@ -137,7 +155,8 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lycity"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+            >
 
             <ImageView
                 android:id="@+id/imgcity"
@@ -150,20 +169,7 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/lypass"
-            style="@style/infoMainLayout">
 
-            <ImageView
-                android:id="@+id/imgpass"
-                style="@style/infoimageView"
-                app:srcCompat="@drawable/password" />
-
-            <TextView
-                android:id="@+id/tvpass"
-                style="@style/infoTextView" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>
 
 </FrameLayout>

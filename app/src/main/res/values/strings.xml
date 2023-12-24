@@ -178,6 +178,7 @@
     <string name="monthreport">montly report</string>
     <string name="lowbalance">Low balance alert</string>
     <string name="limitexpense">Expense limit</string>
+    <string name="Noblankallowed">Required field. Cannot be blank</string>
     <!--sharepreferences de usuario-->
 
     <string name="userdni">userdni</string>

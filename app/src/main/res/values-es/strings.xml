@@ -175,6 +175,7 @@
     <string name="monthreport">Informe mensual</string>
     <string name="lowbalance">Alerta de Saldo bajo</string>
     <string name="limitexpense">Limite de gasto</string>
+    <string name="Noblankallowed">Campo requerido.No puede dejarse en blanco</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>

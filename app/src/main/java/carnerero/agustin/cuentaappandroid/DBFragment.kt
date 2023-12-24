@@ -108,43 +108,51 @@ class DBFragment : Fragment(){
             binding.imgdeletedataaccount, binding.imgdeleteaccount, binding.imgdeleteAll,
             binding.imgexport, binding.imgimportfile
         )
+
+        val lyList = listOf(
+            binding.lyadd, binding.lyren,
+            binding.lydeldata, binding.lydelac, binding.lydelall,
+            binding.lyexport, binding.lyimport
+        )
+
+
         if (Utils.isDarkTheme) {
             for (img in imgList) {
                 changeIconColor(img)
             }
         }
-        imgList[0].setOnClickListener {
+        lyList[0].setOnClickListener {
             insertAccount()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-        imgList[1].setOnClickListener {
+        lyList[1].setOnClickListener {
             changeIbanAccount()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-        imgList[2].setOnClickListener {
+        lyList[2].setOnClickListener {
             deleteAllMovInAccount()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
 
-        imgList[3].setOnClickListener {
+        lyList[3].setOnClickListener {
             deleteAnAccount()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-        imgList[4].setOnClickListener {
+        lyList[4].setOnClickListener {
             deleteAllAccounts()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-        imgList[5].setOnClickListener {
+        lyList[5].setOnClickListener {
            exportFileCsv()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()
         }
-        imgList[6].setOnClickListener {
+        lyList[6].setOnClickListener {
            importFileCsv()
             // Actualizar el fragmento de saldo en la actividad principal
             (activity as MainActivity).actualizarFragmentSaldo()

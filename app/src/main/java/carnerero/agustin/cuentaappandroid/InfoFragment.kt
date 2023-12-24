@@ -90,7 +90,6 @@ class InfoFragment : Fragment() {
         // Definir listas de elementos de la interfaz de usuario
         val imgIconCamera=binding.imgiconcamera
         //Cargar y mostrar imagen
-
         imgPicture=binding.imgPhoto
         imgPicture.setImageURI(Uri.parse(imgStr))
         val lyList = listOf(binding.lyid, binding.lyname, binding.lyemail, binding.lyaddress, binding.lyzipcode,binding.imgcity, binding.lypass)
@@ -98,22 +97,21 @@ class InfoFragment : Fragment() {
         val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
         val textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
         val columnsDataBase=listOf(AppConst.DNI,AppConst.NAME,AppConst.EMAIL,AppConst.ADDRESS,AppConst.ZIP,AppConst.CITY,AppConst.PASSWORD)
-        // Iterar sobre los elementos de imgList
-        for (i in imgList.indices) {
+        for (i in lyList.indices) {
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
                 changeIconColor(imgIconCamera)
             }
-            if (textViewList[i].text.isNullOrEmpty()) {
-                // Asignar un OnClickListener a cada elemento de lyList
+            if (textViewList[i].text.isNullOrEmpty() || textViewList[i].text.isBlank()) {
                 lyList[i].visibility=View.GONE
             }
             lyList[i].setOnClickListener {
-            // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
-            changeField(textViewList[i], titleList[i], columnsDataBase[i])
+                // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
+                changeField(textViewList[i], titleList[i], columnsDataBase[i])
             }
         }
+
 
         imgIconCamera.setOnClickListener {
             if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(requireContext())) {
@@ -169,11 +167,16 @@ class InfoFragment : Fragment() {
 
         // Configurar el evento de clic para el botón personalizado de confirmar
         confirmButton.setOnClickListener {
-            val newValue = editText.text.toString()
-            textView.text = newValue
-            userDao.updateUserField(dni, column, newValue)
-            // Cerrar el AlertDialog
-            dialog.dismiss()
+            if(column.equals(AppConst.DNI) || column.equals(AppConst.NAME)|| column.equals(AppConst.PASSWORD))
+            {
+               editText.error=getString(R.string.Noblankallowed)
+            }else {
+                val newValue = editText.text.toString()
+                textView.text = newValue
+                userDao.updateUserField(dni, column, newValue)
+                // Cerrar el AlertDialog
+                dialog.dismiss()
+            }
         }
 
         // Configurar el evento de clic para el botón personalizado de cancelar
