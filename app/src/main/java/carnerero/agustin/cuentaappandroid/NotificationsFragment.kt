@@ -118,6 +118,7 @@ class NotificationsFragment : Fragment() {
 
         //canal de notificaciones
         createChannel()
+        checkAndNotifyIfBelowLimit()
         //switch de alerta de gastos permisibles
         switchAlertLimit.setOnCheckedChangeListener { _, isChecked ->
             //Guardo configuracion en sharedPreferences
@@ -137,9 +138,7 @@ class NotificationsFragment : Fragment() {
             sharedPreferences.edit().putBoolean(getString(R.string.switchbalance), isChecked)
                 .apply()
             var limit=savedProgressBal
-            val stringBuilder = StringBuilder()
-            stringBuilder.append(getString(R.string.lowbalance))
-            stringBuilder.append(" $savedProgressBal")
+
             // Muestra u oculta la barra de progreso según el estado del interruptor
             seekBarBal.visibility = if (isChecked) View.VISIBLE else View.GONE
             // Muestra u oculta el TextView según el estado del interruptor
@@ -147,12 +146,7 @@ class NotificationsFragment : Fragment() {
 
             //Obtengo saldos de cuentas
             if (isChecked) {
-                for(cuenta:Cuenta in cuentas){
-                        if(cuenta.saldo<=limit){
-                        stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
-                        scheduleNotificationBalance(AlarmNotifications.ALARM_BALANCE,stringBuilder.toString())
-                    }
-                }
+                checkAndNotifyIfBelowLimit()
 
             }
         }
@@ -422,6 +416,25 @@ class NotificationsFragment : Fragment() {
         stringBuilder.append("${getString(R.string.resul)}: ${result}")
         return stringBuilder.toString()
     }
+    fun checkAndNotifyIfBelowLimit() {
+        // Obtén el estado actual del interruptor desde SharedPreferences
+        val isChecked = sharedPreferences.getBoolean(getString(R.string.switchbalance), false)
 
+        // Si el interruptor está activado, realiza la lógica de notificación
+        if (isChecked) {
+            val limit = savedProgressBal
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(getString(R.string.lowbalance))
+            stringBuilder.append(" $limit")
+
+            // Obtengo saldos de cuentas
+            for (cuenta: Cuenta in cuentas) {
+                if (cuenta.saldo <= limit) {
+                    stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
+                    scheduleNotificationBalance(AlarmNotifications.ALARM_BALANCE, stringBuilder.toString())
+                }
+            }
+        }
+    }
 
 }
