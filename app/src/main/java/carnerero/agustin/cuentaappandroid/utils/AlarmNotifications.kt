@@ -65,8 +65,13 @@ class AlarmNotifications:BroadcastReceiver() {
                     .setContentText("Esto es una prueba para la notificación de límite de gastos")
             }
             ALARM_BALANCE -> {
-                notificationBuilder.setContentTitle(context.getString(R.string.balance))
-                    .setContentText("Esto es una prueba para la notificación de alerta de saldo")
+                val bigTextStyle = NotificationCompat.BigTextStyle()
+                    .bigText(str)
+
+                notificationBuilder
+                    .setContentTitle(context.getString(R.string.lowbalance))
+                    .setContentText(str)
+                    .setStyle(bigTextStyle)
             }
             REPORT_DAYRY -> {
                 val bigTextStyle = NotificationCompat.BigTextStyle()

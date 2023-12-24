@@ -173,8 +173,8 @@
     <string name="daylyreport">Informe diario</string>
     <string name="weekreport">Informe semanal</string>
     <string name="monthreport">Informe mensual</string>
-    <string name="lowbalance">Alerta de Saldo bajo</string>
-    <string name="limitexpense">Limite de gasto</string>
+    <string name="lowbalance">Alerta de saldo inferior a </string>
+    <string name="limitexpense">Limite de gasto mensual</string>
     <string name="Noblankallowed">Campo requerido.No puede dejarse en blanco</string>
     <string name="nomovtoday">No ha habia movimientos en tus cuentas</string>
     <string name="weekicome">Ingresos semanales</string>
