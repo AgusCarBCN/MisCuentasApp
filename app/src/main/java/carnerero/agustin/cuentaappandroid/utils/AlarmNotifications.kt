@@ -73,17 +73,25 @@ class AlarmNotifications:BroadcastReceiver() {
                     .bigText(str)
                 val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 notificationBuilder
-                    .setContentTitle("Informe del día: $currentDate")
+                    .setContentTitle(context.getString(R.string.daylyreport) +": $currentDate")
                     .setContentText(str)
                     .setStyle(bigTextStyle)
                            }
             REPORT_WEEKLY -> {
-                notificationBuilder.setContentTitle(context.getString(R.string.weekreport))
-                    .setContentText("Esto es una prueba para la notificación de informe semanal")
+                val bigTextStyle = NotificationCompat.BigTextStyle()
+                    .bigText(str)
+                notificationBuilder
+                    .setContentTitle(context.getString(R.string.weekreport))
+                    .setContentText(str)
+                    .setStyle(bigTextStyle)
             }
             REPORT_MONTLY -> {
-                notificationBuilder.setContentTitle(context.getString(R.string.monthreport))
-                    .setContentText("Esto es una prueba para la notificación de informe mensual")
+                val bigTextStyle = NotificationCompat.BigTextStyle()
+                    .bigText(str)
+                notificationBuilder
+                    .setContentTitle(context.getString(R.string.monthreport))
+                    .setContentText(str)
+                    .setStyle(bigTextStyle)
             }
             else -> {
                 // Puedes agregar un caso predeterminado o manejar otros tipos de notificaciones según sea necesario

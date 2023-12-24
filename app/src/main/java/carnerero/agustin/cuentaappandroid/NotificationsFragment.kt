@@ -21,6 +21,7 @@ import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
+import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -143,13 +144,15 @@ class NotificationsFragment : Fragment() {
 
         switchWeeklyReport.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                //scheduleNotification(AlarmNotifications.REPORT_WEEKLY)
+                val report=showWeeklyReport(movimientos)
+                scheduleNotification(AlarmNotifications.REPORT_WEEKLY,7,report)
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchweek), isChecked).apply()
         }
         switchMonthlyReport.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                //scheduleNotification(AlarmNotifications.REPORT_MONTLY)
+                val report=showMonthlyReport(movimientos)
+                scheduleNotification(AlarmNotifications.REPORT_MONTLY,30,report)
             }
             sharedPreferences.edit().putBoolean(getString(R.string.switchmonth), isChecked).apply()
         }
@@ -220,34 +223,7 @@ class NotificationsFragment : Fragment() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    /*private fun scheduleNotification(notificationType: Int) {
-        val intent = Intent(requireContext().applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", notificationType)
-        val pendingIntent = PendingIntent.getBroadcast(
-            requireContext().applicationContext,
-            notificationType,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager: AlarmManager = context?.getSystemService()!!
-        when {
-            // If permission is granted, proceed with scheduling exact alarms.
 
-            alarmManager.canScheduleExactAlarms() -> {
-                alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP,
-                    Calendar.getInstance().timeInMillis + 10000,
-                    pendingIntent
-                )
-
-            }
-
-            else -> {
-
-            }
-        }
-
-    }*/
 
     private fun scheduleNotification(notificationType: Int,intervalDay:Int,report:String) {
         //val str = showDaylyReport(movimientos)
@@ -288,6 +264,62 @@ class NotificationsFragment : Fragment() {
                 stringBuilder.append(" ${movimiento.importe}  ${movimiento.descripcion}  ${movimiento.iban}\n")
             }
         }
+        if(stringBuilder.isNullOrEmpty()){
+            stringBuilder.append(getString(R.string.nomovtoday))
+        }
         return stringBuilder.toString()
     }
+    fun showWeeklyReport(movimientos: ArrayList<MovimientoBancario>):String{
+        val stringBuilder = StringBuilder()
+        val week=Utils.getWeek()
+        val year= Utils.getYear()
+        var ingresosSemana=0.0
+        var gastosSemana=0.0
+        var result=0.0
+        val ingresos:ArrayList<MovimientoBancario> =ArrayList()
+        val gastos:ArrayList<MovimientoBancario> =ArrayList()
+        for(mov in movimientos){
+            if(mov.importe>=0){
+                ingresos.add(mov)
+            }else{
+                gastos.add(mov)
+            }
+        }
+        ingresosSemana= Utils.calcularImporteSemanal(week,year,ingresos).toDouble()
+        gastosSemana=Utils.calcularImporteSemanal(week,year,gastos).toDouble()
+        result=ingresosSemana-gastosSemana
+        stringBuilder.append("${getString(R.string.weekicome)}: ${ingresosSemana}\n")
+        stringBuilder.append("${getString(R.string.weekbills)}: ${gastosSemana}\n")
+        stringBuilder.append("${getString(R.string.resul)}: ${result}")
+
+        return stringBuilder.toString()
+
+    }
+    fun showMonthlyReport(movimientos: ArrayList<MovimientoBancario>):String{
+        val stringBuilder = StringBuilder()
+        val month=Utils.getMonth()
+        val year= Utils.getYear()
+        var ingresosMes=0.0
+        var gastosMes=0.0
+        var result=0.0
+        val ingresos:ArrayList<MovimientoBancario> =ArrayList()
+        val gastos:ArrayList<MovimientoBancario> =ArrayList()
+        for(mov in movimientos){
+            if(mov.importe>=0){
+                ingresos.add(mov)
+            }else{
+                gastos.add(mov)
+            }
+        }
+        ingresosMes= Utils.calcularImporteMes(month,year,ingresos).toDouble()
+        gastosMes=Utils.calcularImporteMes(month,year,gastos).toDouble()
+        result=ingresosMes-gastosMes
+        stringBuilder.append("${getString(R.string.monthicome)}: ${ingresosMes}\n")
+        stringBuilder.append("${getString(R.string.monthbills)}: ${gastosMes}\n")
+        stringBuilder.append("${getString(R.string.resul)}: ${result}")
+
+        return stringBuilder.toString()
+
+    }
+
 }

@@ -40,7 +40,7 @@ class Utils {
             year: Int,
             importes: ArrayList<MovimientoBancario>
         ): Float {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
             var importeTotal = 0.0
 
             for (mov in importes) {
@@ -57,7 +57,7 @@ class Utils {
             targetDate: LocalDate,
             importes: ArrayList<MovimientoBancario>
         ): Float {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
             var importeTotal = 0.0
 
             for (mov in importes) {
@@ -163,6 +163,10 @@ class Utils {
         fun getToday():Int{
             val calendar=Calendar.getInstance()
             return calendar.get(Calendar.DAY_OF_YEAR)
+        }
+        fun getYear():Int{
+            val calendar=Calendar.getInstance()
+            return calendar.get(Calendar.YEAR)
         }
 
 

@@ -176,9 +176,15 @@
     <string name="daylyreport">dayly report</string>
     <string name="weekreport">weekly report</string>
     <string name="monthreport">montly report</string>
+    <string name="weekicome">Weekly earnings</string>
+    <string name="weekbills">Weekly expenses</string>
+    <string name="monthicome">Monthly earnings</string>
+    <string name="monthbills">Monthly expenses</string>
+    <string name="resul">Result</string>
     <string name="lowbalance">Low balance alert</string>
     <string name="limitexpense">Expense limit</string>
     <string name="Noblankallowed">Required field. Cannot be blank</string>
+    <string name="nomovtoday">There are not movements today in your accounts</string>
     <!--sharepreferences de usuario-->
 
     <string name="userdni">userdni</string>
