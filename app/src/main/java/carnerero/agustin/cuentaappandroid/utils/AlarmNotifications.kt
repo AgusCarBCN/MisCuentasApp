@@ -53,7 +53,7 @@ class AlarmNotifications:BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notificationBuilder = NotificationCompat.Builder(context, NotificationsFragment.CHANEL_NOTIFICATIONS)
+        val notificationBuilder = NotificationCompat.Builder(context, MainActivity.CHANEL_NOTIFICATIONS)
             .setSmallIcon(R.drawable.contabilidad)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

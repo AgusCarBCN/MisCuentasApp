@@ -174,6 +174,7 @@
     <string name="weekreport">Informe semanal</string>
     <string name="monthreport">Informe mensual</string>
     <string name="lowbalance">Alerta de saldo inferior a </string>
+    <string name="hightexpenses">Gastos del mes superiores al limite</string>
     <string name="limitexpense">Limite de gasto mensual</string>
     <string name="Noblankallowed">Campo requerido.No puede dejarse en blanco</string>
     <string name="nomovtoday">No ha habia movimientos en tus cuentas</string>

@@ -152,7 +152,7 @@ class Utils {
         }
         fun getMonth(): Int {
             val calendar = Calendar.getInstance()
-            return calendar.get(Calendar.MONTH) + 1  // Los meses en Calendar comienzan desde 0, así que sumamos 1.
+            return calendar.get(Calendar.MONTH) + 1
         }
 
         fun getWeek():Int

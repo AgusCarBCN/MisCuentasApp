@@ -6,7 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:colorPrimary"
     tools:context=".NotificationsFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -142,6 +145,6 @@
 
 
     </LinearLayout>
-
+</ScrollView>
 
 </FrameLayout>
