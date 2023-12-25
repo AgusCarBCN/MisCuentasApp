@@ -2,12 +2,15 @@ package carnerero.agustin.cuentaappandroid.utils
 
 
 
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
@@ -16,7 +19,11 @@ import java.util.Locale
 
 class Utils {
 
+    private val groupingSeparator = '.'
+    private val decimalFormat =  DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY))
     companion object {
+        val groupingSeparator = '.'
+        val decimalFormat =  DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY))
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         var isDarkTheme=false
 
@@ -150,6 +157,7 @@ class Utils {
             val penultElement = charSequence[charSequence.length - 2].toString()
             return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
         }
+
         fun getMonth(): Int {
             val calendar = Calendar.getInstance()
             return calendar.get(Calendar.MONTH) + 1
@@ -181,6 +189,9 @@ class Utils {
         }
 
     }
+
+
+
 
 }
 

@@ -1,13 +1,20 @@
 package carnerero.agustin.cuentaappandroid
 
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -17,6 +24,7 @@ import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateUserBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.model.Usuario
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
@@ -34,6 +42,7 @@ class CreateUserActivity : AppCompatActivity() {
         "EUR", "USD", "GBP"
     )
     private lateinit var selectedItem:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateUserBinding.inflate(layoutInflater)
@@ -142,6 +151,7 @@ class CreateUserActivity : AppCompatActivity() {
             for (element in listMov) {
                 movDAO.nuevoImporte(element)
             }
+
                 startActivity(intent)
             }
             cancel.setOnClickListener {

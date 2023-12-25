@@ -186,7 +186,10 @@
     <string name="expenseslimit">You have exceeded this months expenses in </string>
     <string name="limitexpense">Expense montly limit</string>
     <string name="Noblankallowed">Required field. Cannot be blank</string>
-    <string name="nomovtoday">There are not movements today in your accounts</string>
+    <string name="nomovtoday">You have had no movements in your accounts today</string>
+    <string name="notificationrequired">Notification permission is required, Please allow notification</string>
+   <string name="notificationrequiredalert">Message to allow notifications</string>
+    <string name="permissiongranted">Notification permission granted</string>
     <!--sharepreferences de usuario-->
 
     <string name="userdni">userdni</string>

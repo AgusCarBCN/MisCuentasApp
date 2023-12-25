@@ -1,6 +1,8 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment
 import carnerero.agustin.cuentaappandroid.databinding.FragmentCalculatorBinding
 import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import carnerero.agustin.cuentaappandroid.utils.Utils.Companion.groupingSeparator
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -68,7 +71,9 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
 
         }
-    operation.addTextChangedListener(SeparateThousands(".",","))
+
+        operation.addTextChangedListener(SeparateThousands(".",","))
+
         return view
     }
 
@@ -230,4 +235,5 @@ class CalculatorFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
 }

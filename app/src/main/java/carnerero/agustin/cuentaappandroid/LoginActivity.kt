@@ -1,10 +1,16 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -14,6 +20,7 @@ import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.Calendar
 
 class LoginActivity : AppCompatActivity() {
@@ -113,12 +120,14 @@ class LoginActivity : AppCompatActivity() {
                 // Mostrar mensaje de éxito y abrir la actividad principal
                 Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, MainActivity::class.java)
+
                 startActivity(intent)
             } else {
                 // Mostrar mensaje de error si las credenciales no coinciden
                 Toast.makeText(this, "${getString(R.string.msgnosucces)}", Toast.LENGTH_LONG).show()
             }
         }
+
     }
 
 
@@ -133,4 +142,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

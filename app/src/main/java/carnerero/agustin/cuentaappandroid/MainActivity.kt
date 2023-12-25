@@ -1,17 +1,26 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlarmManager
-import android.app.Notification
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -24,11 +33,11 @@ import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
-import carnerero.agustin.cuentaappandroid.interfaces.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,7 +48,6 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     companion object {
         const val CHANEL_NOTIFICATION = "NotificationChanel"
-
         const val INTERVAL_WEEKLY = 7
         const val INTERVAL_MONTHLY = 30
         const val INTERVAL_DAYLY=1
@@ -60,7 +68,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var binding: ActivityMainBinding
     private lateinit var fragment: Fragment
     private lateinit var sharedPreferences: SharedPreferences
-
+    private var hasNotificationPermissionGranted = false
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            hasNotificationPermissionGranted = isGranted
+            if (!isGranted) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (Build.VERSION.SDK_INT >= 33) {
+                        if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                            showNotificationPermissionRationale()
+                        } else {
+                            showDialogPermission()
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(applicationContext, getString(R.string.permissiongranted), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
@@ -86,23 +112,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios
         movimientos = movDao.getAll()
+        if (Build.VERSION.SDK_INT >= 33) {
+            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            hasNotificationPermissionGranted = true
+        }
+
         //Crea canal para las notificaciones
-        createChannel(CHANEL_NOTIFICATION)
+        createChannel()
 
         //Envia notificaciones si los switch estan activados.
         if(isCheckedSwitchDay){
-            val report = showDaylyReport(movimientos)
-            scheduleNotification(AlarmNotifications.REPORT_DAYRY,
-                INTERVAL_DAYLY,report)
+                val report = showDaylyReport(movimientos)
+                scheduleNotificationReports(
+                    AlarmNotifications.REPORT_DAYRY,
+                    INTERVAL_DAYLY, report
+                )
         }
         if(isCheckedSwitchWeek){
             val report=showWeeklyReport(movimientos)
-            scheduleNotification(AlarmNotifications.REPORT_WEEKLY,
+            scheduleNotificationReports(AlarmNotifications.REPORT_WEEKLY,
                 INTERVAL_WEEKLY,report)
         }
         if(isCheckedSwitchMonth){
             val report=showMonthlyReport(movimientos)
-            scheduleNotification(AlarmNotifications.REPORT_MONTLY,
+            scheduleNotificationReports(AlarmNotifications.REPORT_MONTLY,
                 INTERVAL_MONTHLY,report)
         }
 
@@ -296,7 +330,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
 
     }
-    private fun scheduleNotification(notificationType: Int, intervalDay: Int, report: String) {
+    private fun scheduleNotificationReports(notificationType: Int, intervalDay: Int, report: String) {
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", notificationType)
         intent.putExtra("message", report)
@@ -312,7 +346,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
         val startTime = Calendar.getInstance()
         startTime.set(Calendar.HOUR_OF_DAY, 22) //
-        startTime.set(Calendar.MINUTE, 0)
+        startTime.set(Calendar.MINUTE, 30)
         startTime.set(Calendar.SECOND, 0)
 
         when (intervalDay) {
@@ -364,9 +398,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
-    private fun createChannel(typeChannel:String) {
+    private fun createChannel() {
         val channel = NotificationChannel(
-            typeChannel,
+            CHANEL_NOTIFICATION,
             "channelAlert",
             NotificationManager.IMPORTANCE_HIGH
         )
@@ -433,4 +467,49 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         stringBuilder.append("${getString(R.string.resul)}: $result")
         return stringBuilder.toString()
     }
+    private fun showAlertDialogSimple(question:Int,
+                                      confirmAction: () -> Unit): AlertDialog {
+        val builder = AlertDialog.Builder(applicationContext)
+        val inflater = LayoutInflater.from(applicationContext)
+        val dialogView = inflater.inflate(R.layout.custom_simple_dialog, null)
+        val questiontv=dialogView.findViewById<TextView>(R.id.tv_question)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm0)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel0)
+
+        questiontv.text=getString(question)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        confirmButton.setOnClickListener {
+            confirmAction()
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
+    }
+    private fun showNotificationPermissionRationale() {
+
+        MaterialAlertDialogBuilder(this, com.google.android.material.R.style.MaterialAlertDialog_Material3)
+            .setTitle(getString(R.string.notificationrequiredalert))
+            .setMessage(getString(R.string.notificationrequired))
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                if (Build.VERSION.SDK_INT >= 33) {
+                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
+    }
+    private fun showDialogPermission(){
+        val dialog=showAlertDialogSimple(R.string.notificationrequired){
+
+        }
+        dialog.show()
+    }
+
 }

@@ -3,17 +3,15 @@
     xmlns:tool="http://schemas.android.com/tools"
     package="carnerero.agustin.cuentaappandroid">
     <!-- Agrega la siguiente línea para permiso de lectura externa -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         tool:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tool:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,8 +20,7 @@
         android:label="@string/labelapp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.CuentaAppAndroid"
-    >
+        android:theme="@style/Base.Theme.CuentaAppAndroid"    >
         <receiver android:name=".utils.AlarmNotifications"
              android:enabled="true"
             />
@@ -54,5 +51,4 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

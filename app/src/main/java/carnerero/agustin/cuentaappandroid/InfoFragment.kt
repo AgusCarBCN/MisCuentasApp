@@ -161,10 +161,8 @@ class InfoFragment : Fragment() {
         // Configurar propiedades específicas del diseño
         dialogTitle.text = titleDialog
         editText.hint = msgHint
-
         // Crear el AlertDialog antes de usarlo para poder cerrarlo más adelante
         val dialog = builder.create()
-
         // Configurar el evento de clic para el botón personalizado de confirmar
         confirmButton.setOnClickListener {
             if(column.equals(AppConst.DNI) || column.equals(AppConst.NAME)|| column.equals(AppConst.PASSWORD))

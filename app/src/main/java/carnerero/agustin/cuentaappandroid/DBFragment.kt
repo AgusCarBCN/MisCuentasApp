@@ -313,7 +313,6 @@ class DBFragment : Fragment(){
 
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
         val etField1 = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
-
         val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
 
             if (isNumber) {

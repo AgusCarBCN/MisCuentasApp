@@ -178,12 +178,15 @@
     <string name="limitexpense">Limite de gasto mensual</string>
     <string name="expenseslimit">Has superado los gastos de este mes en </string>
     <string name="Noblankallowed">Campo requerido.No puede dejarse en blanco</string>
-    <string name="nomovtoday">No ha habia movimientos en tus cuentas</string>
+    <string name="nomovtoday">Hoy no has tenido movimientos en tus cuentas</string>
+    <string name="notificationrequired">Se requiere permiso para las notificaciones.Permite las notificaciones para recibirlas</string>
+    <string name="notificationrequiredalert">Mensaje para permitir notificaciones</string>
     <string name="weekicome">Ingresos semanales</string>
     <string name="weekbills">Gastos semanales</string>
     <string name="monthicome">Ingresos mensuales</string>
     <string name="monthbills">Gastos mensuales</string>
     <string name="resul">Resultado</string>
+    <string name="permissiongranted">Permiso de notificaciones concedido</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>
