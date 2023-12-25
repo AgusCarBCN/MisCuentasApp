@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlarmManager
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -23,6 +24,7 @@ import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
+import carnerero.agustin.cuentaappandroid.interfaces.OnLocaleListener
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
@@ -31,11 +33,13 @@ import com.google.android.material.navigation.NavigationView
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import kotlin.math.abs
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     companion object {
-        const val CHANEL_NOTIFICATIONS = "Notifications"
+        const val CHANEL_NOTIFICATION = "NotificationChanel"
+
         const val INTERVAL_WEEKLY = 7
         const val INTERVAL_MONTHLY = 30
         const val INTERVAL_DAYLY=1
@@ -83,7 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Obtiene todos los movimientos bancarios
         movimientos = movDao.getAll()
         //Crea canal para las notificaciones
-        createChannel()
+        createChannel(CHANEL_NOTIFICATION)
+
         //Envia notificaciones si los switch estan activados.
         if(isCheckedSwitchDay){
             val report = showDaylyReport(movimientos)
@@ -100,9 +105,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             scheduleNotification(AlarmNotifications.REPORT_MONTLY,
                 INTERVAL_MONTHLY,report)
         }
+
         if(isCheckedSwitchAlertBalance){
             checkAndNotifyIfBalanceIsBellowLimit()
         }
+
         if(isCheckedSwitchAlertLimit){
             checkAndNotifyIfExpensesIsAboveLimit()
         }
@@ -219,7 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {
                     stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
-                    scheduleNotificationBalance(stringBuilder.toString())
+                    scheduleNotificationBalance(stringBuilder.toString(),AlarmNotifications.ALARM_BALANCE)
                 }
             }
     }
@@ -228,8 +235,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val limit = savedProgress
         val stringBuilder = StringBuilder()
 
-        stringBuilder.append(getString(R.string.hightexpenses))
-        stringBuilder.append(" $limit")
+        stringBuilder.append(getString(R.string.expenseslimit))
+
         val gastos:ArrayList<MovimientoBancario> =ArrayList()
         for(mov in movimientos){
             if(mov.importe>=0){
@@ -237,16 +244,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         val expensesMonth= Utils.calcularImporteMes(month,year,gastos).toDouble()
+        val difExpensesLimit=abs(expensesMonth)-limit
+        // Format the expense to two decimal places
+        val formattedExpense = String.format("%.2f", difExpensesLimit)
+
+        stringBuilder.append(" $formattedExpense")
         if(expensesMonth>=limit){
-            scheduleNotificationBalance(stringBuilder.toString())
+            scheduleNotificationBalance(stringBuilder.toString(),AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
         }
     }
 
 
-    private fun scheduleNotificationBalance(report: String) {
+    private fun scheduleNotificationBalance(report: String,notificationType: Int) {
 
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", AlarmNotifications.ALARM_BALANCE)
+        intent.putExtra("notificationType", notificationType)
         intent.putExtra("message", report)
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
@@ -330,9 +342,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
-    private fun createChannel() {
+    private fun createChannel(typeChannel:String) {
         val channel = NotificationChannel(
-            CHANEL_NOTIFICATIONS,
+            typeChannel,
             "channelAlert",
             NotificationManager.IMPORTANCE_HIGH
         )

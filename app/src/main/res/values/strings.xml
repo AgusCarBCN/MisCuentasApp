@@ -183,6 +183,7 @@
     <string name="resul">Result</string>
     <string name="lowbalance">Balance alert less than</string>
     <string name="hightexpenses">Expenses per month above the limit</string>
+    <string name="expenseslimit">You have exceeded this months expenses in </string>
     <string name="limitexpense">Expense montly limit</string>
     <string name="Noblankallowed">Required field. Cannot be blank</string>
     <string name="nomovtoday">There are not movements today in your accounts</string>

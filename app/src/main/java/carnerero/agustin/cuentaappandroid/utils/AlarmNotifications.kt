@@ -53,7 +53,7 @@ class AlarmNotifications:BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notificationBuilder = NotificationCompat.Builder(context, MainActivity.CHANEL_NOTIFICATIONS)
+        val notificationBuilder = NotificationCompat.Builder(context, MainActivity.CHANEL_NOTIFICATION)
             .setSmallIcon(R.drawable.contabilidad)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -61,8 +61,13 @@ class AlarmNotifications:BroadcastReceiver() {
 
         when (notificationType) {
             ALARM_LIMIT_NOTIFICATION -> {
-                notificationBuilder.setContentTitle(context.getString(R.string.limitexpense))
-                    .setContentText("Esto es una prueba para la notificación de límite de gastos")
+                val bigTextStyle = NotificationCompat.BigTextStyle()
+                    .bigText(str)
+
+                notificationBuilder
+                    .setContentTitle(context.getString(R.string.hightexpenses))
+                    .setContentText(str)
+                    .setStyle(bigTextStyle)
             }
             ALARM_BALANCE -> {
                 val bigTextStyle = NotificationCompat.BigTextStyle()
