@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
-            android:text="@string/databasetitle"
+            android:text="@string/accountsetting"
             android:textAlignment="center"
             android:textSize="@dimen/head"
             android:textStyle="bold" />

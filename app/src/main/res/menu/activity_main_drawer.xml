@@ -37,8 +37,8 @@
         />
     <item
         android:id="@+id/db"
-        android:icon="@drawable/database24px"
-        android:title="@string/db" />
+        android:icon="@drawable/account_wallet_24"
+        android:title="@string/accountsetting" />
 
     <item
         android:id="@+id/configuracion"

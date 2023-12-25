@@ -190,6 +190,7 @@
     <string name="notificationrequired">Notification permission is required, Please allow notification</string>
    <string name="notificationrequiredalert">Message to allow notifications</string>
     <string name="permissiongranted">Notification permission granted</string>
+    <string name="accountsetting">Set up your accounts</string>
     <!--sharepreferences de usuario-->
 
     <string name="userdni">userdni</string>

@@ -1,25 +1,16 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlarmManager
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -73,18 +64,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             hasNotificationPermissionGranted = isGranted
             if (!isGranted) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    if (Build.VERSION.SDK_INT >= 33) {
-                        if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                            showNotificationPermissionRationale()
-                        } else {
-                            showDialogPermission()
-                        }
-                    }
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                    showNotificationPermissionRationale()
+                } else {
+                   showNotificationPermissionRationale()
                 }
-            } else {
-                Toast.makeText(applicationContext, getString(R.string.permissiongranted), Toast.LENGTH_SHORT)
-                    .show()
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,11 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios
         movimientos = movDao.getAll()
-        if (Build.VERSION.SDK_INT >= 33) {
-            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            hasNotificationPermissionGranted = true
-        }
+        notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
         //Crea canal para las notificaciones
         createChannel()
@@ -467,49 +447,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         stringBuilder.append("${getString(R.string.resul)}: $result")
         return stringBuilder.toString()
     }
-    private fun showAlertDialogSimple(question:Int,
-                                      confirmAction: () -> Unit): AlertDialog {
-        val builder = AlertDialog.Builder(applicationContext)
-        val inflater = LayoutInflater.from(applicationContext)
-        val dialogView = inflater.inflate(R.layout.custom_simple_dialog, null)
-        val questiontv=dialogView.findViewById<TextView>(R.id.tv_question)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm0)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel0)
 
-        questiontv.text=getString(question)
-        builder.setView(dialogView)
-        val dialog = builder.create()
-
-        confirmButton.setOnClickListener {
-            confirmAction()
-            dialog.dismiss()
-        }
-
-        cancelButton.setOnClickListener {
-            dialog.cancel()
-        }
-
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        return dialog
-    }
     private fun showNotificationPermissionRationale() {
 
         MaterialAlertDialogBuilder(this, com.google.android.material.R.style.MaterialAlertDialog_Material3)
             .setTitle(getString(R.string.notificationrequiredalert))
             .setMessage(getString(R.string.notificationrequired))
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                if (Build.VERSION.SDK_INT >= 33) {
-                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                }
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
-    private fun showDialogPermission(){
-        val dialog=showAlertDialogSimple(R.string.notificationrequired){
 
-        }
-        dialog.show()
-    }
 
 }

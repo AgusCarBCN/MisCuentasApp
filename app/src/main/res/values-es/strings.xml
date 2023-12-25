@@ -187,6 +187,7 @@
     <string name="monthbills">Gastos mensuales</string>
     <string name="resul">Resultado</string>
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
+    <string name="accountsetting">Configura tus cuentas</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>
