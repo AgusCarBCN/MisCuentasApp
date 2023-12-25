@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {
                     stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
-                    scheduleNotificationBalance(stringBuilder.toString(),AlarmNotifications.ALARM_BALANCE)
+                    scheduleNotificationAlert(stringBuilder.toString(),AlarmNotifications.ALARM_BALANCE)
                 }
             }
     }
@@ -250,19 +250,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         stringBuilder.append(" $formattedExpense")
         if(expensesMonth>=limit){
-            scheduleNotificationBalance(stringBuilder.toString(),AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
+            scheduleNotificationAlert(stringBuilder.toString(),AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
         }
     }
 
 
-    private fun scheduleNotificationBalance(report: String,notificationType: Int) {
+    private fun scheduleNotificationAlert(report: String,notificationType: Int) {
 
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", notificationType)
         intent.putExtra("message", report)
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
-            AlarmNotifications.ALARM_BALANCE,
+            notificationType,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -273,6 +273,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             System.currentTimeMillis(),
             pendingIntent
         )
+
     }
     private fun scheduleNotification(notificationType: Int, intervalDay: Int, report: String) {
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
