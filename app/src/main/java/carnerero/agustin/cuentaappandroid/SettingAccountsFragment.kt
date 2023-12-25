@@ -38,7 +38,7 @@ import java.io.OutputStreamWriter
 
 
 
-class DBFragment : Fragment(){
+class SettingAccountsFragment : Fragment(){
 
     private lateinit var sharedPreferences: SharedPreferences
     private val admin = DataBaseAppSingleton.getInstance(context)

@@ -96,11 +96,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios
         movimientos = movDao.getAll()
+        //Requiere permiso para enviar notificaciones
         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-
         //Crea canal para las notificaciones
         createChannel()
-
         //Envia notificaciones si los switch estan activados.
         if(isCheckedSwitchDay){
                 val report = showDaylyReport(movimientos)
@@ -164,7 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.notification->fragment=NotificationsFragment()
             R.id.estadistica -> fragment = BarChartFragment()
             R.id.transferencia ->fragment = TransaccionFragment()
-            R.id.db->fragment=DBFragment()
+            R.id.db->fragment=SettingAccountsFragment()
             R.id.configuracion -> fragment = AjustesFragment()
             R.id.about->fragment=AboutFragment()
             R.id.calculator->fragment = CalculatorFragment()
@@ -392,18 +391,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun showDaylyReport(movimientos: ArrayList<MovimientoBancario>): String {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val stringBuilder = StringBuilder()
+        var expenses=0.0
+        var incomes=0.0
+
         for (movimiento in movimientos) {
             val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
             val today= LocalDate.now()
             if (fechaImporteDate.isEqual(today)) {
                 stringBuilder.append(" ${movimiento.importe}  ${movimiento.descripcion}  ${movimiento.iban}\n")
+                if(movimiento.importe>=0){
+                    incomes+=movimiento.importe
+                }else expenses+=movimiento.importe
             }
         }
-        if(stringBuilder.isEmpty()){
-            stringBuilder.append(getString(R.string.nomovtoday))
+        val result=incomes-expenses
+        if(incomes==0.0 && expenses==0.0){
+            stringBuilder.append("${getString(R.string.nomovtoday)}\n")
+        }else {
+            stringBuilder.append(
+                "${getString(R.string.incomes)}: ${
+                    String.format(
+                        "%.2f",
+                        incomes
+                    )
+                }\n"
+            )
+            stringBuilder.append(
+                "${getString(R.string.bills)}: ${
+                    String.format(
+                        "%.2f",
+                        expenses
+                    )
+                }\n"
+            )
+            stringBuilder.append("TOTAL: ${String.format("%.2f", result)}")
         }
         return stringBuilder.toString()
     }
+
     private fun showWeeklyReport(movimientos: ArrayList<MovimientoBancario>):String{
         val stringBuilder = StringBuilder()
         week= Utils.getWeek()
