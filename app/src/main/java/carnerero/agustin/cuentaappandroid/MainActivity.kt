@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {
                     stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
-                    scheduleNotificationAlert(stringBuilder.toString(),AlarmNotifications.ALARM_BALANCE)
+                    scheduleNotificationAlertBalance(stringBuilder.toString())
                 }
             }
     }
@@ -250,19 +250,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         stringBuilder.append(" $formattedExpense")
         if(expensesMonth>=limit){
-            scheduleNotificationAlert(stringBuilder.toString(),AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
+            scheduleNotificationAlertExpenses(stringBuilder.toString())
         }
     }
+    private fun scheduleNotificationAlertExpenses(report: String){
+        val intent=Intent(applicationContext,AlarmNotifications::class.java)
+        intent.putExtra("notificationType", AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
+        intent.putExtra("message", report)
+        val pendingIntent=PendingIntent.getBroadcast(
+            applicationContext.applicationContext,
+            AlarmNotifications.ALARM_LIMIT_NOTIFICATION,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
+        when {
+            // If permission is granted, proceed with scheduling exact alarms.
+            alarmManager.canScheduleExactAlarms() -> {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,Calendar.getInstance().timeInMillis+10000,pendingIntent)
+            }
+            else -> {
 
+            }
+        }
 
-    private fun scheduleNotificationAlert(report: String,notificationType: Int) {
+    }
+
+    private fun scheduleNotificationAlertBalance(report: String) {
 
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", notificationType)
+        intent.putExtra("notificationType", AlarmNotifications.ALARM_BALANCE)
         intent.putExtra("message", report)
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
-            notificationType,
+            AlarmNotifications.ALARM_BALANCE,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
