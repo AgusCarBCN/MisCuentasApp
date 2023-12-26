@@ -31,10 +31,13 @@ import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 import kotlin.math.abs
+import kotlin.math.exp
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +57,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var month=Utils.getMonth()
     private var week=Utils.getWeek()
     private lateinit var cuentas:ArrayList<Cuenta>
+    private lateinit var lang:String
+    private lateinit var country:String
     private lateinit var movimientos: ArrayList<MovimientoBancario>
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
@@ -93,6 +98,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Recupera el valor de los progress de los seekbar
         savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
         savedProgress=sharedPreferences.getInt("progressValue",0)
+        //Recupero configuracion de idioma y pais
+        lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
+        country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
         //Recupera las cuentas
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios
@@ -251,6 +259,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val limit = savedProgress
         val stringBuilder = StringBuilder()
         stringBuilder.append(getString(R.string.expenseslimit))
+        val locale=Locale(lang,country)
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val gastos:ArrayList<MovimientoBancario> =ArrayList()
         for(mov in movimientos){
             if(mov.importe<=0){
@@ -260,7 +270,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val expensesMonth= Utils.calcularImporteMes(month,year,gastos).toDouble()
         val difExpensesLimit=limit-abs(expensesMonth)
         // Format the expense to two decimal places
-        val formattedExpense = String.format("%.2f", abs(difExpensesLimit))
+        val formattedExpense = currencyFormat.format(abs(difExpensesLimit))
 
         stringBuilder.append(" $formattedExpense")
         if(difExpensesLimit<=0){
@@ -325,8 +335,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
         val startTime = Calendar.getInstance()
-        startTime.set(Calendar.HOUR_OF_DAY, 22) //
-        startTime.set(Calendar.MINUTE, 30)
+        startTime.set(Calendar.HOUR_OF_DAY, 23) //
+        startTime.set(Calendar.MINUTE, 50)
         startTime.set(Calendar.SECOND, 0)
 
         when (intervalDay) {
@@ -394,6 +404,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val stringBuilder = StringBuilder()
         var expenses=0.0
         var incomes=0.0
+        val locale=Locale(lang,country)
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
 
         for (movimiento in movimientos) {
             val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
@@ -405,27 +417,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }else expenses+=movimiento.importe
             }
         }
-        val result=incomes-expenses
+        val result=incomes+expenses
         if(incomes==0.0 && expenses==0.0){
             stringBuilder.append("${getString(R.string.nomovtoday)}\n")
         }else {
             stringBuilder.append(
-                "${getString(R.string.incomes)}: ${
-                    String.format(
-                        "%.2f",
-                        incomes
-                    )
-                }\n"
-            )
+                "${getString(R.string.incomes)}: ${currencyFormat.format(incomes)}\n")
+
             stringBuilder.append(
-                "${getString(R.string.bills)}: ${
-                    String.format(
-                        "%.2f",
-                        expenses
-                    )
-                }\n"
-            )
-            stringBuilder.append("TOTAL: ${String.format("%.2f", result)}")
+                "${getString(R.string.bills)}: ${currencyFormat.format(expenses)}\n")
+
+            stringBuilder.append("TOTAL: ${currencyFormat.format(result)})")
         }
         return stringBuilder.toString()
     }
@@ -434,7 +436,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val stringBuilder = StringBuilder()
         week= Utils.getWeek()
         year= Utils.getYear()
-
+        val locale=Locale(lang,country)
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val ingresos:ArrayList<MovimientoBancario> =ArrayList()
         val gastos:ArrayList<MovimientoBancario> =ArrayList()
         for(mov in movimientos){
@@ -447,15 +450,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val ingresosSemana= Utils.calcularImporteSemanal(week,year,ingresos).toDouble()
         val gastosSemana= Utils.calcularImporteSemanal(week,year,gastos).toDouble()
         val result=ingresosSemana-gastosSemana
-        stringBuilder.append("${getString(R.string.weekicome)}: ${ingresosSemana}\n")
-        stringBuilder.append("${getString(R.string.weekbills)}: ${gastosSemana}\n")
-        stringBuilder.append("${getString(R.string.resul)}: $result")
+        stringBuilder.append("${getString(R.string.weekicome)}: ${currencyFormat.format(ingresosSemana)}\n")
+        stringBuilder.append("${getString(R.string.weekbills)}: ${currencyFormat.format(gastosSemana)}\n")
+        stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
     }
     private fun showMonthlyReport(movimientos: ArrayList<MovimientoBancario>):String{
         val stringBuilder = StringBuilder()
         month= Utils.getMonth()
         year= Utils.getYear()
+        val locale=Locale(lang,country)
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         val ingresos:ArrayList<MovimientoBancario> =ArrayList()
         val gastos:ArrayList<MovimientoBancario> =ArrayList()
         for(mov in movimientos){
@@ -468,9 +473,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val ingresosMes= Utils.calcularImporteMes(month,year,ingresos).toDouble()
         val gastosMes= Utils.calcularImporteMes(month,year,gastos).toDouble()
         val result=ingresosMes-gastosMes
-        stringBuilder.append("${getString(R.string.monthicome)}: ${ingresosMes}\n")
-        stringBuilder.append("${getString(R.string.monthbills)}: ${gastosMes}\n")
-        stringBuilder.append("${getString(R.string.resul)}: $result")
+        stringBuilder.append("${getString(R.string.monthicome)}: ${currencyFormat.format(ingresosMes)}\n")
+        stringBuilder.append("${getString(R.string.monthbills)}: ${currencyFormat.format(gastosMes)}\n")
+        stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
     }
 
