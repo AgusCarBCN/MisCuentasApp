@@ -11,6 +11,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -98,6 +99,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         movimientos = movDao.getAll()
         //Requiere permiso para enviar notificaciones
         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+
+
         //Crea canal para las notificaciones
         createChannel()
         //Envia notificaciones si los switch estan activados.
@@ -247,22 +250,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val limit = savedProgress
         val stringBuilder = StringBuilder()
-
         stringBuilder.append(getString(R.string.expenseslimit))
-
         val gastos:ArrayList<MovimientoBancario> =ArrayList()
         for(mov in movimientos){
-            if(mov.importe>=0){
+            if(mov.importe<=0){
                 gastos.add(mov)
             }
         }
         val expensesMonth= Utils.calcularImporteMes(month,year,gastos).toDouble()
-        val difExpensesLimit=abs(expensesMonth)-limit
+        val difExpensesLimit=limit-abs(expensesMonth)
         // Format the expense to two decimal places
-        val formattedExpense = String.format("%.2f", difExpensesLimit)
+        val formattedExpense = String.format("%.2f", abs(difExpensesLimit))
 
         stringBuilder.append(" $formattedExpense")
-        if(expensesMonth>=limit){
+        if(difExpensesLimit<=0){
             scheduleNotificationAlertExpenses(stringBuilder.toString())
         }
     }
