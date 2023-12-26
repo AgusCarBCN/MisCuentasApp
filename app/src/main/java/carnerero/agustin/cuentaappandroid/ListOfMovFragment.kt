@@ -47,7 +47,6 @@ class ListOfMovFragment : Fragment() , OnLocaleListener {
         _binding = FragmentListOfMovBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
         lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
         country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
         conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"

@@ -335,8 +335,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
         val startTime = Calendar.getInstance()
-        startTime.set(Calendar.HOUR_OF_DAY, 23) //
-        startTime.set(Calendar.MINUTE, 50)
+        startTime.set(Calendar.HOUR_OF_DAY, 22) //
+        startTime.set(Calendar.MINUTE, 30)
         startTime.set(Calendar.SECOND, 0)
 
         when (intervalDay) {
@@ -411,7 +411,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
             val today= LocalDate.now()
             if (fechaImporteDate.isEqual(today)) {
-                stringBuilder.append(" ${movimiento.importe}  ${movimiento.descripcion}  ${movimiento.iban}\n")
+                stringBuilder.append("${movimiento.descripcion} ${currencyFormat.format(movimiento.importe)}  ${movimiento.iban}\n")
                 if(movimiento.importe>=0){
                     incomes+=movimiento.importe
                 }else expenses+=movimiento.importe
@@ -427,7 +427,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             stringBuilder.append(
                 "${getString(R.string.bills)}: ${currencyFormat.format(expenses)}\n")
 
-            stringBuilder.append("TOTAL: ${currencyFormat.format(result)})")
+            stringBuilder.append("TOTAL: ${currencyFormat.format(result)}")
         }
         return stringBuilder.toString()
     }
