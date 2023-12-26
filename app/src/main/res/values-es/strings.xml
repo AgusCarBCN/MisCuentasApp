@@ -14,7 +14,7 @@
     <string name="account">Cuenta</string>
     <string name="create_your_account">Crea tu cuenta</string>
     <string name="name">Nombre</string>
-    <string name="id">Dni</string>
+    <string name="id">Nombre de usuario</string>
     <string name="address">Direccion</string>
     <string name="city">Ciudad</string>
     <string name="zipcode">C.Postal</string>

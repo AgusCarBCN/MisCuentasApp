@@ -21,7 +21,7 @@
     <string name="requiredid">*ID</string>
     <string name="requiredpassword">*Password</string>
     <string name="name">Name</string>
-    <string name="id">ID</string>
+    <string name="id">User name</string>
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="zipcode">Zip code</string>
