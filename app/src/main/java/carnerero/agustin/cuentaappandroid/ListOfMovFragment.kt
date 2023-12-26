@@ -22,7 +22,6 @@ class ListOfMovFragment : Fragment() , OnLocaleListener {
 
     private lateinit var lang:String
     private lateinit var country:String
-    private lateinit var currency:String
     private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
@@ -48,20 +47,7 @@ class ListOfMovFragment : Fragment() , OnLocaleListener {
         _binding = FragmentListOfMovBinding.inflate(inflater, container, false)
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        currency=sharedPreferences.getString(getString(R.string.basecurrency), null)?:"EUR"
-        when(currency){
-            "EUR"->{
-                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
-                country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
-            }
-            "USD"->{
-                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
-                country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
-            }else->{
-                lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
-                country=sharedPreferences.getString(getString(R.string.country), null)?:"GB"
-            }
-        }
+
         lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
         country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
         conversionRate = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"

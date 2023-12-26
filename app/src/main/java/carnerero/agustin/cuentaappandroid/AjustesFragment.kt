@@ -66,7 +66,6 @@ class AjustesFragment : Fragment() {
             "EUR"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
             "USD"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_dolar)
             else-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_pound)
-
         }
         // Establecer iconos según el estado actual del modo oscuro y el idioma
         setIcon(enableDarkTheme, imgTheme, lightModeIcon, darkModeIcon)
@@ -97,19 +96,16 @@ class AjustesFragment : Fragment() {
                     lang = "es"
                     country = "ES"
                     getConversionRate(currency,"EUR")
-
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
                     getConversionRate(currency,"USD")
-
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
                     getConversionRate(currency,"GBP")
-
                 }
             }
             // Guardar la selección en SharedPreferences

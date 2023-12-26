@@ -18,7 +18,7 @@
     <string name="goodafternoon">Good afternoon</string>
     <string name="goodevening">Good evening</string>
     <string name="requiredname">*Name</string>
-    <string name="requiredid">*ID</string>
+    <string name="requiredid">*User name</string>
     <string name="requiredpassword">*Password</string>
     <string name="name">Name</string>
     <string name="id">User name</string>

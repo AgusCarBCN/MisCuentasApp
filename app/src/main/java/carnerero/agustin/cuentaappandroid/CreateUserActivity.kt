@@ -36,6 +36,8 @@ class CreateUserActivity : AppCompatActivity() {
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var currency:String
+    private lateinit var lang:String
+    private lateinit var country:String
     private lateinit var binding: ActivityCreateUserBinding
     private val cuentas:ArrayList<Cuenta> =ArrayList()
     private val currencies = arrayOf(
@@ -141,6 +143,27 @@ class CreateUserActivity : AppCompatActivity() {
                 sharedPreferences.edit().putString(
                     getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
                     currency
+                ).apply()
+                when(selectedItem){
+                    "EUR"->{
+                        lang="es"
+                        country="ES"
+                    }
+                    "USD"->{
+                        lang="en"
+                        country="US"
+                    }else->{
+                    lang="en"
+                    country="GB"
+                }
+                }
+                sharedPreferences.edit().putString(
+                    getString(carnerero.agustin.cuentaappandroid.R.string.lang),
+                    lang
+                ).apply()
+                sharedPreferences.edit().putString(
+                    getString(carnerero.agustin.cuentaappandroid.R.string.country),
+                    country
                 ).apply()
                 sharedPreferences.edit().putString(
                     getString(carnerero.agustin.cuentaappandroid.R.string.username),

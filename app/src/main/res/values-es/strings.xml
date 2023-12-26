@@ -21,7 +21,7 @@
     <string name="email">email</string>
     <string name="required">*Campo requerido</string>
     <string name="requiredname">*Nombre</string>
-    <string name="requiredid">*DNI</string>
+    <string name="requiredid">*Nombre de usuario</string>
     <string name="requiredpassword">*Contraseña</string>
     <string name="goodmorning">Buenos dias</string>
     <string name="goodafternoon">Buenas tardes</string>
