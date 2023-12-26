@@ -146,8 +146,8 @@ class CreateUserActivity : AppCompatActivity() {
                 ).apply()
                 when(selectedItem){
                     "EUR"->{
-                        lang="es"
-                        country="ES"
+                    lang="es"
+                    country="ES"
                     }
                     "USD"->{
                         lang="en"
