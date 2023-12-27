@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -112,7 +113,8 @@ class InfoFragment : Fragment() {
             }
         }
 
-
+        // Definir el tooltip para la cámara
+        TooltipCompat.setTooltipText(imgIconCamera, "Cambiar foto de perfil")
         imgIconCamera.setOnClickListener {
             if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(requireContext())) {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -165,9 +167,9 @@ class InfoFragment : Fragment() {
         val dialog = builder.create()
         // Configurar el evento de clic para el botón personalizado de confirmar
         confirmButton.setOnClickListener {
-            if(column.equals(AppConst.DNI) || column.equals(AppConst.NAME)|| column.equals(AppConst.PASSWORD))
-            {
-               editText.error=getString(R.string.Noblankallowed)
+                if(editText.text.toString().isEmpty()) {
+                    editText.error = getString(R.string.Noblankallowed)
+
             }else {
                 val newValue = editText.text.toString()
                 textView.text = newValue

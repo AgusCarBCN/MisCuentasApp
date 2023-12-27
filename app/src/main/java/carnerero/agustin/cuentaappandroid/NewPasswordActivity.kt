@@ -43,7 +43,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        dni = sharedPreferences.getString(getString(R.string.id), null).toString()
+        dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
 
         // Inicializar componentes con fondo azul claro para indicar que están deshabilitados
         et_newPass.isEnabled = false
@@ -54,13 +54,14 @@ class NewPasswordActivity : AppCompatActivity() {
         btn_confirmUser.setOnClickListener {
 
             if (et_userDni.text.toString() == dni) {
+
                 et_newPass.isEnabled = true
                 et_repeatPass.isEnabled = true
                 btn_confirmNewPass.visibility = View.VISIBLE
                 btn_confirmUser.visibility = View.INVISIBLE
                 et_userDni.isEnabled = false
             } else {
-                Toast.makeText(this, getString(R.string.msgnosucces), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${getString(R.string.msgnosucces)}" , Toast.LENGTH_LONG).show()
             }
         }
 

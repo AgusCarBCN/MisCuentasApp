@@ -24,7 +24,7 @@
                 android:id="@+id/ly_logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                 android:layout_weight="1"
+                android:layout_weight="1"
                 android:background="?android:colorPrimaryDark"
                 android:orientation="vertical">
 
@@ -61,6 +61,7 @@
                     android:textColor="?android:textColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_text_user"
                     android:layout_width="match_parent"
@@ -73,9 +74,9 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_text_user"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/til_text_user">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_text_user"
@@ -86,7 +87,7 @@
                         android:background="@drawable/style_editetx"
                         android:gravity="center"
                         android:inputType="text"
-                        android:maxLength="10"/>
+                        android:maxLength="10" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -99,11 +100,12 @@
                     android:textColor="?android:textColor"
                     android:textSize="@dimen/extracommon"
                     android:textStyle="bold" />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/til_text_pass"
-                    >
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
                         android:layout_width="320dp"
@@ -114,6 +116,7 @@
                         android:gravity="center"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <Button
                     android:id="@+id/button"
                     android:layout_width="320dp"
@@ -152,8 +155,8 @@
                         android:background="?android:colorPrimary"
                         android:onClick="createUser"
                         android:text="@string/create_your_account"
-                        android:textSize="@dimen/common"
-                        android:textAllCaps="false" />
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/common" />
                 </LinearLayout>
 
             </LinearLayout>

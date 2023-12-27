@@ -335,8 +335,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
         val startTime = Calendar.getInstance()
-        startTime.set(Calendar.HOUR_OF_DAY, 22) //
-        startTime.set(Calendar.MINUTE, 30)
+        startTime.set(Calendar.HOUR_OF_DAY, 23) //
+        startTime.set(Calendar.MINUTE, 15)
         startTime.set(Calendar.SECOND, 0)
 
         when (intervalDay) {

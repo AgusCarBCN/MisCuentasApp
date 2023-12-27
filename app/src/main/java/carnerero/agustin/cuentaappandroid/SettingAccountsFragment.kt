@@ -177,7 +177,7 @@ class SettingAccountsFragment : Fragment(){
             true,
             R.string.add_an_account,
             R.string.iban,
-            R.string.amount
+            R.string.balance
         ) { iban, amount ->
             val cuenta = Cuenta(iban, amount.toDouble(), dni)
             cuentaDao.insertarCuenta(cuenta)
@@ -190,7 +190,7 @@ class SettingAccountsFragment : Fragment(){
         Log.d("Cambiar Iban", "Cambiando Iban")
         val dialog = createTwoFieldAlertDialogTwoFields(
             false,
-            R.string.add_an_account,
+            R.string.rename_account,
             R.string.iban,
             R.string.newiban
         ) { iban, newIban ->

@@ -12,8 +12,9 @@
     <string name="balance">Saldo</string>
     <string name="create">Crear</string>
     <string name="account">Cuenta</string>
-    <string name="create_your_account">Crea tu cuenta</string>
+    <string name="create_your_account">Crea tu perfil</string>
     <string name="name">Nombre</string>
+    <string name="addyouraccounts">Añade tus cuentas</string>
     <string name="id">Nombre de usuario</string>
     <string name="address">Direccion</string>
     <string name="city">Ciudad</string>
@@ -66,9 +67,9 @@
     <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
     <string name="alertdialognewamount">Importe realizado</string>
     <string name="forgetpass">¿Olvidaste la contraseña?"</string>
-    <string name="step1">Tu dni (paso 1)</string>
+    <string name="step1">Nombre de usuario(paso 1)</string>
     <string name="step2">Nueva contraseña (paso 2)</string>
-    <string name="hintid">Tu dni</string>
+    <string name="hintid">Nombre de usuario</string>
     <string name="hintnewpass">Nueva contraseña</string>
     <string name="hintrepeatpass">Repite la contraseña</string>
     <string name="successnewpass">Contraseña cambiada</string>
@@ -151,8 +152,8 @@
     <string name="delete_data_account">Borrar datos de una cuenta</string>
     <string name="delete_an_account">Borrar una cuenta</string>
     <string name="delete_all">Borrar todo</string>
-    <string name="export_file">Exportar datos a archivo csv</string>
-    <string name="import_file">Cargar datos de un archivo csv</string>
+    <string name="export_file">Exportar datos a archivo </string>
+    <string name="import_file">Cargar datos de un archivo </string>
     <string name="profile_icons">Iconos de informacion del perfil</string>
     <string name="database_icons">Iconos de la pagina de base de datos</string>
     <string name="newfield">Nuevo</string>
@@ -160,8 +161,8 @@
     <string name="hintdeleteaccount">Iban de cuenta a borrar</string>
     <string name="hintdeletemovaccount">Iban de cuenta a borrar importes</string>
     <string name="titledelelemov">Borra los movimientos de una cuenta</string>
-    <string name="iban">IBAN</string>
-    <string name="newiban">Nuevo IBAN</string>
+    <string name="iban">Nombre de la cuenta</string>
+    <string name="newiban">Nuevo nombre</string>
     <string name="existsAccount">No existe una cuenta con este IBAN</string>
     <string name="questiondialog">¿Quieres borrar todos los datos?</string>
     <string name="noaccounts">No hay cuentas que mostrar</string>
