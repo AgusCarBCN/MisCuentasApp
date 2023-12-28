@@ -189,6 +189,10 @@
     <string name="resul">Resultado</string>
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
     <string name="accountsetting">Configura tus cuentas</string>
+    <!--String onBoarding -->
+    <string name="wellcomeOnBoarding">Bienvenido a mis cuentas</string>
+    <string name="createyourprofile">Crea tu perfil</string>
+
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>

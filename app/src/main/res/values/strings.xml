@@ -192,8 +192,11 @@
     <string name="notificationrequiredalert">Message to allow notifications</string>
     <string name="permissiongranted">Notification permission granted</string>
     <string name="accountsetting">Set up your accounts</string>
-    <!--sharepreferences de usuario-->
-
+    
+    <!--String onBoarding -->
+    <string name="wellcomeOnBoarding">Wellcome to my accounts</string>
+    <string name="createyourprofile">Create your profile</string>
+    <!--String sharepreferences -->    
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>
