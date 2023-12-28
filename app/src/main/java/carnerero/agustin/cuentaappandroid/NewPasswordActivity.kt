@@ -39,7 +39,7 @@ class NewPasswordActivity : AppCompatActivity() {
         val et_repeatPass = binding.etRepeatpassword
         val btn_confirmUser = binding.confirmdni
         val btn_confirmNewPass = binding.confirmnewpass
-
+        val btn_goBackLogin=binding.backtoLogin
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         login = sharedPreferences.getString(getString(R.string.userlogin), null).toString()
@@ -47,7 +47,7 @@ class NewPasswordActivity : AppCompatActivity() {
         // Inicializar componentes con fondo azul claro para indicar que están deshabilitados
         et_newPass.isEnabled = false
         et_repeatPass.isEnabled = false
-        btn_confirmNewPass.visibility = View.INVISIBLE
+        btn_confirmNewPass.visibility = View.GONE
 
         // Acciones a realizar cuando se hace clic en el botón de confirmar usuario
         btn_confirmUser.setOnClickListener {
@@ -93,6 +93,11 @@ class NewPasswordActivity : AppCompatActivity() {
                         .show()
                 }
             }
+        }
+        btn_goBackLogin?.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }
