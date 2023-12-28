@@ -21,9 +21,7 @@
     <string name="zipcode">C.Postal</string>
     <string name="email">email</string>
     <string name="required">*Campo requerido</string>
-    <string name="requiredname">*Nombre</string>
-    <string name="requiredid">*Nombre de usuario</string>
-    <string name="requiredpassword">*Contraseña</string>
+
     <string name="goodmorning">Buenos dias</string>
     <string name="goodafternoon">Buenas tardes</string>
     <string name="goodevening">Buenas noches</string>
@@ -192,7 +190,15 @@
     <!--String onBoarding -->
     <string name="wellcomeOnBoarding">Bienvenido a mis cuentas</string>
     <string name="createyourprofile">Crea tu perfil</string>
-
+    <string name="requiredname">*Nombre</string>
+    <string name="requiredid">*Nombre de usuario</string>
+    <string name="requiredpassword">*Contraseña</string>
+    <string name="reppassword">*Repite la contraseña</string>
+    <string name="backbutton">Vuelve atras</string>
+    <string name="createaccounts">Create tus cuentas</string>
+    <string name="chooseimage">Escoje tu foto de perfil(opcional)</string>
+    <string name="infocreateaccounts">Puedes crear tus cuentas ahora o mas adelante.</string>
+    <string name="accountname">Nombre de la cuenta</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
     <string name="userdni">userdni</string>

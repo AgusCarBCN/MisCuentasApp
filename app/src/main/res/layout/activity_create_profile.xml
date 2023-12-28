@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:colorPrimary"
+    tools:context=".CreateProfileActivity">
+
+    <TextView
+        android:id="@+id/tv_createprofiletitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/box"
+        android:layout_marginBottom="@dimen/icon32"
+        android:text="@string/create_your_account"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/head"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_profileimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:text="@string/chooseimage" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lyimg"
+        style="@style/infoMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                app:cardCornerRadius="150dp">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="?android:colorPrimary"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/person" />
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imgIconcameraprofile"
+                android:layout_width="@dimen/icon32"
+                android:layout_height="@dimen/icon32"
+                android:layout_marginStart="215dp"
+                android:layout_marginTop="120dp"
+                app:srcCompat="@drawable/photo_camera_24" />
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common"
+        android:layout_marginStart="20dp"
+        android:textStyle="bold"
+        android:text="@string/required" />
+
+    <EditText
+        android:id="@+id/et_nameprofile"
+        style="@style/InputFieldLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:hint="@string/requiredname"
+        android:inputType="text"
+        android:textColor="#333333"
+         />
+
+    <EditText
+        android:id="@+id/et_usernameprofile"
+        style="@style/InputFieldLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:hint="@string/requiredid"
+        android:inputType="text"
+        android:maxLength="10"
+        android:textColor="#333333"
+       />
+
+    <EditText
+        android:id="@+id/et_passwordprofile"
+        style="@style/InputFieldLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:hint="@string/requiredpassword"
+        android:inputType="text"
+        android:maxLength="10"
+        android:textColor="#333333"
+        />
+    <EditText
+        android:id="@+id/et_reppasswordprofile"
+        style="@style/InputFieldLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:hint="@string/reppassword"
+        android:inputType="text"
+        android:maxLength="10"
+        android:textColor="#333333"
+        />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonLarge"
+        android:layout_marginTop="@dimen/extrabox"
+        android:text="@string/createaccounts"
+        />
+    <Button
+        android:id="@+id/backtoOnBoarding"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:text="@string/backbutton"
+        />
+</LinearLayout>

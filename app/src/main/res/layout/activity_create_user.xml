@@ -12,7 +12,7 @@
     tools:context=".CreateUserActivity">
 
     <TextView
-        android:id="@+id/tv_title2"
+        android:id="@+id/tv_createprofiletitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

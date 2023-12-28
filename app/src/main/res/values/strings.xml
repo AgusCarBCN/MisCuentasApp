@@ -17,9 +17,7 @@
     <string name="goodmorning">Good morning</string>
     <string name="goodafternoon">Good afternoon</string>
     <string name="goodevening">Good evening</string>
-    <string name="requiredname">*Name</string>
-    <string name="requiredid">*User name</string>
-    <string name="requiredpassword">*Password</string>
+
     <string name="name">Name</string>
     <string name="id">Username</string>
     <string name="address">Address</string>
@@ -92,7 +90,7 @@
     <string name="lightTheme">Light theme</string>
     <string name="settingLang">Setting language</string>
     <string name="settingTheme">Setting theme</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
 
     <string name="preferences_enable">enable_dark_mode</string>
     <string name="preferences_enable_lang">enable_en_lang</string>
@@ -126,7 +124,7 @@
     <string name="incorrectExpresion">Incorrect expresion</string>
     <string name="formaterror">Format error</string>
     <string name="labelapp">My accounts</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
 
     <string name="developer">Developer: Agustin Carnerero Peña</string>
     <string name="iconconta">Accounting icon</string>
@@ -192,11 +190,20 @@
     <string name="notificationrequiredalert">Message to allow notifications</string>
     <string name="permissiongranted">Notification permission granted</string>
     <string name="accountsetting">Set up your accounts</string>
-    
+
     <!--String onBoarding -->
     <string name="wellcomeOnBoarding">Wellcome to my accounts</string>
     <string name="createyourprofile">Create your profile</string>
-    <!--String sharepreferences -->    
+    <string name="requiredname">*Name</string>
+    <string name="requiredid">*User name</string>
+    <string name="requiredpassword">*Password</string>
+    <string name="reppassword">*Repeat password</string>
+    <string name="backbutton">Go back</string>
+    <string name="createaccounts">Create your accounts</string>
+    <string name="chooseimage">Choose your profile photo (optional)</string>
+    <string name="infocreateaccounts">You can create your accounts now or later. </string>
+    <string name="accountname">Account name </string>
+    <!--String sharepreferences -->
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:colorPrimary"
+    tools:context=".CreateAccountsActivity">
+    <TextView
+        android:id="@+id/tv_createaccountstitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/box"
+        android:layout_marginBottom="@dimen/icon32"
+        android:text="@string/createaccounts"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/head"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common"
+        android:layout_marginStart="20dp"
+        android:textStyle="bold"
+        android:text="@string/infocreateaccounts"/>
+
+    <EditText
+        android:id="@+id/et_nameaccount"
+        style="@style/InputFieldLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:hint="@string/accountname"
+        android:inputType="textCapWords|textAutoComplete" />
+
+    <EditText
+        android:id="@+id/et_balance"
+        style="@style/InputFieldLarge"
+        android:hint="@string/balance"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/btn_addaccount"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonLarge"
+        android:layout_marginTop="@dimen/box"
+        android:text="@string/add_an_account"
+        />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/icon32"
+        android:textSize="@dimen/extracommon"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:text="@string/selectCurrency" />
+
+    <Spinner
+        android:id="@+id/sp_choosecurreny"
+        style="@style/InputFieldLarge"
+        android:theme="@style/CustomSpinner" />
+
+    <Button
+        android:id="@+id/btn_tologin"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonLarge"
+        android:layout_marginTop="@dimen/box"
+        android:text="@string/login"
+        />
+
+    <Button
+        android:id="@+id/backtoCreateProfile"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonLarge"
+        android:layout_marginTop="@dimen/icon32"
+        android:text="@string/backbutton"
+        />
+
+</LinearLayout>

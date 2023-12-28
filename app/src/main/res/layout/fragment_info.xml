@@ -39,7 +39,7 @@
                     app:cardCornerRadius="150dp">
 
                     <ImageView
-                        android:id="@+id/imgPhoto"
+                        android:id="@+id/imgProfile"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:background="?android:colorPrimary"
@@ -48,7 +48,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
-                    android:id="@+id/imgiconcamera"
+                    android:id="@+id/imgIconcameraprofile"
                     android:layout_width="@dimen/icon32"
                     android:layout_height="@dimen/icon32"
                     android:layout_marginStart="215dp"

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wellcomeOnBoarding"
-        android:textSize="24sp"
+        android:textSize="@dimen/wellcome"
         android:layout_marginTop="@dimen/box"
         android:layout_marginBottom="@dimen/box"
         app:layout_constraintTop_toTopOf="parent"
