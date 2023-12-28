@@ -58,7 +58,7 @@ class NewPasswordActivity : AppCompatActivity() {
                 et_newPass.isEnabled = true
                 et_repeatPass.isEnabled = true
                 btn_confirmNewPass.visibility = View.VISIBLE
-                btn_confirmUser.visibility = View.INVISIBLE
+                btn_confirmUser.visibility = View.GONE
                 et_userDni.isEnabled = false
             } else {
                 Toast.makeText(this, "${getString(R.string.msgnosucces)}" , Toast.LENGTH_LONG).show()
