@@ -38,8 +38,7 @@ class LoginActivity : AppCompatActivity() {
         val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
         // Obtener nombre,nombre de usuario y contraseña
         val name=sharedPreferences.getString(getString(R.string.username),"usuario")
-        val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
-        val password=sharedPreferences.getString(getString(R.string.userpass),"")
+
 
         val wellcome=binding.tvWellcome
 
@@ -63,6 +62,8 @@ class LoginActivity : AppCompatActivity() {
         btn_Login.setOnClickListener {
             val userField: String = binding.etTextUser.text.toString()
             val passwordField: String = binding.etPassword.text.toString()
+            val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
+            val password=sharedPreferences.getString(getString(R.string.userpass),"")
             if (userField.isEmpty() || passwordField.isEmpty()) {
                 if (userField.isEmpty() && passwordField.isEmpty()) {
                     // Mostrar mensaje si ambos campos están vacíos
