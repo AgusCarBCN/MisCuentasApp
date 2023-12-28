@@ -101,7 +101,7 @@ class SettingAccountsFragment : Fragment(){
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         dni = sharedPreferences.getString(getString(R.string.userdni), null)!!
-        cuentas= cuentaDao.listarCuentasPorDNI(dni) as ArrayList<Cuenta>
+        cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
 
         val imgList = listOf(
             binding.imgaddaccount, binding.imgrename,
@@ -179,7 +179,7 @@ class SettingAccountsFragment : Fragment(){
             R.string.iban,
             R.string.balance
         ) { iban, amount ->
-            val cuenta = Cuenta(iban, amount.toDouble(), dni)
+            val cuenta = Cuenta(iban, amount.toDouble())
             cuentaDao.insertarCuenta(cuenta)
             (activity as MainActivity).actualizarFragmentSaldo()
         }

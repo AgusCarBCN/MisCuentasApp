@@ -55,7 +55,7 @@ class NewAmountFragment : Fragment() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
+
         // Acceso a los componentes de la interfaz
         val spinnerCuentas = binding.spCuentas
         val nuevoIngreso = binding.btnNuevoingreso
@@ -67,13 +67,13 @@ class NewAmountFragment : Fragment() {
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         val cuentaDao = CuentaDao(admin)
-        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        val cuentas =cuentaDao.listarTodasLasCuentas()
 
 
         // Configuración del adapter y del spinner
         with(adapter) {
             add(getString(R.string.select_account))
-            cuentas?.forEach { cuenta ->
+            cuentas.forEach { cuenta ->
                 add(cuenta.iban)
             }
         }

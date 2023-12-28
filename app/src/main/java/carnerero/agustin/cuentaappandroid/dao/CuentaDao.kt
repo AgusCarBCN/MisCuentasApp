@@ -15,7 +15,6 @@ class CuentaDao(private val admin: DataBaseApp) {
             val values = ContentValues().apply {
                 put("iban", cuenta.iban)
                 put("saldo", cuenta.saldo)
-                put("dni", cuenta.dni)
             }
 
             try {
@@ -25,27 +24,7 @@ class CuentaDao(private val admin: DataBaseApp) {
             }
         }
     }
-    // la función use para gestionar la apertura y cierre de la base de datos de manera segura en cada método
-    fun listarCuentasPorDNI(dni: String): MutableList<Cuenta> {
-        val cuentas = mutableListOf<Cuenta>()
 
-        admin.readableDatabase.use { db ->
-            val query = "SELECT iban, saldo, dni FROM CUENTA WHERE dni = ?"
-            val selectionArgs = arrayOf(dni)
-            val cursor = db.rawQuery(query, selectionArgs)
-
-            while (cursor.moveToNext()) {
-                val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
-                val saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
-
-                val cuenta = Cuenta(iban, saldo, dni)
-                cuentas.add(cuenta)
-            }
-            cursor.close()
-        }
-
-        return cuentas
-    }
 
     fun actualizarSaldo(importe: Double, iban: String) {
         admin.writableDatabase.use { db ->
@@ -63,23 +42,7 @@ class CuentaDao(private val admin: DataBaseApp) {
             db.delete("CUENTA", whereClause, whereArgs)
         }
     }
-    fun contarCuentasUsuario(dni: String): Int {
-        var count = 0
 
-        admin.readableDatabase.use { db ->
-            val query = "SELECT COUNT(*) FROM CUENTA WHERE dni = ?"
-            val selectionArgs = arrayOf(dni)
-            val cursor = db.rawQuery(query, selectionArgs)
-
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0)
-            }
-
-            cursor.close()
-        }
-
-        return count
-    }
     fun cambiarIbanCuenta(ibanActual: String, nuevoIban: String) {
         admin.writableDatabase.use { db ->
             db.execSQL("PRAGMA foreign_keys = ON;")
@@ -121,21 +84,16 @@ class CuentaDao(private val admin: DataBaseApp) {
         val cuentas = mutableListOf<Cuenta>()
 
         admin.readableDatabase.use { db ->
-            val query = "SELECT iban, saldo, dni FROM CUENTA"
+            val query = "SELECT iban, saldo FROM CUENTA"
             val cursor = db.rawQuery(query, null)
-
             while (cursor.moveToNext()) {
                 val iban = cursor.getString(cursor.getColumnIndexOrThrow("iban"))
                 val saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
-                val dni = cursor.getString(cursor.getColumnIndexOrThrow("dni"))
-
-                val cuenta = Cuenta(iban, saldo, dni)
+                val cuenta = Cuenta(iban, saldo)
                 cuentas.add(cuenta)
             }
             cursor.close()
         }
-
         return cuentas
     }
-
 }

@@ -75,7 +75,7 @@
         />
 
     <Button
-        android:id="@+id/backtoCreateProfile"
+        android:id="@+id/btn_backtoCreateProfile"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         style="@style/ButtonLarge"

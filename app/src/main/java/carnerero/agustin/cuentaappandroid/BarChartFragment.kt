@@ -74,11 +74,10 @@ class BarChartFragment : Fragment() {
         val spCuenta = binding.spCuenta
         val spYears = binding.spYear
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
         rate=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0").toString().toDouble()
-        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        val cuentas = cuentaDao.listarTodasLasCuentas()
         // Verificar si la lista de cuentas es nula o vacía
-                if (cuentas.isNullOrEmpty()) {
+                if (cuentas.isEmpty()) {
                     Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
                     return binding.root
                 }

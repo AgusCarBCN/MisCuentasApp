@@ -118,46 +118,30 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/login"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/style_button"
-                    android:onClick="login"
                     android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="?android:textColor"
                     android:textSize="@dimen/botton"
                     android:textStyle="bold" />
 
-                <LinearLayout
+
+                <Button
+                    android:id="@+id/btn_newpassword"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:colorPrimary"
+                    android:gravity="center"
+                    android:text="@string/forgetpass"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/common" />
 
-                    <TextView
-                        android:id="@+id/tv_createuser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/new_user"
-                        android:textAlignment="center"
-                        android:textColor="?android:textColor"
-                        android:textSize="@dimen/common"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/btn_createuser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="?android:colorPrimary"
-                        android:onClick="createUser"
-                        android:text="@string/create_your_account"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/common" />
-                </LinearLayout>
 
             </LinearLayout>
 

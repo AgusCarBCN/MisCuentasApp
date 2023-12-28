@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityNewPasswordBinding
 
 
@@ -21,10 +20,10 @@ class NewPasswordActivity : AppCompatActivity() {
 
     // Instancias necesarias para acceder a la base de datos y realizar operaciones
     private val admin = DataBaseAppSingleton.getInstance(this)
-    private val userDao = UsuarioDao(admin)
+
 
     // Variable para almacenar el DNI del usuario que inició sesión
-    private lateinit var dni: String
+    private lateinit var login: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +42,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
+        login = sharedPreferences.getString(getString(R.string.userlogin), null).toString()
 
         // Inicializar componentes con fondo azul claro para indicar que están deshabilitados
         et_newPass.isEnabled = false
@@ -53,8 +52,7 @@ class NewPasswordActivity : AppCompatActivity() {
         // Acciones a realizar cuando se hace clic en el botón de confirmar usuario
         btn_confirmUser.setOnClickListener {
 
-            if (et_userDni.text.toString() == dni) {
-
+            if (et_userDni.text.toString() == login) {
                 et_newPass.isEnabled = true
                 et_repeatPass.isEnabled = true
                 btn_confirmNewPass.visibility = View.VISIBLE
@@ -79,10 +77,14 @@ class NewPasswordActivity : AppCompatActivity() {
                 // Verificar que las contraseñas coincidan
                 if (newpass == repeatPass) {
                     // Actualizar la contraseña en la base de datos
-                    userDao.actualizarPassword(dni, newpass)
+                    //Guadar moneda en sharepreferences
+                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    sharedPreferences.edit().putString(
+                        getString(R.string.userpass),
+                        et_newPass.text.toString()
+                    ).apply()
                     Toast.makeText(this, getString(R.string.successnewpass), Toast.LENGTH_LONG)
                         .show()
-
                     // Redirigir al usuario a la pantalla de inicio de sesión
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)

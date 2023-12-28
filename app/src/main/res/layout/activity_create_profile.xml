@@ -110,16 +110,18 @@
         android:maxLength="10"
         android:textColor="#333333"
         />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_createAccounts"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         style="@style/ButtonLarge"
-        android:layout_marginTop="@dimen/extrabox"
+        android:layout_marginTop="@dimen/icon32"
         android:text="@string/createaccounts"
         />
+
     <Button
-        android:id="@+id/backtoOnBoarding"
+        android:id="@+id/btn_backtoOnBoarding"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         style="@style/ButtonLarge"

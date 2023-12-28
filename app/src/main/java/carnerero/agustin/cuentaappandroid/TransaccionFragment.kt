@@ -66,16 +66,16 @@ class TransaccionFragment : Fragment() {
 
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val dni = sharedPreferences.getString(getString(R.string.userdni), null)
+
 
         // Crear un adaptador de cadena (String) para llenar los Spinners
         val adapter =
             ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
 
         // Obtener las cuentas del usuario logeado con el DNI
-        val cuentas = dni?.let { cuentaDao.listarCuentasPorDNI(it) }
+        val cuentas = cuentaDao.listarTodasLasCuentas()
         // Verificar si la lista de cuentas es nula o vacía
-        if (cuentas.isNullOrEmpty()) {
+        if (cuentas.isEmpty()) {
             Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
             return binding.root
         //Verifico si solo hay una cuenta

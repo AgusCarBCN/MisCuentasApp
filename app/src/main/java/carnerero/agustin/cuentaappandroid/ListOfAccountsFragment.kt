@@ -61,7 +61,7 @@ class ListOfAccountsFragment : Fragment(), OnLocaleListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
-        val cuentas = dni.let { cuentaDao.listarCuentasPorDNI(it) }
+        val cuentas = cuentaDao.listarTodasLasCuentas()
         recyclerView = binding.rvCuentas
             adapterCuentas = AdapterBal(cuentas, this)
             recyclerView.apply {

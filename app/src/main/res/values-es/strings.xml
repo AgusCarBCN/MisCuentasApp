@@ -201,6 +201,7 @@
     <string name="accountname">Nombre de la cuenta</string>
     <!--sharepreferences de usuario-->
     <string name="basecurrency">currency</string>
+    <string name="userlogin">userlogin</string>
     <string name="userdni">userdni</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>

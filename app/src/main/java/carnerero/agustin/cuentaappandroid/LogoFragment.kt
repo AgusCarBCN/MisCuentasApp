@@ -46,7 +46,7 @@ class LogoFragment : Fragment() {
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
         if(img!=null) {
             val imgUri = Uri.parse(img)
-            val picture = binding.imgPhoto
+            val picture = binding.imgProfile
             picture.setImageURI(imgUri)
         }
         // Mostrar un saludo personalizado en el TextView

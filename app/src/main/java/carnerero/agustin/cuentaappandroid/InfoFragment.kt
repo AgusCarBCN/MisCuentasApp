@@ -20,7 +20,6 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.dao.UsuarioDao
 import carnerero.agustin.cuentaappandroid.databinding.FragmentInfoBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.io.File
@@ -31,10 +30,6 @@ class InfoFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var imgPicture: ImageView
-    private val admin = DataBaseAppSingleton.getInstance(context)
-    private val userDao=UsuarioDao(admin)
-    private lateinit var dni:String
-
     private val pickMedia=registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri->
         if (uri != null) {
             // Guardar la imagen en la memoria externa
@@ -73,31 +68,27 @@ class InfoFragment : Fragment() {
         val view = binding.root
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-         dni = sharedPreferences.getString(getString(R.string.userdni), null)!!
+        val login = sharedPreferences.getString(getString(R.string.userlogin), null)!!
+        val name = sharedPreferences.getString(getString(R.string.username), null)!!
         val pass = sharedPreferences.getString(getString(R.string.userpass), null)!!
         val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
-        val user = userDao.obtenerUsuarioPorDniYPassword(dni, pass)
 
         //Iniciamos textView con la informacion del usuario
         with(binding){
-            tvdni.text = user?.dni
-            tvname.text=user?.nombre
-            tvaddress.text=user?.domicilio
-            tvcity.text=user?.ciudad
-            tvzip.text=user?.codigoPostal
-            tvEmail.text=user?.email
-            tvpass.text=user?.password
+            tvlogin.text=login
+            tvname.text=name
+            tvpass.text=pass
         }
         // Definir listas de elementos de la interfaz de usuario
-        val imgIconCamera=binding.imgiconcamera
+        val imgIconCamera=binding.imgIconcameraprofile
         //Cargar y mostrar imagen
-        imgPicture=binding.imgPhoto
+        imgPicture=binding.imgProfile
         imgPicture.setImageURI(Uri.parse(imgStr))
-        val lyList = listOf(binding.lyid, binding.lyname, binding.lyemail, binding.lyaddress, binding.lyzipcode,binding.imgcity, binding.lypass)
-        val imgList = listOf(binding.imgid, binding.imgname, binding.imgemail, binding.imgaddress, binding.imgzip,binding.imgcity, binding.imgpass)
-        val titleList = listOf(getString(R.string.id), getString(R.string.name), getString(R.string.email),getString(R.string.address), getString(R.string.zipcode), getString(R.string.city), getString(R.string.password))
-        val textViewList = listOf(binding.tvdni, binding.tvname, binding.tvEmail, binding.tvaddress,binding.tvzip, binding.tvcity,binding.tvpass)
-        val columnsDataBase=listOf(AppConst.DNI,AppConst.NAME,AppConst.EMAIL,AppConst.ADDRESS,AppConst.ZIP,AppConst.CITY,AppConst.PASSWORD)
+        val lyList = listOf(binding.lyid, binding.lyname, binding.lypass)
+        val imgList = listOf(binding.imgid, binding.imgname,  binding.imgpass)
+        val titleList = listOf(getString(R.string.userlogin), getString(R.string.username), getString(R.string.userpass))
+        val textViewList = listOf(binding.tvlogin, binding.tvname, binding.tvpass)
+
         for (i in lyList.indices) {
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
@@ -109,7 +100,7 @@ class InfoFragment : Fragment() {
             }
             lyList[i].setOnClickListener {
                 // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
-                changeField(textViewList[i], titleList[i], columnsDataBase[i])
+                changeField(textViewList[i], titleList[i])
             }
         }
 
@@ -137,7 +128,7 @@ class InfoFragment : Fragment() {
             null
         }
     }
-    private fun changeField(textView: TextView, title: String, column: String) {
+    private fun changeField(textView: TextView, title: String) {
         val builder = AlertDialog.Builder(context)
 
         // Inflar el diseño personalizado
@@ -173,7 +164,10 @@ class InfoFragment : Fragment() {
             }else {
                 val newValue = editText.text.toString()
                 textView.text = newValue
-                userDao.updateUserField(dni, column, newValue)
+                    sharedPreferences.edit().putString(
+                        title,
+                        textView.text.toString()
+                    ).apply()
                 // Cerrar el AlertDialog
                 dialog.dismiss()
             }
@@ -188,7 +182,6 @@ class InfoFragment : Fragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
-
 
 
     private fun changeIconColor(img :ImageView){

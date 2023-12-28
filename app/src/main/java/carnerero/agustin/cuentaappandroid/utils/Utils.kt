@@ -2,13 +2,18 @@ package carnerero.agustin.cuentaappandroid.utils
 
 
 
+import android.content.Context
+import android.net.Uri
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
+import java.io.File
+import java.io.FileOutputStream
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.LocalDate
@@ -177,7 +182,21 @@ class Utils {
             return calendar.get(Calendar.YEAR)
         }
 
+        fun saveImageToExternalStorage(context: Context, uri: Uri): String? {
+            return try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val file = File(context.externalCacheDir, "image.jpg")
+                val outputStream = FileOutputStream(file)
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+                file.absolutePath
+            } catch (e: Exception) {
+                e.printStackTrace()
 
+                null
+            }
+        }
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
             return when(operator) {

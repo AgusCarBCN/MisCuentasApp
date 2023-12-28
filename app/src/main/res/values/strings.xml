@@ -205,6 +205,7 @@
     <string name="accountname">Account name </string>
     <!--String sharepreferences -->
     <string name="userdni">userdni</string>
+    <string name="userlogin">userlogin</string>
     <string name="username">username</string>
     <string name="userpass">userpass</string>
     <string name="lang">lang</string>
