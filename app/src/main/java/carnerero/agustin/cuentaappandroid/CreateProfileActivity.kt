@@ -53,10 +53,14 @@ class CreateProfileActivity : AppCompatActivity() {
         val etRepeatPassword = binding.etReppasswordprofile
         val btnCreateAccount = binding.btnCreateAccounts
         val btnGoBack = binding.btnBacktoOnBoarding
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        // Aplicar tema y configuración de idioma según las preferencias
+        Utils.applyTheme(enableDarkTheme)
+        Utils.applyLanguage(enableEnLang)
         val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
         if(Utils.isDarkTheme){
             changeIconColor(imgIconCamera)
-
         }
         //Cargar y mostrar imagen
         imgPicture=binding.imgProfile

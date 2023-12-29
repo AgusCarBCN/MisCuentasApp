@@ -38,15 +38,7 @@ class TransaccionFragment : Fragment() {
     // SharedPreferences para almacenar y recuperar datos de forma sencilla
     private lateinit var sharedPreferences: SharedPreferences
 
-    // Método llamado cuando se crea el fragmento
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        // Recuperar los argumentos proporcionados al crear la instancia del fragmento
-        arguments?.let {
-
-        }
-    }
 
     // Método llamado para crear la vista del fragmento
     override fun onCreateView(

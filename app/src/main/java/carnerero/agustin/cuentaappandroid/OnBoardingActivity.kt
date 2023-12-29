@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import carnerero.agustin.cuentaappandroid.adapter.ViewTutorialAdapter
 import carnerero.agustin.cuentaappandroid.databinding.ActivityOnBoardingBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -26,6 +27,11 @@ class OnBoardingActivity : AppCompatActivity() {
         //Obtener nombre de usuario
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        // Aplicar tema y configuración de idioma según las preferencias
+        Utils.applyLanguage(enableEnLang)
+        Utils.applyTheme(enableDarkTheme)
         val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
         // Obtener referencias a los componentes desde el enlace de vista (binding)
         val btnCreateProfile=binding.btnCreateprofile

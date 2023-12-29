@@ -47,7 +47,6 @@ class SettingAccountsFragment : Fragment(){
     private lateinit var pickerExport: ActivityResultLauncher<Intent>
     private lateinit var pickerImport: ActivityResultLauncher<Intent>
 
-
     private lateinit var cuentas:ArrayList<Cuenta>
 
     private var _binding: FragmentDbBinding? = null

@@ -13,6 +13,7 @@ import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateAccountsBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class CreateAccountsActivity : AppCompatActivity() {
 
@@ -40,7 +41,12 @@ class CreateAccountsActivity : AppCompatActivity() {
         val btnAddAccount=binding.btnAddaccount
         val btnLogin=binding.btnTologin
         val btnGoBack=binding.btnBacktoCreateProfile
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        // Aplicar tema y configuración de idioma según las preferencias
+        Utils.applyTheme(enableDarkTheme)
+        Utils.applyLanguage(enableEnLang)
         // Crear adaptadores
         val adapter =
             ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
@@ -91,7 +97,6 @@ class CreateAccountsActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
             sharedPreferences.edit().putString(
                 getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),

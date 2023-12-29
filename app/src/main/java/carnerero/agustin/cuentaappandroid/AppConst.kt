@@ -10,13 +10,6 @@ object AppConst {
     const val COMA = ","
     const val NAMEDB="micuentaApp"
     const val VERSIONDB=1
-    const val DNI="dni"
-    const val NAME="nombre"
-    const val ADDRESS="domicilio"
-    const val CITY="ciudad"
-    const val ZIP="codigopostal"
-    const val EMAIL="email"
-    const val PASSWORD="password"
     const val KEY="1595b9bf3f9cbd914be1c9c3"
     const val BASEURL= "https://v6.exchangerate-api.com"
 
