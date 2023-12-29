@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateProfileBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -41,7 +43,7 @@ class CreateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         //Acceso a componenentes de la activity
         // Definir listas de elementos de la interfaz de usuario
         val imgIconCamera = binding.imgIconcameraprofile
@@ -51,7 +53,14 @@ class CreateProfileActivity : AppCompatActivity() {
         val etRepeatPassword = binding.etReppasswordprofile
         val btnCreateAccount = binding.btnCreateAccounts
         val btnGoBack = binding.btnBacktoOnBoarding
+        val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
+        if(Utils.isDarkTheme){
+            changeIconColor(imgIconCamera)
 
+        }
+        //Cargar y mostrar imagen
+        imgPicture=binding.imgProfile
+        imgPicture.setImageURI(Uri.parse(imgStr))
         // Definir el tooltip para la cámara
         TooltipCompat.setTooltipText(imgIconCamera, "Cambiar foto de perfil")
         imgIconCamera.setOnClickListener {
@@ -104,4 +113,8 @@ class CreateProfileActivity : AppCompatActivity() {
            startActivity(intent)
        }
     }
+    private fun changeIconColor(img :ImageView){
+        img.setColorFilter(ContextCompat.getColor(this, R.color.white))
+    }
+
 }

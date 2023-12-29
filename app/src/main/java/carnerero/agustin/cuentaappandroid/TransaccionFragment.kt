@@ -64,7 +64,7 @@ class TransaccionFragment : Fragment() {
         val aceptar = binding.btnAceptar
         val salir = binding.btnSalir
 
-        // Recuperar el DNI del usuario que inició sesión
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
 

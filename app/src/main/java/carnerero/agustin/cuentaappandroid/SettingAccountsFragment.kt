@@ -47,7 +47,7 @@ class SettingAccountsFragment : Fragment(){
     private lateinit var pickerExport: ActivityResultLauncher<Intent>
     private lateinit var pickerImport: ActivityResultLauncher<Intent>
 
-    private lateinit var dni: String
+
     private lateinit var cuentas:ArrayList<Cuenta>
 
     private var _binding: FragmentDbBinding? = null
@@ -100,7 +100,6 @@ class SettingAccountsFragment : Fragment(){
 
         // Obtener el nombre del usuario almacenado en SharedPreferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        dni = sharedPreferences.getString(getString(R.string.userdni), null)!!
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
 
         val imgList = listOf(
@@ -314,8 +313,7 @@ class SettingAccountsFragment : Fragment(){
         val dialogTitle = dialogView.findViewById<TextView>(R.id.tv_dialogtitle2)
         val etField1 = dialogView.findViewById<EditText>(R.id.et_dialogfield1)
         val etField2 = dialogView.findViewById<EditText>(R.id.et_dialogfield2)
-
-            if (isNumber) {
+        if (isNumber) {
                 etField2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
             }
 
