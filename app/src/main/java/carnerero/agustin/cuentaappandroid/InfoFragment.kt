@@ -163,11 +163,11 @@ class InfoFragment : Fragment() {
 
             }else {
                 val newValue = editText.text.toString()
-                textView.text = newValue
-                    sharedPreferences.edit().putString(
+                textView?.text = newValue
+                    sharedPreferences?.edit()?.putString(
                         title,
                         textView.text.toString()
-                    ).apply()
+                    )?.apply()
                 // Cerrar el AlertDialog
                 dialog.dismiss()
             }

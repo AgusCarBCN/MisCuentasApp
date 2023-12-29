@@ -3,7 +3,9 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import carnerero.agustin.cuentaappandroid.adapter.ViewTutorialAdapter
@@ -34,11 +36,11 @@ class OnBoardingActivity : AppCompatActivity() {
             getString(R.string.des4), getString(R.string.des5)
         )
         imgList = mutableListOf(
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image5
+            R.drawable.person,
+            R.drawable.ic_account,
+            R.drawable.ic_search,
+            R.drawable.bar_chart,
+            R.drawable.settings_24
         )
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
@@ -54,6 +56,8 @@ class OnBoardingActivity : AppCompatActivity() {
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyLanguage(enableEnLang)
         Utils.applyTheme(enableDarkTheme)
+
+
         val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
         // Obtener referencias a los componentes desde el enlace de vista (binding)
         val btnCreateProfile=binding.btnCreateprofile
@@ -81,6 +85,8 @@ class OnBoardingActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 }

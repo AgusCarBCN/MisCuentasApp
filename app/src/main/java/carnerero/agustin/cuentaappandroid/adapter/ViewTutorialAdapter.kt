@@ -3,9 +3,11 @@ package carnerero.agustin.cuentaappandroid.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.databinding.ItemPageBinding
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class ViewTutorialAdapter(private var title:List<String>,private var description:List<String>,private var videoView:List<Int>):RecyclerView.Adapter<ViewTutorialAdapter.PagerViewHolder>() {
 

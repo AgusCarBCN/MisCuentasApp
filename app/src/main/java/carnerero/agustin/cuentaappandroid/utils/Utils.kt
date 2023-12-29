@@ -5,8 +5,10 @@ package carnerero.agustin.cuentaappandroid.utils
 import android.content.Context
 import android.net.Uri
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
@@ -196,6 +198,9 @@ class Utils {
 
                 null
             }
+        }
+        fun changeIconColor(img : ImageView,context: Context){
+            img.setColorFilter(ContextCompat.getColor(context, R.color.white))
         }
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
