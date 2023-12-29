@@ -36,11 +36,12 @@ class OnBoardingActivity : AppCompatActivity() {
         // Obtener referencias a los componentes desde el enlace de vista (binding)
         val btnCreateProfile=binding.btnCreateprofile
         val viewPager=binding.viewPager
-        val circleIndicator=binding.circleindex
+        val circleIndicator=binding.circleindicator
 
-        circleIndicator.setViewPager(viewPager)
+
         viewPager.adapter=ViewTutorialAdapter(titleList,descriptionList,imgList)
         viewPager.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+        circleIndicator.setViewPager(viewPager)
         if(userName!=""){
             btnCreateProfile.text=getString(R.string.login)
         }
@@ -58,5 +59,6 @@ class OnBoardingActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

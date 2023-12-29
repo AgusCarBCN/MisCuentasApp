@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:colorPrimary"
+    android:orientation="vertical"
     tools:context=".OnBoardingActivity">
-    <!-- TextView centrado en la parte superior -->
-    <TextView
-        android:id="@+id/textViewWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wellcomeOnBoarding"
-        android:textSize="@dimen/wellcome"
-        android:layout_marginTop="@dimen/box"
-        android:layout_marginBottom="@dimen/box"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/viewPager"/>
 
-    <!-- ViewPager2 que ocupa el centro -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/circleindex"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
-    <me.relex.circleindicator.CircleIndicator3
-        android:id="@+id/circleindex"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/extrabox"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btn_createprofile"
-        android:elevation="4dp">
-    </me.relex.circleindicator.CircleIndicator3>
+        <TextView
+            android:id="@+id/textViewWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"           
+            android:textAlignment="center"
+            android:text="@string/wellcomeOnBoarding"
+            android:textSize="@dimen/head"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
 
-    <!-- Botón en la parte inferior -->
-    <Button
-        android:id="@+id/btn_createprofile"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/box"
-        android:layout_marginBottom="@dimen/box"
-        android:background="@drawable/style_button"
-        android:text="@string/createyourprofile"
-        android:textAllCaps="false"
-        android:textColor="?android:textColor"
-        android:textSize="@dimen/botton"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="550dp">
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:padding="@dimen/padding10"
+                />
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/circleindicator"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                app:ci_margin="@dimen/padding10"
+                app:ci_height="@dimen/padding10"
+                app:ci_width="@dimen/padding10"
+                app:ci_drawable="@drawable/selected_pager_circle"
+                app:ci_drawable_unselected="@drawable/default_pager_circle"
+                app:ci_gravity="center"
+                app:ci_orientation="horizontal"/>
+    </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Botón en la parte inferior -->
+        <Button
+            android:id="@+id/btn_createprofile"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/box"
+            android:layout_marginBottom="@dimen/box"
+            android:background="@drawable/style_button"
+            android:text="@string/createyourprofile"
+            android:textAllCaps="false"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/botton"
+            android:textStyle="bold"
+
+            />
+</LinearLayout>
