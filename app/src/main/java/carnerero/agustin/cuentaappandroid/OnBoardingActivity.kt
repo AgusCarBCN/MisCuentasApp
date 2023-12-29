@@ -2,24 +2,44 @@ package carnerero.agustin.cuentaappandroid
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import carnerero.agustin.cuentaappandroid.adapter.ViewTutorialAdapter
 import carnerero.agustin.cuentaappandroid.databinding.ActivityOnBoardingBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
+
 class OnBoardingActivity : AppCompatActivity() {
+
 
     private lateinit var binding: ActivityOnBoardingBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private var titleList = mutableListOf("Título 1", "Título 2", "Título 3", "Título 4", "Título 5")
+    private lateinit var titleList: MutableList<String>
+    private lateinit var descriptionList: MutableList<String>
+    private lateinit var imgList:MutableList<Int>
 
-    private var descriptionList= mutableListOf("descripcion 1", "descripcion 2", "descripcion 3", "descripcion 4", "descripcion 5")
-    private var imgList= mutableListOf<Int>(R.drawable.image1,R.drawable.image2,R.drawable.image3,R.drawable.image4,R.drawable.image5)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        titleList = mutableListOf(
+            getString(R.string.title1), getString(R.string.title2), getString(R.string.title3),
+            getString(R.string.title4), getString(R.string.title5)
+        )
+
+
+        descriptionList = mutableListOf(
+            getString(R.string.des1), getString(R.string.des2), getString(R.string.des3),
+            getString(R.string.des4), getString(R.string.des5)
+        )
+        imgList = mutableListOf(
+            R.drawable.image1,
+            R.drawable.image2,
+            R.drawable.image3,
+            R.drawable.image4,
+            R.drawable.image5
+        )
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
@@ -27,8 +47,10 @@ class OnBoardingActivity : AppCompatActivity() {
         //Obtener nombre de usuario
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val enableDarkTheme =
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang =
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyLanguage(enableEnLang)
         Utils.applyTheme(enableDarkTheme)
