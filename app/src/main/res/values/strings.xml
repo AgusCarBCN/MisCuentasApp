@@ -212,7 +212,7 @@
     <string name="des5">Customize the theme to your liking and choose your preferred language.
         Additionally, view your expenses converted to dollars, euros, or pounds for a global perspective.
         Enhance it according to your preferences!</string>
-    <string name="wellcomeOnBoarding">Wellcome to my accounts</string>
+    <string name="wellcomeOnBoarding">Wellcome to MyAccountsApp</string>
     <string name="createyourprofile">Create your profile</string>
     <string name="requiredname">*Name</string>
     <string name="requiredid">*User name</string>

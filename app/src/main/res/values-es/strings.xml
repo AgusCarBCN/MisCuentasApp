@@ -191,7 +191,7 @@
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
     <string name="accountsetting">Configura tus cuentas</string>
     <!--String onBoarding -->
-    <string name="wellcomeOnBoarding">Bienvenido a mis cuentas</string>
+    <string name="wellcomeOnBoarding">Bienvenido a MisCuentasApp</string>
     <string name="createyourprofile">Crea tu perfil</string>
     <string name="requiredname">*Nombre</string>
     <string name="requiredid">*Nombre de usuario</string>
