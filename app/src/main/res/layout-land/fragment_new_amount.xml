@@ -31,8 +31,9 @@
 
         <Spinner
             android:id="@+id/sp_cuentas"
-            style="@style/InputFieldLarge"
+            style="@style/InputFieldLargeCenter"
             android:gravity="center"
+            android:textAlignment="center"
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout

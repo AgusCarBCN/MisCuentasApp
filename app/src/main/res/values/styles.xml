@@ -42,8 +42,18 @@
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:background">@drawable/style_editetx</item>
     </style>
+    <style name="InputFieldBaseCenter">
+        <item name="android:layout_height">@dimen/box</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/style_editetx</item>
+    </style>
 
     <style name="InputFieldLarge" parent="InputFieldBase">
+        <item name="android:layout_width">360dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="InputFieldLargeCenter" parent="InputFieldBaseCenter">
         <item name="android:layout_width">360dp</item>
         <item name="android:layout_gravity">center</item>
     </style>

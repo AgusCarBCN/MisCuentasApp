@@ -177,7 +177,7 @@
 
             <Spinner
                 android:id="@+id/sp_consulta"
-                style="@style/InputFieldLarge"
+                style="@style/InputFieldLargeCenter"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:theme="@style/CustomSpinner" />

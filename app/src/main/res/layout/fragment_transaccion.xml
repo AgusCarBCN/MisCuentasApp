@@ -36,7 +36,7 @@
 
         <Spinner
             android:id="@+id/sp_cuentaorigen"
-            style="@style/InputFieldLarge"
+            style="@style/InputFieldLargeCenter"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textAlignment="center"
@@ -55,7 +55,7 @@
 
         <Spinner
             android:id="@+id/sp_cuentadestino"
-            style="@style/InputFieldLarge"
+            style="@style/InputFieldLargeCenter"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textAlignment="center"
