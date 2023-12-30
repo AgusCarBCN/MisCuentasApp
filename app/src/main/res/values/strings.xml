@@ -194,11 +194,15 @@
     financial goals directly from your device. To get the most out of it, we invite you to watch our video
     tutorials. Discover how to enhance your financial experience with My Accounts! </string>
     <!--String onBoarding -->
+    <string name="title0">Wellcome to myAccountsApp</string>
     <string name="title1">Create your profile</string>
     <string name="title2">Record your daily income and expenses.</string>
     <string name="title3">Check your notes.</string>
     <string name="title4">Enable notifications</string>
     <string name="title5">Configure your application and accounts.</string>
+    <string name="des0">¡Bienvenido a misCuentasApp! Tu herramienta personalizada para el control financiero.
+        Registra gastos, crea presupuestos, y sigue tus metas de ahorro. Obtén informes detallados y consejos para tomar
+        decisiones financieras informadas. ¡Comienza tu viaje hacia una salud financiera sólida hoy mismo!</string>
     <string name="des1">Create your profile to use the app. This ensures the confidentiality of your notes,
         securely stored on your mobile device. Establish your profile now for a personalized and
         protected experience!</string>

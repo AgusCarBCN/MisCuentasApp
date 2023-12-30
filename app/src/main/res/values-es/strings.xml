@@ -203,11 +203,15 @@
     <string name="infocreateaccounts">Puedes crear tus cuentas ahora o mas adelante.</string>
     <string name="accountname">Nombre de la cuenta</string>
     <!--intro-->
+    <string name="title0">Bienvenido a misCuentasApp</string>
     <string name="title1">Crea tu perfil</string>
     <string name="title2">Anota tus ingresos y gastos diarios</string>
     <string name="title3">Consulta tus anotaciones</string>
     <string name="title4">Activa las notificaciones </string>
     <string name="title5">Configura tu aplicacion y tus cuentas</string>
+    <string name="des0">Welcome to misCuentasApp! Your personalized financial control tool. Log expenses, create budgets,
+        and track savings goals. Get detailed reports and advice for informed financial decisions.
+        Start your journey to financial wellness today!</string>
     <string name="des1">Crea tu perfil para acceder a la app y asegura la confidencialidad de tus anotaciones,
         que se almacenan de forma segura en tu dispositivo móvil. ¡Crea tu perfil ahora para una
         experiencia personalizada y protegida!</string>

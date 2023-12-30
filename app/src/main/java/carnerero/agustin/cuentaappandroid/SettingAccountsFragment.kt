@@ -168,8 +168,6 @@ class SettingAccountsFragment : Fragment(){
         intent.type = "*/*"  // Puedes ajustar el tipo de archivo permitido si es necesario
         pickerImport.launch(intent)
     }
-
-
     private fun insertAccount() {
         val dialog = createTwoFieldAlertDialogTwoFields(
             true,
@@ -177,9 +175,17 @@ class SettingAccountsFragment : Fragment(){
             R.string.iban,
             R.string.balance
         ) { iban, amount ->
-            val cuenta = Cuenta(iban, amount.toDouble())
-            cuentaDao.insertarCuenta(cuenta)
-            (activity as MainActivity).actualizarFragmentSaldo()
+            if (iban.isEmpty() || amount.isEmpty()) {
+                Toast.makeText(
+                    requireActivity().applicationContext,
+                    getString(R.string.msgemptiesfield),
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                val cuenta = Cuenta(iban, amount.toDouble())
+                cuentaDao.insertarCuenta(cuenta)
+                (activity as MainActivity).actualizarFragmentSaldo()
+            }
         }
         dialog.show()
     }
@@ -194,13 +200,13 @@ class SettingAccountsFragment : Fragment(){
         ) { iban, newIban ->
             if (!existeAccount(iban)) {
                 Toast.makeText(requireActivity().applicationContext, getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
-
-            } else {
+            }else if(iban.isEmpty() || newIban.isEmpty()){
+                Toast.makeText(requireActivity().applicationContext, getString(R.string.msgemptiesfield), Toast.LENGTH_LONG).show()
+            } else{
                 cuentaDao.cambiarIbanCuenta(iban, newIban)
                 (activity as MainActivity).actualizarFragmentSaldo()
             }
         }
-
         dialog.show()
     }
 
@@ -208,7 +214,10 @@ class SettingAccountsFragment : Fragment(){
         val dialog = createAlertDialogOneField(R.string.delete_an_account, R.string.hintdeleteaccount) { iban ->
             if (!existeAccount(iban)) {
                 Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
-            } else {
+            }else if(iban.isEmpty()){
+                Toast.makeText(requireActivity().applicationContext, getString(R.string.msgemptyfield), Toast.LENGTH_LONG).show()
+            }
+            else {
                 cuentaDao.borrarCuentaPorIBAN(iban)
                 (activity as MainActivity).actualizarFragmentSaldo()
             }
@@ -221,7 +230,10 @@ class SettingAccountsFragment : Fragment(){
             createAlertDialogOneField(R.string.titledelelemov, R.string.hintdeletemovaccount) { iban ->
                 if (!existeAccount(iban)) {
                     Toast.makeText(requireContext(), getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
-                } else {
+                } else if(iban.isEmpty()){
+                    Toast.makeText(requireActivity().applicationContext, getString(R.string.msgemptyfield), Toast.LENGTH_LONG).show()
+                }
+                else {
                     movDAO.borrarMovimientosPorIBAN(iban)
                     (activity as MainActivity).actualizarFragmentSaldo()
                 }
