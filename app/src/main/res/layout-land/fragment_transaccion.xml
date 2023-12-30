@@ -20,6 +20,7 @@
             android:id="@+id/et_importetrans"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"
+            android:gravity="center"
             android:inputType="numberDecimal"
              />
 
@@ -38,6 +39,7 @@
             android:id="@+id/sp_cuentaorigen"
             style="@style/InputFieldLarge"
             android:layout_marginTop="5dp"
+            android:textAlignment="center"
             android:theme="@style/CustomSpinner" />
 
         <TextView
@@ -55,6 +57,7 @@
             android:id="@+id/sp_cuentadestino"
             style="@style/InputFieldLarge"
             android:layout_marginTop="5dp"
+            android:textAlignment="center"
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout

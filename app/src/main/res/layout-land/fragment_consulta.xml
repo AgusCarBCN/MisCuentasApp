@@ -19,6 +19,7 @@
             style="@style/InputFieldLarge"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:hint="@string/amount_text"
             android:inputType="textCapWords|textAutoComplete" />
 
@@ -49,6 +50,7 @@
                         android:layout_height="40dp"
                         android:clickable="true"
                         android:focusable="false"
+                        android:gravity="center"
                         android:hint="@string/date_from"
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -63,6 +65,7 @@
                         style="@style/InputFieldMedium"
                         android:layout_width="170dp"
                         android:layout_height="40dp"
+                        android:gravity="center"
                         android:clickable="true"
                         android:focusable="false"
                         android:hint="@string/date_to"
@@ -148,6 +151,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="20dp"
                     android:hint="@string/amount_from"
+                    android:gravity="center"
                     android:inputType="numberDecimal" />
 
                 <EditText
@@ -158,6 +162,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="10dp"
                     android:hint="@string/amount_to"
+                    android:gravity="center"
                     android:inputType="numberDecimal" />
             </LinearLayout>
 
@@ -166,6 +171,7 @@
                 style="@style/InputFieldLarge"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:theme="@style/CustomSpinner" />
 
         </LinearLayout>

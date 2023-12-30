@@ -243,7 +243,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val limit = savedProgressBal
             val stringBuilder = StringBuilder()
             stringBuilder.append(getString(R.string.lowbalance))
-            stringBuilder.append(" $limit")
+        val locale=Locale(lang,country)
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
+            stringBuilder.append(" ${currencyFormat.format(limit)}")
             // Obtengo saldos de cuentas
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {

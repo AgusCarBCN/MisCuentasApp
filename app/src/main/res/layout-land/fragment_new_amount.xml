@@ -18,18 +18,21 @@
             android:id="@+id/et_descripcion"
             style="@style/InputFieldLarge"
             android:hint="@string/amount_text"
+            android:gravity="center"
             android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/et_importe"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"
+            android:gravity="center"
             android:inputType="numberDecimal"
             />
 
         <Spinner
             android:id="@+id/sp_cuentas"
             style="@style/InputFieldLarge"
+            android:gravity="center"
             android:theme="@style/CustomSpinner" />
 
         <LinearLayout

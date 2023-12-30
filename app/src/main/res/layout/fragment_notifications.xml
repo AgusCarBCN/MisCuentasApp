@@ -66,7 +66,6 @@
                 android:text="@string/monthreport"
                  />
 
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,7 +97,7 @@
                 <SeekBar
                     android:id="@+id/seekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="15dp"
                     android:thumb="@drawable/custom_thumb_bar"
                     android:progressDrawable="@drawable/custom_seekbar"
                     android:max="5000"
@@ -132,7 +131,7 @@
             <SeekBar
                 android:id="@+id/seekBarBalance"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="15dp"
                 android:thumb="@drawable/custom_thumb_bar"
                 android:progressDrawable="@drawable/custom_seekbar"
                 android:max="5000"
