@@ -19,14 +19,12 @@ import kotlinx.coroutines.launch
 
 class AjustesFragment : Fragment() {
 
-
     private val repo=CurrencyRepo()
     private var _binding: FragmentAjustesBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
-    private lateinit var currency:String
     private var currencySelected=1
     private val darkModeIcon = R.drawable.dark_mode_20
     private val lightModeIcon = R.drawable.light_mode_20

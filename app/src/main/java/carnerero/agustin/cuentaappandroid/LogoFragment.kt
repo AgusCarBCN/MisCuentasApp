@@ -10,11 +10,6 @@ import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentHomeBinding
 
-
-
-
-
-
 class LogoFragment : Fragment() {
 
 

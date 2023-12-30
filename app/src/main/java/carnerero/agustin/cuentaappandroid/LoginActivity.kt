@@ -14,9 +14,6 @@ import java.util.Calendar
 
 class LoginActivity : AppCompatActivity() {
 
-    // Instancias de DAO y otros elementos necesarios
-    private val admin = DataBaseAppSingleton.getInstance(this)
-    private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var binding: ActivityLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
 

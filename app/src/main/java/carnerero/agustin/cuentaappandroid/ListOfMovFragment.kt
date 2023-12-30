@@ -17,7 +17,6 @@ import java.util.Locale
 
 
 
-
 class ListOfMovFragment : Fragment() , OnLocaleListener {
 
     private lateinit var lang:String

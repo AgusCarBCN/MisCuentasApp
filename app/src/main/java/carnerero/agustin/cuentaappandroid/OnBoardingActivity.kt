@@ -3,18 +3,14 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import carnerero.agustin.cuentaappandroid.adapter.ViewTutorialAdapter
 import carnerero.agustin.cuentaappandroid.databinding.ActivityOnBoardingBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
-
 class OnBoardingActivity : AppCompatActivity() {
-
 
     private lateinit var binding: ActivityOnBoardingBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -22,15 +18,11 @@ class OnBoardingActivity : AppCompatActivity() {
     private lateinit var descriptionList: MutableList<String>
     private lateinit var imgList:MutableList<Int>
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         titleList = mutableListOf(getString(R.string.title0),
             getString(R.string.title1), getString(R.string.title2), getString(R.string.title3),
             getString(R.string.title4), getString(R.string.title5)
         )
-
-
         descriptionList = mutableListOf(getString(R.string.des0),
             getString(R.string.des1), getString(R.string.des2), getString(R.string.des3),
             getString(R.string.des4), getString(R.string.des5)
@@ -42,7 +34,6 @@ class OnBoardingActivity : AppCompatActivity() {
             R.drawable.barchart_intro,
             R.drawable.notifications_intro,
             R.drawable.settings_intro
-
         )
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
@@ -59,13 +50,11 @@ class OnBoardingActivity : AppCompatActivity() {
         Utils.applyLanguage(enableEnLang)
         Utils.applyTheme(enableDarkTheme)
 
-
         val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
         // Obtener referencias a los componentes desde el enlace de vista (binding)
         val btnCreateProfile=binding.btnCreateprofile
         val viewPager=binding.viewPager
         val circleIndicator=binding.circleindicator
-
 
         viewPager.adapter=ViewTutorialAdapter(titleList,descriptionList,imgList)
         viewPager.orientation=ViewPager2.ORIENTATION_HORIZONTAL

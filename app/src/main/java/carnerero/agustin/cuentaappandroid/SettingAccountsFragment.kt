@@ -46,9 +46,7 @@ class SettingAccountsFragment : Fragment(){
     private val movDAO = MovimientoBancarioDAO(admin)
     private lateinit var pickerExport: ActivityResultLauncher<Intent>
     private lateinit var pickerImport: ActivityResultLauncher<Intent>
-
     private lateinit var cuentas:ArrayList<Cuenta>
-
     private var _binding: FragmentDbBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {

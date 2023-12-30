@@ -1,8 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
 
-
-
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,9 +10,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
-
-
-
 
 class NotificationsFragment : Fragment() {
 
@@ -125,7 +120,7 @@ class NotificationsFragment : Fragment() {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-                percentTextView.text = "${progress}"
+                percentTextView.text = "$progress"
                 // Guarda el progreso en SharedPreferences
                 val editor = sharedPreferences.edit()
                 editor.putInt("progressValue", progress)

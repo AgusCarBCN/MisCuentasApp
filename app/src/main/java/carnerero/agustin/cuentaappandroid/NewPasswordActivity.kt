@@ -9,19 +9,11 @@ import android.widget.Toast
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.ActivityNewPasswordBinding
 
-
 class NewPasswordActivity : AppCompatActivity() {
-
     // View Binding para acceder a los componentes de la interfaz de usuario
     private lateinit var binding: ActivityNewPasswordBinding
-
     // SharedPreferences para almacenar y recuperar datos de forma sencilla
     private lateinit var sharedPreferences: SharedPreferences
-
-    // Instancias necesarias para acceder a la base de datos y realizar operaciones
-    private val admin = DataBaseAppSingleton.getInstance(this)
-
-
     // Variable para almacenar el DNI del usuario que inició sesión
     private lateinit var login: String
 

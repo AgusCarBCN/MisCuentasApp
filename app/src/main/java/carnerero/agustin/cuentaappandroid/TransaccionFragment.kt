@@ -17,10 +17,7 @@ import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.text.SimpleDateFormat
 import java.util.Date
 
-
 class TransaccionFragment : Fragment() {
-
-
 
     // Variables para almacenar el valor de los elementos seleccionados en los spinners
     private var selectedItemOrigen: String? = null

@@ -21,11 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
 
-
-
-
 class NewAmountFragment : Fragment() {
-
 
     // Variable para manejar el View Binding
     private var _binding: FragmentNewAmountBinding? = null
