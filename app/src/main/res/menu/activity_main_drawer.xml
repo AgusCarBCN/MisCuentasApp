@@ -18,7 +18,7 @@
         android:title="@string/calculator" />
     <item
         android:id="@+id/nuevoImporte"
-        android:icon="@drawable/payments24px"
+        android:icon="@drawable/payment"
         android:title="@string/new_amount" />
     <item
         android:id="@+id/transferencia"

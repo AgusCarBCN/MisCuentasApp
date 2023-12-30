@@ -11,31 +11,32 @@
         android:id="@+id/tv_titleonboarding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text=" Title "
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="@dimen/extracommon"
+        android:textSize="@dimen/head"
          />
+
+    <ImageView
+        android:id="@+id/img_OnBoarding"
+        android:layout_width="400dp"
+        android:layout_height="230dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+
+        />
     <TextView
         android:id="@+id/tv_desonboarding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="des"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
         android:textStyle="normal"
         android:textSize="@dimen/common"/>
 
-
-    <ImageView
-        android:id="@+id/img_OnBoarding"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="8dp"
-
-         />
 
 
 </LinearLayout>

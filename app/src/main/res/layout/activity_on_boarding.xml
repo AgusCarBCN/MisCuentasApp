@@ -8,16 +8,6 @@
     android:orientation="vertical"
     tools:context=".OnBoardingActivity">
 
-        <TextView
-            android:id="@+id/textViewWelcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"           
-            android:textAlignment="center"
-            android:text="@string/wellcomeOnBoarding"
-            android:textSize="@dimen/head"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            />
 
 
         <RelativeLayout
@@ -35,9 +25,9 @@
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
                 android:layout_alignParentBottom="true"
-                app:ci_margin="@dimen/padding10"
-                app:ci_height="@dimen/padding10"
-                app:ci_width="@dimen/padding10"
+                app:ci_margin="10dp"
+                app:ci_height="10dp"
+                app:ci_width="10dp"
                 app:ci_drawable="@drawable/selected_pager_circle"
                 app:ci_drawable_unselected="@drawable/default_pager_circle"
                 app:ci_gravity="center"

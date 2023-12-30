@@ -209,22 +209,22 @@
     <string name="title3">Consulta tus anotaciones</string>
     <string name="title4">Activa las notificaciones </string>
     <string name="title5">Configura tu aplicacion y tus cuentas</string>
-    <string name="des0">Welcome to misCuentasApp! Your personalized financial control tool. Log expenses, create budgets,
-        and track savings goals. Get detailed reports and advice for informed financial decisions.
-        Start your journey to financial wellness today!</string>
-    <string name="des1">Crea tu perfil para acceder a la app y asegura la confidencialidad de tus anotaciones,
+    <string name="des0">\t\t\t¡Bienvenido a misCuentasApp! Tu herramienta personalizada para el control financiero.
+        Registra gastos, crea presupuestos, y sigue tus metas de ahorro. Obtén informes detallados y consejos para tomar
+        decisiones financieras informadas. ¡Comienza tu viaje hacia una salud financiera sólida hoy mismo!</string>
+    <string name="des1">\t\t\tCrea tu perfil para acceder a la app y asegura la confidencialidad de tus anotaciones,
         que se almacenan de forma segura en tu dispositivo móvil. ¡Crea tu perfil ahora para una
         experiencia personalizada y protegida!</string>
-    <string name="des2">Para gestionar eficazmente tus finanzas personales,
+    <string name="des2">\t\t\tPara gestionar eficazmente tus finanzas personales,
         registra diariamente tus ingresos y gastos en todas tus cuentas. Utiliza la opción
         "Nuevo importe" en el menú para realizar anotaciones, y realiza transacciones fácilmente a través
         de la opción "Transacción". </string>
-    <string name="des3">Consulta tu progreso mediante las opciones de "Gráficos" y "Consulta" para obtener una visión integral.</string>
+    <string name="des3"> \t\t\tConsulta tu progreso mediante las opciones de "Gráficos" y "Consulta" para obtener una visión integral.</string>
     <!--sharepreferences de usuario-->
-    <string name="des4">Activa las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
+    <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
         mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará
         a alcanzar tus objetivos financieros.</string>
-    <string name="des5">Personaliza el tema según tus preferencias y elige el idioma de tu elección.
+    <string name="des5">\t\t\tPersonaliza el tema según tus preferencias y elige el idioma de tu elección.
         Además, visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
         ¡Hazlo aún mejor según tus necesidades!</string>
     <string name="basecurrency">currency</string>

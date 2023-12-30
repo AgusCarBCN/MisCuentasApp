@@ -25,22 +25,24 @@ class OnBoardingActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        titleList = mutableListOf(
+        titleList = mutableListOf(getString(R.string.title0),
             getString(R.string.title1), getString(R.string.title2), getString(R.string.title3),
             getString(R.string.title4), getString(R.string.title5)
         )
 
 
-        descriptionList = mutableListOf(
+        descriptionList = mutableListOf(getString(R.string.des0),
             getString(R.string.des1), getString(R.string.des2), getString(R.string.des3),
             getString(R.string.des4), getString(R.string.des5)
         )
         imgList = mutableListOf(
-            R.drawable.person,
-            R.drawable.ic_account,
-            R.drawable.ic_search,
-            R.drawable.bar_chart,
-            R.drawable.settings_24
+            R.drawable.contabilidad,
+            R.drawable.person_intro,
+            R.drawable.payments_intro,
+            R.drawable.barchart_intro,
+            R.drawable.notifications_intro,
+            R.drawable.settings_intro
+
         )
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
