@@ -34,7 +34,6 @@
             android:name=".LoginActivity"
             android:exported="false"
             android:screenOrientation="fullSensor"/>
-
         <receiver
             android:name=".utils.AlarmNotifications"
             android:enabled="true" />
