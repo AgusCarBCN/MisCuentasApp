@@ -26,8 +26,9 @@
 
         <NumberPicker
             android:id="@+id/yearpicker"
-            style="@style/InputFieldLargeCenter"
             android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            style="@style/LargeNumberPicker"
             android:inputType="number"
             android:layout_marginTop="@dimen/padding10"
             android:autofillHints="name"
@@ -38,6 +39,7 @@
             android:id="@+id/btn_confirmyear"
             style="@style/ButtonLarge"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:text="@string/confirm" />
 
     </LinearLayout>
