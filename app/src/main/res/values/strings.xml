@@ -200,9 +200,9 @@
     <string name="title3">Check your notes.</string>
     <string name="title4">Enable notifications</string>
     <string name="title5">Configure your application and accounts.</string>
-    <string name="des0">\t\t\tWelcome to misCuentasApp! Your personalized financial control tool. Log expenses, create budgets,
-        and track savings goals. Get detailed reports and advice for informed financial decisions.
-        Start your journey to financial wellness today!</string>
+    <string name="des0">\t\t\t\t\t\tWelcome to myAppAccounts! Your personalized tool for financial control.
+        Record expenses and income and achive your savings goals. Get notifications about your accounts to make
+        informed financial decisions. Start your journey to strong financial health today!</string>
 
     <string name="des1">\t\t\tCreate your profile to use the app. This ensures the confidentiality of your notes,
         securely stored on your mobile device. Establish your profile now for a personalized and
@@ -214,9 +214,8 @@
     <string name="des4">\t\t\tActivate notifications to stay informed. Receive daily, weekly, and monthly
         reports of your notes. Enabling expense alerts and balance notifications will help you achieve your
         personal financial goals. Improve it as needed.</string>
-    <string name="des5">\t\t\tCustomize the theme to your liking and choose your preferred language.
-        Additionally, view your expenses converted to dollars, euros, or pounds for a global perspective.
-        Enhance it according to your preferences!</string>
+    <string name="des5">\t\t\tCustomize myAccountsApp according to your preferences.
+        View your expenses converted to dollars, euros or pounds for a global perspective</string>
     <string name="wellcomeOnBoarding">Wellcome to MyAccountsApp</string>
     <string name="createyourprofile">Create your profile</string>
     <string name="requiredname">*Name</string>

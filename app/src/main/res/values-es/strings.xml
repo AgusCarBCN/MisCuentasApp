@@ -209,9 +209,9 @@
     <string name="title3">Consulta tus anotaciones</string>
     <string name="title4">Activa las notificaciones </string>
     <string name="title5">Configura tu aplicacion y tus cuentas</string>
-    <string name="des0">\t\t\t¡Bienvenido a misCuentasApp! Tu herramienta personalizada para el control financiero.
-        Registra gastos, crea presupuestos, y sigue tus metas de ahorro. Obtén informes detallados y consejos para tomar
-        decisiones financieras informadas. ¡Comienza tu viaje hacia una salud financiera sólida hoy mismo!</string>
+    <string name="des0">\t\t\t\t\t\t¡Bienvenido a misCuentasApp! Tu herramienta personalizada para el control financiero.
+        Registra gastos e ingresos  y consigue tus metas de ahorro. Obtén notificaciones de tus cuentas para
+        tomar decisiones financieras informadas.¡Comienza tu viaje hacia una salud financiera sólida hoy mismo!</string>
     <string name="des1">\t\t\tCrea tu perfil para acceder a la app y asegura la confidencialidad de tus anotaciones,
         que se almacenan de forma segura en tu dispositivo móvil. ¡Crea tu perfil ahora para una
         experiencia personalizada y protegida!</string>
@@ -224,9 +224,9 @@
     <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
         mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará
         a alcanzar tus objetivos financieros.</string>
-    <string name="des5">\t\t\tPersonaliza el tema según tus preferencias y elige el idioma de tu elección.
-        Además, visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
-        ¡Hazlo aún mejor según tus necesidades!</string>
+    <string name="des5">\t\t\tPersonaliza misCuentasApp según tus preferencias.
+        Visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
+        </string>
     <string name="basecurrency">currency</string>
     <string name="userlogin">userlogin</string>
     <string name="userdni">userdni</string>
