@@ -328,7 +328,7 @@ class SettingAccountsFragment : Fragment(){
 
 
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm2)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel2)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_aceptyear)
 
         dialogTitle.text = getString(titleResId)
         etField1.hint = getString(hintField1ResId)

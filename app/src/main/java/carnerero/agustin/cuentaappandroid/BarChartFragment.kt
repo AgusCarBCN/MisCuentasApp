@@ -2,6 +2,8 @@ package carnerero.agustin.cuentaappandroid
 
 
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +31,9 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import kotlin.math.abs
+import kotlin.properties.Delegates
 
 
 class BarChartFragment : Fragment() {
@@ -34,7 +42,7 @@ class BarChartFragment : Fragment() {
 
     private val admin = DataBaseAppSingleton.getInstance(context)
     private var selectedIban: String? = null
-    private var selectedYear: String? = null
+    private var selectedYear:Int?=null
     private var rate:Double=1.0
     private val cuentaDao = CuentaDao(admin)
     private val movDao = MovimientoBancarioDAO(admin)
@@ -72,7 +80,7 @@ class BarChartFragment : Fragment() {
         // Inicializar el gráfico y los Spinners
         barChart = binding.barChart
         val spCuenta = binding.spCuenta
-        val spYears = binding.spYear
+        val tvSelectYear=binding.tvyear
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         rate=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0").toString().toDouble()
         val cuentas = cuentaDao.listarTodasLasCuentas()
@@ -88,10 +96,6 @@ class BarChartFragment : Fragment() {
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item
             )
-            val adapterYear = ArrayAdapter<String>(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item
-            )
 
             // Configuración del adapter y del spinner
             with(adapterCuenta) {
@@ -100,16 +104,14 @@ class BarChartFragment : Fragment() {
                 }
             }
 
-            for (i in 0..4) {
-                adapterYear.add(years[i])
-            }
+
 
             // Establecer adaptadores en los Spinners
-            spCuenta.adapter = adapterCuenta
-            spYears.adapter = adapterYear
+            spCuenta.adapter= adapterCuenta
+            selectedYear=Utils.getYear()
 
             // Establecer valores predeterminados
-            selectedYear = years[0]
+
             selectedIban = cuentas[0].iban
 
             // Escuchadores de los Spinners para la selección de elementos
@@ -122,30 +124,20 @@ class BarChartFragment : Fragment() {
                 ) {
                     barChart.clear()
                     selectedIban = adapterCuenta.getItem(position)
+
                     /*se ejecutará en un hilo diferente al hilo principal, evitando bloquear la interfaz de usuario mientras se realiza la operación.*/
                     lifecycleScope.launch {
-                        updateChart(selectedIban.toString(), selectedYear.toString().toInt())
+                        updateChart(selectedIban.toString(), selectedYear!!)
                     }
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-            spYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    barChart.clear()
-                    selectedYear = adapterYear.getItem(position)
-                    lifecycleScope.launch {
-                        updateChart(selectedIban.toString(), selectedYear.toString().toInt())
-                    }
-                }
+    tvSelectYear.setOnClickListener {
+       showSelectYearDialog()
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
+    }
+
 
         return binding.root
     }
@@ -230,6 +222,38 @@ class BarChartFragment : Fragment() {
             barEntriesList.add(BarEntry(i.toFloat(), listOfAmount[i]))
         }
         return barEntriesList
+    }
+
+    private fun showSelectYearDialog(){
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_selectyear_dialog, null)
+        val title=dialogView.findViewById<TextView>(R.id.tv_dialogtitleeyear)
+        val year=dialogView.findViewById<NumberPicker>(R.id.yearpicker)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmyear)
+        val minYear = 2010 //Año mínimo según tus necesidades
+        val maxYear = 2100 //Año máximo según tus necesidades
+        val yearsArray = (minYear..maxYear).toList().map { it.toString() }.toTypedArray()
+        val currentYear=Utils.getYear()
+        year.minValue = minYear
+        year.maxValue = maxYear
+        year.value = currentYear
+        year.displayedValues = yearsArray
+        title.text=getString(R.string.select_year)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        confirmButton.setOnClickListener {
+            var tvYear=binding.tvyear
+            tvYear.text=year.value.toString()
+            dialog.dismiss()
+            selectedYear=year.value
+            updateChart(selectedIban.toString(), selectedYear!!)
+        }
+
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+
     }
 
     // Actualizar el gráfico con nuevos datos
