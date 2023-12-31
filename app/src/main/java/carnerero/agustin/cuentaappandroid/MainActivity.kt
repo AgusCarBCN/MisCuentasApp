@@ -245,7 +245,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             stringBuilder.append(getString(R.string.lowbalance))
         val locale=Locale(lang,country)
         val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-            stringBuilder.append(" ${currencyFormat.format(limit)}")
+        stringBuilder.append(" ${currencyFormat.format(limit)}")
             // Obtengo saldos de cuentas
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {

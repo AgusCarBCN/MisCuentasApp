@@ -36,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
         // Obtener nombre,nombre de usuario y contraseña
         val name=sharedPreferences.getString(getString(R.string.username),"usuario")
 
-
         val wellcome=binding.tvWellcome
 
         // Obtener la hora actual

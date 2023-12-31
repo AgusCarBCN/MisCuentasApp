@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
-import carnerero.agustin.cuentaappandroid.adapter.ViewTutorialAdapter
+import carnerero.agustin.cuentaappandroid.adapter.OnBoardingAdapter
 import carnerero.agustin.cuentaappandroid.databinding.ActivityOnBoardingBinding
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
@@ -56,7 +56,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val viewPager=binding.viewPager
         val circleIndicator=binding.circleindicator
 
-        viewPager.adapter=ViewTutorialAdapter(titleList,descriptionList,imgList)
+        viewPager.adapter=OnBoardingAdapter(titleList,descriptionList,imgList)
         viewPager.orientation=ViewPager2.ORIENTATION_HORIZONTAL
         circleIndicator.setViewPager(viewPager)
         if(userName!=""){

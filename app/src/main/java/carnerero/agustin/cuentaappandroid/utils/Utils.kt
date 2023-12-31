@@ -4,11 +4,7 @@ package carnerero.agustin.cuentaappandroid.utils
 
 import android.content.Context
 import android.net.Uri
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import carnerero.agustin.cuentaappandroid.AppConst
 import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
@@ -16,8 +12,6 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.io.File
 import java.io.FileOutputStream
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
@@ -26,12 +20,9 @@ import java.util.Locale
 
 class Utils {
 
-    private val groupingSeparator = '.'
-    private val decimalFormat =  DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY))
     companion object {
-        val groupingSeparator = '.'
-        val decimalFormat =  DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY))
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+        private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         var isDarkTheme=false
 
         fun calcularImporteMes(
@@ -67,29 +58,14 @@ class Utils {
             }
             return importeTotal.toFloat()
         }
-        fun calcularImporteDia(
-            targetDate: LocalDate,
-            importes: ArrayList<MovimientoBancario>
-        ): Float {
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
-            var importeTotal = 0.0
-
-            for (mov in importes) {
-                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
-                if (fechaImporteDate.isEqual(targetDate)) {
-                    importeTotal += mov.importe
-                }
-            }
-            return importeTotal.toFloat()
-        }
 
         fun applyTheme(enableDarkTheme: Boolean) {
-            if (enableDarkTheme) {
+            isDarkTheme = if (enableDarkTheme) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                isDarkTheme=true
+                true
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                isDarkTheme=false
+                false
             }
 
         }
@@ -175,10 +151,6 @@ class Utils {
             val calendar=Calendar.getInstance()
             return calendar.get(Calendar.WEEK_OF_YEAR)+1
         }
-        fun getToday():Int{
-            val calendar=Calendar.getInstance()
-            return calendar.get(Calendar.DAY_OF_YEAR)
-        }
         fun getYear():Int{
             val calendar=Calendar.getInstance()
             return calendar.get(Calendar.YEAR)
@@ -199,9 +171,7 @@ class Utils {
                 null
             }
         }
-        fun changeIconColor(img : ImageView,context: Context){
-            img.setColorFilter(ContextCompat.getColor(context, R.color.white))
-        }
+
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
             return when(operator) {

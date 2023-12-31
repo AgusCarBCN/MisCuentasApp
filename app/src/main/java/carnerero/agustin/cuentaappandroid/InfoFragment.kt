@@ -50,14 +50,10 @@ class InfoFragment : Fragment() {
     // Variable para manejar el View Binding
     private var _binding: FragmentInfoBinding? = null
     private val binding get() = _binding!!
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
-
     }
 
     override fun onCreateView(
@@ -85,22 +81,24 @@ class InfoFragment : Fragment() {
         imgPicture=binding.imgProfile
         imgPicture.setImageURI(Uri.parse(imgStr))
         val lyList = listOf(binding.lyid, binding.lyname, binding.lypass)
-        val imgList = listOf(binding.imgid, binding.imgname,  binding.imgpass)
-        val titleList = listOf(getString(R.string.userlogin), getString(R.string.username), getString(R.string.userpass))
+        val imgList = listOf(binding.imgid, binding.imgname, binding.imgpass)
+        val titleList =
+            listOf(getString(R.string.id), getString(R.string.name), getString(R.string.password))
         val textViewList = listOf(binding.tvlogin, binding.tvname, binding.tvpass)
-
+        val saveValueList: List<String> = listOf(
+            getString(R.string.userlogin),
+            getString(R.string.username),
+            getString(R.string.userpass)
+        )
         for (i in lyList.indices) {
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
                 changeIconColor(imgIconCamera)
             }
-            if (textViewList[i].text.isNullOrEmpty() || textViewList[i].text.isBlank()) {
-                lyList[i].visibility=View.GONE
-            }
             lyList[i].setOnClickListener {
                 // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
-                changeField(textViewList[i], titleList[i])
+                changeField(textViewList[i], titleList[i], saveValueList[i])
             }
         }
 
@@ -128,7 +126,8 @@ class InfoFragment : Fragment() {
             null
         }
     }
-    private fun changeField(textView: TextView, title: String) {
+
+    private fun changeField(textView: TextView, title: String, saveValue: String) {
         val builder = AlertDialog.Builder(context)
 
         // Inflar el diseño personalizado
@@ -162,15 +161,14 @@ class InfoFragment : Fragment() {
                     editText.error = getString(R.string.Noblankallowed)
 
             }else {
-                val newValue = editText.text.toString()
-                textView.text = newValue
+                    textView.text = editText.text.toString()
                     sharedPreferences.edit().putString(
-                        title,
+                        saveValue,
                         textView.text.toString()
                     ).apply()
                 // Cerrar el AlertDialog
                 dialog.dismiss()
-            }
+                }
         }
 
         // Configurar el evento de clic para el botón personalizado de cancelar
@@ -182,7 +180,6 @@ class InfoFragment : Fragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
-
 
     private fun changeIconColor(img :ImageView){
         img.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
