@@ -109,6 +109,7 @@ class BarChartFragment : Fragment() {
             // Establecer adaptadores en los Spinners
             spCuenta.adapter= adapterCuenta
             selectedYear=Utils.getYear()
+            tvSelectYear.text=Utils.getYear().toString()
 
             // Establecer valores predeterminados
 
@@ -235,6 +236,8 @@ class BarChartFragment : Fragment() {
         val maxYear = 2100 //Año máximo según tus necesidades
         val yearsArray = (minYear..maxYear).toList().map { it.toString() }.toTypedArray()
         val currentYear=Utils.getYear()
+        year.wrapSelectorWheel=true
+
         year.minValue = minYear
         year.maxValue = maxYear
         year.value = currentYear

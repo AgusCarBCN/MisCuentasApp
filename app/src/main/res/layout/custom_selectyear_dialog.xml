@@ -26,8 +26,8 @@
 
         <NumberPicker
             android:id="@+id/yearpicker"
-            style="@style/InputFieldLarge"
-            android:layout_height="300dp"
+            style="@style/InputFieldLargeCenter"
+            android:layout_height="150dp"
             android:inputType="number"
             android:layout_marginTop="@dimen/padding10"
             android:autofillHints="name"
