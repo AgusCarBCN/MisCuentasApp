@@ -47,13 +47,16 @@ class Utils {
         ): Float {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
             var importeTotal = 0.0
-
             for (mov in importes) {
-                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
-                if (fechaImporteDate.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear()) == week
-                    && fechaImporteDate.year == year
-                ) {
-                    importeTotal += mov.importe
+                try {
+                    val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
+                    val weekNumber = fechaImporteDate.get(WeekFields.ISO.weekOfWeekBasedYear())
+                    if (weekNumber == week && fechaImporteDate.year == year) {
+                        importeTotal += mov.importe
+                    }
+                } catch (e: Exception) {
+                    // Manejar cualquier error al analizar la fecha
+                    e.printStackTrace()
                 }
             }
             return importeTotal.toFloat()

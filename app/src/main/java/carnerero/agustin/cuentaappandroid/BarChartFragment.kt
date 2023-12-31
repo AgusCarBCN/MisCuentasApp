@@ -232,7 +232,7 @@ class BarChartFragment : Fragment() {
         val title=dialogView.findViewById<TextView>(R.id.tv_dialogtitleeyear)
         val year=dialogView.findViewById<NumberPicker>(R.id.yearpicker)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmyear)
-        val minYear = 2010 //Año mínimo según tus necesidades
+        val minYear = 2000 //Año mínimo según tus necesidades
         val maxYear = 2100 //Año máximo según tus necesidades
         val yearsArray = (minYear..maxYear).toList().map { it.toString() }.toTypedArray()
         val currentYear=Utils.getYear()

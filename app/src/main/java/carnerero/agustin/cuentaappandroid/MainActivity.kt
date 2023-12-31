@@ -335,13 +335,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
         val startTime = Calendar.getInstance()
-        startTime.set(Calendar.HOUR_OF_DAY, 22) //
-        startTime.set(Calendar.MINUTE, 15)
         startTime.set(Calendar.SECOND, 0)
 
         when (intervalDay) {
             INTERVAL_DAYLY -> {
                 // Configurar la notificación para que se repita diariamente a la misma hora
+                startTime.set(Calendar.HOUR_OF_DAY, 22)
+                startTime.set(Calendar.MINUTE, 30)
                 val intervalMillis = AlarmManager.INTERVAL_DAY
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
@@ -352,9 +352,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             INTERVAL_WEEKLY -> {
                 // Configurar la notificación para que se repita cada semana a la misma hora (domingo)
+                startTime.set(Calendar.HOUR_OF_DAY, 22)
+                startTime.set(Calendar.MINUTE, 35)
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
-                // Verificar si el día actual es después del domingo, si es así, ajustar para la próxima semana
+                // Ajustar para la próxima semana si es después del domingo actual
                 val today = Calendar.getInstance()
                 if (today.after(startTime)) {
                     startTime.add(Calendar.WEEK_OF_YEAR, 1)
@@ -370,15 +372,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             INTERVAL_MONTHLY -> {
                 // Configurar la notificación para que se repita al final de cada mes
+                startTime.set(Calendar.HOUR_OF_DAY, 22)
+                startTime.set(Calendar.MINUTE, 40)
                 startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH))
 
-                // Verificar si el día actual es después del último día del mes, si es así, ajustar para el próximo mes
+                // Ajustar para el próximo mes si es después del último día del mes actual
                 val today = Calendar.getInstance()
                 if (today.after(startTime)) {
                     startTime.add(Calendar.MONTH, 1)
                 }
+                // Utiliza el último día del mes actual
+                val lastDayOfMonth = startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
+                startTime.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
 
-                val intervalMillis = AlarmManager.INTERVAL_DAY * startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
+                val intervalMillis = AlarmManager.INTERVAL_DAY * (lastDayOfMonth - startTime.get(Calendar.DAY_OF_MONTH) + 1)
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     startTime.timeInMillis,
@@ -388,6 +395,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
+
     private fun createChannel() {
         val channel = NotificationChannel(
             CHANEL_NOTIFICATION,
@@ -472,7 +480,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val ingresosMes= Utils.calcularImporteMes(month,year,ingresos).toDouble()
         val gastosMes= Utils.calcularImporteMes(month,year,gastos).toDouble()
-        val result=ingresosMes-gastosMes
+        val result=ingresosMes+gastosMes
         stringBuilder.append("${getString(R.string.monthicome)}: ${currencyFormat.format(ingresosMes)}\n")
         stringBuilder.append("${getString(R.string.monthbills)}: ${currencyFormat.format(gastosMes)}\n")
         stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
