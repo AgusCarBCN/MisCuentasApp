@@ -2,21 +2,17 @@ package carnerero.agustin.cuentaappandroid
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.SharedPreferences
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
-import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentConsultaBinding
@@ -59,9 +55,6 @@ class ConsultaFragment : Fragment() {
         val etDateFrom = binding.etDatefrom
         val etDateTo = binding.etDateto
         val select = binding.selectImporte
-        val ingresos = binding.rbIngresos
-        val gastos = binding.rbGastos
-        val ingresosygastos = binding.rbIngresosygastos
         val tvCuenta = binding.tvcuentasearch
         val buscar = binding.btnBuscar
         val cancel = binding.btnCancelabuscar
@@ -71,7 +64,7 @@ class ConsultaFragment : Fragment() {
 
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]=cuentas.get(i).iban
+            arrayCuentas[i]= cuentas[i].iban
 
         }
 
@@ -266,7 +259,7 @@ class ConsultaFragment : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
         confirmButton.setOnClickListener {
-            var tvAccount = binding.tvcuentasearch
+            val tvAccount = binding.tvcuentasearch
             tvAccount.text = arrayCuentas[account.value]
             dialog.dismiss()
             selectedAccount=arrayCuentas[account.value]

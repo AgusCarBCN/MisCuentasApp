@@ -13,7 +13,6 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -85,7 +84,7 @@ class BarChartFragment : Fragment() {
                 }
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]=cuentas.get(i).iban
+            arrayCuentas[i]= cuentas[i].iban
 
         }
 
@@ -213,7 +212,7 @@ class BarChartFragment : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
         confirmButton.setOnClickListener {
-            var tvYear=binding.tvyear
+            val tvYear=binding.tvyear
             tvYear.text=year.value.toString()
             dialog.dismiss()
             selectedYear=year.value

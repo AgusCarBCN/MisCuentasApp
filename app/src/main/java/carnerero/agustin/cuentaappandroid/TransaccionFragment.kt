@@ -1,19 +1,15 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
@@ -56,12 +52,12 @@ class TransaccionFragment : Fragment() {
 
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]=cuentas.get(i).iban
+            arrayCuentas[i]= cuentas[i].iban
         }
         selectedAccountFrom=arrayCuentas[0]
-        if(arrayCuentas.size>1){
-            selectedAccountTo=arrayCuentas[1]
-        }else selectedAccountTo=arrayCuentas[0]
+        selectedAccountTo = if(arrayCuentas.size>1){
+            arrayCuentas[1]
+        }else arrayCuentas[0]
 
         tvAccountFrom.setOnClickListener {
             showSelectAccountDialog(tvAccountFrom,true)

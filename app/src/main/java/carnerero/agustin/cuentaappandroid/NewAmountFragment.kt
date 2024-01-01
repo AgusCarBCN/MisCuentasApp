@@ -3,19 +3,16 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
@@ -64,7 +61,7 @@ class NewAmountFragment : Fragment() {
 
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]=cuentas.get(i).iban
+            arrayCuentas[i]= cuentas[i].iban
         }
 
 
@@ -190,7 +187,7 @@ class NewAmountFragment : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
         confirmButton.setOnClickListener {
-            var tvAccount = binding.tvcuentanewamount
+            val tvAccount = binding.tvcuentanewamount
             tvAccount.text = arrayCuentas[account.value]
             dialog.dismiss()
             selectedAccount=arrayCuentas[account.value]
