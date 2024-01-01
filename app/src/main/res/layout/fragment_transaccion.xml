@@ -56,7 +56,7 @@
         <TextView
             android:id="@+id/tvcuentadestino"
             style="@style/InputFieldLargeCenter"
-            android:hint="@string/"
+            android:hint="@string/currencyTo"
             android:background="@drawable/style_editetx"
             android:textAlignment="center"
             android:textSize="@dimen/extracommon" />
