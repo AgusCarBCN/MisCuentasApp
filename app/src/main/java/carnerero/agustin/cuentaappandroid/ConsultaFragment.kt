@@ -74,8 +74,7 @@ class ConsultaFragment : Fragment() {
             arrayCuentas[i]=cuentas.get(i).iban
 
         }
-        selectedAccount=arrayCuentas[0]
-        tvCuenta.text=selectedAccount
+
 
         tvCuenta.setOnClickListener {
             showSelectAccountDialog()

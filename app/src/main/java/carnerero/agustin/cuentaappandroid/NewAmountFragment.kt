@@ -66,8 +66,7 @@ class NewAmountFragment : Fragment() {
         for (i in 0 until cuentas.size) {
             arrayCuentas[i]=cuentas.get(i).iban
         }
-        selectedAccount=arrayCuentas[0]
-        tvCuenta.text=selectedAccount
+
 
         tvCuenta.setOnClickListener {
             showSelectAccountDialog()

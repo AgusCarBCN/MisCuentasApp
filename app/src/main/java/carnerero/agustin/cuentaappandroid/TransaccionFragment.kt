@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -20,21 +24,18 @@ import java.util.Date
 class TransaccionFragment : Fragment() {
 
     // Variables para almacenar el valor de los elementos seleccionados en los spinners
-    private var selectedItemOrigen: String? = null
-    private var selectedItemDestino: String? = null
+    private var selectedAccountFrom: String? = null
+    private var selectedAccountTo: String? = null
 
     // Instancia de la base de datos y DAOs necesarios
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val cuentaDao = CuentaDao(admin)
     private val movimientoBancarioDAO = MovimientoBancarioDAO(admin)
-
+    private val cuentas = cuentaDao.listarTodasLasCuentas()
+    private val arrayCuentas = Array(cuentas.size) { "" }
     // View Binding para acceder a los componentes de la interfaz de usuario
     private var _binding: FragmentTransaccionBinding? = null
     private val binding get() = _binding!!
-
-    // SharedPreferences para almacenar y recuperar datos de forma sencilla
-    private lateinit var sharedPreferences: SharedPreferences
-
 
 
     // Método llamado para crear la vista del fragmento
@@ -48,74 +49,26 @@ class TransaccionFragment : Fragment() {
 
         // Obtener todos los componentes del fragmento
         val importe = binding.etImportetrans
-        val cuentaOrigen = binding.spCuentaorigen
-        val cuentaDestino = binding.spCuentadestino
+        val tvAccountFrom = binding.tvcuentaorigen
+        val tvAccountTo = binding.tvcuentadestino
         val aceptar = binding.btnAceptar
         val salir = binding.btnSalir
 
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-
-        // Crear un adaptador de cadena (String) para llenar los Spinners
-        val adapter =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-
-        // Obtener las cuentas del usuario logeado con el DNI
-        val cuentas = cuentaDao.listarTodasLasCuentas()
-        // Verificar si la lista de cuentas es nula o vacía
-        if (cuentas.isEmpty()) {
-            Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
-            return binding.root
-        //Verifico si solo hay una cuenta
+        //Llenar arrayCuentas
+        for (i in 0 until cuentas.size) {
+            arrayCuentas[i]=cuentas.get(i).iban
         }
-        if(cuentas.size==1){
-            Toast.makeText(requireContext(), getString(R.string.oneaccount), Toast.LENGTH_SHORT).show()
-            return binding.root
+        selectedAccountFrom=arrayCuentas[0]
+        if(arrayCuentas.size>1){
+            selectedAccountTo=arrayCuentas[1]
+        }else selectedAccountTo=arrayCuentas[0]
+
+        tvAccountFrom.setOnClickListener {
+            showSelectAccountDialog(tvAccountFrom,true)
         }
 
-        // Llenar los dos Spinners con las cuentas disponibles
-        with(adapter) {
-            cuentas.forEach { cuenta ->
-                add(cuenta.iban)
-            }
-        }
-        cuentaOrigen.adapter = adapter
-        cuentaDestino.adapter = adapter
-
-        // Seleccionar por defecto la cuenta principal en el Spinner de cuenta origen y la secundaria en cuenta destino
-        cuentaOrigen.setSelection(0)
-        cuentaDestino.setSelection(1)
-
-        // Configurar el manejo de eventos al seleccionar elementos en los Spinners
-        cuentaOrigen.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedItemOrigen = adapter.getItem(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso cuando no se selecciona nada
-            }
-        }
-
-        cuentaDestino.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedItemDestino = adapter.getItem(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso cuando no se selecciona nada
-            }
+        tvAccountTo.setOnClickListener {
+            showSelectAccountDialog(tvAccountTo,false)
         }
 
         // Configurar el evento de clic para el botón "Aceptar"
@@ -133,7 +86,7 @@ class TransaccionFragment : Fragment() {
                     getString(R.string.msgemptyfield),
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (selectedItemDestino == selectedItemOrigen) {
+            } else if (selectedAccountTo == selectedAccountFrom) {
                 // Verificar si las cuentas de origen y destino son las mismas
                 Toast.makeText(
                     requireContext(),
@@ -154,20 +107,20 @@ class TransaccionFragment : Fragment() {
                 val importePositivo = importeText.toDouble()
 
                 // Actualizar saldos de cuentas
-                cuentaDao.actualizarSaldo(importeNegativo, selectedItemOrigen.toString())
-                cuentaDao.actualizarSaldo(importePositivo, selectedItemDestino.toString())
+                cuentaDao.actualizarSaldo(importeNegativo, selectedAccountFrom.toString())
+                cuentaDao.actualizarSaldo(importePositivo, selectedAccountTo.toString())
 
                 // Registrar la transacción en el historial de movimientos
                 val movimientoBancarioOrigen = MovimientoBancario(
                     importeNegativo,
                     "Transacción realizada",
-                    selectedItemOrigen.toString(),
+                    selectedAccountFrom.toString(),
                     fechaImporte
                 )
                 val movimientoBancarioDestino = MovimientoBancario(
                     importePositivo,
                     "Transacción recibida",
-                    selectedItemDestino.toString(),
+                    selectedAccountTo.toString(),
                     fechaImporte
                 )
                 movimientoBancarioDAO.nuevoImporte(movimientoBancarioOrigen)
@@ -197,6 +150,37 @@ class TransaccionFragment : Fragment() {
         _binding = null // Importante para evitar fugas de memoria
     }
 
-    // Método companion utilizado para crear una nueva instancia del fragmento
+    private fun showSelectAccountDialog(cuenta:TextView,cuentaOrigin:Boolean){
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_selectaccount_dialog, null)
+        val title = dialogView.findViewById<TextView>(R.id.tv_dialogtitleaccount)
+        val account = dialogView.findViewById<NumberPicker>(R.id.accountpicker)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmaccount)
+        val currentAccount=arrayCuentas[0]
+        account.wrapSelectorWheel=true
+        account.minValue = 0
+        account.maxValue = arrayCuentas.size - 1
+        account.value=arrayCuentas.indexOf(currentAccount)
+        account.displayedValues=arrayCuentas
+        title.text = getString(R.string.select_account)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        confirmButton.setOnClickListener {
+
+            cuenta.text = arrayCuentas[account.value]
+            dialog.dismiss()
+            if(cuentaOrigin){
+                selectedAccountTo=arrayCuentas[account.value]
+            }else{
+                selectedAccountFrom=arrayCuentas[account.value]
+            }
+
+        }
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+
+    }
 
 }

@@ -34,13 +34,13 @@
             android:textSize="@dimen/common"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/sp_cuentaorigen"
+        <TextView
+            android:id="@+id/tvcuentaorigen"
             style="@style/InputFieldLargeCenter"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:hint="@string/select_account"
+            android:background="@drawable/style_editetx"
             android:textAlignment="center"
-            android:theme="@style/CustomSpinner" />
+            android:textSize="@dimen/extracommon" />
 
         <TextView
             android:id="@+id/tv_cuentas3"
@@ -53,13 +53,13 @@
             android:textSize="@dimen/common"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/sp_cuentadestino"
+        <TextView
+            android:id="@+id/tvcuentadestino"
             style="@style/InputFieldLargeCenter"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:hint="@string/select_account"
+            android:background="@drawable/style_editetx"
             android:textAlignment="center"
-            android:theme="@style/CustomSpinner" />
+            android:textSize="@dimen/extracommon" />
 
 
         <LinearLayout
