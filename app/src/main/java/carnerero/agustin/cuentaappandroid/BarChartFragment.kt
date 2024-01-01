@@ -97,7 +97,8 @@ class BarChartFragment : Fragment() {
 
 
     tvSelectCuenta.setOnClickListener {
-        showSelectAccountDialog()
+       showSelectAccountDialog()
+
     }
 
     tvSelectYear.setOnClickListener {
@@ -223,8 +224,9 @@ class BarChartFragment : Fragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
+
     }
-    private fun showSelectAccountDialog() {
+    private fun showSelectAccountDialog(){
         val builder = AlertDialog.Builder(context)
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.custom_selectaccount_dialog, null)
@@ -233,12 +235,10 @@ class BarChartFragment : Fragment() {
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmaccount)
         val currentAccount=arrayCuentas[0]
         account.wrapSelectorWheel=true
-
         account.minValue = 0
         account.maxValue = arrayCuentas.size - 1
         account.value=arrayCuentas.indexOf(currentAccount)
         account.displayedValues=arrayCuentas
-
         title.text = getString(R.string.select_account)
         builder.setView(dialogView)
         val dialog = builder.create()
@@ -246,15 +246,12 @@ class BarChartFragment : Fragment() {
             val tvAccount = binding.tvaccount
             tvAccount.text = arrayCuentas[account.value]
             dialog.dismiss()
-            selectedAccount = arrayCuentas[account.value]
-            updateChart(selectedAccount.toString(), selectedYear!!)
-        }
-
-
-
+            selectedAccount=arrayCuentas[account.value]
+            updateChart(selectedAccount.toString(), selectedYear!!)       }
         // Configurar el fondo transparente
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+
     }
 
 
