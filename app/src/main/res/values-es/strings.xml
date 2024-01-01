@@ -227,6 +227,8 @@
     <string name="des5">\t\t\tPersonaliza misCuentasApp según tus preferencias.
         Visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
         </string>
+    <string name="selectaccountfrom">selecciona cuenta de origen</string>
+    <tring name="selectaccountto">seleccina cuenta de destino</tring>
     <string name="basecurrency">currency</string>
     <string name="userlogin">userlogin</string>
     <string name="userdni">userdni</string>

@@ -37,7 +37,7 @@
         <TextView
             android:id="@+id/tvcuentaorigen"
             style="@style/InputFieldLargeCenter"
-            android:hint="@string/select_account"
+            android:hint="@string/selectaccountfrom"
             android:background="@drawable/style_editetx"
             android:textAlignment="center"
             android:textSize="@dimen/extracommon" />
@@ -56,7 +56,7 @@
         <TextView
             android:id="@+id/tvcuentadestino"
             style="@style/InputFieldLargeCenter"
-            android:hint="@string/select_account"
+            android:hint="@string/selectaccountto"
             android:background="@drawable/style_editetx"
             android:textAlignment="center"
             android:textSize="@dimen/extracommon" />

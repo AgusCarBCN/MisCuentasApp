@@ -227,6 +227,8 @@
     <string name="chooseimage">Choose your profile photo (optional)</string>
     <string name="infocreateaccounts">You can create your accounts now or later. </string>
     <string name="accountname">Account name </string>
+    <string name="selectaccountfrom">select source account</string>
+    <string name="selectaccountto">select destination account</string>
     <!--String sharepreferences -->
     <string name="userdni">userdni</string>
     <string name="userlogin">userlogin</string>
