@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -26,12 +30,14 @@ class NewAmountFragment : Fragment() {
     // Variable para manejar el View Binding
     private var _binding: FragmentNewAmountBinding? = null
     private val binding get() = _binding!!
-
     // Instancias necesarias para acceder a la base de datos y realizar operaciones
     private val admin = DataBaseAppSingleton.getInstance(context)
     private val movDao = MovimientoBancarioDAO(admin)
-    private lateinit var selectedItem: String
-    private lateinit var sharedPreferences: SharedPreferences
+    private val cuentaDao = CuentaDao(admin)
+    private val cuentas = cuentaDao.listarTodasLasCuentas()
+    private val arrayCuentas = Array(cuentas.size) { "" }
+    private lateinit var selectedAccount: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,54 +55,30 @@ class NewAmountFragment : Fragment() {
         _binding = FragmentNewAmountBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Recuperar el DNI del usuario que inició sesión
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
         // Acceso a los componentes de la interfaz
-        val spinnerCuentas = binding.spCuentas
+        val tvCuenta = binding.tvcuentanewamount
         val nuevoIngreso = binding.btnNuevoingreso
         val nuevoGasto = binding.btnNuevogasto
         val descripcion = binding.etDescripcion
         val importe = binding.etImporte
 
-        // Creación del adapter para el spinner
-        val adapter =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val cuentaDao = CuentaDao(admin)
-        val cuentas =cuentaDao.listarTodasLasCuentas()
-
-
-        // Configuración del adapter y del spinner
-        with(adapter) {
-            add(getString(R.string.select_account))
-            cuentas.forEach { cuenta ->
-                add(cuenta.iban)
-            }
+        //Llenar arrayCuentas
+        for (i in 0 until cuentas.size) {
+            arrayCuentas[i]=cuentas.get(i).iban
         }
-        spinnerCuentas.adapter = adapter
+        selectedAccount=arrayCuentas[0]
+        tvCuenta.text=selectedAccount
 
-        // Listener para el spinner que guarda la cuenta seleccionada
-        spinnerCuentas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedItem = adapter.getItem(position).toString()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Acciones a realizar cuando no se selecciona nada
-            }
+        tvCuenta.setOnClickListener {
+            showSelectAccountDialog()
         }
+
 
         // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso
         nuevoIngreso.setOnClickListener {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
-            if (selectedItem == getString(R.string.select_account)) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.alertnewamount),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
+            if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgemptiesfield),
@@ -107,18 +89,18 @@ class NewAmountFragment : Fragment() {
                 val movimientoBancario = MovimientoBancario(
                     importe.text.toString().trim().toDouble(),
                     descripcion.text.toString(),
-                    selectedItem,
+                    selectedAccount,
                     fechaImporte
                 )
                 movDao.nuevoImporte(movimientoBancario)
                 Toast.makeText(
                     requireContext(),
-                    "${getString(R.string.msgincome)}: $selectedItem",
+                    "${getString(R.string.msgincome)}: $selectedAccount",
                     Toast.LENGTH_SHORT
                 ).show()
                 cuentaDao.actualizarSaldo(
                     importe.text.toString().trim().toDouble(),
-                    selectedItem
+                    selectedAccount
                 )
                 importe.text.clear()
                 descripcion.text.clear()
@@ -131,20 +113,14 @@ class NewAmountFragment : Fragment() {
         nuevoGasto.setOnClickListener {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
-            if (selectedItem == getString(R.string.select_account)) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.alertnewamount),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
+            if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgemptiesfield),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val cuenta=searchAccount(cuentas,selectedItem)
+                val cuenta=searchAccount(cuentas,selectedAccount)
                 val saldo= cuenta?.saldo
                 val importeText = importe.text.toString()
                 val importeNumerico = if (importeText.isNotEmpty()) -importeText.toDouble() else 0.0
@@ -159,16 +135,16 @@ class NewAmountFragment : Fragment() {
                     val movimientoBancario = MovimientoBancario(
                         importeNumerico,
                         descripcion.text.toString(),
-                        selectedItem,
+                        selectedAccount,
                         fechaImporte
                     )
                     movDao.nuevoImporte(movimientoBancario)
                     Toast.makeText(
                         requireContext(),
-                        "${getString(R.string.msgbill)}: $selectedItem",
+                        "${getString(R.string.msgbill)}: $selectedAccount",
                         Toast.LENGTH_SHORT
                     ).show()
-                    cuentaDao.actualizarSaldo(importeNumerico, selectedItem)
+                    cuentaDao.actualizarSaldo(importeNumerico, selectedAccount)
                     importe.text.clear()
                     descripcion.text.clear()
                     // Actualizar el fragmento de saldo en la actividad principal
@@ -198,5 +174,31 @@ class NewAmountFragment : Fragment() {
         return null
     }
 
+    private fun showSelectAccountDialog(){
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_selectaccount_dialog, null)
+        val title = dialogView.findViewById<TextView>(R.id.tv_dialogtitleaccount)
+        val account = dialogView.findViewById<NumberPicker>(R.id.accountpicker)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmaccount)
+        val currentAccount=arrayCuentas[0]
+        account.wrapSelectorWheel=true
+        account.minValue = 0
+        account.maxValue = arrayCuentas.size - 1
+        account.value=arrayCuentas.indexOf(currentAccount)
+        account.displayedValues=arrayCuentas
+        title.text = getString(R.string.select_account)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        confirmButton.setOnClickListener {
+            var tvAccount = binding.tvcuentanewamount
+            tvAccount.text = arrayCuentas[account.value]
+            dialog.dismiss()
+            selectedAccount=arrayCuentas[account.value]
+        }
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
 
+    }
 }

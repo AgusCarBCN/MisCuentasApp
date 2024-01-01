@@ -29,12 +29,13 @@
             android:inputType="numberDecimal"
             />
 
-        <Spinner
-            android:id="@+id/sp_cuentas"
+        <TextView
+            android:id="@+id/tvcuentanewamount"
             style="@style/InputFieldLargeCenter"
-            android:gravity="center"
+            android:hint="@string/select_account"
+            android:background="@drawable/style_editetx"
             android:textAlignment="center"
-            android:theme="@style/CustomSpinner" />
+            android:textSize="@dimen/extracommon" />
 
         <LinearLayout
             android:layout_width="match_parent"
