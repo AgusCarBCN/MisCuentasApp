@@ -152,7 +152,7 @@ class Utils {
         fun getWeek():Int
         {
             val calendar=Calendar.getInstance()
-            return calendar.get(Calendar.WEEK_OF_YEAR)+1
+            return calendar.get(Calendar.WEEK_OF_YEAR)
         }
         fun getYear():Int{
             val calendar=Calendar.getInstance()
