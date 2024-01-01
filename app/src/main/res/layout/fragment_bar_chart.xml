@@ -36,27 +36,28 @@
                 android:textAlignment="center">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tv_dialogtitleaccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="35dp"
+                    android:gravity="center"
                     android:text="@string/select_account"
-                    android:textColor="?android:textColor"
                     android:textSize="@dimen/common"
                     android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/sp_cuenta"
+
+                <TextView
+                    android:id="@+id/tvaccount"
                     android:layout_width="150dp"
                     android:layout_height="@dimen/box"
-                    android:layout_marginEnd="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/style_editetx"
-                    android:theme="@style/CustomSpinner" />
+                    android:textAlignment="center"
+                    android:textSize="@dimen/extracommon" />
+
+
+
             </LinearLayout>
 
             <LinearLayout

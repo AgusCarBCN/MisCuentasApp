@@ -3,22 +3,18 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
@@ -30,10 +26,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import kotlinx.coroutines.launch
-import java.util.Calendar
 import kotlin.math.abs
-import kotlin.properties.Delegates
 
 
 class BarChartFragment : Fragment() {
@@ -41,10 +34,12 @@ class BarChartFragment : Fragment() {
     // Variables para parámetros, base de datos, valores seleccionados y componentes del gráfico
 
     private val admin = DataBaseAppSingleton.getInstance(context)
-    private var selectedIban: String? = null
+    private var selectedAccount: String? = null
     private var selectedYear:Int?=null
     private var rate:Double=1.0
     private val cuentaDao = CuentaDao(admin)
+    private val cuentas = cuentaDao.listarTodasLasCuentas()
+    private val arrayCuentas = Array(cuentas.size) { "" }
     private val movDao = MovimientoBancarioDAO(admin)
     private lateinit var ingresosTotales: ArrayList<Float>
     private lateinit var gastosTotales: ArrayList<Float>
@@ -76,10 +71,9 @@ class BarChartFragment : Fragment() {
     ): View {
         // Inflar el diseño para este fragmento
         _binding = FragmentBarChartBinding.inflate(inflater, container, false)
-
         // Inicializar el gráfico y los Spinners
         barChart = binding.barChart
-        val spCuenta = binding.spCuenta
+        val tvSelectCuenta= binding.tvaccount
         val tvSelectYear=binding.tvyear
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         rate=sharedPreferences.getString(getString(R.string.conversion_rate), "1.0").toString().toDouble()
@@ -89,50 +83,22 @@ class BarChartFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.noaccounts), Toast.LENGTH_SHORT).show()
                     return binding.root
                 }
-            val years = arrayOf("2023", "2024", "2025", "2026", "2027")
+        //Llenar arrayCuentas
+        for (i in 0 until cuentas.size) {
+            arrayCuentas[i]=cuentas.get(i).iban
 
-            // Crear adaptadores
-            val adapterCuenta = ArrayAdapter<String>(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item
-            )
+        }
 
-            // Configuración del adapter y del spinner
-            with(adapterCuenta) {
-                cuentas.forEach { cuenta ->
-                    add(cuenta.iban)
-                }
-            }
-
-
-
-            // Establecer adaptadores en los Spinners
-            spCuenta.adapter= adapterCuenta
+            selectedAccount=arrayCuentas[0]
             selectedYear=Utils.getYear()
+            updateChart(selectedAccount.toString(), selectedYear!!)
+            tvSelectCuenta.text=arrayCuentas[0]
             tvSelectYear.text=Utils.getYear().toString()
 
-            // Establecer valores predeterminados
 
-            selectedIban = cuentas[0].iban
-
-            // Escuchadores de los Spinners para la selección de elementos
-            spCuenta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    barChart.clear()
-                    selectedIban = adapterCuenta.getItem(position)
-
-                    /*se ejecutará en un hilo diferente al hilo principal, evitando bloquear la interfaz de usuario mientras se realiza la operación.*/
-                    lifecycleScope.launch {
-                        updateChart(selectedIban.toString(), selectedYear!!)
-                    }
-                }
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
+    tvSelectCuenta.setOnClickListener {
+        showSelectAccountDialog()
+    }
 
     tvSelectYear.setOnClickListener {
        showSelectYearDialog()
@@ -250,7 +216,7 @@ class BarChartFragment : Fragment() {
             tvYear.text=year.value.toString()
             dialog.dismiss()
             selectedYear=year.value
-            updateChart(selectedIban.toString(), selectedYear!!)
+            updateChart(selectedAccount.toString(), selectedYear!!)
         }
 
         // Configurar el fondo transparente
@@ -258,6 +224,40 @@ class BarChartFragment : Fragment() {
         dialog.show()
 
     }
+    private fun showSelectAccountDialog() {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_selectaccount_dialog, null)
+        val title = dialogView.findViewById<TextView>(R.id.tv_dialogtitleaccount)
+        val account = dialogView.findViewById<NumberPicker>(R.id.accountpicker)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmaccount)
+        val currentAccount=arrayCuentas[0]
+        account.wrapSelectorWheel=true
+
+        account.minValue = 0
+        account.maxValue = arrayCuentas.size - 1
+        account.value=arrayCuentas.indexOf(currentAccount)
+        account.displayedValues=arrayCuentas
+
+        title.text = getString(R.string.select_account)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        confirmButton.setOnClickListener {
+            val tvAccount = binding.tvaccount
+            tvAccount.text = arrayCuentas[account.value]
+            dialog.dismiss()
+            selectedAccount = arrayCuentas[account.value]
+            updateChart(selectedAccount.toString(), selectedYear!!)
+        }
+
+
+
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+
 
     // Actualizar el gráfico con nuevos datos
     private fun updateChart(iban: String, year: Int) {

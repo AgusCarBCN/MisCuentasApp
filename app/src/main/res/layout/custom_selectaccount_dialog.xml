@@ -14,7 +14,7 @@
         >
 
         <TextView
-            android:id="@+id/tv_dialogtitleeyear"
+            android:id="@+id/tv_dialogtitleaccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding10"
@@ -22,10 +22,10 @@
             android:gravity="center"
             android:textSize="@dimen/large"
             android:textStyle="bold"
-            android:text="@string/select_year"/>
+            android:text="@string/select_account"/>
 
         <NumberPicker
-            android:id="@+id/yearpicker"
+            android:id="@+id/accountpicker"
             android:layout_height="150dp"
             android:layout_width="wrap_content"
             style="@style/LargeNumberPicker"
@@ -33,12 +33,11 @@
             android:layout_marginTop="@dimen/padding10"
             android:autofillHints="name"
             android:textSize="18sp"
-            android:backgroundTint="@color/darkOrange"
-            android:hint="@string/select_year"
+            android:hint="@string/select_account"
             android:layout_marginBottom="20dp"
             />
         <Button
-            android:id="@+id/btn_confirmyear"
+            android:id="@+id/btn_confirmaccount"
             style="@style/ButtonLarge"
             android:gravity="center"
             android:layout_marginBottom="10dp"
