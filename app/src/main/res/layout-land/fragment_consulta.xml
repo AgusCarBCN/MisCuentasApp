@@ -166,13 +166,13 @@
                     android:inputType="numberDecimal" />
             </LinearLayout>
 
-            <Spinner
-                android:id="@+id/sp_consulta"
+            <TextView
+                android:id="@+id/tvcuentasearch"
                 style="@style/InputFieldLargeCenter"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:theme="@style/CustomSpinner" />
+                android:hint="@string/select_account"
+                android:background="@drawable/style_editetx"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
 
         </LinearLayout>
 

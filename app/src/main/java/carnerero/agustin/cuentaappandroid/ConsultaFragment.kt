@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.SharedPreferences
 import android.icu.util.Calendar
@@ -10,7 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
+import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
@@ -28,11 +32,13 @@ class ConsultaFragment : Fragment() {
     private var _binding: FragmentConsultaBinding? = null
     private val binding get() = _binding!!
     private val admin = DataBaseAppSingleton.getInstance(context)
-    private var selectedItem: String? = null
+    private var selectedAccount: String? = null
     private var result = 0.0
     private val movDao = MovimientoBancarioDAO(admin)
+    private val cuentaDao = CuentaDao(admin)
     private var movList: ArrayList<MovimientoBancario> = movDao.getAll()
-    private lateinit var sharedPreferences: SharedPreferences
+    private val cuentas = cuentaDao.listarTodasLasCuentas()
+    private val arrayCuentas = Array(cuentas.size) { "" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,33 +62,26 @@ class ConsultaFragment : Fragment() {
         val ingresos = binding.rbIngresos
         val gastos = binding.rbGastos
         val ingresosygastos = binding.rbIngresosygastos
-        val spConsulta = binding.spConsulta
+        val tvCuenta = binding.tvcuentasearch
         val buscar = binding.btnBuscar
         val cancel = binding.btnCancelabuscar
         val searchByText: EditText = binding.etSearch
         val importeDesde=binding.etImportedesde
         val importeHasta=binding.etImportehasta
 
-        // Recuperar DNI del usuario que inició sesión
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        //Llenar arrayCuentas
+        for (i in 0 until cuentas.size) {
+            arrayCuentas[i]=cuentas.get(i).iban
 
-
-        // Rellenar el spinner spConsulta
-        val adapter =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
-        val cuentaDao = CuentaDao(admin)
-        val cuentas=cuentaDao.listarTodasLasCuentas()
-        // Configuración del adapter y del spinner
-        with(adapter) {
-            add(getString(R.string.select_account))
-            cuentas.forEach { cuenta ->
-                add(cuenta.iban)
-            }
         }
-        selectedItem = adapter.getItem(0)
-        spConsulta.adapter = adapter
+        selectedAccount=arrayCuentas[0]
+        tvCuenta.text=selectedAccount
 
-        // Mostrar DatePickerDialog al hacer clic en el EditText
+        tvCuenta.setOnClickListener {
+            showSelectAccountDialog()
+        }
+
+            // Mostrar DatePickerDialog al hacer clic en el EditText
         etDateFrom.setOnClickListener {
             showDatePickerDialog(etDateFrom)
         }
@@ -90,48 +89,21 @@ class ConsultaFragment : Fragment() {
             showDatePickerDialog(etDateTo)
         }
 
-        // Listener del spinner
-        spConsulta.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedItem = adapter.getItem(position)
-                if (position == 0) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.select_account),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    ingresos.isEnabled = false
-                    gastos.isEnabled = false
-                    ingresosygastos.isEnabled = false
-                } else {
-                    ingresos.isEnabled = true
-                    gastos.isEnabled = true
-                    ingresosygastos.isEnabled = true
-                    Toast.makeText(
-                        requireContext(),
-                        "Elemento seleccionado: $selectedItem",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
 
         // Función para actualizar la lista de movimientos
         fun updateMovList() {
             when (select.checkedRadioButtonId) {
                 R.id.rb_ingresos -> movList.retainAll(
-                    movDao.getIncome(selectedItem.toString()).toSet()
+                    movDao.getIncome(selectedAccount.toString()).toSet()
                 )
 
                 R.id.rb_gastos -> movList.retainAll(
-                    movDao.getBills(selectedItem.toString()).toSet()
+                    movDao.getBills(selectedAccount.toString()).toSet()
                 )
 
                 R.id.rb_ingresosygastos -> movList.retainAll(
-                    movDao.getIncomeandBills(selectedItem.toString())
+                    movDao.getIncomeandBills(selectedAccount.toString())
                         .toSet()
                 )
             }
@@ -156,7 +128,7 @@ class ConsultaFragment : Fragment() {
 
 
 
-            if (selectedItem.toString() == getString(R.string.select_account)) {
+            if (selectedAccount.toString() == getString(R.string.select_account)) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.select_account),
@@ -277,4 +249,33 @@ class ConsultaFragment : Fragment() {
         }
         return result
     }
+
+    private fun showSelectAccountDialog(){
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val dialogView = inflater.inflate(R.layout.custom_selectaccount_dialog, null)
+        val title = dialogView.findViewById<TextView>(R.id.tv_dialogtitleaccount)
+        val account = dialogView.findViewById<NumberPicker>(R.id.accountpicker)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirmaccount)
+        val currentAccount=arrayCuentas[0]
+        account.wrapSelectorWheel=true
+        account.minValue = 0
+        account.maxValue = arrayCuentas.size - 1
+        account.value=arrayCuentas.indexOf(currentAccount)
+        account.displayedValues=arrayCuentas
+        title.text = getString(R.string.select_account)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        confirmButton.setOnClickListener {
+            var tvAccount = binding.tvcuentasearch
+            tvAccount.text = arrayCuentas[account.value]
+            dialog.dismiss()
+            selectedAccount=arrayCuentas[account.value]
+                }
+        // Configurar el fondo transparente
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+
+    }
+
 }

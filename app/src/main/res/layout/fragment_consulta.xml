@@ -175,12 +175,13 @@
             android:layout_weight="1.5"
             android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/sp_consulta"
+            <TextView
+                android:id="@+id/tvcuentasearch"
                 style="@style/InputFieldLargeCenter"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:theme="@style/CustomSpinner" />
+                android:hint="@string/select_account"
+                android:textSize="@dimen/extracommon"
+                android:textAlignment="center"
+                android:background="@drawable/style_editetx" />
         </LinearLayout>
 
         <LinearLayout

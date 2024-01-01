@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.utils
 
 
 
+
 import android.content.Context
 import android.net.Uri
 import androidx.appcompat.app.AppCompatDelegate
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Calendar
 import java.util.Locale
+
 
 class Utils {
 
@@ -174,6 +176,7 @@ class Utils {
                 null
             }
         }
+
 
         private fun result(number1: Double, number2: Double, operator: String): Double {
 
