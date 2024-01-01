@@ -341,7 +341,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             INTERVAL_DAYLY -> {
                 // Configurar la notificación para que se repita diariamente a la misma hora
                 startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 30)
+                startTime.set(Calendar.MINUTE, 15)
                 val intervalMillis = AlarmManager.INTERVAL_DAY
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
@@ -353,7 +353,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             INTERVAL_WEEKLY -> {
                 // Configurar la notificación para que se repita cada semana a la misma hora (domingo)
                 startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 35)
+                startTime.set(Calendar.MINUTE, 20)
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
                 // Ajustar para la próxima semana si es después del domingo actual
@@ -373,7 +373,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             INTERVAL_MONTHLY -> {
                 // Configurar la notificación para que se repita al final de cada mes
                 startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 40)
+                startTime.set(Calendar.MINUTE, 25)
                 startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH))
 
                 // Ajustar para el próximo mes si es después del último día del mes actual
@@ -457,7 +457,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val ingresosSemana= Utils.calcularImporteSemanal(week,year,ingresos).toDouble()
         val gastosSemana= Utils.calcularImporteSemanal(week,year,gastos).toDouble()
-        val result=ingresosSemana-gastosSemana
+        val result=ingresosSemana+gastosSemana
         stringBuilder.append("${getString(R.string.weekicome)}: ${currencyFormat.format(ingresosSemana)}\n")
         stringBuilder.append("${getString(R.string.weekbills)}: ${currencyFormat.format(gastosSemana)}\n")
         stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
