@@ -220,6 +220,20 @@
         "Nuevo importe" en el menú para realizar anotaciones, y realiza transacciones fácilmente a través
         de la opción "Transacción". </string>
     <string name="des3"> \t\t\tConsulta tu progreso mediante las opciones de "Gráficos" y "Consulta" para obtener una visión integral.</string>
+
+    <string name="january">Enero</string>
+    <string name="february">Febrero</string>
+    <string name="march">Marzo</string>
+    <string name="april">Abril</string>
+    <string name="may">Mayo</string>
+    <string name="june">Junio</string>
+    <string name="july">Julio</string>
+    <string name="august">Agosto</string>
+    <string name="september">Septiembre</string>
+    <string name="october">Octubre</string>
+    <string name="november">Noviembre</string>
+    <string name="december">Diciembre</string>
+
     <!--sharepreferences de usuario-->
     <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
         mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará

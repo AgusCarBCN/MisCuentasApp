@@ -49,10 +49,21 @@ class BarChartFragment : Fragment() {
     private lateinit var barDataSetResultados: BarDataSet
     private lateinit var barEntriesList: ArrayList<BarEntry>
     private lateinit var sharedPreferences: SharedPreferences
-    private val months = arrayOf(
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    )
+    private val months: Array<String>
+        get() = arrayOf(
+            getString(R.string.january),
+            getString(R.string.february),
+            getString(R.string.march),
+            getString(R.string.april),
+            getString(R.string.may),
+            getString(R.string.june),
+            getString(R.string.july),
+            getString(R.string.august),
+            getString(R.string.september),
+            getString(R.string.october),
+            getString(R.string.november),
+            getString(R.string.december)
+        )
 
     // View binding
     private var _binding: FragmentBarChartBinding? = null

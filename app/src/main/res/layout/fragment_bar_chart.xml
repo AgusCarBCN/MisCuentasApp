@@ -82,13 +82,14 @@
 
                 <TextView
                     android:id="@+id/tvyear"
+                    style="@style/MyNumberPicker"
                     android:layout_width="150dp"
                     android:layout_height="@dimen/box"
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="15dp"
-                    android:textSize="@dimen/extracommon"
+                    android:background="@drawable/style_editetx"
                     android:textAlignment="center"
-                    android:background="@drawable/style_editetx" />
+                    android:textSize="@dimen/extracommon" />
             </LinearLayout>
 
         </LinearLayout>

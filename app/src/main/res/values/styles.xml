@@ -28,8 +28,24 @@
         <item name="android:layout_margin">10dp</item>
         <item name="android:textSize">@dimen/head</item>
     </style>
+    <style name="MyNumberPicker">
+
+        <item name="android:textSize">@dimen/icon32</item>
+        <item name="android:colorActivatedHighlight">@color/darkOrange</item>
+
+
+    </style>
+
+    <style name="MyNumberPickerTextAppearance">
+        <item name="android:textColor">@color/darkOrange</item>
+        <item name="android:colorActivatedHighlight">@color/darkOrange</item>
+        <item name="android:textSize">@dimen/icon32</item>
+        <!-- Otros atributos de texto personalizados pueden ir aquí -->
+    </style>
+
     <style name="LargeNumberPicker" >
         <item name="android:textSize">@dimen/icon32</item>
+        <item name="android:textColor">@color/darkOrange</item>
     </style>
 
     <style name="ButtonCalcSmallLand" parent="ButtonCalcBase">
