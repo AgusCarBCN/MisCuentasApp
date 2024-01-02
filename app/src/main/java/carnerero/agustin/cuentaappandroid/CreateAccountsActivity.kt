@@ -77,6 +77,8 @@ class CreateAccountsActivity : AppCompatActivity() {
             if(etAccountName.text.isNullOrEmpty()||etBalance.text.isNullOrEmpty()){
                 etBalance.text.clear()
                 etAccountName.text.clear()
+                etAccountName.error=getString(R.string.msgemptyfield)
+                etBalance.error=getString(R.string.msgemptyfield)
                 Toast.makeText(this, getString(carnerero.agustin.cuentaappandroid.R.string.msgemptiesfield), Toast.LENGTH_LONG)
                     .show()
             }else {

@@ -77,7 +77,7 @@ class CreateProfileActivity : AppCompatActivity() {
             //Verifica si uno de los campos requeridos esta vacio y si lo esta muestra un mensaje de advertencia
             if (etName.text.toString().isEmpty() || etUserName.text.toString()
                     .isEmpty() || etPassword.text.toString()
-                    .isEmpty() || etRepeatPassword.text.toString().isEmpty()
+                    .isEmpty() || etRepeatPassword.text.toString().isEmpty() || etPassword.text.toString()!=etRepeatPassword.text.toString()
             ) {
                 if (etName.text.toString().isEmpty())
                     etName.error = getString(R.string.required)
@@ -89,7 +89,9 @@ class CreateProfileActivity : AppCompatActivity() {
                     etRepeatPassword.error = getString(R.string.required)
                 //Verifica si las contraseñas son iguales
                 if(etPassword.text.toString()!=etRepeatPassword.text.toString()){
-                    Toast.makeText(this, getString(R.string.passnotequals), Toast.LENGTH_LONG)
+                    etRepeatPassword.error=getString(R.string.reppassword)
+                    etPassword.error=getString(R.string.reppassword)
+                    Toast.makeText(this, getString(carnerero.agustin.cuentaappandroid.R.string.passnotequals), Toast.LENGTH_LONG)
                         .show()
                 }
                 //Si se pasan los criterios de validacion se almacenan los valores en sharepreferences
