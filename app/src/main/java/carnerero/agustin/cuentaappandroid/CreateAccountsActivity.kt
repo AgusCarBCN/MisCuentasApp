@@ -25,7 +25,6 @@ class CreateAccountsActivity : AppCompatActivity() {
     private lateinit var currency:String
     private lateinit var lang:String
     private lateinit var country:String
-    private val cuentas:ArrayList<Cuenta> =ArrayList()
     private val currencies = arrayOf(
         "EUR", "USD", "GBP"
     )
@@ -83,19 +82,13 @@ class CreateAccountsActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(carnerero.agustin.cuentaappandroid.R.string.msgemptiesfield), Toast.LENGTH_LONG)
                     .show()
             }else {
-                cuentas.add(
-                    Cuenta(
-                        etAccountName.text.toString(),
-                        etBalance.text.toString().toDouble()
-                    )
-                )
-                //Insertar cuentas en base de datos
-                cuentas.forEach { cuenta ->
-                    cuentaDao.insertarCuenta(cuenta)
-                }
+                cuentaDao.insertarCuenta(Cuenta(
+                    etAccountName.text.toString(),
+                    etBalance.text.toString().toDouble()
+                ))
+                etAccountName.text.clear()
+                etBalance.text.clear()
             }
-            etAccountName.text.clear()
-            etBalance.text.clear()
         }
         btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
