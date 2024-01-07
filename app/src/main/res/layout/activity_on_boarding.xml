@@ -34,22 +34,20 @@
                 app:ci_orientation="horizontal"/>
     </RelativeLayout>
 
-
-
         <!-- Botón en la parte inferior -->
-        <Button
-            android:id="@+id/btn_createprofile"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/box"
-            android:layout_marginBottom="@dimen/box"
-            android:background="@drawable/style_button"
-            android:text="@string/createyourprofile"
-            android:textAllCaps="false"
-            android:textColor="?android:textColor"
-            android:textSize="@dimen/botton"
-            android:textStyle="bold"
+    <Button
+        android:id="@+id/btn_createprofile"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/box"
+        android:background="@drawable/style_button"
+        android:text="@string/createyourprofile"
+        android:textAllCaps="false"
+        android:textColor="?android:textColor"
+        android:textSize="@dimen/botton"
+        android:textStyle="bold"
 
-            />
+        />
 </LinearLayout>

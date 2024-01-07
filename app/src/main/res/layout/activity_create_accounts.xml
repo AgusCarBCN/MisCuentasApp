@@ -23,21 +23,22 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/common"
         android:layout_marginStart="20dp"
-        android:textStyle="bold"
-        android:text="@string/infocreateaccounts"/>
+        android:text="@string/infocreateaccounts"
+        android:textSize="@dimen/common"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_nameaccount"
         style="@style/InputFieldLarge"
-        android:layout_marginTop="@dimen/icon32"
+        android:layout_marginTop="20dp"
         android:hint="@string/accountname"
         android:inputType="textCapWords|textAutoComplete" />
 
     <EditText
         android:id="@+id/et_balance"
         style="@style/InputFieldLarge"
+        android:layout_marginTop="10dp"
         android:hint="@string/balance"
         android:inputType="numberDecimal" />
 
@@ -54,33 +55,32 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/icon32"
-        android:textSize="@dimen/extracommon"
+        android:layout_marginTop="20dp"
+        android:text="@string/selectCurrency"
         android:textAlignment="center"
-        android:textStyle="bold"
-        android:text="@string/selectCurrency" />
+        android:textSize="@dimen/head"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/sp_choosecurreny"
         style="@style/InputFieldLarge"
+        android:layout_marginTop="10dp"
         android:theme="@style/CustomSpinner" />
 
     <Button
         android:id="@+id/btn_tologin"
+        style="@style/ButtonLarge"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonLarge"
-        android:layout_marginTop="@dimen/box"
-        android:text="@string/login"
-        />
+        android:layout_marginTop="20dp"
+        android:text="@string/login" />
 
     <Button
         android:id="@+id/btn_backtoCreateProfile"
+        style="@style/ButtonLarge"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonLarge"
-        android:layout_marginTop="@dimen/icon32"
-        android:text="@string/backbutton"
-        />
+        android:layout_marginTop="10dp"
+        android:text="@string/backbutton" />
 
 </LinearLayout>

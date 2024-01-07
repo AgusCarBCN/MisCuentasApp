@@ -12,8 +12,8 @@
         android:id="@+id/tv_createprofiletitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/create_your_account"
         android:textAlignment="center"
         android:textColor="?android:textColor"
@@ -24,11 +24,11 @@
         android:id="@+id/tv_profileimg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/common"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
-        android:text="@string/chooseimage" />
+        android:layout_marginBottom="5dp"
+        android:text="@string/chooseimage"
+        android:textSize="@dimen/common"
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/lyimg"
@@ -55,9 +55,9 @@
 
             <ImageView
                 android:id="@+id/imgIconcameraprofile"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="220dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="210dp"
                 android:layout_marginTop="120dp"
                 app:srcCompat="@drawable/ic_menu_camera" />
         </FrameLayout>
@@ -67,7 +67,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/common"
+        android:textSize="@dimen/extracommon"
         android:layout_marginStart="20dp"
         android:textStyle="bold"
         android:text="@string/required" />
@@ -75,35 +75,36 @@
     <EditText
         android:id="@+id/et_nameprofile"
         style="@style/InputFieldLarge"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/requiredname"
         android:inputType="text"
 
-         />
+        />
 
     <EditText
         android:id="@+id/et_usernameprofile"
         style="@style/InputFieldLarge"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/requiredid"
         android:inputType="text"
         android:maxLength="10"
 
-       />
+        />
 
     <EditText
         android:id="@+id/et_passwordprofile"
         style="@style/InputFieldLarge"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/requiredpassword"
         android:inputType="textPassword"
         android:maxLength="10"
 
         />
+
     <EditText
         android:id="@+id/et_reppasswordprofile"
         style="@style/InputFieldLarge"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/reppassword"
         android:inputType="textPassword"
         android:maxLength="10"
@@ -112,19 +113,17 @@
 
     <Button
         android:id="@+id/btn_createAccounts"
+        style="@style/ButtonLarge"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonLarge"
-        android:layout_marginTop="@dimen/icon32"
-        android:text="@string/createaccounts"
-        />
+        android:layout_marginTop="20dp"
+        android:text="@string/createaccounts" />
 
     <Button
         android:id="@+id/btn_backtoOnBoarding"
+        style="@style/ButtonLarge"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonLarge"
-        android:layout_marginTop="20dp"
-        android:text="@string/backbutton"
-        />
+        android:layout_marginTop="10dp"
+        android:text="@string/backbutton" />
 </LinearLayout>
