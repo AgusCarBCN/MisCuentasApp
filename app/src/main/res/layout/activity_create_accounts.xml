@@ -46,7 +46,7 @@
         android:id="@+id/btn_addaccount"
         style="@style/ButtonLarge"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="@dimen/box"
         android:text="@string/add_an_account"
         android:textSize="24sp" />
@@ -71,7 +71,7 @@
         android:id="@+id/btn_tologin"
         style="@style/ButtonLarge"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:text="@string/login"
         android:textSize="24sp" />
@@ -80,7 +80,7 @@
         android:id="@+id/btn_backtoCreateProfile"
         style="@style/ButtonLarge"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:text="@string/backbutton"
         android:textSize="24sp" />

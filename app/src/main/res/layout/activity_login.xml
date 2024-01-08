@@ -134,7 +134,7 @@
                 <Button
                     android:id="@+id/btn_newpassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?android:colorPrimary"
                     android:gravity="center"

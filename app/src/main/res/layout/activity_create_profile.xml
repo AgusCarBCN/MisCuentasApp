@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?android:colorPrimary"
+    android:orientation="vertical"
     tools:context=".CreateProfileActivity">
 
     <TextView
@@ -24,9 +24,10 @@
         android:id="@+id/tv_profileimg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="0dp"
         android:layout_marginBottom="5dp"
         android:text="@string/chooseimage"
+        android:textAlignment="center"
         android:textSize="@dimen/common"
         android:textStyle="bold" />
 
@@ -83,10 +84,10 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/extracommon"
         android:layout_marginStart="20dp"
-        android:textStyle="bold"
-        android:text="@string/required" />
+        android:text="@string/required"
+        android:textSize="@dimen/extracommon"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_nameprofile"
@@ -131,7 +132,7 @@
         android:id="@+id/btn_createAccounts"
         style="@style/ButtonLarge"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:text="@string/createaccounts"
         android:textSize="24sp" />
@@ -140,7 +141,7 @@
         android:id="@+id/btn_backtoOnBoarding"
         style="@style/ButtonLarge"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:text="@string/backbutton"
         android:textSize="24sp" />
