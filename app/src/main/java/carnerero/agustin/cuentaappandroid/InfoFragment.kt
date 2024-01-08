@@ -82,6 +82,7 @@ class InfoFragment : Fragment() {
         imgPicture.setImageURI(Uri.parse(imgStr))
         val lyList = listOf(binding.lyid, binding.lyname, binding.lypass)
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgpass)
+        val editIcons= listOf(binding.editid,binding.editname,binding.editpass)
         val titleList =
             listOf(getString(R.string.id), getString(R.string.name), getString(R.string.password))
         val textViewList = listOf(binding.tvlogin, binding.tvname, binding.tvpass)
@@ -94,6 +95,7 @@ class InfoFragment : Fragment() {
             // Verificar si el tema es oscuro y cambiar el color del ícono
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
+                changeIconColor(editIcons[i])
                 changeIconColor(imgIconCamera)
             }
             lyList[i].setOnClickListener {

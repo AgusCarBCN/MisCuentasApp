@@ -39,10 +39,12 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="90dp"
+                android:backgroundTint="@color/lightYellow"
                 app:cardCornerRadius="150dp">
 
                 <ImageView
@@ -51,16 +53,29 @@
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/person" />
+
             </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/imgIconcameraprofile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="210dp"
-                android:layout_marginTop="120dp"
-                app:srcCompat="@drawable/ic_menu_camera" />
+            <!-- Agregamos el CardView para la cámara -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/box"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="200dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="?android:colorAccent"
+                app:cardCornerRadius="150dp">
+
+                <ImageView
+                    android:id="@+id/imgIconcameraprofile"
+                    android:layout_width="@dimen/icon32"
+                    android:layout_height="@dimen/icon32"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_menu_camera" />
+
+            </androidx.cardview.widget.CardView>
         </FrameLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
