@@ -4,33 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoFragment"
-    android:background="?android:colorPrimary">
+    android:layout_gravity="center"
+    android:background="?android:colorPrimary"
+    android:foregroundGravity="center_vertical|center_horizontal"
+    tools:context=".InfoFragment">
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:colorPrimary"
-        android:orientation="vertical"
-       >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="@string/info"
             android:layout_marginBottom="40dp"
+            android:text="@string/info"
             android:textSize="@dimen/head"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyimg"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="0dp"
+            android:foregroundGravity="center"
+            android:gravity="center|start|center_horizontal">
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundGravity="center">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -41,10 +50,11 @@
 
                     <ImageView
                         android:id="@+id/imgProfile"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="0dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/person"  />
+                        app:srcCompat="@drawable/person" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -53,7 +63,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom|start"
-                    android:layout_marginStart="200dp"
+                    android:layout_marginStart="230dp"
                     android:layout_marginBottom="0dp"
                     android:backgroundTint="?android:colorAccent"
                     app:cardCornerRadius="150dp">
@@ -71,7 +81,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyid"
             style="@style/infoMainLayout"
-            >
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp">
 
             <ImageView
                 android:id="@+id/imgid"
@@ -80,13 +92,15 @@
 
             <TextView
                 android:id="@+id/tvlogin"
-                android:layout_width="200dp"
-                style="@style/infoTextView" />
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
 
             <ImageView
                 android:id="@+id/editid"
                 style="@style/infoimageView"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -94,7 +108,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyname"
             style="@style/infoMainLayout"
-           >
+            android:layout_marginLeft="10dp">
 
             <ImageView
                 android:id="@+id/imgname"
@@ -103,8 +117,10 @@
 
             <TextView
                 android:id="@+id/tvname"
-                android:layout_width="200dp"
-                style="@style/infoTextView" />
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
 
             <ImageView
                 android:id="@+id/editname"
@@ -113,9 +129,11 @@
                 app:srcCompat="@drawable/baseline_edit_24" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lypass"
-            style="@style/infoMainLayout">
+            style="@style/infoMainLayout"
+            android:layout_marginLeft="10dp">
 
             <ImageView
                 android:id="@+id/imgpass"
@@ -124,8 +142,10 @@
 
             <TextView
                 android:id="@+id/tvpass"
-                android:layout_width="200dp"
-                style="@style/infoTextView" />
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
 
             <ImageView
                 android:id="@+id/editpass"

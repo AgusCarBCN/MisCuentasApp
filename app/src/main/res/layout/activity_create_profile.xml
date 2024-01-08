@@ -34,7 +34,8 @@
         android:id="@+id/lyimg"
         style="@style/infoMainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -49,8 +50,8 @@
 
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/person" />
 
@@ -61,7 +62,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|start"
-                android:layout_marginStart="200dp"
+                android:layout_marginStart="230dp"
                 android:layout_marginBottom="0dp"
                 android:backgroundTint="?android:colorAccent"
                 app:cardCornerRadius="150dp">
