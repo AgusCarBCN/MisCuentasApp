@@ -34,7 +34,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:background="?android:colorPrimary"
+            android:backgroundTint="@color/lightYellow"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/person" />
 

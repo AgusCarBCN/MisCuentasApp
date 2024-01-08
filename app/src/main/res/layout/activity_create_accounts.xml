@@ -44,12 +44,12 @@
 
     <Button
         android:id="@+id/btn_addaccount"
+        style="@style/ButtonLarge"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonLarge"
         android:layout_marginTop="@dimen/box"
         android:text="@string/add_an_account"
-        />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -73,7 +73,8 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/btn_backtoCreateProfile"
@@ -81,6 +82,7 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/backbutton" />
+        android:text="@string/backbutton"
+        android:textSize="24sp" />
 
 </LinearLayout>

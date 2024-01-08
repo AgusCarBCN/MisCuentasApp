@@ -58,8 +58,8 @@
 
             <!-- Agregamos el CardView para la cámara -->
             <androidx.cardview.widget.CardView
-                android:layout_width="@dimen/box"
-                android:layout_height="@dimen/box"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="200dp"
                 android:layout_marginBottom="0dp"
@@ -68,8 +68,8 @@
 
                 <ImageView
                     android:id="@+id/imgIconcameraprofile"
-                    android:layout_width="@dimen/icon32"
-                    android:layout_height="@dimen/icon32"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_menu_camera" />
 
@@ -132,7 +132,8 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/createaccounts" />
+        android:text="@string/createaccounts"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/btn_backtoOnBoarding"
@@ -140,5 +141,6 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/backbutton" />
+        android:text="@string/backbutton"
+        android:textSize="24sp" />
 </LinearLayout>
