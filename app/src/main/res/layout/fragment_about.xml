@@ -33,7 +33,7 @@
             android:layout_marginStart="@dimen/padding10"
             android:textSize="@dimen/common"
             android:textStyle="bold"
-            android:text="@string/version_1_0"  />
+            android:text="@string/version"  />
 
 
         <TextView
