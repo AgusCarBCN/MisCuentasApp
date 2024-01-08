@@ -62,6 +62,7 @@ class CreateProfileActivity : AppCompatActivity() {
         if(Utils.isDarkTheme){
             changeIconColor(imgIconCamera)
         }
+
         //Cargar y mostrar imagen
         imgPicture=binding.imgProfile
         imgPicture.setImageURI(Uri.parse(imgStr))
