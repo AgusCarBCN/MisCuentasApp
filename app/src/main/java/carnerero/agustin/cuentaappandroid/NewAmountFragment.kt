@@ -63,7 +63,13 @@ class NewAmountFragment : Fragment() {
         for (i in 0 until cuentas.size) {
             arrayCuentas[i]= cuentas[i].iban
         }
+        selectedAccount=""
 
+            Toast.makeText(
+                requireContext(),
+                selectedAccount,
+                Toast.LENGTH_SHORT
+            ).show()
 
         tvCuenta.setOnClickListener {
             showSelectAccountDialog()
@@ -75,11 +81,36 @@ class NewAmountFragment : Fragment() {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
             if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.msgemptiesfield),
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (importe.text.isNullOrBlank() && descripcion.text.isNullOrBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.msgemptiesfield),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    if (importe.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.msgemptyamount),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (descripcion.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.msgemptydes),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            }else if(selectedAccount.isBlank())   {
+                    Toast.makeText(
+                        requireContext(),
+                        "${getString(R.string.msgselectaccount)} ${getString(R.string.incomem)}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
             } else {
 
                 val movimientoBancario = MovimientoBancario(
@@ -110,12 +141,39 @@ class NewAmountFragment : Fragment() {
             val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
             if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
+                if (importe.text.isNullOrBlank() && descripcion.text.isNullOrBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.msgemptiesfield),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    if (importe.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.msgemptyamount),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (descripcion.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.msgemptydes),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        else if(selectedAccount.isBlank())   {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.msgemptiesfield),
+                    "${getString(R.string.msgselectaccount)} ${getString(R.string.billm)}",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
+
+            }
+
+            else {
                 val cuenta=searchAccount(cuentas,selectedAccount)
                 val saldo= cuenta?.saldo
                 val importeText = importe.text.toString()

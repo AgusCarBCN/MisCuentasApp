@@ -33,8 +33,10 @@
     <string name="amount">Importe</string>
     <string name="date_from">Fecha desde</string>
     <string name="date_to">Fecha hasta</string>
-    <string name="incomes">Ingreso</string>
-    <string name="bills">Gasto</string>
+    <string name="incomes">Ingresos</string>
+    <string name="incomem">ingresos</string>
+    <string name="bills">Gastos</string>
+    <string name="billm">gasto</string>
     <string name="income_and_bills">Ingresos y gastos</string>
     <string name="amount_from">Importe desde</string>
     <string name="amount_to">Importe hasta</string>
@@ -54,6 +56,8 @@
     <string name="msgbill">Nuevo gasto en</string>
     <string name="msgemptiesfield">Campos vacios</string>
     <string name="msgemptyfield">Campo vacio</string>
+    <string name="msgemptyamount">Debes introducir un importe</string>
+    <string name="msgemptydes">Debes introducir una descripcion</string>
     <string name="msgsucces">Inicio de sesion exitoso</string>
     <string name="msgnosucces">Inicio de sesion incorrecto</string>
     <string name="msgtransfersame">No se puede realizar una transferencia en una misma cuenta</string>
@@ -198,7 +202,7 @@
     <string name="requiredpassword">*Contraseña</string>
     <string name="reppassword">*Repite la contraseña</string>
     <string name="backbutton">Vuelve atras</string>
-    <string name="createaccounts">Create tus cuentas</string>
+    <string name="createaccounts">Crea tus cuentas</string>
     <string name="chooseimage">Escoje tu foto de perfil(opcional)</string>
     <string name="infocreateaccounts">Puedes crear tus cuentas ahora o mas adelante.</string>
     <string name="accountname">Nombre de la cuenta</string>

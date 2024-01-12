@@ -35,7 +35,9 @@
     <string name="date_from">Date from</string>
     <string name="date_to">Date to</string>
     <string name="incomes">Income</string>
-    <string name="bills">Bill</string>
+    <string name="incomem">income</string>
+    <string name="bills">Bills</string>
+    <string name="billm">spent</string>
     <string name="income_and_bills">Income and Bill</string>
     <string name="amount_from">Amount from</string>
     <string name="amount_to">Amount to</string>
@@ -53,6 +55,8 @@
     <string name="logout">Log out</string>
     <string name="msgincome">New income in</string>
     <string name="msgbill">New bill in</string>
+    <string name="msgemptyamount">You must enter an amount</string>
+    <string name="msgemptydes">You must enter a description</string>
     <string name="msgemptiesfield">Empty fields</string>
     <string name="msgemptyfield">Empty field</string>
     <string name="msgsucces">Successful login</string>
