@@ -167,9 +167,9 @@ class TransaccionFragment : Fragment() {
             cuenta.text = arrayCuentas[account.value]
             dialog.dismiss()
             if(cuentaOrigin){
-                selectedAccountTo=arrayCuentas[account.value]
-            }else{
                 selectedAccountFrom=arrayCuentas[account.value]
+            }else{
+                selectedAccountTo=arrayCuentas[account.value]
             }
 
         }

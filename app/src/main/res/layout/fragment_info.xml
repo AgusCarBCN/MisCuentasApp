@@ -60,18 +60,19 @@
 
                 <!-- Agregamos el CardView para la cámara -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/imgIconcameraprofile"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom|start"
                     android:layout_marginStart="230dp"
                     android:layout_marginBottom="0dp"
-                    android:backgroundTint="?android:colorAccent"
-                    app:cardCornerRadius="150dp">
+                    android:backgroundTint="?android:state_pressed"
+                    app:cardCornerRadius="150dp"
+                    android:contentDescription="@string/selectphoto">
 
                     <ImageView
-                        android:id="@+id/imgIconcameraprofile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_menu_camera" />
                 </androidx.cardview.widget.CardView>
@@ -83,11 +84,14 @@
             style="@style/infoMainLayout"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:contentDescription="@string/changeusername"
             android:layout_marginRight="20dp">
 
             <ImageView
                 android:id="@+id/imgid"
                 style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
                 app:srcCompat="@drawable/login_24" />
 
             <TextView
@@ -100,6 +104,8 @@
             <ImageView
                 android:id="@+id/editid"
                 style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
@@ -108,11 +114,14 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyname"
             style="@style/infoMainLayout"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/changename">
 
             <ImageView
                 android:id="@+id/imgname"
                 style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
                 app:srcCompat="@drawable/person" />
 
             <TextView
@@ -125,6 +134,8 @@
             <ImageView
                 android:id="@+id/editname"
                 style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
@@ -133,11 +144,14 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lypass"
             style="@style/infoMainLayout"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/changepass">
 
             <ImageView
                 android:id="@+id/imgpass"
                 style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
                 app:srcCompat="@drawable/password" />
 
             <TextView
@@ -150,6 +164,8 @@
             <ImageView
                 android:id="@+id/editpass"
                 style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="20dp"
                 app:srcCompat="@drawable/baseline_edit_24" />
 

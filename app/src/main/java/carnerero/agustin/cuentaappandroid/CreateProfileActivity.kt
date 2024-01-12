@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -59,9 +60,7 @@ class CreateProfileActivity : AppCompatActivity() {
         Utils.applyTheme(enableDarkTheme)
         Utils.applyLanguage(enableEnLang)
         val imgStr=sharedPreferences.getString(getString(R.string.img_photo),"")
-        if(Utils.isDarkTheme){
-            changeIconColor(imgIconCamera)
-        }
+
 
         //Cargar y mostrar imagen
         imgPicture=binding.imgProfile
@@ -119,8 +118,6 @@ class CreateProfileActivity : AppCompatActivity() {
            startActivity(intent)
        }
     }
-    private fun changeIconColor(img :ImageView){
-        img.setColorFilter(ContextCompat.getColor(this, R.color.white))
-    }
+
 
 }

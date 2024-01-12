@@ -60,18 +60,19 @@
 
             <!-- Agregamos el CardView para la cámara -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/imgIconcameraprofile"
+                android:contentDescription="@string/selectphoto"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="230dp"
                 android:layout_marginBottom="0dp"
-                android:backgroundTint="?android:colorAccent"
+                android:backgroundTint="?android:state_pressed"
                 app:cardCornerRadius="150dp">
 
                 <ImageView
-                    android:id="@+id/imgIconcameraprofile"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_menu_camera" />
 

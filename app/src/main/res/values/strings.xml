@@ -135,7 +135,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsdate">Date range icons</string>
-    <string name="version">Version 1.2.4</string>
+    <string name="version">Version 1.2.6</string>
     <string name="description">
     My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
 
@@ -266,4 +266,14 @@
     <string name="seekbar">seekbar</string>
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
+
+    <!--content description-->
+    <string name="selectphoto">Select a photo</string>
+    <string name="changename">Change name</string>
+    <string name="changeusername">Change user name</string>
+    <string name="changepass">Change password</string>
+    <string name="createprofile">Create profile</string>
+
+
+
 </resources>

@@ -142,7 +142,6 @@
                     android:textAllCaps="false"
                     android:textSize="@dimen/common" />
 
-
             </LinearLayout>
 
         </LinearLayout>

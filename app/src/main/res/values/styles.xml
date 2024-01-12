@@ -93,8 +93,6 @@
         <item name="android:textSize">@dimen/botton</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/style_button</item>
-
-
     </style>
 
 

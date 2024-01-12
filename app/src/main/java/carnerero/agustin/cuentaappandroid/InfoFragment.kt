@@ -96,7 +96,7 @@ class InfoFragment : Fragment() {
             if (Utils.isDarkTheme) {
                 changeIconColor(imgList[i])
                 changeIconColor(editIcons[i])
-                changeIconColor(imgIconCamera)
+
             }
             lyList[i].setOnClickListener {
                 // Llamar a la función changeField con el TextView correspondiente y el título correspondiente
