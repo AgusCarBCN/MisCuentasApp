@@ -162,7 +162,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Obtén el Fragment actual
+        val currentFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fcv_main_container)
 
+
+            // Puedes reemplazar 'TuFragmentDeseado' con el fragment al que quieres ir.
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fcv_main_container,LogoFragment())
+                .commit()
+
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Obtener el contenedor de fragmentos
@@ -212,6 +223,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
     }
+
 
     private fun changeFragmentMain(fragment: Fragment) {
         // Cambiar el fragmento principal en el contenedor principal
