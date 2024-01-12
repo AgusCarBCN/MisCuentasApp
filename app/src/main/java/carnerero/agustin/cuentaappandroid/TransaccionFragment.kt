@@ -19,9 +19,8 @@ import java.util.Date
 
 class TransaccionFragment : Fragment() {
 
-    // Variables para almacenar el valor de los elementos seleccionados en los spinners
-    private var selectedAccountFrom: String? = null
-    private var selectedAccountTo: String? = null
+    private lateinit var selectedAccountFrom: String
+    private lateinit var selectedAccountTo: String
 
     // Instancia de la base de datos y DAOs necesarios
     private val admin = DataBaseAppSingleton.getInstance(context)
@@ -54,10 +53,8 @@ class TransaccionFragment : Fragment() {
         for (i in 0 until cuentas.size) {
             arrayCuentas[i]= cuentas[i].iban
         }
-        selectedAccountFrom=arrayCuentas[0]
-        selectedAccountTo = if(arrayCuentas.size>1){
-            arrayCuentas[1]
-        }else arrayCuentas[0]
+        selectedAccountFrom=""
+        selectedAccountTo=""
 
         tvAccountFrom.setOnClickListener {
             showSelectAccountDialog(tvAccountFrom,true)
@@ -79,17 +76,40 @@ class TransaccionFragment : Fragment() {
             if (importeText.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.msgemptyfield),
+                    getString(R.string.msgemptyamount),
                     Toast.LENGTH_SHORT
-                ).show()
-            } else if (selectedAccountTo == selectedAccountFrom) {
+                ).show();
+            } else if (selectedAccountTo == selectedAccountFrom && selectedAccountFrom.isNotBlank() && selectedAccountTo.isNotBlank()) {
                 // Verificar si las cuentas de origen y destino son las mismas
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgtransfersame),
                     Toast.LENGTH_SHORT
-                ).show()
-            } else {
+                ).show();
+            } else if (selectedAccountTo.isBlank()|| selectedAccountFrom.isBlank()) {
+                if(selectedAccountTo.isBlank()&& selectedAccountFrom.isBlank()){
+                    Toast.makeText(
+                        requireContext(),
+                        "${getString(R.string.selectaccounts)}",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                }
+                if(selectedAccountFrom.isBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "${getString(R.string.selectaccountfrom)}",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                }
+                if(selectedAccountTo.isBlank()){
+                    Toast.makeText(
+                        requireContext(),
+                        "${getString(R.string.selectaccountto)}",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+            else {
                 // Realizar la transferencia ya que el campo de importe no está vacío
 
                 Toast.makeText(

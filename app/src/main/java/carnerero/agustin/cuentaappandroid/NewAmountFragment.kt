@@ -65,11 +65,6 @@ class NewAmountFragment : Fragment() {
         }
         selectedAccount=""
 
-            Toast.makeText(
-                requireContext(),
-                selectedAccount,
-                Toast.LENGTH_SHORT
-            ).show()
 
         tvCuenta.setOnClickListener {
             showSelectAccountDialog()

@@ -233,7 +233,7 @@
     <string name="accountname">Account name </string>
     <string name="selectaccountfrom">select source account</string>
     <string name="selectaccountto">select destination account</string>
-
+    <string name="selectaccounts">select accounts</string>
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>

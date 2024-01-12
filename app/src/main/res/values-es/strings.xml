@@ -34,7 +34,7 @@
     <string name="date_from">Fecha desde</string>
     <string name="date_to">Fecha hasta</string>
     <string name="incomes">Ingresos</string>
-    <string name="incomem">ingresos</string>
+    <string name="incomem">ingreso</string>
     <string name="bills">Gastos</string>
     <string name="billm">gasto</string>
     <string name="income_and_bills">Ingresos y gastos</string>
@@ -237,7 +237,7 @@
     <string name="october">Octubre</string>
     <string name="november">Noviembre</string>
     <string name="december">Diciembre</string>
-
+    <string name="selectaccounts">selecciona las cuentas</string>
     <!--sharepreferences de usuario-->
     <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
         mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará
