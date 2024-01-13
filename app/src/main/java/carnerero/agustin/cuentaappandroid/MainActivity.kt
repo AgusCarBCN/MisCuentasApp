@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlarmManager
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,12 +9,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.NumberPicker
-import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -111,7 +108,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Requiere permiso para enviar notificaciones
         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
-
+        onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                inicio()
+            }
+        })
         //Crea canal para las notificaciones
         createChannel()
         //Envia notificaciones si los switch estan activados.
@@ -162,18 +163,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // Obtén el Fragment actual
-        val currentFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fcv_main_container)
 
 
-            // Puedes reemplazar 'TuFragmentDeseado' con el fragment al que quieres ir.
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fcv_main_container,LogoFragment())
-                .commit()
-
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Obtener el contenedor de fragmentos
