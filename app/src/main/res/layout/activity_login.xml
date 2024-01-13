@@ -12,12 +12,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+      >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -38,6 +37,7 @@
                     android:layout_marginBottom="50dp"
                     android:background="?android:previewImage"
                     android:scaleType="fitCenter"
+                    android:contentDescription="@string/app_name"
                     app:srcCompat="@drawable/contabilidad" />
             </LinearLayout>
 
@@ -62,58 +62,42 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_text_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/user"
-                    android:textAlignment="center"
-                    android:textColor="?android:textColor"
-                    android:textSize="@dimen/extracommon"
-                    android:textStyle="bold" />
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_text_user"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_text_user"
                         android:layout_width="320dp"
                         android:layout_height="@dimen/box"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
                         android:background="@drawable/style_editetx"
                         android:gravity="center"
+                        android:hint="@string/enterusername"
                         android:inputType="text"
                         android:maxLength="10" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tv_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/password"
-                    android:textAlignment="center"
-                    android:textColor="?android:textColor"
-                    android:textSize="@dimen/extracommon"
-                    android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_text_pass"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
                         android:layout_width="320dp"
                         android:layout_height="@dimen/box"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:background="@drawable/style_editetx"
                         android:gravity="center"
+                        android:hint="@string/enterpass"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +106,7 @@
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/style_button"
                     android:text="@string/login"
                     android:textAllCaps="false"
@@ -133,9 +117,9 @@
 
                 <Button
                     android:id="@+id/btn_newpassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="?android:colorPrimary"
                     android:gravity="center"
                     android:text="@string/forgetpass"

@@ -52,57 +52,39 @@
                 android:textSize="@dimen/head"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/user"
-                android:textAlignment="center"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/extracommon"
-                android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_text_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/til_text_user"
-                >
+                android:layout_marginTop="20dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_text_user"
                     android:layout_width="320dp"
                     android:layout_height="@dimen/box"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/style_editetx"
                     android:gravity="center"
+                    android:hint="@string/enterusername"
                     android:inputType="text"
-                    android:maxLength="10"/>/>
+                    android:maxLength="10" />/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tv_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/password"
-                android:textAlignment="center"
-                android:textColor="?android:textColor"
-                android:textSize="@dimen/extracommon"
-                android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_text_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/til_text_pass"
-                >
+                android:layout_marginTop="20dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
                     android:layout_width="320dp"
                     android:layout_height="@dimen/box"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/style_editetx"
                     android:gravity="center"
+                    android:hint="@string/enterpass"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +92,7 @@
                 android:id="@+id/login"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/style_button"
                 android:gravity="center"
                 android:text="@string/login"

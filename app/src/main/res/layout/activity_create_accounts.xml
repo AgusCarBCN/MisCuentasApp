@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,90 +8,94 @@
     android:orientation="vertical"
     android:background="?android:colorPrimary"
     tools:context=".CreateAccountsActivity">
-    <TextView
-        android:id="@+id/tv_createaccountstitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/box"
-        android:layout_marginBottom="@dimen/icon32"
-        android:text="@string/createaccounts"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/head"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="@string/infocreateaccounts"
-        android:textSize="@dimen/common"
-        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/et_nameaccount"
-        style="@style/InputFieldLarge"
-        android:layout_marginTop="20dp"
-        android:hint="@string/accountname"
-        android:inputType="textCapWords|textAutoComplete" />
+        <TextView
+            android:id="@+id/tv_createaccountstitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/box"
+            android:layout_marginBottom="@dimen/icon32"
+            android:text="@string/createaccounts"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/et_balance"
-        style="@style/InputFieldLarge"
-        android:layout_marginTop="10dp"
-        android:hint="@string/balance"
-        android:inputType="numberDecimal" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/infocreateaccounts"
+            android:textSize="@dimen/common"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btn_addaccount"
-        style="@style/ButtonLarge"
-        android:layout_width="320dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="@dimen/box"
-        android:text="@string/add_an_account"
-        android:textSize="24sp" />
+        <EditText
+            android:id="@+id/et_nameaccount"
+            style="@style/InputFieldLarge"
+            android:layout_marginTop="20dp"
+            android:hint="@string/accountname"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords|textAutoComplete" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/selectCurrency"
-        android:textAlignment="center"
-        android:textSize="@dimen/head"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/et_balance"
+            style="@style/InputFieldLarge"
+            android:layout_marginTop="10dp"
+            android:hint="@string/balance"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal" />
 
-    <Spinner
-        android:id="@+id/sp_choosecurreny"
-        style="@style/InputFieldLarge"
-        android:layout_marginTop="10dp"
-        android:theme="@style/CustomSpinner" />
+        <Button
+            android:id="@+id/btn_addaccount"
+            style="@style/ButtonLarge"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/box"
+            android:text="@string/add_an_account"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/btn_tologin"
-        style="@style/ButtonLarge"
-        android:layout_width="320dp"
-        android:layout_height="48dp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="100sp"
-        android:autoSizeStepGranularity="2sp"
-        android:layout_marginTop="20dp"
-        android:text="@string/login"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/selectCurrency"
+            android:textAlignment="center"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btn_backtoCreateProfile"
-        style="@style/ButtonLarge"
-        android:layout_width="320dp"
-        android:layout_height="48dp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="100sp"
-        android:autoSizeStepGranularity="2sp"
-        android:layout_marginTop="10dp"
-        android:text="@string/backbutton"
-        android:textSize="24sp" />
+        <Spinner
+            android:id="@+id/sp_choosecurreny"
+            style="@style/InputFieldLarge"
+            android:layout_marginTop="10dp"
+            android:theme="@style/CustomSpinner" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_tologin"
+            style="@style/ButtonLarge"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
+            android:text="@string/login"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btn_backtoCreateProfile"
+            style="@style/ButtonLarge"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
+            android:text="@string/backbutton"
+            android:textSize="24sp" />
+    </LinearLayout>
+

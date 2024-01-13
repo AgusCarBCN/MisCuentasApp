@@ -107,7 +107,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         movimientos = movDao.getAll()
         //Requiere permiso para enviar notificaciones
         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-
+        //Implementacion de navegacion personalizada al presionar boton hacia atras de movil
+        //Te redirije hacia fragment de inicio no hacia la anterior actividad,que es la de login
         onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 inicio()

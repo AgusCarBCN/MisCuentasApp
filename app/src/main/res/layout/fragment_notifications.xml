@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:gravity="start|center_horizontal"
-        android:layout_margin="@dimen/padding10"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_tittlenotifications"
             android:layout_width="wrap_content"
@@ -27,17 +27,20 @@
             android:textColor="?android:textColor"
             android:textSize="@dimen/head"
             android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="300dp"
                 android:id="@+id/switchday"
                 style="@style/switchCustom"
-                app:track="@drawable/custom_track"
-                android:text="@string/daylyreport" />
+                android:text="@string/daylyreport"
+                app:track="@drawable/custom_track" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,12 +49,15 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="300dp"
                 android:id="@+id/switchweek"
                 style="@style/switchCustom"
-                app:track="@drawable/custom_track"
-                android:text="@string/weekreport" />
+                android:text="@string/weekreport"
+                app:track="@drawable/custom_track" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,13 +66,14 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="300dp"
                 android:id="@+id/switchmonth"
                 style="@style/switchCustom"
-                app:track="@drawable/custom_track"
                 android:text="@string/monthreport"
-                 />
+                app:track="@drawable/custom_track" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,6 +88,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="300dp"
                     android:id="@+id/switchalertlimit"
                     style="@style/switchCustom"
                     android:layout_margin="8dp"
@@ -94,50 +102,56 @@
                     android:gravity="center"
                     android:textAlignment="center"
                     android:textSize="@dimen/extracommon" />
+
                 <SeekBar
                     android:id="@+id/seekBar"
-                    android:layout_width="match_parent"
+                    android:layout_width="330dp"
                     android:layout_height="15dp"
-                    android:thumb="@drawable/custom_thumb_bar"
-                    android:progressDrawable="@drawable/custom_seekbar"
                     android:max="5000"
-                    android:progress="0"/>
+                    android:progress="0"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    android:thumb="@drawable/custom_thumb_bar" />
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchalertbalance"
-                style="@style/switchCustom"
-                app:track="@drawable/custom_track"
-                android:text="@string/lowbalance"/>
-            <TextView
-                android:id="@+id/tv_percentbalance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textAlignment="center"
-                android:textSize="@dimen/extracommon" />
-            <SeekBar
-                android:id="@+id/seekBarBalance"
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:thumb="@drawable/custom_thumb_bar"
-                android:progressDrawable="@drawable/custom_seekbar"
-                android:max="5000"
-                android:progress="0"
-                />
-                </LinearLayout>
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="300dp"
+                    android:id="@+id/switchalertbalance"
+                    style="@style/switchCustom"
+                    android:text="@string/lowbalance"
+                    app:track="@drawable/custom_track" />
+
+                <TextView
+                    android:id="@+id/tv_percentbalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/extracommon" />
+
+                <SeekBar
+                    android:id="@+id/seekBarBalance"
+                    android:layout_width="330dp"
+                    android:layout_height="15dp"
+                    android:max="5000"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    android:thumb="@drawable/custom_thumb_bar" />
+            </LinearLayout>
 
         </LinearLayout>
 

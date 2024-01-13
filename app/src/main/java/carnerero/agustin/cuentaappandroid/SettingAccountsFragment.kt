@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.databinding.FragmentDbBinding
+import carnerero.agustin.cuentaappandroid.databinding.FragmentAccountsBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -47,7 +47,7 @@ class SettingAccountsFragment : Fragment(){
     private lateinit var pickerExport: ActivityResultLauncher<Intent>
     private lateinit var pickerImport: ActivityResultLauncher<Intent>
     private lateinit var cuentas:ArrayList<Cuenta>
-    private var _binding: FragmentDbBinding? = null
+    private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class SettingAccountsFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDbBinding.inflate(inflater, container, false)
+        _binding = FragmentAccountsBinding.inflate(inflater, container, false)
         val view = binding.root
         pickerExport = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
