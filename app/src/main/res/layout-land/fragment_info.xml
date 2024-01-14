@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="?android:colorPrimary"
+    android:foregroundGravity="center_vertical|center_horizontal"
+    tools:context=".InfoFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/info"
+            android:textSize="@dimen/head"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lyimg"
+            style="@style/infoMainLayout"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="0dp"
+            android:foregroundGravity="center"
+            android:gravity="center|start|center_horizontal">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundGravity="center">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:backgroundTint="@color/lightYellow"
+                    app:cardCornerRadius="150dp">
+
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="0dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/person" />
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Agregamos el CardView para la cámara -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/imgIconcameraprofile"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginStart="230dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="?android:state_pressed"
+                    app:cardCornerRadius="150dp"
+                    android:contentDescription="@string/selectphoto">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_menu_camera" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lyid"
+            style="@style/infoMainLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/changeusername"
+            android:layout_marginRight="20dp">
+
+            <ImageView
+                android:id="@+id/imgid"
+                style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
+                app:srcCompat="@drawable/login_24" />
+
+            <TextView
+                android:id="@+id/tvlogin"
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
+
+            <ImageView
+                android:id="@+id/editid"
+                style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="30dp"
+                app:srcCompat="@drawable/baseline_edit_24" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lyname"
+            style="@style/infoMainLayout"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/changename">
+
+            <ImageView
+                android:id="@+id/imgname"
+                style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
+                app:srcCompat="@drawable/person" />
+
+            <TextView
+                android:id="@+id/tvname"
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
+
+            <ImageView
+                android:id="@+id/editname"
+                style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="20dp"
+                app:srcCompat="@drawable/baseline_edit_24" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lypass"
+            style="@style/infoMainLayout"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/changepass">
+
+            <ImageView
+                android:id="@+id/imgpass"
+                style="@style/infoimageView"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="0dp"
+                app:srcCompat="@drawable/password" />
+
+            <TextView
+                android:id="@+id/tvpass"
+                style="@style/infoTextView"
+                android:layout_width="240dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/extracommon" />
+
+            <ImageView
+                android:id="@+id/editpass"
+                style="@style/infoimageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="20dp"
+                app:srcCompat="@drawable/baseline_edit_24" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+    </ScrollView>
+</FrameLayout>
