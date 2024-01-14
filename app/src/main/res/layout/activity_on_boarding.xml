@@ -47,7 +47,7 @@
         android:text="@string/createyourprofile"
         android:textAllCaps="false"
         android:textColor="?android:textColor"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         />
 </LinearLayout>
