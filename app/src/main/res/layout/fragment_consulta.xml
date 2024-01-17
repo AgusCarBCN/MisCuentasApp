@@ -39,7 +39,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    app:startIconDrawable="@drawable/date">
+                    app:startIconDrawable="@drawable/date"
+                    android:textColor="?android:textColor"
+                    android:textColorHint="?android:textColor"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_datefrom"
@@ -49,14 +52,19 @@
                         android:gravity="center"
                         android:focusable="false"
                         android:hint="@string/date_from"
+                        android:textColor="?android:textColor"
                         android:inputType="date"
+
                          />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:startIconDrawable="@drawable/date">
+                    app:startIconDrawable="@drawable/date"
+                    android:textColor="?android:textColor"
+                    android:textColorHint="?android:textColor" >
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_dateto"
                         style="@style/InputFieldMedium"
@@ -64,6 +72,7 @@
                         android:hint="@string/date_to"
                         android:gravity="center"
                         android:clickable="true"
+                        android:textColor="?android:textColor"
                         android:focusable="false"
                         android:inputType="date"/>
                 </com.google.android.material.textfield.TextInputLayout>

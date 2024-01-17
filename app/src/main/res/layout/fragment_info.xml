@@ -68,7 +68,7 @@
                     android:layout_marginBottom="0dp"
                     android:backgroundTint="?android:state_pressed"
                     app:cardCornerRadius="150dp"
-                    android:contentDescription="@string/selectphoto">
+                    android:contentDescription="@string/selectphotosetting">
 
                     <ImageView
                         android:layout_width="32dp"

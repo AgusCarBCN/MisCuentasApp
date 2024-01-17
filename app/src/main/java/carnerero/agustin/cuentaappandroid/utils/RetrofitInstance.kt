@@ -15,7 +15,7 @@ class RetrofitInstance {
 
             Retrofit.Builder().baseUrl(AppConst.BASEURL).addConverterFactory(GsonConverterFactory.create()).client(client).build()
         }
-        val apiCurrency by lazy {
+        val apiCurrency: CurrencyConverterApi by lazy {
             retrofit.create(CurrencyConverterApi::class.java)
         }
     }

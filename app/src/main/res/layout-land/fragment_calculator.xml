@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tv_operation"
-        style="@style/TextViewCalc"
+        style="@style/TextViewCalcLand"
         android:textSize="@dimen/common"/>
 
     <TextView

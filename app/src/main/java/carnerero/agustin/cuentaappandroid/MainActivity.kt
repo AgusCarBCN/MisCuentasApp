@@ -8,12 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflar el diseño de la actividad utilizando View Binding
@@ -106,12 +108,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Obtiene todos los movimientos bancarios
         movimientos = movDao.getAll()
         //Requiere permiso para enviar notificaciones
-        notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
         //Implementacion de navegacion personalizada al presionar boton hacia atras de movil
         //Te redirije hacia fragment de inicio no hacia la anterior actividad,que es la de login
         onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 inicio()
+                showSaldo()
             }
         })
         //Crea canal para las notificaciones
@@ -263,6 +268,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
     }
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun checkAndNotifyIfExpensesIsAboveLimit() {
 
         val limit = savedProgress
@@ -286,6 +292,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             scheduleNotificationAlertExpenses(stringBuilder.toString())
         }
     }
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun scheduleNotificationAlertExpenses(report: String){
         val intent=Intent(applicationContext,AlarmNotifications::class.java)
         intent.putExtra("notificationType", AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
@@ -405,6 +412,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+
     private fun createChannel() {
         val channel = NotificationChannel(
             CHANEL_NOTIFICATION,
@@ -416,6 +424,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         notificationManager.createNotificationChannel(channel)
     }
+
     private fun showDaylyReport(movimientos: ArrayList<MovimientoBancario>): String {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val stringBuilder = StringBuilder()
@@ -502,7 +511,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setTitle(getString(R.string.notificationrequiredalert))
             .setMessage(getString(R.string.notificationrequired))
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .show()

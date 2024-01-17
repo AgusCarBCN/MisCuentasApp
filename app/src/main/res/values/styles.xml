@@ -5,9 +5,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">?android:colorSecondary</item>
-
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:padding">@dimen/padding10</item>
+    </style>
+    <style name="TextViewCalcLand">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:colorSecondary</item>
+        <item name="android:gravity">center_vertical|end</item>
+
     </style>
 
     <style name="LinearLayoutCalc">
@@ -28,6 +34,7 @@
         <item name="android:layout_margin">10dp</item>
         <item name="android:textSize">@dimen/head</item>
     </style>
+
     <style name="MyNumberPicker">
 
         <item name="android:textSize">@dimen/icon32</item>
@@ -49,7 +56,7 @@
     </style>
 
     <style name="ButtonCalcSmallLand" parent="ButtonCalcBase">
-        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_margin">1dp</item>
         <item name="android:textSize">@dimen/common</item>
     </style>
 
@@ -59,12 +66,14 @@
         <item name="android:layout_height">@dimen/box</item>
         <item name="android:gravity">start</item>
         <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColorHint">?android:textColor</item>
         <item name="android:background">@drawable/style_editetx</item>
     </style>
     <style name="InputFieldBaseCenter">
         <item name="android:layout_height">@dimen/box</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColorHint">?android:textColor</item>
         <item name="android:background">@drawable/style_editetx</item>
     </style>
 

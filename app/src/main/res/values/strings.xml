@@ -139,7 +139,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsdate">Date range icons</string>
-    <string name="version">Version 1.2.6</string>
+    <string name="version">Version 1.2.10</string>
     <string name="description">
     My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
 
@@ -249,7 +249,6 @@
     <string name="november">November</string>
     <string name="december">December</string>
 
-
     <!--String sharepreferences -->
     <string name="userdni">userdni</string>
     <string name="userlogin">userlogin</string>
@@ -279,7 +278,13 @@
     <string name="changeusername">Change user name</string>
     <string name="changepass">Change password</string>
     <string name="createprofile">Create profile</string>
+    <string name="createprofileh">Create profile horizontal view</string>
+    <string name="selectphotoprofile">Select a photo when creating your profile
 
+</string>
+    <string name="selectphotosettingh">Select a photo in profile settings.Horizontal view
+</string>
+    <string name="selectphotosetting">Select a photo in profile settings</string>
 
 
 </resources>

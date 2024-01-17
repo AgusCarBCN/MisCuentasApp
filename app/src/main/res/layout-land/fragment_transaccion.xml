@@ -25,34 +25,12 @@
              />
 
         <TextView
-            android:id="@+id/tv_importe3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/from_account"
-            android:textAlignment="center"
-            android:textColor="?android:textColor"
-            android:textSize="@dimen/common"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/tvcuentaorigen"
             style="@style/InputFieldLargeCenter"
             android:hint="@string/selectaccountfrom"
             android:background="@drawable/style_editetx"
             android:textAlignment="center"
             android:textSize="@dimen/extracommon" />
-
-        <TextView
-            android:id="@+id/tv_cuentas3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/to_account"
-            android:textAlignment="center"
-            android:textColor="?android:textColor"
-            android:textSize="@dimen/common"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvcuentadestino"

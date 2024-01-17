@@ -78,35 +78,35 @@ class TransaccionFragment : Fragment() {
                     requireContext(),
                     getString(R.string.msgemptyamount),
                     Toast.LENGTH_SHORT
-                ).show();
+                ).show()
             } else if (selectedAccountTo == selectedAccountFrom && selectedAccountFrom.isNotBlank() && selectedAccountTo.isNotBlank()) {
                 // Verificar si las cuentas de origen y destino son las mismas
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.msgtransfersame),
                     Toast.LENGTH_SHORT
-                ).show();
+                ).show()
             } else if (selectedAccountTo.isBlank()|| selectedAccountFrom.isBlank()) {
                 if(selectedAccountTo.isBlank()&& selectedAccountFrom.isBlank()){
                     Toast.makeText(
                         requireContext(),
-                        "${getString(R.string.selectaccounts)}",
+                        getString(R.string.selectaccounts),
                         Toast.LENGTH_SHORT
-                    ).show();
+                    ).show()
                 }
                 if(selectedAccountFrom.isBlank()) {
                     Toast.makeText(
                         requireContext(),
-                        "${getString(R.string.selectaccountfrom)}",
+                        getString(R.string.selectaccountfrom),
                         Toast.LENGTH_SHORT
-                    ).show();
+                    ).show()
                 }
                 if(selectedAccountTo.isBlank()){
                     Toast.makeText(
                         requireContext(),
-                        "${getString(R.string.selectaccountto)}",
+                        getString(R.string.selectaccountto),
                         Toast.LENGTH_SHORT
-                    ).show();
+                    ).show()
                 }
             }
             else {

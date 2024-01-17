@@ -7,16 +7,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import androidx.core.content.contentValuesOf
-import carnerero.agustin.cuentaappandroid.DataBaseAppSingleton
 import carnerero.agustin.cuentaappandroid.MainActivity
-import carnerero.agustin.cuentaappandroid.NotificationsFragment
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class AlarmNotifications:BroadcastReceiver() {
 
@@ -28,6 +22,7 @@ class AlarmNotifications:BroadcastReceiver() {
         const val REPORT_WEEKLY=4
         const val REPORT_MONTLY=5
     }
+
     override fun onReceive(context: Context, intent: Intent?) {
         // Verifica si el intent no es nulo y contiene datos adicionales (si es necesario)
         if (intent != null) {
@@ -41,7 +36,8 @@ class AlarmNotifications:BroadcastReceiver() {
         }
     }
 
-    private fun createNotification(context: Context, str:String,notificationType: Int) {
+
+    private fun createNotification(context: Context, str:String, notificationType: Int) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
