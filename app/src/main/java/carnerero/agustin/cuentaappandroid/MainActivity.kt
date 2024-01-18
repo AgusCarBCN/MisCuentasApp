@@ -268,7 +268,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
     }
-    @RequiresApi(Build.VERSION_CODES.S)
+
     private fun checkAndNotifyIfExpensesIsAboveLimit() {
 
         val limit = savedProgress
@@ -292,7 +292,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             scheduleNotificationAlertExpenses(stringBuilder.toString())
         }
     }
-    @RequiresApi(Build.VERSION_CODES.S)
+
     private fun scheduleNotificationAlertExpenses(report: String){
         val intent=Intent(applicationContext,AlarmNotifications::class.java)
         intent.putExtra("notificationType", AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
@@ -304,16 +304,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
-        when {
-            // If permission is granted, proceed with scheduling exact alarms.
-            alarmManager.canScheduleExactAlarms() -> {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP,Calendar.getInstance().timeInMillis+10000,pendingIntent)
-            }
-            else -> {
 
-            }
-        }
-
+        // Configurar la notificación para que se dispare a los 10s
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis()+1000,
+            pendingIntent
+        )
     }
 
     private fun scheduleNotificationAlertBalance(report: String) {
