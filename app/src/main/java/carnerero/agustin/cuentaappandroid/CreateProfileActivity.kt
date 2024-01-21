@@ -53,7 +53,7 @@ class CreateProfileActivity : AppCompatActivity() {
         val btnCreateAccount = binding.btnCreateAccounts
         val btnGoBack = binding.btnBacktoOnBoarding
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyTheme(enableDarkTheme)
         Utils.applyLanguage(enableEnLang)

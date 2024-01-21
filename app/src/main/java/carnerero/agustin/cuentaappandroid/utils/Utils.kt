@@ -151,7 +151,15 @@ class Utils {
             val calendar = Calendar.getInstance()
             return calendar.get(Calendar.MONTH) + 1
         }
+        fun getDefaultLang():Boolean{
+            var defaultLang=false
+            var lang=Locale.getDefault().language
+            if(lang!="es"){
+                defaultLang=true
+            }
+            return defaultLang
 
+        }
         fun getWeek():Int
         {
             val calendar=Calendar.getInstance()

@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Obtener configuraciones de preferencias compartidas
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
         // Obtener nombre,nombre de usuario y contraseña
         val name=sharedPreferences.getString(getString(R.string.username),"usuario")
 

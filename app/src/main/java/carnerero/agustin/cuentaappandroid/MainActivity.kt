@@ -97,12 +97,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             sharedPreferences.getBoolean(getString(R.string.switchmonth), false)
         val isCheckedSwitchAlertLimit =
             sharedPreferences.getBoolean(getString(R.string.switchlimit), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
+        Utils.applyLanguage(enableEnLang)
         //Recupera el valor de los progress de los seekbar
         savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
         savedProgress=sharedPreferences.getInt("progressValue",0)
         //Recupero configuracion de idioma y pais
-        lang=sharedPreferences.getString(getString(R.string.lang), null)?:"es"
-        country=sharedPreferences.getString(getString(R.string.country), null)?:"ES"
+        if(Utils.getDefaultLang()){
+            lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
+            country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
+        }else {
+            lang = sharedPreferences.getString(getString(R.string.lang), null) ?: "es"
+            country = sharedPreferences.getString(getString(R.string.country), null) ?: "ES"
+        }
         //Recupera las cuentas
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios

@@ -42,7 +42,7 @@ class CreateAccountsActivity : AppCompatActivity() {
         val btnGoBack=binding.btnBacktoCreateProfile
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyTheme(enableDarkTheme)
         Utils.applyLanguage(enableEnLang)
@@ -98,16 +98,21 @@ class CreateAccountsActivity : AppCompatActivity() {
                 getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
                 currency
             ).apply()
+           if(enableEnLang){
+               lang="en"
+           }else{
+               lang="es"
+           }
             when(selectedItem){
                 "EUR"->{
-                    lang="es"
+                    //lang="es"
                     country="ES"
                 }
                 "USD"->{
-                    lang="en"
+                    //lang="en"
                     country="US"
                 }else->{
-                lang="en"
+                //lang="en"
                 country="GB"
             }
             }

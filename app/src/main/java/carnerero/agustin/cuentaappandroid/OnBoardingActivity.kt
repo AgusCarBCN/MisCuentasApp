@@ -45,7 +45,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val enableDarkTheme =
             sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
         val enableEnLang =
-            sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyLanguage(enableEnLang)
         Utils.applyTheme(enableDarkTheme)
