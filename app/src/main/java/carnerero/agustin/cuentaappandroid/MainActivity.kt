@@ -120,12 +120,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         //Implementacion de navegacion personalizada al presionar boton hacia atras de movil
         //Te redirije hacia fragment de inicio no hacia la anterior actividad,que es la de login
-        onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                inicio()
-                showSaldo()
-            }
-        })
+
+
+            onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    inicio()
+                    showSaldo()
+                }
+            })
+
         //Crea canal para las notificaciones
         createChannel()
         //Envia notificaciones si los switch estan activados.
@@ -175,8 +178,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
-
-
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -258,6 +259,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fcv_main_container, fragment)
         transaction.commit()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backToLogin()
+            }
+        })
     }
     private fun checkAndNotifyIfBalanceIsBellowLimit() {
 
@@ -507,6 +513,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         stringBuilder.append("${getString(R.string.monthbills)}: ${currencyFormat.format(gastosMes)}\n")
         stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
+    }
+    private fun backToLogin(){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showNotificationPermissionRationale() {

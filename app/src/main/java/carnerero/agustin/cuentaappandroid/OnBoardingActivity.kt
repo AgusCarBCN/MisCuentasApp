@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
@@ -49,7 +50,11 @@ class OnBoardingActivity : AppCompatActivity() {
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyLanguage(enableEnLang)
         Utils.applyTheme(enableDarkTheme)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
 
+            }
+        })
         val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
         // Obtener referencias a los componentes desde el enlace de vista (binding)
         val btnCreateProfile=binding.btnCreateprofile
