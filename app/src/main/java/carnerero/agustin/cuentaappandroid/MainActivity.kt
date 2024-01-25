@@ -124,8 +124,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    inicio()
-                    showSaldo()
+                        inicio()
+                        showSaldo()
+
                 }
             })
 
@@ -259,11 +260,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fcv_main_container, fragment)
         transaction.commit()
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                backToLogin()
-            }
-        })
+
+
     }
     private fun checkAndNotifyIfBalanceIsBellowLimit() {
 
@@ -514,10 +512,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
     }
-    private fun backToLogin(){
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
 
     private fun showNotificationPermissionRationale() {
 

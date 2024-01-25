@@ -39,6 +39,7 @@ class LogoFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val name = sharedPreferences.getString(getString(R.string.username), null)
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
+
         if(img!=null) {
             val imgUri = Uri.parse(img)
             val picture = binding.imgProfile

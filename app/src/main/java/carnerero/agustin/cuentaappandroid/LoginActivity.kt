@@ -26,11 +26,7 @@ class LoginActivity : AppCompatActivity() {
         //Obtener componentes
         val btn_Login=binding.login
         val btn_forgetPassword=binding.btnNewpassword
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                backToOnBoarding()
-            }
-        })
+
 
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -91,10 +87,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    private fun backToOnBoarding(){
-        val intent = Intent(this, OnBoardingActivity::class.java)
-        startActivity(intent)
-    }
+
     override fun onDestroy() {
 
         super.onDestroy()
