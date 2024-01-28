@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentHomeBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 class LogoFragment : Fragment() {
 
@@ -39,6 +41,12 @@ class LogoFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val name = sharedPreferences.getString(getString(R.string.username), null)
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
+
+        //Banner en forma de Banner
+        MobileAds.initialize(requireContext()) {}
+        val mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         if(img!=null) {
             val imgUri = Uri.parse(img)

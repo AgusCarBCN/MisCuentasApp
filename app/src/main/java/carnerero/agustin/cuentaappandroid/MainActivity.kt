@@ -31,6 +31,7 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import java.text.NumberFormat

@@ -72,7 +72,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation ("me.relex:circleindicator:2.1.6")
-
+    //Google adMob
+    implementation ("com.google.android.gms:play-services-ads:22.6.0")
 
 
 
