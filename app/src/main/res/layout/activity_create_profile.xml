@@ -91,16 +91,24 @@
         android:text="@string/required"
         android:textSize="@dimen/extracommon"
         android:textStyle="bold" />
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_nameprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <EditText
         android:id="@+id/et_nameprofile"
         style="@style/InputFieldLarge"
         android:layout_marginTop="10dp"
         android:hint="@string/requiredname"
         android:inputType="text"
-
         />
-
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_usernameprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <EditText
         android:id="@+id/et_usernameprofile"
         style="@style/InputFieldLarge"
@@ -108,9 +116,13 @@
         android:hint="@string/requiredid"
         android:inputType="text"
         android:maxLength="10"
-
         />
-
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_passprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <EditText
         android:id="@+id/et_passwordprofile"
         style="@style/InputFieldLarge"
@@ -118,9 +130,13 @@
         android:hint="@string/requiredpassword"
         android:inputType="textPassword"
         android:maxLength="10"
-
         />
-
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_repeatpassprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <EditText
         android:id="@+id/et_reppasswordprofile"
         style="@style/InputFieldLarge"
@@ -128,9 +144,8 @@
         android:hint="@string/reppassword"
         android:inputType="textPassword"
         android:maxLength="10"
-
         />
-
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/btn_createAccounts"
         style="@style/ButtonLarge"

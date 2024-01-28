@@ -30,23 +30,35 @@
             android:text="@string/infocreateaccounts"
             android:textSize="@dimen/common"
             android:textStyle="bold" />
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
         <EditText
             android:id="@+id/et_nameaccount"
             style="@style/InputFieldLarge"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:hint="@string/accountname"
             android:importantForAutofill="no"
             android:inputType="textCapWords|textAutoComplete" />
-
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_balanceaccount"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
         <EditText
             android:id="@+id/et_balance"
             style="@style/InputFieldLarge"
             android:layout_marginTop="10dp"
             android:hint="@string/balance"
+            android:gravity="center"
             android:importantForAutofill="no"
             android:inputType="numberDecimal" />
-
+                  </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/btn_addaccount"
             style="@style/ButtonLarge"

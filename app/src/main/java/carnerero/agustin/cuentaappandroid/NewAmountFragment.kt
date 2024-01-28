@@ -65,10 +65,18 @@ class NewAmountFragment : Fragment() {
         }
         selectedAccount=""
 
-
         tvCuenta.setOnClickListener {
-            showSelectAccountDialog()
+            if(cuentas.size==0){
+                tvCuenta.text=getString(R.string.noaccounts)
+                Toast.makeText(
+                    requireContext(),getString(R.string.create_your_account),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else {
+                showSelectAccountDialog()
+            }
         }
+
 
 
         // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso

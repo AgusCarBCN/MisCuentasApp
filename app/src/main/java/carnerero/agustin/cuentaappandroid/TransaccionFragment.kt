@@ -57,12 +57,28 @@ class TransaccionFragment : Fragment() {
         selectedAccountTo=""
 
         tvAccountFrom.setOnClickListener {
-            showSelectAccountDialog(tvAccountFrom,true)
+            if(cuentas.size==0){
+                tvAccountFrom.text=getString(R.string.noaccounts)
+                Toast.makeText(
+                    requireContext(),getString(R.string.create_your_account),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else {
+                showSelectAccountDialog(tvAccountFrom,true)
+            }
+        }
+        tvAccountTo.setOnClickListener {
+            if(cuentas.size==0){
+                tvAccountTo.text=getString(R.string.noaccounts)
+                Toast.makeText(
+                    requireContext(),getString(R.string.create_your_account),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else {
+                showSelectAccountDialog(tvAccountTo,false)
+            }
         }
 
-        tvAccountTo.setOnClickListener {
-            showSelectAccountDialog(tvAccountTo,false)
-        }
 
         // Configurar el evento de clic para el botón "Aceptar"
         aceptar.setOnClickListener {

@@ -68,11 +68,18 @@ class ConsultaFragment : Fragment() {
             arrayCuentas[i]= cuentas[i].iban
 
         }
-
-
         tvCuenta.setOnClickListener {
-            showSelectAccountDialog()
+            if(cuentas.size==0){
+                tvCuenta.text=getString(R.string.noaccounts)
+                Toast.makeText(
+                    requireContext(),getString(R.string.create_your_account),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else {
+                showSelectAccountDialog()
+            }
         }
+
 
             // Mostrar DatePickerDialog al hacer clic en el EditText
         etDateFrom.setOnClickListener {

@@ -12,21 +12,28 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:orientation="vertical">
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <EditText
             android:id="@+id/et_descripcion"
             style="@style/InputFieldLarge"
             android:hint="@string/amount_text"
             android:gravity="center"
             android:inputType="textCapWords|textAutoComplete" />
-
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <EditText
             android:id="@+id/et_importe"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"
             android:gravity="center"
             android:inputType="numberDecimal" />
-
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/tvcuentanewamount"
             style="@style/InputFieldLargeCenter"
