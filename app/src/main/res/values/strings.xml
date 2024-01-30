@@ -161,7 +161,7 @@
     <string name="export_file">Export data to file</string>
     <string name="import_file">Import data from file</string>
     <string name="profile_icons">Icons from profile info</string>
-    <string name="database_icons">Icons from database page</string>
+    <string name="database_icons">Icons from setting accounts</string>
     <string name="newfield">New</string>
     <string name="newfieldF">New</string>
     <string name="hintdeleteaccount">Iban account to delete</string>
