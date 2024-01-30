@@ -281,4 +281,7 @@
     <string name="settingExactAlarm">Para poder usar las notificaciones de un modo efectivo es necesario permitir las alarmas exactas para esta aplicacion.¿Ir a la configuracion para activar las alarmas exactas?</string>
     <string name="selectphotosettingh">Selecciona una foto en la configuracion del perfil.Vista horizontal
 </string>
+    <string name="gotologin">Ir a inicio de sesion</string>
+    <string name="addaccount">Añade una cuenta</string>
+    <string name="goback">Volver atras</string>
 </resources>

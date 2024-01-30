@@ -86,8 +86,8 @@ class CreateAccountsActivity : AppCompatActivity() {
                     etAccountName.text.toString(),
                     etBalance.text.toString().toDouble()
                 ))
-                etAccountName.text.clear()
-                etBalance.text.clear()
+                etAccountName.text?.clear()
+                etBalance.text?.clear()
             }
         }
         btnLogin.setOnClickListener {

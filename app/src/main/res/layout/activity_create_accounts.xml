@@ -34,8 +34,8 @@
             android:id="@+id/til_name_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-        <EditText
+            android:labelFor="@+id/et_nameaccount">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_nameaccount"
             style="@style/InputFieldLarge"
             android:layout_marginTop="20dp"
@@ -49,8 +49,8 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-        <EditText
+            android:labelFor="@+id/et_balance">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_balance"
             style="@style/InputFieldLarge"
             android:layout_marginTop="10dp"
@@ -75,6 +75,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/selectCurrency"
             android:textAlignment="center"
+            android:labelFor="@+id/sp_choosecurreny"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -95,6 +96,7 @@
             android:autoSizeStepGranularity="2sp"
             android:autoSizeTextType="uniform"
             android:text="@string/login"
+            android:contentDescription="@string/gotologin"
             android:textSize="20sp" />
 
         <Button
