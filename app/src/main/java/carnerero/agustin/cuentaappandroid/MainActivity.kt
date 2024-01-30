@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid
 
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,8 +11,12 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -271,6 +276,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     }
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun checkAndNotifyIfBalanceIsBellowLimit() {
 
             val limit = savedProgressBal
@@ -288,6 +294,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun checkAndNotifyIfExpensesIsAboveLimit() {
 
         val limit = savedProgress
@@ -312,26 +319,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun scheduleNotificationAlertExpenses(report: String){
-        val intent=Intent(applicationContext,AlarmNotifications::class.java)
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun scheduleNotificationAlertExpenses(report: String) {
+        val intent = Intent(applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
         intent.putExtra("message", report)
-        val pendingIntent=PendingIntent.getBroadcast(
-            applicationContext.applicationContext,
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
             AlarmNotifications.ALARM_LIMIT_NOTIFICATION,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+
         val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
 
-        // Configurar la notificación para que se dispare a los 10s
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis()+1000,
-            pendingIntent
-        )
+        when {
+            alarmManager.canScheduleExactAlarms() -> {
+                // Si se concede el permiso, proceda a programar alarmas exactas.
+                alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + 10000,
+                    pendingIntent
+                )
+            }
+            else -> {
+                //Pida a los usuarios que vayan a la página de alarma exacta en la configuración del sistema.
+                goToSettingPage()
+
+            }
+        }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun scheduleNotificationAlertBalance(report: String) {
 
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
@@ -344,14 +365,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
-        // Configurar la notificación para que se dispare inmediatamente
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis(),
-            pendingIntent
-        )
+        when {
+            alarmManager.canScheduleExactAlarms() -> {
+                // Configurar la notificación para que se dispare inmediatamente
+                alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis(),
+                    pendingIntent
+                )
+            }
+
+            else -> {
+                // crear un alarmdialog para ir a esta pagina o bien seguir en aplicacion
+                goToSettingPage()
+
+            }
+        }
 
     }
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun scheduleNotificationReports(notificationType: Int, intervalDay: Int, report: String) {
         val intent = Intent(applicationContext, AlarmNotifications::class.java)
         intent.putExtra("notificationType", notificationType)
@@ -364,70 +396,81 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
 
         val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
+        when {
+            alarmManager.canScheduleExactAlarms() -> {
+                // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
+                val startTime = Calendar.getInstance()
+                startTime.set(Calendar.SECOND, 0)
 
-        // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
-        val startTime = Calendar.getInstance()
-        startTime.set(Calendar.SECOND, 0)
+                when (intervalDay) {
+                    INTERVAL_DAYLY -> {
+                        // Configurar la notificación para que se repita diariamente a la misma hora
+                        startTime.set(Calendar.HOUR_OF_DAY, 22)
+                        startTime.set(Calendar.MINUTE, 15)
+                        val intervalMillis = AlarmManager.INTERVAL_DAY
+                        alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            startTime.timeInMillis,
+                            intervalMillis,
+                            pendingIntent
+                        )
+                    }
 
-        when (intervalDay) {
-            INTERVAL_DAYLY -> {
-                // Configurar la notificación para que se repita diariamente a la misma hora
-                startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 15)
-                val intervalMillis = AlarmManager.INTERVAL_DAY
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    startTime.timeInMillis,
-                    intervalMillis,
-                    pendingIntent
-                )
-            }
-            INTERVAL_WEEKLY -> {
-                // Configurar la notificación para que se repita cada semana a la misma hora (domingo)
-                startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 20)
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+                    INTERVAL_WEEKLY -> {
+                        // Configurar la notificación para que se repita cada semana a la misma hora (domingo)
+                        startTime.set(Calendar.HOUR_OF_DAY, 22)
+                        startTime.set(Calendar.MINUTE, 20)
+                        startTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
-                // Ajustar para la próxima semana si es después del domingo actual
-                val today = Calendar.getInstance()
-                if (today.after(startTime)) {
-                    startTime.add(Calendar.WEEK_OF_YEAR, 1)
+                        // Ajustar para la próxima semana si es después del domingo actual
+                        val today = Calendar.getInstance()
+                        if (today.after(startTime)) {
+                            startTime.add(Calendar.WEEK_OF_YEAR, 1)
+                        }
+
+                        val intervalMillis = AlarmManager.INTERVAL_DAY * 7
+                        alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            startTime.timeInMillis,
+                            intervalMillis,
+                            pendingIntent
+                        )
+                    }
+
+                    INTERVAL_MONTHLY -> {
+                        // Configurar la notificación para que se repita al final de cada mes
+                        startTime.set(Calendar.HOUR_OF_DAY, 22)
+                        startTime.set(Calendar.MINUTE, 25)
+                        startTime.set(
+                            Calendar.DAY_OF_MONTH,
+                            startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
+                        )
+
+                        // Ajustar para el próximo mes si es después del último día del mes actual
+                        val today = Calendar.getInstance()
+                        if (today.after(startTime)) {
+                            startTime.add(Calendar.MONTH, 1)
+                        }
+                        // Utiliza el último día del mes actual
+                        val lastDayOfMonth = startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
+                        startTime.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
+
+                        val intervalMillis =
+                            AlarmManager.INTERVAL_DAY * (lastDayOfMonth - startTime.get(Calendar.DAY_OF_MONTH) + 1)
+                        alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            startTime.timeInMillis,
+                            intervalMillis,
+                            pendingIntent
+                        )
+                    }
                 }
-
-                val intervalMillis = AlarmManager.INTERVAL_DAY * 7
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    startTime.timeInMillis,
-                    intervalMillis,
-                    pendingIntent
-                )
-            }
-            INTERVAL_MONTHLY -> {
-                // Configurar la notificación para que se repita al final de cada mes
-                startTime.set(Calendar.HOUR_OF_DAY, 22)
-                startTime.set(Calendar.MINUTE, 25)
-                startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH))
-
-                // Ajustar para el próximo mes si es después del último día del mes actual
-                val today = Calendar.getInstance()
-                if (today.after(startTime)) {
-                    startTime.add(Calendar.MONTH, 1)
-                }
-                // Utiliza el último día del mes actual
-                val lastDayOfMonth = startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
-                startTime.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
-
-                val intervalMillis = AlarmManager.INTERVAL_DAY * (lastDayOfMonth - startTime.get(Calendar.DAY_OF_MONTH) + 1)
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    startTime.timeInMillis,
-                    intervalMillis,
-                    pendingIntent
-                )
-            }
+            }else -> {
+            goToSettingPage()
         }
-    }
+        }
 
+    }
 
     private fun createChannel() {
         val channel = NotificationChannel(
@@ -535,6 +578,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
+    private fun createAlertDialogSimple(question:Int,
+                                        confirmAction: () -> Unit): AlertDialog {
+        val builder = AlertDialog.Builder(this)
+        val inflater = LayoutInflater.from(this)
+        val dialogView = inflater.inflate(R.layout.custom_simple_dialog, null)
+        val questiontv=dialogView.findViewById<TextView>(R.id.tv_question)
+        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm0)
+        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel0)
 
+        questiontv.text=getString(question)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        confirmButton.setOnClickListener {
+            confirmAction()
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return dialog
+    }
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun goToSettingPage(){
+        val dialog=createAlertDialogSimple(R.string.settingExactAlarm){
+            startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+        }
+        dialog.show()
+    }
 
 }

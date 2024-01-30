@@ -278,7 +278,7 @@
     <string name="changeusername">Cambia el nombre de usuario</string>
     <string name="changepass">Cambia la contraseña</string>
     <string name="createprofile">Crea tu perfil</string>
-
+    <string name="settingExactAlarm">Para poder usar las notificaciones de un modo efectivo es necesario permitir las alarmas exactas para esta aplicacion.¿Ir a la configuracion para activar las alarmas exactas?</string>
     <string name="selectphotosettingh">Selecciona una foto en la configuracion del perfil.Vista horizontal
 </string>
 </resources>

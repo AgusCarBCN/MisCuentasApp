@@ -285,6 +285,6 @@
     <string name="selectphotosettingh">Select a photo in profile settings.Horizontal view
 </string>
     <string name="selectphotosetting">Select a photo in profile settings</string>
-
+    <string name="settingExactAlarm">In order to use notifications effectively, it is necessary to allow exact alarms for this application. Go to the settings to activate exact alarms?</string>
 
 </resources>
