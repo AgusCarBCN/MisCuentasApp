@@ -31,6 +31,7 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
@@ -111,6 +112,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             lang = sharedPreferences.getString(getString(R.string.lang), null) ?: "es"
             country = sharedPreferences.getString(getString(R.string.country), null) ?: "ES"
         }
+        //Banner en forma de Banner
+        MobileAds.initialize(this) {}
+        val mAdView :com.google.android.gms.ads.AdView=findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
         //Recupera las cuentas
         cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
         //Obtiene todos los movimientos bancarios

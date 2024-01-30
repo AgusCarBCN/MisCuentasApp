@@ -53,11 +53,7 @@ class NewAmountFragment : Fragment() {
         // Inflar el diseño del fragmento utilizando View Binding
         _binding = FragmentNewAmountBinding.inflate(inflater, container, false)
         val view = binding.root
-        //Banner en forma de Banner
-        MobileAds.initialize(requireContext()) {}
-        val mAdView2 = binding.adView2
-        val adRequest = AdRequest.Builder().build()
-        mAdView2?.loadAd(adRequest)
+
         // Acceso a los componentes de la interfaz
         val tvCuenta = binding.tvcuentanewamount
         val nuevoIngreso = binding.btnNuevoingreso

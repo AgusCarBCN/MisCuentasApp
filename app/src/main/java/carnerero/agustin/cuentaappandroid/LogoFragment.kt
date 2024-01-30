@@ -42,11 +42,7 @@ class LogoFragment : Fragment() {
         val name = sharedPreferences.getString(getString(R.string.username), null)
         val img=sharedPreferences.getString(getString(R.string.img_photo),null)
 
-        //Banner en forma de Banner
-        MobileAds.initialize(requireContext()) {}
-        val mAdView = binding.adView
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+
 
         if(img!=null) {
             val imgUri = Uri.parse(img)
