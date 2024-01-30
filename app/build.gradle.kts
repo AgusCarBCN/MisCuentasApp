@@ -14,7 +14,7 @@ android {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 26
         targetSdk = 34
-        versionCode = 15
+        versionCode = 22
         versionName = "1.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,8 +63,8 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.8.2")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
     //Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
