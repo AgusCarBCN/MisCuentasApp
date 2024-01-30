@@ -36,7 +36,7 @@
         style="@style/infoMainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp">
+        android:layout_marginStart="15dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp"
                 android:backgroundTint="@color/lightYellow"
                 app:cardCornerRadius="150dp">
 
@@ -66,7 +66,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|start"
-                android:layout_marginLeft="230dp"
+                android:layout_marginStart="230dp"
                 android:layout_marginBottom="0dp"
                 android:backgroundTint="?android:state_pressed"
                 app:cardCornerRadius="150dp">
@@ -95,8 +95,9 @@
         android:id="@+id/til_nameprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:labelFor="@+id/et_nameprofile"
         >
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_nameprofile"
         style="@style/InputFieldLarge"
         android:layout_marginTop="10dp"
@@ -108,8 +109,9 @@
         android:id="@+id/til_usernameprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:labelFor="@+id/et_usernameprofile"
         >
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_usernameprofile"
         style="@style/InputFieldLarge"
         android:layout_marginTop="10dp"
@@ -122,8 +124,9 @@
         android:id="@+id/til_passprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:labelFor="@+id/et_passwordprofile"
         >
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_passwordprofile"
         style="@style/InputFieldLarge"
         android:layout_marginTop="10dp"
@@ -136,8 +139,9 @@
         android:id="@+id/til_repeatpassprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:labelFor="@+id/et_reppasswordprofile"
         >
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_reppasswordprofile"
         style="@style/InputFieldLarge"
         android:layout_marginTop="10dp"
@@ -153,6 +157,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:text="@string/createaccounts"
+        android:contentDescription="@string/createaccounts"
         android:textSize="20sp" />
 
     <Button
@@ -161,6 +166,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
+        android:contentDescription="@string/backbutton"
         android:text="@string/backbutton"
         android:textSize="20sp" />
 </LinearLayout>
