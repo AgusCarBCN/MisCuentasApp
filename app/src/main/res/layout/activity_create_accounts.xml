@@ -8,8 +8,6 @@
     android:orientation="vertical"
     android:background="?android:colorPrimary"
     tools:context=".CreateAccountsActivity">
-
-
         <TextView
             android:id="@+id/tv_createaccountstitle"
             android:layout_width="match_parent"

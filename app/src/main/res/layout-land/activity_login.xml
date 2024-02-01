@@ -56,7 +56,8 @@
                 android:id="@+id/til_text_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:labelFor="@+id/et_text_user">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_text_user"
@@ -67,13 +68,14 @@
                     android:gravity="center"
                     android:hint="@string/enterusername"
                     android:inputType="text"
-                    android:maxLength="10" />/>
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_text_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:labelFor="@+id/et_password"
                 android:layout_marginTop="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -100,6 +102,9 @@
                 android:textColor="?android:textColor"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_newpassword"
                 android:layout_width="match_parent"
@@ -109,7 +114,7 @@
                 android:text="@string/forgetpass"
                 android:textAllCaps="false"
                 android:textSize="@dimen/common" />
-
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 

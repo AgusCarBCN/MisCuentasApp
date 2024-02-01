@@ -8,14 +8,8 @@
     android:background="?android:colorPrimary"
     android:orientation="vertical"
     tools:context=".LoginActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"      >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+
+
             <LinearLayout
                 android:id="@+id/ly_logo"
                 android:layout_width="match_parent"
@@ -59,7 +53,7 @@
                     android:id="@+id/til_text_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:labelFor="@+id/et_text_user">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_text_user"
                         android:layout_width="320dp"
@@ -75,7 +69,7 @@
                     android:id="@+id/til_text_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:labelFor="@+id/et_password">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
                         android:layout_width="320dp"
@@ -99,22 +93,24 @@
                     android:textColor="?android:textColor"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
-
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/btn_newpassword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="?android:colorPrimary"
                     android:gravity="center"
                     android:text="@string/forgetpass"
                     android:textAllCaps="false"
-                    android:textSize="@dimen/common" />
+                    android:textSize="@dimen/common"
+                    />
+                </ScrollView>
 
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 
-</LinearLayout>
+
