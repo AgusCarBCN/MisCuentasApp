@@ -7,7 +7,6 @@
     android:background="?android:colorPrimary"
     android:orientation="vertical"
     tools:context=".CreateProfileActivity">
-
     <TextView
         android:id="@+id/tv_createprofiletitle"
         android:layout_width="match_parent"
@@ -19,7 +18,6 @@
         android:textColor="?android:textColor"
         android:textSize="@dimen/head"
         android:textStyle="bold" />
-
     <TextView
         android:id="@+id/tv_profileimg"
         android:layout_width="match_parent"
@@ -30,7 +28,13 @@
         android:textAlignment="center"
         android:textSize="@dimen/common"
         android:textStyle="bold" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/lyimg"
         style="@style/infoMainLayout"
@@ -70,19 +74,19 @@
                 android:layout_marginBottom="0dp"
                 android:backgroundTint="?android:state_pressed"
                 app:cardCornerRadius="150dp">
-
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/selectphoto"
                     app:srcCompat="@drawable/ic_menu_camera" />
-
             </androidx.cardview.widget.CardView>
         </FrameLayout>
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -169,4 +173,8 @@
         android:contentDescription="@string/backbutton"
         android:text="@string/backbutton"
         android:textSize="20sp" />
+</LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

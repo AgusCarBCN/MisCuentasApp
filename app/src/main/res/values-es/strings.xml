@@ -269,6 +269,7 @@
     <string name="seekbar">seekbar</string>
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
+    <string name="disablenotifications"> The notifications option is disabled for this version</string>
     <!--content description-->
     <string name="selectphoto">Selecciona una foto</string>
     <string name="selectphotoprofile">Selecciona una foto en la creacion del perfil</string>

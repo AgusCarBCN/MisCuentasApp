@@ -271,7 +271,7 @@
     <string name="seekbar">seekbar</string>
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
-
+<string name="disablenotifications">The notifications option is disabled for this version </string>
     <!--content description-->
     <string name="selectphoto">Select a photo</string>
     <string name="changename">Change name</string>

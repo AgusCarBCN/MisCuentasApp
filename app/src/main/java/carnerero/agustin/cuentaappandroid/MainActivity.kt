@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -146,30 +147,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Crea canal para las notificaciones
         createChannel()
         //Envia notificaciones si los switch estan activados.
-        if(isCheckedSwitchDay){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (isCheckedSwitchDay) {
                 val report = showDaylyReport(movimientos)
                 scheduleNotificationReports(
                     AlarmNotifications.REPORT_DAYRY,
                     INTERVAL_DAYLY, report
                 )
-        }
-        if(isCheckedSwitchWeek){
-            val report=showWeeklyReport(movimientos)
-            scheduleNotificationReports(AlarmNotifications.REPORT_WEEKLY,
-                INTERVAL_WEEKLY,report)
-        }
-        if(isCheckedSwitchMonth){
-            val report=showMonthlyReport(movimientos)
-            scheduleNotificationReports(AlarmNotifications.REPORT_MONTLY,
-                INTERVAL_MONTHLY,report)
-        }
+            }
+            if (isCheckedSwitchWeek) {
+                val report = showWeeklyReport(movimientos)
+                scheduleNotificationReports(
+                    AlarmNotifications.REPORT_WEEKLY,
+                    INTERVAL_WEEKLY, report
+                )
+            }
+            if (isCheckedSwitchMonth) {
+                val report = showMonthlyReport(movimientos)
+                scheduleNotificationReports(
+                    AlarmNotifications.REPORT_MONTLY,
+                    INTERVAL_MONTHLY, report
+                )
+            }
 
-        if(isCheckedSwitchAlertBalance){
-            checkAndNotifyIfBalanceIsBellowLimit()
-        }
+            if (isCheckedSwitchAlertBalance) {
+                checkAndNotifyIfBalanceIsBellowLimit()
+            }
 
-        if(isCheckedSwitchAlertLimit){
-            checkAndNotifyIfExpensesIsAboveLimit()
+            if (isCheckedSwitchAlertLimit) {
+                checkAndNotifyIfExpensesIsAboveLimit()
+            }
+        }else{
+            Toast.makeText(this, getString(R.string.disablenotifications), Toast.LENGTH_LONG).show()
         }
         // Configurar la barra de herramientas (toolbar)
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)

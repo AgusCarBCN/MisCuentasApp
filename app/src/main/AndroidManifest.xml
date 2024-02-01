@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <application
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,7 +23,8 @@
         android:label="@string/labelapp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.CuentaAppAndroid">
+        android:theme="@style/Base.Theme.CuentaAppAndroid"
+        tool:targetApi="s">
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
