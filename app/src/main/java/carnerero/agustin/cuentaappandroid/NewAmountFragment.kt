@@ -134,8 +134,8 @@ class NewAmountFragment : Fragment() {
                     importe.text.toString().trim().toDouble(),
                     selectedAccount
                 )
-                importe.text.clear()
-                descripcion.text.clear()
+                importe.text?.clear()
+                descripcion.text?.clear()
                 // Actualizar el fragmento de saldo en la actividad principal
                 (activity as MainActivity).actualizarFragmentSaldo()
             }
@@ -204,8 +204,8 @@ class NewAmountFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     cuentaDao.actualizarSaldo(importeNumerico, selectedAccount)
-                    importe.text.clear()
-                    descripcion.text.clear()
+                    importe.text?.clear()?:""
+                    descripcion.text?.clear()?:""
                     // Actualizar el fragmento de saldo en la actividad principal
                     (activity as MainActivity).actualizarFragmentSaldo()
                 }

@@ -15,8 +15,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:labelFor="@+id/et_descripcion"
             >
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_descripcion"
             style="@style/InputFieldLarge"
             android:hint="@string/amount_text"
@@ -26,8 +27,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:labelFor="@id/et_importe"
             >
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_importe"
             style="@style/InputFieldLarge"
             android:hint="@string/amount"

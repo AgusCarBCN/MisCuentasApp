@@ -159,7 +159,7 @@ class TransaccionFragment : Fragment() {
                 movimientoBancarioDAO.nuevoImporte(movimientoBancarioDestino)
 
                 // Limpiar el campo de importe
-                importe.text.clear()
+                importe.text?.clear()?:""
 
                 // Actualizar el fragmento de saldo en la actividad principal
                 (activity as MainActivity).actualizarFragmentSaldo()
