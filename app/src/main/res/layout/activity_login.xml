@@ -44,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/wellcome"
                     android:textAlignment="center"
                     android:textColor="?android:textColor"
@@ -69,13 +70,14 @@
                     android:id="@+id/til_text_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:labelFor="@+id/et_password">
+                    android:labelFor="@+id/et_password"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
                         android:layout_width="320dp"
                         android:layout_height="@dimen/box"
                         android:layout_gravity="center"
-                        android:layout_marginTop="30dp"
                         android:background="@drawable/style_editetx"
                         android:gravity="center"
                         android:hint="@string/enterpass"
@@ -86,7 +88,7 @@
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:background="@drawable/style_button"
                     android:text="@string/login"
                     android:textAllCaps="false"

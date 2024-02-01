@@ -137,7 +137,7 @@
     <string name="iconsdate">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
-    <string name="version">Version 1.3.0</string>
+    <string name="version">Version 1.3.3.2</string>
     <string name="description">
     Mis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 
@@ -269,7 +269,7 @@
     <string name="seekbar">seekbar</string>
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
-    <string name="disablenotifications"> The notifications option is disabled for this version</string>
+    <string name="disablenotifications">Las notificaciones están desahilitadas para esta version </string>
     <!--content description-->
     <string name="selectphoto">Selecciona una foto</string>
     <string name="selectphotoprofile">Selecciona una foto en la creacion del perfil</string>
