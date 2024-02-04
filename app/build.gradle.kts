@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId = "carnerero.agustin.cuentaappandroid"
-        minSdk = 26
+        minSdk = 27
         targetSdk = 34
         versionCode = 26
-        versionName = "1.3.3.1"
+        versionName = "1.3.3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
