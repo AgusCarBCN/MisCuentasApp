@@ -2,14 +2,12 @@ package carnerero.agustin.cuentaappandroid
 
 
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
 

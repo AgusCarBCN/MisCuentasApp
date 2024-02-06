@@ -4,10 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.ActivityLoginBinding
 
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -24,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
         // Inicialización del enlace de diseño
         binding = ActivityLoginBinding.inflate(layoutInflater)
         //Obtener componentes
-        val btn_Login=binding.login
-        val btn_forgetPassword=binding.btnNewpassword
+        val btnLogin=binding.login
+        val btnForgetPassword=binding.btnNewpassword
 
 
         // Obtener preferencias compartidas
@@ -41,8 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Obtener la hora actual
         val cal = Calendar.getInstance()
-        val currentHour = cal.get(Calendar.HOUR_OF_DAY)
-        val greeting = when (currentHour) {
+        val greeting = when (cal.get(Calendar.HOUR_OF_DAY)) {
             in 6..11 -> getString(R.string.goodmorning)
             in 12..20 -> getString(R.string.goodafternoon)
             else -> getString(R.string.goodevening)
@@ -56,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         // Establecer el diseño de la actividad
         setContentView(binding.root)
 
-        btn_Login.setOnClickListener {
+        btnLogin.setOnClickListener {
             val userField: String = binding.etTextUser.text.toString()
             val passwordField: String = binding.etPassword.text.toString()
             val userName=sharedPreferences.getString(getString(R.string.userlogin),"")
@@ -64,33 +61,28 @@ class LoginActivity : AppCompatActivity() {
             if (userField.isEmpty() || passwordField.isEmpty()) {
                 if (userField.isEmpty() && passwordField.isEmpty()) {
                     // Mostrar mensaje si ambos campos están vacíos
-                    Toast.makeText(this, "${getString(R.string.msgemptiesfield)}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.msgemptiesfield), Toast.LENGTH_LONG).show()
                 } else {
                     // Mostrar mensaje si al menos un campo está vacío
-                    Toast.makeText(this, "${getString(R.string.msgemptyfield)}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.msgemptyfield), Toast.LENGTH_LONG).show()
                 }
             } else {
                 // Verificar las credenciales
                 if (userName == userField && password== passwordField) {
                     // Mostrar mensaje de éxito y abrir la actividad principal
-                    Toast.makeText(this, "${getString(R.string.msgsucces)}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.msgsucces), Toast.LENGTH_LONG).show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // Mostrar mensaje de error si las credenciales no coinciden
-                    Toast.makeText(this, "${getString(R.string.msgnosucces)}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.msgnosucces), Toast.LENGTH_LONG).show()
                 }
             }
         }
-        btn_forgetPassword.setOnClickListener {
+        btnForgetPassword.setOnClickListener {
             val intent = Intent(this, NewPasswordActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-
-        super.onDestroy()
     }
 
 }

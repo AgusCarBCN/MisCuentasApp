@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateAccountsBinding
@@ -79,8 +78,7 @@ class CreateAccountsActivity : AppCompatActivity() {
                 }
                 if(etBalance.text.isNullOrEmpty()){
                 etBalance.error=getString(R.string.msgemptyfield)}
-                Toast.makeText(this, getString(carnerero.agustin.cuentaappandroid.R.string.msgemptiesfield), Toast.LENGTH_LONG)
-                    .show()
+
             }else {
                 cuentaDao.insertarCuenta(Cuenta(
                     etAccountName.text.toString(),
@@ -98,23 +96,24 @@ class CreateAccountsActivity : AppCompatActivity() {
                 getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
                 currency
             ).apply()
-           if(enableEnLang){
-               lang="en"
-           }else{
-               lang="es"
-           }
-            when(selectedItem){
+            lang = if(enableEnLang){
+                "en"
+            }else{
+                "es"
+            }
+            country = when(selectedItem){
                 "EUR"->{
                     //lang="es"
-                    country="ES"
+                    "ES"
                 }
+
                 "USD"->{
                     //lang="en"
-                    country="US"
+                    "US"
                 }else->{
-                //lang="en"
-                country="GB"
-            }
+                    //lang="en"
+                    "GB"
+                }
             }
             //Guardar configuraciones de idioma y pais en funcion de la moneda seleccionada
             sharedPreferences.edit().putString(

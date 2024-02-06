@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
@@ -88,8 +87,7 @@ class CreateProfileActivity : AppCompatActivity() {
                 //Verifica si las contraseñas son iguales
                 if(etPassword.text.toString()!=etRepeatPassword.text.toString()){
                     etRepeatPassword.error=getString(R.string.reppassword)
-                    Toast.makeText(this, getString(carnerero.agustin.cuentaappandroid.R.string.passnotequals), Toast.LENGTH_LONG)
-                        .show()
+
                 }
                 //Si se pasan los criterios de validacion se almacenan los valores en sharepreferences
             } else {

@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentHomeBinding
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
+
 
 class LogoFragment : Fragment() {
 

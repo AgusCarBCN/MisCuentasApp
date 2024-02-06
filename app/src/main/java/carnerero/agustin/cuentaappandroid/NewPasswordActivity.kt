@@ -26,40 +26,40 @@ class NewPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Referencia de los componentes de la interfaz
-        val et_userDni = binding.etDniuser
-        val et_newPass = binding.etNewpassword
-        val et_repeatPass = binding.etRepeatpassword
-        val btn_confirmUser = binding.confirmdni
-        val btn_confirmNewPass = binding.confirmnewpass
-        val btn_goBackLogin=binding.backtoLogin
+        val etUserName = binding.etDniuser
+        val etNewPass = binding.etNewpassword
+        val etRepeatPass = binding.etRepeatpassword
+        val btnConfirmUser = binding.confirmdni
+        val btnConfirmNewPass = binding.confirmnewpass
+        val btnGoBackLogin=binding.backtoLogin
         // Recuperar el DNI del usuario que inició sesión
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         login = sharedPreferences.getString(getString(R.string.userlogin), null).toString()
 
         // Inicializar componentes con fondo azul claro para indicar que están deshabilitados
-        et_newPass.isEnabled = false
-        et_repeatPass.isEnabled = false
-        btn_confirmNewPass.visibility = View.GONE
+        etNewPass.isEnabled = false
+        etRepeatPass.isEnabled = false
+        btnConfirmNewPass.visibility = View.GONE
 
         // Acciones a realizar cuando se hace clic en el botón de confirmar usuario
-        btn_confirmUser.setOnClickListener {
+        btnConfirmUser.setOnClickListener {
 
-            if (et_userDni.text.toString() == login) {
-                et_newPass.isEnabled = true
-                et_repeatPass.isEnabled = true
-                btn_confirmNewPass.visibility = View.VISIBLE
-                btn_confirmUser.visibility = View.GONE
-                et_userDni.isEnabled = false
+            if (etUserName.text.toString() == login) {
+                etNewPass.isEnabled = true
+                etRepeatPass.isEnabled = true
+                btnConfirmNewPass.visibility = View.VISIBLE
+                btnConfirmUser.visibility = View.GONE
+                etUserName.isEnabled = false
             } else {
-                Toast.makeText(this, "${getString(R.string.msgnosucces)}" , Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.msgnosucces), Toast.LENGTH_LONG).show()
             }
         }
 
         // Acciones a realizar cuando se hace clic en el botón de confirmar nueva contraseña
-        btn_confirmNewPass.setOnClickListener {
+        btnConfirmNewPass.setOnClickListener {
 
-            val newpass = et_newPass.text.toString()
-            val repeatPass = et_repeatPass.text.toString()
+            val newpass = etNewPass.text.toString()
+            val repeatPass = etRepeatPass.text.toString()
 
             // Verificar que los campos de contraseña no estén vacíos
             if (newpass.isEmpty() || repeatPass.isEmpty()) {
@@ -73,7 +73,7 @@ class NewPasswordActivity : AppCompatActivity() {
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
                     sharedPreferences.edit().putString(
                         getString(R.string.userpass),
-                        et_newPass.text.toString()
+                        etNewPass.text.toString()
                     ).apply()
                     Toast.makeText(this, getString(R.string.successnewpass), Toast.LENGTH_LONG)
                         .show()
@@ -86,7 +86,7 @@ class NewPasswordActivity : AppCompatActivity() {
                 }
             }
         }
-        btn_goBackLogin?.setOnClickListener {
+        btnGoBackLogin?.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
