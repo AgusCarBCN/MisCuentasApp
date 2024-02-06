@@ -14,7 +14,7 @@ import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentTransaccionBinding
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import java.text.SimpleDateFormat
+import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.util.Date
 
 class TransaccionFragment : Fragment() {
@@ -83,8 +83,8 @@ class TransaccionFragment : Fragment() {
         // Configurar el evento de clic para el botón "Aceptar"
         aceptar.setOnClickListener {
             // Obtener la fecha actual en formato dd/MM/yyyy
-            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
-
+            //val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
+            val fechaImporte=Date().dateFormat()
             // Obtener el importe del EditText
             val importeText = importe.text.toString().trim()
 

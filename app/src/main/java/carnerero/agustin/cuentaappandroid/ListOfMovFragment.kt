@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +18,7 @@ import java.util.Locale
 
 
 
+@Suppress("DEPRECATION")
 class ListOfMovFragment : Fragment() , OnLocaleListener {
 
     private lateinit var lang:String
@@ -54,16 +54,30 @@ class ListOfMovFragment : Fragment() , OnLocaleListener {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Configuración del RecyclerView y el adaptador
-        val movimientos = arguments?.getParcelableArrayList("clave_movimientos", MovimientoBancario::class.java)
-        recyclerView = binding.rvMovimientos
-        adaptermovimientos= movimientos?.let { AdapterMov(it,this) }!!
-        recyclerView.apply {
-            this.layoutManager= LinearLayoutManager(context)
-            adapter=adaptermovimientos
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            val movimientos = arguments?.getParcelableArrayList(
+                "clave_movimientos",
+                MovimientoBancario::class.java
+            )
+            recyclerView = binding.rvMovimientos
+            adaptermovimientos = movimientos?.let { AdapterMov(it, this) }!!
+            recyclerView.apply {
+                this.layoutManager = LinearLayoutManager(context)
+                adapter = adaptermovimientos
+            }
+        }else{
+            val movimientos = arguments?.getParcelableArrayList<MovimientoBancario>("clave_movimientos")
+            recyclerView = binding.rvMovimientos
+            adaptermovimientos = AdapterMov(movimientos ?: arrayListOf(), this)
+
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = adaptermovimientos
+            }
         }
 
     }
