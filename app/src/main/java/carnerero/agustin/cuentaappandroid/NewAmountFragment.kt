@@ -18,9 +18,7 @@ import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNewAmountBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import java.text.SimpleDateFormat
+import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.util.Date
 import kotlin.math.abs
 
@@ -83,8 +81,8 @@ class NewAmountFragment : Fragment() {
 
         // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso
         nuevoIngreso.setOnClickListener {
-            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
-
+            //val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
+            val fechaImporte=Date().dateFormat()
             if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 if (importe.text.isNullOrBlank() && descripcion.text.isNullOrBlank()) {
                     Toast.makeText(
@@ -143,8 +141,8 @@ class NewAmountFragment : Fragment() {
 
         // Acciones a realizar cuando se hace clic en el botón de nuevo gasto
         nuevoGasto.setOnClickListener {
-            val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
-
+            //val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
+            val fechaImporte=Date().dateFormat()
             if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 if (importe.text.isNullOrBlank() && descripcion.text.isNullOrBlank()) {
                     Toast.makeText(
