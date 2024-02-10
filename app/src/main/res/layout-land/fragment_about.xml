@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutFragment">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,56 +77,62 @@
             android:textStyle="bold"
             android:text="@string/contact_me"  />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+
             <!-- Correo electrónico -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
             <ImageView
                 android:id="@+id/imgemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/email"
+                android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/email_24" />
 
             <TextView
                 android:id="@+id/tvemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:textAlignment="center"
                 android:autoLink="email"
                 android:clickable="true"
                 />
+    </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/common"
-            android:gravity="center"
-            android:orientation="horizontal">
             <!-- Enlace a GitHub -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
             <ImageView
                 android:id="@+id/icongithub"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/github" />
+                android:layout_gravity="center"
+                android:contentDescription="@string/visitGitHub"
+                android:layout_marginEnd="10dp"
+                app:srcCompat="@drawable/github"
+                />
             <TextView
                 android:id="@+id/tvgithublink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:textAlignment="center"
+                android:contentDescription="@string/visitGitHub"
                 android:textSize="@dimen/common"
                 android:clickable="true"
                  />
-
-
+    </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
+
     </ScrollView>
-</FrameLayout>
