@@ -9,9 +9,9 @@ import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
 class MovimientoBancarioDAO(private val admin: DataBaseApp) {
     // Consultas SQL predefinidas
     private val selectAll = "SELECT * FROM MOVIMIENTO"
-    private val selectAllByIban = "SELECT * FROM MOVIMIENTO WHERE iban=?"
-    private val selectIncomes = "SELECT * FROM MOVIMIENTO WHERE iban=? AND importe>=0"
-    private val selectBills = "SELECT * FROM MOVIMIENTO WHERE iban=? AND importe<0"
+    private val selectAllByIban = "SELECT * FROM MOVIMIENTO WHERE nombreCuenta=?"
+    private val selectIncomes = "SELECT * FROM MOVIMIENTO WHERE nombreCuenta=? AND importe>=0"
+    private val selectBills = "SELECT * FROM MOVIMIENTO WHERE nombreCuenta=? AND importe<0"
 
     // Método para insertar un nuevo movimiento bancario en la base de datos
     fun nuevoImporte(movimientoBancario: MovimientoBancario) {
@@ -20,7 +20,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
             val values = ContentValues().apply {
                 put("importe", movimientoBancario.importe)
                 put("descripcion", movimientoBancario.descripcion)
-                put("iban", movimientoBancario.iban)
+                put("nombreCuenta", movimientoBancario.nombreDeCuenta)
                 put("fechaImporte", movimientoBancario.fechaImporte)
             }
 
@@ -37,31 +37,31 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
         return listarMovimientos(selectAll, null)
     }
 
-    fun getIncome(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(selectIncomes, iban)
+    fun getIncome(nombreCuenta: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(selectIncomes, nombreCuenta)
     }
 
-    fun getIncomeandBills(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(selectAllByIban, iban)
+    fun getIncomeandBills(nombreCuenta: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(selectAllByIban, nombreCuenta)
     }
 
-    fun getBills(iban: String): ArrayList<MovimientoBancario> {
-        return listarMovimientos(selectBills, iban)
+    fun getBills(nombre: String): ArrayList<MovimientoBancario> {
+        return listarMovimientos(selectBills, nombre)
     }
 
     // Método privado para listar movimientos según una consulta y un IBAN opcional
-    private fun listarMovimientos(query: String, iban: String?): ArrayList<MovimientoBancario> {
+    private fun listarMovimientos(query: String, nombreCuenta: String?): ArrayList<MovimientoBancario> {
         val movimientos = ArrayList<MovimientoBancario>()
         admin.readableDatabase.use { db ->
             try {
-                val cursor: Cursor = db.rawQuery(query, if (iban != null) arrayOf(iban) else null)
+                val cursor: Cursor = db.rawQuery(query, if (nombreCuenta != null) arrayOf(nombreCuenta) else null)
 
                 if (cursor.moveToFirst()) {
                     do {
                         val movimiento = MovimientoBancario(
                             cursor.getDouble(cursor.getColumnIndexOrThrow("importe")),
                             cursor.getString(cursor.getColumnIndexOrThrow("descripcion")),
-                            cursor.getString(cursor.getColumnIndexOrThrow("iban")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("nombreCuenta")),
                             cursor.getString(cursor.getColumnIndexOrThrow("fechaImporte"))
                         )
                         movimientos.add(movimiento)
@@ -76,17 +76,17 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
         return movimientos
     }
 
-    fun borrarMovimientosPorIBAN(iban: String) {
+    fun borrarMovimientosPorNombre(nombre: String) {
         admin.writableDatabase.use { db ->
             db.execSQL("PRAGMA foreign_keys = ON;")
 
-            val whereClause = "iban = ?"
-            val whereArgs = arrayOf(iban)
+            val whereClause = "nombreCuenta = ?"
+            val whereArgs = arrayOf(nombre)
 
             try {
                 db.delete("MOVIMIENTO", whereClause, whereArgs)
             } catch (e: SQLException) {
-                // Manejo de errores al borrar los movimientos de la cuenta
+
             }
         }
     }

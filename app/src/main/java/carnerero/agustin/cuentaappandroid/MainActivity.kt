@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // Obtengo saldos de cuentas
             for (cuenta: Cuenta in cuentas) {
                 if (cuenta.saldo <= limit) {
-                    stringBuilder.append(".${getString(R.string.account)}:${cuenta.iban}")
+                    stringBuilder.append(".${getString(R.string.account)}:${cuenta.nombre}")
                     scheduleNotificationAlertBalance(stringBuilder.toString())
                 }
             }
@@ -505,7 +505,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
             val today= LocalDate.now()
             if (fechaImporteDate.isEqual(today)) {
-                stringBuilder.append("${movimiento.descripcion} ${currencyFormat.format(movimiento.importe)}  ${movimiento.iban}\n")
+                stringBuilder.append("${movimiento.descripcion} ${currencyFormat.format(movimiento.importe)}  ${movimiento.nombreDeCuenta}\n")
                 if(movimiento.importe>=0){
                     incomes+=movimiento.importe
                 }else expenses+=movimiento.importe
@@ -546,7 +546,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val result=ingresosSemana+gastosSemana
         stringBuilder.append("${getString(R.string.weekicome)}: ${currencyFormat.format(ingresosSemana)}\n")
         stringBuilder.append("${getString(R.string.weekbills)}: ${currencyFormat.format(gastosSemana)}\n")
-        stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
+        stringBuilder.append("${getString(R.string.resultsearch)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
     }
     private fun showMonthlyReport(movimientos: ArrayList<MovimientoBancario>):String{
@@ -569,7 +569,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val result=ingresosMes+gastosMes
         stringBuilder.append("${getString(R.string.monthicome)}: ${currencyFormat.format(ingresosMes)}\n")
         stringBuilder.append("${getString(R.string.monthbills)}: ${currencyFormat.format(gastosMes)}\n")
-        stringBuilder.append("${getString(R.string.resul)}: ${currencyFormat.format(result)}")
+        stringBuilder.append("${getString(R.string.resultsearch)}: ${currencyFormat.format(result)}")
         return stringBuilder.toString()
     }
 

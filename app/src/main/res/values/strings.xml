@@ -1,109 +1,101 @@
 <resources>
-    <string name="app_name">CuentaAppAndroid</string>
-    <string name="title_activity_nav">NavActivity</string>
-    <string name="navigation_drawer_open">Open</string>
-    <string name="navigation_drawer_close">Close</string>
-    <string name="wellcome">Wellcome</string>
-    <string name="login">Login</string>
+    <!-- Authentication and User Profile -->
+    <string name="wellcome">Welcome</string>
+    <string name="login">Log in</string>
     <string name="user">User</string>
     <string name="password">Password</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
-    <string name="balance">Balance</string>
     <string name="create">Create</string>
+    <string name="account">Account</string>
     <string name="create_your_account">Create your profile</string>
-    <string name="change">Change</string>
+    <string name="name">Name</string>
+    <string name="addyouraccounts">Add your accounts</string>
     <string name="required">*Required field</string>
+
+    <!-- Time of Day Greetings -->
     <string name="goodmorning">Good morning</string>
     <string name="goodafternoon">Good afternoon</string>
     <string name="goodevening">Good evening</string>
 
-    <string name="name">Name</string>
-    <string name="id">Username</string>
-    <string name="address">Address</string>
-    <string name="city">City</string>
-    <string name="zipcode">Zip code</string>
-    <string name="email">email</string>
-    <string name="addyouraccounts">Add your accounts</string>
-    <string name="accounts">Accounts</string>
-    <string name="second_account">Secondary account</string>
+    <!-- User Interaction Messages -->
     <string name="new_user">Are you a new user?</string>
     <string name="select_account">Select an account</string>
     <string name="select_year">Select a year</string>
     <string name="amount">Amount</string>
-    <string name="amount_text">Amount description</string>
-    <string name="date_from">Date from</string>
-    <string name="date_to">Date to</string>
-    <string name="incomes">Income</string>
+    <string name="date_from">From date</string>
+    <string name="date_to">To date</string>
+    <string name="incomes">Incomes</string>
     <string name="incomem">income</string>
     <string name="bills">Bills</string>
-    <string name="billm">spent</string>
-    <string name="income_and_bills">Income and Bill</string>
+    <string name="billm">bills</string>
+    <string name="income_and_bills">Incomes and bills</string>
     <string name="amount_from">Amount from</string>
     <string name="amount_to">Amount to</string>
     <string name="search">Search</string>
+    <string name="amount_text">Amount description</string>
     <string name="result">Result</string>
     <string name="your_accounts">Your accounts</string>
-    <string name="account">Account</string>
     <string name="from_account">From account</string>
     <string name="to_account">To account</string>
     <string name="setting">Settings</string>
     <string name="new_amount">New amount</string>
-    <string name="stadistics">Graphics</string>
-    <string name="searchitem">Search</string>
+    <string name="stadistics">Charts</string>
+    <string name="searchitem">Query</string>
     <string name="transferitem">Transfer</string>
     <string name="logout">Log out</string>
     <string name="msgincome">New income in</string>
-    <string name="msgbill">New bill in</string>
-    <string name="msgemptyamount">You must enter an amount</string>
-    <string name="msgemptydes">You must enter a description</string>
+    <string name="msgbill">New expense in</string>
     <string name="msgemptiesfield">Empty fields</string>
     <string name="msgemptyfield">Empty field</string>
+    <string name="msgemptyamount">You must enter an amount</string>
+    <string name="msgemptydes">You must enter a description</string>
     <string name="msgsucces">Successful login</string>
     <string name="msgnosucces">Incorrect login</string>
-    <string name="msgtransfersame">You cannot make a transfer to the same account</string>
-    <string name="msgntransfer">Transfer completed </string>
-    <string name="msgselectaccount">Select an account to a new</string>
-    <string name="msgalertbalance">The expense cannot be greater than the account balance</string>
-    <string name="msgdates">The date from cannot be greater than date to</string>
-    <string name="alertamounts">The amount from cannot be greater than amount to</string>
-    <string name="alertnewamount">you must select an account to add a new entry</string>
-    <string name="alertdialognewamount">Amount realized</string>
-    <string name="forgetpass">Have you forgotten the password?"</string>
-    <string name="step1">Username(step 1)</string>
-    <string name="step2">new password (step 2)</string>
+    <string name="msgtransfersame">You cannot transfer to the same account</string>
+    <string name="msgntransfer">Transfer complete</string>
+    <string name="msgselectaccount">Select an account for a new</string>
+    <string name="msgalertbalance">The expense cannot exceed the balance</string>
+    <string name="msgdates">From date cannot be greater than to date</string>
+    <string name="alertamounts">Amount from cannot be greater than amount to</string>
+    <string name="alertnewamount">You must select an account to add a new amount</string>
+    <string name="alertdialognewamount">Amount made</string>
+    <string name="forgetpass">Forgot password?</string>
+    <string name="balance">Saldo</string>
+    <!-- Password Reset -->
+    <string name="step1">Username (step 1)</string>
+    <string name="step2">New password (step 2)</string>
     <string name="hintid">Username</string>
     <string name="hintnewpass">New password</string>
     <string name="hintrepeatpass">Repeat password</string>
-    <string name="successnewpass">New password created</string>
-    <string name="passnotequals">Passwords not equals </string>
-    <string name="intronewpass"> To change your password follow the steps.</string>
-    <!-- Fragment configuration -->
+    <string name="successnewpass">Password changed</string>
+    <string name="passnotequals">Passwords do not match</string>
+    <string name="intronewpass">To change the password follow the steps.</string>
+    <string name="change">Change</string>
+
+    <!-- Navigation and App Settings -->
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
     <string name="profile">Profile</string>
     <string name="accountconfig">Accounts</string>
     <string name="notifications">Notifications</string>
     <string name="deleteall">Delete all data</string>
-    <string name="importcvs">Import from a external file</string>
-    <string name="exportcvs">Export to a external file</string>
+    <string name="importcvs">Import from external file</string>
+    <string name="exportcvs">Export to external file</string>
     <string name="about">About</string>
     <string name="logoutconf">Log out</string>
     <string name="theme">Theme</string>
     <string name="home">Home</string>
-    <string name="db">DataBase</string>
-    <string name="darkTheme">Dark theme</string>
-    <string name="lightTheme">Light theme</string>
-    <string name="settingLang">Setting language</string>
-    <string name="settingTheme">Setting theme</string>
+    <string name="db">Database</string>
+    <string name="darkTheme">Dark Theme</string>
+    <string name="lightTheme">Light Theme</string>
+    <string name="settingLang">Set language</string>
+    <string name="settingTheme">Set theme</string>
+    <string name="settingcurrency">Select currency</string>
+    <string name="selectaccountfrom">select source account</string>
+    <string name="selectaccountto">select target account</string>
 
-
-    <string name="preferences_enable">enable_dark_mode</string>
-    <string name="preferences_enable_lang">enable_en_lang</string>
-    <string name="euro">euro</string>
-    <string name="dolar">dolar</string>
-    <string name="libra">pound</string>
-    <string name="settingcurrency">Setting currency\n</string>
-
-
+    <!--Calculator-->
     <string name="calc_btn_coma">,</string>
     <string name="calc_sign">+/-</string>
     <string name="calc_btn_0">0</string>
@@ -127,9 +119,11 @@
     <string name="calculator">calculator</string>
     <string name="incorrectExpresion">Incorrect expresion</string>
     <string name="formaterror">Format error</string>
+
+    <!--App name-->
     <string name="labelapp">My accounts</string>
-
-
+    <string name="app_name">My accounts</string>
+    <!--About-->
     <string name="developer">Developer: Agustin Carnerero Peña</string>
     <string name="iconconta">Accounting icon</string>
     <string name="icongithub">Github logo icon</string>
@@ -149,11 +143,12 @@
 </string>
     <string name="contact_me">Contact me</string>
     <string name="visitGitHub">Visit my gitHub</string>
+
+    <!--Profile and accounts settings-->
     <string name="info">Your profile</string>
     <string name="disabledoption">disabled option for an account</string>
     <string name="add_an_account">Add an account</string>
     <string name="img_photo">img_photo</string>
-    <string name="databasetitle">Database</string>
     <string name="rename_account">Rename an account</string>
     <string name="delete_data_account">Delete data from an account</string>
     <string name="delete_an_account">Delete an account</string>
@@ -167,14 +162,15 @@
     <string name="hintdeleteaccount">Iban account to delete</string>
     <string name="hintdeletemovaccount">Iban from account to delete amounts</string>
     <string name="titledelelemov">Delete all amounts from an account</string>
-    <string name="iban">Account name</string>
-    <string name="newiban">New name</string>
+    <string name="newname">New name</string>
     <string name="existsAccount">There is no account with this IBAN</string>
     <string name="questiondialog">Do you want to delete all data?</string>
     <string name="noaccounts">There are not accounts to show</string>
     <string name="oneaccount">Option not available for an account</string>
     <string name="exportData">Export data from account</string>
     <string name="importData">Import data</string>
+
+    <!--Notifications-->
     <string name="selectCurrency">Select Currency</string>
     <string name="daylyreport">dayly report</string>
     <string name="weekreport">weekly report</string>
@@ -183,7 +179,7 @@
     <string name="weekbills">Weekly expenses</string>
     <string name="monthicome">Monthly earnings</string>
     <string name="monthbills">Monthly expenses</string>
-    <string name="resul">Result</string>
+    <string name="resultsearch">Result</string>
     <string name="lowbalance">Balance alert less than</string>
     <string name="hightexpenses">Expenses per month above the limit</string>
     <string name="expenseslimit">You have exceeded this months expenses in </string>
@@ -194,6 +190,8 @@
     <string name="notificationrequiredalert">Message to allow notifications</string>
     <string name="permissiongranted">Notification permission granted</string>
     <string name="accountsetting">Set up your accounts</string>
+
+    <!--Onboarding-->
     <string name="introapp">With this application, you can manage your income, track expenses, and achieve
     financial goals directly from your device. To get the most out of it, we invite you to watch our video
     tutorials. Discover how to enhance your financial experience with My Accounts! </string>
@@ -205,7 +203,7 @@
     <string name="title4">Enable notifications</string>
     <string name="title5">Configure your application and accounts.</string>
     <string name="des0">\t\t\tWelcome to myAppAccounts! Your personalized tool for financial control.
-        Record expenses and income and achive your savings goals. Get notifications about your accounts to make
+        Record expenses and income and achieve your savings goals. Get notifications about your accounts to make
         informed financial decisions. Start your journey to strong financial health today!</string>
 
     <string name="des1">\t\t\tCreate your profile to use the app. This ensures the confidentiality of your notes,
@@ -221,6 +219,8 @@
     <string name="des5">\t\t\tCustomize myAccountsApp according to your preferences.
         View your expenses converted to dollars, euros or pounds for a global perspective</string>
     <string name="wellcomeOnBoarding">Wellcome to MyAccountsApp</string>
+
+    <!--Create profile-->
     <string name="createyourprofile">Create your profile</string>
     <string name="requiredname">*Name</string>
     <string name="requiredid">*User name</string>
@@ -231,11 +231,11 @@
     <string name="chooseimage">Choose your profile photo (optional)</string>
     <string name="infocreateaccounts">You can create your accounts now or later. </string>
     <string name="accountname">Account name </string>
-    <string name="selectaccountfrom">select source account</string>
-    <string name="selectaccountto">select destination account</string>
     <string name="selectaccounts">select accounts</string>
     <string name="enterusername">Enter your user name</string>
     <string name="enterpass">Enter your password</string>
+
+    <!--Months-->
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>
@@ -272,6 +272,8 @@
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
 <string name="disablenotifications">The notifications option is disabled for this version </string>
+    <string name="preferences_enable">habilitar_modo_oscuro</string>
+    <string name="preferences_enable_lang">habilitar_idioma_ingles</string>
     <!--content description-->
     <string name="selectphoto">Select a photo</string>
     <string name="changename">Change name</string>
@@ -280,7 +282,6 @@
     <string name="createprofile">Create profile</string>
     <string name="createprofileh">Create profile horizontal view</string>
     <string name="selectphotoprofile">Select a photo when creating your profile
-
 </string>
     <string name="selectphotosettingh">Select a photo in profile settings.Horizontal view
 </string>
@@ -289,5 +290,9 @@
     <string name="gotologin">Go to Login</string>
     <string name="addaccount">Add an account</string>
     <string name="goback">Go back</string>
+    <!--Divisas-->
+    <string name="euro">euro</string>
+    <string name="dolar">dólar</string>
+    <string name="libra">libra</string>
 
 </resources>

@@ -170,7 +170,7 @@ class SettingAccountsFragment : Fragment(){
         val dialog = createTwoFieldAlertDialogTwoFields(
             true,
             R.string.add_an_account,
-            R.string.iban,
+            R.string.accountname,
             R.string.balance
         ) { iban, amount ->
             if (iban.isEmpty() || amount.isEmpty()) {
@@ -193,8 +193,8 @@ class SettingAccountsFragment : Fragment(){
         val dialog = createTwoFieldAlertDialogTwoFields(
             false,
             R.string.rename_account,
-            R.string.iban,
-            R.string.newiban
+            R.string.accountname,
+            R.string.newname
         ) { iban, newIban ->
             if (!existeAccount(iban)) {
                 Toast.makeText(requireActivity().applicationContext, getString(R.string.existsAccount), Toast.LENGTH_LONG).show()
@@ -232,7 +232,7 @@ class SettingAccountsFragment : Fragment(){
                     Toast.makeText(requireActivity().applicationContext, getString(R.string.msgemptyfield), Toast.LENGTH_LONG).show()
                 }
                 else {
-                    movDAO.borrarMovimientosPorIBAN(iban)
+                    movDAO.borrarMovimientosPorNombre(iban)
                     (activity as MainActivity).actualizarFragmentSaldo()
                 }
             }
@@ -351,7 +351,7 @@ class SettingAccountsFragment : Fragment(){
     }
 
     private fun existeAccount(iban: String): Boolean {
-        return cuentas.any { cuenta -> cuenta.iban == iban }
+        return cuentas.any { cuenta -> cuenta.nombre == iban }
     }
     private fun writeCsvFile(
         movimientos: MutableList<MovimientoBancario>,
@@ -370,7 +370,7 @@ class SettingAccountsFragment : Fragment(){
                 // Escribir los movimientos bancarios
                 for (movimiento in movimientos) {
                     // Asegúrate de que los datos sean válidos antes de escribirlos
-                    val csvLine = "${movimiento.importe},${movimiento.descripcion},${movimiento.iban},${movimiento.fechaImporte}\n"
+                    val csvLine = "${movimiento.importe},${movimiento.descripcion},${movimiento.nombreDeCuenta},${movimiento.fechaImporte}\n"
                     writer.write(csvLine)
                 }
             }

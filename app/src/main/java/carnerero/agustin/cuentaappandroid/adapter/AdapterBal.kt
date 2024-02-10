@@ -13,15 +13,15 @@ import carnerero.agustin.cuentaappandroid.model.Cuenta
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class AdapterBal(
-    private var accountsList: MutableList<Cuenta>,
+    private var listaDeCuentas: MutableList<Cuenta>,
     private val listener: OnLocaleListener
 ) :
     RecyclerView.Adapter<AdapterBal.ViewHolder>() {
     //Esta clase permite inflar la vista item_saldo
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemSaldoBinding.bind(view)
-        var ibanAccount = binding.tvCuenta
-        var balanceAccount = binding.tvSaldo
+        var nombreDeCuenta = binding.tvCuenta
+        var saldoDeCuenta = binding.tvSaldo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,18 +29,18 @@ class AdapterBal(
             LayoutInflater.from(parent.context).inflate(R.layout.item_saldo, parent, false)
         return ViewHolder(itemView)
     }
-    override fun getItemCount(): Int = accountsList.size
+    override fun getItemCount(): Int = listaDeCuentas.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val locale = listener.getLocale()
         val conversionRate=listener.getConversionRate()
         val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-        val cuenta = accountsList[position]
-        holder.ibanAccount.text = cuenta.iban
+        val cuenta = listaDeCuentas[position]
+        holder.nombreDeCuenta.text = cuenta.nombre
         val balance = cuenta.saldo*conversionRate
-        holder.balanceAccount.text = currencyFormat.format(balance)
+        holder.saldoDeCuenta.text = currencyFormat.format(balance)
         val textColorResId = if (Utils.isDarkTheme) R.color.darkGreenPistacho else R.color.darkgreen
-        val textColor = ContextCompat.getColor(holder.balanceAccount.context, textColorResId)
-        holder.balanceAccount.setTextColor(textColor)
+        val textColor = ContextCompat.getColor(holder.saldoDeCuenta.context, textColorResId)
+        holder.saldoDeCuenta.setTextColor(textColor)
 
     }
 

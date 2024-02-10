@@ -84,7 +84,7 @@ class InfoFragment : Fragment() {
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgpass)
         val editIcons= listOf(binding.editid,binding.editname,binding.editpass)
         val titleList =
-            listOf(getString(R.string.id), getString(R.string.name), getString(R.string.password))
+            listOf(getString(R.string.username), getString(R.string.name), getString(R.string.password))
         val textViewList = listOf(binding.tvlogin, binding.tvname, binding.tvpass)
         val saveValueList: List<String> = listOf(
             getString(R.string.userlogin),
@@ -141,8 +141,7 @@ class InfoFragment : Fragment() {
         val editText = dialogView.findViewById<EditText>(R.id.et_dialoginfo)
         val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm)
         val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel)
-        val msgHint = if(title == getString(R.string.city) || title == getString(R.string.address)
-            || title == getString(R.string.password)
+        val msgHint = if(title == getString(R.string.password)
         ){
             "${getString(R.string.newfieldF)} $title"
         }else{

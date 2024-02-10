@@ -1,32 +1,24 @@
 <resources>
-    <string name="app_name">CuentaAppAndroid</string>
-    <string name="title_activity_nav">NavActivity</string>
-    <string name="navigation_drawer_open">Open</string>
-    <string name="navigation_drawer_close">Close</string>
+    <!-- Autenticación y Perfil de Usuario -->
     <string name="wellcome">Bienvenido</string>
-    <string name="login">Iniciar sesion</string>
+    <string name="login">Iniciar sesión</string>
     <string name="user">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
-    <string name="balance">Saldo</string>
     <string name="create">Crear</string>
     <string name="account">Cuenta</string>
     <string name="create_your_account">Crea tu perfil</string>
     <string name="name">Nombre</string>
     <string name="addyouraccounts">Añade tus cuentas</string>
-    <string name="id">Nombre de usuario</string>
-    <string name="address">Direccion</string>
-    <string name="city">Ciudad</string>
-    <string name="zipcode">C.Postal</string>
-    <string name="email">email</string>
     <string name="required">*Campo requerido</string>
 
-    <string name="goodmorning">Buenos dias</string>
+    <!-- Saludos según la hora del día -->
+    <string name="goodmorning">Buenos días</string>
     <string name="goodafternoon">Buenas tardes</string>
     <string name="goodevening">Buenas noches</string>
-    <string name="accounts">Cuentas</string>
-    <string name="second_account">Cuenta auxiliar</string>
+
+    <!-- Mensajes de Interacción con el Usuario -->
     <string name="new_user">¿Eres un nuevo usuario?</string>
     <string name="select_account">Selecciona una cuenta</string>
     <string name="select_year">Selecciona un año</string>
@@ -41,69 +33,70 @@
     <string name="amount_from">Importe desde</string>
     <string name="amount_to">Importe hasta</string>
     <string name="search">Buscar</string>
-    <string name="amount_text">Descripcion del importe</string>
+    <string name="amount_text">Descripción del importe</string>
     <string name="result">Resultado</string>
     <string name="your_accounts">Tus cuentas</string>
     <string name="from_account">Desde cuenta</string>
     <string name="to_account">Hacia cuenta</string>
     <string name="setting">Ajustes</string>
     <string name="new_amount">Nuevo importe</string>
-    <string name="stadistics">Graficos</string>
+    <string name="stadistics">Gráficos</string>
     <string name="searchitem">Consulta</string>
     <string name="transferitem">Transferencia</string>
-    <string name="logout">Cerrar sesion</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="msgincome">Nuevo ingreso en</string>
     <string name="msgbill">Nuevo gasto en</string>
-    <string name="msgemptiesfield">Campos vacios</string>
-    <string name="msgemptyfield">Campo vacio</string>
+    <string name="msgemptiesfield">Campos vacíos</string>
+    <string name="msgemptyfield">Campo vacío</string>
     <string name="msgemptyamount">Debes introducir un importe</string>
-    <string name="msgemptydes">Debes introducir una descripcion</string>
-    <string name="msgsucces">Inicio de sesion exitoso</string>
-    <string name="msgnosucces">Inicio de sesion incorrecto</string>
+    <string name="msgemptydes">Debes introducir una descripción</string>
+    <string name="msgsucces">Inicio de sesión exitoso</string>
+    <string name="msgnosucces">Inicio de sesión incorrecto</string>
     <string name="msgtransfersame">No se puede realizar una transferencia en una misma cuenta</string>
-    <string name="msgntransfer">Transferencia completa </string>
+    <string name="msgntransfer">Transferencia completada </string>
     <string name="msgselectaccount">Selecciona una cuenta para un nuevo</string>
-    <string name="msgalertbalance">El gasto no puede ser mayor que el balance</string>
+    <string name="msgalertbalance">El gasto no puede ser mayor que el saldo</string>
     <string name="msgdates">La fecha desde no puede ser superior a la fecha hasta</string>
-    <string name="alertamounts">El importe desde no puede ser superios al importe hasta</string>
-    <string name="alertnewamount">Debes seleccionar una cuenta para un añadir un nuevo importe</string>
+    <string name="alertamounts">El importe desde no puede ser superior al importe hasta</string>
+    <string name="alertnewamount">Debes seleccionar una cuenta para agregar un nuevo importe</string>
     <string name="alertdialognewamount">Importe realizado</string>
     <string name="forgetpass">¿Olvidaste la contraseña?"</string>
-    <string name="step1">Nombre de usuario(paso 1)</string>
+    <string name="balance">Saldo</string>
+    <!-- Restablecimiento de Contraseña -->
+    <string name="step1">Nombre de usuario (paso 1)</string>
     <string name="step2">Nueva contraseña (paso 2)</string>
     <string name="hintid">Nombre de usuario</string>
     <string name="hintnewpass">Nueva contraseña</string>
     <string name="hintrepeatpass">Repite la contraseña</string>
     <string name="successnewpass">Contraseña cambiada</string>
-    <string name="passnotequals">Las contraseñas no son iguales </string>
+    <string name="passnotequals">Las contraseñas no coinciden</string>
     <string name="intronewpass">Para cambiar la contraseña sigue los pasos.</string>
-    <string name="change">Cambia</string>
+    <string name="change">Cambiar</string>
     <string name="enterusername">Introduce tu usuario</string>
     <string name="enterpass">Introduce tu contraseña</string>
-    <!-- Fragment configuration -->
+
+    <!-- Navegación y Configuración de la Aplicación -->
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
     <string name="profile">Perfil</string>
     <string name="accountconfig">Cuentas</string>
     <string name="notifications">Notificaciones</string>
     <string name="deleteall">Borrar todos los datos</string>
-    <string name="importcvs">Importa desde archivo externo</string>
-    <string name="exportcvs">Exporta hacia archivo externo</string>
+    <string name="importcvs">Importar desde archivo externo</string>
+    <string name="exportcvs">Exportar a archivo externo</string>
     <string name="about">Acerca de</string>
-    <string name="logoutconf">Salir</string>
+    <string name="logoutconf">Cerrar sesión</string>
     <string name="theme">Tema</string>
     <string name="home">Inicio</string>
     <string name="db">Base de datos</string>
     <string name="darkTheme">Tema Oscuro</string>
     <string name="lightTheme">Tema Claro</string>
-    <string name="settingLang">Configura el idioma</string>
-    <string name="settingTheme">Configura el tema</string>
-    <string name="preferences_enable">enable_dark_mode</string>
-    <string name="preferences_enable_lang">enable_en_lang</string>
-    <string name="euro">euro</string>
-    <string name="dolar">dolar</string>
-    <string name="libra">libra</string>
-    <string name="settingcurrency">Seleccion la moneda</string>
-
-
+    <string name="settingLang">Configurar el idioma</string>
+    <string name="settingTheme">Configurar el tema</string>
+    <string name="settingcurrency">Selecciona la moneda</string>
+    <string name="selectaccountfrom">selecciona cuenta de origen</string>
+    <string name="selectaccountto">selecciona cuenta de destino</string>
+    <!--Calculadora-->
     <string name="calc_btn_coma">,</string>
     <string name="calc_sign">+/-</string>
     <string name="calc_btn_0">0</string>
@@ -125,9 +118,13 @@
     <string name="calc_btn_porce">%</string>
     <string name="calc_btn_div">÷</string>
     <string name="calculator">calculadora</string>
-    <string name="incorrectExpresion">Expresion incorrecta</string>
+    <string name="incorrectExpresion">Expresión incorrecta</string>
     <string name="formaterror">Error de formato</string>
+
+    <!--Nombre de la aplicacion-->
     <string name="labelapp">Mis cuentas</string>
+    <string name="app_name">Mis cuentas</string>
+    <!--Página de acerca de-->
     <string name="developer">Desarrollador: Agustin Carnerero Peña</string>
     <string name="atributions">Atribuciones</string>
     <string name="iconconta">Icono de contabilidad</string>
@@ -150,11 +147,12 @@
         explorar nuestros videotutoriales. ¡Descubre cómo mejorar tu experiencia financiera con Mis Cuentas!</string>
     <string name="contact_me">Contáctame</string>
     <string name="visitGitHub">Visita mi gitHub</string>
+
+    <!--Configuración de perfil y cuentas-->
     <string name="info">Tu perfil</string>
     <string name="add_an_account">Añade una cuenta</string>
     <string name="disabledoption">Opcion deshabilitada para una cuenta</string>
     <string name="img_photo">img_photo</string>
-    <string name="databasetitle">Base de datos</string>
     <string name="rename_account">Renombrar cuenta</string>
     <string name="delete_data_account">Borrar datos de una cuenta</string>
     <string name="delete_an_account">Borrar una cuenta</string>
@@ -168,8 +166,7 @@
     <string name="hintdeleteaccount">Iban de cuenta a borrar</string>
     <string name="hintdeletemovaccount">Iban de cuenta a borrar importes</string>
     <string name="titledelelemov">Borra los movimientos de una cuenta</string>
-    <string name="iban">Nombre de la cuenta</string>
-    <string name="newiban">Nuevo nombre</string>
+    <string name="newname">Nuevo nombre</string>
     <string name="existsAccount">No existe una cuenta con este IBAN</string>
     <string name="questiondialog">¿Quieres borrar todos los datos?</string>
     <string name="noaccounts">No hay cuentas que mostrar</string>
@@ -177,6 +174,8 @@
     <string name="importData">Importa datos</string>
     <string name="oneaccount">Opcion no disponible para una cuenta</string>
     <string name="filename">dale un nombre al archivo csv</string>
+
+    <!--Notificaciones-->
     <string name="selectCurrency">Selecciona una divisa</string>
     <string name="daylyreport">Informe diario</string>
     <string name="weekreport">Informe semanal</string>
@@ -193,11 +192,12 @@
     <string name="weekbills">Gastos semanales</string>
     <string name="monthicome">Ingresos mensuales</string>
     <string name="monthbills">Gastos mensuales</string>
-    <string name="resul">Resultado</string>
+    <string name="resultsearch">Resultado</string>
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
     <string name="accountsetting">Configura tus cuentas</string>
-    <!--String onBoarding -->
-    <string name="wellcomeOnBoarding">Bienvenido a MisCuentasApp</string>
+
+    <!--Creación de perfil -->
+
     <string name="createyourprofile">Crea tu perfil</string>
     <string name="requiredname">*Nombre</string>
     <string name="requiredid">*Nombre de usuario</string>
@@ -208,7 +208,9 @@
     <string name="chooseimage">Escoje tu foto de perfil(opcional)</string>
     <string name="infocreateaccounts">Puedes crear tus cuentas ahora o mas adelante.</string>
     <string name="accountname">Nombre de la cuenta</string>
-    <!--intro-->
+
+    <!--On Boarding-->
+    <string name="wellcomeOnBoarding">Bienvenido a MisCuentasApp</string>
     <string name="title0">Bienvenido a misCuentasApp</string>
     <string name="title1">Crea tu perfil</string>
     <string name="title2">Anota tus ingresos y gastos diarios</string>
@@ -226,7 +228,14 @@
         "Nuevo importe" en el menú para realizar anotaciones, y realiza transacciones fácilmente a través
         de la opción "Transacción". </string>
     <string name="des3"> \t\t\tConsulta tu progreso mediante las opciones de "Gráficos" y "Consulta" para obtener una visión integral.</string>
+    <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
+        mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará
+        a alcanzar tus objetivos financieros.</string>
+    <string name="des5">\t\t\tPersonaliza misCuentasApp según tus preferencias.
+        Visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
+        </string>
 
+    <!--Meses del año gráfico de barras-->
     <string name="january">Enero</string>
     <string name="february">Febrero</string>
     <string name="march">Marzo</string>
@@ -240,15 +249,9 @@
     <string name="november">Noviembre</string>
     <string name="december">Diciembre</string>
     <string name="selectaccounts">selecciona las cuentas</string>
+
     <!--sharepreferences de usuario-->
-    <string name="des4">\t\t\tActiva las notificaciones para mantenerte informado. Recibe informes diarios, semanales y
-        mensuales de tus anotaciones. Habilitar alertas de gasto y notificaciones de saldos en cuentas te ayudará
-        a alcanzar tus objetivos financieros.</string>
-    <string name="des5">\t\t\tPersonaliza misCuentasApp según tus preferencias.
-        Visualiza tus gastos convertidos a dólares, euros o libras para una perspectiva global.
-        </string>
-    <string name="selectaccountfrom">selecciona cuenta de origen</string>
-    <string name="selectaccountto">selecciona cuenta de destino</string>
+
     <string name="basecurrency">currency</string>
     <string name="userlogin">userlogin</string>
     <string name="userdni">userdni</string>
@@ -270,6 +273,14 @@
     <string name="seekbarBalance">seekbarbalance</string>
     <string name="isvisible">isVisible</string>
     <string name="disablenotifications">Las notificaciones están desahilitadas para esta version </string>
+    <string name="preferences_enable">habilitar_modo_oscuro</string>
+    <string name="preferences_enable_lang">habilitar_idioma_ingles</string>
+
+    <!--Divisas-->
+    <string name="euro">euro</string>
+    <string name="dolar">dólar</string>
+    <string name="libra">libra</string>
+
     <!--content description-->
     <string name="selectphoto">Selecciona una foto</string>
     <string name="selectphotoprofile">Selecciona una foto en la creacion del perfil</string>

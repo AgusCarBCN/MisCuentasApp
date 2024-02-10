@@ -16,7 +16,7 @@ class DataBaseApp(
 
 
     private val createAccountTable = "CREATE TABLE CUENTA "+
-                                        "(iban TEXT PRIMARY KEY,"+
+                                        "(nombreCuenta TEXT PRIMARY KEY,"+
                                         "saldo DECIMAL(10, 2))"
 
 
@@ -25,9 +25,9 @@ class DataBaseApp(
                                           "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                                           "importe REAL,"+
                                           "descripcion TEXT,"+
-                                          "iban TEXT,"+
+                                          "nombreCuenta TEXT,"+
                                           "fechaImporte DATE,"+
-                                          "FOREIGN KEY (iban) REFERENCES CUENTA (iban) ON UPDATE CASCADE ON DELETE CASCADE)"
+                                          "FOREIGN KEY (nombreCuenta) REFERENCES CUENTA (nombreCuenta) ON UPDATE CASCADE ON DELETE CASCADE)"
 
 
 

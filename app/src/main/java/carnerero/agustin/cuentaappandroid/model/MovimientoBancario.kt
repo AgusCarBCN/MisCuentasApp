@@ -1,18 +1,18 @@
 package carnerero.agustin.cuentaappandroid.model
 
 
-import java.text.SimpleDateFormat
+
 import java.util.Date
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.Locale
+import carnerero.agustin.cuentaappandroid.utils.dateFormat
 
 
 data class MovimientoBancario(
     val importe: Double,
     val descripcion: String,
-    val iban: String,
-    val fechaImporte: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
+    val nombreDeCuenta: String,
+    val fechaImporte: String = Date().dateFormat()
 
 ) : Parcelable {
 
@@ -20,14 +20,14 @@ data class MovimientoBancario(
         parcel.readDouble(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: SimpleDateFormat("dd/MM/yyyy").format(Date())
+        parcel.readString() ?: Date().dateFormat()
     )
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeDouble(importe)
         parcel.writeString(descripcion)
-        parcel.writeString(iban)
+        parcel.writeString(nombreDeCuenta)
         parcel.writeString(fechaImporte)
     }
 

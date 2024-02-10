@@ -2,7 +2,7 @@ package carnerero.agustin.cuentaappandroid.model
 
 
 data class Cuenta(
-    val iban: String,
+    val nombre: String,
     var saldo: Double
 
 )

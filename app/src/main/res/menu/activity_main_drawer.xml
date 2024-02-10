@@ -28,7 +28,7 @@
     <item
         android:id="@+id/consulta"
         android:icon="@drawable/ic_search"
-        android:title="@string/searchitem" />
+        android:title="@string/search" />
 
     <item
         android:id="@+id/estadistica"

@@ -61,7 +61,7 @@ class NewAmountFragment : Fragment() {
 
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]= cuentas[i].iban
+            arrayCuentas[i]= cuentas[i].nombre
         }
         selectedAccount=""
 
@@ -224,7 +224,7 @@ class NewAmountFragment : Fragment() {
     private fun searchAccount(cuentas: List<Cuenta>?, iban: String): Cuenta? {
 
         for (cuenta in cuentas!!) {
-            if (iban == cuenta.iban) {
+            if (iban == cuenta.nombre) {
                 return cuenta
             }
         }

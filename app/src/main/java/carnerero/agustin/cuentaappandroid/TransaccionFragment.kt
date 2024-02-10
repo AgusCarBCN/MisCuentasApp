@@ -51,7 +51,7 @@ class TransaccionFragment : Fragment() {
 
         //Llenar arrayCuentas
         for (i in 0 until cuentas.size) {
-            arrayCuentas[i]= cuentas[i].iban
+            arrayCuentas[i]= cuentas[i].nombre
         }
         selectedAccountFrom=""
         selectedAccountTo=""
