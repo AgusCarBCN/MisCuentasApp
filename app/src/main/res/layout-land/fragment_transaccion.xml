@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     android:background="?android:colorPrimary"
     tools:context=".TransaccionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="vertical">
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,17 +48,14 @@
             <Button
                 android:id="@+id/btn_aceptar"
                 style="@style/ButtonStyle"
-                android:layout_marginRight="20dp"
-
+                android:layout_marginEnd="20dp"
                 android:text="@string/confirm" />
 
             <Button
                 android:id="@+id/btn_salir"
                 style="@style/ButtonStyle"
-                android:layout_marginLeft="20dp"
-
+                android:layout_marginStart="20dp"
                 android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
