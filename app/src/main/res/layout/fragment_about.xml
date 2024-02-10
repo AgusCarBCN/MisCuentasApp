@@ -103,7 +103,7 @@
                 android:layout_marginStart="10dp"
                 android:autoLink="email"
                 android:clickable="true"
-                android:text="agusticar@gmail.com" />
+               />
 
         </LinearLayout>
 

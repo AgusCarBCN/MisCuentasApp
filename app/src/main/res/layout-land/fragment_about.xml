@@ -12,7 +12,7 @@
         >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="?android:colorPrimary">
         <TextView
@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
-            android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
             android:textSize="@dimen/common"
             android:textStyle="normal"
@@ -33,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
-            android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
             android:textSize="@dimen/common"
             android:textStyle="bold"
@@ -46,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
-            android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
             android:textSize="@dimen/common"
             android:textStyle="bold"
@@ -58,7 +55,6 @@
             android:textSize="@dimen/common"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
-            android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
             android:textStyle="bold"
             android:text="@string/atributions"  />
@@ -81,7 +77,6 @@
             android:textSize="@dimen/common"
             android:layout_marginTop="@dimen/padding10"
             android:layout_marginEnd="@dimen/padding10"
-            android:layout_marginRight="@dimen/padding10"
             android:layout_marginStart="@dimen/padding10"
             android:textStyle="bold"
             android:text="@string/contact_me"  />
@@ -97,7 +92,7 @@
                 android:id="@+id/imgemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 app:srcCompat="@drawable/email_24" />
 
             <TextView
@@ -107,7 +102,7 @@
                 android:layout_marginStart="10dp"
                 android:autoLink="email"
                 android:clickable="true"
-                android:text="agusticar@gmail.com" />
+                />
 
         </LinearLayout>
 
@@ -128,7 +123,7 @@
                 android:id="@+id/tvgithublink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:textSize="@dimen/common"
                 android:clickable="true"
                  />

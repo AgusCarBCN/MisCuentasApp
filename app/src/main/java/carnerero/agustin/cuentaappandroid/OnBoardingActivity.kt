@@ -15,20 +15,20 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnBoardingBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var titleList: MutableList<String>
-    private lateinit var descriptionList: MutableList<String>
-    private lateinit var imgList:MutableList<Int>
+    private lateinit var titleList: List<String>
+    private lateinit var descriptionList: List<String>
+    private lateinit var imgList:List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        titleList = mutableListOf(getString(R.string.title0),
+        titleList = listOf(getString(R.string.title0),
             getString(R.string.title1), getString(R.string.title2), getString(R.string.title3),
             getString(R.string.title4), getString(R.string.title5)
         )
-        descriptionList = mutableListOf(getString(R.string.des0),
+        descriptionList = listOf(getString(R.string.des0),
             getString(R.string.des1), getString(R.string.des2), getString(R.string.des3),
             getString(R.string.des4), getString(R.string.des5)
         )
-        imgList = mutableListOf(
+        imgList = listOf(
             R.drawable.contabilidad,
             R.drawable.person_intro,
             R.drawable.payments_intro,

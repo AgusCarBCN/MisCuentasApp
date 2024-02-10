@@ -26,10 +26,15 @@ class AboutFragment : Fragment() {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         val iconEmail=binding.imgemail
         val iconGitHub=binding.icongithub
-
+        val emailLink=binding.tvemail
+        val sendMeAnEmail=getString(R.string.email)
+        emailLink.text=sendMeAnEmail
         if(Utils.isDarkTheme){
             iconEmail.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
             iconGitHub.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
+        }
+        emailLink.setOnClickListener {
+            sendEmail()
         }
         return binding.root
     }
@@ -38,6 +43,8 @@ class AboutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupGitHubLink()
         setupAttributions()
+
+
     }
 
     private fun setupGitHubLink() {
@@ -50,6 +57,12 @@ class AboutFragment : Fragment() {
         githubLinkTextView.setOnClickListener {
             openUrl(githubLinkHtml)
         }
+    }
+    private fun sendEmail(){
+        //Uso de intent implicito para enviar un correo electrónico al desarrollador
+        val sendMeEmail=Intent(Intent.ACTION_SENDTO)
+        sendMeEmail.setData(Uri.parse("mailto:${getString(R.string.email)}"))
+        startActivity(sendMeEmail)
     }
 
     private fun setupAttributions() {
