@@ -75,7 +75,6 @@
                         android:id="@+id/seekBar"
                         android:layout_width="400dp"
                         android:layout_height="10dp"
-                        android:max="5000"
                         android:progress="0"
                         android:progressDrawable="@drawable/custom_seekbar"
                         android:thumb="@drawable/custom_thumb_bar" />
@@ -103,7 +102,6 @@
                         android:layout_width="400dp"
                         android:layout_height="10dp"
                         android:layout_marginBottom="20sp"
-                        android:max="5000"
                         android:progress="0"
                         android:progressDrawable="@drawable/custom_seekbar"
                         android:thumb="@drawable/custom_thumb_bar"

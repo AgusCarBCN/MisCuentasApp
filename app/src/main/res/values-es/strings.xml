@@ -254,6 +254,7 @@
     <!--sharepreferences de usuario-->
 
     <string name="basecurrency">currency</string>
+    <string name="currencyChanged">currencychange</string>
     <string name="userlogin">userlogin</string>
     <string name="userdni">userdni</string>
     <string name="username">username</string>

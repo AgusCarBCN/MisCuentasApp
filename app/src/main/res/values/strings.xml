@@ -258,6 +258,7 @@
     <string name="lang">lang</string>
     <string name="country">country</string>
     <string name="basecurrency">currency</string>
+    <string name="currencyChanged">currencychange</string>
     <string name="currencyTo">currencyTo</string>
     <string name="currencyFrom">currencyFrom</string>
     <string name="filename">give a name to the csv file</string>

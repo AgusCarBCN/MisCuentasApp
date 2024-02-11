@@ -29,6 +29,7 @@ class AjustesFragment : Fragment() {
     private lateinit var imgTheme:ImageView
     private lateinit var langText:TextView
     private lateinit var selectCurrency:RadioGroup
+    private lateinit var currencyChanged:String
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
@@ -100,26 +101,31 @@ class AjustesFragment : Fragment() {
                 R.id.rb_euro -> {
                     lang = "es"
                     country = "ES"
+                    currencyChanged="EUR"
                     getConversionRate(currency,"EUR")
                 }
                 R.id.rb_dolar -> {
                     lang = "en"
                     country = "US"
+                    currencyChanged="USD"
                     getConversionRate(currency,"USD")
                 }
                 R.id.rb_pound -> {
                     lang = "en"
                     country = "GB"
+                    currencyChanged="GBP"
                     getConversionRate(currency,"GBP")
                 }
                 R.id.rb_rupee -> {
                     lang = "en"
                     country = "IN"
+                    currencyChanged="INR"
                     getConversionRate(currency,"INR")
                 }
             }
             // Guardar la selección en SharedPreferences
             sharedPreferences.edit().putInt("lastSelectedOption", checkedId).apply()
+            sharedPreferences.edit().putString(getString(R.string.currencyChanged),currencyChanged).apply()
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
         }

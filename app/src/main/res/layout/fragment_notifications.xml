@@ -88,7 +88,6 @@
                     android:id="@+id/seekBar"
                     android:layout_width="330dp"
                     android:layout_height="15dp"
-                    android:max="5000"
                     android:progress="0"
                     android:progressDrawable="@drawable/custom_seekbar"
                     android:thumb="@drawable/custom_thumb_bar" />
@@ -117,7 +116,6 @@
                     android:id="@+id/seekBarBalance"
                     android:layout_width="330dp"
                     android:layout_height="15dp"
-                    android:max="5000"
                     android:progress="0"
                     android:progressDrawable="@drawable/custom_seekbar"
                     android:thumb="@drawable/custom_thumb_bar" />
