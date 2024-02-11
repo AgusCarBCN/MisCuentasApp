@@ -8,8 +8,6 @@
     android:background="?android:colorPrimary"
     android:orientation="vertical"
     tools:context=".LoginActivity">
-
-
             <LinearLayout
                 android:id="@+id/ly_logo"
                 android:layout_width="match_parent"

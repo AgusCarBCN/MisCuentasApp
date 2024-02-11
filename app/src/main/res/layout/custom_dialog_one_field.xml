@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:gravity="center"
         >
-
         <TextView
             android:id="@+id/tv_dialogtitle"
             android:layout_width="match_parent"

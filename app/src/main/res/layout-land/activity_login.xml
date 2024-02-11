@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".LoginActivity"
+    android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/ly_logo"
@@ -28,6 +24,7 @@
                 android:layout_marginEnd="5dp"
                 android:background="?android:previewImage"
                 android:scaleType="fitCenter"
+                android:contentDescription="@string/labelapp"
                 app:srcCompat="@drawable/contabilidad" />
         </LinearLayout>
 
@@ -107,8 +104,9 @@
                 android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_newpassword"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:background="?android:colorPrimary"
                 android:gravity="center"
                 android:text="@string/forgetpass"
@@ -118,4 +116,3 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>

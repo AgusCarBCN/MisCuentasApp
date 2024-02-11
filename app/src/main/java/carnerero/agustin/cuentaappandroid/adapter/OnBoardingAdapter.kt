@@ -16,9 +16,7 @@ class OnBoardingAdapter(private var title:List<String>, private var description:
         var titleItem=binding.tvTitleonboarding
         var desItem=binding.tvDesonboarding
         var img=binding.imgOnBoarding
-
     }
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,9 +32,5 @@ class OnBoardingAdapter(private var title:List<String>, private var description:
         holder.desItem.text=description[position]
         holder.img.setImageResource(videoView[position])
     }
-
     override fun getItemCount(): Int =title.size
-
-
-
 }

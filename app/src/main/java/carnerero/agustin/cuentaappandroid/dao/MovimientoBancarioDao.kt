@@ -27,7 +27,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
             try {
                 db.insert("MOVIMIENTO", null, values)
             } catch (_: SQLException) {
-                // Manejo de errores al insertar el movimiento bancario
+
             }
         }
     }
@@ -85,7 +85,7 @@ class MovimientoBancarioDAO(private val admin: DataBaseApp) {
 
             try {
                 db.delete("MOVIMIENTO", whereClause, whereArgs)
-            } catch (e: SQLException) {
+            } catch (_: SQLException) {
 
             }
         }

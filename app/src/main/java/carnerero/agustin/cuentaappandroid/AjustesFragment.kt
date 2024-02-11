@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RadioGroup
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -22,6 +25,11 @@ class AjustesFragment : Fragment() {
     private val repo=CurrencyRepo()
     private var _binding: FragmentAjustesBinding? = null
     private val binding get() = _binding!!
+    private lateinit var switchTheme:SwitchCompat
+    private lateinit var switchLang:SwitchCompat
+    private lateinit var imgTheme:ImageView
+    private lateinit var langText:TextView
+    private lateinit var selectCurrency:RadioGroup
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang: String
     private lateinit var country: String
@@ -46,11 +54,11 @@ class AjustesFragment : Fragment() {
         val view = binding.root
         //viewModel=ViewModelProvider(this,CurrencyVmFac(repo)).get(CurrencyVm::class.java)
         // Referencias a elementos de diseño
-        val switchTheme = binding.switchdark
-        val imgTheme = binding.imgDarklight
-        val switchLang = binding.switchen
-        val langText = binding.tvEnes
-        val selectCurrency = binding.selectCurrency
+        switchTheme = binding.switchdark
+        imgTheme = binding.imgDarklight
+        switchLang = binding.switchen
+        langText = binding.tvEnes
+        selectCurrency = binding.selectCurrency
 
         // Obtener preferencias compartidas
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
