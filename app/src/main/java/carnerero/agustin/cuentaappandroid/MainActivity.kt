@@ -111,13 +111,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
         savedProgress=sharedPreferences.getInt("progressValue",0)
         //Recupero configuracion de idioma y pais
-        if(Utils.getDefaultLang()){
-            lang=sharedPreferences.getString(getString(R.string.lang), null)?:"en"
-            country=sharedPreferences.getString(getString(R.string.country), null)?:"US"
-        }else {
-            lang = sharedPreferences.getString(getString(R.string.lang), null) ?: "es"
-            country = sharedPreferences.getString(getString(R.string.country), null) ?: "ES"
-        }
+
+            lang= sharedPreferences.getString(getString(R.string.lang), null).toString()
+            country= sharedPreferences.getString(getString(R.string.country), null).toString()
+
         //Banner en forma de Banner
         MobileAds.initialize(this) {}
         val mAdView :com.google.android.gms.ads.AdView=findViewById(R.id.adView)

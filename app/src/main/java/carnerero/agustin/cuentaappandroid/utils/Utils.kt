@@ -153,12 +153,11 @@ class Utils {
         }
         fun getDefaultLang():Boolean{
             var defaultLang=false
-            var lang=Locale.getDefault().language
+            val lang=Locale.getDefault().language
             if(lang!="es"){
                 defaultLang=true
             }
             return defaultLang
-
         }
         fun getWeek():Int
         {

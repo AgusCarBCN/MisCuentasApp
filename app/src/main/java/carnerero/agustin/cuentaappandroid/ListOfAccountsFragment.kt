@@ -21,7 +21,6 @@ class ListOfAccountsFragment : Fragment(), OnLocaleListener {
     private lateinit var lang:String
     private lateinit var country:String
     private lateinit var currency:String
-    private lateinit var dni:String
     private lateinit var conversionRate:String
     private lateinit var sharedPreferences: SharedPreferences
     // Adaptador y vista para la lista de movimientos
@@ -60,7 +59,7 @@ class ListOfAccountsFragment : Fragment(), OnLocaleListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dni = sharedPreferences.getString(getString(R.string.userdni), null).toString()
+
         val cuentas = cuentaDao.listarTodasLasCuentas()
         recyclerView = binding.rvCuentas
             adapterCuentas = AdapterBal(cuentas, this)

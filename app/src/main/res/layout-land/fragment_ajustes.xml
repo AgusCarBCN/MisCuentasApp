@@ -123,6 +123,17 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
+                <RadioButton
+                    android:id="@+id/rb_rupee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/box"
+                    android:layout_weight="1"
+                    android:buttonTint="?android:colorPrimary"
+                    android:text="@string/rupee"
+                    android:textColor="?android:textColor"
+                    android:textSize="@dimen/common"
+                    android:textStyle="bold"
+                    android:theme="@style/CustomSpinner" />
             </RadioGroup>
         </LinearLayout>
         <TextView

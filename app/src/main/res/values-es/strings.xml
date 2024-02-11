@@ -277,10 +277,10 @@
     <string name="preferences_enable_lang">habilitar_idioma_ingles</string>
 
     <!--Divisas-->
-    <string name="euro">euro</string>
-    <string name="dolar">dólar</string>
-    <string name="libra">libra</string>
-
+    <string name="euro">Euro</string>
+    <string name="dolar">Dólar</string>
+    <string name="libra">Libra</string>
+    <string name="rupee">Rupia</string>
     <!--content description-->
     <string name="selectphoto">Selecciona una foto</string>
     <string name="selectphotoprofile">Selecciona una foto en la creacion del perfil</string>

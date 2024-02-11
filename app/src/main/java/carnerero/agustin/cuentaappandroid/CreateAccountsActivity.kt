@@ -21,11 +21,10 @@ class CreateAccountsActivity : AppCompatActivity() {
     private val admin = DataBaseAppSingleton.getInstance(this)
     private val cuentaDao=CuentaDao(admin)
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var currency:String
     private lateinit var lang:String
     private lateinit var country:String
     private val currencies = arrayOf(
-        "EUR", "USD", "GBP"
+        "EUR", "USD", "GBP","INR"
     )
     private lateinit var selectedItem:String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +68,7 @@ class CreateAccountsActivity : AppCompatActivity() {
                 // Acciones a realizar cuando no se selecciona nada
             }
         }
-        currency = selectedItem
+
 
         btnAddAccount.setOnClickListener {
             if(etAccountName.text.isNullOrEmpty()||etBalance.text.isNullOrEmpty()){
@@ -92,30 +91,29 @@ class CreateAccountsActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
-            sharedPreferences.edit().putString(
-                getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
-                currency
-            ).apply()
-            lang = if(enableEnLang){
-                "en"
-            }else{
-                "es"
-            }
-            country = when(selectedItem){
+             when(selectedItem){
                 "EUR"->{
-                    //lang="es"
-                    "ES"
+                    lang="es"
+                    country="ES"
                 }
-
                 "USD"->{
-                    //lang="en"
-                    "US"
-                }else->{
-                    //lang="en"
-                    "GB"
+                    lang="en"
+                    country="US"
+                }
+                "INR"->{
+                    lang="en"
+                    country="IN"
+                }
+                else->{
+                    lang="en"
+                    country="GB"
                 }
             }
             //Guardar configuraciones de idioma y pais en funcion de la moneda seleccionada
+            sharedPreferences.edit().putString(
+                getString(carnerero.agustin.cuentaappandroid.R.string.basecurrency),
+                selectedItem
+            ).apply()
             sharedPreferences.edit().putString(
                 getString(carnerero.agustin.cuentaappandroid.R.string.lang),
                 lang

@@ -81,7 +81,7 @@ class NewAmountFragment : Fragment() {
 
         // Acciones a realizar cuando se hace clic en el botón de nuevo ingreso
         nuevoIngreso.setOnClickListener {
-            //val fechaImporte = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
             val fechaImporte=Date().dateFormat()
             if (importe.text.isNullOrBlank() || descripcion.text.isNullOrBlank()) {
                 if (importe.text.isNullOrBlank() && descripcion.text.isNullOrBlank()) {

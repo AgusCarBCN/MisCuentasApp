@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioGroup
-import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
@@ -66,11 +65,11 @@ class AjustesFragment : Fragment() {
         // Obtener el estado actual del modo oscuro, idioma y divisa desde SharedPreferences
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
         val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), false)
-
         val currency = sharedPreferences.getString(getString(R.string.basecurrency),null).toString()
         currencySelected = when(currency){
             "EUR"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_euro)
             "USD"-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_dolar)
+            "INR"->sharedPreferences.getInt("lastSelectedOption", R.id.rb_rupee)
             else-> sharedPreferences.getInt("lastSelectedOption", R.id.rb_pound)
         }
         // Establecer iconos según el estado actual del modo oscuro y el idioma
@@ -112,6 +111,11 @@ class AjustesFragment : Fragment() {
                     lang = "en"
                     country = "GB"
                     getConversionRate(currency,"GBP")
+                }
+                R.id.rb_rupee -> {
+                    lang = "en"
+                    country = "IN"
+                    getConversionRate(currency,"INR")
                 }
             }
             // Guardar la selección en SharedPreferences
