@@ -7,12 +7,10 @@
     android:layout_gravity="center_horizontal"
     android:background="?android:colorPrimary"
     tools:context=".NewAmountFragment">
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/et_descripcion"
-            >
+            android:labelFor="@+id/et_descripcion"            >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_descripcion"
             style="@style/InputFieldLarge"
@@ -23,8 +21,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@id/et_importe"
-            >
+            android:labelFor="@id/et_importe">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_importe"
             style="@style/InputFieldLarge"
@@ -39,25 +36,21 @@
             android:background="@drawable/style_editetx"
             android:textAlignment="center"
             android:textSize="@dimen/extracommon" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
-
             <Button
                 android:id="@+id/btn_nuevoingreso"
                 style="@style/ButtonStyle"
                 android:layout_marginEnd="20dp"
                 android:text="@string/incomes" />
-
             <Button
                 android:id="@+id/btn_nuevogasto"
                 style="@style/ButtonStyle"
                 android:layout_marginStart="20dp"
                 android:text="@string/bills" />
-
         </LinearLayout>
     </LinearLayout>

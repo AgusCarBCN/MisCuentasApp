@@ -4,151 +4,110 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".CalculatorFragment"
-    >
-
+    tools:context=".CalculatorFragment" >
     <TextView
         android:id="@+id/tv_operation"
         style="@style/TextViewCalcLand"
         android:textSize="@dimen/common"/>
-
     <TextView
         android:id="@+id/tv_result"
         style="@style/TextViewCalc"
         android:textSize="@dimen/common" />
-
     <!-- Contenido del primer LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_firstrow"
         style="@style/LinearLayoutCalc">
-
         <Button
             android:id="@+id/btn_1"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_1" />
-
-
         <Button
             android:id="@+id/btn_2"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_2" />
-
         <Button
             android:id="@+id/btn_3"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_3" />
-
         <Button
             android:id="@+id/btn_4"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_4" />
-
-
         <Button
             android:id="@+id/btn_5"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_5" />
-
-
     </LinearLayout>
     <!-- Contenido del segundo LinearLayout -->
-
     <LinearLayout
         android:id="@+id/ly_secondrow"
         style="@style/LinearLayoutCalc">
-
-
         <Button
             android:id="@+id/btn_6"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_6" />
-
         <Button
             android:id="@+id/btn_7"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_7" />
-
-
         <Button
             android:id="@+id/btn_8"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_8" />
-
         <Button
             android:id="@+id/btn_9"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_9" />
-
         <Button
             android:id="@+id/btn0"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_0" />
-
-
     </LinearLayout>
-
     <!-- Contenido del cuarto LinearLayout -->
     <LinearLayout
         android:id="@+id/ly_fourthrow"
         style="@style/LinearLayoutCalc">
-
         <Button
             android:id="@+id/btn_plus"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_plus" />
-
         <Button
             android:id="@+id/btn_minus"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_minus" />
-
         <Button
             android:id="@+id/btn_times"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_times" />
-
-
         <Button
             android:id="@+id/btn_div"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_div" />
-
-
         <Button
             android:id="@+id/btn_porc"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_porce" />
-
-
     </LinearLayout>
     <!-- Contenido del quinto LinearLayout -->
-
     <LinearLayout
         android:id="@+id/ly_fithrow"
         style="@style/LinearLayoutCalc">
-
-
         <Button
             android:id="@+id/btn_clear"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_C"
             android:textColor="@color/red" />
-
-
         <Button
             android:id="@+id/btn_retro"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_retro" />
-
         <Button
             android:id="@+id/btn_coma"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_coma" />
-
         <Button
             android:id="@+id/btn_result"
             style="@style/ButtonCalcSmallLand"
             android:text="@string/calc_btn_equal" />
-
     </LinearLayout>
 </LinearLayout>

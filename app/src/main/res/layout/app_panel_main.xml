@@ -40,7 +40,6 @@
                     ads:adSize="BANNER"
                     ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
                 </com.google.android.gms.ads.AdView>
-
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fcv_main_container"
                     android:name="carnerero.agustin.cuentaappandroid.LogoFragment"
@@ -52,6 +51,7 @@
                     android:name="carnerero.agustin.cuentaappandroid.ListOfAccountsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>

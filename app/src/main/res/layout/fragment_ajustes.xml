@@ -8,7 +8,6 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AjustesFragment">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +20,6 @@
                 android:layout_height="@dimen/box"
                 android:contentDescription="@string/settingTheme"
                 android:layout_marginEnd="20dp" />
-
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchdark"
                 style="@style/switchCustom"
@@ -29,10 +27,7 @@
                 android:layout_width="100dp"
                 app:track="@drawable/custom_track"
                 />
-
-
         </LinearLayout>
-
         <TextView
             android:id="@+id/tv_settingTheme"
             android:layout_width="wrap_content"
@@ -45,14 +40,12 @@
             android:textColor="?android:textColor"
             android:textSize="@dimen/common"
             android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/tv_enes"
                 android:layout_width="@dimen/box"
@@ -64,7 +57,6 @@
                 android:textAllCaps="true"
                 android:textSize="@dimen/head"
                 android:textStyle="bold" />
-
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchen"
                 style="@style/switchCustom"
@@ -72,10 +64,7 @@
                 android:layout_width="100dp"
                 android:layout_height="48dp"
                 app:track="@drawable/custom_track" />
-
-
         </LinearLayout>
-
         <TextView
             android:id="@+id/tv_settingLang"
             android:layout_width="wrap_content"
@@ -89,7 +78,6 @@
             android:textColor="?android:textColor"
             android:textSize="@dimen/common"
             android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,14 +85,12 @@
             android:background="?android:colorPrimary"
             android:gravity="center|top"
             android:orientation="horizontal">
-
             <RadioGroup
                 android:id="@+id/selectCurrency"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_button"
                 android:orientation="horizontal">
-
                 <RadioButton
                     android:id="@+id/rb_euro"
                     android:layout_width="wrap_content"
@@ -116,8 +102,6 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
-
-
                 <RadioButton
                     android:id="@+id/rb_dolar"
                     android:layout_width="wrap_content"
@@ -129,7 +113,6 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
-
                 <RadioButton
                     android:id="@+id/rb_pound"
                     android:layout_width="wrap_content"
@@ -141,13 +124,8 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
-
-
             </RadioGroup>
-
-
         </LinearLayout>
-
         <TextView
             android:id="@+id/tv_settingCurrency"
             android:layout_width="wrap_content"
@@ -161,5 +139,3 @@
             android:textSize="@dimen/common"
             android:textStyle="bold" />
     </LinearLayout>
-
-

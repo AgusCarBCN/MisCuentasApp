@@ -18,7 +18,6 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -64,7 +63,6 @@
             android:layout_marginTop="@dimen/box"
             android:text="@string/add_an_account"
             android:textSize="20sp" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
@@ -75,13 +73,11 @@
             android:labelFor="@+id/sp_choosecurreny"
             android:textSize="20sp"
             android:textStyle="bold" />
-
         <Spinner
             android:id="@+id/sp_choosecurreny"
             style="@style/InputFieldLarge"
             android:layout_marginTop="10dp"
             android:theme="@style/CustomSpinner" />
-
         <Button
             android:id="@+id/btn_tologin"
             style="@style/ButtonLarge"
@@ -95,7 +91,6 @@
             android:text="@string/login"
             android:contentDescription="@string/gotologin"
             android:textSize="20sp" />
-
         <Button
             android:id="@+id/btn_backtoCreateProfile"
             style="@style/ButtonLarge"

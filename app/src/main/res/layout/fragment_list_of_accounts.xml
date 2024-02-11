@@ -3,28 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center|top"
     android:orientation="vertical"
     tools:context=".ListOfAccountsFragment">
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding10"
-        android:gravity="center|center_horizontal|left"
         android:text="@string/your_accounts"
         android:textAlignment="center"
         android:textSize="@dimen/extracommon"
         android:textStyle="bold" />
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cuentas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:overScrollMode="never" />
-
-
-
+</LinearLayout>
 </LinearLayout>
 
 

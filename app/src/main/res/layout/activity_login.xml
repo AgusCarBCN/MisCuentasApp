@@ -108,9 +108,7 @@
                     android:textSize="@dimen/common"
                     />
                 </ScrollView>
-
             </LinearLayout>
-
         </LinearLayout>
 
 

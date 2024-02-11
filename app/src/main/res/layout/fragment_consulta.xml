@@ -9,13 +9,10 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ConsultaFragment">
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/et_search"
-            >
+            android:labelFor="@+id/et_search">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
             style="@style/InputFieldLarge"
@@ -23,23 +20,18 @@
             android:gravity="center"
             android:inputType="textCapWords|textAutoComplete" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     app:startIconDrawable="@drawable/date"
                     android:textColor="?android:textColor"
-                    android:textColorHint="?android:textColor"
-                    >
-
+                    android:textColorHint="?android:textColor">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_datefrom"
                         style="@style/InputFieldMedium"
@@ -49,18 +41,14 @@
                         android:focusable="false"
                         android:hint="@string/date_from"
                         android:textColor="?android:textColor"
-                        android:inputType="date"
-
-                         />
+                        android:inputType="date"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:startIconDrawable="@drawable/date"
                     android:textColor="?android:textColor"
                     android:textColorHint="?android:textColor" >
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_dateto"
                         style="@style/InputFieldMedium"
@@ -72,11 +60,7 @@
                         android:focusable="false"
                         android:inputType="date"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
-
             </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,7 +69,6 @@
             android:layout_weight="1"
             android:gravity="top"
             android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,15 +76,12 @@
                 android:background="?android:colorPrimary"
                 android:gravity="center|top"
                 android:orientation="horizontal">
-
                 <RadioGroup
                     android:id="@+id/selectImporte"
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/style_button"
-                    android:orientation="horizontal"
-                   >
-
+                    android:orientation="horizontal">
                     <RadioButton
                         android:id="@+id/rb_ingresos"
                         android:layout_width="wrap_content"
@@ -113,8 +93,6 @@
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
-
-
                     <RadioButton
                         android:id="@+id/rb_gastos"
                         android:layout_width="wrap_content"
@@ -126,7 +104,6 @@
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
-
                     <RadioButton
                         android:id="@+id/rb_ingresosygastos"
                         android:layout_width="wrap_content"
@@ -138,20 +115,14 @@
                         android:textSize="@dimen/common"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
-
-
                 </RadioGroup>
-
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <EditText
                     android:id="@+id/et_importedesde"
                     style="@style/InputFieldMedium"
@@ -161,7 +132,6 @@
                     android:gravity="center"
                     android:hint="@string/amount_from"
                     android:inputType="numberDecimal" />
-
                 <EditText
                     android:id="@+id/et_importehasta"
                     style="@style/InputFieldMedium"
@@ -172,16 +142,13 @@
                     android:hint="@string/amount_to"
                     android:inputType="numberDecimal" />
             </LinearLayout>
-
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="1.5"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/tvcuentasearch"
                 style="@style/InputFieldLargeCenter"
@@ -190,19 +157,16 @@
                 android:textAlignment="center"
                 android:background="@drawable/style_editetx" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center">
-
             <Button
                 android:id="@+id/btn_buscar"
                 style="@style/ButtonStyle"
                 android:layout_marginEnd="20dp"
                 android:text="@string/search" />
-
             <Button
                 android:id="@+id/btn_cancelabuscar"
                 style="@style/ButtonStyle"

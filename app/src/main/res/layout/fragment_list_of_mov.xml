@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:background="?android:colorSecondary"
     tools:context=".ListOfMovFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Cambia el atributo android:layout_height de wrap_content a 0dp
-             y agrega el atributo android:layout_weight con un valor de 1. -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_movimientos"
                 android:layout_width="match_parent"
@@ -24,6 +13,6 @@
                 android:overScrollMode="never" />
         </ScrollView>
 
-    </LinearLayout>
 
-</FrameLayout>
+
+
