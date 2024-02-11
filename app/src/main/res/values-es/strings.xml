@@ -148,6 +148,7 @@
     <string name="contact_me">Contáctame</string>
     <string name="visitGitHub">Visita mi gitHub</string>
     <string name="email">Enviame un email</string>
+    <string name="developeremail">agusticar@gmail.com</string>
     <!--Configuración de perfil y cuentas-->
     <string name="info">Tu perfil</string>
     <string name="add_an_account">Añade una cuenta</string>

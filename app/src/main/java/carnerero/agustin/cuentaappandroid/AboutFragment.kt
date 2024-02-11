@@ -61,7 +61,7 @@ class AboutFragment : Fragment() {
     private fun sendEmail(){
         //Uso de intent implicito para enviar un correo electrónico al desarrollador
         val sendMeEmail=Intent(Intent.ACTION_SENDTO)
-        sendMeEmail.setData(Uri.parse("mailto:${getString(R.string.email)}"))
+        sendMeEmail.setData(Uri.parse("mailto:${getString(R.string.developeremail)}"))
         startActivity(sendMeEmail)
     }
 

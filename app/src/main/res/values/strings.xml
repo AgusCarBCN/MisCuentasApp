@@ -144,6 +144,7 @@
     <string name="contact_me">Contact me</string>
     <string name="visitGitHub">Visit my gitHub</string>
     <string name="email">Send me an email</string>
+    <string name="developeremail">agusticar@gmail.com</string>
     <!--Profile and accounts settings-->
     <string name="info">Your profile</string>
     <string name="disabledoption">disabled option for an account</string>

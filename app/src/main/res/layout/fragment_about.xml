@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             tools:ignore="UseCompoundDrawables">
             <ImageView
                 android:id="@+id/imgemail"
@@ -101,6 +102,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:gravity="center"
         tools:ignore="UseCompoundDrawables">
