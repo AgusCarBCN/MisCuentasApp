@@ -11,32 +11,33 @@ import android.widget.SeekBar
 import androidx.preference.PreferenceManager
 import carnerero.agustin.cuentaappandroid.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
 
 
-    // Variable para manejar el View Binding
-    private var _binding: FragmentNotificationsBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var sharedPreferences: SharedPreferences
-    private var savedProgress: Int = 0
-    private var savedProgressBal: Int = 0
-    private lateinit var ratio:String
-    private lateinit var currency:String
-    private var maxBalance:Int=5000
-    private var maxExpense:Int=5000
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
 
+    class NotificationsFragment : Fragment() {
+
+
+        // Variable para manejar el View Binding
+        private var _binding: FragmentNotificationsBinding? = null
+        private val binding get() = _binding!!
+        private lateinit var sharedPreferences: SharedPreferences
+        private var savedProgress: Int = 0
+        private var savedProgressBal: Int = 0
+        private var currencyBase:String?=null
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            arguments?.let {
+
+            }
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            // Inflate the layout for this fragment
+            _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
 
             val switchDiaryReport = binding.switchday
             val switchWeeklyReport = binding.switchweek
@@ -49,19 +50,8 @@ class NotificationsFragment : Fragment() {
             val percentTextViewBal = binding.tvPercentbalance
 
 
-
             // Obtener preferencias compartidas
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            ratio = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
-            currency = sharedPreferences.getString(getString(R.string.basecurrency),null).toString()
-            if(currency=="INR"){
-                maxBalance=500000
-                maxExpense=500000
-            }else{
-                maxBalance=5000
-                maxExpense=5000
-            }
-
             // Obtener el estado de los switchs de las notificaciones
             val isCheckedSwitchDay =
                 sharedPreferences.getBoolean(getString(R.string.switchday), false)
@@ -77,7 +67,15 @@ class NotificationsFragment : Fragment() {
 
             savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
             savedProgress = sharedPreferences.getInt("progressValue", 0)
+            currencyBase=sharedPreferences.getString(getString(R.string.basecurrency),"EUR").toString()
 
+            if(currencyBase=="INR"){
+                seekBar.max=1000000
+                seekBarBal.max=100000
+            }else{
+                seekBar.max=5000
+                seekBarBal.max=5000
+            }
 
             //Asigno el estado de los switchs
             switchDiaryReport.isChecked = isCheckedSwitchDay
@@ -100,7 +98,6 @@ class NotificationsFragment : Fragment() {
                     .apply()
                 // Muestra u oculta la barra de progreso según el estado del interruptor
                 seekBar.visibility = if (isChecked) View.VISIBLE else View.GONE
-
                 // Muestra u oculta el TextView según el estado del interruptor
                 percentTextView.visibility = if (isChecked) View.VISIBLE else View.GONE
                 //Obtengo el valor del porcentaje seleccionado del seekbar
@@ -114,7 +111,6 @@ class NotificationsFragment : Fragment() {
 
                 // Muestra u oculta la barra de progreso según el estado del interruptor
                 seekBarBal.visibility = if (isChecked) View.VISIBLE else View.GONE
-
                 // Muestra u oculta el TextView según el estado del interruptor
                 percentTextViewBal.visibility = if (isChecked) View.VISIBLE else View.GONE
 
@@ -145,9 +141,7 @@ class NotificationsFragment : Fragment() {
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    seekBar?.max=maxBalance
                     // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-
                     percentTextView.text = "$progress"
                     // Guarda el progreso en SharedPreferences
                     val editor = sharedPreferences.edit()
@@ -170,7 +164,6 @@ class NotificationsFragment : Fragment() {
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    seekBar?.max=maxExpense
                     // Actualiza el valor del progreso y muestra el porcentaje en el TextView
                     percentTextViewBal.text = "$progress"
                     // Guarda el progreso en SharedPreferences
@@ -196,9 +189,11 @@ class NotificationsFragment : Fragment() {
             percentTextView.text = "$savedProgress"
             percentTextViewBal.text = "$savedProgressBal"
 
-        return binding.root
+
+
+            return binding.root
+        }
     }
-}
 
 
 
