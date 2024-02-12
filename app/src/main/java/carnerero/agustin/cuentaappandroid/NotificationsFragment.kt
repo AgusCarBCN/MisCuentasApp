@@ -147,7 +147,7 @@ class NotificationsFragment : Fragment() {
                 ) {
                     seekBar?.max=maxBalance
                     // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-                    val progressRatio=progress*(ratio.toDouble()).toInt()
+
                     percentTextView.text = "$progress"
                     // Guarda el progreso en SharedPreferences
                     val editor = sharedPreferences.edit()
@@ -172,7 +172,6 @@ class NotificationsFragment : Fragment() {
                 ) {
                     seekBar?.max=maxExpense
                     // Actualiza el valor del progreso y muestra el porcentaje en el TextView
-                    val progressRatio=progress*(ratio.toDouble()).toInt()
                     percentTextViewBal.text = "$progress"
                     // Guarda el progreso en SharedPreferences
                     val editor = sharedPreferences.edit()

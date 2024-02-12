@@ -91,9 +91,9 @@
     <string name="db">Base de datos</string>
     <string name="darkTheme">Tema Oscuro</string>
     <string name="lightTheme">Tema Claro</string>
-    <string name="settingLang">Configurar el idioma</string>
-    <string name="settingTheme">Configurar el tema</string>
-    <string name="settingcurrency">Selecciona la moneda</string>
+    <string name="settingLang">Escoje un idioma</string>
+    <string name="settingTheme">Escoje un tema</string>
+    <string name="settingcurrency">Mira tus cuentas en otra moneda</string>
     <string name="selectaccountfrom">selecciona cuenta de origen</string>
     <string name="selectaccountto">selecciona cuenta de destino</string>
     <!--Calculadora-->
@@ -177,7 +177,7 @@
     <string name="filename">dale un nombre al archivo csv</string>
 
     <!--Notificaciones-->
-    <string name="selectCurrency">Selecciona una divisa</string>
+    <string name="selectCurrency">Selecciona una divisa para tus cuentas</string>
     <string name="daylyreport">Informe diario</string>
     <string name="weekreport">Informe semanal</string>
     <string name="monthreport">Informe mensual</string>

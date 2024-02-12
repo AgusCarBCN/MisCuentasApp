@@ -19,6 +19,7 @@
     <string name="goodevening">Good evening</string>
 
     <!-- User Interaction Messages -->
+
     <string name="new_user">Are you a new user?</string>
     <string name="select_account">Select an account</string>
     <string name="select_year">Select a year</string>
@@ -89,9 +90,9 @@
     <string name="db">Database</string>
     <string name="darkTheme">Dark Theme</string>
     <string name="lightTheme">Light Theme</string>
-    <string name="settingLang">Set language</string>
-    <string name="settingTheme">Set theme</string>
-    <string name="settingcurrency">Select currency</string>
+    <string name="settingLang">Choose a language</string>
+    <string name="settingTheme">Choose a theme</string>
+    <string name="settingcurrency">See your accounts in another currency</string>
     <string name="selectaccountfrom">select source account</string>
     <string name="selectaccountto">select target account</string>
 
@@ -172,7 +173,7 @@
     <string name="importData">Import data</string>
 
     <!--Notifications-->
-    <string name="selectCurrency">Select Currency</string>
+    <string name="selectCurrency">Select a currency for your accounts</string>
     <string name="daylyreport">dayly report</string>
     <string name="weekreport">weekly report</string>
     <string name="monthreport">montly report</string>
