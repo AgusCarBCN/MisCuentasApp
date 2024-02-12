@@ -53,10 +53,10 @@ class NotificationsFragment : Fragment() {
             // Obtener preferencias compartidas
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
             ratio = sharedPreferences.getString(getString(R.string.conversion_rate), "1.0") ?: "1.0"
-            currency = sharedPreferences.getString(getString(R.string.currencyChanged),null).toString()
+            currency = sharedPreferences.getString(getString(R.string.basecurrency),null).toString()
             if(currency=="INR"){
-                maxBalance=400000
-                maxExpense=400000
+                maxBalance=500000
+                maxExpense=500000
             }else{
                 maxBalance=5000
                 maxExpense=5000
@@ -195,8 +195,6 @@ class NotificationsFragment : Fragment() {
             seekBarBal.progress = savedProgressBal
             percentTextView.text = "$savedProgress"
             percentTextViewBal.text = "$savedProgressBal"
-
-
 
         return binding.root
     }
