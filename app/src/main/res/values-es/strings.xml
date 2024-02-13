@@ -164,8 +164,8 @@
     <string name="database_icons">Iconos de configuracion de cuentas</string>
     <string name="newfield">Nuevo</string>
     <string name="newfieldF">Nueva</string>
-    <string name="hintdeleteaccount">Iban de cuenta a borrar</string>
-    <string name="hintdeletemovaccount">Iban de cuenta a borrar importes</string>
+    <string name="hintdeleteaccount">Nombre de cuenta a borrar</string>
+    <string name="hintdeletemovaccount">Nombre de cuenta a borrar importes</string>
     <string name="titledelelemov">Borra los movimientos de una cuenta</string>
     <string name="newname">Nuevo nombre</string>
     <string name="existsAccount">No existe una cuenta con este nombre</string>

@@ -161,8 +161,8 @@
     <string name="database_icons">Icons from setting accounts</string>
     <string name="newfield">New</string>
     <string name="newfieldF">New</string>
-    <string name="hintdeleteaccount">Iban account to delete</string>
-    <string name="hintdeletemovaccount">Iban from account to delete amounts</string>
+    <string name="hintdeleteaccount">Account name to delete</string>
+    <string name="hintdeletemovaccount">Name from account to delete amounts</string>
     <string name="titledelelemov">Delete all amounts from an account</string>
     <string name="newname">New name</string>
     <string name="existsAccount">There is no account with this name</string>
