@@ -85,8 +85,12 @@ class AboutFragment : Fragment() {
             "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>",
             "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>",
             "<a href=\"https://fonts.google.com/icons\"> $infoProfileIcons $attributionTextPlural Google Fonts</a>",
-            "<a href=\"https://fonts.google.com/icons\"> $databaseIcons $attributionTextPlural Google Fonts</a>"
-        )
+            "<a href=\"https://fonts.google.com/icons\"> $databaseIcons $attributionTextPlural Google Fonts</a>",
+            "<a href=\"https://www.flaticon.es/iconos-gratis/estados-unidos\" title=\"estados unidos iconos\">Estados unidos iconos creados por Freepik - Flaticon</a>",
+            "<a href=\"https://www.flaticon.es/iconos-gratis/bandera-del-reino-unido\" title=\"bandera del reino unido iconos\">Bandera del reino unido iconos creados por Freepik - Flaticon</a>",
+            "<a href=\"https://www.flaticon.es/iconos-gratis/europa\" title=\"europa iconos\">Europa iconos creados por Xinh Studio - Flaticon</a>",
+            "<a href=\"https://www.flaticon.es/iconos-gratis/india\" title=\"india iconos\">India iconos creados por Freepik - Flaticon</a>"
+            )
 
         for (attributionHtml in attributionsList) {
             val attributionTextView = TextView(requireContext())

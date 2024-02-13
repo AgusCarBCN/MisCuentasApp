@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import androidx.databinding.adapters.AdapterViewBindingAdapter
 import androidx.preference.PreferenceManager
+import carnerero.agustin.cuentaappandroid.adapter.CustomAdapter
 import carnerero.agustin.cuentaappandroid.dao.CuentaDao
 import carnerero.agustin.cuentaappandroid.databinding.ActivityCreateAccountsBinding
 import carnerero.agustin.cuentaappandroid.model.Cuenta
+import carnerero.agustin.cuentaappandroid.model.CurrencyItem
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 class CreateAccountsActivity : AppCompatActivity() {
@@ -23,51 +25,49 @@ class CreateAccountsActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var lang:String
     private lateinit var country:String
-    private val currencies = arrayOf(
-        "EUR", "USD", "GBP","INR"
-    )
+    private val currenciesList=arrayOf(CurrencyItem(R.drawable.ue,"EUR"),
+        CurrencyItem(R.drawable.usa,"USD"),
+        CurrencyItem(R.drawable.uk,"GBP"),
+        CurrencyItem(R.drawable.india,"INR"))
+
+
     private lateinit var selectedItem:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateAccountsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Acceso a componentes de la interfaz
-        val etAccountName=binding.etNameaccount
-        val etBalance=binding.etBalance
-        val selectCurrencies=binding.spChoosecurreny
-        val btnAddAccount=binding.btnAddaccount
-        val btnLogin=binding.btnTologin
-        val btnGoBack=binding.btnBacktoCreateProfile
+
+        val etAccountName = binding.etNameaccount
+        val etBalance = binding.etBalance
+        val selectCurrencies = binding.spChoosecurreny
+        val btnAddAccount = binding.btnAddaccount
+        val btnLogin = binding.btnTologin
+        val btnGoBack = binding.btnBacktoCreateProfile
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
+        val enableDarkTheme =
+            sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
+        val enableEnLang = sharedPreferences.getBoolean(
+            getString(R.string.preferences_enable_lang),
+            Utils.getDefaultLang()
+        )
         // Aplicar tema y configuración de idioma según las preferencias
         Utils.applyTheme(enableDarkTheme)
         Utils.applyLanguage(enableEnLang)
-        // Crear adaptadores
-        val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
-        with(adapter) {
-            currencies.forEach { currency ->
-                add(currency)
-            }
-        }
+        val adapter = CustomAdapter(this, currenciesList)
         selectCurrencies.adapter = adapter
-        selectedItem = currencies[0]
-        // Listener para el spinner que guarda la divisa seleccionada
+
         selectCurrencies.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedItem = adapter.getItem(position).toString()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedItem = currenciesList[position].currencySymbol
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Acciones a realizar cuando no se selecciona nada
+                selectedItem=currenciesList[0].currencySymbol
             }
         }
+
+
 
 
         btnAddAccount.setOnClickListener {

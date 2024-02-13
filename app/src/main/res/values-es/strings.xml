@@ -12,7 +12,7 @@
     <string name="name">Nombre</string>
     <string name="addyouraccounts">Añade tus cuentas</string>
     <string name="required">*Campo requerido</string>
-
+    <string name="userName">nombre de usuario</string>
     <!-- Saludos según la hora del día -->
     <string name="goodmorning">Buenos días</string>
     <string name="goodafternoon">Buenas tardes</string>
@@ -168,7 +168,7 @@
     <string name="hintdeletemovaccount">Iban de cuenta a borrar importes</string>
     <string name="titledelelemov">Borra los movimientos de una cuenta</string>
     <string name="newname">Nuevo nombre</string>
-    <string name="existsAccount">No existe una cuenta con este IBAN</string>
+    <string name="existsAccount">No existe una cuenta con este nombre</string>
     <string name="questiondialog">¿Quieres borrar todos los datos?</string>
     <string name="noaccounts">No hay cuentas que mostrar</string>
     <string name="exportData">Exportar datos desde cuenta</string>

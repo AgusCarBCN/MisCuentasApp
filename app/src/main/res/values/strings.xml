@@ -12,7 +12,7 @@
     <string name="name">Name</string>
     <string name="addyouraccounts">Add your accounts</string>
     <string name="required">*Required field</string>
-
+    <string name="userName">nombre de usuario</string>
     <!-- Time of Day Greetings -->
     <string name="goodmorning">Good morning</string>
     <string name="goodafternoon">Good afternoon</string>
@@ -165,7 +165,7 @@
     <string name="hintdeletemovaccount">Iban from account to delete amounts</string>
     <string name="titledelelemov">Delete all amounts from an account</string>
     <string name="newname">New name</string>
-    <string name="existsAccount">There is no account with this IBAN</string>
+    <string name="existsAccount">There is no account with this name</string>
     <string name="questiondialog">Do you want to delete all data?</string>
     <string name="noaccounts">There are not accounts to show</string>
     <string name="oneaccount">Option not available for an account</string>

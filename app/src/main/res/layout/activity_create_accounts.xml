@@ -73,11 +73,18 @@
             android:labelFor="@+id/sp_choosecurreny"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <Spinner
             android:id="@+id/sp_choosecurreny"
             style="@style/InputFieldLarge"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:theme="@style/CustomSpinner" />
+            android:dropDownWidth="wrap_content"
+            android:spinnerMode="dropdown"
+            android:textSize="20sp"
+            android:theme="@style/CustomSpinner"
+            android:visibility="visible"
+            tools:visibility="visible" />
         <Button
             android:id="@+id/btn_tologin"
             style="@style/ButtonLarge"

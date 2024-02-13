@@ -84,7 +84,7 @@ class InfoFragment : Fragment() {
         val imgList = listOf(binding.imgid, binding.imgname, binding.imgpass)
         val editIcons= listOf(binding.editid,binding.editname,binding.editpass)
         val titleList =
-            listOf(getString(R.string.username), getString(R.string.name), getString(R.string.password))
+            listOf(getString(R.string.userName), getString(R.string.name), getString(R.string.password))
         val textViewList = listOf(binding.tvlogin, binding.tvname, binding.tvpass)
         val saveValueList: List<String> = listOf(
             getString(R.string.userlogin),
