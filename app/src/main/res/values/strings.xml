@@ -12,7 +12,7 @@
     <string name="name">Name</string>
     <string name="addyouraccounts">Add your accounts</string>
     <string name="required">*Required field</string>
-    <string name="userName">nombre de usuario</string>
+    <string name="userName">user name</string>
     <!-- Time of Day Greetings -->
     <string name="goodmorning">Good morning</string>
     <string name="goodafternoon">Good afternoon</string>
