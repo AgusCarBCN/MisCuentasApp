@@ -1,114 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorPrimary"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
-            <LinearLayout
-                android:id="@+id/ly_logo"
+
+    <LinearLayout
+        android:id="@+id/ly_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:colorPrimaryDark"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ly_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="230dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="50dp"
+            android:background="?android:previewImage"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/contabilidad" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:colorPrimary"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ly_logo">
+
+        <TextView
+            android:id="@+id/tv_wellcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/wellcome"
+            android:textAlignment="center"
+            android:textColor="?android:textColor"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_text_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/et_text_user">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_text_user"
+                android:layout_width="320dp"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="center"
+                android:hint="@string/enterusername"
+                android:inputType="text"
+                android:maxLength="10" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_text_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:labelFor="@+id/et_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="320dp"
+                android:layout_height="@dimen/box"
+                android:layout_gravity="center"
+                android:background="@drawable/style_editetx"
+                android:gravity="center"
+                android:hint="@string/enterpass"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/style_button"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="?android:textColor"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_newpassword"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?android:colorPrimaryDark"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="230dp"
-                    android:layout_height="250dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="50dp"
-                    android:background="?android:previewImage"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="@string/app_name"
-                    app:srcCompat="@drawable/contabilidad" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/ly_login"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="?android:colorPrimary"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_wellcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/wellcome"
-                    android:textAlignment="center"
-                    android:textColor="?android:textColor"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_text_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/et_text_user">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_text_user"
-                        android:layout_width="320dp"
-                        android:layout_height="@dimen/box"
-                        android:layout_gravity="center"
-                        android:background="@drawable/style_editetx"
-                        android:gravity="center"
-                        android:hint="@string/enterusername"
-                        android:inputType="text"
-                        android:maxLength="10" />
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_text_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/et_password"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_password"
-                        android:layout_width="320dp"
-                        android:layout_height="@dimen/box"
-                        android:layout_gravity="center"
-                        android:background="@drawable/style_editetx"
-                        android:gravity="center"
-                        android:hint="@string/enterpass"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
-                <Button
-                    android:id="@+id/login"
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/style_button"
-                    android:text="@string/login"
-                    android:textAllCaps="false"
-                    android:textColor="?android:textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_newpassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?android:colorPrimary"
-                    android:gravity="center"
-                    android:text="@string/forgetpass"
-                    android:textAllCaps="false"
-                    android:textSize="@dimen/common"
-                    />
-                </ScrollView>
-            </LinearLayout>
-        </LinearLayout>
+                android:gravity="center"
+                android:text="@string/forgetpass"
+                android:textAllCaps="false"
+                android:textSize="@dimen/common" />
+        </ScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
