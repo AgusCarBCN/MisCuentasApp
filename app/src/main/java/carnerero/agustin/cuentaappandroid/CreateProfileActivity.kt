@@ -47,8 +47,8 @@ class CreateProfileActivity : AppCompatActivity() {
         val imgIconCamera = binding.imgIconcameraprofile
         val etName = binding.etNameprofile
         val etUserName = binding.etUsernameprofile
-        val etPassword = binding.etPasswordprofile
-        val etRepeatPassword = binding.etReppasswordprofile
+        val etPassword = binding.etPassword
+        val etRepeatPassword = binding.etRepeatpassword
         val btnCreateAccount = binding.btnCreateAccounts
         val btnGoBack = binding.btnBacktoOnBoarding
         val enableDarkTheme = sharedPreferences.getBoolean(getString(R.string.preferences_enable), false)
