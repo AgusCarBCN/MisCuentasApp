@@ -32,16 +32,17 @@
                     app:startIconDrawable="@drawable/date"
                     android:textColor="?android:textColor"
                     android:textColorHint="?android:textColor">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_datefrom"
                         style="@style/InputFieldMedium"
-                        android:layout_width="175dp"
+                        android:layout_width="155dp"
                         android:clickable="true"
-                        android:gravity="center"
                         android:focusable="false"
+                        android:gravity="center"
                         android:hint="@string/date_from"
-                        android:textColor="?android:textColor"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:textColor="?android:textColor" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
@@ -49,16 +50,17 @@
                     app:startIconDrawable="@drawable/date"
                     android:textColor="?android:textColor"
                     android:textColorHint="?android:textColor" >
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_dateto"
                         style="@style/InputFieldMedium"
-                        android:layout_width="175dp"
-                        android:hint="@string/date_to"
-                        android:gravity="center"
+                        android:layout_width="155dp"
                         android:clickable="true"
-                        android:textColor="?android:textColor"
                         android:focusable="false"
-                        android:inputType="date"/>
+                        android:gravity="center"
+                        android:hint="@string/date_to"
+                        android:inputType="date"
+                        android:textColor="?android:textColor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         <LinearLayout
@@ -76,12 +78,14 @@
                 android:background="?android:colorPrimary"
                 android:gravity="center|top"
                 android:orientation="horizontal">
+
                 <RadioGroup
                     android:id="@+id/selectImporte"
-                    android:layout_width="360dp"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/style_button"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/rb_ingresos"
                         android:layout_width="wrap_content"
@@ -90,9 +94,10 @@
                         android:buttonTint="?android:colorPrimary"
                         android:text="@string/incomes"
                         android:textColor="?android:textColor"
-                        android:textSize="@dimen/common"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
+
                     <RadioButton
                         android:id="@+id/rb_gastos"
                         android:layout_width="wrap_content"
@@ -101,9 +106,10 @@
                         android:buttonTint="?android:colorPrimary"
                         android:text="@string/bills"
                         android:textColor="?android:textColor"
-                        android:textSize="@dimen/common"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
+
                     <RadioButton
                         android:id="@+id/rb_ingresosygastos"
                         android:layout_width="wrap_content"
@@ -112,7 +118,7 @@
                         android:buttonTint="?android:colorPrimary"
                         android:text="@string/income_and_bills"
                         android:textColor="?android:textColor"
-                        android:textSize="@dimen/common"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         android:theme="@style/CustomSpinner" />
                 </RadioGroup>
@@ -123,21 +129,23 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/et_importedesde"
                     style="@style/InputFieldMedium"
-                    android:layout_width="170dp"
+                    android:layout_width="155dp"
                     android:layout_marginEnd="10dp"
                     android:autofillHints=""
                     android:gravity="center"
                     android:hint="@string/amount_from"
                     android:inputType="numberDecimal" />
+
                 <EditText
                     android:id="@+id/et_importehasta"
                     style="@style/InputFieldMedium"
-                    android:autofillHints=""
-                    android:layout_width="170dp"
+                    android:layout_width="155dp"
                     android:layout_marginStart="10dp"
+                    android:autofillHints=""
                     android:gravity="center"
                     android:hint="@string/amount_to"
                     android:inputType="numberDecimal" />
@@ -162,15 +170,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center">
+
             <Button
                 android:id="@+id/btn_buscar"
                 style="@style/ButtonStyle"
-                android:layout_marginEnd="20dp"
+                android:layout_width="145dp"
+                android:layout_marginEnd="15dp"
                 android:text="@string/search" />
+
             <Button
                 android:id="@+id/btn_cancelabuscar"
                 style="@style/ButtonStyle"
-                android:layout_marginStart="20dp"
+                android:layout_width="145dp"
+                android:layout_marginStart="15dp"
                 android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>

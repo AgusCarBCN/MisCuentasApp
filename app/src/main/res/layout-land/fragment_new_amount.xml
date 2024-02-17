@@ -13,12 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@id/et_descripcion">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_descripcion"
-            style="@style/InputFieldLarge"
-            android:hint="@string/amount_text"
-            android:gravity="center"
-            android:inputType="textCapWords" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_descripcion"
+                style="@style/InputFieldLarge"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/amount_text"
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -50,12 +51,15 @@
             <Button
                 android:id="@+id/btn_nuevoingreso"
                 style="@style/ButtonStyle"
-                android:layout_marginEnd="20dp"
+                android:layout_width="145dp"
+                android:layout_marginEnd="15dp"
                 android:text="@string/incomes" />
+
             <Button
                 android:id="@+id/btn_nuevogasto"
                 style="@style/ButtonStyle"
-                android:layout_marginStart="20dp"
+                android:layout_width="145dp"
+                android:layout_marginStart="15dp"
                 android:text="@string/bills"
                 android:textAllCaps="false" />
         </LinearLayout>
