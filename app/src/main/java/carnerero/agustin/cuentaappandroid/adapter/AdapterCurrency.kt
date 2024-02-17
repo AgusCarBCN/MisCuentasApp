@@ -27,7 +27,7 @@ class CustomAdapter(val context: Context, private val currencyList: Array<Curren
             view = inflater.inflate(R.layout.custom_choosecurrency, parent, false)
             viewHolder = ViewHolder(
                 view.findViewById(R.id.imageFlag),
-                view.findViewById(R.id.text_view_currency)
+                view.findViewById(R.id.baseCurrency)
             )
             view.tag = viewHolder
         } else {

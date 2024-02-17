@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/img_darklight"
-            android:layout_width="@dimen/box"
-            android:layout_height="@dimen/box"
+            android:layout_width="@dimen/icon32"
+            android:layout_height="@dimen/icon32"
             android:layout_marginEnd="20dp"
             android:contentDescription="@string/settingTheme" />
 
@@ -53,8 +53,8 @@
 
         <TextView
             android:id="@+id/tv_enes"
-            android:layout_width="@dimen/box"
-            android:layout_height="@dimen/box"
+            android:layout_width="@dimen/icon32"
+            android:layout_height="@dimen/icon32"
             android:layout_marginEnd="20dp"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
