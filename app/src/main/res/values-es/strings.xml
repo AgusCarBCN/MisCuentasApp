@@ -25,9 +25,9 @@
     <string name="amount">Importe</string>
     <string name="date_from">Fecha desde</string>
     <string name="date_to">Fecha hasta</string>
-    <string name="incomes">Ingresos</string>
+    <string name="incomes">Ingreso</string>
     <string name="incomem">ingreso</string>
-    <string name="bills">Gastos</string>
+    <string name="bills">Gasto</string>
     <string name="billm">gasto</string>
     <string name="income_and_bills">Ingresos y gastos</string>
     <string name="amount_from">Importe desde</string>

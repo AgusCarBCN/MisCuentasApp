@@ -85,12 +85,14 @@
             android:background="?android:colorPrimary"
             android:gravity="center|top"
             android:orientation="horizontal">
+
             <RadioGroup
                 android:id="@+id/selectCurrency"
-                android:layout_width="360dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_button"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rb_euro"
                     android:layout_width="wrap_content"
@@ -102,6 +104,7 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
+
                 <RadioButton
                     android:id="@+id/rb_dolar"
                     android:layout_width="wrap_content"
@@ -113,6 +116,7 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
+
                 <RadioButton
                     android:id="@+id/rb_pound"
                     android:layout_width="wrap_content"
@@ -124,6 +128,7 @@
                     android:textSize="@dimen/common"
                     android:textStyle="bold"
                     android:theme="@style/CustomSpinner" />
+
                 <RadioButton
                     android:id="@+id/rb_rupee"
                     android:layout_width="wrap_content"
