@@ -38,11 +38,13 @@ class AjustesFragment : Fragment() {
     private val lightModeIcon = R.drawable.light_mode_20
     private val english ="en"
     private val spanish = "es"
-
+    /*En resumen, onCreateView() se utiliza para inflar y configurar la jerarquía de vistas del Fragment,
+    mientras que onViewCreated() se utiliza para realizar cualquier inicialización adicional o configuración de vistas después
+    de que la vista del Fragment haya sido inflada completamente./
+    */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -51,7 +53,12 @@ class AjustesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAjustesBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         //viewModel=ViewModelProvider(this,CurrencyVmFac(repo)).get(CurrencyVm::class.java)
         // Referencias a elementos de diseño
         switchTheme = binding.switchdark
@@ -129,7 +136,7 @@ class AjustesFragment : Fragment() {
             sharedPreferences.edit().putString(getString(R.string.lang), lang).apply()
             sharedPreferences.edit().putString(getString(R.string.country), country).apply()
         }
-        return view
+
     }
 
     // Función para establecer un icono según el estado de una característica
