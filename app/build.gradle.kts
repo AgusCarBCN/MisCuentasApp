@@ -106,6 +106,8 @@ dependencies {
     //Chart
     implementation (libs.mpandroidchart)
     implementation (libs.accompanist.permissions)
+    //Google adMob
+    implementation (libs.play.services.ads)
 }
 
 kapt {

@@ -59,6 +59,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.about.AboutApp
 import carnerero.agustin.cuentaappandroid.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.about.SendEmail
+import carnerero.agustin.cuentaappandroid.admob.AdBanner
 import carnerero.agustin.cuentaappandroid.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorUI
@@ -176,6 +177,7 @@ fun MainScreen(
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
+                AdBanner()
                 // Add your main screen content here
                 Column(
                     modifier = Modifier.padding(innerPadding)
