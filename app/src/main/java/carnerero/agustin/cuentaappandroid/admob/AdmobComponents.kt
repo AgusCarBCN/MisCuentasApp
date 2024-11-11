@@ -1,7 +1,10 @@
 package carnerero.agustin.cuentaappandroid.admob
 
 import android.content.ContentValues.TAG
+import android.os.Build
+import android.util.DisplayMetrics
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.window.layout.WindowMetricsCalculator
@@ -17,14 +22,33 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
+@RequiresApi(Build.VERSION_CODES.R)
+@Composable
+fun adaptiveAdSize(): AdSize {
+    val context = LocalContext.current
+    val density = LocalDensity.current.density
 
+    // Obtenemos el ancho de la pantalla en píxeles
+    val displayMetrics = DisplayMetrics().apply {
+        context.display.getRealMetrics(this)
+    }
+    val adWidthPixels = displayMetrics.widthPixels.toFloat()
 
+    // Convertimos el ancho a dp y calculamos el AdSize adecuado
+    val adWidthDp = (adWidthPixels / density).toInt()
+    return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidthDp)
+}
+
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun AdmobBanner() {
+    val size=adaptiveAdSize()
+
     Column {
         AndroidView(modifier = Modifier.fillMaxWidth(), factory = { context ->
+
             AdView(context).apply {
-                setAdSize(AdSize.BANNER)
+                setAdSize(size)
                 adUnitId = "ca-app-pub-3940256099942544/6300978111"
                 loadAd(AdRequest.Builder().build())
                 this.adListener = object : AdListener() {
