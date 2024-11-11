@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mis Cuentas</string>
+    <string name="title_activity_other">Other</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!--Login -->
+    <string name="changeformattext">Cambia solo el formato de la divisa.</string>
+    <string name="changecurrencytext">Cambia el formato y las entradas a la divisa seleccionada.</string>
+    <string name="changeFormat">Cambiar formato</string>
+    <string name="changeCurrency">Cambiar divisa</string>
+    <string name="loginButton">Inicio de sesion</string>
+    <string name="confirmButton">Confirmar</string>
+    <string name="backButton">Atras</string>
+    <string name="enterName">Introduce tu nombre</string>
+    <string name="repeatpassword">Repite la contraseña</string>
+    <string name="enterUsername">Introduce tu nombre de usuario</string>
+    <string name="enterPassword">Introduce contraseña</string>
+    <string name="forgotpassword">¿Olvidaste la contraseña?</string>
+    <string name="requestuser">Introduce nombre de usuario(paso 1)</string>
+    <string name="newpassword">Introduce nueva contraseña (paso 2)</string>
+    <string name="goodmornig">Buenos días</string>
+    <string name="goodafternoon">Buenas tardes</string>
+    <string name="goodevening">Buenas noches</string>
+
+    <!--Home-->
+    <string name="seeincome">Ver ingresos</string>
+    <string name="seeexpense">Ver gastos</string>
+    <string name="seeall">Ver ingresos y gastos</string>
+    <string name="yourentries">Tus registros</string>
+    <!--On Boarding-->
+
+
+    <string name="title0">Bienvenido a misCuentasApp</string>
+    <string name="title1">Crea tu perfil</string>
+    <string name="title2">Crea tus cuentas</string>
+    <string name="title3">Anota tus ingresos y gastos diarios</string>
+    <string name="title4">Consulta tu progreso financiero</string>
+    <string name="title5">Busca tus anotaciones</string>
+    <string name="title6">Controla tus gastos</string>
+    <string name="des0">\t\t\t¡Bienvenido a Mis Cuentas! Tu herramienta personalizada para gestionar y mejorar tus finanzas personales. Empieza hoy mismo tu camino hacia una vida financiera saludable y segura.</string>
+    <string name="des1">\t\t\tCrea tu perfil para acceder a la app y asegura la confidencialidad de tus anotaciones,
+        que se almacenan de forma segura en tu dispositivo móvil. ¡Crea tu perfil ahora para una
+        experiencia personalizada y protegida!</string>
+    <string name="des2">\t\t\tAñade cuentas durante el proceso de configuración del perfil o en cualquier momento después. Puedes elegir cualquier divisa del mundo y cambiarla cuando lo desees. Al cambiar de divisa, puedes optar por actualizar todos tus movimientos al nuevo formato o solo el formato de la divisa.</string>
+    <string name="des3">\t\t\tPara gestionar eficazmente tus finanzas, registra diariamente tus ingresos y gastos en cada cuenta. También puedes realizar movimientos entre tus cuentas usando la opción de transacciones.</string>
+    <string name="des4">\t\t\tConsulta tu progreso financiero a través de gráficos detallados. Los gráficos de barras muestran tus ingresos, gastos y saldo mensual, mientras que los gráficos circulares te ofrecen una visión clara de la distribución de tus gastos por categorías en un periodo determinado.</string>
+    <string name="des5">\t\t\tConsulta movimientos fácilmente, buscando por nombre, rango de fechas o cantidad de dinero, para que puedas hacer un seguimiento detallado de todas tus transacciones.</string>
+    <string name="des6">\t\t\tControla tanto tus gastos totales como por categoría en un periodo determinado. Activa las notificaciones para recibir alertas cuando alcances tus límites de gasto y mantener tus finanzas bajo control.</string>
+
+    <!---Profile-->
+    <string name="createProfileButton">Crea un perfil</string>
+    <string name="createaccountmsg">Puedes crear tus cuentas ahora o mas tarde.</string>
+    <string name="createAccount">Crea tu cuentas</string>
+    <string name="enteramount">Saldo</string>
+    <string name="amountName">Nombre de la cuenta</string>
+    <string name="addAccount">Añade una cuenta</string>
+    <!---Icons-->
+    <string name="visibily">Contraseña visible</string>
+    <string name="visibilyoff">Contraseña no visible</string>
+
+    <!--Option side menu-->
+    <string name="mainmenu">Menu principal de navegación</string>
+    <string name="management">Gestion de finanzas</string>
+    <string name="aboutapp">Información de la App</string>
+    <string name="home">Inicio</string>
+    <string name="profile">Perfil</string>
+    <string name="privacy">Política de privacidad</string>
+    <string name="notification">Notificaciones</string>
+    <string name="calculator">Calculadora</string>
+    <string name="barchart">Gráfico de barras</string>
+    <string name="piechart">Graficos circulares</string>
+    <string name="newincome">Nuevo ingreso</string>
+    <string name="transfer">Transferencia</string>
+    <string name="search">Buscar</string>
+    <string name="accountsetting">Configura tus cuentas</string>
+    <string name="settings">Ajustes</string>
+    <string name="about">Acerca de </string>
+    <string name="exitapp">Cerrar sesion</string>
+    <!--Create Accounts-->
+    <string name="createaccountsmsg">Puedes crear tus cuentas ahora o mas tarde.</string>
+    <string name="selectcurrency">Escoje una divisa para tus cuentas.</string>
+    <string name="selectedcurrency">Divisa seleccionada: </string>
+
+    <!--Ajustes-->
+    <string name="limitmaxexpense">Establece un limite máximo de gasto total</string>
+    <string name="expensemanagement">Controla tus gastos</string>
+    <string name="accountscontrol">Selecciona cuentas</string>
+    <string name="accountscontroldes">Habilita o deshabilita cuentas para controlar gastos totales</string>
+    <string name="expenseoptions">Opciones de control de gastos totales</string>
+    <string name="expenseoptionsdes">Selecciona las opciones para controlar todos tus gastos totales en un periodo de tiempo</string>
+    <string name="categorycontrol">Gasto por categoría</string>
+    <string name="descategorycontrol">Establece un control de gasto por cada categoría y recibe avisos al superarlos.</string>
+    <string name="desexpensecontrol">Controla los gastos totales y recibe una notificación cuando los hayas superado</string>
+    <string name="expensecontrol">Gasto total</string>
+    <string name="modify">Modifica esta cuenta</string>
+    <string name="deleteaccount">Borra esta cuenta</string>
+    <string name="appsettings">Ajustes generales</string>
+    <string name="destheme">Escoje entre tema claro o oscuro.</string>
+    <string name="desenableonboarding">Activa o desactiva el tutorial de inicio.</string>
+    <string name="theme">Tema de la app</string>
+    <string name="enableonboarding">Tutorial de inicio.</string>
+    <string name="enablenotifications">Notificaciones</string>
+    <string name="desenablenotifications">Habilitar o deshabilitar notificaciones en tu móvil de control del gasto.</string>
+    <string name="createbackup">Copia de seguridad</string>
+    <string name="loadbackup">Carga archivo de seguridad</string>
+    <string name="deleteall">Borra todo</string>
+    <string name="desbackup">Guarda una copia de seguridad de los registros.</string>
+    <string name="desload">Carga el archivo de seguridad de los registros.</string>
+    <string name="desdeleteall">Borra todos los registros.</string>
+    <string name="backup">Gestión de copias de seguridad</string>
+    <string name="delete_data_account">Borra una cuenta y todos sus registros</string>
+    <string name="delete_an_account">Borra una cuenta</string>
+    <string name="delete_all">Borra todo</string>
+    <string name="edit_account">Modifica una cuenta</string>
+    <string name="desedit_account">Cambia el nombre y el balance de tus cuentas.</string>
+    <string name="add_an_account">Añade una cuenta</string>
+    <string name="desdelete_data_account">Borrar todos los movimientos que has realizado en una cuenta.</string>
+    <string name="desdelete_an_account">Borra una cuenta con todos sus registros.</string>
+    <string name="desdelete_all">Borra todas las cuentas y todos sus registros dentro.</string>
+    <string name="desadd_an_account">Añade una nueva cuenta a la aplicación</string>
+    <string name="changecurrency">Cambia la divisa.</string>
+    <string name="deschangecurrency">Cambia la divisa de tus cuentas.</string>
+    <string name="email">agusticar@gmail.com</string>
+    <!--Profile-->
+    <string name="change">Cambiar</string>
+    <string name="name">Nombre</string>
+    <string name="userName">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="newName">Nuevo nombre</string>
+    <string name="newUserName">Nuevo usuario</string>
+    <string name="newPassword">Nueva contraseña</string>
+    <!--SnackBar messages-->
+    <string name="inValidLogin">Inicio de sesion invalido</string>
+    <string name="userNameUpdated">Nombre de usuario actualizado</string>
+    <string name="nameUpdated">Nombre actualizado</string>
+    <string name="passwordUpdated">Contraseña actualizada</string>
+    <string name="photoUpdated">Foto de perfil actualizada</string>
+    <string name="newaccountcreated">Has creado una nueva cuenta</string>
+    <string name="newincomecreated">Has insertado un nuevo ingreso</string>
+    <string name="newexpensecreated">Has insertado un nuevo gasto</string>
+    <string name="transferdone">Transferencia hecha</string>
+    <string name="overbalance">Importe por encima de saldo</string>
+    <string name="transferfrom">Gasto por transferencia</string>
+    <string name="transferTo">Ingreso por transferencia</string>
+    <string name="namechanged">Has cambiado el nombre de la cuenta</string>
+    <string name="amountchanged">Has cambiado el sado de la cuenta</string>
+    <string name="errorexport">Error al exportar fichero</string>
+    <string name="errorimport">Error al importar fichero</string>
+    <string name="erroraccountcreated">Error al crear una cuenta</string>
+    <string name="errorwritingdatastore">Error al escribir en DataStore</string>
+    <string name="errorreadingdatastore">Error al leer en DataStore</string>
+    <string name="datefromoverdateto">La fecha inicial es posterior a la fecha final</string>
+    <string name="amountfromoverdateto">El monto inicial es mayor que el monto final</string>
+    <string name="currencyformatchange">Has cambiado el formato de la moneda</string>
+    <string name="currencychange">Has cambiado el formato y las entradas a la nueva moneda.</string>
+    <string name="apierror">Error de conexion a internet</string>
+    <string name="permissiondeny">Permiso de notificacion denegado</string>
+    <string name="espendingupdate">Límite de gasto modificado de </string>
+    <!--TopBar titles-->
+    <string name="hometitle">Mis Cuentas</string>
+    <string name="searchtitle">Busqueda</string>
+    <string name="settingstitle">Configuración</string>
+    <string name="profiletitle">Perfil</string>
+    <string name="new_incometitle">Nuevo importe</string>
+    <string name="transfertitle">Transferencia</string>
+    <string name="barcharttitle">Gráficos</string>
+    <string name="calculatortitle">Calculadora</string>
+    <string name="setting_accountstitle">Configuración de las cuentas</string>
+    <string name="abouttitle">Acerca de</string>
+    <string name="greeting">Hola,</string>
+    <!--Página de acerca de-->
+    <string name="developer">Desarrollador: Agustin Carnerero Peña</string>
+    <string name="atributions">Atribuciones</string>
+    <string name="iconconta">Icono de contabilidad</string>
+    <string name="icongithub">Icono de logotipo de github</string>
+    <string name="menuicons">Iconos de menu lateral</string>
+    <string name="iconstheme">Iconos de configuracion de tema</string>
+    <string name="iconsdate">Iconos de rango de fecha</string>
+    <string name="attributionicon"> creado por </string>
+    <string name="attributionicons">creados por</string>
+    <string name="version">Version 2.0</string>
+    <string name="description">
+    Mis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
+
+    Además, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
+
+    Simplifica tu gestión financiera con Mis cuentas y mantén un control preciso de tus transacciones, todo en un solo lugar.
+</string>
+    <string name="desaboutapp">Una pequeña descripcion sobre la app</string>
+    <string name="desaboutme">Quien hay detras de este proyecto.</string>
+    <string name="desshare">Comparte esta app para que llegue a muchos sitios.</string>
+    <string name="desrate">Valora y comparte tu opinión sobre la app.</string>
+    <string name="desemail">Contacta conmigo para darme cualquier sugerencia.</string>
+    <string name="desstore">Descarga mi otra aplicación. MisCuentasApp</string>
+    <string name="despolicy">Accede a la política de privacidad</string>
+    <string name="othersapp">Otras aplicaciones</string>
+    <string name="policy">Política de privacidad</string>
+    <string name="share">Comparte</string>
+    <string name="rate">Valora</string>
+    <string name="contactme">Contactame</string>
+    <string name="visitmygithub">Visita mi github</string>
+    <string name="newexpense">Nuevo gasto</string>
+    <!--newAmount-->
+    <string name="selectanaccount">Escoje una cuenta</string>
+    <string name="chooseexpense">Elije un tipo de gasto</string>
+    <string name="chooseincome">Elije un tipo de ingreso</string>
+    <string name="desamount">Descripcion del importe</string>
+    <string name="enternote">Introduce importe</string>
+    <string name="food">Comida</string>
+    <string name="morgage">Vivienda</string>
+    <string name="electricitybill">Electricidad</string>
+    <string name="waterbill">Agua</string>
+    <string name="gasbill">Gas</string>
+    <string name="publictransport">Transporte público</string>
+    <string name="fuel_title">Combustible</string>
+    <string name="insurances">Seguros</string>>
+    <string name="health">Gastos médicos</string>
+    <string name="entertainment">Ocio</string>
+    <string name="subscriptions">Suscripciones</string>
+    <string name="vacations_travel_title">Vacaciones</string>
+    <string name="courses_books_materials_title">Educación</string>
+    <string name="clothing">Ropa</string>
+    <string name="house">Hogar</string>
+    <string name="car">Coche</string>
+    <string name="gym">Deporte</string>
+    <string name="pets">Mascotas</string>
+    <string name="other_expenses">Otros</string>
+    <string name="gifts_title">Regalos</string>
+    <string name="donations_title">Donaciones</string>
+    <string name="personal_care_title">Cuidado Personal</string>
+    <string name="salary">Salario</string>
+    <string name="lotery">Loteria</string>
+    <string name="dividens">Dividendos</string>
+    <string name="rental">Alquiler</string>
+    <string name="freelance">Freelance</string>
+    <string name="otherincomes">Otros</string>
+    <string name="sales">Ventas</string>
+    <string name="subsidies">Subsidios</string>
+    <string name="awards">Premios</string>
+    <string name="benefit_assets">Ganancia de activos</string>
+    <string name="lost_assets">Perdida de activos</string>
+    <string name="books">Libros</string>
+    <string name="music">Música</string>
+    <string name="hobbies">Aficiones</string>
+    <string name="restaurants">Restaurantes</string>
+    <string name="mobile">Móvil</string>
+    <string name="taxes">Impuestos</string>
+    <string name="loans">Préstamos</string>
+    <string name="electronics">Electrónica</string>
+    <string name="financial_assets_losses">Pérdidas activos financieros</string>
+    <string name="coffee">Café</string>
+    <string name="tobacco">Tabaco</string>
+    <string name="supplements">Suplementos</string>
+    <string name="motorcycle">Moto</string>
+    <string name="medical_expenses">Gastos médicos</string>
+    <string name="garden">Jardín</string>
+    <string name="children">Niños</string>
+    <string name="therapies">Terapias</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="gambling">Juego</string>
+    <string name="internet">Internet</string>
+    <!---Transfer-->
+    <string name="originaccount">Selecciona cuenta de origen</string>
+    <string name="destinationaccount">Selecciona cuenta destino</string>
+    <string name="amountentrie">Introduce una cantidad</string>
+    <string name="noaccounts">No hay cuentas creadas todavia.</string>
+    <string name="youraccounts">Tus cuentas</string>
+    <!--Dialog-->
+    <string name="cancelButton">Cancelar</string>
+    <string name="exitinfo">¿Estas seguro que quieres cerrar la sesión?</string>
+    <string name="deleteinfo">¿Estas seguro que quieres borrar la cuenta?</string>
+    <string name="titledelete">Confirma borrar cuenta</string>
+    <string name="titleexit">Confirma salida</string>
+    <!--backup-->
+    <string name="exportData">Datos guardados en fichero: </string>
+    <string name="filename">Dar un nombre al archivo CSV</string>
+    <string name="filenamelabel">Nombre fichero CSV</string>
+    <string name="download">Descargando fichero  </string>
+    <string name="upload">Copia de fichero de seguridad </string>
+    <!--entries-->
+    <string name="bydate">Por fecha</string>
+    <string name="bycategory">Por categoría</string>
+    <string name="noentries">No hay entradas todavia</string>
+    <!--search-->
+    <string name="searchentries">Buscar entradas(opcional)</string>
+    <string name="fromdate">Desde</string>
+    <string name="todate">Hasta</string>
+    <string name="fromamount">Desde cantidad(opcional)</string>
+    <string name="toamount">Hasta cantidad(opcional)</string>
+    <string name="incomeoption">Ingresos</string>
+    <string name="expenseoption">Gastos</string>
+    <string name="alloption">Ingresos y gastos</string>
+    <!--calculator-->
+    <string name="calcback">"\u232B"</string>
+    <!--Charts-->
+    <string name="incomechart">Ingresos</string>
+    <string name="expensechart">Gastos</string>
+    <string name="daterange">Selecciona un rango de fechas</string>
+    <string name="account">Cuenta</string>
+    <string name="year">Año</string>
+    <string name="result">Resultado</string>
+    <!--Meses del año gráfico de barras-->
+    <string name="january">Ene</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Abr</string>
+    <string name="may">May</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Ago</string>
+    <string name="september">Sep</string>
+    <string name="october">Oct</string>
+    <string name="november">Nov</string>
+    <string name="december">Dic</string>
+    <!--Meses del año gráfico de barras-->
+    <string name="months">Meses</string>
+    <string name="januarytable">Enero</string>
+    <string name="februarytable">Febrero</string>
+    <string name="marchtable">Marzo</string>
+    <string name="apriltable">Abril</string>
+    <string name="mayotable">Mayo</string>
+    <string name="junetable">Junio</string>
+    <string name="julytable">Julio</string>
+    <string name="augusttable">Agosto</string>
+    <string name="septembertable">Septiembre</string>
+    <string name="octobertable">Octubre</string>
+    <string name="novembertable">Noviembre</string>
+    <string name="decembertable">Diciciembre</string>
+    <!--Notificaciones-->
+
+    <string name="lowbalance">Alerta de saldo inferior a </string>
+    <string name="hightexpenses">Gastos del mes superiores al limite</string>
+    <string name="limitexpense">Limite de gasto mensual</string>
+    <string name="notification_required">Activa las notificaciones para recibir alertas sobre el control de tus gastos. Puedes activarlas o desactivarlas en cualquier momento desde la sección de Ajustes de la aplicación.</string>
+    <string name="notificationrequiredalert">¿Permites que mis cuentas te envie notificaciones?</string>
+    <string name="permissiongranted">Permiso de notificaciones concedido</string>
+    <string name="selectcategories">Selecciona categorias</string>
+    <string name="choosecategories">Habilita o Deshabilita categorias para controlar gastos</string>
+    <string name="currentexpense">Gasto actual</string>
+    <string name="categorytitle">Categorias</string>
+    <string name="limitMax">Limite máximo</string>
+    <string name="select">Selecciona</string>
+    <string name="limitMaxtitle">Límite máximo de gasto</string>
+    <string name="messagedialog">Selecciona el límite máximo de gasto por categoría</string>
+    <string name="categoryespendingcontrol">Control de gasto por categoría de</string>
+    <string name="accountespendingcontrol">Control de gastos por cuenta de</string>
+    <string name="expenseslimit">Has superado el limite de gasto.</string>
+    <string name="expenseslimit80">Estas cerca de superar tu límite de gasto.</string>
+    <string name="expensebycategory">Gasto por categoría de </string>
+    <string name="expensebyaccount">Gasto por cuenta de </string>
+    <string name="expenselimitOk">Tus gastos están controlados en esta categoría</string>
+    <string name="expensesByMonth">Gastos por mes</string>
+    <string name="accountchecked">Cuenta seleccionada</string>
+    <string name="accountunchecked">Cuenta no seleccionada</string>
+    <string name="selectaccounts">Selecciona cuentas</string>
+
+</resources>

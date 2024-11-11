@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <dimen name="small" >14sp</dimen>
-        <dimen name="common" >16sp</dimen>
-        <dimen name="large">20sp</dimen>
-        <dimen name="extralarge">24dp</dimen>
-        <dimen name="login" >20dp</dimen>
-        <dimen name="botton" >24dp</dimen>
-        <dimen name="switchCustom" >30dp</dimen>
-        <dimen name="textView" >20sp</dimen>
-        <dimen name="head" >24sp</dimen>
-        <dimen name="wellcome" >34sp</dimen>
-        <dimen name="boxh" >42dp</dimen>
-        <dimen name="icon32">32dp</dimen>
-        <dimen name="icon40">40dp</dimen>
-        <dimen name="box" >48dp</dimen>
-        <dimen name="extratext">48dp</dimen>
-        <dimen name="extrabox">60dp</dimen>
-        <dimen name="extracommon" >18sp</dimen>
-        <dimen name="calcbutton">32sp</dimen>
-        <dimen name="extracalcbutton">48sp</dimen>
-        <dimen name="padding10">10dp</dimen>
+    <!-- Títulos grandes -->
+    <dimen name="text_title_large">30sp</dimen>
+    <dimen name="text_title_medium">24sp</dimen>
+    <dimen name="text_title_small">18sp</dimen>
+
+    <!-- Texto de cuerpo -->
+    <dimen name="text_body_big">20sp</dimen>
+    <dimen name="text_body_extra_large">18sp</dimen>
+    <dimen name="text_body_large">16sp</dimen>
+    <dimen name="text_body_medium">14sp</dimen>
+    <dimen name="text_body_small">12sp</dimen>
+
+    <!-- Texto de subtítulos y pies de página -->
+    <dimen name="text_subtitle">18sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_over_line">10sp</dimen>
 </resources>
+

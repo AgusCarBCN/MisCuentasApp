@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Accounts</string>
+
+    <string name="title_activity_other">Other</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Login -->
+    <string name="changeformattext">Only change the currency format.</string>
+    <string name="changecurrencytext">Change the format and entries to the selected currency.</string>
+    <string name="loginButton">Log in</string>
+    <string name="confirmButton">Confirm</string>
+    <string name="backButton">Back</string>
+    <string name="changeFormat">Change Format</string>
+    <string name="changeCurrency">Change Currency</string>
+    <string name="enterName">Enter your name</string>
+    <string name="repeatpassword">Repeat your password</string>
+    <string name="enterUsername">Enter your user name</string>
+    <string name="enterPassword">Enter password</string>
+    <string name="forgotpassword">Forgot your password?</string>
+    <string name="requestuser">Enter username (step 1)</string>
+    <string name="newpassword">Enter new password (step 2)</string>
+    <string name="goodmornig">Good morning</string>
+    <string name="goodafternoon">Good afternoon</string>
+    <string name="goodevening">Good evening</string>
+    <!--Home-->
+    <string name="seeincome">See incomes</string>
+    <string name="seeexpense">See expenses</string>
+    <string name="seeall">See incomes and expenses</string>
+    <string name="yourentries">Your notes</string>
+
+    <!--String onBoarding -->
+    <string name="title0">Wellcome to MyAccountsApp</string>
+    <string name="title1">Create your profile</string>
+    <string name="title2">Create your accounts</string>
+    <string name="title3">Record your daily income and expenses</string>
+    <string name="title4">View your records</string>
+    <string name="title5">Search your records</string>
+    <string name="title6">Control your expenses</string>
+    <string name="des0">Welcome to My Accounts! Your personalized tool to manage and improve your personal finances. Start your journey today towards a healthy and secure financial life.</string>
+    <string name="des1">Create your profile to access the app and ensure the confidentiality of your records, which are securely stored on your mobile device. Create your profile now for a personalized and protected experience!</string>
+    <string name="des2">Add accounts during the profile setup process or at any time afterward. You can choose any currency in the world and change it whenever you wish. When changing currencies, you can choose to update all your transactions to the new format or just the currency format.</string>
+    <string name="des3">To manage your finances effectively, record your income and expenses daily for each account. You can also transfer funds between your accounts using the transactions option.</string>
+    <string name="des4">Check your financial progress through detailed charts. Bar graphs show your monthly income, expenses, and balance, while pie charts give you a clear view of how your expenses are distributed across categories over a set period.</string>
+    <string name="des5">Easily check transactions by searching by name, date range, or amount, so you can keep a detailed track of all your transactions.</string>
+    <string name="des6">Monitor both your total spending and spending by category over a specific period. Enable notifications to receive alerts when you reach your spending limits and keep your finances under control.</string>
+
+
+    <!---Profile-->
+    <string name="createProfileButton">Create a profile</string>
+    <string name="createAccount">Create your accounts</string>
+    <string name="createaccountmsg">You can create your account now or later.</string>
+    <string name="enteramount">Amount</string>
+    <string name="amountName">Account name</string>
+    <string name="addAccount">Add account</string>
+    <!---Icons-->
+    <string name="visibily">Password visible</string>
+    <string name="visibilyoff">Password no visible</string>
+    <!--Option side menu-->
+    <string name="mainmenu">Main navigation menu</string>
+    <string name="management">Financial management</string>
+    <string name="aboutapp">Information about App</string>
+    <string name="barchart">BarChart</string>
+    <string name="piechart">Pie Charts</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="notification">Notifications</string>
+    <string name="calculator">Calculator</string>
+    <string name="newincome">New amount</string>
+    <string name="transfer">Transfer</string>
+    <string name="search">Search</string>
+    <string name="privacy">Privacy policy</string>
+
+    <string name="accountsetting">Manage your accounts</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="exitapp">Log out</string>
+    <!--Create Accounts-->
+    <string name="createaccountsmsg">You can create your accounts now o later.</string>
+    <string name="selectcurrency">Select a currency for your accounts.</string>
+    <string name="selectedcurrency">Selected currency: </string>
+    <!--Settings-->
+    <string name="accountscontrol">Select accounts</string>
+    <string name="accountscontroldes">Enable or disable accounts to control total expenses</string>
+    <string name="limitmaxexpense">Set a maximum total spending limit</string>
+    <string name="expensemanagement">Manage your expenses</string>
+    <string name="expenseoptions">Total expense control options</string>
+    <string name="expenseoptionsdes">Select options to control all your total expenses within a time period</string>
+    <string name="categorycontrol">Expense by Category</string>
+    <string name="descategorycontrol">Set an expense limit for each category and receive alerts when you exceed them.</string>
+    <string name="desexpensecontrol">Track total expenses and receive notifications when limits are exceeded.</string>
+    <string name="expensecontrol">Total Expense</string>
+    <string name="modify">Modify this account</string>
+    <string name="delete_data_account">Delete the account and all its records</string>
+    <string name="deleteaccount">Delete this account</string>
+    <string name="edit_account">Modify an account</string>
+    <string name="desedit_account"> Change the name and balance of your accounts.</string>
+    <string name="appsettings">App Settings</string>
+    <string name="theme">App theme</string>
+    <string name="enableonboarding">Onboarding.</string>
+    <string name="destheme">Choose between dark or light theme.</string>
+    <string name="desenableonboarding">Enable or disable onboarding</string>
+    <string name="enablenotifications">Notifications</string>
+    <string name="desenablenotifications">Enable or disable notifications on your expense tracker mobile app.</string>
+
+    <string name="createbackup">Create backup</string>
+    <string name="loadbackup">Load backup</string>
+    <string name="deleteall">Delete all</string>
+    <string name="desbackup">Save a backup of your records.</string>
+    <string name="desload">Load the backup file of your records.</string>
+    <string name="desdeleteall">Delete all records.</string>
+    <string name="backup">Backup management</string>
+    <string name="delete_an_account">Delete an account</string>
+    <string name="delete_all">Delete all</string>
+    <string name="add_an_account">Add an account</string>
+    <string name="desdelete_data_account">Delete all the transactions you have made in an account.</string>
+    <string name="desdelete_an_account">Delete an account along with all its records.</string>
+    <string name="desdelete_all">Delete all accounts and all their records inside.</string>
+    <string name="desadd_an_account">Add a new account to the application.</string>
+    <string name="changecurrency">Change currency</string>
+    <string name="deschangecurrency">Change the currency of your accounts.</string>
+    <string name="email">agusticar@gmail.com</string>
+    <!--Profile-->
+    <string name="change">Change</string>
+    <string name="name">Name</string>
+    <string name="userName">User name</string>
+    <string name="password">Password</string>
+    <string name="newName">New name</string>
+    <string name="newUserName">New user name</string>
+    <string name="newPassword">New password</string>
+    <!--SnackBar messages-->
+    <string name="inValidLogin">Invalid login</string>
+    <string name="userNameUpdated">User name updated</string>
+    <string name="nameUpdated">Name updated</string>
+    <string name="passwordUpdated">Password updated</string>
+    <string name="photoUpdated">Profile photo updated</string>
+    <string name="newaccountcreated">You have created a new account</string>
+    <string name="newincomecreated">You have inserted a new income</string>
+    <string name="newexpensecreated">You have inserted a new expense</string>
+    <string name="transferdone">Transfer done</string>
+    <string name="overbalance">Amount over balance</string>
+    <string name="transferfrom">Expense by transfer</string>
+    <string name="transferTo">Income by transfer</string>
+    <string name="namechanged">You have changed the account name</string>
+    <string name="amountchanged">You have changed the account balance</string>
+    <string name="errorexport">Error export file</string>
+    <string name="errorimport">Error import file</string>
+    <string name="erroraccountcreated">Error creating an account</string>
+    <string name="errorwritingdatastore">Error writing to DataStore</string>
+    <string name="errorreadingdatastore">Error reading to DataStore</string>
+    <string name="datefromoverdateto">Date from is over date to</string>
+    <string name="amountfromoverdateto">Amount from is over amount to</string>
+    <string name="currencyformatchange">You have changed the currency format</string>
+    <string name="currencychange">You have changed the format and entries to the new currency.</string>
+    <string name="apierror">Internet connection error</string>
+    <string name="espendingupdate">Spending limit updated of </string>
+    <string name="permissiondeny">Notification permission denied</string>
+
+    <!--TopBar titles-->
+    <string name="hometitle">Home</string>
+    <string name="searchtitle">Search</string>
+    <string name="settingstitle">Settings</string>
+    <string name="profiletitle">Profile</string>
+    <string name="new_incometitle">New Income</string>
+    <string name="transfertitle">Transfer</string>
+    <string name="barcharttitle">Bar Chart</string>
+    <string name="calculatortitle">Calculator</string>
+    <string name="setting_accountstitle">Setting Accounts</string>
+    <string name="abouttitle">About</string>
+    <string name="greeting">Hello,</string>
+    <!--About-->
+    <string name="developer">Developer: Agustin Carnerero Peña</string>
+    <string name="iconconta">Accounting icon</string>
+    <string name="icongithub">Github logo icon</string>
+    <string name="menuicons">Side menu icons</string>
+    <string name="iconstheme">Setting theme icons</string>
+    <string name="attributionicon"> made by </string>
+    <string name="attributionicons">made by</string>
+    <string name="atributions">Attributions</string>
+    <string name="iconsdate">Date range icons</string>
+    <string name="version">Version 2.0</string>
+    <string name="description">
+    My Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
+
+    Additionally, the application features a handy integrated calculator, allowing you to perform calculations quickly and easily without leaving the app.
+
+    Streamline your financial management with My Accounts and maintain precise control over your transactions, all in one place.
+</string>
+    <string name="desaboutapp">A brief description about the app.</string>
+    <string name="desaboutme">Who is behind this project.</string>
+    <string name="desshare">Share this app to reach many places.</string>
+    <string name="desrate">Rate and share your opinion about the app.</string>
+    <string name="desemail">Contact me to give any suggestion.</string>
+    <string name="desstore">Download my other application. MyAccountsApp</string>
+    <string name="despolicy">Go to private policy</string>
+    <string name="othersapp">Others apps</string>
+    <string name="policy">Private policy</string>
+    <string name="share">Share</string>
+    <string name="rate">Rate</string>
+    <string name="contactme">Contact me</string>
+    <string name="visitmygithub">Visit my github</string>
+    <string name="newexpense">New Expense</string>
+
+    <!--newAmount-->
+    <string name="enternote">Enter amount</string>
+    <string name="desamount">Descripcion del importe</string>
+    <string name="selectanaccount">Select an account</string>
+    <string name="chooseexpense">choose a type of expense</string>
+    <string name="chooseincome">choose a type of income</string>
+    <string name="food">Food</string>
+    <string name="morgage">Housing</string>
+    <string name="electricitybill">Electricity</string>
+    <string name="waterbill">Water</string>
+    <string name="gasbill">Gas</string>
+    <string name="publictransport">Public transport</string>
+    <string name="fuel_title">Fuel</string>
+    <string name="health">Medical Expenses</string>
+    <string name="insurances">Insurances</string>
+    <string name="pets">Pets</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="vacations_travel_title">Vacations</string>
+    <string name="courses_books_materials_title">Education</string>
+    <string name="clothing">Clothing</string>
+    <string name="house">Home</string>
+    <string name="gym">Sport</string>
+    <string name="other_expenses">Other</string>
+    <string name="gifts_title">Gifts</string>
+    <string name="donations_title">Donations</string>
+    <string name="personal_care_title">Personal Care</string>
+    <string name="car">Car</string>
+    <string name="salary">Salary</string>
+    <string name="lotery">Lotery</string>
+    <string name="dividens">Dividends</string>
+    <string name="rental">Rent</string>
+    <string name="freelance">Freelance</string>
+    <string name="otherincomes">Others</string>
+    <string name="sales">Sales</string>
+    <string name="subsidies">Subsidies</string>
+
+    <string name="awards">Awards</string>
+    <string name="benefit_assets">Win asset</string>
+    <string name="lost_assets">lost asset</string>
+    <string name="books">Books</string>
+    <string name="music">Music</string>
+    <string name="hobbies">Hobbies</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="mobile">Mobile</string>
+    <string name="taxes">Taxes</string>
+    <string name="loans">Loans</string>
+    <string name="electronics">Electronics</string>
+    <string name="financial_assets_losses">Financial assets losses</string>
+    <string name="coffee">Coffee</string>
+    <string name="tobacco">Tobacco</string>
+    <string name="supplements">Supplements</string>
+    <string name="motorcycle">Motorcycle</string>
+    <string name="medical_expenses">Medical expenses</string>
+    <string name="garden">Garden</string>
+    <string name="children">Children</string>
+    <string name="therapies">Therapies</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="gambling">Gambling</string>
+    <string name="internet">Internet</string>
+    <!---Transfer-->
+    <string name="originaccount">Select an origin account</string>
+    <string name="destinationaccount">Select destination account</string>
+    <string name="amountentrie">Enter an amount</string>
+    <string name="noaccounts">There are no accounts created yet</string>
+    <string name="youraccounts">Your accounts</string>
+    <!--Dialog-->
+    <string name="cancelButton">Cancel</string>
+    <string name="exitinfo">Are you sure you want log out?</string>
+    <string name="titleexit">Confirm exit</string>
+    <string name="deleteinfo">¿Are you sure you want delete an account?</string>
+    <string name="titledelete">Confirm delete account</string>
+    <!--backup-->
+    <string name="exportData">Export data</string>
+    <string name="filename">Give a name to CSV file</string>
+    <string name="download">Download file </string>
+    <string name="upload">Backup file </string>
+    <string name="filenamelabel">CSV file name</string>
+    <!--entries-->
+    <string name="bydate">By date</string>
+    <string name="bycategory">By category</string>
+    <string name="noentries">There are no entries yet</string>
+    <!--search-->
+    <string name="searchentries">Search entries(optional)</string>
+    <string name="fromdate">From</string>
+    <string name="todate">To</string>
+    <string name="fromamount">From amount(optional)</string>
+    <string name="toamount">To amount(optional)</string>
+    <string name="incomeoption">Incomes</string>
+    <string name="expenseoption">Expenses</string>
+    <string name="alloption">Incomes and Expenses</string>
+    <!--calculator-->
+    <string name="calcback">"\u232B"</string>
+    <!--Charts-->
+    <string name="incomechart">Incomes</string>
+    <string name="expensechart">Expenses</string>
+    <string name="daterange">Selecciona un rango de fechas</string>
+    <string name="account">Account</string>
+    <string name="year">Year</string>
+    <string name="result">Result</string>
+    <!--Months-->
+
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Apr</string>
+    <string name="may">May</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Aug</string>
+    <string name="september">Sep</string>
+    <string name="october">Oct</string>
+    <string name="november">Nov</string>
+    <string name="december">Dec</string>
+    <string name="months">Months</string>
+    <string name="januarytable">January</string>
+    <string name="februarytable">February</string>
+    <string name="marchtable">March</string>
+    <string name="apriltable">April</string>
+    <string name="mayotable">May</string>
+    <string name="junetable">June</string>
+    <string name="julytable">July</string>
+    <string name="augusttable">August</string>
+    <string name="septembertable">September</string>
+    <string name="octobertable">October</string>
+    <string name="novembertable">November</string>
+    <string name="decembertable">December</string>
+    <!--Notifications-->
+    <string name="lowbalance">Low balance alert </string>
+    <string name="hightexpenses">Monthly expenses exceed the limit</string>
+    <string name="limitexpense">Monthly expense limit</string>
+    <string name="notification_required">Enable notifications to receive alerts about managing your expenses. You can enable or disable them at any time from the app’s Settings section.</string>
+    <string name="notificationrequiredalert">Do you allow My Accounts to send you notifications?</string>
+    <string name="permissiongranted">Notification permission granted</string>
+    <string name="selectcategories">Select categories</string>
+    <string name="choosecategories">Enable or Disable categories to control spending</string>
+    <string name="currentexpense">Current expense</string>
+    <string name="categorytitle">Categories</string>
+    <string name="limitMax">Maximum limit</string>
+    <string name="select">Select</string>
+    <string name="expensebyaccount">Spending by account of </string>
+    <string name="accountespendingcontrol">Spending control by account of</string>
+    <string name="messagedialog">Select the maximum spending limit per category</string>
+    <string name="categoryespendingcontrol">Spending control by category of</string>
+    <string name="expenseslimit">You have exceeded the spending limit.</string>
+    <string name="expenseslimit80"> You are about to exceed your spending limit.</string>
+    <string name="expensebycategory">Spending by category of </string>
+    <string name="expenselimitOk">Your expenses are under control in this category</string>
+    <string name="expensesByMonth">Expenses by month</string>
+    <string name="limitMaxtitle">Maximum limit of expense</string>
+    <string name="accountchecked">Checked account</string>
+    <string name="accountunchecked">Unchecked account</string>
+    <string name="selectaccounts">Select accounts</string>
+</resources>

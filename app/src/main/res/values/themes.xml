@@ -1,54 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.CuentaAppAndroid" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryVariant">@color/darkBrown</item>
-        <item name="android:previewImage">@color/orange</item>
-        <item name="android:colorPrimaryDark">@color/orange</item>
-        <item name="android:colorSecondary">@color/lightYellow</item>
-        <item name="android:colorAccent">@color/orange</item>
-        <item name="android:textColorLink">@color/blue</item>
-        <item name="android:state_pressed">@color/darkOrange</item>
-        <item name="android:state_enabled">@color/lightYellow</item>
-        <item name="android:state_empty">@color/lightGrey</item>
-        <item name="android:textColor">@color/darkBrown</item>
-        <item name="colorSurface">@color/lightYellow</item>
-        <item name="colorOnSurface">@color/darkBrown</item>
-    </style>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
-
-    <style name="RadioButtonStyle">
-        <item name="android:textColor">@color/lightYellow</item>
-        <item name="android:textColorHighlight">@color/orange</item>
-        <item name="android:buttonTint">@color/orange</item>
-    </style>
-
-
-    //Personalizacion del DatePickerDialog
-    <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/darkOrange</item>
-        <item name="android:colorPrimary">@color/yellow</item>
-        <item name="android:colorPrimaryDark">@color/orange</item>
-        <item name="android:colorAccent">@color/orange</item>
-        <item name="android:windowBackground">@color/lightYellow</item>
-    </style>
-
-
-    <style name="CustomSpinner">
-        <item name="android:background">@color/lightYellow</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/darkBrown</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog_Background" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <!-- Background Color-->
-        <item name="android:background">@color/yellow</item>
-        <item name="android:buttonTint">@color/orange</item>
-
-    </style>
-
+    <style name="Theme.MisCuentasApp" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

@@ -1,483 +1,191 @@
 package carnerero.agustin.cuentaappandroid
 
-import android.app.AlarmManager
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.getSystemService
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.preference.PreferenceManager
-import carnerero.agustin.cuentaappandroid.dao.CuentaDao
-import carnerero.agustin.cuentaappandroid.dao.MovimientoBancarioDAO
-import carnerero.agustin.cuentaappandroid.databinding.ActivityMainBinding
-import carnerero.agustin.cuentaappandroid.model.Cuenta
-import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import carnerero.agustin.cuentaappandroid.utils.AlarmNotifications
-import carnerero.agustin.cuentaappandroid.utils.Utils
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.navigation.NavigationView
-import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
-import java.util.Locale
-import kotlin.math.abs
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
+import carnerero.agustin.cuentaappandroid.calculator.CalculatorViewModel
+import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.createaccounts.view.CreateAccountsComponent
+import carnerero.agustin.cuentaappandroid.createprofile.CreateProfileComponent
+import carnerero.agustin.cuentaappandroid.createprofile.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.login.LoginComponent
+import carnerero.agustin.cuentaappandroid.login.LoginViewModel
+import carnerero.agustin.cuentaappandroid.main.model.Routes
+import carnerero.agustin.cuentaappandroid.main.view.MainScreen
+import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
+import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.tutorial.view.Tutorial
+import carnerero.agustin.cuentaappandroid.tutorial.view.TutorialViewModel
+import carnerero.agustin.cuentaappandroid.theme.MisCuentasTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
     companion object {
-        const val CHANEL_NOTIFICATION = "NotificationChanel"
-        const val INTERVAL_WEEKLY = 7
-        const val INTERVAL_MONTHLY = 30
-        const val INTERVAL_DAYLY=1
+        const val CHANEL_NOTIFICATION = "NotificationChannel"
+
     }
 
-    private val admin = DataBaseAppSingleton.getInstance(this)
-    private val cuentaDao= CuentaDao(admin)
-    private val movDao = MovimientoBancarioDAO(admin)
-    private var savedProgressBal:Int=0
-    private var savedProgress:Int=0
-    private var year=Utils.getYear()
-    private var month=Utils.getMonth()
-    private var week=Utils.getWeek()
-    private lateinit var cuentas:ArrayList<Cuenta>
-    private lateinit var lang:String
-    private lateinit var country:String
-    private lateinit var movimientos: ArrayList<MovimientoBancario>
-    private lateinit var drawer: DrawerLayout
-    private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var fragment: Fragment
-    private lateinit var sharedPreferences: SharedPreferences
-    private var hasNotificationPermissionGranted = false
-    private val notificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            hasNotificationPermissionGranted = isGranted
-            if (!isGranted) {
-                if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                    showNotificationPermissionRationale()
-                } else {
-                   showNotificationPermissionRationale()
-                }
-            }
-        }
-    @RequiresApi(Build.VERSION_CODES.S)
+    private val tutorialViewModel: TutorialViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private val accountViewModel: AccountsViewModel by viewModels()
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val entriesViewModel: EntriesViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
+    private val settingViewModel: SettingViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
+    private val barChartViewModel: BarChartViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+    private val calculatorViewModel: CalculatorViewModel by viewModels()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        // Inflar el diseño de la actividad utilizando View Binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        // Obtener preferencias compartidas
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        //Recupera valor de los switchCompact que activan las notificaciones
-        val isCheckedSwitchAlertBalance =
-            sharedPreferences.getBoolean(getString(R.string.switchbalance), false)
-        val isCheckedSwitchDay =
-            sharedPreferences.getBoolean(getString(R.string.switchday), false)
-        val isCheckedSwitchWeek =
-            sharedPreferences.getBoolean(getString(R.string.switchweek), false)
-        val isCheckedSwitchMonth =
-            sharedPreferences.getBoolean(getString(R.string.switchmonth), false)
-        val isCheckedSwitchAlertLimit =
-            sharedPreferences.getBoolean(getString(R.string.switchlimit), false)
-        val enableEnLang = sharedPreferences.getBoolean(getString(R.string.preferences_enable_lang), Utils.getDefaultLang())
-        Utils.applyLanguage(enableEnLang)
-        //Recupera el valor de los progress de los seekbar
-        savedProgressBal = sharedPreferences.getInt("progressValueBal", 0)
-        savedProgress=sharedPreferences.getInt("progressValue",0)
-        //Recupero configuracion de idioma y pais
-
-            lang= sharedPreferences.getString(getString(R.string.lang), null).toString()
-            country= sharedPreferences.getString(getString(R.string.country), null).toString()
-
-        //Banner en forma de Banner
-        MobileAds.initialize(this) {}
-        val mAdView :com.google.android.gms.ads.AdView=findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
-
-        //Recupera las cuentas
-        cuentas= cuentaDao.listarTodasLasCuentas() as ArrayList<Cuenta>
-        //Obtiene todos los movimientos bancarios
-        movimientos = movDao.getAll()
-        //Requiere permiso para enviar notificaciones
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-        }
-        //Implementacion de navegacion personalizada al presionar boton hacia atras de movil
-        //Te redirije hacia fragment de inicio no hacia la anterior actividad,que es la de login
-
-
-            onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                        inicio()
-                        showSaldo()
-
-                }
-            })
 
         //Crea canal para las notificaciones
         createChannel()
-        //Envia notificaciones si los switch estan activados.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (isCheckedSwitchDay) {
-                val report = showDaylyReport(movimientos)
-                scheduleNotificationReports(
-                    AlarmNotifications.REPORT_DAYRY,
-                    INTERVAL_DAYLY, report
-                )
-            }
-            if (isCheckedSwitchWeek) {
-                val report = showWeeklyReport(movimientos)
-                scheduleNotificationReports(
-                    AlarmNotifications.REPORT_WEEKLY,
-                    INTERVAL_WEEKLY, report
-                )
-            }
-            if (isCheckedSwitchMonth) {
-                val report = showMonthlyReport(movimientos)
-                scheduleNotificationReports(
-                    AlarmNotifications.REPORT_MONTLY,
-                    INTERVAL_MONTHLY, report
-                )
-            }
+        enableEdgeToEdge()
 
-            if (isCheckedSwitchAlertBalance) {
-                checkAndNotifyIfBalanceIsBellowLimit()
-            }
+        setContent {
 
-            if (isCheckedSwitchAlertLimit) {
-                checkAndNotifyIfExpensesIsAboveLimit()
-            }
-        }else{
-            Toast.makeText(this, getString(R.string.disablenotifications), Toast.LENGTH_LONG).show()
-        }
-        // Configurar la barra de herramientas (toolbar)
-        val toolbar: Toolbar = findViewById(R.id.toolbar_main)
-        setSupportActionBar(toolbar)
+            val navigationController = rememberNavController()
+            val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
+            val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
+            val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
-        // Acceso al DrawerLayout
-        drawer = binding.draverLayout
-        // Configurar ActionBarDrawerToggle para manejar la apertura y cierre del DrawerLayout
-        toggle = ActionBarDrawerToggle(
-            this,
-            drawer,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        // Habilitar el botón de inicio en la barra de herramientas
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
-        // Configurar el NavigationView y su escucha de eventos de selección
-        val navigationView = binding.navView
-        navigationView.setNavigationItemSelectedListener(this)
-    }
+            MisCuentasTheme(darkTheme = switchDarkTheme) {
 
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Obtener el contenedor de fragmentos
-        val fragmentContainer: FragmentContainerView = findViewById(R.id.fcv_main_container)
-
-
-        // Determinar el fragmento a mostrar según la selección del usuario en el NavigationView
-        when (item.itemId) {
-            R.id.home -> fragment = LogoFragment()
-            R.id.consulta -> fragment = ConsultaFragment()
-            R.id.nuevoImporte -> fragment = NewAmountFragment()
-            R.id.notification->fragment=NotificationsFragment()
-            R.id.estadistica -> fragment = BarChartFragment()
-            R.id.transferencia ->fragment = TransaccionFragment()
-            R.id.db->fragment=SettingAccountsFragment()
-            R.id.configuracion -> fragment = AjustesFragment()
-            R.id.about->fragment=AboutFragment()
-            R.id.calculator->fragment = CalculatorFragment()
-            R.id.profile->fragment=InfoFragment()
-            R.id.salir -> {
-                // Finalizar la actividad si se selecciona "salir"
-                finish()
-                return true
-            }
-            else -> fragment = ListOfAccountsFragment()
-        }
-
-        // Mostrar el fragmento de saldo en el contenedor de información
-        showSaldo()
-        // Cambiar el fragmento principal en el contenedor principal
-        changeFragmentMain(fragment)
-        // Establecer la visibilidad del contenedor de fragmentos
-        fragmentContainer.visibility = View.VISIBLE
-        // Cerrar el DrawerLayout después de la selección
-        drawer.closeDrawer(GravityCompat.START)
-        return true
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        // Sincronizar el estado de ActionBarDrawerToggle después de que se ha restaurado la instancia
-        super.onPostCreate(savedInstanceState)
-        toggle.syncState()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        // Manejar cambios en la configuración, por ejemplo, rotaciones de pantalla
-        super.onConfigurationChanged(newConfig)
-        toggle.onConfigurationChanged(newConfig)
-    }
-
-
-    private fun changeFragmentMain(fragment: Fragment) {
-        // Cambiar el fragmento principal en el contenedor principal
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fcv_main_container, fragment)
-            .commit()
-    }
-
-    private fun showSaldo() {
-        // Mostrar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = ListOfAccountsFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.info_container, fragmentSaldo)
-            .commit()
-    }
-
-    fun actualizarFragmentSaldo() {
-        // Actualizar el fragmento de saldo en el contenedor de información
-        val fragmentSaldo = ListOfAccountsFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.info_container, fragmentSaldo)
-        transaction.commit()
-    }
-
-    fun inicio() {
-        // Mostrar el fragmento de inicio en el contenedor principal
-        val fragment = LogoFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fcv_main_container, fragment)
-        transaction.commit()
-
-
-    }
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun checkAndNotifyIfBalanceIsBellowLimit() {
-
-            val limit = savedProgressBal
-            val stringBuilder = StringBuilder()
-            stringBuilder.append(getString(R.string.lowbalance))
-        val locale=Locale(lang,country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-        stringBuilder.append(" ${currencyFormat.format(limit)}")
-            // Obtengo saldos de cuentas
-            for (cuenta: Cuenta in cuentas) {
-                if (cuenta.saldo <= limit) {
-                    stringBuilder.append(".${getString(R.string.account)}:${cuenta.nombre}")
-                    scheduleNotificationAlertBalance(stringBuilder.toString())
+                val snackbarHostState = remember {
+                    SnackbarHostState()
                 }
-            }
-    }
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun checkAndNotifyIfExpensesIsAboveLimit() {
+                val scope = rememberCoroutineScope()
 
-        val limit = savedProgress
-        val stringBuilder = StringBuilder()
-        stringBuilder.append(getString(R.string.expenseslimit))
-        val locale=Locale(lang,country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-        val gastos:ArrayList<MovimientoBancario> =ArrayList()
-        for(mov in movimientos){
-            if(mov.importe<=0){
-                gastos.add(mov)
-            }
-        }
-        val expensesMonth= Utils.calcularImporteMes(month,year,gastos).toDouble()
-        val difExpensesLimit=limit-abs(expensesMonth)
-        // Format the expense to two decimal places
-        val formattedExpense = currencyFormat.format(abs(difExpensesLimit))
+                Log.d("showTutorialMain", showTutorial.toString())
+                ObserveAsEvents(
+                    flow = SnackBarController.events,
+                    snackbarHostState
+                ) { event ->
+                    scope.launch {
+                        snackbarHostState.currentSnackbarData?.dismiss()
 
-        stringBuilder.append(" $formattedExpense")
-        if(difExpensesLimit<=0){
-            scheduleNotificationAlertExpenses(stringBuilder.toString())
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun scheduleNotificationAlertExpenses(report: String) {
-        val intent = Intent(applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", AlarmNotifications.ALARM_LIMIT_NOTIFICATION)
-        intent.putExtra("message", report)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            AlarmNotifications.ALARM_LIMIT_NOTIFICATION,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
-
-        when {
-            alarmManager.canScheduleExactAlarms() -> {
-                // Si se concede el permiso, proceda a programar alarmas exactas.
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis() + 10000,
-                    pendingIntent
-                )
-            }
-            else -> {
-                //Pida a los usuarios que vayan a la página de alarma exacta en la configuración del sistema.
-                goToSettingPage()
-
-            }
-        }
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun scheduleNotificationAlertBalance(report: String) {
-
-        val intent = Intent(applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", AlarmNotifications.ALARM_BALANCE)
-        intent.putExtra("message", report)
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            AlarmNotifications.ALARM_BALANCE,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
-        when {
-            alarmManager.canScheduleExactAlarms() -> {
-                // Configurar la notificación para que se dispare inmediatamente
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis(),
-                    pendingIntent
-                )
-            }
-
-            else -> {
-                // crear un alarmdialog para ir a esta pagina o bien seguir en aplicacion
-                goToSettingPage()
-
-            }
-        }
-
-    }
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun scheduleNotificationReports(notificationType: Int, intervalDay: Int, report: String) {
-        val intent = Intent(applicationContext, AlarmNotifications::class.java)
-        intent.putExtra("notificationType", notificationType)
-        intent.putExtra("message", report)
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            notificationType,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager: AlarmManager = applicationContext?.getSystemService()!!
-        when {
-            alarmManager.canScheduleExactAlarms() -> {
-                // Calcular la hora de inicio para la notificación (ajusta la hora y el minuto según tus necesidades)
-                val startTime = Calendar.getInstance()
-                startTime.set(Calendar.SECOND, 0)
-
-                when (intervalDay) {
-                    INTERVAL_DAYLY -> {
-                        // Configurar la notificación para que se repita diariamente a la misma hora
-                        startTime.set(Calendar.HOUR_OF_DAY, 22)
-                        startTime.set(Calendar.MINUTE, 15)
-                        val intervalMillis = AlarmManager.INTERVAL_DAY
-                        alarmManager.setRepeating(
-                            AlarmManager.RTC_WAKEUP,
-                            startTime.timeInMillis,
-                            intervalMillis,
-                            pendingIntent
+                        val result = snackbarHostState.showSnackbar(
+                            message = event.message,
+                            actionLabel = event.action?.name,
+                            duration = SnackbarDuration.Short
                         )
-                    }
 
-                    INTERVAL_WEEKLY -> {
-                        // Configurar la notificación para que se repita cada semana a la misma hora (domingo)
-                        startTime.set(Calendar.HOUR_OF_DAY, 22)
-                        startTime.set(Calendar.MINUTE, 20)
-                        startTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-
-                        // Ajustar para la próxima semana si es después del domingo actual
-                        val today = Calendar.getInstance()
-                        if (today.after(startTime)) {
-                            startTime.add(Calendar.WEEK_OF_YEAR, 1)
+                        if (result == SnackbarResult.ActionPerformed) {
+                            event.action?.action?.invoke()
                         }
-
-                        val intervalMillis = AlarmManager.INTERVAL_DAY * 7
-                        alarmManager.setRepeating(
-                            AlarmManager.RTC_WAKEUP,
-                            startTime.timeInMillis,
-                            intervalMillis,
-                            pendingIntent
-                        )
-                    }
-
-                    INTERVAL_MONTHLY -> {
-                        // Configurar la notificación para que se repita al final de cada mes
-                        startTime.set(Calendar.HOUR_OF_DAY, 22)
-                        startTime.set(Calendar.MINUTE, 25)
-                        startTime.set(
-                            Calendar.DAY_OF_MONTH,
-                            startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
-                        )
-
-                        // Ajustar para el próximo mes si es después del último día del mes actual
-                        val today = Calendar.getInstance()
-                        if (today.after(startTime)) {
-                            startTime.add(Calendar.MONTH, 1)
-                        }
-                        // Utiliza el último día del mes actual
-                        val lastDayOfMonth = startTime.getActualMaximum(Calendar.DAY_OF_MONTH)
-                        startTime.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
-
-                        val intervalMillis =
-                            AlarmManager.INTERVAL_DAY * (lastDayOfMonth - startTime.get(Calendar.DAY_OF_MONTH) + 1)
-                        alarmManager.setRepeating(
-                            AlarmManager.RTC_WAKEUP,
-                            startTime.timeInMillis,
-                            intervalMillis,
-                            pendingIntent
-                        )
                     }
                 }
-            }else -> {
-            goToSettingPage()
-        }
-        }
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
+                    }
+                ) { innerPadding ->
 
+
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = if (showTutorial) Routes.Tutorial.route
+                        else Routes.Login.route
+
+                    ) {
+                        composable(Routes.Tutorial.route) {
+                            Tutorial(
+                                tutorialViewModel,
+                                navToScreen = {
+                                    navigationController.navigate(
+                                        if (toLogin) Routes.Login.route
+                                        else Routes.CreateProfile.route
+                                    )
+                                },
+                                modifier = Modifier.padding(innerPadding),
+                            )
+                        }
+
+                        composable(Routes.CreateProfile.route) {
+                            CreateProfileComponent(profileViewModel,
+                                navToBackLogin = { navigationController.popBackStack() },
+                                navToCreateAccounts = { navigationController.navigate(Routes.CreateAccounts.route) })
+                        }
+
+                        composable(Routes.CreateAccounts.route) {
+                            CreateAccountsComponent(accountViewModel,categoriesViewModel, navToLogin = {
+                                navigationController.navigate(Routes.Login.route)
+                            },
+                                navToBack = { navigationController.popBackStack() }
+                            )
+
+                        }
+                        composable(Routes.Login.route) {
+                            LoginComponent(
+                                loginViewModel,
+                                modifier = Modifier.fillMaxSize(),
+                                navToMain = {
+                                    navigationController.navigate(Routes.Home.route)
+                                }
+                            )
+                        }
+                        composable(Routes.Home.route) {
+                            MainScreen(
+                                mainViewModel,
+                                accountViewModel,
+                                categoriesViewModel,
+                                profileViewModel,
+                                settingViewModel,
+                                entriesViewModel,
+                                searchViewModel,
+                                calculatorViewModel,
+                                barChartViewModel,
+                                navToCreateAccounts = {
+                                    navigationController.navigate(Routes.CreateAccounts.route)
+                                }
+
+                            )
+
+                        }
+
+
+                    }
+
+                }
+            }
+        }
     }
-
     private fun createChannel() {
         val channel = NotificationChannel(
             CHANEL_NOTIFICATION,
@@ -489,132 +197,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         notificationManager.createNotificationChannel(channel)
     }
-
-    private fun showDaylyReport(movimientos: ArrayList<MovimientoBancario>): String {
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val stringBuilder = StringBuilder()
-        var expenses=0.0
-        var incomes=0.0
-        val locale=Locale(lang,country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-
-        for (movimiento in movimientos) {
-            val fechaImporteDate = LocalDate.parse(movimiento.fechaImporte, formatter)
-            val today= LocalDate.now()
-            if (fechaImporteDate.isEqual(today)) {
-                stringBuilder.append("${movimiento.descripcion} ${currencyFormat.format(movimiento.importe)}  ${movimiento.nombreDeCuenta}\n")
-                if(movimiento.importe>=0){
-                    incomes+=movimiento.importe
-                }else expenses+=movimiento.importe
-            }
-        }
-        val result=incomes+expenses
-        if(incomes==0.0 && expenses==0.0){
-            stringBuilder.append("${getString(R.string.nomovtoday)}\n")
-        }else {
-            stringBuilder.append(
-                "${getString(R.string.incomes)}: ${currencyFormat.format(incomes)}\n")
-
-            stringBuilder.append(
-                "${getString(R.string.bills)}: ${currencyFormat.format(expenses)}\n")
-
-            stringBuilder.append("TOTAL: ${currencyFormat.format(result)}")
-        }
-        return stringBuilder.toString()
-    }
-
-    private fun showWeeklyReport(movimientos: ArrayList<MovimientoBancario>):String{
-        val stringBuilder = StringBuilder()
-        week= Utils.getWeek()
-        year= Utils.getYear()
-        val locale=Locale(lang,country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-        val ingresos:ArrayList<MovimientoBancario> =ArrayList()
-        val gastos:ArrayList<MovimientoBancario> =ArrayList()
-        for(mov in movimientos){
-            if(mov.importe>=0){
-                ingresos.add(mov)
-            }else{
-                gastos.add(mov)
-            }
-        }
-        val ingresosSemana= Utils.calcularImporteSemanal(week,year,ingresos).toDouble()
-        val gastosSemana= Utils.calcularImporteSemanal(week,year,gastos).toDouble()
-        val result=ingresosSemana+gastosSemana
-        stringBuilder.append("${getString(R.string.weekicome)}: ${currencyFormat.format(ingresosSemana)}\n")
-        stringBuilder.append("${getString(R.string.weekbills)}: ${currencyFormat.format(gastosSemana)}\n")
-        stringBuilder.append("${getString(R.string.resultsearch)}: ${currencyFormat.format(result)}")
-        return stringBuilder.toString()
-    }
-    private fun showMonthlyReport(movimientos: ArrayList<MovimientoBancario>):String{
-        val stringBuilder = StringBuilder()
-        month= Utils.getMonth()
-        year= Utils.getYear()
-        val locale=Locale(lang,country)
-        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
-        val ingresos:ArrayList<MovimientoBancario> =ArrayList()
-        val gastos:ArrayList<MovimientoBancario> =ArrayList()
-        for(mov in movimientos){
-            if(mov.importe>=0){
-                ingresos.add(mov)
-            }else{
-                gastos.add(mov)
-            }
-        }
-        val ingresosMes= Utils.calcularImporteMes(month,year,ingresos).toDouble()
-        val gastosMes= Utils.calcularImporteMes(month,year,gastos).toDouble()
-        val result=ingresosMes+gastosMes
-        stringBuilder.append("${getString(R.string.monthicome)}: ${currencyFormat.format(ingresosMes)}\n")
-        stringBuilder.append("${getString(R.string.monthbills)}: ${currencyFormat.format(gastosMes)}\n")
-        stringBuilder.append("${getString(R.string.resultsearch)}: ${currencyFormat.format(result)}")
-        return stringBuilder.toString()
-    }
-
-
-    private fun showNotificationPermissionRationale() {
-
-        MaterialAlertDialogBuilder(this, com.google.android.material.R.style.MaterialAlertDialog_Material3)
-            .setTitle(getString(R.string.notificationrequiredalert))
-            .setMessage(getString(R.string.notificationrequired))
-            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-            .setNegativeButton(getString(R.string.cancel), null)
-            .show()
-    }
-    private fun createAlertDialogSimple(question:Int,
-                                        confirmAction: () -> Unit): AlertDialog {
-        val builder = AlertDialog.Builder(this)
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.custom_simple_dialog, null)
-        val questiontv=dialogView.findViewById<TextView>(R.id.tv_question)
-        val confirmButton = dialogView.findViewById<Button>(R.id.btn_dialogconfirm0)
-        val cancelButton = dialogView.findViewById<Button>(R.id.btn_dialogcancel0)
-
-        questiontv.text=getString(question)
-        builder.setView(dialogView)
-        val dialog = builder.create()
-
-        confirmButton.setOnClickListener {
-            confirmAction()
-            dialog.dismiss()
-        }
-
-        cancelButton.setOnClickListener {
-            dialog.cancel()
-        }
-
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        return dialog
-    }
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun goToSettingPage(){
-        val dialog=createAlertDialogSimple(R.string.settingExactAlarm){
-            startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
-        }
-        dialog.show()
-    }
-
 }
+
+

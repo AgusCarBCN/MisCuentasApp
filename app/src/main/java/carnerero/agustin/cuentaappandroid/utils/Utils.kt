@@ -1,205 +1,150 @@
 package carnerero.agustin.cuentaappandroid.utils
 
-
-
-
 import android.content.Context
 import android.net.Uri
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
-import carnerero.agustin.cuentaappandroid.AppConst
-import carnerero.agustin.cuentaappandroid.interfaces.OnResolveListener
-import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.model.MovimientoBancario
-import java.io.File
-import java.io.FileOutputStream
+import androidx.documentfile.provider.DocumentFile
+import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
+import carnerero.agustin.cuentaappandroid.main.model.currencyLocales
+import carnerero.agustin.cuentaappandroid.setting.model.EntryCSV
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.temporal.WeekFields
-import java.util.Calendar
+import java.util.Date
 import java.util.Locale
-
+import kotlin.math.abs
 
 class Utils {
 
     companion object {
 
-        private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        var isDarkTheme=false
+        fun isValidDecimal(text: String): Boolean {
 
+            return text.isEmpty() || text.matches(Regex("^([1-9]\\d*|0)?(\\.\\d*)?\$"))
 
-        fun calcularImporteMes(
-            month: Int,
-            year: Int,
-            importes: ArrayList<MovimientoBancario>
-        ): Float {
-            var importeTotal = 0.0
-
-            for (mov in importes) {
-                val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
-                if (fechaImporteDate.monthValue == month && fechaImporteDate.year == year) {
-                    importeTotal += mov.importe
-                }
-            }
-            return importeTotal.toFloat()
         }
-        fun calcularImporteSemanal(
-            week: Int,
-            year: Int,
-            importes: ArrayList<MovimientoBancario>
-        ): Float {
+
+        fun convertMillisToDate(millis: Long): String {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return formatter.format(Date(millis))
+        }
+
+        fun numberFormat(amount: Double, currencyCode: String): String {
+
+            val locale = currencyLocales[currencyCode] ?: Locale.GERMAN
+            // Formatear la cantidad en la moneda especificada
+            val numberFormat = NumberFormat.getCurrencyInstance(locale)
+            // Iniciar la carga de cuentas solo cuando el Composable se inicia
+            return numberFormat.format(
+                abs(amount)
+            )
+        }
+
+
+        fun toDateEntry(date: String): String {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+            val dateEntry = formatter.parse(date)
+            date.let { formatter.parse(it) }
+            return dateEntry?.dateFormatDayMonth() ?: ""
+
+
+        }
+
+        fun convertStringToLocalDate(date: String): LocalDate {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
-            var importeTotal = 0.0
-            for (mov in importes) {
-                try {
-                    val fechaImporteDate = LocalDate.parse(mov.fechaImporte, formatter)
-                    val weekNumber = fechaImporteDate.get(WeekFields.ISO.weekOfWeekBasedYear())
-                    if (weekNumber == week && fechaImporteDate.year == year) {
-                        importeTotal += mov.importe
-                    }
-                } catch (e: Exception) {
-                    // Manejar cualquier error al analizar la fecha
-                    e.printStackTrace()
-                }
-            }
-            return importeTotal.toFloat()
+            return LocalDate.parse(date, formatter)
         }
 
-        fun applyTheme(enableDarkTheme: Boolean) {
-            isDarkTheme = if (enableDarkTheme) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                true
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                false
-            }
+        fun writeCsvFile(
+            entries: MutableList<EntryCSV>,
+            context: Context,
+            fileName: String,
+            directory: DocumentFile
+        ) {
+            val file = directory.createFile("text/csv", fileName)
+            val outputStream = context.contentResolver.openOutputStream(file?.uri!!)
 
-        }
-        fun applyLanguage(enableEnLang: Boolean) {
+            BufferedWriter(OutputStreamWriter(outputStream)).use { writer ->
+                // Escribir el encabezado del CSV
+                writer.write("Description,CategoryName,Amount,Date,AccountName,CategoryId,accountId\n")
 
-            if (enableEnLang) {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-            } else {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
-            }
-        }
-        fun tryResolve(operationRef: String, isResolve: Boolean,listener : OnResolveListener) {
-            if (operationRef.isEmpty()) return
-
-            var operation = operationRef
-
-            if (operation.endsWith(AppConst.COMA)) {
-                operation = operation.substring(0, operation.length - 1)
-            }
-
-            val operator = getOperator(operationRef)
-            var values: List<String> = emptyList()
-
-            if (operator != AppConst.NULL) {
-                values = when (operator) {
-                    AppConst.RESTAR -> {
-                        val index = operation.lastIndexOf(AppConst.RESTAR)
-                        if (index < operationRef.length - 1) {
-                            listOf(operation.substring(0, index), operation.substring(index + 1))
-                        } else {
-                            listOf(operation.substring(0, index))
-                        }
-                    }
-                    else -> operation.split(operator)
+                //Escribir las rutas en fichero
+                for (entry in entries) {
+                    // Asegúrate de que los datos sean válidos antes de escribirlos
+                    val csvLine =
+                                "${entry.description}," +
+                                "${entry.category}," +
+                                "${entry.amount}," +
+                                "${entry.date}," +
+                                "${entry.accountName}," +
+                                "${entry.categoryId}," +
+                                "${entry.accountId}\n"
+                    writer.write(csvLine)
                 }
             }
 
-            if (values.size > 1) {
-                try {
-                    // Replace comma with dot in the input numbers
-                    val (number1, number2) = values.map {  it.replace(".", "").replace(",", ".").toDouble()}
-                    listener.showResult(result(number1, number2, operator))
+        }
 
+        fun readCsvFile(
+            context: Context,
+            fileUri: Uri
+        ): MutableList<Entry> {
+            val entries = mutableListOf<Entry>()
 
-                } catch (e: NumberFormatException) {
-                    if (isResolve) {
-                        listener.showMessageError(R.string.formaterror)
+            context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
 
+                for (record in csvParser) {
+                    try {
+                        val description = record.get(0)
+                        val category = record.get(1)
+                        val amount = record.get(2).toDoubleOrNull() ?: 0.0
+                        val date = record.get(3)
+                        val accountName = record.get(4)
+                        val categoryId = record.get(5).toInt()
+                        val accountId = record.get(6).toInt()
+
+                        // Crear objeto route y agregarlo a lista
+
+                        val entry = Entry(
+                            description = description,
+                            amount = amount,
+                            date = date,
+                            categoryId = categoryId,
+                            accountId = accountId
+                        )
+                        entries.add(entry)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
-            } else {
-                if (isResolve && operator != AppConst.NULL) {
-                    listener.showMessageError(R.string.incorrectExpresion)
-                }
             }
+            return entries
         }
 
-        fun getOperator(operation: String): String {
-            return when {
-                operation.contains(AppConst.MULTIPLICAR) -> AppConst.MULTIPLICAR
-                operation.contains(AppConst.DIVIDIR) -> AppConst.DIVIDIR
-                operation.contains(AppConst.SUMAR) -> AppConst.SUMAR
-                operation.contains(AppConst.PORCENTAJE) -> AppConst.PORCENTAJE
-                operation.contains(AppConst.RESTAR) -> AppConst.RESTAR
-                else -> AppConst.NULL
+        fun getMapOfEntriesByCategory(listOfEntries: List<EntryDTO>): Map<Int, Pair<Int?, Double?>> {
+            val groupedEntriesByCategoryName = listOfEntries.groupBy { it.nameResource }
+
+            val categoryIcons = groupedEntriesByCategoryName.mapValues { (_, entries) ->
+                entries.firstOrNull()?.iconResource
             }
-        }
-        fun replaceOperator(charSequence: CharSequence): Boolean {
-
-            if (charSequence.length < 2) return false
-            val lastElement = charSequence[charSequence.length - 1].toString()
-            val penultElement = charSequence[charSequence.length - 2].toString()
-            return (lastElement == AppConst.MULTIPLICAR || lastElement == AppConst.DIVIDIR || lastElement == AppConst.SUMAR) && (penultElement == AppConst.MULTIPLICAR || penultElement == AppConst.DIVIDIR || penultElement == AppConst.SUMAR || penultElement==AppConst.RESTAR)
-        }
-
-        fun getMonth(): Int {
-            val calendar = Calendar.getInstance()
-            return calendar.get(Calendar.MONTH) + 1
-        }
-        fun getDefaultLang():Boolean{
-            var defaultLang=false
-            val lang=Locale.getDefault().language
-            if(lang!="es"){
-                defaultLang=true
+            val categoryTotals = groupedEntriesByCategoryName.mapValues { (_, entries) ->
+                entries.sumOf { it.amount }
             }
-            return defaultLang
-        }
-        fun getWeek():Int
-        {
-            val calendar=Calendar.getInstance()
-            return calendar.get(Calendar.WEEK_OF_YEAR)
-        }
-        fun getYear():Int{
-            val calendar=Calendar.getInstance()
-            return calendar.get(Calendar.YEAR)
+            return categoryIcons.map { (categoryName, icon) ->
+                categoryName to Pair(icon, categoryTotals[categoryName])
+            }.toMap()
         }
 
-        fun saveImageToExternalStorage(context: Context, uri: Uri): String? {
-            return try {
-                val inputStream = context.contentResolver.openInputStream(uri)
-                val file = File(context.externalCacheDir, "image.jpg")
-                val outputStream = FileOutputStream(file)
-                inputStream?.copyTo(outputStream)
-                inputStream?.close()
-                outputStream.close()
-                file.absolutePath
-            } catch (e: Exception) {
-                e.printStackTrace()
-
-                null
-            }
-        }
-
-
-        private fun result(number1: Double, number2: Double, operator: String): Double {
-
-            return when(operator) {
-                AppConst.SUMAR -> number1 + number2
-                AppConst.MULTIPLICAR -> number1 * number2
-                AppConst.DIVIDIR ->  number1 / number2
-                else-> number1 - number2
-            }
-        }
 
     }
-
-
-
-
 }
-
