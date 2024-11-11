@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryBudgetItemControl(
     category: Category,
@@ -131,7 +132,7 @@ fun CategoryBudgetItemControl(
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             color = LocalCustomColorsPalette.current.textColor,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
         // Barra de progreso con color dinámico
@@ -139,7 +140,7 @@ fun CategoryBudgetItemControl(
             modifier = Modifier
                 .width(320.dp)
                 .height(10.dp)
-                .background(LocalCustomColorsPalette.current.drawerColor)
+                .background(LocalCustomColorsPalette.current.backgroundPrimary)
                 .clip(RoundedCornerShape(5.dp))
         ) {
             Box(
@@ -157,37 +158,42 @@ fun CategoryBudgetItemControl(
             text = "$limitExpenseText: ${Utils.numberFormat(spendingLimit,currencyCode)}",
             fontSize = 16.sp,
             color = LocalCustomColorsPalette.current.textColor,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
         Slider(
             value = spendingLimit.toFloat(),
-            onValueChange = { spendingLimit = it.toDouble()
-
-                            },
-
+            onValueChange = { spendingLimit = it.toDouble() },
             valueRange = 0f..maxLimit.toFloat(),  // Rango ajustable
             steps = (maxLimit / 1).toInt() - 1, // Incremento en pasos de 1
-            modifier = Modifier.width(320.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp) // Altura similar a la de la barra de progreso
+                .clip(RoundedCornerShape(5.dp)),
+                thumb = {
+                    // Omitir el thumb para hacerlo invisible o usar un thumb transparente
+                    Box(modifier = Modifier.size(0.dp)) // Un tamaño de 0 dp lo hace invisible
+                }
+            ,// Forma redondeada
             colors = SliderColors(
-                thumbColor = LocalCustomColorsPalette.current.thumbCheckedColor,
-                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,
-                activeTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
-                inactiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                inactiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledThumbColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledActiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledActiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledInactiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledInactiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-
+                thumbColor = LocalCustomColorsPalette.current.backgroundPrimary, // Color del thumb
+                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,  // Track activo
+                inactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary, // Track inactivo
+                activeTickColor = LocalCustomColorsPalette.current.trackCheckedColor,
+                inactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledThumbColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledActiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledInactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledActiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledInactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary
             )
         )
+
         ModelButton(text = stringResource(id = R.string.confirmButton),
             R.dimen.text_title_small,
-            modifier = Modifier.width(320.dp),
+            modifier = Modifier.width(320.dp).
+            padding(top = 10.dp),
             true,
             onClickButton = {
-
                     categoriesViewModel.upDateSpendingLimitCategory(category.id, spendingLimit)
                     scope.launch(Dispatchers.Main) {
                         SnackBarController.sendEvent(
@@ -201,6 +207,7 @@ fun CategoryBudgetItemControl(
         )
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountBudgetItemControl(
     account: Account,
@@ -293,7 +300,7 @@ fun AccountBudgetItemControl(
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             color = LocalCustomColorsPalette.current.textColor,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
         // Barra de progreso con color dinámico
@@ -301,7 +308,7 @@ fun AccountBudgetItemControl(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(10.dp)
-                .background(LocalCustomColorsPalette.current.drawerColor)
+                .background(LocalCustomColorsPalette.current.backgroundPrimary)
                 .clip(RoundedCornerShape(5.dp))
         ) {
             Box(
@@ -319,36 +326,41 @@ fun AccountBudgetItemControl(
             text = "$limitExpenseText: ${Utils.numberFormat(spendingLimit,currencyCode)}",
             fontSize = 16.sp,
             color = LocalCustomColorsPalette.current.textColor,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
         Slider(
             value = spendingLimit.toFloat(),
-            onValueChange = { spendingLimit = it.toDouble()
-
-            },
+            onValueChange = { spendingLimit = it.toDouble() },
             valueRange = 0f..maxLimit.toFloat(),  // Rango ajustable
-            steps = (maxLimit / 1).toInt() - 1, // Incremento en pasos de 50
-            modifier = Modifier.fillMaxWidth(),
+            steps = (maxLimit / 1).toInt() - 1, // Incremento en pasos de 1
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp) // Altura similar a la de la barra de progreso
+                .clip(RoundedCornerShape(5.dp)),
+            thumb = {
+                // Omitir el thumb para hacerlo invisible o usar un thumb transparente
+                Box(modifier = Modifier.size(0.dp)) // Un tamaño de 0 dp lo hace invisible
+            }
+            ,// Forma redondeada
             colors = SliderColors(
-                thumbColor = LocalCustomColorsPalette.current.thumbCheckedColor,
-                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,
-                activeTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
-                inactiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                inactiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledThumbColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledActiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledActiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledInactiveTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,
-                disabledInactiveTickColor = LocalCustomColorsPalette.current.trackDefaultColor,
-
-                )
+                thumbColor = LocalCustomColorsPalette.current.backgroundPrimary, // Color del thumb
+                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,  // Track activo
+                inactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary, // Track inactivo
+                activeTickColor = LocalCustomColorsPalette.current.trackCheckedColor,
+                inactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledThumbColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledActiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledInactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledActiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
+                disabledInactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary
+            )
         )
         ModelButton(text = stringResource(id = R.string.confirmButton),
             R.dimen.text_title_small,
-            modifier = Modifier.width(320.dp),
+            modifier = Modifier.width(320.dp)
+                .padding(top = 10.dp),
             true,
             onClickButton = {
-
                 accountsViewModel.upDateSpendingLimitAccount(account.id, spendingLimit)
                 scope.launch(Dispatchers.Main) {
                     SnackBarController.sendEvent(
