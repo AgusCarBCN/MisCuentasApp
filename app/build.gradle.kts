@@ -55,6 +55,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.window)
     val roomVersion = "2.6.1"
 
 

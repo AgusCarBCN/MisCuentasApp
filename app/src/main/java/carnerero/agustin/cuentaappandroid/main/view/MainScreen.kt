@@ -59,7 +59,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.about.AboutApp
 import carnerero.agustin.cuentaappandroid.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.about.SendEmail
-import carnerero.agustin.cuentaappandroid.admob.AdBanner
+import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 import carnerero.agustin.cuentaappandroid.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorUI
@@ -97,6 +97,7 @@ import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -173,15 +174,17 @@ fun MainScreen(
                         (if (selectedScreen == IconOptions.HOME) userName else "").toString()
                     )
                 },
-                { BottomAppBar(mainViewModel) },
+                { BottomAppBar(mainViewModel)
+                },
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
-                AdBanner()
+
                 // Add your main screen content here
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
+                    AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()
                     }

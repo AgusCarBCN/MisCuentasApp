@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -26,6 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
+
+
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
@@ -44,6 +49,9 @@ import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.theme.MisCuentasTheme
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.MobileAds
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -83,14 +91,16 @@ class MainActivity : ComponentActivity() {
             val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
             MisCuentasTheme(darkTheme = switchDarkTheme) {
-
+                MobileAds.initialize(this){
+                    Log.d(TAG, "onCreate: initAds")
+                }
                 val snackbarHostState = remember {
                     SnackbarHostState()
                 }
 
                 val scope = rememberCoroutineScope()
 
-                Log.d("showTutorialMain", showTutorial.toString())
+
                 ObserveAsEvents(
                     flow = SnackBarController.events,
                     snackbarHostState
@@ -116,7 +126,6 @@ class MainActivity : ComponentActivity() {
                         SnackbarHost(hostState = snackbarHostState)
                     }
                 ) { innerPadding ->
-
 
                     NavHost(
                         navController = navigationController,
