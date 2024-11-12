@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -68,7 +69,7 @@ fun CategoryBudgetItemControl(
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth(),
+            .width(320.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -140,7 +141,7 @@ fun CategoryBudgetItemControl(
             modifier = Modifier
                 .width(320.dp)
                 .height(10.dp)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .background(LocalCustomColorsPalette.current.drawerColor)
                 .clip(RoundedCornerShape(5.dp))
         ) {
             Box(
@@ -164,29 +165,31 @@ fun CategoryBudgetItemControl(
             value = spendingLimit.toFloat(),
             onValueChange = { spendingLimit = it.toDouble() },
             valueRange = 0f..maxLimit.toFloat(),  // Rango ajustable
-            steps = (maxLimit / 1).toInt() - 1, // Incremento en pasos de 1
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp) // Altura similar a la de la barra de progreso
-                .clip(RoundedCornerShape(5.dp)),
-                thumb = {
-                    // Omitir el thumb para hacerlo invisible o usar un thumb transparente
-                    Box(modifier = Modifier.size(0.dp)) // Un tamaño de 0 dp lo hace invisible
-                }
-            ,// Forma redondeada
+            modifier = Modifier.width(320.dp),
+            thumb = {
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)  // Tamaño del thumb
+                        .background(
+                            color = LocalCustomColorsPalette.current.thumbCheckedColor,
+                            shape = CircleShape  // Asegura que el thumb sea redondo
+                        )
+                )
+            },
             colors = SliderColors(
-                thumbColor = LocalCustomColorsPalette.current.backgroundPrimary, // Color del thumb
-                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,  // Track activo
-                inactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary, // Track inactivo
-                activeTickColor = LocalCustomColorsPalette.current.trackCheckedColor,
-                inactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledThumbColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledActiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledInactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledActiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledInactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary
+                thumbColor = LocalCustomColorsPalette.current.thumbCheckedColor,  // Asegúrate de que no sea transparente
+                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,
+                activeTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
+                inactiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                inactiveTickColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledThumbColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledActiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledActiveTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
+                disabledInactiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledInactiveTickColor = LocalCustomColorsPalette.current.drawerColor,
             )
         )
+
 
         ModelButton(text = stringResource(id = R.string.confirmButton),
             R.dimen.text_title_small,
@@ -306,9 +309,9 @@ fun AccountBudgetItemControl(
         // Barra de progreso con color dinámico
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .width(320.dp)
                 .height(10.dp)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .background(LocalCustomColorsPalette.current.drawerColor)
                 .clip(RoundedCornerShape(5.dp))
         ) {
             Box(
@@ -332,29 +335,33 @@ fun AccountBudgetItemControl(
             value = spendingLimit.toFloat(),
             onValueChange = { spendingLimit = it.toDouble() },
             valueRange = 0f..maxLimit.toFloat(),  // Rango ajustable
-            steps = (maxLimit / 1).toInt() - 1, // Incremento en pasos de 1
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp) // Altura similar a la de la barra de progreso
-                .clip(RoundedCornerShape(5.dp)),
+            modifier = Modifier.width(320.dp),
             thumb = {
-                // Omitir el thumb para hacerlo invisible o usar un thumb transparente
-                Box(modifier = Modifier.size(0.dp)) // Un tamaño de 0 dp lo hace invisible
-            }
-            ,// Forma redondeada
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)  // Tamaño del thumb
+                        .background(
+                            color = LocalCustomColorsPalette.current.thumbCheckedColor,
+                            shape = CircleShape  // Asegura que el thumb sea redondo
+                        )
+                )
+            },
             colors = SliderColors(
-                thumbColor = LocalCustomColorsPalette.current.backgroundPrimary, // Color del thumb
-                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,  // Track activo
-                inactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary, // Track inactivo
-                activeTickColor = LocalCustomColorsPalette.current.trackCheckedColor,
-                inactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledThumbColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledActiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledInactiveTrackColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledActiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary,
-                disabledInactiveTickColor = LocalCustomColorsPalette.current.backgroundPrimary
+                thumbColor = LocalCustomColorsPalette.current.thumbCheckedColor,  // Asegúrate de que no sea transparente
+                activeTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,
+                activeTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
+                inactiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                inactiveTickColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledThumbColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledActiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledActiveTickColor = LocalCustomColorsPalette.current.thumbCheckedColor,
+                disabledInactiveTrackColor = LocalCustomColorsPalette.current.drawerColor,
+                disabledInactiveTickColor = LocalCustomColorsPalette.current.drawerColor,
             )
         )
+
+
+
         ModelButton(text = stringResource(id = R.string.confirmButton),
             R.dimen.text_title_small,
             modifier = Modifier.width(320.dp)
@@ -374,3 +381,4 @@ fun AccountBudgetItemControl(
         )
     }
 }
+
