@@ -3,6 +3,9 @@ package carnerero.agustin.cuentaappandroid.about
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.components.RowComponent
@@ -36,6 +41,10 @@ fun AboutScreen(mainViewModel: MainViewModel)
         "https://play.google.com/store/apps/details?id=carnerero.agustin.cuentaappandroid&hl=es&gl=US"
     val policyLink =
        "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
+
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -146,5 +155,70 @@ private fun openGooglePlayStore(context: Context, link: String) {
     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 
 }
+/*
+private fun setupGitHubLink() {
+    val githubLinkTextView: TextView = binding.tvgithublink
+    val visitGit = getString(R.string.visitGitHub)
+    val githubLinkHtml = "<a href=\"https://github.com/AgusCarBCN\" title=\"GitHub\">$visitGit</a>"
 
+    githubLinkTextView.movementMethod = LinkMovementMethod.getInstance()
+    githubLinkTextView.text = fromHtml(githubLinkHtml)
+    githubLinkTextView.setOnClickListener {
+        openUrl(githubLinkHtml)
+    }
+}
+private fun sendEmail(){
+    //Uso de intent implicito para enviar un correo electrónico al desarrollador
+    val sendMeEmail=Intent(Intent.ACTION_SENDTO)
+    sendMeEmail.setData(Uri.parse("mailto:${getString(R.string.developeremail)}"))
+    startActivity(sendMeEmail)
+}
+
+private fun setupAttributions() {
+   /* val attributionsContainer = binding.attributionsContainer
+    val attributionText = getString(R.string.attributionicon)
+    val attributionTextPlural=getString(R.string.attributionicons)
+    val accountIcon=getString(R.string.iconconta)
+    val githubIcon=getString(R.string.icongithub)
+    val settingIcons=getString(R.string.iconstheme)
+    val sideMenuIcons=getString(R.string.menuicons)
+    val dateRangeIcons=getString(R.string.iconsdate)
+    val infoProfileIcons=getString(R.string.profile_icons)
+    val databaseIcons=getString(R.string.database_icons)
+    val attributionsList = listOf(
+        "<a href=\"https://www.flaticon.es/autores/2d3ds\" " +
+                "title=\"contabilidad iconos\">$accountIcon $attributionText 2D3ds - Flaticon</a>",
+        "<a href=\"https://www.freepik.es/icono/logotipo-github_25231#fromView=search&term=github&page=1&position=2&track=ais&uuid=bca581ff-3f61-49a9-8010-59c21c4b0f7c\">" +
+                "$githubIcon $attributionText Dave Gandy</a>",
+        "<a href=\"https://fonts.google.com/icons\"> $settingIcons $attributionTextPlural Google Fonts</a>",
+        "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>",
+        "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>",
+        "<a href=\"https://fonts.google.com/icons\"> $infoProfileIcons $attributionTextPlural Google Fonts</a>",
+        "<a href=\"https://fonts.google.com/icons\"> $databaseIcons $attributionTextPlural Google Fonts</a>"
+    )
+
+    for (attributionHtml in attributionsList) {
+        val attributionTextView = TextView(requireContext())
+        attributionTextView.movementMethod = LinkMovementMethod.getInstance()
+        attributionTextView.text = fromHtml(attributionHtml)
+        attributionTextView.setOnClickListener {
+            openUrl(attributionHtml)
+        }
+        attributionsContainer.addView(attributionTextView)
+    }*/
+}
+
+private fun openUrl(html: String) {
+    try {
+        val url = fromHtml(html).toString()
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    } catch (e: Exception) {
+        // Manejo de errores
+    }
+}
+
+private fun fromHtml(html: String): CharSequence {
+    return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+}*/
 
