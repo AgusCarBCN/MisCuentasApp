@@ -69,11 +69,11 @@ fun CalculatorUI(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 32.dp, horizontal = 16.dp)
+                            .padding(vertical = 20.dp, horizontal = 16.dp)
                     ) {
                         Text(
                             text = expression,
-                            fontSize = 64.sp,
+                            fontSize = 48.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Start,
                             color = LocalCustomColorsPalette.current.textColor
@@ -84,7 +84,7 @@ fun CalculatorUI(
                             Box(
                                 modifier = Modifier
                                     .width(2.dp) // Ancho del cursor
-                                    .height(64.dp) // Altura del cursor
+                                    .height(48.dp) // Altura del cursor
                                     .background(LocalCustomColorsPalette.current.textColor) // Color del cursor
                                     .align(Alignment.CenterEnd) // Alinear al final del texto
                                     .padding(horizontal = 4.dp) // Espacio a los lados del cursor
