@@ -97,6 +97,23 @@ fun AboutApp() {
         fontSize = 18.sp,
         color = LocalCustomColorsPalette.current.textColor
     )
+        Text(
+            text = stringResource(id = R.string.developer),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
+            fontSize = 18.sp,
+            color = LocalCustomColorsPalette.current.textColor
+        )
+        Text(
+            text = stringResource(id = R.string.version),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
+            fontSize = 18.sp,
+            color = LocalCustomColorsPalette.current.textColor
+        )
+
 }
 }
 
