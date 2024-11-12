@@ -187,6 +187,7 @@ private fun SetupAttributions() {
         "https://www.flaticon.es/autores/2d3ds" to stringResource(id = R.string.iconconta),
         "https://fonts.google.com/icons" to stringResource(id = R.string.iconsGoogle),
         "https://uxwing.com/tag/tools-icons" to stringResource(id = R.string.iconsuxwing),
+        "https://flagpedia.net/" to stringResource(id = R.string.iconflags),
         "https://v6.exchangerate-api.com" to stringResource(id = R.string.api)
     )
 
