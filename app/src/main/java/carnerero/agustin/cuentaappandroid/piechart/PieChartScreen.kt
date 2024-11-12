@@ -152,7 +152,7 @@ fun PieChartScreen(
                 HeadSetting(title = stringResource(id = R.string.expensechart), 24)
                 ChartPie(expenseList)
             }
-
+""
         } else {
             Text(
                 modifier = Modifier.padding(50.dp),

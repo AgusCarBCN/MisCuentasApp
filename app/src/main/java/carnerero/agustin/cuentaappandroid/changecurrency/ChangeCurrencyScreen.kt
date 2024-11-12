@@ -59,11 +59,7 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        IconAnimated(
-            iconResource = R.drawable.ic_change_currency, sizeIcon = 140,
-            LocalCustomColorsPalette.current.imageTutorialInit,
-            LocalCustomColorsPalette.current.imageTutorialTarget
-        )
+
         CurrencySelector(accountsViewModel)
         HeadSetting(title = stringResource(id = R.string.changeformattext), 16)
         ModelButton(text = stringResource(id = R.string.changeFormat),
