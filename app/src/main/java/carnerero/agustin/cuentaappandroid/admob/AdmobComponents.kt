@@ -49,7 +49,7 @@ fun AdmobBanner() {
 
             AdView(context).apply {
                 setAdSize(size)
-                adUnitId = "ca-app-pub-5972269460585117~8243512982"//"ca-app-pub-3940256099942544/6300978111"
+                adUnitId = "ca-app-pub-3940256099942544/6300978111"
                 loadAd(AdRequest.Builder().build())
                 this.adListener = object : AdListener() {
                     override fun onAdClicked() {

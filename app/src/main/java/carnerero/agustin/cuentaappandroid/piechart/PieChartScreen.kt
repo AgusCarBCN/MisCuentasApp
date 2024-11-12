@@ -144,10 +144,15 @@ fun PieChartScreen(
             }
         }
         if (listOfEntries.isNotEmpty()) {
-            HeadSetting(title = stringResource(id = R.string.incomechart), 24)
-            ChartPie(incomeList)
-            HeadSetting(title = stringResource(id = R.string.expensechart), 24)
-            ChartPie(expenseList)
+            if(incomeList.size>0) {
+                HeadSetting(title = stringResource(id = R.string.incomechart), 24)
+                ChartPie(incomeList)
+            }
+            if(expenseList.size>0) {
+                HeadSetting(title = stringResource(id = R.string.expensechart), 24)
+                ChartPie(expenseList)
+            }
+
         } else {
             Text(
                 modifier = Modifier.padding(50.dp),
