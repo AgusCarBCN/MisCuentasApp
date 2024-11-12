@@ -170,13 +170,18 @@
     <string name="abouttitle">Acerca de</string>
     <string name="greeting">Hola,</string>
     <!--Página de acerca de-->
+
+    <string name="currencydata">Datos de divisas</string>
     <string name="developer">Desarrollador: Agustin Carnerero Peña</string>
     <string name="atributions">Atribuciones</string>
-    <string name="iconconta">Icono de contabilidad</string>
-    <string name="icongithub">Icono de logotipo de github</string>
+    <string name="iconconta">Icono de contabilidad - 2D3ds (Flaticon)</string>
+    <string name="iconsGoogle">Iconos de GoogleFonts</string>
+    <string name="iconsuxwing">Iconos de Uxwing</string>
+    <string name="api">Api de divisas-Exchangerate-API</string>
+
     <string name="menuicons">Iconos de menu lateral</string>
     <string name="iconstheme">Iconos de configuracion de tema</string>
-    <string name="iconsdate">Iconos de rango de fecha</string>
+    <string name="iconsAttribution">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
     <string name="version">Version 3.0</string>

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -111,7 +117,7 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             color = LocalCustomColorsPalette.current.textColor
         )
         Text(
@@ -119,10 +125,19 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            fontSize = 18.sp,
+            fontSize = 16.sp,
+            color = LocalCustomColorsPalette.current.textColor
+        )
+        Text(
+            text = stringResource(id = R.string.atributions),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
+            fontSize = 16.sp,
             color = LocalCustomColorsPalette.current.textColor
         )
 
+        SetupAttributions()
 }
 }
 
@@ -155,70 +170,65 @@ private fun openGooglePlayStore(context: Context, link: String) {
     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 
 }
-/*
-private fun setupGitHubLink() {
-    val githubLinkTextView: TextView = binding.tvgithublink
-    val visitGit = getString(R.string.visitGitHub)
-    val githubLinkHtml = "<a href=\"https://github.com/AgusCarBCN\" title=\"GitHub\">$visitGit</a>"
+@Composable
+private fun SetupGitHubLink() {
+    val visitGit = stringResource(R.string.visitmygithub)
+    val githubUrl = "https://github.com/AgusCarBCN"
+    val context = LocalContext.current
 
-    githubLinkTextView.movementMethod = LinkMovementMethod.getInstance()
-    githubLinkTextView.text = fromHtml(githubLinkHtml)
-    githubLinkTextView.setOnClickListener {
-        openUrl(githubLinkHtml)
-    }
-}
-private fun sendEmail(){
-    //Uso de intent implicito para enviar un correo electrónico al desarrollador
-    val sendMeEmail=Intent(Intent.ACTION_SENDTO)
-    sendMeEmail.setData(Uri.parse("mailto:${getString(R.string.developeremail)}"))
-    startActivity(sendMeEmail)
+    ClickableTextLink(text = visitGit, url = githubUrl, context = context)
 }
 
-private fun setupAttributions() {
-   /* val attributionsContainer = binding.attributionsContainer
-    val attributionText = getString(R.string.attributionicon)
-    val attributionTextPlural=getString(R.string.attributionicons)
-    val accountIcon=getString(R.string.iconconta)
-    val githubIcon=getString(R.string.icongithub)
-    val settingIcons=getString(R.string.iconstheme)
-    val sideMenuIcons=getString(R.string.menuicons)
-    val dateRangeIcons=getString(R.string.iconsdate)
-    val infoProfileIcons=getString(R.string.profile_icons)
-    val databaseIcons=getString(R.string.database_icons)
-    val attributionsList = listOf(
-        "<a href=\"https://www.flaticon.es/autores/2d3ds\" " +
-                "title=\"contabilidad iconos\">$accountIcon $attributionText 2D3ds - Flaticon</a>",
-        "<a href=\"https://www.freepik.es/icono/logotipo-github_25231#fromView=search&term=github&page=1&position=2&track=ais&uuid=bca581ff-3f61-49a9-8010-59c21c4b0f7c\">" +
-                "$githubIcon $attributionText Dave Gandy</a>",
-        "<a href=\"https://fonts.google.com/icons\"> $settingIcons $attributionTextPlural Google Fonts</a>",
-        "<a href=\"https://fonts.google.com/icons\"> $sideMenuIcons $attributionTextPlural Google Fonts</a>",
-        "<a href=\"https://fonts.google.com/icons\"> $dateRangeIcons $attributionTextPlural Google Fonts</a>",
-        "<a href=\"https://fonts.google.com/icons\"> $infoProfileIcons $attributionTextPlural Google Fonts</a>",
-        "<a href=\"https://fonts.google.com/icons\"> $databaseIcons $attributionTextPlural Google Fonts</a>"
+@Composable
+private fun SetupAttributions() {
+    val context = LocalContext.current
+
+    val attributionsList = mapOf(
+        "https://www.flaticon.es/autores/2d3ds" to stringResource(id = R.string.iconconta),
+        "https://fonts.google.com/icons" to stringResource(id = R.string.iconsGoogle),
+        "https://uxwing.com/tag/tools-icons" to stringResource(id = R.string.iconsuxwing),
+        "https://v6.exchangerate-api.com" to stringResource(id = R.string.api)
     )
 
-    for (attributionHtml in attributionsList) {
-        val attributionTextView = TextView(requireContext())
-        attributionTextView.movementMethod = LinkMovementMethod.getInstance()
-        attributionTextView.text = fromHtml(attributionHtml)
-        attributionTextView.setOnClickListener {
-            openUrl(attributionHtml)
+    Column {
+        attributionsList.forEach { (url, description) ->
+            Box(modifier = Modifier.padding(top = 5.dp,start=20.dp)) {
+                ClickableTextLink(description, url, context, fontSize = 16.sp) // Ajusta el tamaño aquí.
+            }
         }
-        attributionsContainer.addView(attributionTextView)
-    }*/
-}
-
-private fun openUrl(html: String) {
-    try {
-        val url = fromHtml(html).toString()
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
-    } catch (e: Exception) {
-        // Manejo de errores
     }
 }
 
-private fun fromHtml(html: String): CharSequence {
-    return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
-}*/
+@Composable
+private fun ClickableTextLink(
+    text: String,
+    url: String,
+    context: Context,
+    fontSize: TextUnit = 16.sp // Puedes cambiar el valor predeterminado si deseas otro tamaño.
+) {
+    val annotatedText = buildAnnotatedString {
+        pushStringAnnotation(tag = "URL", annotation = url)
+        withStyle(style = SpanStyle(color = LocalCustomColorsPalette.current.incomeColor, textDecoration = TextDecoration.Underline)) {
+            append(text)
+        }
+        pop()
+    }
 
+    androidx.compose.foundation.text.ClickableText(
+        text = annotatedText,
+        style = androidx.compose.ui.text.TextStyle(fontSize = fontSize),
+        onClick = { offset ->
+            annotatedText.getStringAnnotations(tag = "URL", start = offset, end = offset)
+                .firstOrNull()?.let { annotation ->
+                    openUrl(annotation.item, context)
+                }
+        }
+    )
+}
+
+
+
+private fun openUrl(url: String, context: Context) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(intent)
+}

@@ -168,15 +168,21 @@
     <string name="abouttitle">About</string>
     <string name="greeting">Hello,</string>
     <!--About-->
+    <string name="iconconta">Accounting icon - 2D3ds (Flaticon)</string>
+
+    <string name="iconsGoogle">Google Fonts icons</string>
+    <string name="iconsuxwing">Uxwing icons</string>
+    <string name="api">Currency API - Exchangerate-API</string>
+
+    <string name="currencydata">Currency Data</string>
     <string name="developer">Developer: Agustin Carnerero Peña</string>
-    <string name="iconconta">Accounting icon</string>
-    <string name="icongithub">Github logo icon</string>
+
     <string name="menuicons">Side menu icons</string>
     <string name="iconstheme">Setting theme icons</string>
     <string name="attributionicon"> made by </string>
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
-    <string name="iconsdate">Date range icons</string>
+    <string name="iconsAttribution">Date range icons</string>
     <string name="version">Version 3.0</string>
     <string name="description">
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
