@@ -58,7 +58,7 @@ fun NotificationCategoriesObserver(
                                 "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, codeCurrency)}."
                     }
                     else -> {
-                        "${stringResource(id = R.string.expenselimitOk)} \n" +
+                        "${stringResource(id = R.string.expenselimitOkCategory)} \n" +
                                 "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, codeCurrency)}."
                     }
                 }
@@ -122,7 +122,7 @@ fun NotificationAccountObserver(
                                 "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, codeCurrency)}."
                     }
                     else -> {
-                        "${stringResource(id = R.string.expenselimitOk)} \n" +
+                        "${stringResource(id = R.string.expenselimitOkAccount)} \n" +
                                 "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, codeCurrency)}."
                     }
                 }

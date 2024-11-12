@@ -347,10 +347,11 @@
     <string name="expenseslimit">You have exceeded the spending limit.</string>
     <string name="expenseslimit80"> You are about to exceed your spending limit.</string>
     <string name="expensebycategory">Spending by category of </string>
-    <string name="expenselimitOk">Your expenses are under control in this category</string>
+    <string name="expenselimitOkCategory">Your expenses are under control in this category</string>
     <string name="expensesByMonth">Expenses by month</string>
     <string name="limitMaxtitle">Maximum limit of expense</string>
     <string name="accountchecked">Checked account</string>
     <string name="accountunchecked">Unchecked account</string>
     <string name="selectaccounts">Select accounts</string>
+    <string name="expenselimitOkAccount">Tus gastos están controlados en esta cuenta</string>
 </resources>
