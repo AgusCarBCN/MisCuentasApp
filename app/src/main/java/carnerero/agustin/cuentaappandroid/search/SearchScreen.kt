@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.SnackBarController
@@ -65,8 +66,8 @@ fun SearchScreen(
             .padding(top = 30.dp)
             .background(LocalCustomColorsPalette.current.backgroundPrimary)
             .verticalScroll(
-            rememberScrollState()
-        ),
+                rememberScrollState()
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -78,7 +79,7 @@ fun SearchScreen(
             BoardType.TEXT,
             false
         )
-        HeadSetting(title = stringResource(id = R.string.daterange), 20)
+        HeadSetting(title = stringResource(id = R.string.daterange), androidx.compose.material3.MaterialTheme.typography.headlineSmall)
         Row(
             modifier = Modifier
                 .width(360.dp)
@@ -87,14 +88,16 @@ fun SearchScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             DatePickerSearch(
-                modifier = Modifier.weight(0.5f).
-                padding(10.dp),
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(10.dp),
                 R.string.fromdate,
                 searchViewModel,
                 true
             )
             DatePickerSearch(
-                modifier = Modifier.weight(0.5f)
+                modifier = Modifier
+                    .weight(0.5f)
                     .padding(10.dp),
                 R.string.todate,
                 searchViewModel,
@@ -126,7 +129,7 @@ fun SearchScreen(
             false
         )
         ModelButton(text = stringResource(id = R.string.search),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             enableSearchButton,
             onClickButton = {

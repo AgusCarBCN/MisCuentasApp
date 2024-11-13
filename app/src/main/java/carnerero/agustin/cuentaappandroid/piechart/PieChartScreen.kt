@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +30,8 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,7 +112,7 @@ fun PieChartScreen(
 
 
         AccountSelector(300, 20, stringResource(id = R.string.selectanaccount), accountViewModel)
-        HeadSetting(title = stringResource(id = R.string.daterange), 20)
+        HeadSetting(title = stringResource(id = R.string.daterange), MaterialTheme.typography.headlineSmall)
         Row(
             modifier = Modifier
                 .width(360.dp)
@@ -145,20 +148,21 @@ fun PieChartScreen(
         }
         if (listOfEntries.isNotEmpty()) {
             if(incomeList.size>0) {
-                HeadSetting(title = stringResource(id = R.string.incomechart), 24)
+                HeadSetting(title = stringResource(id = R.string.incomechart), MaterialTheme.typography.headlineMedium)
                 ChartPie(incomeList)
             }
             if(expenseList.size>0) {
-                HeadSetting(title = stringResource(id = R.string.expensechart), 24)
+                HeadSetting(title = stringResource(id = R.string.expensechart), MaterialTheme.typography.headlineMedium)
                 ChartPie(expenseList)
             }
-""
+
         } else {
             Text(
                 modifier = Modifier.padding(50.dp),
                 text = stringResource(id = R.string.noentries),
                 color = LocalCustomColorsPalette.current.textColor,
-                fontSize = 18.sp
+                style=MaterialTheme.typography.bodyLarge
+
             )
         }
     }
@@ -288,8 +292,9 @@ fun LegendItem(color: Color, label: String) {
         // Texto de la leyenda
         Text(
             text = label,
-            color = LocalCustomColorsPalette.current.textColor, // Puedes ajustar el color del texto según tu tema
-            fontSize = 16.sp
+            color = LocalCustomColorsPalette.current.textColor,
+            style=MaterialTheme.typography.bodyMedium
+
         )
     }
 }

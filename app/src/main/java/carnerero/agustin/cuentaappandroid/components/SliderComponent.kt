@@ -10,6 +10,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -93,8 +95,7 @@ fun CategoryBudgetItemControl(
                     , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textHeadColor,
                 textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.labelLarge
             )
         }
         Row(
@@ -111,8 +112,7 @@ fun CategoryBudgetItemControl(
                 , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyMedium
             )
             Text(
                 text = "${stringResource(id = R.string.todate)}: ${category.toDate}",
@@ -121,8 +121,8 @@ fun CategoryBudgetItemControl(
                 , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyMedium
+
             )
         }
 
@@ -130,9 +130,9 @@ fun CategoryBudgetItemControl(
         // Barra de progreso de gasto actual
         Text(
             text = "$currentExpense: ${Utils.numberFormat(expensesByCategory, currencyCode)} / ${Utils.numberFormat(spendingLimit,currencyCode)}",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
-            color = LocalCustomColorsPalette.current.textColor,
+
+            style=MaterialTheme.typography.bodyLarge,
+                    color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
@@ -157,7 +157,7 @@ fun CategoryBudgetItemControl(
         // Slider para ajustar el límite de gasto
         Text(
             text = "$limitExpenseText: ${Utils.numberFormat(spendingLimit,currencyCode)}",
-            fontSize = 16.sp,
+            style=MaterialTheme.typography.bodyLarge,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
@@ -192,7 +192,7 @@ fun CategoryBudgetItemControl(
 
 
         ModelButton(text = stringResource(id = R.string.confirmButton),
-            R.dimen.text_title_small,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp).
             padding(top = 10.dp),
             true,
@@ -261,8 +261,7 @@ fun AccountBudgetItemControl(
                 , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textHeadColor,
                 textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.labelLarge
             )
 
         Row(
@@ -279,8 +278,7 @@ fun AccountBudgetItemControl(
                 , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = "${stringResource(id = R.string.todate)}: ${account.toDate}",
@@ -289,8 +287,7 @@ fun AccountBudgetItemControl(
                 , // Hace que el texto ocupe espacio disponible
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyMedium
             )
         }
 
@@ -300,8 +297,7 @@ fun AccountBudgetItemControl(
         // Barra de progreso de gasto actual
         Text(
             text = "$currentExpense: ${Utils.numberFormat(expensesByAccount, currencyCode)} / ${Utils.numberFormat(spendingLimit,currencyCode)}",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
+            style=MaterialTheme.typography.bodyMedium,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
@@ -327,7 +323,7 @@ fun AccountBudgetItemControl(
         // Slider para ajustar el límite de gasto
         Text(
             text = "$limitExpenseText: ${Utils.numberFormat(spendingLimit,currencyCode)}",
-            fontSize = 16.sp,
+            style=MaterialTheme.typography.bodyMedium,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
@@ -363,7 +359,7 @@ fun AccountBudgetItemControl(
 
 
         ModelButton(text = stringResource(id = R.string.confirmButton),
-            R.dimen.text_title_small,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp)
                 .padding(top = 10.dp),
             true,

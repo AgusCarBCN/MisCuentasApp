@@ -25,6 +25,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -97,7 +98,8 @@ fun Tutorial(
 
 
         ModelButton(text = stringResource(id =if(toLogin) R.string.loginButton else R.string.createProfileButton),
-            R.dimen.text_title_medium,modifier = Modifier
+            MaterialTheme.typography.labelLarge
+           ,modifier = Modifier
                 .width(360.dp)
                 .constrainAs(loginButton) {
                     top.linkTo(horizontalPager.bottom)          // Parte superior anclada al imageBox
@@ -156,8 +158,7 @@ private fun ItemCard(item: TutorialItem) {
                     .padding(top = 15.dp, bottom = 15.dp)
                     .align(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
+                style=MaterialTheme.typography.headlineMedium,
                 color = (LocalCustomColorsPalette.current.boldTextColor)
             )
             Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
@@ -179,9 +180,7 @@ private fun ItemCard(item: TutorialItem) {
                     .height(220.dp)
                     .padding(top = 10.dp, bottom = 5.dp)
                     .align(Alignment.CenterHorizontally),
-
-                fontWeight = FontWeight.Normal,
-                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() },
+                style=MaterialTheme.typography.labelLarge,
                 color = LocalCustomColorsPalette.current.textColor
             )
 

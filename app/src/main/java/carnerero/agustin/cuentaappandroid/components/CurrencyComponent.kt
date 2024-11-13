@@ -13,16 +13,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.createaccounts.model.Currency
@@ -38,7 +41,7 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
     // Obtener el estado de expansión desde el ViewModel
     val isExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
     val currencies by accountsViewModel.currencyCodeList.observeAsState(listOf())
-
+    accountsViewModel.getListOfCurrencyCode()
 
     // Contenedor principal
     Column(
@@ -51,7 +54,7 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
             // Título
             Text(
                 text = stringResource(id = R.string.selectcurrency),
-                fontSize = 18.sp,
+                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_small).toSp() },
                 color = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
@@ -62,7 +65,7 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
             // Botón para expandir/colapsar la lista de divisas
             ModelButton(
                 text = "Select Currency",
-                R.dimen.text_title_medium,
+                MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(),
                 onClickButton = { accountsViewModel.onExpandedChange(true) }
             )
@@ -70,12 +73,12 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
             // Mostrar la moneda seleccionada actualmente
             Text(
                 text = "${stringResource(id = R.string.selectedcurrency)} $currencyCodeShowed",
-                fontSize = 18.sp,
                 color = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
                     .fillMaxWidth(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style=MaterialTheme.typography.bodyLarge
             )
         } else {
             // Mostrar solo la lista de divisas si isExpanded es verdadero
@@ -117,8 +120,8 @@ fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
         Spacer(modifier = Modifier.width(15.dp)) // Espaciador entre la imagen y el texto
         Text(
             text = currency.currencyDescription,
-            fontSize = 16.sp,
-            color = LocalCustomColorsPalette.current.textColor
+            color = LocalCustomColorsPalette.current.textColor,
+            style=MaterialTheme.typography.bodyMedium
         )
     }
 }

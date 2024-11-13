@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -66,7 +67,7 @@ fun AccountList(
 
             HeadSetting(
                 title = stringResource(id = R.string.youraccounts),
-                size = 22
+                MaterialTheme.typography.headlineSmall
             )
             // Mostrar las cuentas si están disponibles
             LazyColumn(
@@ -123,7 +124,7 @@ fun ModifyAccountsComponent(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        HeadSetting(title = stringResource(id = R.string.edit_account), 20)
+        HeadSetting(title = stringResource(id = R.string.edit_account), MaterialTheme.typography.headlineSmall)
 
         IconAnimated(
             iconResource = R.drawable.configaccountoption, sizeIcon = 120,
@@ -141,7 +142,7 @@ fun ModifyAccountsComponent(
             false
         )
         ModelButton(text = stringResource(id = R.string.change),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             nameButtonChange,
             onClickButton = {
@@ -172,7 +173,7 @@ fun ModifyAccountsComponent(
 
 
         ModelButton(text = stringResource(id = R.string.change),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             balanceButtonChange,
             onClickButton = {
@@ -192,7 +193,7 @@ fun ModifyAccountsComponent(
         )
 
         ModelButton(text = stringResource(id = R.string.backButton),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             true,
             onClickButton = {

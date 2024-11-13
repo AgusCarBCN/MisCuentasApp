@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,7 +64,7 @@ fun HomeScreen(
         if (accounts.isEmpty()) {
             Text(text = stringResource(id = R.string.noaccounts),
                 color = LocalCustomColorsPalette.current.textColor,
-                fontSize = 18.sp)
+                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() })
         }
         else{
             Row(modifier = Modifier.padding(top = 20.dp)) {
@@ -82,7 +85,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.width(5.dp))
             HeadSetting(title = stringResource(id = R.string.youraccounts),
-                size = 22)
+                MaterialTheme.typography.headlineSmall)
 
             // Mostrar las cuentas si están disponibles
             LazyColumn(

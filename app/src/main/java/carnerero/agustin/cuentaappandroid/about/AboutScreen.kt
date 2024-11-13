@@ -3,9 +3,6 @@ package carnerero.agustin.cuentaappandroid.about
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.text.Html
-import android.text.method.LinkMovementMethod
-import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.components.RowComponent
@@ -49,8 +45,6 @@ fun AboutScreen(mainViewModel: MainViewModel)
        "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
 
 
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +54,7 @@ fun AboutScreen(mainViewModel: MainViewModel)
             )
     )
     {
-        HeadSetting(title = stringResource(id = R.string.aboutapp), 20)
+        HeadSetting(title = stringResource(id = R.string.aboutapp), MaterialTheme.typography.titleLarge)
 
         RowComponent(title = stringResource(id = R.string.about),
             description = stringResource(id = R.string.desaboutapp),
@@ -103,38 +97,38 @@ fun AboutApp() {
             )
     )
     {
-    HeadSetting(title = stringResource(id = R.string.app_name), 20)
+    HeadSetting(title = stringResource(id = R.string.app_name),MaterialTheme.typography.titleLarge )
     Text(
         text = stringResource(id = R.string.description),
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-        fontSize = 18.sp,
-        color = LocalCustomColorsPalette.current.textColor
+        color = LocalCustomColorsPalette.current.textColor,
+        style=MaterialTheme.typography.bodyLarge
     )
         Text(
             text = stringResource(id = R.string.developer),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            fontSize = 16.sp,
-            color = LocalCustomColorsPalette.current.textColor
+            color = LocalCustomColorsPalette.current.textColor,
+            style=MaterialTheme.typography.bodyMedium
         )
         Text(
             text = stringResource(id = R.string.version),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            fontSize = 16.sp,
-            color = LocalCustomColorsPalette.current.textColor
+                .padding(top = 5.dp, end = 20.dp, start = 20.dp),
+            color = LocalCustomColorsPalette.current.textColor,
+            style=MaterialTheme.typography.bodyMedium
         )
         Text(
             text = stringResource(id = R.string.atributions),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            fontSize = 16.sp,
-            color = LocalCustomColorsPalette.current.textColor
+                .padding(top = 5.dp, end = 20.dp, start = 20.dp),
+            color = LocalCustomColorsPalette.current.textColor,
+            style=MaterialTheme.typography.bodyMedium
         )
 
         SetupAttributions()

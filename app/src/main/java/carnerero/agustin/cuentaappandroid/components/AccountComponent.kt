@@ -15,6 +15,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -23,6 +24,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,14 +48,10 @@ fun AccountSelector(
     // Observa el estado de la lista de cuentas y la moneda
     val accounts by accountViewModel.listOfAccounts.observeAsState(emptyList())
     val currencyCodeSelected by accountViewModel.currencyCodeSelected.observeAsState("USD")
-
     // Inicializamos el estado del VerticalPager basado en la cantidad de cuentas
     val pagerState = rememberPagerState(pageCount = { accounts.size })
     val isDraggingUp by remember { derivedStateOf { pagerState.currentPage == 0 || pagerState.targetPage > pagerState.currentPage } }
-
         accountViewModel.getAllAccounts()
-
-
     Column(
         modifier = Modifier
             .width(size.dp)
@@ -78,10 +77,10 @@ fun AccountSelector(
             )
             Text(
                 text = title,
-                fontSize = 20.sp,
                 color = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier.padding(vertical = 10.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
 
@@ -102,9 +101,7 @@ fun AccountSelector(
                 } else {
                     accountViewModel.onAccountSelected(accounts[pagerState.targetPage])
                 }
-
                 val balanceFormatted = Utils.numberFormat(accounts[page].balance, currencyCodeSelected)
-
                 Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -112,18 +109,16 @@ fun AccountSelector(
                 ) {
                     Text(
                         text = accounts[page].name,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
                         color = LocalCustomColorsPalette.current.textColor,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.width(spacerWidth.dp))
                     Text(
                         text = balanceFormatted,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
                         color = LocalCustomColorsPalette.current.incomeColor,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

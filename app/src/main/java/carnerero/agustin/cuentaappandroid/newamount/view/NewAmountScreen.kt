@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.SnackBarController
@@ -84,7 +85,8 @@ fun NewAmount(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconAnimated(iconResource = iconResource, sizeIcon = 120, initColor, targetColor)
-        HeadSetting(title = stringResource(id = titleResource), 24)
+        HeadSetting(title = stringResource(id = titleResource), MaterialTheme.typography.titleLarge
+        )
         TextFieldComponent(
             modifier = Modifier.width(320.dp),
             stringResource(id = R.string.desamount),
@@ -103,7 +105,7 @@ fun NewAmount(
         )
         AccountSelector(300,20,stringResource(id = R.string.selectanaccount), accountViewModel)
         ModelButton(text = stringResource(id = if (type== CategoryType.INCOME) R.string.newincome else R.string.newexpense),
-            R.dimen.text_title_medium,
+            androidx.compose.material3.MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),
             enableConfirmButton,
             onClickButton = {
@@ -174,7 +176,7 @@ fun NewAmount(
             }
         )
         ModelButton(text = stringResource(id = R.string.backButton),
-            R.dimen.text_title_medium,
+            androidx.compose.material3.MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -19,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,8 +68,6 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
-        Log.d("imageUriFromProfile", selectedImageUri.toString())
-
 
         ProfileImageWithCamera(createViewModel)
         Row(
@@ -76,7 +77,7 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
         ) {
             ModelButton(
                 text = "Change Photo",
-                R.dimen.text_title_small, modifier = Modifier.width(220.dp),
+                MaterialTheme.typography.labelLarge, modifier = Modifier.width(220.dp),
                 enableChangeImageButton,
                 onClickButton = {
                     scope.launch {
@@ -98,7 +99,7 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.userName,
             onNameTextFieldChanged = { createViewModel.onUserNameChanged(it) },
             type = BoardType.TEXT,
-            sizeFontButton = R.dimen.text_title_small,
+            sizeFontButton = R.dimen.text_button_large,
             enableUserNameButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -115,7 +116,7 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.name,
             onNameTextFieldChanged = { createViewModel.onNameChanged(it) },
             type = BoardType.TEXT,
-            sizeFontButton = R.dimen.text_title_small,
+            sizeFontButton = R.dimen.text_button_large,
             enableNameButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -131,7 +132,7 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.password,
             onNameTextFieldChanged = { createViewModel.onPasswordChanged(it) },
             type = BoardType.PASSWORD,
-            sizeFontButton = R.dimen.text_title_small,
+            sizeFontButton = R.dimen.text_button_large,
             enablePasswordButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -167,8 +168,7 @@ fun NewInputComponent(
                 .fillMaxWidth()
                 .padding(top = 10.dp, start = 30.dp),
             text = title,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            style=MaterialTheme.typography.bodyLarge
         )
 
         Row(
@@ -188,7 +188,7 @@ fun NewInputComponent(
             )
             ModelButton(
                 text = stringResource(id = R.string.change),
-                sizeFontButton,
+                MaterialTheme.typography.labelMedium,
                 modifier = Modifier.weight(0.40f),
                 enableInputButton,
                 onClickButton = onChangeButtonClick

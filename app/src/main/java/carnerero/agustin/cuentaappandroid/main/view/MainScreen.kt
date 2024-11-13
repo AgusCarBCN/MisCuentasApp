@@ -49,6 +49,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -556,7 +558,7 @@ private fun TitleOptions(title: Int) {
         color = LocalCustomColorsPalette.current.contentDrawerColor,
         //fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp
+        fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() }
 
     )
 }

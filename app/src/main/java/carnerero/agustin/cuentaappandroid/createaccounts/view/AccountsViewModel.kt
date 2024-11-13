@@ -143,7 +143,7 @@ class AccountsViewModel @Inject constructor(
             getCurrencyCode()
             _isCurrencyExpanded.value = false
             onAccountUpdated()
-           //getListOfCurrencyCode()
+           getListOfCurrencyCode()
             updateExpensePercentage()
 
         }

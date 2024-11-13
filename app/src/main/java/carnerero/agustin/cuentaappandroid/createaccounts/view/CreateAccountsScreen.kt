@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -82,8 +83,7 @@ fun CreateAccountsComponent(
                     modifier = Modifier
                         .padding(50.dp),
                     text = if (!isCurrencyExpanded) stringResource(id = R.string.createAccount) else "",
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
-                    fontWeight = FontWeight.Bold, // Estilo de texto en negrita
+                   style=MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     color = LocalCustomColorsPalette.current.textColor
                 )
@@ -106,8 +106,7 @@ fun CreateAccountsComponent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.createaccountmsg),
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
-                    fontWeight = FontWeight.Bold, // Estilo de texto en negrita
+                    style=MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = LocalCustomColorsPalette.current.textColor
                 )
@@ -131,7 +130,7 @@ fun CreateAccountsComponent(
                     false
                 )
                 ModelButton(text = stringResource(id = R.string.addAccount),
-                    R.dimen.text_title_medium,
+                    MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     isEnableButton,
                     onClickButton = {
@@ -171,7 +170,7 @@ fun CreateAccountsComponent(
             if (!isCurrencyExpanded) {
                 if (enableCurrencySelector) {
                     ModelButton(text = stringResource(id = R.string.confirmButton),
-                        R.dimen.text_title_medium,
+                      MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.width(360.dp),
                         true,
                         onClickButton = {
@@ -194,7 +193,7 @@ fun CreateAccountsComponent(
                     )
                 }
                 ModelButton(text = stringResource(id = R.string.backButton),
-                    R.dimen.text_title_medium,
+                    MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.width(360.dp),
                     true,
                     onClickButton = {

@@ -7,17 +7,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
@@ -49,8 +53,7 @@ fun CategoryEntries(category: Category, modifier: Modifier, onClickItem: () -> U
         )
         Text(
             text = stringResource(id = category.nameResource), // Nombre de la categoría
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
+            style=MaterialTheme.typography.labelMedium,
             color = LocalCustomColorsPalette.current.textColor, // Color del texto
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(vertical = 8.dp)

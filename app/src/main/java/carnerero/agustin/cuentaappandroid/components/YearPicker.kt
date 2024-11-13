@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -22,6 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -77,7 +80,7 @@ fun YearSelector(
             )
             Text(
                 text = stringResource(id = R.string.year),
-                fontSize = 20.sp,
+                style= MaterialTheme.typography.bodyLarge,
                 color = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier.padding(vertical = 10.dp),
                 textAlign = TextAlign.Start
@@ -104,8 +107,7 @@ fun YearSelector(
                 ) {
                     Text(
                         text = years[page],
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
+                        style= MaterialTheme.typography.bodyLarge,
                         color = LocalCustomColorsPalette.current.textColor,
                         textAlign = TextAlign.Center
                     )

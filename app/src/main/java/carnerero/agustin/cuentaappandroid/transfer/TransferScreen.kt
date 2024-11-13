@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -90,7 +91,7 @@ fun Transfer(
         AccountSelector(300,20,stringResource(id = R.string.destinationaccount), accountViewModel, true)
 
         ModelButton(text = stringResource(id = R.string.confirmButton),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),
             confirmButton,
             onClickButton = {
@@ -143,7 +144,7 @@ fun Transfer(
             }
         )
         ModelButton(text = stringResource(id = R.string.backButton),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {

@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.components.AccountCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
@@ -43,7 +44,7 @@ fun EntryAccountList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeadSetting(title = stringResource(id = R.string.selectaccounts),
-            size = 22)
+            androidx.compose.material3.MaterialTheme.typography.headlineSmall)
         // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
         LazyColumn(
             modifier = Modifier

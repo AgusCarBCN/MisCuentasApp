@@ -4,6 +4,7 @@ package carnerero.agustin.cuentaappandroid.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
@@ -47,7 +48,8 @@ fun RadioButtonSearch(searchViewModel: SearchViewModel) {
                 )
                 Text(
                     text = stringResource(id = option),
-                    color = LocalCustomColorsPalette.current.textColor
+                    color = LocalCustomColorsPalette.current.textColor,
+                    style=MaterialTheme.typography.bodySmall
                 )
             }
         }

@@ -9,17 +9,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 
 
@@ -39,11 +44,13 @@ fun SwitchComponent(title:String,
     ) {
         Column(modifier = Modifier.weight(0.75f)) {
             Text(text = title,
-                fontWeight = FontWeight.Bold,
-                fontSize =18.sp,
+                modifier=Modifier.padding(bottom = 5.dp),
+                style=MaterialTheme.typography.titleLarge,
                 color = LocalCustomColorsPalette.current.textColor)
             Text(text = description,
+                style=MaterialTheme.typography.bodyMedium,
                 color= LocalCustomColorsPalette.current.textColor)
+
         }
         Switch(modifier = Modifier.weight(0.25f),
             checked = isChecked,
@@ -104,13 +111,14 @@ fun RowComponent(title: String,
         Column(modifier = Modifier.weight(0.90f)) {
             Text(
                 text = title,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                modifier=Modifier.padding(bottom = 5.dp),
+                style=MaterialTheme.typography.titleLarge,
                 color = LocalCustomColorsPalette.current.textColor
             )
             Text(
                 text = description,
-                color = LocalCustomColorsPalette.current.textColor
+                color = LocalCustomColorsPalette.current.textColor,
+                style=MaterialTheme.typography.bodyMedium
             )
         }
 
@@ -119,12 +127,11 @@ fun RowComponent(title: String,
 
 }
 @Composable
-fun HeadSetting(title: String,size:Int) {
+fun HeadSetting(title: String,textStyle: TextStyle) {
 
     Text(
         text = title,
-        fontWeight = FontWeight.Bold,
-        fontSize = size.sp,
+        style= textStyle,
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
             .fillMaxWidth(),

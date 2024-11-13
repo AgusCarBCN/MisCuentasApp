@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,6 +20,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -76,7 +79,7 @@ fun EntryList(
             Text(
                 text = stringResource(id = R.string.noentries),
                 color = LocalCustomColorsPalette.current.textColor,
-                fontSize = 18.sp
+                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() }
             )
         }
     }
@@ -106,9 +109,8 @@ fun EntryList(
                                 .padding(start = 15.dp),
                             text = Utils.toDateEntry(date),
                             textAlign = TextAlign.Start,
-                            fontSize = 18.sp,
                             color = LocalCustomColorsPalette.current.textColor,
-                            fontWeight = FontWeight.Bold
+                            style=MaterialTheme.typography.bodyLarge
                         )
                     }
                 }
@@ -154,8 +156,7 @@ fun ItemEntry(
                 modifier = Modifier
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style=MaterialTheme.typography.bodyLarge,
                 color = LocalCustomColorsPalette.current.textHeadColor
             )
             Spacer(modifier = Modifier.height(12.dp))
@@ -166,8 +167,7 @@ fun ItemEntry(
                 color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyLarge
             )
 
         }
@@ -190,8 +190,8 @@ fun ItemEntry(
                     .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyLarge
+
             )
             Text(
                 text = entry.name,
@@ -200,8 +200,7 @@ fun ItemEntry(
                     .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.End,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyMedium
             )
 
         }
@@ -237,8 +236,8 @@ fun ItemCategory(
                     .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyLarge
+
             )
             Text(
                 text = Utils.numberFormat(amount ?: 0.0, currencyCode),
@@ -247,8 +246,8 @@ fun ItemCategory(
                 color = if ((amount ?: 0.0) >= 0) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.bodyLarge
+
             )
 
         }

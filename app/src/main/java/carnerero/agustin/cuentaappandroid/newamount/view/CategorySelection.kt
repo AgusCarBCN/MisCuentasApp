@@ -11,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.components.CategoryEntries
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
@@ -35,7 +36,8 @@ fun CategorySelector(mainViewModel: MainViewModel, categoriesViewModel: Categori
         HeadSetting(
             title = (if (type == CategoryType.INCOME) stringResource(id = R.string.chooseincome) else stringResource(
                 id = R.string.chooseexpense
-            )), size = 24
+            )), androidx.compose.material3.MaterialTheme.typography.headlineSmall
+
         )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

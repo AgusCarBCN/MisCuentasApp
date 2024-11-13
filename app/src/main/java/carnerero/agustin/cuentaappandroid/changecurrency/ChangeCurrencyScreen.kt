@@ -16,18 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.components.CurrencySelector
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.components.IconAnimated
 import carnerero.agustin.cuentaappandroid.components.ModelButton
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,41 +47,36 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
     val messageFormatCurrencyChange = stringResource(id = R.string.currencyformatchange)
     val messageCurrencyChange = stringResource(id = R.string.currencychange)
     val messageErrorConnexionApi=stringResource(id = R.string.apierror)
-    LaunchedEffect(Unit) {
-        accountsViewModel.getListOfCurrencyCode()
-    }
-    Column(modifier=Modifier
-        .verticalScroll(
-            rememberScrollState()
-            ),
+
+
+    Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
 
         CurrencySelector(accountsViewModel)
-        HeadSetting(title = stringResource(id = R.string.changeformattext), 16)
+
+        HeadSetting(title = stringResource(id = R.string.changeformattext), MaterialTheme.typography.titleMedium)
         ModelButton(text = stringResource(id = R.string.changeFormat),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             true,
             onClickButton = {
-
                 scope.launch(Dispatchers.Main) {
                     accountsViewModel.setCurrencyCode(currencyCodeShowed)
                     SnackBarController.sendEvent(event = SnackBarEvent(messageFormatCurrencyChange))
                 }
             }
         )
-        HeadSetting(title = stringResource(id = R.string.changecurrencytext), 16)
+        HeadSetting(title = stringResource(id = R.string.changecurrencytext), MaterialTheme.typography.titleMedium)
         ModelButton(text = stringResource(id = R.string.changeCurrency),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             true,
             onClickButton = {
                 scope.launch(Dispatchers.IO) {
                     accountsViewModel.setCurrencyCode(currencyCodeShowed)
-
                     // Llama a conversionCurrencyRate y espera el resultado
                     val ratio = accountsViewModel.conversionCurrencyRate(currencyCodeSelected, currencyCodeShowed)
                     Log.d("ratio",ratio.toString())
@@ -93,7 +87,6 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
                             val newBalance = account.balance * (ratio )
                             val id = account.id
                             accountsViewModel.upDateAccountBalance(id, newBalance)
-
                         }
                         entries.forEach { entry ->
                             val newAmount = entry.amount * (ratio)
@@ -112,7 +105,7 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
             }
         )
         ModelButton(text = stringResource(id = R.string.backButton),
-            R.dimen.text_title_medium,
+            MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             true,
             onClickButton = {

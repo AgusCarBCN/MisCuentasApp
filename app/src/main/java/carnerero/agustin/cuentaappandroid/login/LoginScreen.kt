@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -147,7 +148,7 @@ fun LoginComponent(
                     true
                 )
                 ModelButton(text = stringResource(id = R.string.loginButton),
-                    R.dimen.text_title_medium,
+                    MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     enableLoginButton,
                     onClickButton = {
@@ -169,7 +170,7 @@ fun LoginComponent(
                     content = {
                         Text(
                             text = stringResource(id = R.string.forgotpassword),
-                            fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_medium).toSp() },
+                            style=MaterialTheme.typography.labelSmall,
                             color = LocalCustomColorsPalette.current.textColor
                         )
                     }
@@ -199,7 +200,7 @@ fun LoginComponent(
                     true
                 )
                 ModelButton(text = stringResource(id = R.string.confirmButton),
-                    R.dimen.text_title_medium,
+                    MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     enableConfirmButton,
                     onClickButton = {
@@ -225,7 +226,7 @@ fun LoginComponent(
                 )
 
                 ModelButton(text = stringResource(id = R.string.backButton),
-                    R.dimen.text_title_medium,
+                    MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     true,
                     onClickButton = {

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,7 +32,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ModelButton(
     text: String,
-    fontDimen:Int,
+    textStyle:TextStyle,
     modifier: Modifier = Modifier, // Permitir modificar el botón desde el exterior
     enabledButton: Boolean = true,
     onClickButton: () -> Unit
@@ -39,7 +41,6 @@ fun ModelButton(
     val targetColorButton = LocalCustomColorsPalette.current.buttonTransition
     val initColorText = LocalCustomColorsPalette.current.textButtonColorDefault
     val targetColorText = LocalCustomColorsPalette.current.textTransition
-
     val colorButton = remember { Animatable(initColorButton) }
     val colorText = remember { Animatable(initColorText) }
     val coroutineScope = rememberCoroutineScope()
@@ -95,9 +96,8 @@ fun ModelButton(
         ) {
         Text(
             text = text,
-            fontSize = with(LocalDensity.current) { dimensionResource(id = fontDimen).toSp() },
-            fontWeight = FontWeight.Bold, // Estilo de texto en negrita
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = textStyle
         )
     }
 }

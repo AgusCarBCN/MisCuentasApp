@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -143,7 +144,7 @@ fun SettingScreen(
             )
     )
     {
-        HeadSetting(title = stringResource(id = R.string.appsettings), 20)
+        HeadSetting(title = stringResource(id = R.string.appsettings), MaterialTheme.typography.headlineSmall)
         SwitchComponent(
             title = stringResource(id = R.string.theme),
             description = stringResource(id = R.string.destheme),
@@ -168,7 +169,7 @@ fun SettingScreen(
             }
         )
         SpacerApp()
-        HeadSetting(title = stringResource(id = R.string.expensemanagement), 20)
+        HeadSetting(title = stringResource(id = R.string.expensemanagement), MaterialTheme.typography.headlineSmall)
 
         RowComponent(title = stringResource(id = R.string.accountscontrol),
             description = stringResource(id = R.string.accountscontroldes),
@@ -201,7 +202,7 @@ fun SettingScreen(
 
         SpacerApp()
 
-        HeadSetting(title = stringResource(id = R.string.backup), 20)
+        HeadSetting(title = stringResource(id = R.string.backup), MaterialTheme.typography.headlineSmall)
 
         RowComponent(title = stringResource(id = R.string.createbackup),
             description = stringResource(id = R.string.desbackup),
@@ -224,7 +225,7 @@ fun SettingScreen(
 
         SpacerApp()
 
-        HeadSetting(title = stringResource(id = R.string.accountsetting), 20)
+        HeadSetting(title = stringResource(id = R.string.accountsetting), MaterialTheme.typography.headlineSmall)
 
         RowComponent(title = stringResource(id = R.string.add_an_account),
             description = stringResource(id = R.string.desadd_an_account),

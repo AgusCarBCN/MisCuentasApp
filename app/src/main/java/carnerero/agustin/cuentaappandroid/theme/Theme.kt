@@ -2,15 +2,16 @@ package carnerero.agustin.cuentaappandroid.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.PathSegment
 
 
 // Implementación del tema con soporte para tema claro/oscuro y colores dinámicos
 @Composable
 fun  MisCuentasTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -26,7 +27,9 @@ fun  MisCuentasTheme(
     ) {
         MaterialTheme(
             //colorScheme = colorScheme, // the MaterialTheme still uses the "normal" palette
-            content = content
+            content = content,
+            typography = AppTypography
+            // our custom typography
         )
     }
 

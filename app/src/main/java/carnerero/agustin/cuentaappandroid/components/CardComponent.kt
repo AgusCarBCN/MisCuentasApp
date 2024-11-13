@@ -17,6 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,14 +27,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
 import carnerero.agustin.cuentaappandroid.SnackBarController
@@ -92,11 +89,9 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
                 .padding(top = 12.dp)
                 .fillMaxWidth(),
             textAlign = TextAlign.Center,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
+            style=MaterialTheme.typography.titleLarge
         )
-        Spacer(modifier = Modifier.height(10.dp)) // Espacio entre el texto y el botón
-
+        Spacer(modifier = Modifier.height(10.dp))
         TextButton(
             onClick = {
                 onClickCard()
@@ -107,9 +102,9 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
                         .padding(5.dp)
                         .fillMaxWidth(),
                     text = stringResource(id = if (isIncome) R.string.seeincome else R.string.seeexpense),
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
                     textAlign = TextAlign.Center,
-                    color = LocalCustomColorsPalette.current.textColor
+                    color = LocalCustomColorsPalette.current.textColor,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         )
@@ -149,8 +144,8 @@ fun AccountCard(
                     .padding(10.dp)
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
-                fontSize = 22.sp,
-                color = LocalCustomColorsPalette.current.textColor
+                color = LocalCustomColorsPalette.current.textColor,
+                style=MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(12.dp)) // Espacio entre el texto y el botón
             Text(
@@ -159,8 +154,7 @@ fun AccountCard(
                     .padding(10.dp)
                     .weight(0.4f),
                 textAlign = TextAlign.End,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.headlineSmall
             )
         }
         Spacer(modifier = Modifier.height(8.dp)) // Espacio entre el texto y el botón
@@ -175,9 +169,9 @@ fun AccountCard(
                         .padding(5.dp)
                         .fillMaxWidth(),
                     text = stringResource(id = textButton),
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
                     textAlign = TextAlign.Start,
-                    color = LocalCustomColorsPalette.current.textColor
+                    color = LocalCustomColorsPalette.current.textColor,
+                    style=MaterialTheme.typography.bodyLarge
                 )
             }
         )
@@ -223,7 +217,7 @@ fun AccountCardWithCheckbox(
                     .padding(10.dp)
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
-                fontSize = 22.sp,
+                style=MaterialTheme.typography.headlineSmall,
                 color = LocalCustomColorsPalette.current.textColor
             )
             Spacer(modifier = Modifier.height(12.dp)) // Espacio entre el texto y el botón
@@ -233,8 +227,7 @@ fun AccountCardWithCheckbox(
                     .padding(10.dp)
                     .weight(0.4f),
                 textAlign = TextAlign.End,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
+                style=MaterialTheme.typography.headlineSmall
             )
         }
         Spacer(modifier = Modifier.height(8.dp)) // Espacio entre el texto y el botón
@@ -250,7 +243,7 @@ fun AccountCardWithCheckbox(
                     .padding(10.dp)
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 color = LocalCustomColorsPalette.current.textColor
             )
             Checkbox(

@@ -86,9 +86,9 @@ fun BarChartScreen(
             YearSelector(barChartViewModel)
         }
 
-        HeadSetting(title = stringResource(id = R.string.alloption), 20)
+        HeadSetting(title = stringResource(id = R.string.alloption), MaterialTheme.typography.titleMedium)
         BarChart(context, data,isDarkTheme)
-        HeadSetting(title = stringResource(id = R.string.result), 20)
+        HeadSetting(title = stringResource(id = R.string.result), MaterialTheme.typography.titleLarge)
         BarChartResult(context, data,isDarkTheme)
         Table(accountViewModel,data)
     }
