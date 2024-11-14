@@ -44,22 +44,23 @@ fun AdmobBanner() {
 
             AdView(context).apply {
                 setAdSize(size)
-                adUnitId ="ca-app-pub-5972269460585117~8243512982"//ca-app-pub-3940256099942544/6300978111"
+                adUnitId ="ca-app-pub-5972269460585117/2830069049"
+
                 loadAd(AdRequest.Builder().build())
                 this.adListener = object : AdListener() {
                     override fun onAdClicked() {
-                        Log.d(TAG, "onAdClicked: ")
+                        Log.d("admob", "onAdClicked: ")
                         // Code to be executed when the user clicks on an ad.
                     }
 
                     override fun onAdClosed() {
-                        Log.d(TAG, "onAdClosed: ")
+                        Log.d("admob", "onAdClosed: ")
                         // Code to be executed when the user is about to return
                         // to the app after tapping on an ad.
                     }
 
                     override fun onAdFailedToLoad(adError: LoadAdError) {
-                        Log.d(TAG, "onAdFailedToLoad: $adError")
+                        Log.d("admob", "onAdFailedToLoad: $adError")
                         // Code to be executed when an ad request fails.
                     }
 
@@ -69,12 +70,12 @@ fun AdmobBanner() {
                     }
 
                     override fun onAdLoaded() {
-                        Log.d(TAG, "onAdLoaded: ")
+                        Log.d("admob", "onAdLoaded: ")
                         // Code to be executed when an ad finishes loading.
                     }
 
                     override fun onAdOpened() {
-                        Log.d(TAG, "onAdOpened: ")
+                        Log.d("admob", "onAdOpened: ")
                         // Code to be executed when an ad opens an overlay that
                         // covers the screen.
                     }

@@ -51,20 +51,11 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
             .padding(5.dp)
     ) {
         if (!isExpanded) {
-            // Título
-            Text(
-                text = stringResource(id = R.string.selectcurrencyoption),
-                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_small).toSp() },
-                color = LocalCustomColorsPalette.current.textColor,
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+
 
             // Botón para expandir/colapsar la lista de divisas
             ModelButton(
-                text = stringResource(id = R.string.changeCurrency),
+                text = stringResource(id = R.string.selectcurrencyoption),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(),
                 onClickButton = { accountsViewModel.onExpandedChange(true) }
