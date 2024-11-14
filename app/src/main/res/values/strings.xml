@@ -9,7 +9,7 @@
     <string name="changeFormat">Change Format</string>
     <string name="changeCurrency">Change Currency</string>
     <string name="changeformattext">Only change the currency format.</string>
-    <string name="changecurrencytext">Change the format and entries to the selected currency.</string>
+
     <string name="backButton">Back</string>
     <string name="enterName">Enter your name</string>
     <string name="repeatpassword">Repeat your password</string>
@@ -181,7 +181,9 @@
     <string name="developer">Developer: Agustin Carnerero Peña</string>
 
     <string name="currencydata">Currency Data</string>
+    <string name="changecurrencytext">Change the currency format and exchange rate</string>
 
+    <string name="selectcurrencyoption">Select currrency</string>
     <string name="menuicons">Side menu icons</string>
     <string name="iconstheme">Setting theme icons</string>
     <string name="attributionicon"> made by </string>

@@ -51,7 +51,7 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        HeadSetting(title = stringResource(id = R.string.changeCurrency),MaterialTheme.typography.headlineMedium )
+        HeadSetting(title = stringResource(id = R.string.changecurrency),MaterialTheme.typography.headlineMedium )
         CurrencySelector(accountsViewModel)
         HeadSetting(title = stringResource(id = R.string.changeformattext),MaterialTheme.typography.headlineSmall )
         ModelButton(text = stringResource(id = R.string.changeFormat),

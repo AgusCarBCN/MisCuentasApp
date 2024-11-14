@@ -6,7 +6,7 @@
 
     <!--Login -->
     <string name="changeformattext">Cambia solo el formato de la divisa.</string>
-    <string name="changecurrencytext">Cambia el formato y las entradas a la divisa seleccionada.</string>
+    <string name="changecurrencytext">Cambia el formato y tipo de cambio</string>
     <string name="changeFormat">Cambiar formato</string>
     <string name="changeCurrency">Cambiar divisa</string>
     <string name="loginButton">Inicio de sesion</string>
@@ -114,9 +114,12 @@
     <string name="desdelete_an_account">Borra una cuenta con todos sus registros.</string>
     <string name="desdelete_all">Borra todas las cuentas y todos sus registros dentro.</string>
     <string name="desadd_an_account">Añade una nueva cuenta a la aplicación</string>
-    <string name="changecurrency">Cambia la divisa.</string>
+    <string name="changecurrency">Cambia de divisa.</string>
+
     <string name="deschangecurrency">Cambia la divisa de tus cuentas.</string>
     <string name="email">agusticar@gmail.com</string>
+    <string name="selectcurrencyoption">Selecciona divisa</string>
+
     <!--Profile-->
     <string name="change">Cambiar</string>
     <string name="name">Nombre</string>
