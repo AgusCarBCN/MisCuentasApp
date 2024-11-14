@@ -85,7 +85,7 @@ fun NewAmount(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconAnimated(iconResource = iconResource, sizeIcon = 120, initColor, targetColor)
-        HeadSetting(title = stringResource(id = titleResource), MaterialTheme.typography.titleLarge
+        HeadSetting(title = stringResource(id = titleResource), androidx.compose.material3.MaterialTheme.typography.headlineMedium
         )
         TextFieldComponent(
             modifier = Modifier.width(320.dp),

@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
@@ -54,10 +51,9 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-
+        HeadSetting(title = stringResource(id = R.string.changeCurrency),MaterialTheme.typography.headlineMedium )
         CurrencySelector(accountsViewModel)
-
-        HeadSetting(title = stringResource(id = R.string.changeformattext), MaterialTheme.typography.titleMedium)
+        HeadSetting(title = stringResource(id = R.string.changeformattext),MaterialTheme.typography.headlineSmall )
         ModelButton(text = stringResource(id = R.string.changeFormat),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
@@ -69,7 +65,7 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
                 }
             }
         )
-        HeadSetting(title = stringResource(id = R.string.changecurrencytext), MaterialTheme.typography.titleMedium)
+        HeadSetting(title = stringResource(id = R.string.changecurrencytext), MaterialTheme.typography.headlineSmall)
         ModelButton(text = stringResource(id = R.string.changeCurrency),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
