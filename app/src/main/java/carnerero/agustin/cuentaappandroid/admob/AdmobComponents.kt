@@ -6,17 +6,12 @@ import android.util.DisplayMetrics
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.window.layout.WindowMetricsCalculator
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -49,7 +44,7 @@ fun AdmobBanner() {
 
             AdView(context).apply {
                 setAdSize(size)
-                adUnitId = "ca-app-pub-3940256099942544/6300978111"
+                adUnitId ="ca-app-pub-5972269460585117~8243512982"//ca-app-pub-3940256099942544/6300978111"
                 loadAd(AdRequest.Builder().build())
                 this.adListener = object : AdListener() {
                     override fun onAdClicked() {

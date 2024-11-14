@@ -99,7 +99,6 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.userName,
             onNameTextFieldChanged = { createViewModel.onUserNameChanged(it) },
             type = BoardType.TEXT,
-            sizeFontButton = R.dimen.text_button_large,
             enableUserNameButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -116,7 +115,6 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.name,
             onNameTextFieldChanged = { createViewModel.onNameChanged(it) },
             type = BoardType.TEXT,
-            sizeFontButton = R.dimen.text_button_large,
             enableNameButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -132,7 +130,6 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
             R.string.password,
             onNameTextFieldChanged = { createViewModel.onPasswordChanged(it) },
             type = BoardType.PASSWORD,
-            sizeFontButton = R.dimen.text_button_large,
             enablePasswordButton,
             onChangeButtonClick = {
                 scope.launch {
@@ -156,7 +153,6 @@ fun NewInputComponent(
     label:Int,
     onNameTextFieldChanged: (String) -> Unit,
     type: BoardType,
-    sizeFontButton: Int,
     enableInputButton: Boolean,
     onChangeButtonClick: () -> Unit,
     isPassword: Boolean = false

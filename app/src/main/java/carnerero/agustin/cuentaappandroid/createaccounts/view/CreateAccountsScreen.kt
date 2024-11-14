@@ -17,15 +17,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.components.BoardType
@@ -65,7 +61,6 @@ fun CreateAccountsComponent(
         val accountName by accountsViewModel.name.observeAsState("")
         val accountBalance by accountsViewModel.amount.observeAsState("")
         val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(true)
-
         val newAccountCreated = message(resource = R.string.newaccountcreated)
         val errorAccountCreated = message(resource = R.string.erroraccountcreated)
         val errorWritingDataStore= message(resource = R.string.errorwritingdatastore)
@@ -170,7 +165,7 @@ fun CreateAccountsComponent(
             if (!isCurrencyExpanded) {
                 if (enableCurrencySelector) {
                     ModelButton(text = stringResource(id = R.string.confirmButton),
-                      MaterialTheme.typography.bodyLarge,
+                      MaterialTheme.typography.labelLarge,
                         modifier = Modifier.width(360.dp),
                         true,
                         onClickButton = {
@@ -193,7 +188,7 @@ fun CreateAccountsComponent(
                     )
                 }
                 ModelButton(text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.bodyLarge,
+                    MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     true,
                     onClickButton = {

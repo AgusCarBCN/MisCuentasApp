@@ -55,9 +55,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.about.AboutApp
 import carnerero.agustin.cuentaappandroid.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.about.SendEmail
@@ -99,7 +97,6 @@ import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
-import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -263,9 +260,9 @@ fun MainScreen(
 
                         IconOptions.EXIT -> {
                             // Obtén el contexto actual de la aplicación
-                            val context = LocalContext.current
+                            val localContext = LocalContext.current
                             // Verifica si el contexto es una actividad
-                            val activity = context as? Activity
+                            val activity = localContext as? Activity
 
                             ModelDialog(R.string.exitapp,
                                 R.string.exitinfo,
