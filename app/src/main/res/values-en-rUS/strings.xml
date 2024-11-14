@@ -359,5 +359,7 @@
     <string name="accountchecked">Checked account</string>
     <string name="accountunchecked">Unchecked account</string>
     <string name="selectaccounts">Select accounts</string>
+    <string name="categorychecked">Checked</string>
+    <string name="categoryunchecked">Unchecked</string>
     <string name="expenselimitOkAccount">Tus gastos están controlados en esta cuenta</string>
 </resources>

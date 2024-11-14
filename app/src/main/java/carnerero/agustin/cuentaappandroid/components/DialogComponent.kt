@@ -38,12 +38,11 @@ fun ModelDialog(
             onDismissRequest = { onDismiss() },
 
             title={Text(stringResource(id = title),
-                fontSize= with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_small).toSp() },
-                fontWeight = FontWeight.Bold,
-                color = LocalCustomColorsPalette.current.textColor)},
+                style=MaterialTheme.typography.titleMedium,
+                color = LocalCustomColorsPalette.current.textHeadColor)},
 
             text={Text(stringResource(id = message),
-                fontSize=with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_medium).toSp() },
+                style=MaterialTheme.typography.bodySmall,
                 color = LocalCustomColorsPalette.current.textColor)}
             ,
             confirmButton = {
@@ -89,7 +88,7 @@ fun NotificationDialog(
             }                           ,
 
             text={Text(stringResource(id = R.string.notification_required),
-                fontSize=with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_small).toSp() },
+                style=MaterialTheme.typography.bodySmall,
                 color = LocalCustomColorsPalette.current.textColor)}
             ,
             confirmButton = {
@@ -131,8 +130,8 @@ fun ModelDialogWithTextField(
             title = {
                 Text(
                     name,
-                    color = LocalCustomColorsPalette.current.textColor,
-                    style=MaterialTheme.typography.titleMedium
+                    color = LocalCustomColorsPalette.current.textHeadColor,
+                    style=MaterialTheme.typography.titleSmall
                 )
             },
             text = {
@@ -152,8 +151,6 @@ fun ModelDialogWithTextField(
                         BoardType.DECIMAL,
                         false
                     )
-
-
                         DatePickerSearch(
                             modifier = Modifier
                                 .width(240.dp)

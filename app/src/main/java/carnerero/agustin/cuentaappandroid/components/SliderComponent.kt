@@ -218,7 +218,6 @@ fun AccountBudgetItemControl(
 ) {
 
     val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
-
     val limitExpenseText=stringResource(id = R.string.limitexpense)
     val currentExpense=stringResource(id = R.string.currentexpense)
     val scope = rememberCoroutineScope()

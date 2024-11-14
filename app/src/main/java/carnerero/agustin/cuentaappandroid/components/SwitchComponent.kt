@@ -104,10 +104,7 @@ fun RowComponent(title: String,
                 .size(24.dp)
                 .padding(end=10.dp),
             tint = LocalCustomColorsPalette.current.textColor
-
-
         )
-
         Column(modifier = Modifier.weight(0.90f)) {
             Text(
                 text = title,
@@ -121,10 +118,7 @@ fun RowComponent(title: String,
                 style=MaterialTheme.typography.bodyMedium
             )
         }
-
     }
-
-
 }
 @Composable
 fun HeadSetting(title: String,textStyle: TextStyle) {

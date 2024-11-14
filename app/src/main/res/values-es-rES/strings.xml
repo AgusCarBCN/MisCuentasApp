@@ -22,15 +22,12 @@
     <string name="goodmornig">Buenos días</string>
     <string name="goodafternoon">Buenas tardes</string>
     <string name="goodevening">Buenas noches</string>
-
     <!--Home-->
     <string name="seeincome">Ver ingresos</string>
     <string name="seeexpense">Ver gastos</string>
     <string name="seeall">Ver ingresos y gastos</string>
     <string name="yourentries">Tus registros</string>
     <!--On Boarding-->
-
-
     <string name="title0">Bienvenido a misCuentasApp</string>
     <string name="title1">Crea tu perfil</string>
     <string name="title2">Crea tus cuentas</string>
@@ -58,7 +55,6 @@
     <!---Icons-->
     <string name="visibily">Contraseña visible</string>
     <string name="visibilyoff">Contraseña no visible</string>
-
     <!--Option side menu-->
     <string name="mainmenu">Menu principal de navegación</string>
     <string name="management">Gestion de finanzas</string>
@@ -81,7 +77,6 @@
     <string name="createaccountsmsg">Puedes crear tus cuentas ahora o mas tarde.</string>
     <string name="selectcurrency">Escoje una divisa para tus cuentas.</string>
     <string name="selectedcurrency">Divisa seleccionada: </string>
-
     <!--Ajustes-->
     <string name="limitmaxexpense">Establece un limite máximo de gasto total</string>
     <string name="expensemanagement">Controla tus gastos</string>
@@ -170,7 +165,6 @@
     <string name="abouttitle">Acerca de</string>
     <string name="greeting">Hola,</string>
     <!--Página de acerca de-->
-
     <string name="currencydata">Datos de divisas</string>
     <string name="developer">Desarrollador: Agustin Carnerero Peña</string>
     <string name="atributions">Atribuciones</string>
@@ -179,7 +173,6 @@
     <string name="iconsuxwing">Iconos de Uxwing</string>
     <string name="iconflags">Iconos de banderas - Flagpedia.net</string>
     <string name="api">Api de divisas-Exchangerate-API</string>
-
     <string name="menuicons">Iconos de menu lateral</string>
     <string name="iconstheme">Iconos de configuracion de tema</string>
     <string name="iconsAttribution">Iconos de rango de fecha</string>
@@ -189,7 +182,7 @@
     <string name="description">
     \t\t\tMis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 
-    Además, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
+    \t\t\tAdemás, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
 
     Simplifica tu gestión financiera con Mis cuentas y mantén un control preciso de tus transacciones, todo en un solo lugar.
 </string>
@@ -361,5 +354,6 @@
     <string name="accountchecked">Cuenta seleccionada</string>
     <string name="accountunchecked">Cuenta no seleccionada</string>
     <string name="selectaccounts">Selecciona cuentas</string>
-
+    <string name="categorychecked">Seleccionada</string>
+    <string name="categoryunchecked">No seleccionada</string>
 </resources>

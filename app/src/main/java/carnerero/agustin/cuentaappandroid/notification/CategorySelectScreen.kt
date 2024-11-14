@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,17 +25,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
+import carnerero.agustin.cuentaappandroid.components.CategoryCardWithCheckbox
+import carnerero.agustin.cuentaappandroid.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.components.ModelDialogWithTextField
 import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
@@ -64,28 +63,47 @@ fun EntryCategoryList(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        HeadSetting(title = stringResource(id = R.string.selectcategories),
+            androidx.compose.material3.MaterialTheme.typography.headlineSmall)
         // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f) // Permite que la columna ocupe el espacio disponible
-                .padding(bottom = 16.dp) // Espacio en la parte inferior
+                .padding(bottom = 16.dp), // Espacio en la parte inferior
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(listOfCategories) { category ->
-                ItemCategoryCheck(
+                CategoryCardWithCheckbox(
                     category,
                     categoriesViewModel,
                     searchViewModel,
                     onCheckBoxChange = { checked ->
-                        categoriesViewModel.updateCheckedCategory(category.id,
-                            checked)
-                        if(!category.isChecked){
-                        categoriesViewModel.onEnableDialogChange(true)
-                            }
+                        categoriesViewModel.updateCheckedCategory(
+                            category.id,
+                            checked
+                        )
+                        if (!category.isChecked) {
+                            categoriesViewModel.onEnableDialogChange(true)
+                        }
                     }
 
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+                /* ItemCategoryCheck(
+                     category,
+                     categoriesViewModel,
+                     searchViewModel,
+                     onCheckBoxChange = { checked ->
+                         categoriesViewModel.updateCheckedCategory(category.id,
+                             checked)
+                         if(!category.isChecked){
+                         categoriesViewModel.onEnableDialogChange(true)
+                             }
+                     }
+
+                 )*/
             }
         }
 
@@ -95,10 +113,11 @@ fun EntryCategoryList(
 
 
 @Composable
-fun ItemCategoryCheck(category: Category,
-                      categoriesViewModel: CategoriesViewModel,
-                      searchViewModel: SearchViewModel,
-                      onCheckBoxChange: (Boolean) -> Unit
+fun ItemCategoryCheck(
+    category: Category,
+    categoriesViewModel: CategoriesViewModel,
+    searchViewModel: SearchViewModel,
+    onCheckBoxChange: (Boolean) -> Unit
 ) {
     val limitMax by categoriesViewModel.limitMax.observeAsState(category.limitMax.toString())
     val toDate by searchViewModel.selectedToDate.observeAsState(category.fromDate)
@@ -106,7 +125,7 @@ fun ItemCategoryCheck(category: Category,
     val showDialog by categoriesViewModel.enableDialog.observeAsState(false)
     val scope = rememberCoroutineScope()
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
-    val categoryName= stringResource(id = category.nameResource)
+    val categoryName = stringResource(id = category.nameResource)
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -141,9 +160,9 @@ fun ItemCategoryCheck(category: Category,
                     .padding(horizontal = 4.dp),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge,
 
-            )
+                )
 
             Checkbox(
                 modifier = Modifier.weight(0.2f), // Ajuste proporcional para el checkbox
@@ -159,7 +178,7 @@ fun ItemCategoryCheck(category: Category,
         }
         if (category.isChecked) {
 
-           ModelDialogWithTextField(
+            ModelDialogWithTextField(
                 categoryName,
                 showDialog,
                 limitMax,
@@ -173,7 +192,7 @@ fun ItemCategoryCheck(category: Category,
                                 )
                             )
                         }
-                        categoriesViewModel.updateCheckedCategory(category.id,false)
+                        categoriesViewModel.updateCheckedCategory(category.id, false)
                     } else {
                         categoriesViewModel.upDateLimitMaxCategory(
                             category.id,
@@ -183,16 +202,15 @@ fun ItemCategoryCheck(category: Category,
                         categoriesViewModel.upDateCategoryDates(category.id, fromDate, toDate)
                     }
                 },
-                onDismiss = { categoriesViewModel.onEnableDialogChange(false)
-                              categoriesViewModel.updateCheckedCategory(category.id,false)
-                            }
-            ,searchViewModel)
-
+                onDismiss = {
+                    categoriesViewModel.onEnableDialogChange(false)
+                    categoriesViewModel.updateCheckedCategory(category.id, false)
+                }, searchViewModel)
 
 
         }
     }
- }
+}
 
 
 

@@ -118,6 +118,7 @@ fun AccountSelector(
                         text = balanceFormatted,
                         color = LocalCustomColorsPalette.current.incomeColor,
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

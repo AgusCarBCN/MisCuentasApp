@@ -2,9 +2,12 @@ package carnerero.agustin.cuentaappandroid.components
 
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -36,7 +40,9 @@ import coil.compose.rememberAsyncImagePainter
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Account
+import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -89,7 +95,7 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
                 .padding(top = 12.dp)
                 .fillMaxWidth(),
             textAlign = TextAlign.Center,
-            style=MaterialTheme.typography.titleLarge
+            style=MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(10.dp))
         TextButton(
@@ -177,6 +183,116 @@ fun AccountCard(
         )
     }
 }
+
+@Composable
+fun CategoryCardWithCheckbox(category: Category,
+                             categoriesViewModel: CategoriesViewModel,
+                             searchViewModel: SearchViewModel,
+                             onCheckBoxChange: (Boolean) -> Unit
+                             )
+{
+    val toDate by searchViewModel.selectedToDate.observeAsState(category.fromDate)
+    val fromDate by searchViewModel.selectedFromDate.observeAsState(category.toDate)
+    val showDialog by categoriesViewModel.enableDialog.observeAsState(false)
+    val limitMax by categoriesViewModel.limitMax.observeAsState(category.limitMax.toString())
+    val messageDateError = stringResource(id = R.string.datefromoverdateto)
+    val scope = rememberCoroutineScope()
+    ElevatedCard(
+
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        colors = CardColors(
+            containerColor = LocalCustomColorsPalette.current.drawerColor,
+            contentColor = LocalCustomColorsPalette.current.incomeColor,
+            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
+            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+        ),   modifier = Modifier
+            .size(width = 360.dp, height = 80.dp)
+
+    ){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, end = 10.dp, start = 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween, // Cambia a SpaceBetween
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Contenedor para el icono y el texto para que se agrupen en un extremo
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = category.iconResource),
+                    contentDescription = "category",
+                    modifier = Modifier
+                        .size(42.dp)
+                        .padding(end = 10.dp),
+                    tint = LocalCustomColorsPalette.current.textHeadColor
+                )
+                Column {
+                    Text(
+                        text = stringResource(id = category.nameResource),
+                        modifier = Modifier.padding(bottom = 5.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = LocalCustomColorsPalette.current.textColor
+                    )
+                    Text(
+                        text = if (category.isChecked) stringResource(id = R.string.categorychecked)
+                        else stringResource(id = R.string.categoryunchecked),
+                        color = LocalCustomColorsPalette.current.textColor,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+
+            // Checkbox al extremo opuesto
+            Checkbox(
+                checked = category.isChecked,
+                onCheckedChange = onCheckBoxChange,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = LocalCustomColorsPalette.current.drawerColor,
+                    uncheckedColor = LocalCustomColorsPalette.current.textColor,
+                    checkmarkColor = LocalCustomColorsPalette.current.incomeColor
+                )
+            )
+        }
+
+        if (category.isChecked) {
+                ModelDialogWithTextField(
+                    stringResource(category.nameResource),
+                    showDialog,
+                    limitMax,
+                    onValueChange = {categoriesViewModel.onChangeLimitMax(it) },
+                    onConfirm = {
+                        if (!searchViewModel.validateDates()) {
+                            scope.launch(Dispatchers.Main) {
+                                SnackBarController.sendEvent(
+                                    event = SnackBarEvent(
+                                        messageDateError
+                                    )
+                                )
+                            }
+                            categoriesViewModel.updateCheckedCategory(category.id,false)
+                        } else {
+                            categoriesViewModel.upDateLimitMaxCategory(
+                                category.id,
+                                limitMax.toFloatOrNull() ?: 0f
+                            )
+                            categoriesViewModel.onEnableDialogChange(false)
+                            categoriesViewModel.upDateCategoryDates(category.id, fromDate, toDate)
+                        }
+                    },
+                    onDismiss = { categoriesViewModel.onEnableDialogChange(false)
+                        categoriesViewModel.updateCheckedCategory(category.id,false) }
+                    ,searchViewModel)
+
+            }
+        }
+    }
+
+
+
 
 @Composable
 fun AccountCardWithCheckbox(

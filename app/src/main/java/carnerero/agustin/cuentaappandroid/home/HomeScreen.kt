@@ -85,7 +85,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.width(5.dp))
             HeadSetting(title = stringResource(id = R.string.youraccounts),
-                MaterialTheme.typography.headlineSmall)
+                MaterialTheme.typography.headlineMedium)
 
             // Mostrar las cuentas si están disponibles
             LazyColumn(

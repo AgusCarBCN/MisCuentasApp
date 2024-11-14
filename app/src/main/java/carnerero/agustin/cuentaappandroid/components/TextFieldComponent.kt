@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -45,7 +46,7 @@ fun TextFieldComponent(
             onTextChange(it)
 
         },
-        label = { Text(text = label) },
+        label = { Text(text = label,style= MaterialTheme.typography.labelSmall) },
         shape = RoundedCornerShape(10.dp),
         maxLines = 1,
         singleLine = true, // Limita la altura de la caja de entrada a una sola línea

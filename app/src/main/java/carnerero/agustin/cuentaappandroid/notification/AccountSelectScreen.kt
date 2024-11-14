@@ -51,6 +51,7 @@ fun EntryAccountList(
                 .fillMaxWidth()
                 .weight(1f) // Permite que la columna ocupe el espacio disponible
                 .padding(bottom = 16.dp), // Espacio en la parte inferior
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(listOfAccounts) { account ->
