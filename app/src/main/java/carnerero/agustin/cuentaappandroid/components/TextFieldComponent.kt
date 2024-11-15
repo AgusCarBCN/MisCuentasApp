@@ -78,12 +78,12 @@ fun TextFieldComponent(
                     if (!visiblePasswordIcon) {
                         Icon(
                             painter = painterResource(id = R.drawable.visibility),
-                            contentDescription = stringResource(id = R.string.show_password) // Descripción para mostrar la contraseña
+                            contentDescription = stringResource(id = R.string.showpassword) // Descripción para mostrar la contraseña
                         )
                     } else {
                         Icon(
                             painter = painterResource(id = R.drawable.visibility_off),
-                            contentDescription = stringResource(id = R.string.hide_password) // Descripción para ocultar la contraseña
+                            contentDescription = stringResource(id = R.string.hidepassword) // Descripción para ocultar la contraseña
                         )
                     }
                 }

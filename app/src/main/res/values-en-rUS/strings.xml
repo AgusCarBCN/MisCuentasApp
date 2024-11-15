@@ -372,7 +372,10 @@
     <string name="profileimage">Profile image</string>
     <string name="ischecked"> is checked</string>
     <string name="isunchecked"> is unchecked</string>
+    <string name="selected">selected</string>
     <string name="showpassword">Show password</string>
     <string name="hidepassword">Hide password</string>
+    <string name="item">Item for</string>
+    <string name="itemicon">Item category icon of</string>
 
 </resources>

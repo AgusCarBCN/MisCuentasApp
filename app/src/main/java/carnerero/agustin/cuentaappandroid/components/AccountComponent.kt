@@ -27,6 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,6 +51,8 @@ fun AccountSelector(
     // Observa el estado de la lista de cuentas y la moneda
     val accounts by accountViewModel.listOfAccounts.observeAsState(emptyList())
     val currencyCodeSelected by accountViewModel.currencyCodeSelected.observeAsState("USD")
+    val selected= stringResource(id = R.string.select)
+    val balance= stringResource(id = R.string.fromamount)
     // Inicializamos el estado del VerticalPager basado en la cantidad de cuentas
     val pagerState = rememberPagerState(pageCount = { accounts.size })
     val isDraggingUp by remember { derivedStateOf { pagerState.currentPage == 0 || pagerState.targetPage > pagerState.currentPage } }
@@ -103,7 +108,8 @@ fun AccountSelector(
                 }
                 val balanceFormatted = Utils.numberFormat(accounts[page].balance, currencyCodeSelected)
                 Row(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -122,6 +128,7 @@ fun AccountSelector(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
+
             }
         }
     }

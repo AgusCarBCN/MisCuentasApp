@@ -367,7 +367,9 @@
     <string name="ischecked">seleccionado</string>
     <string name="isunchecked">no seleccionado</string>
     <string name="profileimage">Imagen de perfil</string>
-    <string name="show_password">Muestra contraseña</string>
-    <string name="hide_password">Esconde contraseña</string>
-
+    <string name="showpassword">Muestra contraseña</string>
+    <string name="hidepassword">Esconde contraseña</string>
+    <string name="item">Elemento para</string>
+    <string name="itemicon">Icono de elemento de categoría de</string>
+    <string name="selected">seleccionada</string>
 </resources>

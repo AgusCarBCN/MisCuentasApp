@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -203,7 +204,7 @@ private fun ClickableTextLink(
 ) {
     val annotatedText = buildAnnotatedString {
         pushStringAnnotation(tag = "URL", annotation = url)
-        withStyle(style = SpanStyle(color = LocalCustomColorsPalette.current.incomeColor, textDecoration = TextDecoration.Underline)) {
+        withStyle(style = SpanStyle(color= LocalCustomColorsPalette.current.link, textDecoration = TextDecoration.Underline)) {
             append(text)
         }
         pop()

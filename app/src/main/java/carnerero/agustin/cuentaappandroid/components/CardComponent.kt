@@ -203,7 +203,8 @@ fun CategoryCardWithCheckbox(category: Category,
     val categoryName= stringResource(category.nameResource)
     val checked=stringResource(R.string.ischecked)
     val unchecked = stringResource(R.string.isunchecked)
-
+    val item= stringResource(id = R.string.item)
+    val iconItem= stringResource(id = R.string.itemicon)
 
     ElevatedCard(
 
@@ -224,8 +225,8 @@ fun CategoryCardWithCheckbox(category: Category,
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 10.dp, start = 10.dp)
                 .semantics {
-                contentDescription ="item for $categoryName"
-            },
+                    contentDescription = "$item $categoryName"
+                },
             horizontalArrangement = Arrangement.SpaceBetween, // Cambia a SpaceBetween
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -235,7 +236,7 @@ fun CategoryCardWithCheckbox(category: Category,
             ) {
                 Icon(
                     painter = painterResource(id = category.iconResource),
-                    contentDescription = "icon list of $categoryName",
+                    contentDescription = "$iconItem $categoryName",
                     modifier = Modifier
                         .size(42.dp)
                         .padding(end = 10.dp),

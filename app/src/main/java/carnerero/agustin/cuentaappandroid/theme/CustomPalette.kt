@@ -59,8 +59,8 @@ data class CustomColorsPalette(
     val numberCalColor:Color = Color.Unspecified,
     val progressBar50:Color = Color.Unspecified,
     val progressBar80:Color = Color.Unspecified,
-    val progressBar100:Color = Color.Unspecified
-
+    val progressBar100:Color = Color.Unspecified,
+    val link:Color=Color.Unspecified
     )
 
 val LightCustomColorsPalette = CustomColorsPalette(
@@ -115,7 +115,8 @@ val LightCustomColorsPalette = CustomColorsPalette(
     textTargetOperatorCalc = White,
     progressBar50 = greenDark,
     progressBar80 = SoftPeach,
-    progressBar100 = redDark
+    progressBar100 = redDark,
+    link= DeepBlue
 
 
 )
@@ -171,7 +172,8 @@ val DarkCustomColorsPalette = CustomColorsPalette(
     textTargetOperatorCalc = White,
     progressBar50 = greenPistachio,
     progressBar80 = BurntPeach,
-    progressBar100 = coralRed
+    progressBar100 = coralRed,
+    link= BlueLighter
 )
 
 val LocalCustomColorsPalette = staticCompositionLocalOf { CustomColorsPalette() }
