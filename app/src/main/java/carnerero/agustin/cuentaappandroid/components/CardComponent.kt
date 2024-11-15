@@ -33,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
@@ -53,6 +55,7 @@ import kotlinx.coroutines.launch
 @Composable
 
 fun UserImage(uri: Uri, size: Int) {
+    val profileImage= stringResource(id = R.string.profileimage)
     Card(
         modifier = Modifier
             .size(size.dp)
@@ -64,7 +67,7 @@ fun UserImage(uri: Uri, size: Int) {
         Image(
             painter = if (uri == Uri.EMPTY) painterResource(id = R.drawable.contabilidad)
             else rememberAsyncImagePainter(uri), // Carga la imagen desde el Uri ,
-            contentDescription = "Profile Image",
+            contentDescription = profileImage,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
@@ -197,6 +200,11 @@ fun CategoryCardWithCheckbox(category: Category,
     val limitMax by categoriesViewModel.limitMax.observeAsState(category.limitMax.toString())
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     val scope = rememberCoroutineScope()
+    val categoryName= stringResource(category.nameResource)
+    val checked=stringResource(R.string.ischecked)
+    val unchecked = stringResource(R.string.isunchecked)
+
+
     ElevatedCard(
 
         elevation = CardDefaults.cardElevation(
@@ -214,7 +222,10 @@ fun CategoryCardWithCheckbox(category: Category,
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, end = 10.dp, start = 10.dp),
+                .padding(top = 10.dp, end = 10.dp, start = 10.dp)
+                .semantics {
+                contentDescription ="item for $categoryName"
+            },
             horizontalArrangement = Arrangement.SpaceBetween, // Cambia a SpaceBetween
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -224,7 +235,7 @@ fun CategoryCardWithCheckbox(category: Category,
             ) {
                 Icon(
                     painter = painterResource(id = category.iconResource),
-                    contentDescription = "category",
+                    contentDescription = "icon list of $categoryName",
                     modifier = Modifier
                         .size(42.dp)
                         .padding(end = 10.dp),
@@ -247,7 +258,10 @@ fun CategoryCardWithCheckbox(category: Category,
             }
 
             // Checkbox al extremo opuesto
-            Checkbox(
+            Checkbox(modifier = Modifier.semantics {
+                // Descripción única del Checkbox
+                contentDescription = "${category.nameResource}: ${if (category.isChecked) checked else unchecked}"
+            },
                 checked = category.isChecked,
                 onCheckedChange = onCheckBoxChange,
                 colors = CheckboxDefaults.colors(

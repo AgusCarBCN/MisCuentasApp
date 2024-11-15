@@ -72,21 +72,20 @@ fun TextFieldComponent(
             unfocusedTrailingIconColor = LocalCustomColorsPalette.current.textColor,
             focusedTrailingIconColor = LocalCustomColorsPalette.current.textColor),
 
-
         trailingIcon = {
-            if(type== BoardType.PASSWORD){
-                if(!visiblePasswordIcon) {
-                    Icon(painter = painterResource (id= R.drawable.visibility), contentDescription = stringResource(
-                        id = R.string.visibily
-                    ) )
-
-                }else {
-                    Icon(
-                        painter = painterResource(id = R.drawable.visibility_off),
-                        contentDescription = stringResource(id = R.string.visibilyoff)
-                    )
-                }
-                IconButton(onClick = {visiblePasswordIcon=!visiblePasswordIcon}) {
+            if (type == BoardType.PASSWORD) {
+                IconButton(onClick = { visiblePasswordIcon = !visiblePasswordIcon }) {
+                    if (!visiblePasswordIcon) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.visibility),
+                            contentDescription = stringResource(id = R.string.show_password) // Descripción para mostrar la contraseña
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.visibility_off),
+                            contentDescription = stringResource(id = R.string.hide_password) // Descripción para ocultar la contraseña
+                        )
+                    }
                 }
             }
         }

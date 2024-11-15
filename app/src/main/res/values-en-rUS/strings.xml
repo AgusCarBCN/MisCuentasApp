@@ -367,5 +367,12 @@
     <!--contentDescription-->
     <string name="indicatorSelected">Selected indicator</string>
     <string name="indicatorNoSelected">Unselected indicator</string>
+    <string name="isenabled"> is enabled</string>
+    <string name="isdisabled"> is disabled</string>
+    <string name="profileimage">Profile image</string>
+    <string name="ischecked"> is checked</string>
+    <string name="isunchecked"> is unchecked</string>
+    <string name="showpassword">Show password</string>
+    <string name="hidepassword">Hide password</string>
 
 </resources>

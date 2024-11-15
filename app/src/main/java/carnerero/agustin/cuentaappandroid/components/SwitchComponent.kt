@@ -19,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +37,8 @@ fun SwitchComponent(title:String,
                     description:String,
                     isChecked:Boolean,
                     onClickSwitch: (Boolean) -> Unit) {
-
+    val isEnabled= stringResource(id = R.string.isenabled)
+    val isDisabled= stringResource(id = R.string.isdisabled)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,7 +56,18 @@ fun SwitchComponent(title:String,
                 color= LocalCustomColorsPalette.current.textColor)
 
         }
-        Switch(modifier = Modifier.weight(0.25f),
+        Switch(modifier = Modifier
+            .weight(0.25f)
+            .semantics {
+                // Agregamos un contentDescription dinámico
+                contentDescription = if (isChecked) {
+                    "$title $isEnabled"
+                } else {
+                    "$title $isDisabled"
+                }
+            }
+
+            ,
             checked = isChecked,
             onCheckedChange = {onClickSwitch(it)},
 
@@ -100,9 +115,10 @@ fun RowComponent(title: String,
         Icon(
             painter = painterResource(id = iconResource),
             contentDescription = title,
-            modifier = Modifier.weight(0.10f)
+            modifier = Modifier
+                .weight(0.10f)
                 .size(24.dp)
-                .padding(end=10.dp),
+                .padding(end = 10.dp),
             tint = LocalCustomColorsPalette.current.textColor
         )
         Column(modifier = Modifier.weight(0.90f)) {

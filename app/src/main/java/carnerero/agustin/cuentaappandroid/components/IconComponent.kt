@@ -23,13 +23,15 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun IconComponent(isPressed: Boolean, iconResource: Int, iconSize: Int) {
+fun IconComponent(isPressed: Boolean, label:String,iconResource: Int, iconSize: Int) {
     // Animación de escala para el punto seleccionado
     val scale = animateFloatAsState(
         targetValue = if (isPressed) 1.2f else 1f,
@@ -59,6 +61,10 @@ fun IconComponent(isPressed: Boolean, iconResource: Int, iconSize: Int) {
         modifier = Modifier
             .scale(scale.value)
             .size(iconSize.dp)
+            .semantics {
+                // Agregamos un contentDescription dinámico
+                contentDescription = label
+            }
     )
 }
 
@@ -69,7 +75,6 @@ fun IconAnimated(iconResource:Int,sizeIcon:Int,initColor:Color,targetColor: Colo
 
     val color = remember { Animatable(initColor) }
     val coroutineScope = rememberCoroutineScope()
-
 
     // Iniciamos una corrutina para animar el color de manera infinita
 
