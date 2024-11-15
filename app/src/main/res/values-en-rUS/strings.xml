@@ -364,4 +364,8 @@
     <string name="categorychecked">Checked</string>
     <string name="categoryunchecked">Unchecked</string>
     <string name="expenselimitOkAccount">Tus gastos están controlados en esta cuenta</string>
+    <!--contentDescription-->
+    <string name="indicatorSelected">Selected indicator</string>
+    <string name="indicatorNoSelected">Unselected indicator</string>
+
 </resources>

@@ -240,6 +240,8 @@ private fun CircleIndicator(
     selectedIndex: Int,
     modifier: Modifier = Modifier
 ) {
+    val indicatorSelected= stringResource(id = R.string.indicatorSelected)
+    val indicatorUnSelected= stringResource(id = R.string.indicatorNoSelected)
     Column(
         modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -274,7 +276,9 @@ private fun CircleIndicator(
                 Icon(
                     painter = painterResource (if(index==selectedIndex)R.drawable.indicatorselected
                     else R.drawable.circleindicator ),
-                    contentDescription = "indicator",
+                    contentDescription = if(index==selectedIndex)indicatorSelected
+                    else indicatorUnSelected
+                    ,
                     tint = indicatorColor,
                     modifier = Modifier
                         .scale(scale.value)

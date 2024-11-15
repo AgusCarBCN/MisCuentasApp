@@ -185,7 +185,7 @@
     <string name="description">
     \t\t\tMis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 
-    \t\t\tAdemás, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
+    Además, la aplicación incluye una práctica calculadora integrada, permitiéndote realizar cálculos de manera rápida y sencilla sin tener que salir de la aplicación.
 
     Simplifica tu gestión financiera con Mis cuentas y mantén un control preciso de tus transacciones, todo en un solo lugar.
 </string>
@@ -359,4 +359,8 @@
     <string name="selectaccounts">Selecciona cuentas</string>
     <string name="categorychecked">Seleccionada</string>
     <string name="categoryunchecked">No seleccionada</string>
+    <!--contentDescription-->
+    <string name="indicatorSelected">Indicador seleccionado</string>
+    <string name="indicatorNoSelected">Indicador no seleccionado</string>
+
 </resources>
