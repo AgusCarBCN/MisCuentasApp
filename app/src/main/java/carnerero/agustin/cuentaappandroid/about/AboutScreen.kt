@@ -77,8 +77,8 @@ fun AboutScreen(mainViewModel: MainViewModel) {
             description = stringResource(id = R.string.desemail),
             iconResource = R.drawable.email,
             onClick = { mainViewModel.selectScreen(IconOptions.EMAIL) })
-        RowComponent(title = stringResource(id = R.string.contactme),
-            description = stringResource(id = R.string.visitmygithub),
+        RowComponent(title = stringResource(id = R.string.visitmygithub),
+            description = stringResource(id = R.string.visitmygithubdes),
             iconResource = R.drawable.github,
             onClick = { visitMyGitHub(context) })
         RowComponent(title = stringResource(id = R.string.othersapp),

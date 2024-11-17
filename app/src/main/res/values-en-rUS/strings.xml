@@ -101,6 +101,7 @@
     <string name="desenableonboarding">Enable or disable onboarding</string>
     <string name="enablenotifications">Notifications</string>
     <string name="desenablenotifications">Enable or disable notifications on your expense tracker mobile app.</string>
+    <string name="visitmygithubdes">Explore my programming projects and collaborate on them</string>
 
     <string name="createbackup">Create backup</string>
     <string name="loadbackup">Load backup</string>

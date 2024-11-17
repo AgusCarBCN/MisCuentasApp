@@ -84,7 +84,7 @@
     <!--Settings-->
     <string name="accountscontrol">Select accounts</string>
     <string name="accountscontroldes">Enable or disable accounts to control total expenses</string>
-
+    <string name="visitmygithubdes">Explore my programming projects and collaborate on them</string>
     <string name="expenseoptions">Total expense control options</string>
     <string name="expenseoptionsdes">Select options to control all your total expenses within a time period</string>
     <string name="limitmaxexpense">Set a maximum total spending limit</string>
