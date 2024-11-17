@@ -1,9 +1,7 @@
 package carnerero.agustin.cuentaappandroid.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,19 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.SnackBarController
-import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Account
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import kotlin.math.abs
 
@@ -42,7 +38,8 @@ fun CategoryBudgetItemControl(
     val expensePercent= stringResource(id = R.string.percentexpense)
     // Estado para almacenar el total de gastos por categoría
     var expensesByCategory by remember { mutableDoubleStateOf(0.0) }
-
+    val categoryName = stringResource(category.nameResource)
+    val expenseControlText= stringResource(id = R.string.expenseControl)
     // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
     LaunchedEffect(category.id) {
         expensesByCategory = categoriesViewModel.sumOfExpensesByCategory(
@@ -73,7 +70,10 @@ fun CategoryBudgetItemControl(
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .width(320.dp),
+            .width(320.dp)
+            .semantics {
+                contentDescription = "$expenseControlText $categoryName"
+            },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -180,7 +180,7 @@ fun CategoryBudgetItemControl(
         val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
         val expensePercent= stringResource(id = R.string.percentexpense)
         val currentExpense = stringResource(id = R.string.currentexpense)
-
+        val expenseControlText= stringResource(id = R.string.expenseControl)
 
         // Estado para almacenar el total de gastos por categoría
         var expensesByAccount by remember { mutableDoubleStateOf(0.0) }
@@ -214,7 +214,10 @@ fun CategoryBudgetItemControl(
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription = "$expenseControlText ${account.name}"
+                }, .
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

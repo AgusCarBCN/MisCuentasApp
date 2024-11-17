@@ -382,6 +382,6 @@
     <string name="itemicon">Item category icon of</string>
     <string name="selected">selected</string>
     <string name="percentexpense">Spending percentage:</string>
-
+    <string name="expenseControl">Expense control of</string>
 </resources>
 

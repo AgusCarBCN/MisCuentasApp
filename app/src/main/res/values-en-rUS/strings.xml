@@ -378,5 +378,5 @@
     <string name="item">Item for</string>
     <string name="itemicon">Item category icon of</string>
     <string name="percentexpense">Spending percentage:</string>
-
+    <string name="expenseControl">Expense control of</string>
 </resources>

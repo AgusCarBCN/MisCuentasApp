@@ -370,6 +370,7 @@
     <string name="profileimage">Imagen de perfil</string>
     <string name="showpassword">Muestra contraseña</string>
     <string name="hidepassword">Esconde contraseña</string>
+    <string name="expenseControl">Control de gasto de </string>
     <string name="item">Elemento para</string>
     <string name="itemicon">Icono de elemento de categoría de</string>
     <string name="selected">seleccionada</string>

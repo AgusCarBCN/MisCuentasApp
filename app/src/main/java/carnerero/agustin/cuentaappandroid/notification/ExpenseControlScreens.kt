@@ -13,6 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.components.AccountBudgetItemControl
 import carnerero.agustin.cuentaappandroid.components.CategoryBudgetItemControl
@@ -53,9 +55,8 @@ fun ExpenseControlCategoriesScreen(categoriesViewModel: CategoriesViewModel,
                CategoryBudgetItemControl(category,
                    categoriesViewModel,
                    accountsViewModel)
-                if(listOfCategoriesChecked.size > 1) {
                     SpacerApp()
-                }
+
             }
         }
     }
@@ -88,9 +89,8 @@ fun ExpenseControlAccountsScreen(accountsViewModel: AccountsViewModel)
             items(listOfAccountsChecked) { account ->
                 AccountBudgetItemControl(account ,
                     accountsViewModel)
-                if(listOfAccountsChecked.size > 1) {
                     SpacerApp()
-                }
+
             }
         }
     }
