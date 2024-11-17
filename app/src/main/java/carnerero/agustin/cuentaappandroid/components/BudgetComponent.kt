@@ -38,11 +38,10 @@ fun CategoryBudgetItemControl(
     val expensePercent= stringResource(id = R.string.percentexpense)
     // Estado para almacenar el total de gastos por categoría
     var expensesByCategory by remember { mutableDoubleStateOf(0.0) }
-    val categoryName = stringResource(category.nameResource)
-    val expenseControlText= stringResource(id = R.string.expenseControl)
+
 
     // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
-    LaunchedEffect(category.id) {
+    LaunchedEffect(Unit) {
         expensesByCategory = categoriesViewModel.sumOfExpensesByCategory(
             category.id,
             category.fromDate,
@@ -185,7 +184,7 @@ fun CategoryBudgetItemControl(
         var expensesByAccount by remember { mutableDoubleStateOf(0.0) }
 
         // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
-        LaunchedEffect(account.id) {
+        LaunchedEffect(Unit) {
             expensesByAccount = accountsViewModel.sumOfExpensesByAccount(
                 account.id,
                 account.fromDate,
