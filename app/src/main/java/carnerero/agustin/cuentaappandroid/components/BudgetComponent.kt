@@ -57,8 +57,7 @@ fun CategoryBudgetItemControl(
         0.0f,
         1.0f
     ))
-    val decimalFormat = DecimalFormat("#.##")
-    val spendingPercent = decimalFormat.format(spendingPercentage * 100).toFloat()
+    val spendingPercent = Math.round(spendingPercentage * 100)
 
 
     // Color de la barra de progreso según el porcentaje
@@ -202,8 +201,7 @@ fun CategoryBudgetItemControl(
                 0.0f,
                 1.0f
             ) // Porcentaje de gasto
-        val decimalFormat = DecimalFormat("#.##")
-        val spendingPercent = decimalFormat.format(spendingPercentage * 100).toFloat()
+        val spendingPercent = Math.round(spendingPercentage * 100)
         // Color de la barra de progreso según el porcentaje
         val progressColor = when {
             spendingPercentage < 0.5f -> LocalCustomColorsPalette.current.progressBar50
