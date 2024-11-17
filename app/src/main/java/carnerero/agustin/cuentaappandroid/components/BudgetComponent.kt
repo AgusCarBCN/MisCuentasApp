@@ -217,7 +217,7 @@ fun CategoryBudgetItemControl(
                 .fillMaxWidth()
                 .semantics {
                     contentDescription = "$expenseControlText ${account.name}"
-                }, .
+                },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
