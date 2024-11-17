@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.components.AccountCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.components.HeadSetting

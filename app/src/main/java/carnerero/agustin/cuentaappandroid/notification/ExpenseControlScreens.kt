@@ -19,6 +19,7 @@ import carnerero.agustin.cuentaappandroid.components.CategoryBudgetItemControl
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 
 @Composable
 
@@ -52,6 +53,9 @@ fun ExpenseControlCategoriesScreen(categoriesViewModel: CategoriesViewModel,
                CategoryBudgetItemControl(category,
                    categoriesViewModel,
                    accountsViewModel)
+                if(listOfCategoriesChecked.size > 1) {
+                    SpacerApp()
+                }
             }
         }
     }
@@ -82,9 +86,11 @@ fun ExpenseControlAccountsScreen(accountsViewModel: AccountsViewModel)
                 .padding(bottom = 16.dp) // Espacio en la parte inferior
         ) {
             items(listOfAccountsChecked) { account ->
-
                 AccountBudgetItemControl(account ,
                     accountsViewModel)
+                if(listOfAccountsChecked.size > 1) {
+                    SpacerApp()
+                }
             }
         }
     }

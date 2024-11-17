@@ -14,13 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -34,16 +34,15 @@ import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 
 @Composable
 
-fun AboutScreen(mainViewModel: MainViewModel)
-{
-    val message= stringResource(id = R.string.share)
+fun AboutScreen(mainViewModel: MainViewModel) {
+    val message = stringResource(id = R.string.share)
     val context = LocalContext.current
     val appClimgingCompanionLink =
         "https://play.google.com/store/apps/details?id=com.blogspot.agusticar.climbcompanion&pli=1"
     val appMisCuentasLink =
         "https://play.google.com/store/apps/details?id=carnerero.agustin.cuentaappandroid&hl=es&gl=US"
     val policyLink =
-       "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
+        "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
 
 
     Column(
@@ -55,7 +54,10 @@ fun AboutScreen(mainViewModel: MainViewModel)
             )
     )
     {
-        HeadSetting(title = stringResource(id = R.string.aboutapp), MaterialTheme.typography.titleLarge)
+        HeadSetting(
+            title = stringResource(id = R.string.aboutapp),
+            MaterialTheme.typography.titleLarge
+        )
 
         RowComponent(title = stringResource(id = R.string.about),
             description = stringResource(id = R.string.desaboutapp),
@@ -66,25 +68,30 @@ fun AboutScreen(mainViewModel: MainViewModel)
         RowComponent(title = stringResource(id = R.string.share),
             description = stringResource(id = R.string.desshare),
             iconResource = R.drawable.share,
-            onClick = { shareLinkGooglePlayStore(context,appMisCuentasLink,message) })
+            onClick = { shareLinkGooglePlayStore(context, message) })
         RowComponent(title = stringResource(id = R.string.rate),
             description = stringResource(id = R.string.desrate),
             iconResource = R.drawable.star_rate,
-            onClick = { openGooglePlayStore(context,appMisCuentasLink) })
+            onClick = { openGooglePlayStore(context, appMisCuentasLink) })
         RowComponent(title = stringResource(id = R.string.contactme),
             description = stringResource(id = R.string.desemail),
             iconResource = R.drawable.email,
-            onClick = {mainViewModel.selectScreen(IconOptions.EMAIL) })
+            onClick = { mainViewModel.selectScreen(IconOptions.EMAIL) })
+        RowComponent(title = stringResource(id = R.string.contactme),
+            description = stringResource(id = R.string.visitmygithub),
+            iconResource = R.drawable.github,
+            onClick = { visitMyGitHub(context) })
         RowComponent(title = stringResource(id = R.string.othersapp),
             description = stringResource(id = R.string.desstore),
             iconResource = R.drawable.apps,
-            onClick = { openGooglePlayStore(context,appClimgingCompanionLink) })
+            onClick = { openGooglePlayStore(context, appClimgingCompanionLink) })
         RowComponent(title = stringResource(id = R.string.privacy),
             description = stringResource(id = R.string.despolicy),
             iconResource = R.drawable.privacy,
-            onClick = { openGooglePlayStore(context,policyLink) })
+            onClick = { openGooglePlayStore(context, policyLink) })
     }
 }
+
 @Composable
 @Preview(showBackground = true)
 
@@ -98,22 +105,25 @@ fun AboutApp() {
             )
     )
     {
-    HeadSetting(title = stringResource(id = R.string.app_name),MaterialTheme.typography.titleLarge )
-    Text(
-        text = stringResource(id = R.string.description),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-        color = LocalCustomColorsPalette.current.textColor,
-        style=MaterialTheme.typography.bodyLarge
-    )
+        HeadSetting(
+            title = stringResource(id = R.string.app_name),
+            MaterialTheme.typography.titleLarge
+        )
+        Text(
+            text = stringResource(id = R.string.description),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, end = 20.dp, start = 20.dp),
+            color = LocalCustomColorsPalette.current.textColor,
+            style = MaterialTheme.typography.bodyLarge
+        )
         Text(
             text = stringResource(id = R.string.developer),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
             color = LocalCustomColorsPalette.current.textColor,
-            style=MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium
         )
         Text(
             text = stringResource(id = R.string.version),
@@ -121,7 +131,7 @@ fun AboutApp() {
                 .fillMaxWidth()
                 .padding(top = 5.dp, end = 20.dp, start = 20.dp),
             color = LocalCustomColorsPalette.current.textColor,
-            style=MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium
         )
         Text(
             text = stringResource(id = R.string.atributions),
@@ -129,11 +139,11 @@ fun AboutApp() {
                 .fillMaxWidth()
                 .padding(top = 5.dp, end = 20.dp, start = 20.dp),
             color = LocalCustomColorsPalette.current.textColor,
-            style=MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium
         )
 
         SetupAttributions()
-}
+    }
 }
 
 @Composable
@@ -147,9 +157,12 @@ fun SendEmail() {
 
 }
 
-private fun shareLinkGooglePlayStore(context: Context, link: String, msg: String) {
+private fun shareLinkGooglePlayStore(context: Context, msg: String) {
+
+    val appMisCuentasLink =
+        "https://play.google.com/store/apps/details?id=carnerero.agustin.cuentaappandroid&hl=es&gl=US"
     // Combinar el mensaje y el enlace en una sola cadena
-    val combinedMsg = "$msg\n$link"
+    val combinedMsg = "$msg\n$appMisCuentasLink"
 
     // Crear un Intent para compartir
     val shareIntent = Intent(Intent.ACTION_SEND)
@@ -165,18 +178,17 @@ private fun openGooglePlayStore(context: Context, link: String) {
     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 
 }
-@Composable
-private fun SetupGitHubLink() {
-    val visitGit = stringResource(R.string.visitmygithub)
-    val githubUrl = "https://github.com/AgusCarBCN"
-    val context = LocalContext.current
 
-    ClickableTextLink(text = visitGit, url = githubUrl, context = context)
+private fun visitMyGitHub(context: Context) {
+
+    val githubUrl = "https://github.com/AgusCarBCN"
+
+    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl)))
+
 }
 
 @Composable
 private fun SetupAttributions() {
-    val context = LocalContext.current
 
     val attributionsList = mapOf(
         "https://www.flaticon.es/autores/2d3ds" to stringResource(id = R.string.iconconta),
@@ -188,43 +200,25 @@ private fun SetupAttributions() {
 
     Column {
         attributionsList.forEach { (url, description) ->
-            Box(modifier = Modifier.padding(top = 5.dp,start=20.dp)) {
-                ClickableTextLink(description, url, context, fontSize = 16.sp) // Ajusta el tamaño aquí.
+            Box(modifier = Modifier.padding(top = 5.dp, start = 20.dp)) {
+                Text(buildAnnotatedString {
+
+                    withLink(
+                        LinkAnnotation.Url(
+                            url,
+                            TextLinkStyles(SpanStyle(color = LocalCustomColorsPalette.current.link,
+                                fontSize =14.sp
+                            )
+                        ))
+                    ) {
+                        append(description)
+                    }
+                })
+
             }
         }
     }
 }
 
-@Composable
-private fun ClickableTextLink(
-    text: String,
-    url: String,
-    context: Context,
-    fontSize: TextUnit = 16.sp // Puedes cambiar el valor predeterminado si deseas otro tamaño.
-) {
-    val annotatedText = buildAnnotatedString {
-        pushStringAnnotation(tag = "URL", annotation = url)
-        withStyle(style = SpanStyle(color= LocalCustomColorsPalette.current.link, textDecoration = TextDecoration.Underline)) {
-            append(text)
-        }
-        pop()
-    }
-
-    androidx.compose.foundation.text.ClickableText(
-        text = annotatedText,
-        style = androidx.compose.ui.text.TextStyle(fontSize = fontSize),
-        onClick = { offset ->
-            annotatedText.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                .firstOrNull()?.let { annotation ->
-                    openUrl(annotation.item, context)
-                }
-        }
-    )
-}
 
 
-
-private fun openUrl(url: String, context: Context) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    context.startActivity(intent)
-}
