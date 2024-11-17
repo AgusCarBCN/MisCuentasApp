@@ -2,12 +2,10 @@ package carnerero.agustin.cuentaappandroid.components
 
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -197,7 +195,7 @@ fun CategoryCardWithCheckbox(category: Category,
     val toDate by searchViewModel.selectedToDate.observeAsState(category.fromDate)
     val fromDate by searchViewModel.selectedFromDate.observeAsState(category.toDate)
     val showDialog by categoriesViewModel.enableDialog.observeAsState(false)
-    val limitMax by categoriesViewModel.limitMax.observeAsState(category.limitMax.toString())
+    val spendingLimit by categoriesViewModel.spendingLimit.observeAsState(category.spendingLimit.toString())
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     val scope = rememberCoroutineScope()
     val categoryName= stringResource(category.nameResource)
@@ -277,8 +275,8 @@ fun CategoryCardWithCheckbox(category: Category,
                 ModelDialogWithTextField(
                     stringResource(category.nameResource),
                     showDialog,
-                    limitMax,
-                    onValueChange = {categoriesViewModel.onChangeLimitMax(it) },
+                    spendingLimit,
+                    onValueChange = {categoriesViewModel.onChangeSpendingLimit(it) },
                     onConfirm = {
                         if (!searchViewModel.validateDates()) {
                             scope.launch(Dispatchers.Main) {
@@ -290,9 +288,9 @@ fun CategoryCardWithCheckbox(category: Category,
                             }
                             categoriesViewModel.updateCheckedCategory(category.id,false)
                         } else {
-                            categoriesViewModel.upDateLimitMaxCategory(
+                            categoriesViewModel.upDateSpendingLimitCategory(
                                 category.id,
-                                limitMax.toFloatOrNull() ?: 0f
+                                spendingLimit.toDouble()
                             )
                             categoriesViewModel.onEnableDialogChange(false)
                             categoriesViewModel.upDateCategoryDates(category.id, fromDate, toDate)
@@ -320,7 +318,7 @@ fun AccountCardWithCheckbox(
     val toDate by searchViewModel.selectedToDate.observeAsState(account.fromDate)
     val fromDate by searchViewModel.selectedFromDate.observeAsState(account.toDate)
     val showDialog by accountsViewModel.enableDialog.observeAsState(false)
-    val limitMax by accountsViewModel.limitMax.observeAsState(account.limitMax.toString())
+    val spendingLimit by accountsViewModel.spendingLimit.observeAsState(account.spendingLimit.toString())
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     val scope = rememberCoroutineScope()
 
@@ -391,8 +389,8 @@ fun AccountCardWithCheckbox(
                 ModelDialogWithTextField(
                     account.name,
                     showDialog,
-                    limitMax,
-                    onValueChange = {accountsViewModel.onChangeLimitMax(it) },
+                    spendingLimit,
+                    onValueChange = {accountsViewModel.onChangeSpendingLimit(it) },
                     onConfirm = {
                         if (!searchViewModel.validateDates()) {
                             scope.launch(Dispatchers.Main) {
@@ -404,9 +402,9 @@ fun AccountCardWithCheckbox(
                             }
                             accountsViewModel.updateCheckedAccount(account.id,false)
                         } else {
-                            accountsViewModel.upDateLimitMaxAccount(
+                            accountsViewModel.upDateSpendingLimitAccount(
                                 account.id,
-                                limitMax.toFloatOrNull() ?: 0f
+                                spendingLimit.toDouble()
                             )
                             accountsViewModel.onEnableDialogChange(false)
                             accountsViewModel.upDateAccountsDates(account.id, fromDate, toDate)

@@ -24,7 +24,7 @@ fun NotificationCategoriesObserver(
     notificationService: NotificationService
 ) {
     // Update expense percentage
-    categoriesViewModel.UpdateExpensePercentage()
+    categoriesViewModel.updateExpenseCategoryPercentage()
     val expensePercentageMap by categoriesViewModel.expensePercentageFlow.collectAsState()
     val codeCurrency by accountsViewModel.currencyCodeSelected.observeAsState("USD")
 

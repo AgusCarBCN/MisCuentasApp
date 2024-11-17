@@ -21,7 +21,6 @@ import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.Up
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountDateToUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountNameUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateCheckedAccountUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateLimitMaxAccountUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateSpendingLimitAccountUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumTotalExpensesByDateUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.datastore.GetCurrencyCodeUseCase
@@ -51,7 +50,6 @@ class AccountsViewModel @Inject constructor(
     private val updateBalance: UpdateAccountBalanceUseCase,
     private val converterCurrency: ConvertCurrencyUseCase,
     private val getSumExpensesByAccount: GetSumTotalExpensesByDateUseCase,
-    private val updateLimitMax: UpdateLimitMaxAccountUseCase,
     private val updateChecked: UpdateCheckedAccountUseCase,
     private val updateSpendingLimit: UpdateSpendingLimitAccountUseCase,
     private val updateFromDate: UpdateAccountDateFromUseCase,
@@ -285,8 +283,8 @@ class AccountsViewModel @Inject constructor(
 
     //LiveData para textfield de categoria seleccionada para control de gasto
 
-    private val _limitMax=MutableLiveData<String>()
-    val limitMax: LiveData<String> = _limitMax
+    private val _spendingLimit=MutableLiveData<String>()
+    val spendingLimit: LiveData<String> = _spendingLimit
 
     private val _conversionCurrencyRate = MutableLiveData<Double>()
     val conversionCurrencyRate: LiveData<Double> = _conversionCurrencyRate
@@ -488,11 +486,11 @@ class AccountsViewModel @Inject constructor(
             }
         }
     }
-    fun onChangeLimitMax(newLimitMax:String){
-        if (Utils.isValidDecimal(newLimitMax)) {
-            _limitMax.value = newLimitMax
+    fun onChangeSpendingLimit(newSpendingLimit:String){
+        if (Utils.isValidDecimal(newSpendingLimit)) {
+            _spendingLimit.value = newSpendingLimit
         }
-        _limitMax.value = newLimitMax
+        _spendingLimit.value = newSpendingLimit
     }
 
     fun upDateAccountName(idAccount:Int,newName:String){
@@ -529,18 +527,9 @@ class AccountsViewModel @Inject constructor(
     fun upDateSpendingLimitAccount(accountId: Int, newAmount: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             updateSpendingLimit.invoke(accountId, newAmount)
-            //getAllCategoriesChecked(CategoryType.EXPENSE)
+
         }
     }
-
-    fun upDateLimitMaxAccount(accountId: Int, newLimitMax: Float) {
-        viewModelScope.launch(Dispatchers.IO) {
-             updateLimitMax.invoke(accountId, newLimitMax)
-            //getAllCategoriesChecked(CategoryType.EXPENSE)
-        }
-    }
-
-
 
     suspend fun conversionCurrencyRate(fromCurrency: String, toCurrency: String): Double? {
 

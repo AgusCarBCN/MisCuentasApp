@@ -20,10 +20,10 @@
         android:theme="@style/Theme.MisCuentasApp"
         tool:targetApi="31">
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
-
+        <!-- AdMob app ID: ca-app-pub-5972269460585117~8243512982 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5972269460585117~8243512982"/>
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

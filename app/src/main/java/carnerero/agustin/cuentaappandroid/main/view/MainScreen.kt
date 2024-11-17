@@ -78,7 +78,7 @@ import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.newamount.view.CategorySelector
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.NewAmount
-import com.blogspot.agusticar.miscuentasv2.notification.EntryAccountList
+import carnerero.agustin.cuentaappandroid.notification.EntryAccountList
 import carnerero.agustin.cuentaappandroid.notification.EntryCategoryList
 import carnerero.agustin.cuentaappandroid.notification.ExpenseControlAccountsScreen
 import carnerero.agustin.cuentaappandroid.notification.ExpenseControlCategoriesScreen

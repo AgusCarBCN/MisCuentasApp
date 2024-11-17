@@ -350,7 +350,7 @@
     <string name="choosecategories">Enable or Disable categories to control spending</string>
     <string name="currentexpense">Current expense</string>
     <string name="categorytitle">Categories</string>
-    <string name="limitMax">Maximum limit</string>
+    <string name="limitMax">Spending limit</string>
     <string name="select">Select</string>
     <string name="expensebyaccount">Spending by account of </string>
     <string name="accountespendingcontrol">Spending control by account of</string>
@@ -381,5 +381,7 @@
     <string name="item">Item for</string>
     <string name="itemicon">Item category icon of</string>
     <string name="selected">selected</string>
+    <string name="percentexpense">Spending percentage:</string>
+
 </resources>
 

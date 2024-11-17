@@ -1,4 +1,4 @@
-package com.blogspot.agusticar.miscuentasv2.notification
+package carnerero.agustin.cuentaappandroid.notification
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

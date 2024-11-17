@@ -31,15 +31,11 @@ interface CategoryDao {
     @Query("UPDATE CategoryEntity SET periodSpendingLimit = :newAmount WHERE id = :categoryId")
     suspend fun updateSpendingLimitCategory(categoryId: Int, newAmount:Double)
 
-    // 6. Update limitMax category
-    @Query("UPDATE CategoryEntity SET limitMax = :newLimitMax WHERE id = :categoryId")
-    suspend fun updateLimitMaxCategory(categoryId: Int, newLimitMax:Float)
-
-    // 7. Update date From  category control expense
+   // 6. Update date From  category control expense
     @Query("UPDATE CategoryEntity SET fromDate = :newDate WHERE id = :categoryId")
     suspend fun updateFromDateCategory(categoryId:Int,newDate: String)
 
-    // 8. Update date to  category control expense
+    // 7. Update date to  category control expense
     @Query("UPDATE CategoryEntity SET toDate = :newDate WHERE id = :categoryId")
     suspend fun updateToDateCategory(categoryId:Int,newDate: String)
 

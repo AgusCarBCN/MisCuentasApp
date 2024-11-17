@@ -14,7 +14,6 @@ import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.I
 
 import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateCheckedCategoryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateFromDateCategoryUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateLimitMaxCategoryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateSpendingLimitCategoryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateToDateCategoryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumOfExpensesByCategoryAndDateUseCase
@@ -37,150 +36,11 @@ class CategoriesViewModel @Inject constructor(
     private val getAllCategoriesChecked: GetAllCategoriesCheckedUseCase,
     private val upDateSpendingLimit: UpdateSpendingLimitCategoryUseCase,
     private val upDateCheckedCategory: UpdateCheckedCategoryUseCase,
-    private val upDateLimitMaxCategory: UpdateLimitMaxCategoryUseCase,
     private val upDateFromDate: UpdateFromDateCategoryUseCase,
     private val upDateToDate: UpdateToDateCategoryUseCase,
     private val getSumExpensesByCategory: GetSumOfExpensesByCategoryAndDateUseCase
 
 ): ViewModel() {
-
-    // Flow que emite los gastos actuales y el límite para cada categoría
-    private val _expensePercentageFlow = MutableStateFlow<Map<Category, Float>>(emptyMap())
-    val expensePercentageFlow: StateFlow<Map<Category, Float>> = _expensePercentageFlow.asStateFlow()
-
-    //LiveData para la lista de Categorias de control de gasto
-    private val _listOfCategoriesChecked = MutableLiveData<List<Category>>()
-    val listOfCategoriesChecked: LiveData<List<Category>> = _listOfCategoriesChecked
-
-
-    //LiveData para la lista de Categorias
-    private val _listOfCategories = MutableLiveData<List<Category>>()
-    val listOfCategories: LiveData<List<Category>> = _listOfCategories
-
-    //LiveData para categoria seleccionada
-
-    private val _categorySelected = MutableLiveData<Category>()
-    val categorySelected: LiveData<Category> = _categorySelected
-
-    //LiveData para textfield de categoria seleccionada para control de gasto
-
-    private val _limitMax=MutableLiveData<String>()
-    val limitMax: LiveData<String> = _limitMax
-
-    //LiveData que activa o desactiva dialogo de categoria seleccionada
-
-    private val _enableDialog=MutableLiveData<Boolean>()
-    val enableDialog: LiveData<Boolean> = _enableDialog
-
-    init {
-        viewModelScope.launch {
-            updateExpensePercentage()
-        }
-    }
-    fun populateCategories(){
-        viewModelScope.launch(Dispatchers.IO)
-         {
-            incomeCategories.forEach { category->
-                insertCategory.invoke(category)
-            }
-            expenseCategories.forEach { category->
-                insertCategory.invoke(category)
-            }
-         }
-    }
-
-    fun onChangeLimitMax(newLimitMax:String){
-        if (Utils.isValidDecimal(newLimitMax)) {
-            _limitMax.value = newLimitMax
-        }
-        _limitMax.value = newLimitMax
-    }
-
-    fun onEnableDialogChange(newValue:Boolean){
-        _enableDialog.value = newValue
-    }
-
-    fun getAllCategoriesByType(type: CategoryType){
-        viewModelScope.launch(Dispatchers.IO){
-            _listOfCategories.postValue(getAllCategoriesByType.invoke(type))
-        }
-
-    }
-    fun getAllCategoriesChecked(type: CategoryType){
-        viewModelScope.launch(Dispatchers.IO){
-            _listOfCategoriesChecked.postValue(getAllCategoriesChecked.invoke(type))
-        }
-
-    }
-
-    fun onCategorySelected(categorySelected: Category) {
-        _categorySelected.value = categorySelected
-    }
-    fun upDateCategoryDates(categoryId:Int,fromDate:String,toDate:String){
-        viewModelScope.launch(Dispatchers.IO) {
-            upDateFromDate.invoke(categoryId, fromDate)
-            upDateToDate.invoke(categoryId, toDate)
-
-        }
-    }
-
-    fun updateCheckedCategory(categoryId: Int, isChecked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            upDateCheckedCategory.invoke(categoryId, isChecked)
-            getAllCategoriesByType(CategoryType.EXPENSE)
-        }
-    }
-    fun upDateSpendingLimitCategory(categoryId: Int, newAmount: Double) {
-        viewModelScope.launch(Dispatchers.IO) {
-            upDateSpendingLimit.invoke(categoryId, newAmount)
-            getAllCategoriesChecked(CategoryType.EXPENSE)
-        }
-    }
-
-    fun upDateLimitMaxCategory(categoryId: Int, newLimitMax: Float) {
-        viewModelScope.launch(Dispatchers.IO) {
-            upDateLimitMaxCategory.invoke(categoryId, newLimitMax)
-            getAllCategoriesChecked(CategoryType.EXPENSE)
-        }
-    }
-    suspend fun sumOfExpensesByCategory(categoryId:Int,
-                                        fromDate:String,
-                                        toDate:String): Double? {
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val result=getSumExpensesByCategory.invoke(categoryId,fromDate,toDate)
-                result
-            }
-        }catch(e: IOException) {
-            null
-        }
-    }
-    // Función que actualiza el flujo con el porcentaje de gasto para cada categoría
-    private suspend fun updateExpensePercentage() {
-        getAllCategoriesChecked(CategoryType.EXPENSE)
-        val categories = _listOfCategoriesChecked.value // Método que obtiene todas las categorías
-        // Verifica que las categorías no sean nulas
-        if (categories.isNullOrEmpty()) {
-            // Si las categorías son nulas o vacías, no se hace nada
-            _expensePercentageFlow.value = emptyMap() // Asigna un mapa vacío
-            return
-        }
-
-        val expensePercentageMap = categories.associateWith { category ->
-            val expenses = sumOfExpensesByCategory(category.id,category.fromDate,category.toDate) ?: 0.0
-            val percentage = (abs(expenses) / abs(category.spendingLimit)).toFloat().coerceIn(0.0f, 1.0f)
-            percentage
-        }
-        _expensePercentageFlow.value = expensePercentageMap
-    }
-    // Función para refrescar el porcentaje de gasto (opcional)
-    fun UpdateExpensePercentage() {
-        viewModelScope.launch {
-            updateExpensePercentage()
-        }
-    }
-
     private val incomeCategories = listOf(
         Category(
             type = CategoryType.INCOME,
@@ -437,5 +297,139 @@ class CategoriesViewModel @Inject constructor(
             nameResource = R.string.other_expenses
         )
     )
+    // Flow que emite los gastos actuales y el límite para cada categoría
+    private val _expensePercentageFlow = MutableStateFlow<Map<Category, Float>>(emptyMap())
+    val expensePercentageFlow: StateFlow<Map<Category, Float>> = _expensePercentageFlow.asStateFlow()
+
+    //LiveData para la lista de Categorias de control de gasto
+    private val _listOfCategoriesChecked = MutableLiveData<List<Category>>()
+    val listOfCategoriesChecked: LiveData<List<Category>> = _listOfCategoriesChecked
+
+
+    //LiveData para la lista de Categorias
+    private val _listOfCategories = MutableLiveData<List<Category>>()
+    val listOfCategories: LiveData<List<Category>> = _listOfCategories
+
+    //LiveData para categoria seleccionada
+
+    private val _categorySelected = MutableLiveData<Category>()
+    val categorySelected: LiveData<Category> = _categorySelected
+
+    //LiveData para textfield de categoria seleccionada para control de gasto
+
+    private val _spendingLimit=MutableLiveData<String>()
+    val spendingLimit: LiveData<String> = _spendingLimit
+
+
+    //LiveData que activa o desactiva dialogo de categoria seleccionada
+
+    private val _enableDialog=MutableLiveData<Boolean>()
+    val enableDialog: LiveData<Boolean> = _enableDialog
+
+    init {
+        viewModelScope.launch {
+            updateExpensePercentage()
+        }
+    }
+    fun populateCategories(){
+        viewModelScope.launch(Dispatchers.IO)
+         {
+            incomeCategories.forEach { category->
+                insertCategory.invoke(category)
+            }
+            expenseCategories.forEach { category->
+                insertCategory.invoke(category)
+            }
+         }
+    }
+
+    fun onChangeSpendingLimit(newSpendingLimit:String){
+        if (Utils.isValidDecimal(newSpendingLimit)) {
+            _spendingLimit.value = newSpendingLimit
+        }
+        _spendingLimit.value = newSpendingLimit
+    }
+
+    fun onEnableDialogChange(newValue:Boolean){
+        _enableDialog.value = newValue
+    }
+
+    fun getAllCategoriesByType(type: CategoryType){
+        viewModelScope.launch(Dispatchers.IO){
+            _listOfCategories.postValue(getAllCategoriesByType.invoke(type))
+        }
+
+    }
+    fun getAllCategoriesChecked(type: CategoryType){
+        viewModelScope.launch(Dispatchers.IO){
+            _listOfCategoriesChecked.postValue(getAllCategoriesChecked.invoke(type))
+        }
+
+    }
+
+    fun onCategorySelected(categorySelected: Category) {
+        _categorySelected.value = categorySelected
+    }
+    fun upDateCategoryDates(categoryId:Int,fromDate:String,toDate:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            upDateFromDate.invoke(categoryId, fromDate)
+            upDateToDate.invoke(categoryId, toDate)
+
+        }
+    }
+
+    fun updateCheckedCategory(categoryId: Int, isChecked: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            upDateCheckedCategory.invoke(categoryId, isChecked)
+            getAllCategoriesByType(CategoryType.EXPENSE)
+        }
+    }
+    fun upDateSpendingLimitCategory(categoryId: Int, newAmount: Double) {
+        viewModelScope.launch(Dispatchers.IO) {
+            upDateSpendingLimit.invoke(categoryId, newAmount)
+            getAllCategoriesChecked(CategoryType.EXPENSE)
+        }
+    }
+
+
+
+    suspend fun sumOfExpensesByCategory(categoryId:Int,
+                                        fromDate:String,
+                                        toDate:String): Double? {
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val result=getSumExpensesByCategory.invoke(categoryId,fromDate,toDate)
+                result
+            }
+        }catch(e: IOException) {
+            null
+        }
+    }
+
+    // Función que actualiza el flujo con el porcentaje de gasto para cada categoría
+    private suspend fun updateExpensePercentage() {
+        getAllCategoriesChecked(CategoryType.EXPENSE)
+        val categories = _listOfCategoriesChecked.value // Método que obtiene todas las categorías
+        // Verifica que las categorías no sean nulas
+        if (categories.isNullOrEmpty()) {
+            // Si las categorías son nulas o vacías, no se hace nada
+            _expensePercentageFlow.value = emptyMap() // Asigna un mapa vacío
+            return
+        }
+
+        val expensePercentageMap = categories.associateWith { category ->
+            val expenses = sumOfExpensesByCategory(category.id,category.fromDate,category.toDate) ?: 0.0
+            val percentage = (abs(expenses) / abs(category.spendingLimit)).toFloat().coerceIn(0.0f, 1.0f)
+            percentage
+        }
+        _expensePercentageFlow.value = expensePercentageMap
+    }
+    // Función para refrescar el porcentaje de gasto (opcional)
+    fun updateExpenseCategoryPercentage() {
+        viewModelScope.launch {
+            updateExpensePercentage()
+        }
+    }
 
 }

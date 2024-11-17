@@ -33,17 +33,13 @@ class CategoryRepository  @Inject constructor(private val categoryDao: CategoryD
         categoryDao.updateSpendingLimitCategory(categoryId,newAmount)
     }
 
-    // 6. Update limitMax category
-    suspend fun updateLimitMaxCategory(categoryId:Int,newLimitMax:Float) {
-        categoryDao.updateLimitMaxCategory(categoryId,newLimitMax)
-    }
 
-    // 7. Update from Date category
+    // 6. Update from Date category
     suspend fun updateFromDateCategory(categoryId:Int,newDate:String) {
         categoryDao.updateFromDateCategory(categoryId,newDate)
     }
 
-    // 8. Update to Date category
+    // 7. Update to Date category
     suspend fun updateToDateCategory(categoryId:Int,newDate:String) {
         categoryDao.updateToDateCategory(categoryId,newDate)
     }

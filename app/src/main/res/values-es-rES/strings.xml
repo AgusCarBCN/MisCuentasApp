@@ -341,7 +341,7 @@
     <string name="choosecategories">Habilita o Deshabilita categorias para controlar gastos</string>
     <string name="currentexpense">Gasto actual</string>
     <string name="categorytitle">Categorias</string>
-    <string name="limitMax">Limite máximo</string>
+    <string name="limitMax">Limite de gasto</string>
     <string name="select">Selecciona</string>
     <string name="limitMaxtitle">Límite máximo de gasto</string>
     <string name="messagedialog">Selecciona el límite máximo de gasto por categoría</string>
@@ -359,6 +359,7 @@
     <string name="selectaccounts">Selecciona cuentas</string>
     <string name="categorychecked">Seleccionada</string>
     <string name="categoryunchecked">No seleccionada</string>
+    <string name="percentexpense">Porcentaje de gasto:</string>
     <!--contentDescription-->
     <string name="indicatorSelected">Indicador seleccionado</string>
     <string name="indicatorNoSelected">Indicador no seleccionado</string>
