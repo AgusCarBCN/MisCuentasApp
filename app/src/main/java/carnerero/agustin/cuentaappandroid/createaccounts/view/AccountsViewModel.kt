@@ -469,7 +469,10 @@ class AccountsViewModel @Inject constructor(
     }
 
     fun onTextBalanceChanged(newBalance:String){
-        _newAmount.value = newBalance
+        if (Utils.isValidDecimal(newBalance)) {
+            _newAmount.value = newBalance
+        }
+
         _isEnableChangeBalanceButton.value=true
     }
 
@@ -504,8 +507,7 @@ class AccountsViewModel @Inject constructor(
     }
     fun upDateAccountBalance(idAccount:Int,newBalance:Double){
         viewModelScope.launch(Dispatchers.IO) {
-             updateBalance.invoke(idAccount,newBalance)
-            Log.d("Account", "Balance updated")
+             updateBalance.invoke(idAccount, newBalance)
             _isEnableChangeNameButton.postValue(false)
            onAccountUpdated()
         }
