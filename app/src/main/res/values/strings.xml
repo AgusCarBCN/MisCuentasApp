@@ -368,6 +368,7 @@
     <string name="selectaccounts">Select accounts</string>
     <string name="categorychecked">Checked</string>
     <string name="categoryunchecked">Unchecked</string>
+
     <!--contentDescription-->
     <string name="indicatorSelected">Selected indicator</string>
     <string name="indicatorNoSelected">Unselected indicator</string>
