@@ -69,7 +69,11 @@ interface AccountDao {
     @Query("UPDATE AccountEntity SET toDate = :newDate WHERE id = :accountId")
     suspend fun updateToDateAccount(accountId:Int,newDate: String)
 
-    // 13. List all accounts checkec
+    // 13. List all accounts checked
     @Query("SELECT * FROM AccountEntity WHERE isChecked=1")
     suspend fun getAllAccountsChecked(): List<Account>
+
+    // 5. Update periodSpendingLimit category
+    @Query("UPDATE AccountEntity SET periodSpendingLimit = :newAmount WHERE id = :accountId")
+    suspend fun updateSpendingLimitAccount(accountId: Int, newAmount:Double)
 }

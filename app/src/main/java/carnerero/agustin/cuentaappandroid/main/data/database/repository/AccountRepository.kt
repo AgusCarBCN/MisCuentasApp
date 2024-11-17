@@ -53,7 +53,7 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
 
     // 10. Update amount account
     suspend fun updateSpendingLimitAccount(accountId:Int, newAmount:Double) {
-        accountDao.updateAmountAccount(accountId,newAmount)
+        accountDao.updateSpendingLimitAccount(accountId,newAmount)
     }
 
    // 11. Update from Date account

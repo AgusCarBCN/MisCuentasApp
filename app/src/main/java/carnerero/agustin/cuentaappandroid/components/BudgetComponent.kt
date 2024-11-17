@@ -40,6 +40,7 @@ fun CategoryBudgetItemControl(
     var expensesByCategory by remember { mutableDoubleStateOf(0.0) }
     val categoryName = stringResource(category.nameResource)
     val expenseControlText= stringResource(id = R.string.expenseControl)
+
     // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
     LaunchedEffect(category.id) {
         expensesByCategory = categoriesViewModel.sumOfExpensesByCategory(
@@ -71,9 +72,9 @@ fun CategoryBudgetItemControl(
         modifier = Modifier
             .padding(16.dp)
             .width(320.dp)
-            .semantics {
+           /* .semantics {
                 contentDescription = "$expenseControlText $categoryName"
-            },
+            }*/,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -144,7 +145,6 @@ fun CategoryBudgetItemControl(
 
         Text(
             text = "$expensePercent $spendingPercent %" ,
-
             style = MaterialTheme.typography.bodyMedium,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
@@ -161,7 +161,7 @@ fun CategoryBudgetItemControl(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(spendingPercentage.toFloat())
+                    .fillMaxWidth(spendingPercentage)
                     .fillMaxHeight()
                     .background(progressColor)
             )
@@ -170,7 +170,7 @@ fun CategoryBudgetItemControl(
 
     }
 }
-    @OptIn(ExperimentalMaterial3Api::class)
+
     @Composable
     fun AccountBudgetItemControl(
         account: Account,

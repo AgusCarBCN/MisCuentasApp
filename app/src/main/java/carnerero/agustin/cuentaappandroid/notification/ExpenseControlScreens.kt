@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.notification
 
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.components.AccountBudgetItemControl
 import carnerero.agustin.cuentaappandroid.components.CategoryBudgetItemControl
@@ -51,14 +50,17 @@ fun ExpenseControlCategoriesScreen(categoriesViewModel: CategoriesViewModel,
                 .weight(1f) // Permite que la columna ocupe el espacio disponible
                 .padding(bottom = 16.dp) // Espacio en la parte inferior
         ) {
-            items(listOfCategoriesChecked) { category ->
-               CategoryBudgetItemControl(category,
-                   categoriesViewModel,
-                   accountsViewModel)
-                    SpacerApp()
 
+            items(listOfCategoriesChecked) { category ->
+                       CategoryBudgetItemControl(
+                           category,
+                           categoriesViewModel,
+                           accountsViewModel
+                       )
+                       SpacerApp()
+                   }
             }
-        }
+
     }
 }
 @Composable
