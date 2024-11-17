@@ -183,7 +183,7 @@ fun MainScreen(
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    //AdmobBanner()
+                    AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()
                     }
