@@ -172,7 +172,7 @@ WHERE amount < 0
     INNER JOIN AccountEntity a ON e.accountId = a.id
     INNER JOIN CategoryEntity c ON e.categoryId = c.id
     WHERE e.amount >= 0
-    ORDER BY date DESC
+    ORDER BY date DESC, e.id DESC
 """
     )
     suspend fun getAllIncomesDTO(): List<EntryDTO>
@@ -191,7 +191,7 @@ WHERE amount < 0
     INNER JOIN AccountEntity a ON e.accountId = a.id
     INNER JOIN CategoryEntity c ON e.categoryId = c.id
     WHERE e.amount < 0 
-    ORDER BY date DESC
+    ORDER BY date DESC, e.id DESC
 """
     )
     suspend fun getAllExpensesDTO(): List<EntryDTO>
@@ -209,7 +209,7 @@ WHERE amount < 0
     FROM EntryEntity e
     INNER JOIN AccountEntity a ON e.accountId = a.id
     INNER JOIN CategoryEntity c ON e.categoryId = c.id
-    ORDER BY date DESC
+    ORDER BY date DESC, e.id DESC
 """
     )
     suspend fun getAllEntriesDTO(): List<EntryDTO>
@@ -228,7 +228,7 @@ WHERE amount < 0
     INNER JOIN AccountEntity a ON e.accountId = a.id
      INNER JOIN CategoryEntity c ON e.categoryId = c.id
    WHERE accountId = :accountId
-    ORDER BY date DESC
+    ORDER BY date DESC, e.id DESC
 """
     )
     suspend fun getAllEntriesByAccountDTO(accountId: Int): List<EntryDTO>
@@ -258,7 +258,7 @@ INNER JOIN CategoryEntity c ON e.categoryId = c.id
             OR (:selectedOptions = 1 AND e.amount < 0.0)                  
         )
          AND (:descriptionAmount LIKE "" OR e.description LIKE :descriptionAmount)
-         ORDER BY date DESC
+         ORDER BY date DESC, e.id DESC
 
 """
     )
