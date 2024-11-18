@@ -35,6 +35,7 @@ fun CategoryBudgetItemControl(
 
     val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
     val currentExpense = stringResource(id = R.string.currentexpense)
+    val spendingLimitMessage= stringResource(id = R.string.limitexpense)
     val expensePercent= stringResource(id = R.string.percentexpense)
     // Estado para almacenar el total de gastos por categoría
     var expensesByCategory by remember { mutableDoubleStateOf(0.0) }
@@ -134,16 +135,23 @@ fun CategoryBudgetItemControl(
                     expensesByCategory,
                     currencyCode
                 )
-            } / ${Utils.numberFormat(spendingLimit, currencyCode)}",
+            }",
 
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
+            color = LocalCustomColorsPalette.current.textColor,
+            modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
+        )
+        Text(
+            text ="$spendingLimitMessage: ${Utils.numberFormat(spendingLimit, currencyCode)}",
+            style = MaterialTheme.typography.bodyLarge,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
+
         Text(
             text = "$expensePercent $spendingPercent %" ,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = LocalCustomColorsPalette.current.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
