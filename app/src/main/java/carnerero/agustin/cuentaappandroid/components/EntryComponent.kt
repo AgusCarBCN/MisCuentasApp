@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlin.math.abs
 
 
 @Composable
@@ -124,7 +126,8 @@ fun EntryList(
                 }
             }
         } else {
-            items(entriesByCategory.toList()) { (categoryName, info) ->
+            items(entriesByCategory.toList()
+                .sortedByDescending {(_, info) -> abs(info.second ?: 0.0) }) { (categoryName, info) ->
                 val (icon, total) = info // Desestructurar el ícono y el total
                 ItemCategory(
                     categoryName = categoryName,
@@ -133,6 +136,7 @@ fun EntryList(
                     currencyCode
                 )
             }
+
         }
     }
 }
