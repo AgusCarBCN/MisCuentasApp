@@ -85,8 +85,8 @@
     <string name="expenseoptions">Opciones de control de gastos totales</string>
     <string name="expenseoptionsdes">Selecciona las opciones para controlar todos tus gastos totales en un periodo de tiempo</string>
     <string name="categorycontrol">Gasto por categoría</string>
-    <string name="descategorycontrol">Establece un control de gasto por cada categoría y recibe avisos al superarlos.</string>
-    <string name="desexpensecontrol">Controla los gastos totales y recibe una notificación cuando los hayas superado</string>
+    <string name="descategorycontrol">Visualiza el control de gasto por cada categoría y recibe un aviso en forma de notificación cuando hayas superado el límite de gasto.</string>
+    <string name="desexpensecontrol">Visualiza los gastos totales por cuenta y recibe una notificación cuando los hayas superado</string>
     <string name="expensecontrol">Gasto total</string>
     <string name="modify">Modifica esta cuenta</string>
     <string name="deleteaccount">Borra esta cuenta</string>
@@ -115,7 +115,7 @@
     <string name="desdelete_all">Borra todas las cuentas y todos sus registros dentro.</string>
     <string name="desadd_an_account">Añade una nueva cuenta a la aplicación</string>
     <string name="changecurrency">Cambia de divisa.</string>
-    <string name="visitmygithubdes">explora mis proyectos de programación y colabora en ellos</string>
+    <string name="visitmygithubdes">Explora mis proyectos de programación y colabora en ellos</string>
     <string name="deschangecurrency">Cambia la divisa de tus cuentas.</string>
     <string name="email">agusticar@gmail.com</string>
     <string name="selectcurrencyoption">Selecciona divisa</string>

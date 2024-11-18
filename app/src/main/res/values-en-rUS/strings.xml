@@ -79,6 +79,7 @@
     <string name="selectcurrency">Select a currency for your accounts.</string>
     <string name="selectedcurrency">Selected currency: </string>
     <!--Settings-->
+    <string name="desexpensecontrol">View total expenses by account and receive a notification when you exceed them.</string>
     <string name="accountscontrol">Select accounts</string>
     <string name="accountscontroldes">Enable or disable accounts to control total expenses</string>
     <string name="limitmaxexpense">Set a maximum total spending limit</string>
@@ -86,8 +87,6 @@
     <string name="expenseoptions">Total expense control options</string>
     <string name="expenseoptionsdes">Select options to control all your total expenses within a time period</string>
     <string name="categorycontrol">Expense by Category</string>
-    <string name="descategorycontrol">Set an expense limit for each category and receive alerts when you exceed them.</string>
-    <string name="desexpensecontrol">Track total expenses and receive notifications when limits are exceeded.</string>
     <string name="expensecontrol">Total Expense</string>
     <string name="modify">Modify this account</string>
     <string name="delete_data_account">Delete the account and all its records</string>
@@ -102,7 +101,7 @@
     <string name="enablenotifications">Notifications</string>
     <string name="desenablenotifications">Enable or disable notifications on your expense tracker mobile app.</string>
     <string name="visitmygithubdes">Explore my programming projects and collaborate on them</string>
-
+    <string name="descategorycontrol">View spending control by category and receive a notification alert when you exceed the spending limit.</string>
     <string name="createbackup">Create backup</string>
     <string name="loadbackup">Load backup</string>
     <string name="deleteall">Delete all</string>

@@ -90,7 +90,6 @@
     <string name="limitmaxexpense">Set a maximum total spending limit</string>
     <string name="expensemanagement">Manage your expenses</string>
     <string name="categorycontrol">Expense by Category</string>
-    <string name="descategorycontrol">Set an expense limit for each category and receive alerts when you exceed them.</string>
     <string name="desexpensecontrol">Track total expenses and receive notifications when limits are exceeded.</string>
     <string name="expensecontrol">Total Expense</string>
     <string name="modify">Modify this account</string>
@@ -122,6 +121,7 @@
     <string name="changecurrency">Change currency</string>
     <string name="deschangecurrency">Change the currency of your accounts.</string>
     <string name="email">agusticar@gmail.com</string>
+    <string name="descategorycontrol">View spending control by category and receive a notification alert when you exceed the spending limit.</string>
 
 <!--Profile-->
     <string name="change">Change</string>
