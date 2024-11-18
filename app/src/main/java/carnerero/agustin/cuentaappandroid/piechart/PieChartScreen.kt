@@ -259,15 +259,15 @@ fun colorGenerator(isDarkTheme: Boolean): Color {
     val random = Random.Default
     return if (isDarkTheme) {
         // Genera colores vivos que destacan sobre un fondo oscuro
-        val red = random.nextInt(128, 256) // Colores brillantes
-        val green = random.nextInt(128, 256)
-        val blue = random.nextInt(128, 256)
+        val red = random.nextInt(0, 256) // Colores brillantes
+        val green = random.nextInt(0, 256)
+        val blue = random.nextInt(0, 256)
         Color(red, green, blue)
     } else {
         // Genera colores pastel que destacan sobre un fondo claro
-        val red = random.nextInt(200, 256) // Colores pastel más claros
-        val green = random.nextInt(200, 256)
-        val blue = random.nextInt(200, 256)
+        val red = random.nextInt(0, 256) // Colores pastel más claros
+        val green = random.nextInt(0, 256)
+        val blue = random.nextInt(0, 256)
         Color(red, green, blue)
     }
 
