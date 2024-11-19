@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -47,6 +49,8 @@ fun AccountSelector(
     val accounts by accountViewModel.listOfAccounts.observeAsState(emptyList())
     val currencyCodeSelected by accountViewModel.currencyCodeSelected.observeAsState("USD")
     val selected= stringResource(id = R.string.select)
+    val destination=stringResource(id = R.string.destinationaccount)
+    val origin=stringResource(id = R.string.originaccount)
     val balance= stringResource(id = R.string.fromamount)
     // Inicializamos el estado del VerticalPager basado en la cantidad de cuentas
     val pagerState = rememberPagerState(pageCount = { accounts.size })
@@ -108,14 +112,22 @@ fun AccountSelector(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
+                    Text(modifier = Modifier.semantics {
+                        contentDescription= if(isAccountDestination) "$destination {$accounts[page].name} $selected"
+                        else "$origin {$accounts[page].name} $selected"
+
+                    },
                         text = accounts[page].name,
                         color = LocalCustomColorsPalette.current.textColor,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.width(spacerWidth.dp))
-                    Text(
+                    Text(modifier = Modifier.semantics {
+                        contentDescription= if(isAccountDestination) "$destination {$accounts[page].balance} $selected"
+                        else "$origin {$accounts[page].balance} $selected"
+
+                    },
                         text = balanceFormatted,
                         color = LocalCustomColorsPalette.current.incomeColor,
                         textAlign = TextAlign.Center,

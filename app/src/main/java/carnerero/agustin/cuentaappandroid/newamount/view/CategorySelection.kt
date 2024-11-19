@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
@@ -44,6 +46,7 @@ fun CategorySelector(mainViewModel: MainViewModel, categoriesViewModel: Categori
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp)
+
         ) {
             items(listOfCategories.size) { index ->
                 CategoryEntries(listOfCategories[index],

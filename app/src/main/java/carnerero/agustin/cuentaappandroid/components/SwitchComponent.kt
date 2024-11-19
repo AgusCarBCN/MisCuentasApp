@@ -144,7 +144,10 @@ fun HeadSetting(title: String,textStyle: TextStyle) {
         style= textStyle,
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .semantics {
+                contentDescription=title
+            },
         color = LocalCustomColorsPalette.current.textHeadColor,
         textAlign = TextAlign.Center
     )

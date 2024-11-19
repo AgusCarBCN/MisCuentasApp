@@ -186,7 +186,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsAttribution">Date range icons</string>
-    <string name="version">Version 3.5</string>
+    <string name="version">Version 3.6</string>
     <string name="description">
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
 
@@ -339,6 +339,8 @@
     <string name="novembertable">November</string>
     <string name="decembertable">December</string>
     <!--Notifications-->
+    <string name="selectcategoriescontrol">Select categories for expense control</string>
+    <string name="selectaccountcontrol">Select accounts for expense control</string>
     <string name="lowbalance">Low balance alert </string>
     <string name="hightexpenses">Monthly expenses exceed the limit</string>
     <string name="limitexpense">Monthly expense limit</string>

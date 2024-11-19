@@ -258,7 +258,7 @@ private fun CircleIndicator(
                 val scale = animateFloatAsState(
                     targetValue = if (index == selectedIndex) 1.1f else 1f, // Escala más grande si es el seleccionado
                     animationSpec = spring(dampingRatio = Spring.DampingRatioHighBouncy, stiffness = Spring.StiffnessLow),
-                    label = "indicatorTutorial"
+                    label = "indicatorTutorial $index"
                 )
                 val indicatorColor by animateColorAsState(
                     targetValue = if (index == selectedIndex) {
@@ -266,7 +266,7 @@ private fun CircleIndicator(
                     } else {
                         LocalCustomColorsPalette.current.indicatorDefault
                     },
-                    label = "indicator color",
+                    label = "indicator color $index",
                     animationSpec = tween(
                         durationMillis = 2000, // Duración de la animación
                         easing = LinearOutSlowInEasing // Controla la velocidad de la transición
@@ -276,8 +276,8 @@ private fun CircleIndicator(
                 Icon(
                     painter = painterResource (if(index==selectedIndex)R.drawable.indicatorselected
                     else R.drawable.circleindicator ),
-                    contentDescription = if(index==selectedIndex)indicatorSelected
-                    else indicatorUnSelected
+                    contentDescription = if(index==selectedIndex)"$indicatorSelected $index"
+                    else "$indicatorUnSelected $index"
                     ,
                     tint = indicatorColor,
                     modifier = Modifier

@@ -54,6 +54,8 @@ fun DatePickerSearch(
     }.value
     //Mensaje de error de fechas
     val messageDateError= stringResource(id = R.string.datefromoverdateto)
+    val dateFromText= "${stringResource(id = R.string.fromdate)} $selectedDate"
+    val dateToText= "${stringResource(id = R.string.todate)} $selectedDate"
 
 
 // Estado del DatePicker
@@ -77,7 +79,7 @@ fun DatePickerSearch(
                 ) {
                     Icon(
                         imageVector = Icons.Default.DateRange,
-                        contentDescription = "Select date"
+                        contentDescription = (if(isDateFrom) dateFromText else dateToText)
                     )
                 }
             },

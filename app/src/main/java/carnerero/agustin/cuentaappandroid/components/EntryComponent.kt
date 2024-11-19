@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -147,11 +149,22 @@ fun ItemEntry(
     entry: EntryDTO,
     currencyCode: String
 ) {
-
-    Column {
+    val date= stringResource(id=R.string.fromdate)
+    val amount= stringResource(id = R.string.amountentrie)
+    val iconText= "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
+    Column(modifier = Modifier.semantics {
+        contentDescription =
+            " ${entry.description}, $date: ${entry.date}, $amount:${
+                Utils.numberFormat(
+                    entry.amount,
+                    currencyCode
+                )
+            }"
+    }) {
 
         Row(
-            modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            modifier = Modifier
+                .padding(start = 15.dp, end = 20.dp, top = 5.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -183,7 +196,7 @@ fun ItemEntry(
             Icon(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = entry.iconResource),
-                contentDescription = "icon",
+                contentDescription = null,
                 tint = LocalCustomColorsPalette.current.textColor
             )
             Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
@@ -191,7 +204,8 @@ fun ItemEntry(
                 text = stringResource(id = entry.nameResource),
                 modifier = Modifier
                     .padding(10.dp)
-                    .weight(0.4f),
+                    .weight(0.4f)
+                                     ,
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.bodyLarge
@@ -201,7 +215,8 @@ fun ItemEntry(
                 text = entry.name,
                 modifier = Modifier
                     .padding(10.dp)
-                    .weight(0.4f),
+                    .weight(0.4f)
+                    ,
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.End,
                 style=MaterialTheme.typography.bodyMedium

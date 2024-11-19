@@ -42,8 +42,8 @@ fun EntryAccountList(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadSetting(title = stringResource(id = R.string.selectaccounts),
-            androidx.compose.material3.MaterialTheme.typography.headlineSmall)
+        HeadSetting(title = stringResource(id = R.string.selectaccountcontrol),
+            androidx.compose.material3.MaterialTheme.typography.titleLarge)
         // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
         LazyColumn(
             modifier = Modifier

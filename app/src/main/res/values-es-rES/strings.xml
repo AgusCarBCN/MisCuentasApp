@@ -181,7 +181,7 @@
     <string name="iconsAttribution">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
-    <string name="version">Version 3.5</string>
+    <string name="version">Version 3.6</string>
     <string name="description">
     \t\t\tMis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 
@@ -339,7 +339,9 @@
     <string name="notification_required">Activa las notificaciones para recibir alertas sobre el control de tus gastos. Puedes activarlas o desactivarlas en cualquier momento desde la sección de Ajustes de la aplicación.</string>
     <string name="notificationrequiredalert">¿Permites que mis cuentas te envie notificaciones?</string>
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
-    <string name="selectcategories">Selecciona categorias</string>
+    <string name="selectcategories">Selecciona categorías</string>
+    <string name="selectcategoriescontrol">Selecciona categorías para control de gastos</string>
+    <string name="selectaccountcontrol">Selecciona cuentas para control de gastos</string>
     <string name="choosecategories">Habilita o Deshabilita categorias para controlar gastos</string>
     <string name="currentexpense">Gasto actual</string>
     <string name="categorytitle">Categorias</string>

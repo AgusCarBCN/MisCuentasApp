@@ -125,7 +125,7 @@ fun AccountCard(
     textButton: Int,
     onClickCard: () -> Unit
 ) {
-
+    val contentText=stringResource(textButton)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -174,7 +174,10 @@ fun AccountCard(
                 Text(
                     modifier = Modifier
                         .padding(5.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .semantics {
+                            contentDescription = "$contentText ${account.name}"
+                        },
                     text = stringResource(id = textButton),
                     textAlign = TextAlign.Start,
                     color = LocalCustomColorsPalette.current.textColor,
@@ -249,7 +252,13 @@ fun CategoryCardWithCheckbox(category: Category,
                     )
                     Text(
                         text = if (category.isChecked) stringResource(id = R.string.categorychecked)
+
                         else stringResource(id = R.string.categoryunchecked),
+                        modifier = Modifier.semantics {
+
+                            contentDescription = if(category.isChecked) "$categoryName $checked"
+                            else "$categoryName $unchecked"
+                        },
                         color = LocalCustomColorsPalette.current.textColor,
                         style = MaterialTheme.typography.bodySmall
                     )

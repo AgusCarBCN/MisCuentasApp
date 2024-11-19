@@ -45,8 +45,8 @@ fun EntryCategoryList(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadSetting(title = stringResource(id = R.string.selectcategories),
-            androidx.compose.material3.MaterialTheme.typography.headlineSmall)
+        HeadSetting(title = stringResource(id = R.string.selectcategoriescontrol),
+            androidx.compose.material3.MaterialTheme.typography.titleLarge)
         // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
         LazyColumn(
             modifier = Modifier
