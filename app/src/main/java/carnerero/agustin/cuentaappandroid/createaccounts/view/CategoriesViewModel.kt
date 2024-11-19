@@ -125,16 +125,6 @@ class CategoriesViewModel @Inject constructor(
             iconResource = R.drawable.ic_category_internet,
             nameResource = R.string.internet
         ),
-        Category(
-            type = CategoryType.EXPENSE,
-            iconResource = R.drawable.ic_cleaning,
-            nameResource = R.string.cleaning
-        ),
-        Category(
-            type = CategoryType.EXPENSE,
-            iconResource = R.drawable.ic_diy,
-            nameResource = R.string.diy
-        ),
 
         Category(
             type = CategoryType.EXPENSE,
@@ -302,6 +292,17 @@ class CategoriesViewModel @Inject constructor(
             iconResource = R.drawable.ic_category_kids,
             nameResource = R.string.children
         ),
+        Category(
+            type = CategoryType.EXPENSE,
+            iconResource = R.drawable.ic_cleaning,
+            nameResource = R.string.cleaning
+        ),
+        Category(
+            type = CategoryType.EXPENSE,
+            iconResource = R.drawable.ic_diy,
+            nameResource = R.string.diy
+        ),
+
         Category(
             type = CategoryType.EXPENSE,
             iconResource = R.drawable.ic_category_otherincomes,
