@@ -181,7 +181,7 @@
     <string name="iconsAttribution">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
-    <string name="version">Version 3.6</string>
+    <string name="version">Version 3.7</string>
     <string name="description">
     \t\t\tMis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 
@@ -194,7 +194,7 @@
     <string name="desshare">Comparte esta app para que llegue a muchos sitios.</string>
     <string name="desrate">Valora y comparte tu opinión sobre la app.</string>
     <string name="desemail">Contacta conmigo para darme cualquier sugerencia.</string>
-    <string name="desstore">Descarga mi otra aplicación. MisCuentasApp</string>
+    <string name="desstore">Descarga mi otra aplicación: Climbing Companion</string>
     <string name="despolicy">Accede a la política de privacidad</string>
     <string name="othersapp">Otras aplicaciones</string>
     <string name="policy">Política de privacidad</string>

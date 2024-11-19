@@ -186,7 +186,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsAttribution">Date range icons</string>
-    <string name="version">Version 3.6</string>
+    <string name="version">Version 3.7</string>
     <string name="description">
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
 
@@ -199,7 +199,7 @@
     <string name="desshare">Share this app to reach many places.</string>
     <string name="desrate">Rate and share your opinion about the app.</string>
     <string name="desemail">Contact me to give any suggestion.</string>
-    <string name="desstore">Download my other application. MyAccountsApp</string>
+    <string name="desstore">Download my other application: Climbing Companion</string>
     <string name="despolicy">Go to private policy</string>
     <string name="othersapp">Others apps</string>
     <string name="policy">Private policy</string>

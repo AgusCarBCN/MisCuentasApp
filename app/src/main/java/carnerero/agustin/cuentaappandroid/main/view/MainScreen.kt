@@ -179,11 +179,10 @@ fun MainScreen(
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
 
-                // Add your main screen content here
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    //AdmobBanner()
+                    AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()
                     }
