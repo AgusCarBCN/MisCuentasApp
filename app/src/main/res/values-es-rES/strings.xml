@@ -86,7 +86,7 @@
     <string name="expenseoptionsdes">Selecciona las opciones para controlar todos tus gastos totales en un periodo de tiempo</string>
     <string name="categorycontrol">Gasto por categoría</string>
     <string name="descategorycontrol">Visualiza el control de gasto por cada categoría y recibe un aviso en forma de notificación cuando hayas superado el límite de gasto.</string>
-    <string name="desexpensecontrol">Visualiza los gastos totales por cuenta y recibe una notificación cuando los hayas superado</string>
+    <string name="desexpensecontrol">Visualiza el control de gasto por cuenta y recibe una notificación cuando hayas superado el límite de gasto</string>
     <string name="expensecontrol">Gasto total</string>
     <string name="modify">Modifica esta cuenta</string>
     <string name="deleteaccount">Borra esta cuenta</string>
@@ -262,6 +262,8 @@
     <string name="alcohol">Alcohol</string>
     <string name="gambling">Juego</string>
     <string name="internet">Internet</string>
+    <string name="cleaning">Limpieza</string>
+    <string name="diy">Bricolaje</string>
     <!---Transfer-->
     <string name="originaccount">Selecciona cuenta de origen</string>
     <string name="destinationaccount">Selecciona cuenta destino</string>

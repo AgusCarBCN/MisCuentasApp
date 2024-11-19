@@ -82,6 +82,8 @@
     <string name="selectcurrency">Select a currency for your accounts.</string>
     <string name="selectedcurrency">Selected currency: </string>
     <!--Settings-->
+
+    <string name="desexpensecontrol">View spending control by account and receive a notification when you exceed the spending limit</string>
     <string name="accountscontrol">Select accounts</string>
     <string name="accountscontroldes">Enable or disable accounts to control total expenses</string>
     <string name="visitmygithubdes">Explore my programming projects and collaborate on them</string>
@@ -90,7 +92,6 @@
     <string name="limitmaxexpense">Set a maximum total spending limit</string>
     <string name="expensemanagement">Manage your expenses</string>
     <string name="categorycontrol">Expense by Category</string>
-    <string name="desexpensecontrol">Track total expenses and receive notifications when limits are exceeded.</string>
     <string name="expensecontrol">Total Expense</string>
     <string name="modify">Modify this account</string>
     <string name="delete_data_account">Delete the account and all its records</string>
@@ -273,6 +274,8 @@
     <string name="alcohol">Alcohol</string>
     <string name="gambling">Gambling</string>
     <string name="internet">Internet</string>
+    <string name="cleaning">Cleaning products</string>
+    <string name="diy">DIY products</string>
     <!---Transfer-->
     <string name="originaccount">Select an origin account</string>
     <string name="destinationaccount">Select destination account</string>
