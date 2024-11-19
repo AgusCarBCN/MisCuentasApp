@@ -17,8 +17,8 @@ android {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 27
         targetSdk = 34
-        versionCode = 39
-        versionName = "3.5"
+        versionCode = 40
+        versionName = "3.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
