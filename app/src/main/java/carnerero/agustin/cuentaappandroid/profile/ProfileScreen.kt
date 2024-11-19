@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
@@ -35,6 +36,7 @@ import carnerero.agustin.cuentaappandroid.components.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.createprofile.ProfileImageWithCamera
 import carnerero.agustin.cuentaappandroid.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.launch
 
 
@@ -164,7 +166,9 @@ fun NewInputComponent(
                 .fillMaxWidth()
                 .padding(top = 10.dp, start = 30.dp),
             text = title,
-            style=MaterialTheme.typography.bodyLarge
+            color= LocalCustomColorsPalette.current.textHeadColor,
+            style=MaterialTheme.typography.headlineSmall,
+            textAlign = TextAlign.Start
         )
 
         Row(
