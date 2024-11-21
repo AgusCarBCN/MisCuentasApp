@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -73,8 +74,7 @@ fun CalculatorUI(
                     ) {
                         Text(
                             text = expression,
-                            fontSize = 48.sp,
-                            fontWeight = FontWeight.Normal,
+                            style = MaterialTheme.typography.displayLarge,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Start,
                             color = LocalCustomColorsPalette.current.textColor
                         )
@@ -84,7 +84,7 @@ fun CalculatorUI(
                             Box(
                                 modifier = Modifier
                                     .width(2.dp) // Ancho del cursor
-                                    .height(48.dp) // Altura del cursor
+                                    .height(36.dp) // Altura del cursor
                                     .background(LocalCustomColorsPalette.current.textColor) // Color del cursor
                                     .align(Alignment.CenterEnd) // Alinear al final del texto
                                     .padding(horizontal = 4.dp) // Espacio a los lados del cursor

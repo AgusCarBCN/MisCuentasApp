@@ -53,7 +53,11 @@ class ParserCalculator(private val input:String="") {
 
             tokenizer.nextToken()
 
-            return parseExpression(tokenizer)
+            val result = parseExpression(tokenizer)
+
+            // Redondeamos el resultado a dos decimales usando Math.round
+            return Math.round(result * 100) / 100.0
+            //return parseExpression(tokenizer)
         }
 
         // Función para analizar la expresión y realizar las operaciones de suma y resta
