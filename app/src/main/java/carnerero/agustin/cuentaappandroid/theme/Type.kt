@@ -32,13 +32,20 @@ val AppTypography = Typography(
         lineHeight = 36.sp,
         letterSpacing = 0.5.sp
     ),
-     displayLarge = TextStyle(
-         fontFamily = latoBold,
-         fontWeight = FontWeight.Bold,
-         fontSize = 36.sp,
-         lineHeight = 36.sp,
-         letterSpacing = 0.5.sp
-     ),
+    displayMedium = TextStyle(
+        fontFamily = latoBold,
+        fontWeight = FontWeight.Bold,
+        fontSize = 36.sp,               // Font size ajustado a 36.sp
+        lineHeight = 44.sp,             // Ajustamos lineHeight para que haya más espacio entre las líneas
+        letterSpacing = 0.25.sp         // Reducción del letterSpacing para hacerlo más compacto
+    ),
+    displayLarge = TextStyle(
+        fontFamily = latoBold,
+        fontWeight = FontWeight.Bold,
+        fontSize = 48.sp,               // Aumentamos el tamaño para displayLarge
+        lineHeight = 56.sp,             // Aumentamos lineHeight para que haya espacio visual
+        letterSpacing = 0.1.sp          // Ajustamos el letterSpacing para que sea más natural
+    ),
 
     titleSmall = TextStyle(
         fontFamily = latoBold,

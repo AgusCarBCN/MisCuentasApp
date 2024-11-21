@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -71,7 +72,7 @@ fun CalculatorButton(
     {
         Text(
             text = symbol,
-            fontSize = 36.sp,
+            style= MaterialTheme.typography.displayLarge,
             color = colorText.value,
         )
     }

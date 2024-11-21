@@ -74,7 +74,7 @@ fun CalculatorUI(
                     ) {
                         Text(
                             text = expression,
-                            style = MaterialTheme.typography.displayLarge,
+                            style = MaterialTheme.typography.displayMedium,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Start,
                             color = LocalCustomColorsPalette.current.textColor
                         )
