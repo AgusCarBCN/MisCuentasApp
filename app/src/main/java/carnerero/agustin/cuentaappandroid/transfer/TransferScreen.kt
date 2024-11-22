@@ -89,7 +89,11 @@ fun Transfer(
         )
         AccountSelector(300,20,stringResource(id = R.string.originaccount), accountViewModel)
         AccountSelector(300,20,stringResource(id = R.string.destinationaccount), accountViewModel, true)
-
+        if(accountTo==accountFrom){
+            entryViewModel.onChangeTransferButton(false)
+        }else {
+            entryViewModel.onChangeTransferButton(true)
+        }
         ModelButton(text = stringResource(id = R.string.confirmButton),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),
@@ -100,6 +104,7 @@ fun Transfer(
                 } else {
                     -1
                 }
+
                 scope.launch(Dispatchers.IO) {
                     if (operationStatus == 1) {
                         entryViewModel.addEntry(

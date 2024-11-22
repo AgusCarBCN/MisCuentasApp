@@ -468,6 +468,7 @@ class AccountsViewModel @Inject constructor(
 
     }
 
+
     fun onTextBalanceChanged(newBalance:String){
         if (Utils.isValidDecimal(newBalance)) {
             _newAmount.value = newBalance
