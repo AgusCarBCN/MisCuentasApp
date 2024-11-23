@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.transfer
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,7 +48,7 @@ fun Transfer(
 
     val accountFrom by accountViewModel.accountSelected.observeAsState()
     val accountTo by accountViewModel.destinationAccount.observeAsState()
-    val amountTransfer by entryViewModel.entryAmount.observeAsState("")
+    val amountTransfer by entryViewModel.entryAmount.observeAsState("0.0")
     val confirmButton by entryViewModel.enableConfirmTransferButton.observeAsState(false)
     val scope = rememberCoroutineScope()
     val idAccountFrom = accountFrom?.id ?: 1
@@ -89,7 +90,9 @@ fun Transfer(
         )
         AccountSelector(300,20,stringResource(id = R.string.originaccount), accountViewModel)
         AccountSelector(300,20,stringResource(id = R.string.destinationaccount), accountViewModel, true)
-        if(accountTo==accountFrom){
+        Log.d("amount",amountTransfer)
+        if ((accountTo==accountFrom) || (amountTransfer.isEmpty()|| amountTransfer.toDoubleOrNull()==0.0) )
+        {
             entryViewModel.onChangeTransferButton(false)
         }else {
             entryViewModel.onChangeTransferButton(true)
@@ -112,7 +115,7 @@ fun Transfer(
                                 description = transferFrom,
                                 amount = negativeAmount,
                                 date = Date().dateFormat(),
-                                categoryId = 2,
+                                categoryId = 53,
                                 accountId = idAccountFrom
                             )
                         )
@@ -121,7 +124,7 @@ fun Transfer(
                                 description = transferTo,
                                 amount = amount,
                                 date = Date().dateFormat(),
-                                categoryId = 2,
+                                categoryId = 53,
                                 accountId = idAccountTo
                             )
                         )
