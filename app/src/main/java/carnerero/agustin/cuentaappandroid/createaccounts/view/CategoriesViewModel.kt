@@ -307,7 +307,12 @@ class CategoriesViewModel @Inject constructor(
             type = CategoryType.EXPENSE,
             iconResource = R.drawable.ic_category_otherincomes,
             nameResource = R.string.other_expenses
-        )
+        ),
+        Category(
+        type = CategoryType.TRANSFER,
+        iconResource = R.drawable.transferoption,
+        nameResource = R.string.transfer
+    )
     )
     // Flow que emite los gastos actuales y el límite para cada categoría
     private val _expensePercentageFlow = MutableStateFlow<Map<Category, Float>>(emptyMap())
