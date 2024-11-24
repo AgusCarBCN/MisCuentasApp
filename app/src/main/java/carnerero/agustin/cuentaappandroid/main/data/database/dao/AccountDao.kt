@@ -57,9 +57,9 @@ interface AccountDao {
     @Query("UPDATE AccountEntity SET isChecked = :newValueChecked WHERE id = :accountId")
     suspend fun updateCheckedAccount(accountId: Int, newValueChecked: Boolean)
 
-    // 10. Update amount account
+    // 10. Update periodSpendingLimit category
     @Query("UPDATE AccountEntity SET periodSpendingLimit = :newAmount WHERE id = :accountId")
-    suspend fun updateAmountAccount(accountId: Int, newAmount:Double)
+    suspend fun updateSpendingLimitAccount(accountId: Int, newAmount:Double)
 
    // 11. Update date From  account control expense
     @Query("UPDATE AccountEntity SET fromDate = :newDate WHERE id = :accountId")
@@ -73,7 +73,12 @@ interface AccountDao {
     @Query("SELECT * FROM AccountEntity WHERE isChecked=1")
     suspend fun getAllAccountsChecked(): List<Account>
 
-    // 5. Update periodSpendingLimit category
-    @Query("UPDATE AccountEntity SET periodSpendingLimit = :newAmount WHERE id = :accountId")
-    suspend fun updateSpendingLimitAccount(accountId: Int, newAmount:Double)
+    // 14. Update All account by exchange rate
+    @Query("UPDATE AccountEntity SET balance = balance*:rate")
+    suspend fun updateAccountBalanceByExchangeRate(rate:Double)
+
+
+
+
+
 }

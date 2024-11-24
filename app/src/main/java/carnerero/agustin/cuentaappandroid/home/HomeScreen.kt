@@ -52,6 +52,7 @@ fun HomeScreen(
 
     LaunchedEffect(Unit) {
         entriesViewModel.getTotal()
+        accountsViewModel.getAllAccounts()
     }
 
     Column(

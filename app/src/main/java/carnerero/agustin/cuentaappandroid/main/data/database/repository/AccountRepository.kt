@@ -71,5 +71,8 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     suspend fun getAllAccountsChecked(): List<Account> {
         return accountDao.getAllAccountsChecked()
     }
-
+    // 14. Update account balance by exchange rate
+    suspend fun updateAccountBalanceByExchangeRate(rate:Double) {
+        accountDao.updateAccountBalanceByExchangeRate(rate)
+    }
 }

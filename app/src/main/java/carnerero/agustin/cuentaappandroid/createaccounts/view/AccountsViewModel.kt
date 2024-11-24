@@ -16,6 +16,7 @@ import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.Ge
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.GetAllAccountsUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.InsertAccountUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.TransferUseCase
+import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountBalanceByExchangeRateUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountBalanceUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountDateFromUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.accountusecase.UpdateAccountDateToUseCase
@@ -53,7 +54,8 @@ class AccountsViewModel @Inject constructor(
     private val updateChecked: UpdateCheckedAccountUseCase,
     private val updateSpendingLimit: UpdateSpendingLimitAccountUseCase,
     private val updateFromDate: UpdateAccountDateFromUseCase,
-    private val updateToDate: UpdateAccountDateToUseCase
+    private val updateToDate: UpdateAccountDateToUseCase,
+    private val updateAccountsBalanceByExchangeRate: UpdateAccountBalanceByExchangeRateUseCase
 
 ) : ViewModel() {
     private val currencies=
@@ -300,7 +302,7 @@ class AccountsViewModel @Inject constructor(
             getCurrencyCode()
             _isCurrencyExpanded.value = false
             onAccountUpdated()
-           getListOfCurrencyCode()
+            getListOfCurrencyCode()
             updateExpensePercentage()
 
         }
@@ -351,7 +353,12 @@ class AccountsViewModel @Inject constructor(
             }
         }
     }
+    fun updateAccountsBalancesByExchangeRates(rate:Double){
+        viewModelScope.launch(Dispatchers.IO) {
+            updateAccountsBalanceByExchangeRate.invoke(rate)
+        }
 
+    }
     private suspend fun updateAccountBalance(accountId: Int, newBalance: Double) {
         try {
             withContext(Dispatchers.IO) {

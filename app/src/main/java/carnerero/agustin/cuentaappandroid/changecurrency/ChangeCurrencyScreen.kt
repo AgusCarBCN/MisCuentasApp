@@ -78,12 +78,14 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
                     Log.d("ratio",ratio.toString())
                     if(ratio!=null) {
                         entriesViewModel.getAllEntriesDataBase()
+                        accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
                         accountsViewModel.getAllAccounts()
+                        /*accountsViewModel.getAllAccounts()
                         accounts?.forEach { account ->
                             val newBalance = account.balance * (ratio )
                             val id = account.id
                             accountsViewModel.upDateAccountBalance(id, newBalance)
-                        }
+                        }*/
                         entries.forEach { entry ->
                             val newAmount = entry.amount * (ratio)
                             val id = entry.id
