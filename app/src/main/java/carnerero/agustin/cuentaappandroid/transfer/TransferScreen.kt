@@ -67,8 +67,8 @@ fun Transfer(
             .fillMaxWidth()
             .padding(top = 30.dp)
             .verticalScroll(
-            rememberScrollState()
-        ),
+                rememberScrollState()
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -88,13 +88,22 @@ fun Transfer(
             BoardType.DECIMAL,
             false
         )
-        AccountSelector(300,20,stringResource(id = R.string.originaccount), accountViewModel)
-        AccountSelector(300,20,stringResource(id = R.string.destinationaccount), accountViewModel, true)
-        Log.d("amount",amountTransfer)
-        if ((accountTo==accountFrom) || (amountTransfer.isEmpty()|| amountTransfer.toDoubleOrNull()==0.0) )
-        {
+        AccountSelector(300, 20, stringResource(id = R.string.originaccount), accountViewModel)
+        AccountSelector(
+            300,
+            20,
+            stringResource(id = R.string.destinationaccount),
+            accountViewModel,
+            true
+        )
+        Log.d("amount", amountTransfer)
+        if ((accountTo == accountFrom) ||
+            (amountTransfer.isEmpty() ||
+                    amountTransfer.toDoubleOrNull() == 0.0) ||
+            amountTransfer == "."
+        ) {
             entryViewModel.onChangeTransferButton(false)
-        }else {
+        } else {
             entryViewModel.onChangeTransferButton(true)
         }
         ModelButton(text = stringResource(id = R.string.confirmButton),

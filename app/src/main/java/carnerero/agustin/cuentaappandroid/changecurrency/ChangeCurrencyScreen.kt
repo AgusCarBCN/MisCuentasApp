@@ -82,19 +82,6 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
                         entriesViewModel.getAllEntriesDTO()
                         accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
                         accountsViewModel.getAllAccounts()
-                        /*accountsViewModel.getAllAccounts()
-                        accounts?.forEach { account ->
-                            val newBalance = account.balance * (ratio )
-                            val id = account.id
-                            accountsViewModel.upDateAccountBalance(id, newBalance)
-                        }*/
-                        entries.forEach { entry ->
-                            val newAmount = entry.amount * (ratio)
-                            val id = entry.id
-                            entriesViewModel.upDateAmountEntry(id, newAmount)
-                        }
-                        entriesViewModel.getTotal()
-
                         withContext(Dispatchers.Main) {
                             SnackBarController.sendEvent(event = SnackBarEvent(messageCurrencyChange))
                         }
