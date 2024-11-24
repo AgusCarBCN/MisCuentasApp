@@ -27,6 +27,9 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
         entryDao.insertEntry(entry)
     }
 
+    suspend fun updateEntriesAmountByExchangeRate(rate: Double){
+        entryDao.updateEntriesAmountByExchangeRate(rate)
+    }
     suspend fun getAllEntries(): List<Entry> =
 
         entryDao.getAllEntries()

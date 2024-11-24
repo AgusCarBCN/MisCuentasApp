@@ -77,7 +77,9 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
                     val ratio = accountsViewModel.conversionCurrencyRate(currencyCodeSelected, currencyCodeShowed)
                     Log.d("ratio",ratio.toString())
                     if(ratio!=null) {
-                        entriesViewModel.getAllEntriesDataBase()
+                        entriesViewModel.updateEntriesAmountByExchangeRate(ratio)
+                        entriesViewModel.getTotal()
+                        entriesViewModel.getAllEntriesDTO()
                         accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
                         accountsViewModel.getAllAccounts()
                         /*accountsViewModel.getAllAccounts()

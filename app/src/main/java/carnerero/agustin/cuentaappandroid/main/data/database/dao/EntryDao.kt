@@ -42,6 +42,9 @@ interface EntryDao {
     @Query("SELECT * FROM EntryEntity WHERE id = :entryId")
     suspend fun getEntryById(entryId: Long): Entry?
 
+    // 14. Update All entries by exchange rate
+    @Query("UPDATE EntryEntity SET amount = amount*:rate")
+    suspend fun updateEntriesAmountByExchangeRate(rate:Double)
 
 
     // 7. Actualizar el montante de una entrada

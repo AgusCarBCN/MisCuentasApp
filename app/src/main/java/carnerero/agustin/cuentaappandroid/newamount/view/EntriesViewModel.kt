@@ -19,6 +19,7 @@ import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.Ge
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumTotalIncomesUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.InsertEntryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.UpdateAmountUseCase
+import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.UpdateEntriesAmountByExchangeRateUseCase
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +47,8 @@ class EntriesViewModel @Inject constructor(
     private val getTotalIncomesByDate: GetSumTotalIncomesByDate,
     private val getTotalExpensesByDate: GetSumTotalExpensesByDateUseCase,
     private val updateAmountEntry: UpdateAmountUseCase,
-    private val getAllEntriesDTO: GeAllEntriesUseCase
+    private val getAllEntriesDTO: GeAllEntriesUseCase,
+    private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase
 
 ) : ViewModel() {
 
@@ -88,7 +90,7 @@ class EntriesViewModel @Inject constructor(
 
     init{
         getTotal()
-
+        getAllEntriesDTO()
     }
 
     fun getAllEntriesDTO(){
@@ -222,6 +224,11 @@ class EntriesViewModel @Inject constructor(
                 }
             resetFields()
             getTotal()
+        }
+    }
+    fun updateEntriesAmountByExchangeRate(rate:Double){
+        viewModelScope.launch(Dispatchers.IO) {
+            updateEntriesAmountByExchangeRate.invoke(rate)
         }
     }
     fun onTextFieldsChanged(newDescription:String,newAmount:String){
