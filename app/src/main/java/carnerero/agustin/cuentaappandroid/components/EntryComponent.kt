@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -290,13 +291,17 @@ fun EntriesWithCheckBox(
     currencyCode: String,
     entriesToModify:Boolean = false
 ) {
-    val listOfEntriesWithCheckBox = remember {
-        mutableStateListOf<EntryWithCheckBox>().apply {
-            listOfEntries.forEach { entry ->
-                add(EntryWithCheckBox(entry, false))
-            }
-        }
+    // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
+    // remember(listOfEntries):
+    // - Al observar listOfEntries, remember reconstruye listOfEntriesWithCheckBox cada vez que listOfEntries cambia.
+    // - Esto asegura que los datos estén siempre sincronizados con la fuente original (listOfEntries).
+    // map y toMutableStateList:
+    // - map crea una nueva lista de EntryWithCheckBox, donde cada elemento de listOfEntries se asocia a un checkbox inicializado en false.
+    // - toMutableStateList convierte esa lista en un estado observable para que las actualizaciones dinámicas funcionen en la interfaz de manera reactiva.
+    val listOfEntriesWithCheckBox = remember(listOfEntries) {
+        listOfEntries.map { EntryWithCheckBox(it, false) }.toMutableStateList()
     }
+
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -309,13 +314,13 @@ fun EntriesWithCheckBox(
             verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
             contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
         ) {
-            items(listOfEntries) { entry ->
+            items(listOfEntriesWithCheckBox) { entry ->
                 EntryCardWithCheckBox(
-                    entry,
+                    entry.entry,
                     currencyCode,
-                    false,
+                    entry.checkbox,
                     onSelectionChange = {
-                       /* if (entriesToModify) {
+                        if (entriesToModify) {
                             TODO()
                         } else {
                             val index = listOfEntriesWithCheckBox.indexOf(entry)
@@ -323,7 +328,7 @@ fun EntriesWithCheckBox(
                                 listOfEntriesWithCheckBox[index] =
                                     entry.copy(checkbox = !entry.checkbox)
                             }
-                        }*/
+                        }
                     }
                 )
             }
