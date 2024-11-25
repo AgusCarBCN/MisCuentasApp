@@ -253,8 +253,7 @@ fun SettingScreen(
             description = stringResource(id = R.string.deleteentrydes),
             iconResource = R.drawable.ic_databasedelete,
             onClick = {
-                settingViewModel.onSelectAccountOption(true)
-                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
+                mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
             }
         )
         RowComponent(title = stringResource(id = R.string.modifyentry),
@@ -264,7 +263,6 @@ fun SettingScreen(
 
             }
         )
-
 
 
         RowComponent(title = stringResource(id = R.string.changecurrency),

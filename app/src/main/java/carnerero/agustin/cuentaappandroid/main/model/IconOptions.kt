@@ -20,6 +20,7 @@ enum class IconOptions {
     ABOUT_DESCRIPTION,
     EXIT,
     ENTRIES,
+    ENTRIES_TO_DELETE,
     EMAIL,
     SELECT_CATEGORIES,
     SELECT_ACCOUNTS,

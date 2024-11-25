@@ -65,6 +65,7 @@ import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorUI
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.changecurrency.ChangeCurrencyScreen
+import carnerero.agustin.cuentaappandroid.components.EntriesWithCheckBox
 import carnerero.agustin.cuentaappandroid.components.EntryList
 import carnerero.agustin.cuentaappandroid.components.IconComponent
 import carnerero.agustin.cuentaappandroid.components.ModelDialog
@@ -351,7 +352,14 @@ fun MainScreen(
                                 accountsViewModel
                             )
 
-
+                        IconOptions.ENTRIES_TO_DELETE -> {
+                            EntriesWithCheckBox(
+                                mainViewModel,
+                                entriesViewModel,
+                                entries,
+                                currencyCode
+                            )
+                        }
                     }
 
                 }
