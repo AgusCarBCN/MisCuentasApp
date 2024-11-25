@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
@@ -18,13 +19,13 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEntry(entry: Entry)
 
-     // 2. Borrar una entrada por ID
+     // 2. Delete entry
      @Delete
      suspend fun deleteEntry(entry: Entry)
 
-     // 3. Borrar todas las entradas
-     @Query("DELETE FROM EntryEntity")
-     suspend fun deleteAllEntries()
+     // 3. Modify entries
+     @Update
+     suspend fun updateEntry(entry: Entry)
 
     // 2. Get all entries
     @Query("SELECT * FROM EntryEntity ORDER BY date DESC")

@@ -21,6 +21,7 @@ import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.Ge
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.InsertEntryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.UpdateAmountUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.UpdateEntriesAmountByExchangeRateUseCase
+import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.UpdateEntryUseCase
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +51,8 @@ class EntriesViewModel @Inject constructor(
     private val updateAmountEntry: UpdateAmountUseCase,
     private val getAllEntriesDTO: GeAllEntriesUseCase,
     private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase,
-    private val deleteEntry: DeleteEntryUseCase
+    private val deleteEntry: DeleteEntryUseCase,
+    private val updateEntry: UpdateEntryUseCase
 
     ) : ViewModel() {
 
@@ -231,10 +233,14 @@ class EntriesViewModel @Inject constructor(
     fun deleteEntry(entry:EntryDTO) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteEntry.invoke(entry)
-
             getTotal()
         }
-
+    }
+    fun updateEntry(entry:EntryDTO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateEntry.invoke(entry)
+            getTotal()
+        }
     }
     fun updateEntriesAmountByExchangeRate(rate:Double){
         viewModelScope.launch(Dispatchers.IO) {

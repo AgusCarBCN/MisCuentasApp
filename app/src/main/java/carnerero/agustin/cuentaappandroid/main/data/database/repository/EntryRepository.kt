@@ -106,6 +106,10 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
         val entry=entryDtoToEntry(entryDTO)
         entryDao.deleteEntry(entry)
     }
+    suspend fun upDateEntry(entryDTO:EntryDTO){
+        val entry=entryDtoToEntry(entryDTO)
+        entryDao.updateEntry(entry)
+    }
 
     private fun entryDtoToEntry(dto: EntryDTO): Entry {
         return Entry(
