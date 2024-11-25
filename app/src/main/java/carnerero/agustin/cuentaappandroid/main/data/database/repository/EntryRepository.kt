@@ -107,7 +107,6 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
         entryDao.deleteEntry(entry)
     }
 
-
     private fun entryDtoToEntry(dto: EntryDTO): Entry {
         return Entry(
             id=dto.id,
@@ -116,11 +115,6 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
             date = dto.date,
             categoryId = dto.iconResource,
             accountId =dto.accountId
-
         )
     }
-
-
-
-
 }

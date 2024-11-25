@@ -358,11 +358,12 @@ fun MainScreen(
 
                         IconOptions.ENTRIES_TO_DELETE -> {
                             EntriesWithCheckBox(
-                                mainViewModel,
                                 entriesViewModel,
                                 entries,
                                 currencyCode
                             )
+                            title=R.string.selectEntries
+
                         }
 
 

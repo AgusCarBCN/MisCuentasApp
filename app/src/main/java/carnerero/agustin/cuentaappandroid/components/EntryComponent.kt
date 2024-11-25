@@ -1,13 +1,14 @@
 package carnerero.agustin.cuentaappandroid.components
 
-import android.graphics.Insets.add
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -33,19 +33,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
-import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 
@@ -89,11 +87,20 @@ fun EntryList(
                 )
             }
         } else {
-            Text(
-                text = stringResource(id = R.string.noentries),
-                color = LocalCustomColorsPalette.current.textColor,
-                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() }
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.recordsnotfound),
+                    color = LocalCustomColorsPalette.current.textColor,
+                    textAlign = TextAlign.Center,
+                    fontSize = with(LocalDensity.current) {
+                        dimensionResource(id = R.dimen.text_body_extra_large).toSp()
+                    }
+                )
+            }
+
         }
     }
     LazyColumn(
@@ -123,7 +130,7 @@ fun EntryList(
                             text = Utils.toDateEntry(date),
                             textAlign = TextAlign.Start,
                             color = LocalCustomColorsPalette.current.textColor,
-                            style=MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
                 }
@@ -138,7 +145,11 @@ fun EntryList(
             }
         } else {
             items(entriesByCategory.toList()
-                .sortedByDescending {(_, info) -> abs(info.second ?: 0.0) }) { (categoryName, info) ->
+                .sortedByDescending { (_, info) ->
+                    abs(
+                        info.second ?: 0.0
+                    )
+                }) { (categoryName, info) ->
                 val (icon, total) = info // Desestructurar el ícono y el total
                 ItemCategory(
                     categoryName = categoryName,
@@ -158,9 +169,10 @@ fun ItemEntry(
     entry: EntryDTO,
     currencyCode: String
 ) {
-    val date= stringResource(id=R.string.fromdate)
-    val amount= stringResource(id = R.string.amountentrie)
-    val iconText= "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
+    val date = stringResource(id = R.string.fromdate)
+    val amount = stringResource(id = R.string.amountentrie)
+    val iconText =
+        "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
     Column(modifier = Modifier.semantics {
         contentDescription =
             " ${entry.description}, $date: ${entry.date}, $amount:${
@@ -182,7 +194,7 @@ fun ItemEntry(
                 modifier = Modifier
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge,
                 color = LocalCustomColorsPalette.current.textHeadColor
             )
             Spacer(modifier = Modifier.height(12.dp))
@@ -193,7 +205,7 @@ fun ItemEntry(
                 color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
-                style=MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge
             )
 
         }
@@ -213,22 +225,20 @@ fun ItemEntry(
                 text = stringResource(id = entry.nameResource),
                 modifier = Modifier
                     .padding(10.dp)
-                    .weight(0.4f)
-                                     ,
+                    .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge
 
             )
             Text(
                 text = entry.name,
                 modifier = Modifier
                     .padding(10.dp)
-                    .weight(0.4f)
-                    ,
+                    .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.End,
-                style=MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium
             )
 
         }
@@ -264,7 +274,7 @@ fun ItemCategory(
                     .weight(0.4f),
                 color = LocalCustomColorsPalette.current.textColor,
                 textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge
 
             )
             Text(
@@ -274,7 +284,7 @@ fun ItemCategory(
                 color = if ((amount ?: 0.0) >= 0) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
-                style=MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge
 
             )
 
@@ -283,13 +293,13 @@ fun ItemCategory(
     }
 
 }
+
 @Composable
 fun EntriesWithCheckBox(
-    mainViewModel: MainViewModel,
     entriesViewModel: EntriesViewModel,
     listOfEntries: List<EntryDTO>,
     currencyCode: String,
-    entriesToModify:Boolean = false
+    entriesToModify: Boolean = false
 ) {
     // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
     // remember(listOfEntries):
@@ -302,9 +312,31 @@ fun EntriesWithCheckBox(
         listOfEntries.map { EntryWithCheckBox(it, false) }.toMutableStateList()
     }
 
-    Column(verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if(listOfEntries.isNotEmpty()) {
+            HeadSetting(
+                title = stringResource(id = R.string.selectentriesToDelete),
+                MaterialTheme.typography.titleLarge
+            )
+        }else{
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.recordsnotfound),
+                    color = LocalCustomColorsPalette.current.textColor,
+                    textAlign = TextAlign.Center,
+                    fontSize = with(LocalDensity.current) {
+                        dimensionResource(id = R.dimen.text_body_extra_large).toSp()
+                    }
+                )
+            }
 
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -333,29 +365,24 @@ fun EntriesWithCheckBox(
                 )
             }
         }
-
-
-        ModelButton(text = stringResource(id = R.string.confirmButton),
+        if(listOfEntries.isNotEmpty()) {
+            ModelButton(text = stringResource(id = R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.width(320.dp),
                 true,
                 onClickButton = {
-                        val entriesToRemove = listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
-                        entriesToRemove.forEach { entryWithCheckBox ->
-                            listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
-                            entriesViewModel.deleteEntry(entryWithCheckBox. entry) // Borra de la base de datos
-                        }
-                        Log.d("entries",entriesToRemove.toString())
-                        entriesViewModel.getTotal()
-
-
-
-
-
+                    val entriesToRemove =
+                        listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
+                    entriesToRemove.forEach { entryWithCheckBox ->
+                        listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
+                        entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
+                    }
+                    entriesViewModel.getTotal()
                 }
             )
         }
     }
+}
 
 
 

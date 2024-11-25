@@ -343,6 +343,9 @@
     <string name="novembertable">November</string>
     <string name="decembertable">December</string>
     <!--Notifications-->
+    <string name="recordsnotfound">No records found</string>
+    <string name="selectEntries">Select records</string>
+    <string name="selectentriesToDelete">Select records to delete</string>
     <string name="selectcategoriescontrol">Select categories for expense control</string>
     <string name="selectaccountcontrol">Select accounts for expense control</string>
     <string name="lowbalance">Low balance alert </string>

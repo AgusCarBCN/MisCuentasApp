@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.notification
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,9 +40,7 @@ fun EntryCategoryList(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 30.dp),
+
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -52,9 +51,10 @@ fun EntryCategoryList(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f) // Permite que la columna ocupe el espacio disponible
-                .padding(bottom = 16.dp), // Espacio en la parte inferior
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(bottom = 16.dp)            ,
+            verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
+            contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido,
+
         ) {
             items(listOfCategories) { category ->
                 CategoryCardWithCheckbox(

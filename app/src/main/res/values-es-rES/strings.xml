@@ -336,13 +336,15 @@
     <string name="novembertable">Noviembre</string>
     <string name="decembertable">Diciciembre</string>
     <!--Notificaciones-->
-
+    <string name="recordsnotfound">No se han encontrado registros</string>
     <string name="lowbalance">Alerta de saldo inferior a </string>
     <string name="hightexpenses">Gastos del mes superiores al limite</string>
     <string name="limitexpense">Limite de gasto mensual</string>
     <string name="notification_required">Activa las notificaciones para recibir alertas sobre el control de tus gastos. Puedes activarlas o desactivarlas en cualquier momento desde la sección de Ajustes de la aplicación.</string>
     <string name="notificationrequiredalert">¿Permites que mis cuentas te envie notificaciones?</string>
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
+    <string name="selectEntries">Selecciona registros</string>
+    <string name="selectentriesToDelete">Selecciona los registros a borrar</string>
     <string name="selectcategories">Selecciona categorías</string>
     <string name="selectcategoriescontrol">Selecciona categorías para control de gastos</string>
     <string name="selectaccountcontrol">Selecciona cuentas para control de gastos</string>
