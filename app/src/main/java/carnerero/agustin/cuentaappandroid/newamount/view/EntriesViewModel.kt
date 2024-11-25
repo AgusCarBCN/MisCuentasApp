@@ -228,7 +228,7 @@ class EntriesViewModel @Inject constructor(
             getTotal()
         }
     }
-    fun deleteEntry(entry:Entry) {
+    fun deleteEntry(entry:EntryDTO) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteEntry.invoke(entry)
 

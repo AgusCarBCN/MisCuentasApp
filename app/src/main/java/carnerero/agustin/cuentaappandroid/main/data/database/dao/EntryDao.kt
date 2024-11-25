@@ -164,7 +164,8 @@ WHERE amount < 0
 
     @Query(
         """
-    SELECT e.description,
+    SELECT e.id,
+           e.description,
            e.amount,
            e.date,
            c.iconResource,
@@ -183,7 +184,8 @@ WHERE amount < 0
 
     @Query(
         """
-    SELECT e.description,
+    SELECT e.id,
+           e.description,
            e.amount,
            e.date,
            c.nameResource,
@@ -202,7 +204,8 @@ WHERE amount < 0
 
     @Query(
         """
-    SELECT e.description,
+    SELECT e.id,
+           e.description,
            e.amount,
            e.date,
            c.nameResource,
@@ -220,7 +223,8 @@ WHERE amount < 0
 
     @Query(
         """
-    SELECT e.description,
+    SELECT e.id,
+           e.description,
            e.amount,
            e.date,
            c.nameResource,
@@ -239,7 +243,9 @@ WHERE amount < 0
 
     @Query(
         """
-    SELECT e.description,
+    SELECT 
+       e.id, 
+       e.description,
        e.amount,
        e.date,
        c.nameResource,
@@ -247,6 +253,7 @@ WHERE amount < 0
        e.accountId,
        a.name ,
        e.categoryId
+       
 FROM EntryEntity e
 INNER JOIN AccountEntity a ON e.accountId = a.id
 INNER JOIN CategoryEntity c ON e.categoryId = c.id

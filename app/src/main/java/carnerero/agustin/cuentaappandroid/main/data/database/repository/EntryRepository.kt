@@ -102,7 +102,8 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
                                                   toDate: String):Double=
         entryDao.getSumOfExpenseByCategoryAndDate(categoryId,fromDate,toDate)?:0.0
 
-    suspend fun deleteEntry(entry:Entry){
+    suspend fun deleteEntry(entryDTO:EntryDTO){
+        val entry=entryDtoToEntry(entryDTO)
         entryDao.deleteEntry(entry)
     }
 
@@ -118,17 +119,7 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
         )
     }
 
-    /*private fun entryToEntryDto(entry: Entry): EntryDTO {
-        return EntryDTO(
-            description = entry.description,
-            amount = entry.amount,
-            date = entry.date,
-            nameResource = entry.categoryId,
-            iconResource = entry.categoryId,
-            accountId = entry.accountId,
-            name = ""
-        )
-    }*/
+
 
 
 }

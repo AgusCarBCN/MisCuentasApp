@@ -4,6 +4,7 @@ import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.util.Date
 
 data class EntryDTO(
+    val id:Int,
     val description: String,
     val amount: Double,
     val date: String = Date().dateFormat(),

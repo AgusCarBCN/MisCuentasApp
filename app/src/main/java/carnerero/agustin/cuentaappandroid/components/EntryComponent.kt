@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
@@ -309,7 +310,7 @@ fun EntriesWithCheckBox(
         ) {
             items(listOfEntriesWithCheckBox) { entry ->
                 EntryCardWithCheckBox(
-                    entry.entryDTO,
+                    entry.entry,
                     currencyCode,
                     entry.checkbox,
                     onSelectionChange = {
@@ -338,7 +339,7 @@ fun EntriesWithCheckBox(
                             val entriesToRemove = listOfEntriesWithCheckBox.filter { it.checkbox }
                             listOfEntriesWithCheckBox.removeAll(entriesToRemove) // Actualiza la lista observada
                             entriesToRemove.forEach { element ->
-                                entriesViewModel.deleteEntry(element.entryDTO) // Borra de la base de datos
+                                entriesViewModel.deleteEntry(element.entry) // Borra de la base de datos
                                 entriesViewModel.getTotal() // Actualiza el total
                             }
                             entriesViewModel.getTotal()

@@ -261,8 +261,7 @@ fun SettingScreen(
             description = stringResource(id = R.string.modifyentrydes),
             iconResource = R.drawable.ic_databaseupdate,
             onClick = {
-                settingViewModel.onSelectAccountOption(true)
-                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
+
             }
         )
 

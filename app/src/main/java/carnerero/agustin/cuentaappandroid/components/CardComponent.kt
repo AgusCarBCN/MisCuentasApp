@@ -44,6 +44,7 @@ import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewMode
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Account
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
+import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
