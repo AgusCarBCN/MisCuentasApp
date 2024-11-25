@@ -334,7 +334,7 @@ fun EntriesWithCheckBox(
             }
         }
 
-        /*
+
         ModelButton(text = stringResource(id = R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.width(320.dp),
@@ -347,7 +347,6 @@ fun EntriesWithCheckBox(
                         }
                         Log.d("entries",entriesToRemove.toString())
                         entriesViewModel.getTotal()
-                        mainViewModel.selectScreen(IconOptions.HOME)
 
 
 
@@ -355,9 +354,9 @@ fun EntriesWithCheckBox(
 
                 }
             )
-        }*/
+        }
     }
-    }
+
 
 
 

@@ -110,6 +110,7 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
 
     private fun entryDtoToEntry(dto: EntryDTO): Entry {
         return Entry(
+            id=dto.id,
             description = dto.description,
             amount = dto.amount,
             date = dto.date,
