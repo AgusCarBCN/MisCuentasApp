@@ -119,7 +119,10 @@
     <string name="deschangecurrency">Cambia la divisa de tus cuentas.</string>
     <string name="email">agusticar@gmail.com</string>
     <string name="selectcurrencyoption">Selecciona divisa</string>
-
+    <string name="deleteentry">Borra registros</string>
+    <string name="deleteentrydes">Selecciona uno o varios registros a borrar.</string>
+    <string name="modifyentry">Modifica registros</string>
+    <string name="modifyentrydes">Selecciona un registro a modificar.</string>
     <!--Profile-->
     <string name="change">Cambiar</string>
     <string name="name">Nombre</string>

@@ -173,7 +173,7 @@ fun SettingScreen(
 
         RowComponent(title = stringResource(id = R.string.accountscontrol),
             description = stringResource(id = R.string.accountscontroldes),
-            iconResource = R.drawable.ic_check,
+            iconResource = R.drawable.ic_selectaccounts,
             onClick = {
                 mainViewModel.selectScreen(IconOptions.SELECT_ACCOUNTS)
             })
@@ -187,7 +187,7 @@ fun SettingScreen(
 
         RowComponent(title = stringResource(id = R.string.selectcategories),
             description = stringResource(id = R.string.choosecategories),
-            iconResource = R.drawable.ic_check,
+            iconResource = R.drawable.ic_selectcategories,
             onClick = {
                 mainViewModel.selectScreen(IconOptions.SELECT_CATEGORIES)
             })
@@ -249,6 +249,25 @@ fun SettingScreen(
                 mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
             }
         )
+        RowComponent(title = stringResource(id = R.string.deleteentry),
+            description = stringResource(id = R.string.deleteentrydes),
+            iconResource = R.drawable.ic_databasedelete,
+            onClick = {
+                settingViewModel.onSelectAccountOption(true)
+                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
+            }
+        )
+        RowComponent(title = stringResource(id = R.string.modifyentry),
+            description = stringResource(id = R.string.modifyentrydes),
+            iconResource = R.drawable.ic_databaseupdate,
+            onClick = {
+                settingViewModel.onSelectAccountOption(true)
+                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
+            }
+        )
+
+
+
         RowComponent(title = stringResource(id = R.string.changecurrency),
             description = stringResource(id = R.string.deschangecurrency),
             iconResource = R.drawable.exchange,
