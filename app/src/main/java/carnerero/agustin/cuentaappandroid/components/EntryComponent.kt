@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,14 +40,12 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 
@@ -397,7 +394,31 @@ fun EntriesWithCheckBox(
         }
     }
 }
+@Composable
+fun EntriesWithEditIcon(
+    entriesViewModel: EntriesViewModel,
+    listOfEntries: List<EntryDTO>,
+    currencyCode: String
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .padding(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
+        contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
+    ) {
+        items(listOfEntries) { entry ->
+            EntryCardWithIcon(
+                entry,
+                currencyCode
+
+            )
+        }
+    }
 
 
+
+}
 
 

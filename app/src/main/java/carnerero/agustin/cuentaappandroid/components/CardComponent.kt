@@ -589,7 +589,7 @@ fun EntryCardWithIcon(
                 contentDescription = "indicator",
                 tint = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(24.dp)
                     .clickable {
                         // To modify Screen
                     }

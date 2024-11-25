@@ -37,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.reflect.Type
 import java.util.Date
 
 
@@ -46,7 +47,7 @@ fun SearchScreen(
     searchViewModel: SearchViewModel,
     entriesViewModel: EntriesViewModel,
     mainViewModel: MainViewModel,
-    entriesWithCheckBoxes:Boolean=false
+    typeOfSearch:TypeOfSearch
 ) {
     val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")
     val toAmount by searchViewModel.toAmount.observeAsState("0.0")
@@ -161,10 +162,12 @@ fun SearchScreen(
                         toAmount.toDoubleOrNull() ?: Double.MAX_VALUE,
                         selectedOption ?: 0
                     )
-                    if(!entriesWithCheckBoxes) {
+                    if(typeOfSearch == TypeOfSearch.SEARCH) {
                         mainViewModel.selectScreen(IconOptions.ENTRIES)
-                    }else {
+                    }else if(typeOfSearch == TypeOfSearch.DELETE) {
                         mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
+                    }else if(typeOfSearch == TypeOfSearch.UPDATE){
+                        mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                     }
                 }
             }

@@ -59,13 +59,13 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.about.AboutApp
 import carnerero.agustin.cuentaappandroid.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.about.SendEmail
-import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 import carnerero.agustin.cuentaappandroid.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorUI
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.components.EntriesWithCheckBox
+import carnerero.agustin.cuentaappandroid.components.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.components.EntryList
 import carnerero.agustin.cuentaappandroid.components.IconComponent
 import carnerero.agustin.cuentaappandroid.components.ModelDialog
@@ -91,6 +91,7 @@ import carnerero.agustin.cuentaappandroid.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.setting.AccountList
 import carnerero.agustin.cuentaappandroid.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.setting.SettingScreen
@@ -200,11 +201,15 @@ fun MainScreen(
                         }
 
                         IconOptions.SEARCH -> {
-                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel)
+                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,TypeOfSearch.SEARCH)
                             title = R.string.searchtitle
                         }
-                        IconOptions.SEARCH_CHECKBOXES -> {
-                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,true)
+                        IconOptions.SEARCH_DELETE -> {
+                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,TypeOfSearch.DELETE)
+                            title = R.string.searchtitledelete
+                        }
+                        IconOptions.SEARCH_UPDATE -> {
+                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,TypeOfSearch.UPDATE)
                             title = R.string.searchtitledelete
                         }
                         IconOptions.SETTINGS -> {
@@ -366,6 +371,15 @@ fun MainScreen(
 
                         }
 
+                        IconOptions.ENTRIES_TO_UPDATE -> {
+                            EntriesWithEditIcon(
+                                entriesViewModel ,
+                                entries ,
+                                currencyCode
+                            )
+                            title=R.string.selectEntries
+
+                        }
 
                     }
 

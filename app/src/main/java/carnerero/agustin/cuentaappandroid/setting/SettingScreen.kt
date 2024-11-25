@@ -253,14 +253,14 @@ fun SettingScreen(
             description = stringResource(id = R.string.deleteentrydes),
             iconResource = R.drawable.ic_databasedelete,
             onClick = {
-                mainViewModel.selectScreen(IconOptions.SEARCH_CHECKBOXES)
+                mainViewModel.selectScreen(IconOptions.SEARCH_DELETE)
             }
         )
         RowComponent(title = stringResource(id = R.string.modifyentry),
             description = stringResource(id = R.string.modifyentrydes),
             iconResource = R.drawable.ic_databaseupdate,
             onClick = {
-
+                mainViewModel.selectScreen(IconOptions.SEARCH_UPDATE)
             }
         )
 
