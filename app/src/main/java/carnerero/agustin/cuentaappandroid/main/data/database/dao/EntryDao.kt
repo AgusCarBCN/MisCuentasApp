@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.main.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -17,13 +18,13 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEntry(entry: Entry)
 
-    /* // 2. Borrar una entrada por ID
+     // 2. Borrar una entrada por ID
      @Delete
      suspend fun deleteEntry(entry: Entry)
 
      // 3. Borrar todas las entradas
      @Query("DELETE FROM EntryEntity")
-     suspend fun deleteAllEntries()*/
+     suspend fun deleteAllEntries()
 
     // 2. Get all entries
     @Query("SELECT * FROM EntryEntity ORDER BY date DESC")

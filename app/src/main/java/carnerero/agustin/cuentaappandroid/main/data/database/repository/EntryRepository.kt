@@ -102,6 +102,9 @@ class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
                                                   toDate: String):Double=
         entryDao.getSumOfExpenseByCategoryAndDate(categoryId,fromDate,toDate)?:0.0
 
+    suspend fun deleteEntry(entry:Entry){
+        entryDao.deleteEntry(entry)
+    }
 
 
     private fun entryDtoToEntry(dto: EntryDTO): Entry {

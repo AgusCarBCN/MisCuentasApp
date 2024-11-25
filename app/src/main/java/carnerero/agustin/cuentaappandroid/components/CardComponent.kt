@@ -41,6 +41,7 @@ import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Account
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
@@ -424,6 +425,92 @@ fun AccountCardWithCheckbox(
                     ,searchViewModel)
 
             }
+        }
+    }
+}
+@Composable
+fun EntryCardWithCheckBox(
+    entry: EntryDTO,
+    currencyCode: String,
+    isChecked:Boolean,
+    onSelectionChange: () -> Unit
+){
+
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        colors = CardColors(
+            containerColor = LocalCustomColorsPalette.current.drawerColor,
+            contentColor = LocalCustomColorsPalette.current.incomeColor,
+            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
+            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+        ),
+        modifier = Modifier
+            .size(width = 360.dp, height = 120.dp)
+            .padding(bottom = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = entry.description,
+                modifier = Modifier
+                    .weight(0.6f),
+                textAlign = TextAlign.Start,
+                style=MaterialTheme.typography.bodyLarge,
+                color = LocalCustomColorsPalette.current.textHeadColor
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = Utils.numberFormat(entry.amount, currencyCode),
+                modifier = Modifier
+                    .weight(0.4f),
+                color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
+                else LocalCustomColorsPalette.current.expenseColor,
+                textAlign = TextAlign.End,
+                style=MaterialTheme.typography.bodyLarge
+            )
+
+        }
+        Row(
+            modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                painter = painterResource(id = entry.iconResource),
+                contentDescription = null,
+                tint = LocalCustomColorsPalette.current.textColor
+            )
+            Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
+            Text(
+                text = stringResource(id = entry.nameResource),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .weight(0.4f)
+                ,
+                color = LocalCustomColorsPalette.current.textColor,
+                textAlign = TextAlign.Start,
+                style=MaterialTheme.typography.bodyLarge
+
+            )
+            Checkbox(
+                modifier = Modifier.weight(0.2f), // Ajuste proporcional para el checkbox
+                checked = isChecked,
+                onCheckedChange = {
+                    onSelectionChange()
+                },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = LocalCustomColorsPalette.current.drawerColor,
+                    uncheckedColor = LocalCustomColorsPalette.current.textColor,
+                    checkmarkColor = LocalCustomColorsPalette.current.incomeColor
+                )
+            )
         }
     }
 }

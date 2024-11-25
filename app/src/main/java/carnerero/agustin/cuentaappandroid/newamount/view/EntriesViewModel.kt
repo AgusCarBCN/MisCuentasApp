@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
+import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.DeleteEntryUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetAllEntriesDatabaseUseCase
@@ -48,9 +49,10 @@ class EntriesViewModel @Inject constructor(
     private val getTotalExpensesByDate: GetSumTotalExpensesByDateUseCase,
     private val updateAmountEntry: UpdateAmountUseCase,
     private val getAllEntriesDTO: GeAllEntriesUseCase,
-    private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase
+    private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase,
+    private val deleteEntry: DeleteEntryUseCase
 
-) : ViewModel() {
+    ) : ViewModel() {
 
 
     private val _totalIncomes = MutableLiveData<Double>()
@@ -225,6 +227,14 @@ class EntriesViewModel @Inject constructor(
             resetFields()
             getTotal()
         }
+    }
+    fun deleteEntry(entry:Entry) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteEntry.invoke(entry)
+
+            getTotal()
+        }
+
     }
     fun updateEntriesAmountByExchangeRate(rate:Double){
         viewModelScope.launch(Dispatchers.IO) {
