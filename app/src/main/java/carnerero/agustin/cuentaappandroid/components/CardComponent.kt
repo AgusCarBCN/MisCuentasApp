@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.components
 
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -514,4 +516,88 @@ fun EntryCardWithCheckBox(
             )
         }
     }
+}
+@Composable
+fun EntryCardWithIcon(
+    entry: EntryDTO,
+    currencyCode: String
+) {
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        colors = CardColors(
+            containerColor = LocalCustomColorsPalette.current.drawerColor,
+            contentColor = LocalCustomColorsPalette.current.incomeColor,
+            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
+            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+        ),
+        modifier = Modifier
+            .size(width = 360.dp, height = 120.dp)
+            .padding(bottom = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = entry.description,
+                modifier = Modifier
+                    .weight(0.6f),
+                textAlign = TextAlign.Start,
+                style=MaterialTheme.typography.bodyLarge,
+                color = LocalCustomColorsPalette.current.textHeadColor
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = Utils.numberFormat(entry.amount, currencyCode),
+                modifier = Modifier
+                    .weight(0.4f),
+                color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
+                else LocalCustomColorsPalette.current.expenseColor,
+                textAlign = TextAlign.End,
+                style=MaterialTheme.typography.bodyLarge
+            )
+
+        }
+        Row(
+            modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                painter = painterResource(id = entry.iconResource),
+                contentDescription = null,
+                tint = LocalCustomColorsPalette.current.textColor
+            )
+            Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
+            Text(
+                text = stringResource(id = entry.nameResource),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .weight(0.4f)
+                ,
+                color = LocalCustomColorsPalette.current.textColor,
+                textAlign = TextAlign.Start,
+                style=MaterialTheme.typography.bodyLarge
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.edit),
+                contentDescription = "indicator",
+                tint = LocalCustomColorsPalette.current.textColor,
+                modifier = Modifier
+                    .size(36.dp)
+                    .clickable {
+                        // To modify Screen
+                    }
+            )
+
+
+
+        }
+    }
+
 }

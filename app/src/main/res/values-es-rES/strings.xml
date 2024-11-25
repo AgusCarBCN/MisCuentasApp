@@ -158,6 +158,8 @@
     <string name="apierror">Error de conexion a internet</string>
     <string name="permissiondeny">Permiso de notificacion denegado</string>
     <string name="espendingupdate">Límite de gasto modificado de </string>
+    <string name="deleteentries">Has borrando los registros seleccionados</string>
+    <string name="nodeleteentries">No hay registros seleccionados que borrar</string>
     <!--TopBar titles-->
     <string name="hometitle">Mis Cuentas</string>
     <string name="searchtitle">Busqueda</string>
@@ -345,6 +347,7 @@
     <string name="permissiongranted">Permiso de notificaciones concedido</string>
     <string name="selectEntries">Selecciona registros</string>
     <string name="selectentriesToDelete">Selecciona los registros a borrar</string>
+    <string name="selectentriesToModify">Selecciona los registros a modificar</string>
     <string name="selectcategories">Selecciona categorías</string>
     <string name="selectcategoriescontrol">Selecciona categorías para control de gastos</string>
     <string name="selectaccountcontrol">Selecciona cuentas para control de gastos</string>

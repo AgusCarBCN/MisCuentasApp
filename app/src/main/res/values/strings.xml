@@ -162,7 +162,8 @@
     <string name="apierror">Internet connection error</string>
     <string name="espendingupdate">Spending limit updated of </string>
     <string name="permissiondeny">Notification permission denied</string>
-
+    <string name="deleteentries">You have deleted the selected records</string>
+    <string name="nodeleteentries">There are no selected records to delete</string>
     <!--TopBar titles-->
     <string name="hometitle">Home</string>
     <string name="searchtitle">Search</string>
@@ -347,6 +348,7 @@
     <string name="novembertable">November</string>
     <string name="decembertable">December</string>
     <!--Notifications-->
+    <string name="selectentriesToModify">Select records to modify</string>
     <string name="recordsnotfound">No records found</string>
     <string name="selectEntries">Select records</string>
     <string name="selectentriesToDelete">Select records to delete</string>

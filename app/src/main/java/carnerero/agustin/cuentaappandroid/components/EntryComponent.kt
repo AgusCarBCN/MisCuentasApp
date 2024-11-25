@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,12 +38,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.SnackBarController
+import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
@@ -298,8 +303,7 @@ fun ItemCategory(
 fun EntriesWithCheckBox(
     entriesViewModel: EntriesViewModel,
     listOfEntries: List<EntryDTO>,
-    currencyCode: String,
-    entriesToModify: Boolean = false
+    currencyCode: String
 ) {
     // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
     // remember(listOfEntries):
@@ -311,7 +315,9 @@ fun EntriesWithCheckBox(
     val listOfEntriesWithCheckBox = remember(listOfEntries) {
         listOfEntries.map { EntryWithCheckBox(it, false) }.toMutableStateList()
     }
-
+    val scope = rememberCoroutineScope()
+    val messageDeleteEntries= stringResource(id = R.string.deleteentries)
+    val messageNotSelectedEntries= stringResource(id = R.string.nodeleteentries)
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -352,15 +358,12 @@ fun EntriesWithCheckBox(
                     currencyCode,
                     entry.checkbox,
                     onSelectionChange = {
-                        if (entriesToModify) {
-                            TODO()
-                        } else {
                             val index = listOfEntriesWithCheckBox.indexOf(entry)
                             if (index != -1) {
                                 listOfEntriesWithCheckBox[index] =
                                     entry.copy(checkbox = !entry.checkbox)
                             }
-                        }
+
                     }
                 )
             }
@@ -371,13 +374,24 @@ fun EntriesWithCheckBox(
                 modifier = Modifier.width(320.dp),
                 true,
                 onClickButton = {
+
                     val entriesToRemove =
                         listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
+                    if(entriesToRemove.isEmpty()){
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(event = SnackBarEvent(messageNotSelectedEntries))
+                        }
+                    }else{
                     entriesToRemove.forEach { entryWithCheckBox ->
                         listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
                         entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
                     }
                     entriesViewModel.getTotal()
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(event = SnackBarEvent(messageDeleteEntries))
+                        }
+
+                }
                 }
             )
         }
