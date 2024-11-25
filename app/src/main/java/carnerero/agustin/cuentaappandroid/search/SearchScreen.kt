@@ -45,7 +45,8 @@ fun SearchScreen(
     accountViewModel: AccountsViewModel,
     searchViewModel: SearchViewModel,
     entriesViewModel: EntriesViewModel,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    entriesWithCheckBoxes:Boolean=false
 ) {
     val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")
     val toAmount by searchViewModel.toAmount.observeAsState("0.0")
@@ -160,8 +161,11 @@ fun SearchScreen(
                         toAmount.toDoubleOrNull() ?: Double.MAX_VALUE,
                         selectedOption ?: 0
                     )
-                    mainViewModel.selectScreen(IconOptions.ENTRIES)
-
+                    if(!entriesWithCheckBoxes) {
+                        mainViewModel.selectScreen(IconOptions.ENTRIES)
+                    }else {
+                        mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
+                    }
                 }
             }
         )

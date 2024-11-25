@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.main.model
 enum class IconOptions {
     HOME,
     SEARCH,
+    SEARCH_CHECKBOXES,
     SETTINGS,
     PROFILE,
     NEW_AMOUNT,

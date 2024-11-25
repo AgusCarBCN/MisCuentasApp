@@ -303,55 +303,56 @@ fun EntriesWithCheckBox(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
+                .weight(1f)
                 .background(LocalCustomColorsPalette.current.backgroundPrimary)
                 .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
             contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
         ) {
-            items(listOfEntriesWithCheckBox) { entry ->
+            items(listOfEntries) { entry ->
                 EntryCardWithCheckBox(
-                    entry.entry,
+                    entry,
                     currencyCode,
-                    entry.checkbox,
+                    false,
                     onSelectionChange = {
-                        if(entriesToModify){
+                       /* if (entriesToModify) {
                             TODO()
-                        }else {
+                        } else {
                             val index = listOfEntriesWithCheckBox.indexOf(entry)
                             if (index != -1) {
                                 listOfEntriesWithCheckBox[index] =
                                     entry.copy(checkbox = !entry.checkbox)
                             }
-                        }
+                        }*/
                     }
                 )
             }
         }
-        if (listOfEntriesWithCheckBox.size > 0) {
-            ModelButton(text = stringResource(id = R.string.confirmButton),
+
+        /*
+        ModelButton(text = stringResource(id = R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.width(320.dp),
                 true,
                 onClickButton = {
-                    listOfEntriesWithCheckBox.forEach { entry ->
-                        if (entry.checkbox) {
-                            // Elimina elementos seleccionados visualmente y de la base de datos
-                            val entriesToRemove = listOfEntriesWithCheckBox.filter { it.checkbox }
-                            listOfEntriesWithCheckBox.removeAll(entriesToRemove) // Actualiza la lista observada
-                            entriesToRemove.forEach { element ->
-                                entriesViewModel.deleteEntry(element.entry) // Borra de la base de datos
-                                entriesViewModel.getTotal() // Actualiza el total
-                            }
-                            entriesViewModel.getTotal()
-                            mainViewModel.selectScreen(IconOptions.HOME)
-
+                        val entriesToRemove = listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
+                        entriesToRemove.forEach { entryWithCheckBox ->
+                            listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
+                            entriesViewModel.deleteEntry(entryWithCheckBox. entry) // Borra de la base de datos
                         }
-                    }
+                        Log.d("entries",entriesToRemove.toString())
+                        entriesViewModel.getTotal()
+                        mainViewModel.selectScreen(IconOptions.HOME)
+
+
+
+
 
                 }
             )
-        }
+        }*/
     }
-}
+    }
+
 
 

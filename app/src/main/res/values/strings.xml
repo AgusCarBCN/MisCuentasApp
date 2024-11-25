@@ -166,6 +166,7 @@
     <!--TopBar titles-->
     <string name="hometitle">Home</string>
     <string name="searchtitle">Search</string>
+    <string name="searchtitledelete">Search records to delete</string>
     <string name="settingstitle">Settings</string>
     <string name="profiletitle">Profile</string>
     <string name="new_incometitle">New Income</string>

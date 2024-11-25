@@ -161,6 +161,7 @@
     <!--TopBar titles-->
     <string name="hometitle">Mis Cuentas</string>
     <string name="searchtitle">Busqueda</string>
+    <string name="searchtitledelete">Busca registros a borrar</string>
     <string name="settingstitle">Configuración</string>
     <string name="profiletitle">Perfil</string>
     <string name="new_incometitle">Nuevo importe</string>

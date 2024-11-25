@@ -203,6 +203,10 @@ fun MainScreen(
                             SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel)
                             title = R.string.searchtitle
                         }
+                        IconOptions.SEARCH_CHECKBOXES -> {
+                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,true)
+                            title = R.string.searchtitledelete
+                        }
                         IconOptions.SETTINGS -> {
                             SettingScreen(
                                 settingViewModel,
@@ -360,6 +364,8 @@ fun MainScreen(
                                 currencyCode
                             )
                         }
+
+
                     }
 
                 }
