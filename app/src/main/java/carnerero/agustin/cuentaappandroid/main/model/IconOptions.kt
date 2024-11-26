@@ -24,6 +24,7 @@ enum class IconOptions {
     ENTRIES,
     ENTRIES_TO_DELETE,
     ENTRIES_TO_UPDATE,
+    MODIFY_ENTRY,
     EMAIL,
     SELECT_CATEGORIES,
     SELECT_ACCOUNTS,

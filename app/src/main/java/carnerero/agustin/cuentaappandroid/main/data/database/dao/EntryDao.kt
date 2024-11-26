@@ -27,6 +27,10 @@ interface EntryDao {
      @Update
      suspend fun updateEntry(entry: Entry)
 
+    // Método para actualizar solo los campos específicos de la entrada
+    @Query("UPDATE EntryEntity SET description = :description, amount = :amount, date = :date WHERE id = :id")
+    suspend fun updateEntryFields(id: Long, description: String, amount: Double, date: String)
+
     // 2. Get all entries
     @Query("SELECT * FROM EntryEntity ORDER BY date DESC")
     suspend fun getAllEntries(): List<Entry>

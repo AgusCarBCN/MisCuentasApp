@@ -43,15 +43,20 @@ import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Account
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Category
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
+import carnerero.agustin.cuentaappandroid.main.model.IconOptions
+import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.enums.enumEntries
 
 
 @Composable
@@ -520,7 +525,10 @@ fun EntryCardWithCheckBox(
 @Composable
 fun EntryCardWithIcon(
     entry: EntryDTO,
-    currencyCode: String
+    currencyCode: String,
+    entriesViewModel: EntriesViewModel,
+    mainViewModel: MainViewModel
+
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -591,11 +599,10 @@ fun EntryCardWithIcon(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        // To modify Screen
+                        entriesViewModel.onEntryDTOSelected(entry)
+                        mainViewModel.selectScreen(IconOptions.MODIFY_ENTRY)
                     }
             )
-
-
 
         }
     }

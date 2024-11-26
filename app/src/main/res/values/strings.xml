@@ -82,6 +82,11 @@
     <string name="selectcurrency">Select a currency for your accounts.</string>
     <string name="selectedcurrency">Selected currency: </string>
     <!--Settings-->
+    <string name="modifydes">Edit the description</string>
+    <string name="labeldatemodify">Date</string>
+    <string name="labelamountmodify">Amount</string>
+    <string name="modifydate">Edit date</string>
+    <string name="modifyamount">Edit amount</string>
     <string name="deleteButton">Delete</string>
     <string name="deleteentry">Delete Records</string>
     <string name="deleteentrydes">Select one or more records to delete.</string>
@@ -127,7 +132,7 @@
     <string name="deschangecurrency">Change the currency of your accounts.</string>
     <string name="email">agusticar@gmail.com</string>
     <string name="descategorycontrol">View spending control by category and receive a notification alert when you exceed the spending limit.</string>
-
+    <string name="modifyButton">Modify</string>
 <!--Profile-->
     <string name="change">Change</string>
     <string name="name">Name</string>
@@ -165,9 +170,12 @@
     <string name="permissiondeny">Notification permission denied</string>
     <string name="deleteentries">You have deleted the selected records</string>
     <string name="nodeleteentries">There are no selected records to delete</string>
+    <string name="modifyentrymsg">You have edited this record</string>
+
     <!--TopBar titles-->
     <string name="hometitle">Home</string>
     <string name="searchtitle">Search</string>
+    <string name="searchtitlemodify">Search records to edit</string>
     <string name="searchtitledelete">Search records to delete</string>
     <string name="settingstitle">Settings</string>
     <string name="profiletitle">Profile</string>

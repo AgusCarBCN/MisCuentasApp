@@ -91,6 +91,10 @@ class EntriesViewModel @Inject constructor(
     private val _listOfEntriesDB = MutableStateFlow<List<Entry>>(emptyList())
     val listOfEntriesDB: StateFlow<List<Entry>> = _listOfEntriesDB.asStateFlow()
 
+    //MutableStateFlow de entrada seleccionada a modificar
+    private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
+    val entryDTOSelected: LiveData<EntryDTO?> = _entryDTOSelected
+
 
     init{
         getTotal()
@@ -236,12 +240,21 @@ class EntriesViewModel @Inject constructor(
             getTotal()
         }
     }
-    fun updateEntry(entry:EntryDTO) {
+    fun updateEntry(id: Long, description: String, amount: Double, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            updateEntry.invoke(entry)
-            getTotal()
+            try {
+                updateEntry.invoke(id,description,amount,date)
+
+            } catch (e: Exception) {
+                Log.e("EntryDTO", "Error updating entry: ${e.message}")
+            }
         }
     }
+    fun onEntryDTOSelected(entryDTO:EntryDTO)
+    {
+        _entryDTOSelected.value = entryDTO
+    }
+
     fun updateEntriesAmountByExchangeRate(rate:Double){
         viewModelScope.launch(Dispatchers.IO) {
             updateEntriesAmountByExchangeRate.invoke(rate)

@@ -78,6 +78,11 @@
     <string name="selectcurrency">Escoje una divisa para tus cuentas.</string>
     <string name="selectedcurrency">Divisa seleccionada: </string>
     <!--Ajustes-->
+    <string name="modifydes">Modifica la descripción</string>
+    <string name="labeldatemodify">Fecha</string>
+    <string name="labelamountmodify">Importe</string>
+    <string name="modifydate">Modifica fecha</string>
+    <string name="modifyamount">Modifica cantidad</string>
     <string name="limitmaxexpense">Establece un limite máximo de gasto total</string>
     <string name="expensemanagement">Controla tus gastos</string>
     <string name="accountscontrol">Selecciona cuentas</string>
@@ -124,6 +129,7 @@
     <string name="deleteentrydes">Selecciona uno o varios registros a borrar.</string>
     <string name="modifyentry">Modifica registros</string>
     <string name="modifyentrydes">Selecciona un registro a modificar.</string>
+    <string name="modifyButton">Modifica</string>
     <!--Profile-->
     <string name="change">Cambiar</string>
     <string name="name">Nombre</string>
@@ -159,12 +165,14 @@
     <string name="apierror">Error de conexion a internet</string>
     <string name="permissiondeny">Permiso de notificacion denegado</string>
     <string name="espendingupdate">Límite de gasto modificado de </string>
+    <string name="modifyentrymsg">Has modificado este registro</string>
     <string name="deleteentries">Has borrando los registros seleccionados</string>
     <string name="nodeleteentries">No hay registros seleccionados que borrar</string>
     <!--TopBar titles-->
     <string name="hometitle">Mis Cuentas</string>
     <string name="searchtitle">Busqueda</string>
     <string name="searchtitledelete">Busca registros a borrar</string>
+    <string name="searchtitlemodify">Busca registros a modificar</string>
     <string name="settingstitle">Configuración</string>
     <string name="profiletitle">Perfil</string>
     <string name="new_incometitle">Nuevo importe</string>
@@ -294,6 +302,7 @@
     <string name="bycategory">Por categoría</string>
     <string name="noentries">No hay entradas todavia</string>
     <!--search-->
+
     <string name="searchentries">Buscar entradas(opcional)</string>
     <string name="fromdate">Desde</string>
     <string name="todate">Hasta</string>

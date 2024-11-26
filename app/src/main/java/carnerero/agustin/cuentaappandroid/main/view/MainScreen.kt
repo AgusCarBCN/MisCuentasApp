@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.main.view
 
 import android.app.Activity
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
@@ -78,6 +79,7 @@ import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryTy
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.entries.CategorySelector
 import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.entries.NewEntry
 import carnerero.agustin.cuentaappandroid.notification.EntryAccountList
 import carnerero.agustin.cuentaappandroid.notification.EntryCategoryList
@@ -130,6 +132,7 @@ fun MainScreen(
     val showExitDialog by mainViewModel.showExitDialog.collectAsState()
     val showDeleteAccountDialog by mainViewModel.showDeleteAccountDialog.collectAsState()
     val entries by entriesViewModel.listOfEntriesDTO.collectAsState()
+    val selectedEntryDTO by entriesViewModel.entryDTOSelected.observeAsState()
     val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
     val settingAccountOption by settingViewModel.deleteAccountOption.observeAsState(false)
     val selectedAccount by accountsViewModel.accountSelected.observeAsState()
@@ -210,7 +213,7 @@ fun MainScreen(
                         }
                         IconOptions.SEARCH_UPDATE -> {
                             SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,TypeOfSearch.UPDATE)
-                            title = R.string.searchtitledelete
+                            title = R.string.searchtitlemodify
                         }
                         IconOptions.SETTINGS -> {
                             SettingScreen(
@@ -375,6 +378,7 @@ fun MainScreen(
                         IconOptions.ENTRIES_TO_UPDATE -> {
                             EntriesWithEditIcon(
                                 entriesViewModel ,
+                                mainViewModel,
                                 entries ,
                                 currencyCode
                             )
@@ -382,6 +386,21 @@ fun MainScreen(
 
                         }
 
+                        IconOptions.MODIFY_ENTRY -> {
+                            selectedEntryDTO?.let { entry ->
+                                ModifyEntry(
+                                    entry,
+                                    entriesViewModel,
+                                    searchViewModel,
+                                    accountsViewModel,
+                                    mainViewModel
+                                )
+                            } ?: run {
+                                // Maneja el caso nulo, por ejemplo, muestra un mensaje de error
+                                Log.e("ModifyEntry", "selectedEntryDTO is null")
+                            }
+                            title=R.string.modifyentry
+                        }
                     }
 
                 }

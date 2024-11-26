@@ -43,6 +43,7 @@ import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -416,6 +417,7 @@ fun EntriesWithCheckBox(
 @Composable
 fun EntriesWithEditIcon(
     entriesViewModel: EntriesViewModel,
+    mainViewModel: MainViewModel,
     listOfEntries: List<EntryDTO>,
     currencyCode: String
 ) {
@@ -430,8 +432,9 @@ fun EntriesWithEditIcon(
         items(listOfEntries) { entry ->
             EntryCardWithIcon(
                 entry,
-                currencyCode
-
+                currencyCode,
+                entriesViewModel,
+                mainViewModel
             )
         }
     }
