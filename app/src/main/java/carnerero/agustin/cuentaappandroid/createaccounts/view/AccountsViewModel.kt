@@ -337,7 +337,7 @@ class AccountsViewModel @Inject constructor(
         }
     }
 
-    fun updateEntry(accountId: Int, amount: Double, isTransferDestination: Boolean) {
+    fun updateAccountBalance(accountId: Int, amount: Double, isTransferDestination: Boolean) {
         viewModelScope.launch {
             try {
                 val account = _accountSelected.value

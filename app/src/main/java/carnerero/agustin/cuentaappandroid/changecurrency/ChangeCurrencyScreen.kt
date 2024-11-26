@@ -23,7 +23,7 @@ import carnerero.agustin.cuentaappandroid.components.ModelButton
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

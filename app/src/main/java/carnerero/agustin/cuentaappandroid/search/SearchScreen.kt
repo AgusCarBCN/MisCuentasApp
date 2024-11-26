@@ -32,12 +32,11 @@ import carnerero.agustin.cuentaappandroid.components.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import java.util.Date
 
 

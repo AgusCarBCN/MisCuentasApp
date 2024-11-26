@@ -30,7 +30,7 @@ import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers

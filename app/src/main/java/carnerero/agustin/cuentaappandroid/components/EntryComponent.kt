@@ -39,8 +39,10 @@ import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.SnackBarController
 import carnerero.agustin.cuentaappandroid.SnackBarEvent
+import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -299,6 +301,7 @@ fun ItemCategory(
 @Composable
 fun EntriesWithCheckBox(
     entriesViewModel: EntriesViewModel,
+    accountViewModel:AccountsViewModel,
     listOfEntries: List<EntryDTO>,
     currencyCode: String
 ) {
@@ -313,18 +316,18 @@ fun EntriesWithCheckBox(
         listOfEntries.map { EntryWithCheckBox(it, false) }.toMutableStateList()
     }
     val scope = rememberCoroutineScope()
-    val messageDeleteEntries= stringResource(id = R.string.deleteentries)
-    val messageNotSelectedEntries= stringResource(id = R.string.nodeleteentries)
+    val messageDeleteEntries = stringResource(id = R.string.deleteentries)
+    val messageNotSelectedEntries = stringResource(id = R.string.nodeleteentries)
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(listOfEntries.isNotEmpty()) {
+        if (listOfEntries.isNotEmpty()) {
             HeadSetting(
                 title = stringResource(id = R.string.selectentriesToDelete),
                 MaterialTheme.typography.titleLarge
             )
-        }else{
+        } else {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -355,18 +358,20 @@ fun EntriesWithCheckBox(
                     currencyCode,
                     entry.checkbox,
                     onSelectionChange = {
-                            val index = listOfEntriesWithCheckBox.indexOf(entry)
-                            if (index != -1) {
-                                listOfEntriesWithCheckBox[index] =
-                                    entry.copy(checkbox = !entry.checkbox)
-                            }
+                        val index = listOfEntriesWithCheckBox.indexOf(entry)
+                        if (index != -1) {
+                            listOfEntriesWithCheckBox[index] =
+                                entry.copy(checkbox = !entry.checkbox)
+                        }
 
                     }
                 )
             }
         }
-        if(listOfEntries.isNotEmpty()) {
-            ModelButton(text = stringResource(id = R.string.confirmButton),
+        if (listOfEntries.isNotEmpty()) {
+            ModelButton(text = stringResource(
+                id = R.string.deleteButton
+            ),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.width(320.dp),
                 true,
@@ -374,26 +379,40 @@ fun EntriesWithCheckBox(
 
                     val entriesToRemove =
                         listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
-                    if(entriesToRemove.isEmpty()){
+                    if (entriesToRemove.isEmpty()) {
                         scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageNotSelectedEntries))
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    messageNotSelectedEntries
+                                )
+                            )
                         }
-                    }else{
-                    entriesToRemove.forEach { entryWithCheckBox ->
-                        listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
-                        entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
-                    }
-                    entriesViewModel.getTotal()
+                    } else {
+                        entriesToRemove.forEach { entryWithCheckBox ->
+                            val idAccount = entryWithCheckBox.entry.accountId
+                            val type=entryWithCheckBox.entry.categoryType
+                            val amount=entryWithCheckBox.entry.amount
+                            listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
+                            entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
+                            accountViewModel.updateAccountBalance(
+                                                        idAccount,
+                                                        -1*(amount),
+                                                        false
+                                                    )
+
+                        }
+                        entriesViewModel.getTotal()
                         scope.launch(Dispatchers.Main) {
                             SnackBarController.sendEvent(event = SnackBarEvent(messageDeleteEntries))
                         }
 
-                }
+                    }
                 }
             )
         }
     }
 }
+
 @Composable
 fun EntriesWithEditIcon(
     entriesViewModel: EntriesViewModel,
@@ -416,7 +435,6 @@ fun EntriesWithEditIcon(
             )
         }
     }
-
 
 
 }

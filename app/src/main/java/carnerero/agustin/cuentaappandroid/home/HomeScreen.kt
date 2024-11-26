@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.components.AccountCard
@@ -32,7 +31,7 @@ import carnerero.agustin.cuentaappandroid.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
 

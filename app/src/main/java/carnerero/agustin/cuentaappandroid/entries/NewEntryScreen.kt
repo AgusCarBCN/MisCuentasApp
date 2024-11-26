@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.newamount.view
+package carnerero.agustin.cuentaappandroid.entries
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.SnackBarController
@@ -42,7 +41,7 @@ import java.util.Date
 
 @Composable
 
-fun NewAmount(
+fun NewEntry(
     mainViewModel: MainViewModel,
     entryViewModel: EntriesViewModel,
     categoriesViewModel: CategoriesViewModel,
@@ -130,7 +129,7 @@ fun NewAmount(
                                 accountId = idAccount
                             )
                         )
-                        accountViewModel.updateEntry(
+                        accountViewModel.updateAccountBalance(
                             idAccount,
                             if (type== CategoryType.INCOME) amount else negativeAmount,
                             false

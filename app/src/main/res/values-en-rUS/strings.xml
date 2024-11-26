@@ -79,6 +79,7 @@
     <string name="selectcurrency">Select a currency for your accounts.</string>
     <string name="selectedcurrency">Selected currency: </string>
     <!--Settings-->
+    <string name="deleteButton">Delete</string>
     <string name="deleteentry">Delete Records</string>
     <string name="deleteentrydes">Select one or more records to delete.</string>
     <string name="modifyentry">Modify Records</string>
@@ -162,6 +163,7 @@
     <string name="changecurrencytext">Change the currency format and exchange rate</string>
     <string name="deleteentries">You have deleted the selected records</string>
     <string name="nodeleteentries">There are no selected records to delete</string>
+
     <!--TopBar titles-->
     <string name="hometitle">Home</string>
     <string name="searchtitle">Search</string>

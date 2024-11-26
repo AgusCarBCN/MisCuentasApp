@@ -76,9 +76,9 @@ import carnerero.agustin.cuentaappandroid.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.main.data.database.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.newamount.view.CategorySelector
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.NewAmount
+import carnerero.agustin.cuentaappandroid.entries.CategorySelector
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.NewEntry
 import carnerero.agustin.cuentaappandroid.notification.EntryAccountList
 import carnerero.agustin.cuentaappandroid.notification.EntryCategoryList
 import carnerero.agustin.cuentaappandroid.notification.ExpenseControlAccountsScreen
@@ -300,7 +300,7 @@ fun MainScreen(
                         }
 
                         IconOptions.NEW_AMOUNT -> {
-                            NewAmount(mainViewModel, entriesViewModel,categoriesViewModel, accountsViewModel)
+                            NewEntry(mainViewModel, entriesViewModel,categoriesViewModel, accountsViewModel)
 
                         }
 
@@ -364,6 +364,7 @@ fun MainScreen(
                         IconOptions.ENTRIES_TO_DELETE -> {
                             EntriesWithCheckBox(
                                 entriesViewModel,
+                                accountsViewModel,
                                 entries,
                                 currencyCode
                             )

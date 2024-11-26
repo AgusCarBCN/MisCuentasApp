@@ -30,18 +30,15 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.components.AccountSelector
 import carnerero.agustin.cuentaappandroid.components.DatePickerSearch
 import carnerero.agustin.cuentaappandroid.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.piechart.model.Legend
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette

@@ -99,6 +99,7 @@
     <string name="desenablenotifications">Habilitar o deshabilitar notificaciones en tu móvil de control del gasto.</string>
     <string name="createbackup">Copia de seguridad</string>
     <string name="loadbackup">Carga archivo de seguridad</string>
+    <string name="deleteButton">Borrar</string>
     <string name="deleteall">Borra todo</string>
     <string name="desbackup">Guarda una copia de seguridad de los registros.</string>
     <string name="desload">Carga el archivo de seguridad de los registros.</string>

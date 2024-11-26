@@ -13,7 +13,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -28,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 
 
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
@@ -44,12 +42,11 @@ import carnerero.agustin.cuentaappandroid.main.model.Routes
 import carnerero.agustin.cuentaappandroid.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.newamount.view.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.theme.MisCuentasTheme
-import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.MobileAds
 
 import dagger.hilt.android.AndroidEntryPoint

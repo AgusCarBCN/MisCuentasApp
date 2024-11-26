@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.newamount.view
+package carnerero.agustin.cuentaappandroid.entries
 
 import android.util.Log
 import androidx.lifecycle.LiveData
