@@ -53,7 +53,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
     val descriptionEntry by entriesViewModel.entryName.observeAsState(entryDTO.description)
     val amountEntry by entriesViewModel.entryAmount.observeAsState(kotlin.math.abs(entryDTO.amount).toString())
     val dateSelected by searchViewModel.selectedFromDate.observeAsState(entryDTO.date)
-    val entryDTOSelected by entriesViewModel.entryDTOSelected.observeAsState(entryDTO)
+
     val messageModify= stringResource(id = R.string.modifyentrymsg)
     val scope = rememberCoroutineScope()
     //val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
@@ -146,7 +146,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
                         if(entryDTO.categoryType==CategoryType.INCOME) amountEntry.toDouble()
                         else (-1)*(amountEntry.toDouble()),
                         dateSelected)
-
+                mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                 //Actualiza balance de cuenta
                 /*accountsViewModel.updateAccountBalance(
                     entryDTO.accountId,
