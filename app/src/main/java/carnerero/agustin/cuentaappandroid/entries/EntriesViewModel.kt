@@ -148,23 +148,8 @@ class EntriesViewModel @Inject constructor(
         }
     }
 
-   fun getAllEntriesDataBase(){
 
-        viewModelScope.launch(Dispatchers.IO) {
-            flow {
-                val entries = getAllEntriesDB.invoke()
-                emit(entries)
-            }
-                .catch { e ->
-                    // Manejo de errores
-                    _listOfEntriesDB.value = emptyList() // O alguna acción que maneje el error
-                    Log.e("ViewModel", "Error getting incomes: ${e.message}")
-                }
-                .collect { entries ->
-                    _listOfEntriesDB.value = entries
-                }
-        }
-    }
+
     // Método para obtener todos los ingresos
     fun getAllIncomes() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -250,6 +235,17 @@ class EntriesViewModel @Inject constructor(
             }
         }
     }
+    fun updateEntries(entryID:Long,updatedEntryDTO: EntryDTO) {
+        // Encuentra la entrada por ID y actualiza la lista
+        val currentEntries = _listOfEntriesDTO.value.toMutableList()
+        val entryIndex = currentEntries.indexOfFirst { it.id == entryID }
+        if (entryIndex != -1) {
+            currentEntries[entryIndex] = updatedEntryDTO
+        }
+        _listOfEntriesDTO.value = currentEntries.toList() // Actualiza el estado
+    }
+
+
     fun onEntryDTOSelected(entryDTO:EntryDTO)
     {
         _entryDTOSelected.value = entryDTO

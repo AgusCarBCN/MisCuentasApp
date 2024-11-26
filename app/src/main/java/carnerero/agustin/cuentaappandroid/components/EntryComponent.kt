@@ -391,7 +391,6 @@ fun EntriesWithCheckBox(
                     } else {
                         entriesToRemove.forEach { entryWithCheckBox ->
                             val idAccount = entryWithCheckBox.entry.accountId
-                            val type=entryWithCheckBox.entry.categoryType
                             val amount=entryWithCheckBox.entry.amount
                             listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
                             entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos

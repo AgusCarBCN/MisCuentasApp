@@ -132,20 +132,25 @@ fun ModifyEntry(entryDTO: EntryDTO,
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {
-
-
-
-                //Modica registro
-                    Log.d("dto",entryDTO.id.toString())
-                Log.d("dto",descriptionEntry.toString())
-                Log.d("dto",amountEntry)
-                Log.d("dto",dateSelected.toString())
-
+                val entryDTOUpdated=EntryDTO(
+                    entryDTO.id,
+                    descriptionEntry,
+                    if(entryDTO.categoryType==CategoryType.INCOME) amountEntry.toDouble()
+                    else (-1)*(amountEntry.toDouble()),
+                    dateSelected,
+                    entryDTO.iconResource,
+                    entryDTO.nameResource,
+                    entryDTO.accountId,
+                    entryDTO.name,
+                    entryDTO.categoryId,
+                    entryDTO.categoryType
+                )
                     entriesViewModel.updateEntry(entryDTO.id,
                         descriptionEntry,
                         if(entryDTO.categoryType==CategoryType.INCOME) amountEntry.toDouble()
                         else (-1)*(amountEntry.toDouble()),
                         dateSelected)
+                entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
                 mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                 //Actualiza balance de cuenta
                 /*accountsViewModel.updateAccountBalance(
@@ -154,6 +159,8 @@ fun ModifyEntry(entryDTO: EntryDTO,
                     else updateBalanceExpense,
                     false
                 )*/
+
+
                 entriesViewModel.getTotal()
                 scope.launch(Dispatchers.Main) {
                     SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
