@@ -123,8 +123,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
             onClickButton = {
                 val amountBefore=entryDTO.amount
                 val updateBalanceIncome=amountEntry.toDouble()-amountBefore
-                val updateBalanceExpense = amountEntry.toDouble() + kotlin.math.abs(amountBefore)
-
+                val updateBalanceExpense = (-1)*amountEntry.toDouble() + kotlin.math.abs(amountBefore)
 
                 val entryDTOUpdated=EntryDTO(
                     entryDTO.id,
@@ -147,12 +146,12 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
                 mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                 //Actualiza balance de cuenta
-                /*accountsViewModel.updateAccountBalance(
+                accountsViewModel.updateAccountBalance(
                     entryDTO.accountId,
                     if(entryDTO.categoryType==CategoryType.INCOME) updateBalanceIncome
                     else updateBalanceExpense,
                     false
-                )*/
+                )
 
 
                 entriesViewModel.getTotal()
