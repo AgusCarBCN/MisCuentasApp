@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -51,6 +52,10 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 )
 {
     val selectedEntryDTO by entriesViewModel.entryDTOSelected.observeAsState()
+    // Sincroniza los datos iniciales del ViewModel
+    LaunchedEffect(entryDTO) {
+        entriesViewModel.setInitialData(entryDTO)
+    }
     val description=entryDTO.description
     val amount= kotlin.math.abs(entryDTO.amount).toString()
     val descriptionEntry by entriesViewModel.entryDescriptionModify.observeAsState(description)
@@ -118,7 +123,8 @@ fun ModifyEntry(entryDTO: EntryDTO,
             onClickButton = {
                 val amountBefore=entryDTO.amount
                 val updateBalanceIncome=amountEntry.toDouble()-amountBefore
-                val updateBalanceExpense=-(amountEntry.toDouble())+amountBefore
+                val updateBalanceExpense = amountEntry.toDouble() + kotlin.math.abs(amountBefore)
+
 
                 val entryDTOUpdated=EntryDTO(
                     entryDTO.id,

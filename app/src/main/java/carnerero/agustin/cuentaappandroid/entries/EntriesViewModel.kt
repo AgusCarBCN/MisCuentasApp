@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
+import kotlin.math.abs
 
 @HiltViewModel
 class EntriesViewModel @Inject constructor(
@@ -282,7 +283,10 @@ class EntriesViewModel @Inject constructor(
         _entryDescriptionModify.value=newDescription
 
     }
-
+    fun setInitialData(entryDTO: EntryDTO) {
+        _entryDescriptionModify.value = entryDTO.description
+        _entryAmountModify.value = abs(entryDTO.amount).toString()
+    }
 
     fun onAmountChanged(idAccountFrom:Int,idAccountTo:Int,newAmount: String) {
         // Validar y actualizar el valor de amount
