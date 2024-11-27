@@ -125,7 +125,6 @@ fun MainScreen(
     val context= LocalContext.current
     val notificationService= NotificationService(context)
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
-
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val selectedScreen by mainViewModel.selectedScreen.collectAsState()
@@ -145,6 +144,7 @@ fun MainScreen(
     }
     LaunchedEffect(Unit) {
         entriesViewModel.getAllIncomes()  // Llamar a la función para cargar las entradas
+2
     }
 
     //Boton de atrás te lleva al Home

@@ -530,6 +530,7 @@ fun EntryCardWithIcon(
     mainViewModel: MainViewModel
 
 ) {
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

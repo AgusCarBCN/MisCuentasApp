@@ -82,6 +82,13 @@ class EntriesViewModel @Inject constructor(
     private val _entryAmount = MutableLiveData<String>()
     val entryAmount: LiveData<String> = _entryAmount
 
+    // LiveData para los campos de texto
+    private val _entryDescriptionModify = MutableLiveData<String>()
+    val entryDescriptionModify: LiveData<String> = _entryDescriptionModify
+
+    private val _entryAmountModify = MutableLiveData<String>()
+    val entryAmountModify: LiveData<String> = _entryAmountModify
+
 
     // MutableStateFlow para la lista de entradas
     private val _listOfEntriesDTO = MutableStateFlow<List<EntryDTO>>(emptyList())
@@ -100,6 +107,7 @@ class EntriesViewModel @Inject constructor(
         getTotal()
         getAllEntriesDTO()
     }
+
 
     fun getAllEntriesDTO(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -229,7 +237,8 @@ class EntriesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 updateEntry.invoke(id,description,amount,date)
-
+                resetFields()
+                getTotal()
             } catch (e: Exception) {
                 Log.e("EntryDTO", "Error updating entry: ${e.message}")
             }
@@ -248,6 +257,7 @@ class EntriesViewModel @Inject constructor(
 
     fun onEntryDTOSelected(entryDTO:EntryDTO)
     {
+
         _entryDTOSelected.value = entryDTO
     }
 
@@ -264,6 +274,15 @@ class EntriesViewModel @Inject constructor(
         _entryName.value=newDescription
         _enableConfirmButton.value = enableButton(newDescription,newAmount)
     }
+    fun onTextFieldsChangedModify(newDescription:String,newAmount:String){
+        // Validar y actualizar el valor de amount
+        if (Utils.isValidDecimal(newAmount)) {
+            _entryAmountModify.value = newAmount
+        }
+        _entryDescriptionModify.value=newDescription
+
+    }
+
 
     fun onAmountChanged(idAccountFrom:Int,idAccountTo:Int,newAmount: String) {
         // Validar y actualizar el valor de amount

@@ -50,37 +50,21 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 mainViewModel: MainViewModel
                 )
 {
-    val descriptionEntry by entriesViewModel.entryName.observeAsState(entryDTO.description)
-    val amountEntry by entriesViewModel.entryAmount.observeAsState(kotlin.math.abs(entryDTO.amount).toString())
+    val selectedEntryDTO by entriesViewModel.entryDTOSelected.observeAsState()
+    val description=entryDTO.description
+    val amount= kotlin.math.abs(entryDTO.amount).toString()
+    val descriptionEntry by entriesViewModel.entryDescriptionModify.observeAsState(description)
+    val amountEntry by entriesViewModel.entryAmountModify.observeAsState(amount)
     val dateSelected by searchViewModel.selectedFromDate.observeAsState(entryDTO.date)
 
     val messageModify= stringResource(id = R.string.modifyentrymsg)
     val scope = rememberCoroutineScope()
-    //val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
+    Log.d("dtosel",selectedEntryDTO.toString())
     val initColor =
         if (entryDTO.categoryType== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeInit
         else LocalCustomColorsPalette.current.iconExpenseInit
     val targetColor = if (entryDTO.categoryType== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeTarget
     else LocalCustomColorsPalette.current.iconExpenseTarget
-    val amountBefore=entryDTO.amount
-
-    val updateBalanceIncome=amountEntry.toDouble()-amountBefore
-    val updateBalanceExpense=-(amountEntry.toDouble())+amountBefore
-    val mutableEntryDTO = remember {
-        MutableEntryDTO(
-            id = entryDTO.id,
-            description = mutableStateOf(entryDTO.description),
-            amount = mutableDoubleStateOf(kotlin.math.abs(entryDTO.amount)),
-            date = mutableStateOf(entryDTO.date),
-            iconResource = entryDTO.iconResource,
-            nameResource = entryDTO.nameResource,
-            accountId = entryDTO.accountId,
-            name = entryDTO.name,
-            categoryId = entryDTO.categoryId,
-            categoryType = entryDTO.categoryType
-        )
-    }
-
 
 
     Column(
@@ -101,7 +85,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
             modifier = Modifier.width(320.dp),
             stringResource(id = R.string.desamount),
             descriptionEntry,
-            onTextChange = { entriesViewModel.onTextFieldsChanged(it, amountEntry)},
+            onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry)},
 
             BoardType.TEXT,
             false
@@ -122,7 +106,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
             modifier = Modifier.width(320.dp),
             stringResource(id = R.string.modifyamount),
             amountEntry,
-            onTextChange = { entriesViewModel.onTextFieldsChanged(descriptionEntry, it)},
+            onTextChange = { entriesViewModel.onTextFieldsChangedModify(descriptionEntry, it)},
 
             BoardType.DECIMAL,
             false
@@ -132,6 +116,10 @@ fun ModifyEntry(entryDTO: EntryDTO,
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {
+                val amountBefore=entryDTO.amount
+                val updateBalanceIncome=amountEntry.toDouble()-amountBefore
+                val updateBalanceExpense=-(amountEntry.toDouble())+amountBefore
+
                 val entryDTOUpdated=EntryDTO(
                     entryDTO.id,
                     descriptionEntry,
