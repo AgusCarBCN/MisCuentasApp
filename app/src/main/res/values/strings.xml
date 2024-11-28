@@ -206,7 +206,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsAttribution">Icons</string>
-    <string name="version">Version 3.9.2</string>
+    <string name="version">Version 3.10</string>
     <string name="description">
 
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
@@ -406,5 +406,8 @@
     <string name="selected">selected</string>
     <string name="percentexpense">Spending percentage:</string>
     <string name="expenseControl">Expense control of</string>
+    <string name="checkbox">Selection</string>
+    <string name="ischeckedtodelete"> is checked to delete</string>
+    <string name="isuncheckedtodelete"> is unchecked to delete</string>
 </resources>
 

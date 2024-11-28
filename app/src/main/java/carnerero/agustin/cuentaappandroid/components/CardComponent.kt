@@ -448,9 +448,11 @@ fun EntryCardWithCheckBox(
     onSelectionChange: () -> Unit
 ){
     val item= stringResource(id = R.string.item)
-    val entryDescripcion=entry.description
-    val checked="$entryDescripcion ${stringResource(R.string.ischecked)}"
-    val unchecked = stringResource(R.string.isunchecked)
+    val entryDescription=entry.description
+    val amount= stringResource(id = R.string.amountentrie)
+    val checked="$entryDescription ${stringResource(R.string.ischeckedtodelete)}"
+    val unchecked = stringResource(R.string.isuncheckedtodelete)
+    val checkbox=stringResource(id = R.string.checkbox)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -464,16 +466,14 @@ fun EntryCardWithCheckBox(
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
             .padding(bottom = 10.dp)
-            .semantics {
-                contentDescription = entryDescripcion
-            }
     ) {
         Row(
             modifier = Modifier
                 .padding(start = 15.dp, end = 20.dp, top = 5.dp)
                 .semantics {
-                    contentDescription = "$item $entryDescripcion"
-                },
+                    contentDescription = "$item: $entryDescription, $amount: ${Utils.numberFormat(entry.amount, currencyCode)}"
+                }
+            ,
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -498,7 +498,13 @@ fun EntryCardWithCheckBox(
 
         }
         Row(
-            modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
+            modifier = Modifier
+                .padding(start = 15.dp, end = 20.dp, top = 5.dp)
+                .semantics {
+
+                    contentDescription = "$checkbox: $entryDescription, ${if (isChecked) checked else unchecked}"
+
+                },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -522,12 +528,7 @@ fun EntryCardWithCheckBox(
             )
             Checkbox(
                 modifier = Modifier
-                    .weight(0.2f)        // Ajuste proporcional para el checkbox
-                    .semantics {
-                        // Descripción única del Checkbox
-                        contentDescription =
-                            "${entry.description}: ${if (isChecked) checked else unchecked}"
-                    }
+                    .weight(0.2f)
                 ,checked = isChecked,
                 onCheckedChange = {
                     onSelectionChange()
