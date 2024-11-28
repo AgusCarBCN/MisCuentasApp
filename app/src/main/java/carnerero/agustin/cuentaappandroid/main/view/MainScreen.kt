@@ -60,6 +60,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.about.AboutApp
 import carnerero.agustin.cuentaappandroid.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.about.SendEmail
+import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 import carnerero.agustin.cuentaappandroid.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.calculator.CalculatorUI
@@ -189,7 +190,7 @@ fun MainScreen(
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    //AdmobBanner()
+                    AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()
                     }
