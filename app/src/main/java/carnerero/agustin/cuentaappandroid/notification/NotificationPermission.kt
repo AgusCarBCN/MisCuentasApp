@@ -4,9 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import carnerero.agustin.cuentaappandroid.components.NotificationDialog
-import carnerero.agustin.cuentaappandroid.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.NotificationDialog
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

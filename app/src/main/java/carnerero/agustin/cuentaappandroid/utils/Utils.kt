@@ -3,10 +3,10 @@ package carnerero.agustin.cuentaappandroid.utils
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
-import carnerero.agustin.cuentaappandroid.main.data.database.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.main.data.database.entities.Entry
-import carnerero.agustin.cuentaappandroid.main.model.currencyLocales
-import carnerero.agustin.cuentaappandroid.setting.model.EntryCSV
+import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.currencyLocales
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader

@@ -1,7 +1,7 @@
 package carnerero.agustin.cuentaappandroid.di
 
-import carnerero.agustin.cuentaappandroid.retrofit.AppConst
-import carnerero.agustin.cuentaappandroid.retrofit.CurrencyConverterApi
+import carnerero.agustin.cuentaappandroid.data.network.model.AppConst
+import carnerero.agustin.cuentaappandroid.data.network.client.CurrencyConverterApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

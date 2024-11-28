@@ -1,8 +1,8 @@
 package carnerero.agustin.cuentaappandroid.di
 
 import android.content.Context
-import carnerero.agustin.cuentaappandroid.calculator.ParserCalculator
-import carnerero.agustin.cuentaappandroid.main.data.datastore.preferences.repository.UserDataStoreRepository
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.ParserCalculator
+import carnerero.agustin.cuentaappandroid.data.repository.UserDataStoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

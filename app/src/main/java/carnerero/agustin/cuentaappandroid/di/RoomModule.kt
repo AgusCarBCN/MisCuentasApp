@@ -2,7 +2,7 @@ package carnerero.agustin.cuentaappandroid.di
 
 import android.content.Context
 import androidx.room.Room
-import carnerero.agustin.cuentaappandroid.main.data.database.AppDataBase
+import carnerero.agustin.cuentaappandroid.data.db.database.AppDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

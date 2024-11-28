@@ -12,8 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import carnerero.agustin.cuentaappandroid.R
 
-import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 

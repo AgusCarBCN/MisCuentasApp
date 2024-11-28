@@ -29,24 +29,26 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 
-import carnerero.agustin.cuentaappandroid.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.calculator.CalculatorViewModel
-import carnerero.agustin.cuentaappandroid.createaccounts.view.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.createaccounts.view.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.createaccounts.view.CreateAccountsComponent
-import carnerero.agustin.cuentaappandroid.createprofile.CreateProfileComponent
-import carnerero.agustin.cuentaappandroid.createprofile.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.login.LoginComponent
-import carnerero.agustin.cuentaappandroid.login.LoginViewModel
-import carnerero.agustin.cuentaappandroid.main.model.Routes
-import carnerero.agustin.cuentaappandroid.main.view.MainScreen
-import carnerero.agustin.cuentaappandroid.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.entries.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.search.SearchViewModel
-import carnerero.agustin.cuentaappandroid.tutorial.view.Tutorial
-import carnerero.agustin.cuentaappandroid.tutorial.view.TutorialViewModel
-import carnerero.agustin.cuentaappandroid.theme.MisCuentasTheme
+import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileComponent
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.Routes
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
+import carnerero.agustin.cuentaappandroid.utils.ObserveAsEvents
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import com.google.android.gms.ads.MobileAds
 
 import dagger.hilt.android.AndroidEntryPoint
