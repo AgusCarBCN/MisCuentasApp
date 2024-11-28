@@ -168,37 +168,6 @@ fun SettingScreen(
 
             }
         )
-        SpacerApp()
-        HeadSetting(title = stringResource(id = R.string.expensemanagement), MaterialTheme.typography.headlineSmall)
-
-        RowComponent(title = stringResource(id = R.string.accountscontrol),
-            description = stringResource(id = R.string.accountscontroldes),
-            iconResource = R.drawable.ic_selectaccounts,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.SELECT_ACCOUNTS)
-            })
-
-        RowComponent(title = stringResource(id = R.string.expensecontrol),
-            description = stringResource(id = R.string.desexpensecontrol),
-            iconResource = R.drawable.ic_expensetotal,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.ACCOUNT_EXPENSE_CONTROL)
-            })
-
-        RowComponent(title = stringResource(id = R.string.selectcategories),
-            description = stringResource(id = R.string.choosecategories),
-            iconResource = R.drawable.ic_selectcategories,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.SELECT_CATEGORIES)
-            })
-        RowComponent(title = stringResource(id = R.string.categorycontrol),
-            description = stringResource(id = R.string.descategorycontrol),
-            iconResource = R.drawable.ic_categorycontrol,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.CATEGORY_EXPENSE_CONTROL)
-            })
-
-
 
         SpacerApp()
 

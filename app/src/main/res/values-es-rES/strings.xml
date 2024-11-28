@@ -44,7 +44,6 @@
     <string name="des4">\t\t\tConsulta tu progreso financiero a través de gráficos detallados. Los gráficos de barras muestran tus ingresos, gastos y saldo mensual, mientras que los gráficos circulares te ofrecen una visión clara de la distribución de tus gastos por categorías en un periodo determinado.</string>
     <string name="des5">\t\t\tConsulta movimientos fácilmente, buscando por nombre, rango de fechas o cantidad de dinero, para que puedas hacer un seguimiento detallado de todas tus transacciones.</string>
     <string name="des6">\t\t\tControla tanto tus gastos totales como por categoría en un periodo determinado. Activa las notificaciones para recibir alertas cuando alcances tus límites de gasto y mantener tus finanzas bajo control.</string>
-
     <!---Profile-->
     <string name="createProfileButton">Crea un perfil</string>
     <string name="createaccountmsg">Puedes crear tus cuentas ahora o mas tarde.</string>
@@ -56,6 +55,10 @@
     <string name="visibily">Contraseña visible</string>
     <string name="visibilyoff">Contraseña no visible</string>
     <!--Option side menu-->
+    <string name="stadistics">Estadísticas</string>
+    <string name="spendingcontrol">Control del gasto</string>
+    <string name="piechartdes">Gráficos circulares de gastos por categoría.</string>
+    <string name="barchartdes">Gráficos de barras de ingresos,gastos y resultado por mes.</string>
     <string name="mainmenu">Menu principal de navegación</string>
     <string name="management">Gestion de finanzas</string>
     <string name="aboutapp">Información de la App</string>

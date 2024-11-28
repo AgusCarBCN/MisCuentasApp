@@ -64,7 +64,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
 
     val messageModify= stringResource(id = R.string.modifyentrymsg)
     val scope = rememberCoroutineScope()
-    Log.d("dtosel",selectedEntryDTO.toString())
+
     val initColor =
         if (entryDTO.categoryType== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeInit
         else LocalCustomColorsPalette.current.iconExpenseInit

@@ -98,6 +98,8 @@ import carnerero.agustin.cuentaappandroid.setting.AccountList
 import carnerero.agustin.cuentaappandroid.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.spendingcontrol.SpendingControlScreen
+import carnerero.agustin.cuentaappandroid.stadistics.StadisticsScreen
 import carnerero.agustin.cuentaappandroid.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.theme.LocalCustomColorsPalette
@@ -401,6 +403,15 @@ fun MainScreen(
                             }
                             title=R.string.modifyentry
                         }
+
+                        IconOptions.STADISTICS -> {
+                            StadisticsScreen(mainViewModel)
+                            title=R.string.stadistics
+                        }
+                        IconOptions.SPENDING_CONTROL -> {
+                            SpendingControlScreen(mainViewModel)
+                            title=R.string.spendingcontrol
+                        }
                     }
 
                 }
@@ -493,11 +504,11 @@ private fun DrawerContent(
             ClickableRow(OptionItem(R.string.transfer, R.drawable.transferoption), onClick = {
                 viewModel.selectScreen(IconOptions.TRANSFER)
             })
-            ClickableRow(OptionItem(R.string.barchart, R.drawable.barchartoption), onClick = {
-                viewModel.selectScreen(IconOptions.BARCHART)
+            ClickableRow(OptionItem(R.string.stadistics, R.drawable.ic_staditics), onClick = {
+                viewModel.selectScreen(IconOptions.STADISTICS)
             })
-            ClickableRow(OptionItem(R.string.piechart, R.drawable.ic_piechart), onClick = {
-                viewModel.selectScreen(IconOptions.PIE_CHART)
+            ClickableRow(OptionItem(R.string.spendingcontrol, R.drawable.ic_expensecontrol), onClick = {
+                viewModel.selectScreen(IconOptions.SPENDING_CONTROL)
 
             })
             ClickableRow(OptionItem(R.string.calculator, R.drawable.ic_calculate), onClick = {

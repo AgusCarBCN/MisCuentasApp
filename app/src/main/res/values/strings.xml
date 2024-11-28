@@ -60,6 +60,10 @@
     <string name="title_activity_main_screen" translatable="false">MainScreen</string>
 
     <!--Option side menu-->
+    <string name="stadistics">Statistics</string>
+    <string name="spendingcontrol">Spending Control</string>
+    <string name="piechartdes">Pie charts of expenses by category.</string>
+    <string name="barchartdes">Bar charts of income, expenses, and results by month.</string>
     <string name="mainmenu">Main navigation menu</string>
     <string name="management">Financial management</string>
     <string name="aboutapp">Information about App</string>
@@ -188,16 +192,13 @@
     <string name="greeting">Hello,</string>
     <!--About-->
     <string name="iconconta">Accounting icon - 2D3ds (Flaticon)</string>
-
     <string name="iconsGoogle">Google Fonts icons</string>
     <string name="iconsuxwing">Uxwing icons</string>
     <string name="api">Currency API - Exchangerate-API</string>
     <string name="iconflags">Flags icons - Flagpedia.net</string>
     <string name="developer">Developer: Agustin Carnerero Peña</string>
-
     <string name="currencydata">Currency Data</string>
     <string name="changecurrencytext">Change the currency format and exchange rate</string>
-
     <string name="selectcurrencyoption">Select currrency</string>
     <string name="menuicons">Side menu icons</string>
     <string name="iconstheme">Setting theme icons</string>
@@ -206,7 +207,6 @@
     <string name="atributions">Attributions</string>
     <string name="iconsAttribution">Icons</string>
     <string name="version">Version 3.9.2</string>
-
     <string name="description">
 
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
@@ -391,7 +391,6 @@
     <string name="selectaccounts">Select accounts</string>
     <string name="categorychecked">Checked</string>
     <string name="categoryunchecked">Unchecked</string>
-
     <!--contentDescription-->
     <string name="indicatorSelected">Selected indicator</string>
     <string name="indicatorNoSelected">Unselected indicator</string>

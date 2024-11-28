@@ -354,7 +354,11 @@ fun AccountCardWithCheckbox(
             .size(width = 360.dp, height = 120.dp)
     ) {
         Row(
-            modifier = Modifier.padding(5.dp),
+            modifier = Modifier
+                .padding(5.dp)
+                .semantics {
+                    contentDescription = "$ entry.des"
+                },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -443,7 +447,10 @@ fun EntryCardWithCheckBox(
     isChecked:Boolean,
     onSelectionChange: () -> Unit
 ){
-
+    val item= stringResource(id = R.string.item)
+    val entryDescripcion=entry.description
+    val checked="$entryDescripcion ${stringResource(R.string.ischecked)}"
+    val unchecked = stringResource(R.string.isunchecked)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -457,10 +464,16 @@ fun EntryCardWithCheckBox(
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
             .padding(bottom = 10.dp)
+            .semantics {
+                contentDescription = entryDescripcion
+            }
     ) {
         Row(
             modifier = Modifier
-                .padding(start = 15.dp, end = 20.dp, top = 5.dp),
+                .padding(start = 15.dp, end = 20.dp, top = 5.dp)
+                .semantics {
+                    contentDescription = "$item $entryDescripcion"
+                },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -508,8 +521,14 @@ fun EntryCardWithCheckBox(
 
             )
             Checkbox(
-                modifier = Modifier.weight(0.2f), // Ajuste proporcional para el checkbox
-                checked = isChecked,
+                modifier = Modifier
+                    .weight(0.2f)        // Ajuste proporcional para el checkbox
+                    .semantics {
+                        // Descripción única del Checkbox
+                        contentDescription =
+                            "${entry.description}: ${if (isChecked) checked else unchecked}"
+                    }
+                ,checked = isChecked,
                 onCheckedChange = {
                     onSelectionChange()
                 },
@@ -530,7 +549,9 @@ fun EntryCardWithIcon(
     mainViewModel: MainViewModel
 
 ) {
-
+    val income= stringResource(id = R.string.incomeoption)
+    val expense= stringResource(id = R.string.expenseoption)
+    val edit=stringResource(id = R.string.modifyentry)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -544,6 +565,19 @@ fun EntryCardWithIcon(
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
             .padding(bottom = 10.dp)
+            .semantics {
+                contentDescription = buildString {
+                    append(entry.description)
+                    append(". ")
+                    append(entry.amount)
+                    append(Utils.numberFormat(entry.amount, currencyCode))
+                    append(". ")
+                    append(
+                        if (entry.amount >= 0) income
+                        else expense
+                    )
+                }
+            }
     ) {
         Row(
             modifier = Modifier
@@ -595,7 +629,7 @@ fun EntryCardWithIcon(
             )
             Icon(
                 painter = painterResource(id = R.drawable.edit),
-                contentDescription = "indicator",
+                contentDescription = "$edit ${entry.description}" ,
                 tint = LocalCustomColorsPalette.current.textColor,
                 modifier = Modifier
                     .size(24.dp)

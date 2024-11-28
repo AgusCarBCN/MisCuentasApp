@@ -56,6 +56,10 @@
     <string name="visibily">Password visible</string>
     <string name="visibilyoff">Password no visible</string>
     <!--Option side menu-->
+    <string name="stadistics">Statistics</string>
+    <string name="spendingcontrol">Spending Control</string>
+    <string name="piechartdes">Pie charts of expenses by category.</string>
+    <string name="barchartdes">Bar charts of income, expenses, and results by month.</string>
     <string name="mainmenu">Main navigation menu</string>
     <string name="management">Financial management</string>
     <string name="aboutapp">Information about App</string>
