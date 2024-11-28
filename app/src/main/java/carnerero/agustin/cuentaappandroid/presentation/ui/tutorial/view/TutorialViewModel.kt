@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.GetShowTutorialUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.GetToLoginUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.SetShowTutorialUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetShowTutorialUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetToLoginUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SetShowTutorialUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

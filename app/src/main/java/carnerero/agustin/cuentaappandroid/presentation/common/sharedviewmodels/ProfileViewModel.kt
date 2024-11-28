@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.GetPhotoFromUriUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.GetUserProfileDataUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.SaveUriUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.SetToLoginUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.datastore.SetUserProfileDataUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SaveUriUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SetToLoginUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

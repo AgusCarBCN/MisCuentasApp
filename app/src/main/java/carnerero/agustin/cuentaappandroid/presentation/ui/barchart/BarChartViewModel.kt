@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumExpensesByMonthUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumIncomesByMonthUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
-import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumExpensesByMonthUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumIncomesByMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

@@ -8,15 +8,14 @@ import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.GetAllCategoriesByType
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.GetAllCategoriesCheckedUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.InsertCategoryUseCase
-
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateCheckedCategoryUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateFromDateCategoryUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateSpendingLimitCategoryUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.categoryusecase.UpdateToDateCategoryUseCase
-import carnerero.agustin.cuentaappandroid.main.domain.database.entriesusecase.GetSumOfExpensesByCategoryAndDateUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.GetAllCategoriesByType
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.GetAllCategoriesCheckedUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.InsertCategoryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.UpdateCheckedCategoryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.UpdateFromDateCategoryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.UpdateSpendingLimitCategoryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.UpdateToDateCategoryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumOfExpensesByCategoryAndDateUseCase
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
