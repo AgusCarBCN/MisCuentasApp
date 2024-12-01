@@ -128,17 +128,17 @@ interface EntryDao {
         dateTo: String = Date().dateFormat()
     ): Double?
 
+    //10. Get sum of incomes entries by month
 
-    //10.Get sum of incomes entries by month
     @Transaction
     @Query(
         """
     SELECT SUM(amount) FROM EntryEntity 
-        WHERE amount >= 0
-         AND accountId = :accountId
-         AND SUBSTR(date, 4, 2) = :month 
-         AND SUBSTR(date, 7, 4) = :year
-"""
+    WHERE amount >= 0
+    AND accountId = :accountId
+    AND SUBSTR(date, 6, 2) = :month  -- Extrae el mes
+    AND SUBSTR(date, 1, 4) = :year   -- Extrae el año
+    """
     )
     suspend fun getSumOfIncomeEntriesForMonth(
         accountId: Int,
@@ -147,22 +147,22 @@ interface EntryDao {
     ): Double?
 
 
+
     //11.Get sum of expenses entries by month
     @Transaction
     @Query(
-        """           
-           
-SELECT SUM(amount) FROM EntryEntity 
-WHERE amount < 0
-  AND accountId = :accountId
-   AND SUBSTR(date, 4, 2) = :month 
-   AND SUBSTR(date, 7, 4) = :year
-"""
+        """
+    SELECT SUM(amount) FROM EntryEntity 
+    WHERE amount < 0
+    AND accountId = :accountId
+    AND SUBSTR(date, 6, 2) = :month  -- Extrae el mes
+    AND SUBSTR(date, 1, 4) = :year   -- Extrae el año
+    """
     )
     suspend fun getSumOfExpensesEntriesForMonth(
         accountId: Int,
-        month: String,
-        year: String
+        month: String,  // Espera un valor en formato 'MM' (ejemplo: '01' para enero)
+        year: String    // Espera un valor en formato 'YYYY' (ejemplo: '2024')
     ): Double?
 
 

@@ -32,7 +32,7 @@ class Utils {
         }
 
         fun convertMillisToDate(millis: Long): String {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             return formatter.format(Date(millis))
         }
 
@@ -49,7 +49,7 @@ class Utils {
 
 
         fun toDateEntry(date: String): String {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
             val dateEntry = formatter.parse(date)
             date.let { formatter.parse(it) }
@@ -59,7 +59,7 @@ class Utils {
         }
 
         fun convertStringToLocalDate(date: String): LocalDate {
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
             return LocalDate.parse(date, formatter)
         }
 
