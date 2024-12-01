@@ -162,13 +162,12 @@ fun SearchScreen(
                         toAmount.toDoubleOrNull() ?: Double.MAX_VALUE,
                         selectedOption ?: 0
                     )
-                    if(typeOfSearch == TypeOfSearch.SEARCH) {
-                        mainViewModel.selectScreen(IconOptions.ENTRIES)
-                    }else if(typeOfSearch == TypeOfSearch.DELETE) {
-                        mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
-                    }else if(typeOfSearch == TypeOfSearch.UPDATE){
-                        mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
+                    when (typeOfSearch) {
+                        TypeOfSearch.SEARCH -> mainViewModel.selectScreen(IconOptions.ENTRIES)
+                        TypeOfSearch.DELETE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
+                        TypeOfSearch.UPDATE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                     }
+
                 }
             }
         )
