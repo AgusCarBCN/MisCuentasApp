@@ -48,15 +48,20 @@ class Utils {
         }
 
 
-        fun toDateEntry(date: String): String {
+        fun toDateFormatDayMonth(date: String): String {
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
             val dateEntry = formatter.parse(date)
             date.let { formatter.parse(it) }
             return dateEntry?.dateFormatDayMonth() ?: ""
 
-
         }
+        fun toDateShortFormatLocale(date:String): String {
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val dateEntry = formatter.parse(date)
+            date.let { formatter.parse(it) }
+            return dateEntry?.dateFormatByLocale() ?: ""
+        }
+
 
         fun convertStringToLocalDate(date: String): LocalDate {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())

@@ -136,7 +136,7 @@ fun EntryList(
                                 .background(LocalCustomColorsPalette.current.backgroundPrimary)
                                 .fillParentMaxWidth()
                                 .padding(start = 15.dp),
-                            text = Utils.toDateEntry(date),
+                            text = Utils.toDateFormatDayMonth(date),
                             textAlign = TextAlign.Start,
                             color = LocalCustomColorsPalette.current.textColor,
                             style = MaterialTheme.typography.bodyLarge

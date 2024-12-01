@@ -1,10 +1,9 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol
-
+package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,66 +19,60 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CategoryCardWithCheckbox
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 
-
 @Composable
-fun EntryCategoryList(
-    categoriesViewModel: CategoriesViewModel,
+fun EntryAccountList(
+    accountsViewModel: AccountsViewModel,
     searchViewModel: SearchViewModel
 ) {
     // Observa la lista de categorías desde el ViewModel
-    val listOfCategories by categoriesViewModel.listOfCategories.observeAsState(emptyList())
-
+    val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
+    val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
     LaunchedEffect(Unit) {
-        categoriesViewModel.getAllCategoriesByType(CategoryType.EXPENSE)
+        accountsViewModel.getAllAccounts()
     }
 
     Column(
-
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 30.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadSetting(title = stringResource(id = R.string.selectcategoriescontrol),
+        HeadSetting(title = stringResource(id = R.string.selectaccountcontrol),
             MaterialTheme.typography.titleLarge)
         // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f) // Permite que la columna ocupe el espacio disponible
-                .padding(bottom = 16.dp)            ,
-            verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
-            contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido,
+                .padding(bottom = 16.dp), // Espacio en la parte inferior
 
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(listOfCategories) { category ->
-                CategoryCardWithCheckbox(
-                    category,
-                    categoriesViewModel,
+            items(listOfAccounts) { account ->
+                AccountCardWithCheckbox(
+                    account,
+                    currencyCode,
+                    accountsViewModel,
                     searchViewModel,
                     onCheckBoxChange = { checked ->
-                        categoriesViewModel.updateCheckedCategory(
-                            category.id,
+                        accountsViewModel.updateCheckedAccount(
+                            account.id,
                             checked
                         )
-                        if (!category.isChecked) {
-                            categoriesViewModel.onEnableDialogChange(true)
+                        if (!account.isChecked) {
+                            accountsViewModel.onEnableDialogChange(true)
                         }
                     }
-
                 )
-                Spacer(modifier = Modifier.height(20.dp))
-
+                Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)
             }
         }
     }
 }
-
-
-
-
 

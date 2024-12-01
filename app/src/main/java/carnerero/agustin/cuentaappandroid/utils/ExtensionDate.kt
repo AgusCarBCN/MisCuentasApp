@@ -26,3 +26,13 @@ fun Date.dateFormatDayMonth(): String {
         formatter.format(this)
     }
 }
+
+
+fun Date.dateFormatByLocale(): String {
+    // Obtener el Locale del dispositivo
+    val locale = Locale.getDefault()
+    // Crear un objeto SimpleDateFormat utilizando el Locale
+    val formatter = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, locale)
+    // Formateamos la fecha y la devolvemos
+    return formatter.format(this)
+}

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.components
+package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -107,7 +107,7 @@ fun CategoryBudgetItemControl(
             verticalAlignment = Alignment.CenterVertically // Alinear verticalmente al centro
         ) {
             Text(
-                text = "${stringResource(id = R.string.fromdate)}: ${category.fromDate}",
+                text = "${stringResource(id = R.string.fromdate)}: ${Utils.toDateShortFormatLocale(category.fromDate)}",
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible
@@ -116,7 +116,7 @@ fun CategoryBudgetItemControl(
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "${stringResource(id = R.string.todate)}: ${category.toDate}",
+                text = "${stringResource(id = R.string.todate)}: ${Utils.toDateShortFormatLocale(category.toDate)}",
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible

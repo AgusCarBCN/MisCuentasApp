@@ -82,10 +82,10 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelect
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.EntryAccountList
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.EntryCategoryList
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.ExpenseControlAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.ExpenseControlCategoriesScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.EntryAccountList
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.EntryCategoryList
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.ExpenseControlAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.ExpenseControlCategoriesScreen
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol
+package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol
 
 
 import androidx.compose.foundation.layout.Arrangement
@@ -15,8 +15,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.components.AccountBudgetItemControl
-import carnerero.agustin.cuentaappandroid.presentation.ui.expensecontrol.components.CategoryBudgetItemControl
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.AccountBudgetItemControl
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.CategoryBudgetItemControl
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
