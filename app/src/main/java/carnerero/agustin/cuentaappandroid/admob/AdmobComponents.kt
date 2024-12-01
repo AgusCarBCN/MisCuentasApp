@@ -1,9 +1,10 @@
 package carnerero.agustin.cuentaappandroid.admob
 
-import android.content.ContentValues.TAG
+
 import android.os.Build
-import android.util.DisplayMetrics
 import android.util.Log
+import android.view.WindowManager
+import android.view.WindowMetrics
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,12 +23,16 @@ import com.google.android.gms.ads.LoadAdError
 fun adaptiveAdSize(): AdSize {
     val context = LocalContext.current
     val density = LocalDensity.current.density
+    val metrics: WindowMetrics = context.getSystemService(WindowManager::class.java).currentWindowMetrics
+    val currentBounds = metrics.bounds
+
+    val width = currentBounds.width()
 
     // Obtenemos el ancho de la pantalla en píxeles
-    val displayMetrics = DisplayMetrics().apply {
+    /*val displayMetrics = DisplayMetrics().apply {
         context.display.getRealMetrics(this)
-    }
-    val adWidthPixels = displayMetrics.widthPixels.toFloat()
+    }*/
+    val adWidthPixels = width.toFloat()
 
     // Convertimos el ancho a dp y calculamos el AdSize adecuado
     val adWidthDp = (adWidthPixels / density).toInt()
