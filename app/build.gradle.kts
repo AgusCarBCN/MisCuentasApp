@@ -1,4 +1,4 @@
-import com.android.ide.common.fonts.getFontsPath
+
 
 plugins {
     alias(libs.plugins.android.application)
@@ -15,7 +15,8 @@ android {
 
     defaultConfig {
         applicationId = "carnerero.agustin.cuentaappandroid"
-        minSdk = 27
+        minSdk = 26
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 47
         versionName = "3.11"
