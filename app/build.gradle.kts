@@ -6,8 +6,7 @@ plugins {
     id ("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
-
-}
+    }
 
 android {
     namespace = "carnerero.agustin.cuentaappandroid"
@@ -16,8 +15,7 @@ android {
     defaultConfig {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 26
-        //noinspection OldTargetApi
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 47
         versionName = "3.11"
 
@@ -62,13 +60,13 @@ dependencies {
 
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.window)
-    val roomVersion = "2.6.1"
+    //val roomVersion = "2.6.1"
 
 
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt(libs.androidx.room.compiler)
 
     //room
     implementation(libs.androidx.room.runtime)

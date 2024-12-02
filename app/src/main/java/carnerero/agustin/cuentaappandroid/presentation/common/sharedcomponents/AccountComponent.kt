@@ -51,7 +51,7 @@ fun AccountSelector(
     val selected= stringResource(id = R.string.select)
     val destination=stringResource(id = R.string.destinationaccount)
     val origin=stringResource(id = R.string.originaccount)
-    val balance= stringResource(id = R.string.fromamount)
+
     // Inicializamos el estado del VerticalPager basado en la cantidad de cuentas
     val pagerState = rememberPagerState(pageCount = { accounts.size })
     val isDraggingUp by remember { derivedStateOf { pagerState.currentPage == 0 || pagerState.targetPage > pagerState.currentPage } }
