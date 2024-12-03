@@ -211,7 +211,8 @@ class MainActivity : ComponentActivity() {
         val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
         // Ocultar la barra de estado y la barra de navegación
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars())
-        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+        // Dejar visible la barra de navegación
+        windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
     }
 }
 

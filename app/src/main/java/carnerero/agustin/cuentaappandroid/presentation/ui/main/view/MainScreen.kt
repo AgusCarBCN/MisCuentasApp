@@ -488,7 +488,7 @@ private fun DrawerContent(
     Card(
         modifier = Modifier
             .fillMaxWidth(0.75f)
-            .padding(top = 88.dp)
+            .padding(top = 62.dp)
             .background(color = Color.Transparent)
 
     ) {
