@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+    //id("kotlin-kapt")
     }
 
 android {
@@ -65,7 +66,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin annotation processing tool (kapt)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     //room
     implementation(libs.androidx.room.runtime)
@@ -106,17 +107,17 @@ dependencies {
     implementation (libs.circleindicator)
     //Dagger Hilt
     implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
+    ksp (libs.hilt.compiler)
     //Chart
     implementation (libs.mpandroidchart)
     implementation (libs.accompanist.permissions)
     //Google adMob
     implementation (libs.play.services.ads)
 }
-
+/*
 kapt {
     correctErrorTypes= true
-}
+}*/
 
 
 
