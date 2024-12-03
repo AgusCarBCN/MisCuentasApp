@@ -379,7 +379,7 @@
     <string name="accountespendingcontrol">Spending control by account of</string>
     <string name="messagedialog">Select the maximum spending limit per category</string>
     <string name="categoryespendingcontrol">Spending control by category of</string>
-    <string name="expenselimitOkAccount">Tus gastos están controlados en esta cuenta</string>
+    <string name="expenselimitOkAccount">Your expenses are under control in this account</string>
     <string name="expenseslimit">You have exceeded the spending limit.</string>
     <string name="expenseslimit80"> You are about to exceed your spending limit.</string>
     <string name="expensebycategory">Spending by category of </string>
