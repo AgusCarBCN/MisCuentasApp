@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mis Cuentas</string>
+    <string name="app_name">Mis CuentasApp</string>
     <string name="title_activity_other">Other</string>
     <string name="title_activity_login">LoginActivity</string>
 

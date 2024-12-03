@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mis Cuentas</string>
+    <string name="app_name">My AccountsApp</string>
     <string name="title_activity_other">Other</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Login -->
@@ -234,7 +234,7 @@
     <string name="chooseexpense">choose a type of expense</string>
     <string name="chooseincome">choose a type of income</string>
     <string name="selectanaccount">Select an account</string>
-    <string name="desamount">Descripcion del importe</string>
+    <string name="desamount">Amount description</string>
     <string name="food">Food</string>
     <string name="morgage">Housing</string>
     <string name="electricitybill">Electricity</string>

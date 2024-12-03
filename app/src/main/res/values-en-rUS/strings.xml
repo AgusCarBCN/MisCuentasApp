@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Accounts</string>
-
+    <string name="app_name">My AccountsApp</string>
     <string name="title_activity_other">Other</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Login -->
@@ -230,7 +229,7 @@
 
     <!--newAmount-->
     <string name="enternote">Enter amount</string>
-    <string name="desamount">Descripcion del importe</string>
+    <string name="desamount">Amount description</string>
     <string name="selectanaccount">Select an account</string>
     <string name="chooseexpense">choose a type of expense</string>
     <string name="chooseincome">choose a type of income</string>
