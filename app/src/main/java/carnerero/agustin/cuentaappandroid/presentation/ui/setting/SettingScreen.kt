@@ -139,7 +139,7 @@ fun SettingScreen(
             }
         }
     }
-    val pickerImportLauncher = rememberLauncherForActivityResult(
+    val pickerImportLauncherEntries = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -169,7 +169,36 @@ fun SettingScreen(
             }
         }
     }
-
+    val pickerImportLauncherAccounts = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+                // Lanzamiento de una corutina en un contexto de IO
+                scope.launch(Dispatchers.IO) {
+                    try {
+                        val accountsToRead =
+                            Utils.readCsvAccountsFile(context, uri)
+                        for (account in accountsToRead) {
+                            accountsViewModel.addAccount(account)
+                        }
+                        // Cambiamos al hilo principal para mostrar el SnackBar
+                        withContext(Dispatchers.Main) {
+                            SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                        }
+                    } catch (e: IOException) {
+                        withContext(Dispatchers.Main) {
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    errorImport
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -229,7 +258,17 @@ fun SettingScreen(
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.type = "*/*"
-                pickerImportLauncher.launch(intent)
+                pickerImportLauncherEntries.launch(intent)
+
+            })
+        RowComponent(title = stringResource(id = R.string.loadbackupaccount),
+            description = stringResource(id = R.string.desloadaccount),
+            iconResource = R.drawable.download,
+            onClick = {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "*/*"
+                pickerImportLauncherAccounts.launch(intent)
 
             })
 

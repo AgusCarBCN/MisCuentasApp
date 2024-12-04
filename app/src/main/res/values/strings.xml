@@ -117,10 +117,12 @@
     <string name="enablenotifications">Notifications</string>
     <string name="desenablenotifications">Enable or disable notifications on your expense tracker mobile app.</string>
     <string name="createbackup">Create backup</string>
-    <string name="loadbackup">Load backup</string>
     <string name="deleteall">Delete all</string>
-    <string name="desbackup">Save a backup of your road records.</string>
-    <string name="desload">Load the backup file of your road records.</string>
+    <string name="loadbackupaccount">Load accounts backup</string>
+    <string name="loadbackup">Load records backup</string>
+    <string name="desbackup">Save a backup of your records and accounts.</string>
+    <string name="desload">Load the backup file of your records.</string>
+    <string name="desloadaccount">Load the backup file of your accounts.</string>
     <string name="desdeleteall">Delete all records.</string>
     <string name="backup">Backup management</string>
     <string name="delete_an_account">Delete an account</string>
