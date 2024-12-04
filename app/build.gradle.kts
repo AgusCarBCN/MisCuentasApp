@@ -7,7 +7,7 @@ plugins {
     id ("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-    //id("kotlin-kapt")
+
     }
 
 android {
@@ -61,7 +61,6 @@ dependencies {
 
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.window)
-    //val roomVersion = "2.6.1"
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin annotation processing tool (kapt)
@@ -112,10 +111,7 @@ dependencies {
     //Google adMob
     implementation (libs.play.services.ads)
 }
-/*
-kapt {
-    correctErrorTypes= true
-}*/
+
 
 
 
