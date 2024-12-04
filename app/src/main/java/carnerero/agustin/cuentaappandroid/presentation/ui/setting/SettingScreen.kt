@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toFile
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
@@ -82,6 +83,8 @@ fun SettingScreen(
     val messageImport = stringResource(id = R.string.loadbackup)
     val messageNoEntries = stringResource(id = R.string.noentries)
     val messageNoAccounts = stringResource(id = R.string.noaccounts)
+    val messageNoValidEntriesFile=stringResource(id = R.string.novalidrecordcsv)
+    val messageEntriesWithoutAccounts= stringResource(id = R.string.loadentrieswithoutaccount)
     val errorExport = stringResource(id = R.string.errorexport)
     val errorImport = stringResource(id = R.string.errorimport)
 
@@ -141,20 +144,33 @@ fun SettingScreen(
     }
     val pickerImportLauncherEntries = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+    ) {
+
+        result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
+                val fileName=uri.path.toString()
                 // Lanzamiento de una corutina en un contexto de IO
                 scope.launch(Dispatchers.IO) {
                     try {
-                        val entriesToRead =
-                            Utils.readCsvEntriesFile(context, uri)
-                        for (entry in entriesToRead) {
-                            entriesViewModel.addEntry(entry)
-                        }
-                        // Cambiamos al hilo principal para mostrar el SnackBar
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                        if(fileName.contains("Records")) {
+                            val entriesToRead =
+                                Utils.readCsvEntriesFile(context, uri)
+                            for (entry in entriesToRead) {
+                                entriesViewModel.addEntry(entry)
+                            }
+                            // Cambiamos al hilo principal para mostrar el SnackBar
+                            withContext(Dispatchers.Main) {
+                                SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                            }
+                        }else{
+                            withContext(Dispatchers.Main) {
+                                SnackBarController.sendEvent(
+                                    event = SnackBarEvent(
+                                        messageNoValidEntriesFile
+                                    )
+                                )
+                            }
                         }
                     } catch (e: IOException) {
                         withContext(Dispatchers.Main) {
@@ -255,11 +271,16 @@ fun SettingScreen(
             description = stringResource(id = R.string.desload),
             iconResource = R.drawable.download,
             onClick = {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                intent.addCategory(Intent.CATEGORY_OPENABLE)
-                intent.type = "*/*"
-                pickerImportLauncherEntries.launch(intent)
-
+                if(accounts.isNotEmpty()) {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    intent.addCategory(Intent.CATEGORY_OPENABLE)
+                    intent.type = "*/*"
+                    pickerImportLauncherEntries.launch(intent)
+                }else{
+                    scope.launch(Dispatchers.Main) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(messageEntriesWithoutAccounts))
+                    }
+                }
             })
         RowComponent(title = stringResource(id = R.string.loadbackupaccount),
             description = stringResource(id = R.string.desloadaccount),
