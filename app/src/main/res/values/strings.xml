@@ -146,6 +146,8 @@
     <string name="newUserName">New user name</string>
     <string name="newPassword">New password</string>
 <!--SnackBar messages-->
+    <string name="noentries">No entries yet</string>
+    <string name="noaccounts">No accounts created yet</string>
     <string name="inValidLogin">Invalid login</string>
     <string name="userNameUpdated">User name updated</string>
     <string name="nameUpdated">Name updated</string>
@@ -294,7 +296,6 @@
     <string name="originaccount">Select an origin account</string>
     <string name="destinationaccount">Select destination account</string>
     <string name="amountentrie">Enter an amount</string>
-    <string name="noaccounts">There are no accounts created yet</string>
     <string name="youraccounts">Your accounts</string>
     <!--Dialog-->
     <string name="cancelButton">Cancel</string>
@@ -303,7 +304,7 @@
     <string name="deleteinfo">¿Are you sure you want delete an account?</string>
     <string name="titledelete">Confirm delete account</string>
     <!--backup-->
-    <string name="exportData">Export data</string>
+    <string name="exportData">Export data in CSV files</string>
     <string name="filename">Give a name to CSV file</string>
     <string name="download">Download file </string>
     <string name="upload">Backup file </string>
@@ -311,7 +312,7 @@
     <!--entries-->
     <string name="bydate">By date</string>
     <string name="bycategory">By category</string>
-    <string name="noentries">There are no entries yet</string>
+
     <!--search-->
     <string name="daterange">Select a date range</string>
     <string name="searchentries">Search entries(optional)</string>

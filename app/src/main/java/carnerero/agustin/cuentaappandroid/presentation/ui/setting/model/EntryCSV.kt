@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting.model
 
 data class EntryCSV(
-
     val description: String,
     val category: String,
     val amount: Double,

@@ -142,6 +142,8 @@
     <string name="newUserName">Nuevo usuario</string>
     <string name="newPassword">Nueva contraseña</string>
     <!--SnackBar messages-->
+    <string name="noentries">No hay registros todavia</string>
+    <string name="noaccounts">No hay cuentas creadas todavia.</string>
     <string name="inValidLogin">Inicio de sesion invalido</string>
     <string name="userNameUpdated">Nombre de usuario actualizado</string>
     <string name="nameUpdated">Nombre actualizado</string>
@@ -286,7 +288,6 @@
     <string name="originaccount">Selecciona cuenta de origen</string>
     <string name="destinationaccount">Selecciona cuenta destino</string>
     <string name="amountentrie">Introduce una cantidad</string>
-    <string name="noaccounts">No hay cuentas creadas todavia.</string>
     <string name="youraccounts">Tus cuentas</string>
     <!--Dialog-->
     <string name="cancelButton">Cancelar</string>
@@ -295,7 +296,7 @@
     <string name="titledelete">Confirma borrar cuenta</string>
     <string name="titleexit">Confirma salida</string>
     <!--backup-->
-    <string name="exportData">Datos guardados en fichero: </string>
+    <string name="exportData">Datos guardados en ficheros CSV</string>
     <string name="filename">Dar un nombre al archivo CSV</string>
     <string name="filenamelabel">Nombre fichero CSV</string>
     <string name="download">Descargando fichero  </string>
@@ -303,9 +304,7 @@
     <!--entries-->
     <string name="bydate">Por fecha</string>
     <string name="bycategory">Por categoría</string>
-    <string name="noentries">No hay entradas todavia</string>
     <!--search-->
-
     <string name="searchentries">Buscar entradas(opcional)</string>
     <string name="fromdate">Desde</string>
     <string name="todate">Hasta</string>

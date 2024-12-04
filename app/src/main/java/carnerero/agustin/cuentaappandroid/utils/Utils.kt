@@ -4,8 +4,10 @@ import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.currencyLocales
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
@@ -65,22 +67,10 @@ class Utils {
 
         fun convertStringToLocalDate(date: String): LocalDate {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
-
-
-
-
-
-
-
-
-
-
-
-
             return LocalDate.parse(date, formatter)
         }
 
-        fun writeCsvFile(
+        fun writeCsvEntriesFile(
             entries: MutableList<EntryCSV>,
             context: Context,
             fileName: String,
@@ -109,8 +99,65 @@ class Utils {
             }
 
         }
+        fun writeCsvAccountsFile(
+            accounts: MutableList<AccountCSV>,
+            context: Context,
+            fileName: String,
+            directory: DocumentFile
+        ) {
+            val file = directory.createFile("text/csv", fileName)
+            val outputStream = context.contentResolver.openOutputStream(file?.uri!!)
 
-        fun readCsvFile(
+            BufferedWriter(OutputStreamWriter(outputStream)).use { writer ->
+                // Escribir el encabezado del CSV
+                writer.write("Name,Balance,AccountId\n")
+
+                //Escribir las rutas en fichero
+                for (account in accounts) {
+                    // Asegúrate de que los datos sean válidos antes de escribirlos
+                    val csvLine =
+                                "${account.name}," +
+                                "${account.balance}," +
+                                "${account.accountId}\n"
+                    writer.write(csvLine)
+                }
+            }
+
+        }
+
+        fun readCsvAccountsFile(
+            context: Context,
+            fileUri: Uri
+        ): MutableList<Account> {
+
+            val accounts = mutableListOf<Account>()
+            context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                val csvParser = CSVParser.parse(bufferedReader, CSVFormat.DEFAULT)
+
+                for (record in csvParser) {
+                    try {
+                        val accountName = record.get(0)
+                        val accountBalance = record.get(1).toDoubleOrNull() ?: 0.0
+                        val accountId = record.get(2).toInt()
+
+                        // Crear objeto route y agregarlo a lista
+
+                        val account = Account(
+                            name =accountName,
+                            balance = accountBalance,
+                            id = accountId
+                        )
+                        accounts.add(account)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            return accounts
+        }
+
+        fun readCsvEntriesFile(
             context: Context,
             fileUri: Uri
         ): MutableList<Entry> {
@@ -147,6 +194,8 @@ class Utils {
             }
             return entries
         }
+
+
 
         fun getMapOfEntriesByCategory(listOfEntries: List<EntryDTO>): Map<Int, Pair<Int?, Double?>> {
             val groupedEntriesByCategoryName = listOfEntries.groupBy { it.nameResource }

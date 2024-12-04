@@ -28,18 +28,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
+import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
@@ -70,11 +72,16 @@ fun SettingScreen(
     val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
     val switchNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val entries by entriesViewModel.listOfEntriesDTO.collectAsState()
+    val accounts by accountsViewModel.listOfAccounts.observeAsState(mutableListOf())
     val entriesCSV = toEntryCSV(entries)
+    val accountsCSV = toAccountCSV(accounts)
     val date = Date().dateFormat()
-    val fileName = "backup$date"
-    val messageExport = stringResource(id = R.string.exportData) + fileName
+    val fileRecordsName = "backupRecords$date"
+    val fileAccountsName = "backupAccounts$date"
+    val messageExport = stringResource(id = R.string.exportData)
     val messageImport = stringResource(id = R.string.loadbackup)
+    val messageNoEntries = stringResource(id = R.string.noentries)
+    val messageNoAccounts = stringResource(id = R.string.noaccounts)
     val errorExport = stringResource(id = R.string.errorexport)
     val errorImport = stringResource(id = R.string.errorimport)
 
@@ -85,13 +92,42 @@ fun SettingScreen(
             result.data?.data?.let { uri ->
                 val directory = DocumentFile.fromTreeUri(context, uri) // Direct assignment
                 if (directory != null && directory.isDirectory) {
-
                     scope.launch(Dispatchers.IO) {
                         try {
-                            Utils.writeCsvFile(entriesCSV, context, fileName, directory)
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(event = SnackBarEvent(messageExport))
+                            if (entries.isNotEmpty()) {
+                                Utils.writeCsvEntriesFile(
+                                    entriesCSV,
+                                    context,
+                                    fileRecordsName,
+                                    directory
+                                )
                             }
+                            if (accounts.isNotEmpty()) {
+                                    Utils.writeCsvAccountsFile(
+                                        accountsCSV,
+                                        context,
+                                        fileAccountsName,
+                                        directory
+                                    )
+                            }
+                            if (entries.isNotEmpty() || accounts.isNotEmpty()) {
+                                        withContext(Dispatchers.Main) {
+                                            SnackBarController.sendEvent(
+                                                event = SnackBarEvent(
+                                                    messageExport
+                                                )
+                                            )
+                                        }
+                                } else {
+                                    withContext(Dispatchers.Main) {
+                                        SnackBarController.sendEvent(
+                                            event = SnackBarEvent(
+                                                messageNoEntries
+                                            )
+                                        )
+                                    }
+                                }
+
                         } catch (e: IOException) {
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(event = SnackBarEvent(errorExport))
@@ -112,7 +148,7 @@ fun SettingScreen(
                 scope.launch(Dispatchers.IO) {
                     try {
                         val entriesToRead =
-                            Utils.readCsvFile(context, uri)
+                            Utils.readCsvEntriesFile(context, uri)
                         for (entry in entriesToRead) {
                             entriesViewModel.addEntry(entry)
                         }
@@ -144,7 +180,10 @@ fun SettingScreen(
             )
     )
     {
-        HeadSetting(title = stringResource(id = R.string.appsettings), MaterialTheme.typography.headlineSmall)
+        HeadSetting(
+            title = stringResource(id = R.string.appsettings),
+            MaterialTheme.typography.headlineSmall
+        )
         SwitchComponent(
             title = stringResource(id = R.string.theme),
             description = stringResource(id = R.string.destheme),
@@ -159,10 +198,10 @@ fun SettingScreen(
         )
         SwitchComponent(
             title = stringResource(id = R.string.enablenotifications),
-            description = (if(permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
+            description = (if (permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
             else stringResource(id = R.string.permissiondeny)),
-             isChecked = if(permissionNotificationGranted) switchNotifications
-             else false,
+            isChecked = if (permissionNotificationGranted) switchNotifications
+            else false,
             onClickSwitch = {
                 settingViewModel.onSwitchNotificationsClicked(it)
 
@@ -171,7 +210,10 @@ fun SettingScreen(
 
         SpacerApp()
 
-        HeadSetting(title = stringResource(id = R.string.backup), MaterialTheme.typography.headlineSmall)
+        HeadSetting(
+            title = stringResource(id = R.string.backup),
+            MaterialTheme.typography.headlineSmall
+        )
 
         RowComponent(title = stringResource(id = R.string.createbackup),
             description = stringResource(id = R.string.desbackup),
@@ -194,7 +236,10 @@ fun SettingScreen(
 
         SpacerApp()
 
-        HeadSetting(title = stringResource(id = R.string.accountsetting), MaterialTheme.typography.headlineSmall)
+        HeadSetting(
+            title = stringResource(id = R.string.accountsetting),
+            MaterialTheme.typography.headlineSmall
+        )
 
         RowComponent(title = stringResource(id = R.string.add_an_account),
             description = stringResource(id = R.string.desadd_an_account),
@@ -232,8 +277,6 @@ fun SettingScreen(
                 mainViewModel.selectScreen(IconOptions.SEARCH_UPDATE)
             }
         )
-
-
         RowComponent(title = stringResource(id = R.string.changecurrency),
             description = stringResource(id = R.string.deschangecurrency),
             iconResource = R.drawable.exchange,
@@ -270,4 +313,20 @@ fun toEntryCSV(entries: List<EntryDTO>): MutableList<EntryCSV> {
         )
     }
     return entriesCSV
+}
+
+@Composable
+fun toAccountCSV(accounts: List<Account>): MutableList<AccountCSV> {
+
+    val accountsCSV = mutableListOf<AccountCSV>()
+    accounts.forEach { account ->
+        accountsCSV.add(
+            AccountCSV(
+                account.name,
+                account.balance,
+                account.id
+            )
+        )
+    }
+    return accountsCSV
 }
