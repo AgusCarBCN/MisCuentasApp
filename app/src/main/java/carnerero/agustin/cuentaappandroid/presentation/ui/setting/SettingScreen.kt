@@ -84,6 +84,7 @@ fun SettingScreen(
     val messageNoEntries = stringResource(id = R.string.noentries)
     val messageNoAccounts = stringResource(id = R.string.noaccounts)
     val messageNoValidEntriesFile=stringResource(id = R.string.novalidrecordcsv)
+    val messageNoValidAccountsFile=stringResource(id = R.string.novalidaccountscsv)
     val messageEntriesWithoutAccounts= stringResource(id = R.string.loadentrieswithoutaccount)
     val errorExport = stringResource(id = R.string.errorexport)
     val errorImport = stringResource(id = R.string.errorimport)
@@ -190,17 +191,28 @@ fun SettingScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
+                val fileName=uri.path.toString()
                 // Lanzamiento de una corutina en un contexto de IO
                 scope.launch(Dispatchers.IO) {
                     try {
-                        val accountsToRead =
-                            Utils.readCsvAccountsFile(context, uri)
-                        for (account in accountsToRead) {
-                            accountsViewModel.addAccount(account)
-                        }
-                        // Cambiamos al hilo principal para mostrar el SnackBar
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                        if(fileName.contains("Accounts")) {
+                            val accountsToRead =
+                                Utils.readCsvAccountsFile(context, uri)
+                            for (account in accountsToRead) {
+                                accountsViewModel.addAccount(account)
+                            }
+                            // Cambiamos al hilo principal para mostrar el SnackBar
+                            withContext(Dispatchers.Main) {
+                                SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                            }
+                        }else{
+                            withContext(Dispatchers.Main) {
+                                SnackBarController.sendEvent(
+                                    event = SnackBarEvent(
+                                        messageNoValidAccountsFile
+                                    )
+                                )
+                            }
                         }
                     } catch (e: IOException) {
                         withContext(Dispatchers.Main) {
