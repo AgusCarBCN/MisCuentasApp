@@ -348,6 +348,7 @@ class AccountsViewModel @Inject constructor(
                     (accountDestination?.balance ?: 0.0) + amount
                 }
                 updateAccountBalance(accountId, newBalance)
+                onAccountUpdated()
             } catch (e: Exception) {
                 Log.e("Accounts", "Error updating entry: ${e.message}", e)
             }
