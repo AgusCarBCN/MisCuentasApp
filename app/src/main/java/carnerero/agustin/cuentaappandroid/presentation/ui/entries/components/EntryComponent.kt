@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,7 +56,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
-
+@OptIn(ExperimentalFoundationApi::class) // Habilitar API experimental
 @Composable
 fun EntryList(
     entriesViewModel: EntriesViewModel,
@@ -121,7 +122,7 @@ fun EntryList(
         if (enableByDate) {
             groupedEntriesByDate.forEach { (date, entries) ->
                 // Mostrar una cabecera sticky para la fecha
-                stickyHeader {
+               stickyHeader{
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
