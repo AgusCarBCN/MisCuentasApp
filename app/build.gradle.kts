@@ -7,19 +7,19 @@ plugins {
     id ("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-git
+
     }
 
 android {
     namespace = "carnerero.agustin.cuentaappandroid"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 26
         targetSdk = 35
-        versionCode = 48
-        versionName = "3.12"
+        versionCode = 49
+        versionName = "3.13"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
