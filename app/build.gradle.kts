@@ -9,10 +9,7 @@ plugins {
     id ("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-
-
-        id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
-
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     }
 
 android {
@@ -28,15 +25,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     }
-    val secretsProps = Properties()
-    val secretsPropsFile = File(rootDir,"secrets.properties")
-    if (secretsPropsFile.exists() && secretsPropsFile.isFile) {
-        secretsPropsFile.inputStream().use{
-            secretsProps.load(it)
-        }
-    } else {
-        println("⚠️ secrets.properties no encontrado! Usando valores por defecto")
-    }
+
 
 
     buildTypes {
@@ -46,17 +35,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField(
-                "String",
-                "API_BASE_URL",
-                secretsProps.getProperty("API_BASEURL", "https://default.example.com")
-            )
 
-            buildConfigField(
-                "String",
-                "API_KEY",
-                secretsProps.getProperty("API_KEY","ClavePorDefecto")
-            )
         }
 
     }
