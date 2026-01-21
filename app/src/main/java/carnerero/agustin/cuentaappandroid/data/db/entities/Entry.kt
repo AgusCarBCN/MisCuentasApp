@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import java.math.BigDecimal
 import java.util.Date
 
 @Entity(
@@ -28,7 +29,7 @@ data class Entry(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "amount") var amount: Double,
+    @ColumnInfo(name = "amount") var amount: BigDecimal= BigDecimal.ZERO,
     @ColumnInfo(name = "date") val date: String = Date().dateFormat(),
     @ColumnInfo(name = "categoryId") val categoryId: Int, // Relación uno a muchos con Account
     @ColumnInfo(name = "accountId") val accountId: Int // Relación uno a muchos con Account

@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.data.repository
 
 import carnerero.agustin.cuentaappandroid.data.db.dao.AccountDao
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class AccountRepository @Inject constructor(private val accountDao: AccountDao) {
@@ -39,11 +40,11 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     }
 
     // 7. Actualizar el balance de una cuenta
-    suspend fun updateAccountBalance(accountId: Int, newBalance: Double) {
+    suspend fun updateAccountBalance(accountId: Int, newBalance: BigDecimal) {
         accountDao.updateAccountBalance(accountId, newBalance)
     }
     //8.Transferencia entre cuentas
-    suspend fun transferFunds(fromAccountId: Int, toAccountId: Int, amount: Double) {
+    suspend fun transferFunds(fromAccountId: Int, toAccountId: Int, amount: BigDecimal) {
         accountDao.transferFunds(fromAccountId, toAccountId, amount)
     }
     // 9. Update checked account
@@ -52,7 +53,7 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     }
 
     // 10. Update amount account
-    suspend fun updateSpendingLimitAccount(accountId:Int, newAmount:Double) {
+    suspend fun updateSpendingLimitAccount(accountId:Int, newAmount: BigDecimal) {
         accountDao.updateSpendingLimitAccount(accountId,newAmount)
     }
 
@@ -72,7 +73,7 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
         return accountDao.getAllAccountsChecked()
     }
     // 14. Update account balance by exchange rate
-    suspend fun updateAccountBalanceByExchangeRate(rate:Double) {
-        accountDao.updateAccountBalanceByExchangeRate(rate)
+    suspend fun updateAccountBalanceByExchangeRate(rate: BigDecimal) {
+        accountDao.updateAllBalancesByExchangeRate(rate)
     }
 }

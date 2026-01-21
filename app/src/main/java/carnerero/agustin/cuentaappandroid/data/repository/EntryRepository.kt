@@ -4,122 +4,124 @@ package carnerero.agustin.cuentaappandroid.data.repository
 import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import java.util.Date
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class EntryRepository @Inject constructor(private val entryDao: EntryDao) {
 
-    // 1. Insertar o actualizar una entrada
-    suspend fun insertEntry(entry: Entry) {
-        entryDao.insertEntry(entry)
+    class EntryRepository(
+        private val entryDao: EntryDao
+    ) {
+        /* =====================
+           CRUD
+           ===================== */
+        suspend fun insertEntry(entry: Entry) =
+            entryDao.insertEntry(entry)
+
+        suspend fun deleteEntry(entry: Entry) =
+            entryDao.deleteEntry(entry)
+
+        suspend fun updateEntry(entry: Entry) =
+            entryDao.updateEntry(entry)
+
+        suspend fun updateEntryFields(
+            id: Long,
+            description: String,
+            amount: BigDecimal,
+            date: String
+        ) = entryDao.updateEntryFields(id, description, amount, date)
+
+        suspend fun getEntryById(entryId: Long): Entry? =
+            entryDao.getEntryById(entryId)
+
+        suspend fun getAllEntries(): List<Entry> =
+            entryDao.getAllEntries()
+
+        /* =====================
+           CONSULTAS SIMPLES
+           ===================== */
+
+        suspend fun getAllIncomes(): List<Entry> =
+            entryDao.getAllIncomes()
+
+        suspend fun getAllExpenses(): List<Entry> =
+            entryDao.getAllExpenses()
+
+        suspend fun getEntriesByCategory(categoryId: Int): List<Entry> =
+            entryDao.getEntriesByCategory(categoryId)
+
+        /* =====================
+           LÓGICA FINANCIERA
+           ===================== */
+
+        suspend fun getTotalIncome(): BigDecimal =
+            entryDao.getAllIncomes()
+                .fold(BigDecimal.ZERO) { acc, entry -> acc + entry.amount }
+
+        suspend fun getTotalExpense(): BigDecimal =
+            entryDao.getAllExpenses()
+                .fold(BigDecimal.ZERO) { acc, entry -> acc + entry.amount }
+
+        suspend fun getTotalExpenseByCategory(categoryId: Int): BigDecimal =
+            entryDao.getAllExpenses()
+                .filter { it.categoryId == categoryId }
+                .fold(BigDecimal.ZERO) { acc, entry -> acc + entry.amount }
+
+        suspend fun getIncomeByDateRange(
+            accountId: Int,
+            from: String,
+            to: String
+        ): BigDecimal =
+            entryDao.getAllIncomes()
+                .filter {
+                    it.accountId == accountId &&
+                            it.date >= from &&
+                            it.date <= to
+                }
+                .fold(BigDecimal.ZERO) { acc, entry -> acc + entry.amount }
+
+        suspend fun getExpenseByDateRange(
+            accountId: Int,
+            from: String,
+            to: String
+        ): BigDecimal =
+            entryDao.getAllExpenses()
+                .filter {
+                    it.accountId == accountId &&
+                            it.date >= from &&
+                            it.date <= to
+                }
+                .fold(BigDecimal.ZERO) { acc, entry -> acc + entry.amount }
+
+        /* =====================
+           OPERACIONES MASIVAS
+           ===================== */
+
+        suspend fun applyExchangeRate(rate: BigDecimal) {
+            val entries = entryDao.getAllEntries()
+            entries.forEach { entry ->
+                val newAmount = entry.amount.multiply(rate)
+                entryDao.updateEntryFields(
+                    entry.id,
+                    entry.description,
+                    newAmount,
+                    entry.date
+                )
+            }
+        }
+
+        /* =====================
+           DTOs PARA UI
+           ===================== */
+
+        suspend fun getAllEntriesDTO(): List<EntryDTO> =
+            entryDao.getAllEntriesDTO()
+
+        suspend fun getAllIncomesDTO(): List<EntryDTO> =
+            entryDao.getAllIncomesDTO()
+
+        suspend fun getAllExpensesDTO(): List<EntryDTO> =
+            entryDao.getAllExpensesDTO()
     }
 
-    suspend fun getSumIncomes(): Double =
-        entryDao.getSumOfIncomeEntries() ?: 0.0
-
-
-    suspend fun getSumExpenses() =
-        entryDao.getSumOfExpenseEntries() ?: 0.0
-
-    suspend fun insertEntryDTO(entryDTO: EntryDTO) {
-        val entry = entryDtoToEntry(entryDTO)
-        entryDao.insertEntry(entry)
-    }
-
-
-    suspend fun updateEntriesAmountByExchangeRate(rate: Double){
-        entryDao.updateEntriesAmountByExchangeRate(rate)
-    }
-    suspend fun getAllEntries(): List<Entry> =
-
-        entryDao.getAllEntries()
-
-
-    suspend fun getAllEntriesDTO(): List<EntryDTO> = entryDao.getAllEntriesDTO()
-
-    suspend fun getAllIncomesDTO(): List<EntryDTO> = entryDao.getAllIncomesDTO()
-
-    suspend fun getAllExpensesDTO(): List<EntryDTO> = entryDao.getAllExpensesDTO()
-
-    suspend fun getAllEntriesDTOByAccount(accountId: Int): List<EntryDTO> =
-        entryDao.getAllEntriesByAccountDTO(accountId)
-
-    suspend fun getEntriesFiltered(
-        accountId: Int,
-        descriptionAmount: String,
-        fromDate: String = Date().dateFormat(),
-        toDate: String = Date().dateFormat(),
-        amountMin: Double = 0.0,
-        amountMax: Double = Double.MAX_VALUE,
-        selectedOptions: Int = 0
-    ): List<EntryDTO> = entryDao.getFilteredEntriesDTO(
-        accountId,
-        descriptionAmount,
-        fromDate,
-        toDate,
-        amountMin,
-        amountMax,
-        selectedOptions
-
-    )
-
-    suspend fun getSumIncomesByDate(
-        accountId: Int,
-        fromDate: String = Date().dateFormat(),
-        toDate: String = Date().dateFormat()
-    ): Double =
-        entryDao.getSumOfIncomeEntriesByDate(accountId, fromDate, toDate) ?: 0.0
-
-    suspend fun getSumExpensesByDate(
-        accountId: Int,
-        fromDate: String = Date().dateFormat(),
-        toDate: String = Date().dateFormat()
-    ): Double =
-        entryDao.getSumOfExpenseEntriesByDate(accountId, fromDate, toDate) ?: 0.0
-
-    suspend fun getSumOfIncomeEntriesForMonth(
-        accountId: Int,
-        month: String,
-        year: String
-    ): Double =
-        entryDao.getSumOfIncomeEntriesForMonth(accountId, month, year) ?: 0.0
-
-    suspend fun getSumOfExpensesEntriesForMonth(
-        accountId: Int,
-        month: String,
-        year: String
-    ): Double = entryDao.getSumOfExpensesEntriesForMonth(accountId, month,year) ?: 0.0
-
-    suspend fun updateAmountEntry(idAccount:Long,newAmount:Double){
-        entryDao.updateAmountEntry(idAccount,newAmount)
-    }
-
-    suspend fun getSumOfExpensesEntriesByCategory(categoryId:Int) :Double=
-        entryDao.getSumOfExpenseByCategory(categoryId)?:0.0
-
-    suspend fun getSumOfExpensesByCategoryAndDate(categoryId:Int,
-                                                  fromDate:String,
-                                                  toDate: String):Double=
-        entryDao.getSumOfExpenseByCategoryAndDate(categoryId,fromDate,toDate)?:0.0
-
-    suspend fun deleteEntry(entryDTO: EntryDTO){
-        val entry=entryDtoToEntry(entryDTO)
-        entryDao.deleteEntry(entry)
-    }
-    suspend fun upDateEntry(id: Long, description: String, amount: Double, date: String){
-
-        entryDao.updateEntryFields(id, description, amount, date)
-    }
-
-    private fun entryDtoToEntry(dto: EntryDTO): Entry {
-        return Entry(
-            id=dto.id,
-            description = dto.description,
-            amount = dto.amount,
-            date = dto.date,
-            categoryId = dto.iconResource,
-            accountId =dto.accountId
-        )
-    }
 }

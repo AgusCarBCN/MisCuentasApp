@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import java.math.BigDecimal
 
 /*Permiten que una función pueda ser pausada y reanudada en un contexto de corutinas,
  lo que facilita la ejecución de operaciones que podrían bloquear el hilo principal*/
@@ -13,72 +14,80 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 @Dao
 interface AccountDao {
 
-    // 1. Add an account
+    // 1️⃣ Insertar cuenta
     @Insert
     suspend fun insertAccount(account: Account)
 
-    // 2. List all accounts
+    // 2️⃣ Listar todas las cuentas
     @Query("SELECT * FROM AccountEntity")
     suspend fun getAllAccounts(): List<Account>
 
-    // 3. Delete account
+    // 3️⃣ Borrar cuenta
     @Delete
     suspend fun deleteAccount(account: Account)
 
-    // 4. Delete all accounts
+    // 4️⃣ Borrar todas las cuentas
     @Query("DELETE FROM AccountEntity")
     suspend fun deleteAllAccounts()
 
-    // 5. Get account by id
+    // 5️⃣ Obtener cuenta por id
     @Query("SELECT * FROM AccountEntity WHERE id = :accountId LIMIT 1")
     suspend fun getAccountById(accountId: Int): Account?
 
-    // 6. Update account name
+    // 6️⃣ Actualizar nombre de cuenta
     @Query("UPDATE AccountEntity SET name = :newName WHERE id = :accountId")
     suspend fun updateAccountName(accountId: Int, newName: String)
 
-    // 7. Update account balance
+    // 7️⃣ Actualizar balance de cuenta
     @Query("UPDATE AccountEntity SET balance = :newBalance WHERE id = :accountId")
-    suspend fun updateAccountBalance(accountId: Int, newBalance: Double)
+    suspend fun updateAccountBalance(accountId: Int, newBalance: BigDecimal)
 
-    // 8. Transfer funds between accounts
+    // 8️⃣ Transferencia de fondos entre cuentas
     @Transaction
-    suspend fun transferFunds(fromAccountId: Int, toAccountId: Int, amount: Double) {
+    suspend fun transferFunds(fromAccountId: Int, toAccountId: Int, amount: BigDecimal) {
         val fromAccount = getAccountById(fromAccountId)
+            ?: throw IllegalArgumentException("Cuenta origen no encontrada")
         val toAccount = getAccountById(toAccountId)
+            ?: throw IllegalArgumentException("Cuenta destino no encontrada")
 
-        val updatedFromBalance = (fromAccount?.balance ?: 0.0) - amount
-        val updatedToBalance = (toAccount?.balance ?: 0.0) + amount
+        val updatedFromBalance = fromAccount.balance.subtract(amount)
+        if (updatedFromBalance < BigDecimal.ZERO) {
+            throw IllegalArgumentException("Saldo insuficiente en la cuenta origen")
+        }
+        val updatedToBalance = toAccount.balance.add(amount)
 
         updateAccountBalance(fromAccountId, updatedFromBalance)
         updateAccountBalance(toAccountId, updatedToBalance)
     }
-    // 9. Update checked state account
+
+    // 9️⃣ Actualizar estado isChecked
     @Query("UPDATE AccountEntity SET isChecked = :newValueChecked WHERE id = :accountId")
     suspend fun updateCheckedAccount(accountId: Int, newValueChecked: Boolean)
 
-    // 10. Update periodSpendingLimit category
+    // 🔟 Actualizar spendingLimit
     @Query("UPDATE AccountEntity SET periodSpendingLimit = :newAmount WHERE id = :accountId")
-    suspend fun updateSpendingLimitAccount(accountId: Int, newAmount:Double)
+    suspend fun updateSpendingLimitAccount(accountId: Int, newAmount: BigDecimal)
 
-   // 11. Update date From  account control expense
+    // 1️⃣1️⃣ Actualizar fecha fromDate
     @Query("UPDATE AccountEntity SET fromDate = :newDate WHERE id = :accountId")
-    suspend fun updateFromDateAccount(accountId:Int,newDate: String)
+    suspend fun updateFromDateAccount(accountId: Int, newDate: String)
 
-    // 12. Update date to account control expense
+    // 1️⃣2️⃣ Actualizar fecha toDate
     @Query("UPDATE AccountEntity SET toDate = :newDate WHERE id = :accountId")
-    suspend fun updateToDateAccount(accountId:Int,newDate: String)
+    suspend fun updateToDateAccount(accountId: Int, newDate: String)
 
-    // 13. List all accounts checked
+    // 1️⃣3️⃣ Listar todas las cuentas con isChecked = true
     @Query("SELECT * FROM AccountEntity WHERE isChecked=1")
     suspend fun getAllAccountsChecked(): List<Account>
 
-    // 14. Update All account by exchange rate
-    @Query("UPDATE AccountEntity SET balance = balance*:rate")
-    suspend fun updateAccountBalanceByExchangeRate(rate:Double)
-
-
-
-
-
+    // 1️⃣4️⃣ Actualizar balance de todas las cuentas según tipo de cambio
+    // NO se puede hacer directamente con BigDecimal en SQL, hacemos en Kotlin
+    @Transaction
+    suspend fun updateAllBalancesByExchangeRate(rate: BigDecimal) {
+        val accounts = getAllAccounts()
+        accounts.forEach { account ->
+            val newBalance = account.balance.multiply(rate)
+            updateAccountBalance(account.id, newBalance)
+        }
+    }
 }
