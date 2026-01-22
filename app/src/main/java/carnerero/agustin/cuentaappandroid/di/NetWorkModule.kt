@@ -1,8 +1,8 @@
 package carnerero.agustin.cuentaappandroid.di
 
+
 import carnerero.agustin.cuentaappandroid.BuildConfig
 import carnerero.agustin.cuentaappandroid.data.network.client.CurrencyConverterApi
-import carnerero.agustin.cuentaappandroid.data.network.model.AppConst
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +34,7 @@ object NetWorkModule {
         @Provides
         fun provideRetrofit(client: OkHttpClient): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(AppConst.BASEURL)
+                .baseUrl(BuildConfig.API_BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

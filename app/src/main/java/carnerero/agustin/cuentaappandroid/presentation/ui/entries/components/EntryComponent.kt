@@ -1,6 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries.components
 
-import android.icu.math.BigDecimal
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -55,6 +56,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import kotlin.math.abs
 
 @OptIn(ExperimentalFoundationApi::class) // Habilitar API experimental
@@ -165,7 +167,7 @@ fun EntryList(
                 ItemCategory(
                     categoryName = categoryName,
                     categoryIcon = icon,
-                    amount = total as BigDecimal?,
+                    amount = total ,
                     currencyCode
                 )
             }
@@ -182,6 +184,7 @@ fun ItemEntry(
 ) {
     val date = stringResource(id = R.string.fromdate)
     val amount = stringResource(id = R.string.amountentrie)
+    val entryAmount=entry.amount
     val iconText =
         "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
     Column(modifier = Modifier.semantics {
@@ -213,8 +216,10 @@ fun ItemEntry(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color =if ((amount.toDouble()) >= 0) LocalCustomColorsPalette.current.incomeColor
-                else LocalCustomColorsPalette.current.expenseColor,
+
+                    color = if (entryAmount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
+                    else LocalCustomColorsPalette.current.expenseColor
+               ,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge
             )
@@ -237,7 +242,11 @@ fun ItemEntry(
                 modifier = Modifier
                     .padding(10.dp)
                     .weight(0.4f),
-                color = LocalCustomColorsPalette.current.textColor,
+                color = if (entryAmount.toDouble() > 0.0 )
+                    LocalCustomColorsPalette.current.incomeColor
+                else
+                    LocalCustomColorsPalette.current.expenseColor
+                ,
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge
 
@@ -291,7 +300,7 @@ fun ItemCategory(
             )
             Text(
 
-                text = Utils.numberFormat((amount?.toBigDecimal() ?: BigDecimal.ZERO) as java.math.BigDecimal, currencyCode),
+                text = Utils.numberFormat((amount ?: BigDecimal.ZERO) , currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
                 color = if ((amount ?: BigDecimal.ZERO) >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor

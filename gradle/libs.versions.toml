@@ -10,7 +10,7 @@ constraintlayoutVersion = "2.2.0"
 converterGson = "2.9.0"
 datastore = "1.1.1"
 hiltAndroid = "2.58"
-kotlin = "2.0.21."
+kotlin = "2.3.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -25,7 +25,7 @@ mpandroidchart = "v3.1.0"
 navigationCompose = "2.8.4"
 playServicesAds = "23.6.0"
 retrofit = "2.9.0"
-roomRuntime = "2.6.1"
+roomRuntime = "2.8.4"
 runtimeLivedata = "1.7.5"
 composeMaterial3 = "1.0.0-alpha29"
 documentfile = "1.0.1"
@@ -74,6 +74,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-window = { group = "androidx.window", name = "window", version.ref = "window" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 [plugins]
+
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

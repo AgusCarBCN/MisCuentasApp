@@ -28,8 +28,7 @@ import javax.inject.Singleton
                 AppDataBase::class.java,
                 "my_database"
             )
-                .addTypeConverter(Converters()) // <-- Aquí agregamos BigDecimal converter
-                .fallbackToDestructiveMigration()
+
                 .build()
         }
 

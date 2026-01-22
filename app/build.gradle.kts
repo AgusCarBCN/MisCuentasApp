@@ -1,5 +1,4 @@
-import java.io.FileInputStream
-import java.util.Properties
+
 
 
 plugins {
@@ -10,6 +9,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
     }
 
 android {
@@ -19,13 +19,18 @@ android {
     defaultConfig {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 50
         versionName = "4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    }
 
+
+    }
+    buildFeatures {
+        buildConfig = true
+        compose=true
+    }
 
 
     buildTypes {
@@ -43,17 +48,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        jvmToolchain(17)
-    }
 
-
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-        resValues=true
-
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 
     composeOptions {
@@ -66,7 +65,12 @@ android {
     }
 
 }
+secrets {
+    // This production secrets file and going to contains real secrets
+    propertiesFileName = "secrets.properties"
 
+
+}
 dependencies {
 
     implementation(libs.androidx.documentfile)
@@ -121,7 +125,9 @@ dependencies {
     //Google adMob
     implementation (libs.play.services.ads)
 }
-
+hilt {
+    enableAggregatingTask = true
+}
 
 
 
