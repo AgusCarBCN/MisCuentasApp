@@ -354,19 +354,19 @@ fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>)
                     color = LocalCustomColorsPalette.current.textColor
                 )
                 Text(
-                    text = Utils.numberFormat(element.incomes.toDouble(),currencyCodeSelected), // Formato para ingresos
+                    text = Utils.numberFormat(element.incomes.toBigDecimal(),currencyCodeSelected), // Formato para ingresos
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
                     color = LocalCustomColorsPalette.current.incomeColor
                 )
                 Text(
-                    text = Utils.numberFormat(element.expenses.toDouble(),currencyCodeSelected), // Formato para gastos
+                    text = Utils.numberFormat(element.expenses.toBigDecimal(),currencyCodeSelected), // Formato para gastos
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
                     color = LocalCustomColorsPalette.current.expenseColor
                 )
                 Text(
-                    text = Utils.numberFormat(element.result.toDouble(),currencyCodeSelected), // Formato para resultado
+                    text = Utils.numberFormat(element.result.toBigDecimal(),currencyCodeSelected), // Formato para resultado
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
                     color = if(element.result>=0) LocalCustomColorsPalette.current.incomeColor

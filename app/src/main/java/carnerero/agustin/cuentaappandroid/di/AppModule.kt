@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.di
 import android.content.Context
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.ParserCalculator
 import carnerero.agustin.cuentaappandroid.data.repository.UserDataStoreRepository
+import carnerero.agustin.cuentaappandroid.utils.mapper.EntryMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,6 @@ import javax.inject.Singleton
 
 object AppModule {
 
-
     @Provides
     @Singleton
     fun provideUserPreferencesRepository(@ApplicationContext context: Context): UserDataStoreRepository {
@@ -32,4 +32,9 @@ object AppModule {
         return ParserCalculator()
     }
 
+    @Singleton
+    @Provides
+    fun provideEntryMapper (): EntryMapper{
+        return EntryMapper();
+    }
 }

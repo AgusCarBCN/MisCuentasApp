@@ -38,6 +38,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import java.util.Date
 
 
@@ -158,8 +159,8 @@ fun SearchScreen(
                         entryDescription,
                         fromDate,
                         toDate,
-                        fromAmount.toDoubleOrNull() ?: 0.0,
-                        toAmount.toDoubleOrNull() ?: Double.MAX_VALUE,
+                        fromAmount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
+                        toAmount.toBigDecimalOrNull() ?: BigDecimal("1E10"),
                         selectedOption ?: 0
                     )
                     when (typeOfSearch) {

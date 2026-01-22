@@ -15,6 +15,7 @@ import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.math.BigDecimal
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -38,15 +39,10 @@ class Utils {
             return formatter.format(Date(millis))
         }
 
-        fun numberFormat(amount: Double, currencyCode: String): String {
-
+        fun numberFormat(amount: BigDecimal, currencyCode: String): String {
             val locale = currencyLocales[currencyCode] ?: Locale.GERMAN
-            // Formatear la cantidad en la moneda especificada
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
-            // Iniciar la carga de cuentas solo cuando el Composable se inicia
-            return numberFormat.format(
-                abs(amount)
-            )
+            return numberFormat.format(abs(amount.toDouble()))
         }
 
 
@@ -138,7 +134,7 @@ class Utils {
                 for (record in csvParser) {
                     try {
                         val accountName = record.get(0)
-                        val accountBalance = record.get(1).toDoubleOrNull() ?: 0.0
+                        val accountBalance = record.get(1).toBigDecimalOrNull() ?: BigDecimal.ZERO
                         val accountId = record.get(2).toInt()
 
                         // Crear objeto route y agregarlo a lista
@@ -171,7 +167,7 @@ class Utils {
                     try {
                         val description = record.get(0)
                         val category = record.get(1)
-                        val amount = record.get(2).toDoubleOrNull() ?: 0.0
+                        val amount = record.get(2).toBigDecimalOrNull() ?: BigDecimal.ZERO
                         val date = record.get(3)
                         val accountName = record.get(4)
                         val categoryId = record.get(5).toInt()
@@ -197,7 +193,7 @@ class Utils {
 
 
 
-        fun getMapOfEntriesByCategory(listOfEntries: List<EntryDTO>): Map<Int, Pair<Int?, Double?>> {
+        fun getMapOfEntriesByCategory(listOfEntries: List<EntryDTO>): Map<Int, Pair<Int?, BigDecimal?>> {
             val groupedEntriesByCategoryName = listOfEntries.groupBy { it.nameResource }
 
             val categoryIcons = groupedEntriesByCategoryName.mapValues { (_, entries) ->

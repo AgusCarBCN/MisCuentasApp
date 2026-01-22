@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries.components
 
+import android.icu.math.BigDecimal
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -156,15 +157,15 @@ fun EntryList(
         } else {
             items(entriesByCategory.toList()
                 .sortedByDescending { (_, info) ->
-                    abs(
-                        info.second ?: 0.0
-                    )
+
+                        info.second?.abs()
+
                 }) { (categoryName, info) ->
                 val (icon, total) = info // Desestructurar el ícono y el total
                 ItemCategory(
                     categoryName = categoryName,
                     categoryIcon = icon,
-                    amount = total,
+                    amount = total as BigDecimal?,
                     currencyCode
                 )
             }
@@ -212,7 +213,7 @@ fun ItemEntry(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
+                color =if ((amount.toDouble()) >= 0) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge
@@ -261,10 +262,11 @@ fun ItemEntry(
 fun ItemCategory(
     categoryName: Int?,
     categoryIcon: Int?,
-    amount: Double?,
+    amount: BigDecimal?,
     currencyCode: String
 ) {
     Column {
+
         Row(
             modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
             horizontalArrangement = Arrangement.Center,
@@ -288,10 +290,11 @@ fun ItemCategory(
 
             )
             Text(
-                text = Utils.numberFormat(amount ?: 0.0, currencyCode),
+
+                text = Utils.numberFormat((amount?.toBigDecimal() ?: BigDecimal.ZERO) as java.math.BigDecimal, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if ((amount ?: 0.0) >= 0) LocalCustomColorsPalette.current.incomeColor
+                color = if ((amount ?: BigDecimal.ZERO) >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge
@@ -401,7 +404,7 @@ fun EntriesWithCheckBox(
                             entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
                             accountViewModel.updateAccountBalance(
                                                         idAccount,
-                                                        -1*(amount),
+                                                        amount.negate(),
                                                         false
                                                     )
 

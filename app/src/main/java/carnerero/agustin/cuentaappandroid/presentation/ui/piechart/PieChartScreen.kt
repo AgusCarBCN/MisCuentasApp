@@ -43,6 +43,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.model.Legend
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import java.math.BigDecimal
 import java.util.Date
 import kotlin.math.cos
 import kotlin.math.sin
@@ -55,8 +56,8 @@ fun PieChartScreen(
     searchViewModel: SearchViewModel
 ) {
 
-    val getTotalIncomes by entriesViewModel.totalIncomes.observeAsState(0.0)
-    val getTotalExpenses by entriesViewModel.totalExpenses.observeAsState(0.0)
+    val getTotalIncomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
+    val getTotalExpenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
     val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
     val fromDate by searchViewModel.selectedFromDate.observeAsState("01/01/1900")
     val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
@@ -73,8 +74,8 @@ fun PieChartScreen(
             "",
             fromDate,
             toDate,
-            0.0,
-            Double.MAX_VALUE,
+            BigDecimal.ZERO,
+            BigDecimal("1E10"),
             2
         )
     }
@@ -135,7 +136,7 @@ fun PieChartScreen(
 
         //Calculate percent of entries and adding to percentsList
         categoryList.forEach { category ->
-            if (category.second >= 0) {
+            if (category.second >= BigDecimal.ZERO) {
                 incomeList.add((category.second / getTotalIncomes).toFloat() to stringResource(id = category.first))
 
             } else {
@@ -144,11 +145,11 @@ fun PieChartScreen(
             }
         }
         if (listOfEntries.isNotEmpty()) {
-            if(incomeList.size>0) {
+            if(incomeList.isNotEmpty()) {
                 HeadSetting(title = stringResource(id = R.string.incomechart), MaterialTheme.typography.headlineMedium)
                 ChartPie(incomeList)
             }
-            if(expenseList.size>0) {
+            if(expenseList.isNotEmpty()) {
                 HeadSetting(title = stringResource(id = R.string.expensechart), MaterialTheme.typography.headlineMedium)
                 ChartPie(expenseList)
             }

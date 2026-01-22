@@ -7,6 +7,5 @@ import javax.inject.Inject
 class GetAllEntriesByAccountUseCase   @Inject constructor(private val repository: EntryRepository) {
 
     suspend operator fun invoke(accountId:Int): List<EntryDTO> =
-        repository.getAllEntriesDTOByAccount(accountId)
-
+        repository.getAllEntriesByAccount(accountId)
 }

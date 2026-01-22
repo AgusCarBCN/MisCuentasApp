@@ -52,7 +52,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
         entriesViewModel.setInitialData(entryDTO)
     }
     val description=entryDTO.description
-    val amount= kotlin.math.abs(entryDTO.amount).toString()
+    val amount= entryDTO.amount.abs().toString()
     val descriptionEntry by entriesViewModel.entryDescriptionModify.observeAsState(description)
     val amountEntry by entriesViewModel.entryAmountModify.observeAsState(amount)
     val dateSelected by searchViewModel.selectedFromDate.observeAsState(entryDTO.date)
@@ -117,14 +117,14 @@ fun ModifyEntry(entryDTO: EntryDTO,
             true,
             onClickButton = {
                 val amountBefore=entryDTO.amount
-                val updateBalanceIncome=amountEntry.toDouble()-amountBefore
-                val updateBalanceExpense = (-1)*amountEntry.toDouble() + abs(amountBefore)
+                val updateBalanceIncome=amountEntry.toBigDecimal()-amountBefore
+                val updateBalanceExpense = amountEntry.toBigDecimal().negate().add(amountBefore)
 
                 val entryDTOUpdated= EntryDTO(
                     entryDTO.id,
                     descriptionEntry,
-                    if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toDouble()
-                    else (-1)*(amountEntry.toDouble()),
+                    if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()
+                    else amountEntry.toBigDecimal().negate(),
                     dateSelected,
                     entryDTO.iconResource,
                     entryDTO.nameResource,
@@ -135,8 +135,8 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 )
                     entriesViewModel.updateEntry(entryDTO.id,
                         descriptionEntry,
-                        if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toDouble()
-                        else (-1)*(amountEntry.toDouble()),
+                        if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()
+                        else amountEntry.toBigDecimal().negate(),
                         dateSelected)
                 entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
                 mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)

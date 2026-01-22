@@ -376,7 +376,7 @@ fun toEntryCSV(entries: List<EntryDTO>): MutableList<EntryCSV> {
             EntryCSV(
                 entry.description,
                 stringResource(id = entry.nameResource),
-                entry.amount,
+                entry.amount.toDouble(),
                 entry.date,
                 entry.name,
                 entry.categoryId,
@@ -395,7 +395,7 @@ fun toAccountCSV(accounts: List<Account>): MutableList<AccountCSV> {
         accountsCSV.add(
             AccountCSV(
                 account.name,
-                account.balance,
+                account.balance.toDouble(),
                 account.id
             )
         )

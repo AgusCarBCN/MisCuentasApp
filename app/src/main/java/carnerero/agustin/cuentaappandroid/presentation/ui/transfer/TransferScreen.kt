@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 import java.util.Date
 
 @Composable
@@ -53,8 +55,8 @@ fun Transfer(
     val scope = rememberCoroutineScope()
     val idAccountFrom = accountFrom?.id ?: 1
     val idAccountTo = accountTo?.id ?: 1
-    val amount = amountTransfer.toDoubleOrNull() ?: 0.0
-    val negativeAmount = (-1) * (amountTransfer.toDoubleOrNull() ?: 0.0)
+    val amount = amountTransfer.toBigDecimalOrNull() ?: BigDecimal.ZERO
+    val negativeAmount = amountTransfer.toBigDecimalOrNull()?.negate() ?: BigDecimal("1E10")
     //accountViewModel.isValidTransfer()
     val transferFrom = stringResource(id = R.string.transferfrom)
     val transferTo = stringResource(id = R.string.transferTo)

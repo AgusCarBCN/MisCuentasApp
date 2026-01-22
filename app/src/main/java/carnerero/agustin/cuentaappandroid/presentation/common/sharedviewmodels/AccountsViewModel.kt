@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -288,8 +289,8 @@ class AccountsViewModel @Inject constructor(
     private val _spendingLimit=MutableLiveData<String>()
     val spendingLimit: LiveData<String> = _spendingLimit
 
-    private val _conversionCurrencyRate = MutableLiveData<Double>()
-    val conversionCurrencyRate: LiveData<Double> = _conversionCurrencyRate
+    private val _conversionCurrencyRate = MutableLiveData<BigDecimal>()
+    val conversionCurrencyRate: LiveData<BigDecimal> = _conversionCurrencyRate
 
     private val _enableDialog=MutableLiveData<Boolean>()
     val enableDialog: LiveData<Boolean> = _enableDialog
@@ -324,7 +325,7 @@ class AccountsViewModel @Inject constructor(
         }
     }
 
-    fun transferAmount(accountFromId: Int, accountToId: Int, amount: Double) {
+    fun transferAmount(accountFromId: Int, accountToId: Int, amount: BigDecimal) {
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) {
@@ -337,15 +338,15 @@ class AccountsViewModel @Inject constructor(
         }
     }
 
-    fun updateAccountBalance(accountId: Int, amount: Double, isTransferDestination: Boolean) {
+    fun updateAccountBalance(accountId: Int, amount: BigDecimal, isTransferDestination: Boolean) {
         viewModelScope.launch {
             try {
                 val account = _accountSelected.value
                 val accountDestination = _destinationAccount.value
                 val newBalance = if (!isTransferDestination) {
-                    (account?.balance ?: 0.0) + amount
+                    (account?.balance ?: BigDecimal.ZERO).add(amount)
                 } else {
-                    (accountDestination?.balance ?: 0.0) + amount
+                    (accountDestination?.balance ?: BigDecimal.ZERO).add(amount)
                 }
                 updateAccountBalance(accountId, newBalance)
                 onAccountUpdated()
@@ -354,13 +355,13 @@ class AccountsViewModel @Inject constructor(
             }
         }
     }
-    fun updateAccountsBalancesByExchangeRates(rate:Double){
+    fun updateAccountsBalancesByExchangeRates(rate: BigDecimal){
         viewModelScope.launch(Dispatchers.IO) {
             updateAccountsBalanceByExchangeRate.invoke(rate)
         }
 
     }
-    private suspend fun updateAccountBalance(accountId: Int, newBalance: Double) {
+    private suspend fun updateAccountBalance(accountId: Int, newBalance: BigDecimal) {
         try {
             withContext(Dispatchers.IO) {
                 updateBalance.invoke(accountId, newBalance)
@@ -514,7 +515,7 @@ class AccountsViewModel @Inject constructor(
             onAccountUpdated()
         }
     }
-    fun upDateAccountBalance(idAccount:Int,newBalance:Double){
+    fun upDateAccountBalance(idAccount:Int,newBalance: BigDecimal){
         viewModelScope.launch(Dispatchers.IO) {
              updateBalance.invoke(idAccount, newBalance)
             _isEnableChangeNameButton.postValue(false)
@@ -535,28 +536,30 @@ class AccountsViewModel @Inject constructor(
             getAllAccounts()
         }
     }
-    fun upDateSpendingLimitAccount(accountId: Int, newAmount: Double) {
+    fun upDateSpendingLimitAccount(accountId: Int, newAmount: BigDecimal) {
         viewModelScope.launch(Dispatchers.IO) {
             updateSpendingLimit.invoke(accountId, newAmount)
 
         }
     }
 
-    suspend fun conversionCurrencyRate(fromCurrency: String, toCurrency: String): Double? {
-
+    suspend fun conversionCurrencyRate(fromCurrency: String, toCurrency: String): BigDecimal? {
         return try {
             withContext(Dispatchers.IO) {
                 val response = converterCurrency.invoke(fromCurrency, toCurrency)
-                response.body()?.conversion_rate
+                response.body()?.conversion_rate?.let { rate ->
+                    // Convertir a BigDecimal de forma segura
+                    BigDecimal.valueOf(rate)
+                }
             }
-        }catch(e: IOException) {
+        } catch (e: IOException) {
             null
         }
     }
 
     suspend fun sumOfExpensesByAccount(accountId:Int,
                                         fromDate:String,
-                                        toDate:String): Double? {
+                                        toDate:String): BigDecimal? {
 
         return try {
             withContext(Dispatchers.IO) {
@@ -580,8 +583,8 @@ class AccountsViewModel @Inject constructor(
         }
 
         val expensePercentageMap = categories.associateWith { account ->
-            val expenses = sumOfExpensesByAccount(account.id,account.fromDate,account.toDate) ?: 0.0
-            val percentage = (abs(expenses) / abs(account.spendingLimit)).toFloat().coerceIn(0.0f, 1.0f)
+            val expenses = sumOfExpensesByAccount(account.id,account.fromDate,account.toDate) ?: BigDecimal.ZERO
+            val percentage = (expenses.abs() / account.spendingLimit.abs()).toFloat().coerceIn(0.0f, 1.0f)
             percentage
         }
         _expensePercentageFlow.value = expensePercentageMap
@@ -599,7 +602,7 @@ class AccountsViewModel @Inject constructor(
     }
 
 
-    fun isValidExpense(amount: Double): Boolean = (_accountSelected.value?.balance ?: 0.0) >= amount
+    fun isValidExpense(amount: BigDecimal): Boolean = (_accountSelected.value?.balance ?: BigDecimal.ZERO) >= amount
 
     private fun enableButton(description: String, amount: String): Boolean =
         description.isNotBlank() && amount.isNotEmpty() && description.isNotBlank() && amount.isNotBlank()

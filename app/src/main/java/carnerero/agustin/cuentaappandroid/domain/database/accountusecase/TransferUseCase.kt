@@ -1,11 +1,12 @@
 package carnerero.agustin.cuentaappandroid.domain.database.accountusecase
 
 import carnerero.agustin.cuentaappandroid.data.repository.AccountRepository
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class TransferUseCase  @Inject constructor(private val repository: AccountRepository) {
 
-    suspend operator fun invoke(fromAccountId: Int, toAccountId: Int, newBalance: Double) {
+    suspend operator fun invoke(fromAccountId: Int, toAccountId: Int, newBalance: BigDecimal) {
         repository.transferFunds(fromAccountId, toAccountId, newBalance)
     }
 }

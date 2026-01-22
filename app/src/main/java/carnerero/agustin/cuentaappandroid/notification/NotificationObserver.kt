@@ -15,6 +15,8 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import kotlinx.serialization.BinaryFormat
+import java.math.BigDecimal
 
 
 @Composable
@@ -33,13 +35,13 @@ fun NotificationCategoriesObserver(
 
     expensePercentageMap.forEach { (category, percentage) ->
         // State to track the expenses by category and whether it has been loaded
-        var expensesByCategory by remember { mutableStateOf<Double?>(null) }
+        var expensesByCategory by remember { mutableStateOf<BigDecimal?>(null) }
 
         // Load expenses for each category when the category ID changes
         LaunchedEffect(category.id) {
             expensesByCategory = categoriesViewModel.sumOfExpensesByCategory(category.id,
                 category.fromDate,
-                category.toDate) ?: 0.0
+                category.toDate) ?: BigDecimal.ZERO
 
         }
 
@@ -97,13 +99,13 @@ fun NotificationAccountObserver(
 
     expensePercentageMap.forEach { (account, percentage) ->
         // State to track the expenses by category and whether it has been loaded
-        var expensesByAccounts by remember { mutableStateOf<Double?>(null) }
+        var expensesByAccounts by remember { mutableStateOf<BigDecimal?>(null) }
 
         // Load expenses for each category when the category ID changes
         LaunchedEffect(account.id) {
             expensesByAccounts = accountsViewModel.sumOfExpensesByAccount(account.id,
                 account.fromDate,
-                account.toDate) ?: 0.0
+                account.toDate) ?: BigDecimal.ZERO
 
         }
 

@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.data.repository
 import carnerero.agustin.cuentaappandroid.data.db.dao.CategoryDao
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class CategoryRepository  @Inject constructor(private val categoryDao: CategoryDao) {
@@ -29,7 +30,7 @@ class CategoryRepository  @Inject constructor(private val categoryDao: CategoryD
     }
 
     // 5. Update amount category
-    suspend fun updateSpendingLimitCategory(categoryId:Int,newAmount:Double) {
+    suspend fun updateSpendingLimitCategory(categoryId:Int,newAmount: BigDecimal) {
         categoryDao.updateSpendingLimitCategory(categoryId,newAmount)
     }
 

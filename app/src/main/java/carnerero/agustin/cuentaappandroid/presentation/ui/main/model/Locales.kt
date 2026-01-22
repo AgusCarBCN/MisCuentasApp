@@ -6,158 +6,159 @@ import java.util.Locale
 
 
 val currencyLocales = mapOf(
-    "AED" to Locale("ar", "AE"), // UAE Dirham
-    "AFN" to Locale("ps", "AF"), // Afghan Afghani
-    "ALL" to Locale("sq", "AL"), // Albanian Lek
-    "AMD" to Locale("hy", "AM"), // Armenian Dram
-    "AOA" to Locale("pt", "AO"), // Angolan Kwanza
-    "ARS" to Locale("es", "AR"), // Peso Argentino
-    "AUD" to Locale("en", "AU"), // Australian Dollar
-    "AWG" to Locale("nl", "AW"), // Aruban Florin
-    "AZN" to Locale("az", "AZ"), // Azerbaijani Manat
-    "BAM" to Locale("bs", "BA"), // Bosnia-Herzegovina Convertible Mark
-    "BBD" to Locale("en", "BB"), // Barbadian Dollar
-    "BDT" to Locale("bn", "BD"), // Bangladeshi Taka
-    "BGN" to Locale("bg", "BG"), // Bulgarian Lev
-    "BHD" to Locale("ar", "BH"), // Bahraini Dinar
-    "BIF" to Locale("fr", "BI"), // Burundian Franc
-    "BMD" to Locale("en", "BM"), // Bermudian Dollar
-    "BND" to Locale("ms", "BN"), // Brunei Dollar
-    "BOB" to Locale("es", "BO"), // Bolivian Boliviano
-    "BRL" to Locale("pt", "BR"), // Real brasileño
-    "BSD" to Locale("en", "BS"), // Bahamian Dollar
-    "BTN" to Locale("dz", "BT"), // Bhutanese Ngultrum
-    "BWP" to Locale("en", "BW"), // Botswana Pula
-    "BYN" to Locale("be", "BY"), // Belarusian Ruble
-    "BZD" to Locale("bz", "BZ"), // Belize Dollar
-    "CAD" to Locale("en", "CA"), // Canadian Dollar
-    "CDF" to Locale("fr", "CD"), // Congolese Franc
-    "CHF" to Locale("de", "CH"), // Swiss Franc
-    "CLP" to Locale("es", "CL"), // Peso chileno
-    "CNY" to Locale("zh", "CN"), // Yuan chino
-    "COP" to Locale("es", "CO"), // Peso colombiano
-    "CRC" to Locale("es", "CR"), // Costa Rican Colón
-    "CUP" to Locale("es", "CU"), // Cuban Peso
-    "CVE" to Locale("pt", "CV"), // Cape Verdean Escudo
-    "CZK" to Locale("cs", "CZ"), // Czech Koruna
-    "DJF" to Locale("fr", "DJ"), // Djiboutian Franc
-    "DKK" to Locale("da", "DK"), // Danish Krone
-    "DOP" to Locale("es", "DO"), // Dominican Peso
-    "DZD" to Locale("ar", "DZ"), // Algerian Dinar
-    "EGP" to Locale("ar", "EG"), // Egyptian Pound
-    "ERN" to Locale("ti", "ER"), // Eritrean Nakfa
-    "ETB" to Locale("am", "ET"), // Ethiopian Birr
-    "EUR" to Locale("es", "ES"), // Euro
-    "FJD" to Locale("en", "FJ"), // Fijian Dollar
-    "FKP" to Locale("en", "FK"), // Falkland Islands Pound
-    "FOK" to Locale("fo", "FO"), // Faroese Króna
-    "GBP" to Locale("en", "GB"), // British Pound
-    "GEL" to Locale("ka", "GE"), // Georgian Lari
-    "GHS" to Locale("ak", "GH"), // Ghanaian Cedi
-    "GIP" to Locale("en", "GI"), // Gibraltar Pound
-    "GMD" to Locale("en", "GM"), // Gambian Dalasi
-    "GNF" to Locale("fr", "GN"), // Guinean Franc
-    "GTQ" to Locale("es", "GT"), // Guatemalan Quetzal
-    "GYD" to Locale("en", "GY"), // Guyanese Dollar
-    "HKD" to Locale("zh", "HK"), // Hong Kong Dollar
-    "HNL" to Locale("es", "HN"), // Lempira de Honduras
-    "HRK" to Locale("hr", "HR"), // Croatian Kuna
-    "HTG" to Locale("ht", "HT"), // Haitian Gourde
-    "HUF" to Locale("hu", "HU"), // Hungarian Forint
-    "IDR" to Locale("id", "ID"), // Indonesian Rupiah
-    "ILS" to Locale("he", "IL"), // Israeli Shekel
-    "INR" to Locale("hi", "IN"), // Indian Rupee
-    "IQD" to Locale("ar", "IQ"), // Iraqi Dinar
-    "IRR" to Locale("fa", "IR"), // Iranian Rial
-    "ISK" to Locale("is", "IS"), // Icelandic Krona
-    "JMD" to Locale("en", "JM"), // Jamaican Dollar
-    "JOD" to Locale("ar", "JO"), // Jordanian Dinar
-    "JPY" to Locale("ja", "JP"), // Yen japonés
-    "KES" to Locale("en", "KE"), // Kenyan Shilling
-    "KGS" to Locale("ky", "KG"), // Kyrgyzstani Som
-    "KHR" to Locale("km", "KH"), // Cambodian Riel
-    "KMF" to Locale("fr", "KM"), // Comorian Franc
-    "KRW" to Locale("ko", "KR"), // South Korean Won
-    "KWD" to Locale("ar", "KW"), // Kuwaiti Dinar
-    "KYD" to Locale("en", "KY"), // Cayman Islands Dollar
-    "KZT" to Locale("kk", "KZ"), // Kazakhstani Tenge
-    "LAK" to Locale("lo", "LA"), // Lao Kip
-    "LBP" to Locale("ar", "LB"), // Lebanese Pound
-    "LKR" to Locale("si", "LK"), // Sri Lankan Rupee
-    "LRD" to Locale("en", "LR"), // Liberian Dollar
-    "LSL" to Locale("en", "LS"), // Lesotho Loti
-    "LYD" to Locale("ly", "LY"), // Libyan Dinar
-    "MAD" to Locale("ar", "MA"), // Moroccan Dirham
-    "MDL" to Locale("ro", "MD"), // Moldovan Leu
-    "MGA" to Locale("mg", "MG"), // Malagasy Ariary
-    "MKD" to Locale("mk", "MK"), // Macedonian Denar
-    "MMK" to Locale("my", "MM"), // Burmese Kyat
-    "MNT" to Locale("mn", "MN"), // Mongolian Tögrög
-    "MOP" to Locale("pt", "MO"), // Macanese Pataca
-    "MRU" to Locale("mr", "MR"), // Mauritanian Ouguiya
-    "MUR" to Locale("en", "MU"), // Mauritian Rupee
-    "MVR" to Locale("dv", "MV"), // Maldivian Rufiyaa
-    "MWK" to Locale("en", "MW"), // Malawian Kwacha
-    "MXN" to Locale("es", "MX"), // Peso mexicano
-    "MYR" to Locale("ms", "MY"), // Malaysian Ringgit
-    "MZN" to Locale("pt", "MZ"), // Mozambican Metical
-    "NAD" to Locale("en", "NA"), // Namibian Dollar
-    "NGN" to Locale("en", "NG"), // Nigerian Naira
-    "NIO" to Locale("es", "NI"), // Nicaraguan Córdoba
-    "NOK" to Locale("no", "NO"), // Norwegian Krone
-    "NPR" to Locale("ne", "NP"), // Nepalese Rupee
-    "NZD" to Locale("en", "NZ"), // New Zealand Dollar
-    "OMR" to Locale("ar", "OM"), // Omani Rial
-    "PAB" to Locale("es", "PA"), // Panamanian Balboa
-    "PEN" to Locale("es", "PE"), // Sol peruano
-    "PGK" to Locale("en", "PG"), // Papua New Guinean Kina
-    "PHP" to Locale("en", "PH"), // Peso filipino
-    "PKR" to Locale("ur", "PK"), // Pakistani Rupee
-    "PLN" to Locale("pl", "PL"), // Polish Zloty
-    "PYG" to Locale("gn", "PY"), // Paraguayan Guarani
-    "QAR" to Locale("ar", "QA"), // Qatari Riyal
-    "RON" to Locale("ro", "RO"), // Romanian Leu
-    "RSD" to Locale("sr", "RS"), // Serbian Dinar
-    "RUB" to Locale("ru", "RU"), // Russian Ruble
-    "RWF" to Locale("rw", "RW"), // Rwandan Franc
-    "SAR" to Locale("ar", "SA"), // Saudi Riyal
-    "SBD" to Locale("en", "SB"), // Solomon Islands Dollar
-    "SCR" to Locale("en", "SC"), // Seychellois Rupee
-    "SDG" to Locale("ar", "SD"), // Sudanese Pound
-    "SEK" to Locale("sv", "SE"), // Swedish Krona
-    "SGD" to Locale("en", "SG"), // Singapore Dollar
-    "SHP" to Locale("en", "SH"), // Saint Helena Pound
-    "SLL" to Locale("en", "SL"), // Sierra Leonean Leone
-    "SOS" to Locale("so", "SO"), // Somali Shilling
-    "SRD" to Locale("en", "SR"), // Surinamese Dollar
-    "SSP" to Locale("en", "SS"), // South Sudanese Pound
-    "STN" to Locale("st", "ST"), // São Tomé and Príncipe Dobra
-    "SYP" to Locale("ar", "SY"), // Syrian Pound
-    "SZL" to Locale("en", "SZ"), // Eswatini Lilangeni
-    "THB" to Locale("th", "TH"), // Thai Baht
-    "TJS" to Locale("tg", "TJ"), // Tajikistani Somoni
-    "TMT" to Locale("tm", "TM"), // Turkmenistani Manat
-    "TND" to Locale("ar", "TN"), // Tunisian Dinar
-    "TOP" to Locale("to", "TO"), // Tongan Paʻanga
-    "TRY" to Locale("tr", "TR"), // Turkish Lira
-    "TTD" to Locale("en", "TT"), // Trinidad and Tobago Dollar
-    "TWD" to Locale("zh", "TW"), // New Taiwan Dollar
-    "TZS" to Locale("sw", "TZ"), // Tanzanian Shilling
-    "UAH" to Locale("uk", "UA"), // Ukrainian Hryvnia
-    "UGX" to Locale("en", "UG"), // Ugandan Shilling
-    "USD" to Locale("en", "US"), // US Dollar
-    "UYU" to Locale("es", "UY"), // Uruguayan Peso
-    "UZS" to Locale("uz", "UZ"), // Uzbekistani Som
-    "VES" to Locale("ve", "VE"), // Venezuelan Bolívar
-    "VND" to Locale("vi", "VN"), // Vietnamese Dong
-    "VUV" to Locale("vu", "VU"), // Vanuatu Vatu
-    "WST" to Locale("sm", "WS"), // Samoan Tala
-    "XAF" to Locale("fr", "CF"), // Central African CFA Franc
-    "XOF" to Locale("fr", "WF"), // West African CFA Franc
-    "XPF" to Locale("fr", "PF"), // CFP Franc
-    "YER" to Locale("ar", "YE"), // Yemeni Rial
-    "ZAR" to Locale("af", "ZA"), // South African Rand
-    "ZMW" to Locale("en", "ZM"), // Zambian Kwacha
-    "ZWL" to Locale("en", "ZW")  // Zimbabwean Dollar
+    "AED" to Locale.Builder().setLanguage("ar").setRegion("AE").build(),
+    "AFN" to Locale.Builder().setLanguage("ps").setRegion("AF").build(),
+    "ALL" to Locale.Builder().setLanguage("sq").setRegion("AL").build(),
+    "AMD" to Locale.Builder().setLanguage("hy").setRegion("AM").build(),
+    "AOA" to Locale.Builder().setLanguage("pt").setRegion("AO").build(),
+    "ARS" to Locale.Builder().setLanguage("es").setRegion("AR").build(),
+    "AUD" to Locale.Builder().setLanguage("en").setRegion("AU").build(),
+    "AWG" to Locale.Builder().setLanguage("nl").setRegion("AW").build(),
+    "AZN" to Locale.Builder().setLanguage("az").setRegion("AZ").build(),
+    "BAM" to Locale.Builder().setLanguage("bs").setRegion("BA").build(),
+    "BBD" to Locale.Builder().setLanguage("en").setRegion("BB").build(),
+    "BDT" to Locale.Builder().setLanguage("bn").setRegion("BD").build(),
+    "BGN" to Locale.Builder().setLanguage("bg").setRegion("BG").build(),
+    "BHD" to Locale.Builder().setLanguage("ar").setRegion("BH").build(),
+    "BIF" to Locale.Builder().setLanguage("fr").setRegion("BI").build(),
+    "BMD" to Locale.Builder().setLanguage("en").setRegion("BM").build(),
+    "BND" to Locale.Builder().setLanguage("ms").setRegion("BN").build(),
+    "BOB" to Locale.Builder().setLanguage("es").setRegion("BO").build(),
+    "BRL" to Locale.Builder().setLanguage("pt").setRegion("BR").build(),
+    "BSD" to Locale.Builder().setLanguage("en").setRegion("BS").build(),
+    "BTN" to Locale.Builder().setLanguage("dz").setRegion("BT").build(),
+    "BWP" to Locale.Builder().setLanguage("en").setRegion("BW").build(),
+    "BYN" to Locale.Builder().setLanguage("be").setRegion("BY").build(),
+    "BZD" to Locale.Builder().setLanguage("en").setRegion("BZ").build(),
+    "CAD" to Locale.Builder().setLanguage("en").setRegion("CA").build(),
+    "CDF" to Locale.Builder().setLanguage("fr").setRegion("CD").build(),
+    "CHF" to Locale.Builder().setLanguage("de").setRegion("CH").build(),
+    "CLP" to Locale.Builder().setLanguage("es").setRegion("CL").build(),
+    "CNY" to Locale.Builder().setLanguage("zh").setRegion("CN").build(),
+    "COP" to Locale.Builder().setLanguage("es").setRegion("CO").build(),
+    "CRC" to Locale.Builder().setLanguage("es").setRegion("CR").build(),
+    "CUP" to Locale.Builder().setLanguage("es").setRegion("CU").build(),
+    "CVE" to Locale.Builder().setLanguage("pt").setRegion("CV").build(),
+    "CZK" to Locale.Builder().setLanguage("cs").setRegion("CZ").build(),
+    "DJF" to Locale.Builder().setLanguage("fr").setRegion("DJ").build(),
+    "DKK" to Locale.Builder().setLanguage("da").setRegion("DK").build(),
+    "DOP" to Locale.Builder().setLanguage("es").setRegion("DO").build(),
+    "DZD" to Locale.Builder().setLanguage("ar").setRegion("DZ").build(),
+    "EGP" to Locale.Builder().setLanguage("ar").setRegion("EG").build(),
+    "ERN" to Locale.Builder().setLanguage("ti").setRegion("ER").build(),
+    "ETB" to Locale.Builder().setLanguage("am").setRegion("ET").build(),
+    "EUR" to Locale.Builder().setLanguage("es").setRegion("ES").build(),
+    "FJD" to Locale.Builder().setLanguage("en").setRegion("FJ").build(),
+    "FKP" to Locale.Builder().setLanguage("en").setRegion("FK").build(),
+    "FOK" to Locale.Builder().setLanguage("fo").setRegion("FO").build(),
+    "GBP" to Locale.Builder().setLanguage("en").setRegion("GB").build(),
+    "GEL" to Locale.Builder().setLanguage("ka").setRegion("GE").build(),
+    "GHS" to Locale.Builder().setLanguage("ak").setRegion("GH").build(),
+    "GIP" to Locale.Builder().setLanguage("en").setRegion("GI").build(),
+    "GMD" to Locale.Builder().setLanguage("en").setRegion("GM").build(),
+    "GNF" to Locale.Builder().setLanguage("fr").setRegion("GN").build(),
+    "GTQ" to Locale.Builder().setLanguage("es").setRegion("GT").build(),
+    "GYD" to Locale.Builder().setLanguage("en").setRegion("GY").build(),
+    "HKD" to Locale.Builder().setLanguage("zh").setRegion("HK").build(),
+    "HNL" to Locale.Builder().setLanguage("es").setRegion("HN").build(),
+    "HRK" to Locale.Builder().setLanguage("hr").setRegion("HR").build(),
+    "HTG" to Locale.Builder().setLanguage("ht").setRegion("HT").build(),
+    "HUF" to Locale.Builder().setLanguage("hu").setRegion("HU").build(),
+    "IDR" to Locale.Builder().setLanguage("id").setRegion("ID").build(),
+    "ILS" to Locale.Builder().setLanguage("he").setRegion("IL").build(),
+    "INR" to Locale.Builder().setLanguage("hi").setRegion("IN").build(),
+    "IQD" to Locale.Builder().setLanguage("ar").setRegion("IQ").build(),
+    "IRR" to Locale.Builder().setLanguage("fa").setRegion("IR").build(),
+    "ISK" to Locale.Builder().setLanguage("is").setRegion("IS").build(),
+    "JMD" to Locale.Builder().setLanguage("en").setRegion("JM").build(),
+    "JOD" to Locale.Builder().setLanguage("ar").setRegion("JO").build(),
+    "JPY" to Locale.Builder().setLanguage("ja").setRegion("JP").build(),
+    "KES" to Locale.Builder().setLanguage("en").setRegion("KE").build(),
+    "KGS" to Locale.Builder().setLanguage("ky").setRegion("KG").build(),
+    "KHR" to Locale.Builder().setLanguage("km").setRegion("KH").build(),
+    "KMF" to Locale.Builder().setLanguage("fr").setRegion("KM").build(),
+    "KRW" to Locale.Builder().setLanguage("ko").setRegion("KR").build(),
+    "KWD" to Locale.Builder().setLanguage("ar").setRegion("KW").build(),
+    "KYD" to Locale.Builder().setLanguage("en").setRegion("KY").build(),
+    "KZT" to Locale.Builder().setLanguage("kk").setRegion("KZ").build(),
+    "LAK" to Locale.Builder().setLanguage("lo").setRegion("LA").build(),
+    "LBP" to Locale.Builder().setLanguage("ar").setRegion("LB").build(),
+    "LKR" to Locale.Builder().setLanguage("si").setRegion("LK").build(),
+    "LRD" to Locale.Builder().setLanguage("en").setRegion("LR").build(),
+    "LSL" to Locale.Builder().setLanguage("en").setRegion("LS").build(),
+    "LYD" to Locale.Builder().setLanguage("ar").setRegion("LY").build(),
+    "MAD" to Locale.Builder().setLanguage("ar").setRegion("MA").build(),
+    "MDL" to Locale.Builder().setLanguage("ro").setRegion("MD").build(),
+    "MGA" to Locale.Builder().setLanguage("mg").setRegion("MG").build(),
+    "MKD" to Locale.Builder().setLanguage("mk").setRegion("MK").build(),
+    "MMK" to Locale.Builder().setLanguage("my").setRegion("MM").build(),
+    "MNT" to Locale.Builder().setLanguage("mn").setRegion("MN").build(),
+    "MOP" to Locale.Builder().setLanguage("pt").setRegion("MO").build(),
+    "MRU" to Locale.Builder().setLanguage("mr").setRegion("MR").build(),
+    "MUR" to Locale.Builder().setLanguage("en").setRegion("MU").build(),
+    "MVR" to Locale.Builder().setLanguage("dv").setRegion("MV").build(),
+    "MWK" to Locale.Builder().setLanguage("en").setRegion("MW").build(),
+    "MXN" to Locale.Builder().setLanguage("es").setRegion("MX").build(),
+    "MYR" to Locale.Builder().setLanguage("ms").setRegion("MY").build(),
+    "MZN" to Locale.Builder().setLanguage("pt").setRegion("MZ").build(),
+    "NAD" to Locale.Builder().setLanguage("en").setRegion("NA").build(),
+    "NGN" to Locale.Builder().setLanguage("en").setRegion("NG").build(),
+    "NIO" to Locale.Builder().setLanguage("es").setRegion("NI").build(),
+    "NOK" to Locale.Builder().setLanguage("no").setRegion("NO").build(),
+    "NPR" to Locale.Builder().setLanguage("ne").setRegion("NP").build(),
+    "NZD" to Locale.Builder().setLanguage("en").setRegion("NZ").build(),
+    "OMR" to Locale.Builder().setLanguage("ar").setRegion("OM").build(),
+    "PAB" to Locale.Builder().setLanguage("es").setRegion("PA").build(),
+    "PEN" to Locale.Builder().setLanguage("es").setRegion("PE").build(),
+    "PGK" to Locale.Builder().setLanguage("en").setRegion("PG").build(),
+    "PHP" to Locale.Builder().setLanguage("en").setRegion("PH").build(),
+    "PKR" to Locale.Builder().setLanguage("ur").setRegion("PK").build(),
+    "PLN" to Locale.Builder().setLanguage("pl").setRegion("PL").build(),
+    "PYG" to Locale.Builder().setLanguage("gn").setRegion("PY").build(),
+    "QAR" to Locale.Builder().setLanguage("ar").setRegion("QA").build(),
+    "RON" to Locale.Builder().setLanguage("ro").setRegion("RO").build(),
+    "RSD" to Locale.Builder().setLanguage("sr").setRegion("RS").build(),
+    "RUB" to Locale.Builder().setLanguage("ru").setRegion("RU").build(),
+    "RWF" to Locale.Builder().setLanguage("rw").setRegion("RW").build(),
+    "SAR" to Locale.Builder().setLanguage("ar").setRegion("SA").build(),
+    "SBD" to Locale.Builder().setLanguage("en").setRegion("SB").build(),
+    "SCR" to Locale.Builder().setLanguage("en").setRegion("SC").build(),
+    "SDG" to Locale.Builder().setLanguage("ar").setRegion("SD").build(),
+    "SEK" to Locale.Builder().setLanguage("sv").setRegion("SE").build(),
+    "SGD" to Locale.Builder().setLanguage("en").setRegion("SG").build(),
+    "SHP" to Locale.Builder().setLanguage("en").setRegion("SH").build(),
+    "SLL" to Locale.Builder().setLanguage("en").setRegion("SL").build(),
+    "SOS" to Locale.Builder().setLanguage("so").setRegion("SO").build(),
+    "SRD" to Locale.Builder().setLanguage("en").setRegion("SR").build(),
+    "SSP" to Locale.Builder().setLanguage("en").setRegion("SS").build(),
+    "STN" to Locale.Builder().setLanguage("st").setRegion("ST").build(),
+    "SYP" to Locale.Builder().setLanguage("ar").setRegion("SY").build(),
+    "SZL" to Locale.Builder().setLanguage("en").setRegion("SZ").build(),
+    "THB" to Locale.Builder().setLanguage("th").setRegion("TH").build(),
+    "TJS" to Locale.Builder().setLanguage("tg").setRegion("TJ").build(),
+    "TMT" to Locale.Builder().setLanguage("tm").setRegion("TM").build(),
+    "TND" to Locale.Builder().setLanguage("ar").setRegion("TN").build(),
+    "TOP" to Locale.Builder().setLanguage("to").setRegion("TO").build(),
+    "TRY" to Locale.Builder().setLanguage("tr").setRegion("TR").build(),
+    "TTD" to Locale.Builder().setLanguage("en").setRegion("TT").build(),
+    "TWD" to Locale.Builder().setLanguage("zh").setRegion("TW").build(),
+    "TZS" to Locale.Builder().setLanguage("sw").setRegion("TZ").build(),
+    "UAH" to Locale.Builder().setLanguage("uk").setRegion("UA").build(),
+    "UGX" to Locale.Builder().setLanguage("en").setRegion("UG").build(),
+    "USD" to Locale.Builder().setLanguage("en").setRegion("US").build(),
+    "UYU" to Locale.Builder().setLanguage("es").setRegion("UY").build(),
+    "UZS" to Locale.Builder().setLanguage("uz").setRegion("UZ").build(),
+    "VES" to Locale.Builder().setLanguage("ve").setRegion("VE").build(),
+    "VND" to Locale.Builder().setLanguage("vi").setRegion("VN").build(),
+    "VUV" to Locale.Builder().setLanguage("vu").setRegion("VU").build(),
+    "WST" to Locale.Builder().setLanguage("sm").setRegion("WS").build(),
+    "XAF" to Locale.Builder().setLanguage("fr").setRegion("CF").build(),
+    "XOF" to Locale.Builder().setLanguage("fr").setRegion("WF").build(),
+    "XPF" to Locale.Builder().setLanguage("fr").setRegion("PF").build(),
+    "YER" to Locale.Builder().setLanguage("ar").setRegion("YE").build(),
+    "ZAR" to Locale.Builder().setLanguage("af").setRegion("ZA").build(),
+    "ZMW" to Locale.Builder().setLanguage("en").setRegion("ZM").build(),
+    "ZWL" to Locale.Builder().setLanguage("en").setRegion("ZW").build()
 )
+
 val locale = currencyLocales["EUR"] ?: Locale.GERMAN

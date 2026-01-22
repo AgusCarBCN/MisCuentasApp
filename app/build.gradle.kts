@@ -20,8 +20,8 @@ android {
         applicationId = "carnerero.agustin.cuentaappandroid"
         minSdk = 26
         targetSdk = 35
-        versionCode = 49
-        versionName = "3.13"
+        versionCode = 50
+        versionName = "4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -43,9 +43,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        jvmToolchain(17)
     }
+
+
 
     buildFeatures {
         compose = true

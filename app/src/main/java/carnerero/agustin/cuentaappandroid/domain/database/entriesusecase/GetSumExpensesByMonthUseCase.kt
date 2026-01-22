@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
 import carnerero.agustin.cuentaappandroid.data.repository.EntryRepository
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class GetSumExpensesByMonthUseCase @Inject constructor(private val repository: EntryRepository) {
@@ -9,5 +10,5 @@ class GetSumExpensesByMonthUseCase @Inject constructor(private val repository: E
         accountId: Int,
         month: String,
         year: String
-    ): Double = repository.getSumOfExpensesEntriesForMonth(accountId, month, year)
+    ): BigDecimal = repository.getSumOfExpensesEntriesForMonth(accountId, month, year)
 }

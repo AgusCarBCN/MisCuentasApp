@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
 import carnerero.agustin.cuentaappandroid.data.repository.EntryRepository
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class GetSumTotalIncomesByDate @Inject constructor(private val repository: EntryRepository){
@@ -8,7 +9,7 @@ class GetSumTotalIncomesByDate @Inject constructor(private val repository: Entry
     suspend operator fun invoke(accountId:Int,
                                 fromDate:String,
                                 toDate:String
-                                ):Double = repository.getSumIncomesByDate(accountId,
+                                ): BigDecimal = repository.getSumIncomesByDate(accountId,
                                     fromDate,
                                     toDate)
 

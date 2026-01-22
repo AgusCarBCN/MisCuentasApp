@@ -37,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 
 @Composable
 fun AccountList(
@@ -179,7 +180,7 @@ fun ModifyAccountsComponent(
             onClickButton = {
                 try {
                     scope.launch(Dispatchers.IO) {
-                        val newBalance=balance.toDoubleOrNull()?:0.0
+                        val newBalance=balance.toBigDecimalOrNull()?: BigDecimal.ZERO
                         accountsViewModel.upDateAccountBalance(accountId,newBalance)
                         SnackBarController.sendEvent(event = SnackBarEvent(balanceChanged))
 

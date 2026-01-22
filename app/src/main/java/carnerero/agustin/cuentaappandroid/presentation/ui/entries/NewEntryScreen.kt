@@ -39,6 +39,7 @@ import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 import java.util.Date
 
 @Composable
@@ -61,8 +62,8 @@ fun NewEntry(
     val type = categorySelected?.type?: CategoryType.INCOME
     val iconResource = categorySelected?.iconResource ?: 0
     val titleResource = categorySelected?.nameResource ?: 0
-    val amount = amountEntry.toDoubleOrNull() ?: 0.0
-    val negativeAmount = (-1) * (amountEntry.toDoubleOrNull() ?: 0.0)
+    val amount = amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO
+    val negativeAmount = amountEntry.toBigDecimalOrNull()?.negate() ?: BigDecimal.ZERO
     //Snackbar messages
     val newIncomeMessage = message(resource = R.string.newincomecreated)
     val newExpenseMessage = message(resource = R.string.newexpensecreated)
@@ -111,7 +112,7 @@ fun NewEntry(
             enableConfirmButton,
             onClickButton = {
                 operationStatus = if (type== CategoryType.EXPENSE){
-                    if (accountViewModel.isValidExpense(amountEntry.toDoubleOrNull() ?: 0.0)) {
+                    if (accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)) {
                         1
                     } else {
                         0

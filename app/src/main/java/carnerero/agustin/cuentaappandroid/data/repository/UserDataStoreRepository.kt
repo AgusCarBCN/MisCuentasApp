@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 
 class UserDataStoreRepository @Inject constructor(private val context: Context) :
@@ -97,7 +98,7 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
 
         val uriString=context.dataStore.data.first()[UserPreferencesKeys.PHOTO_URI] ?: ""
 
-        return Uri.parse(uriString)
+        return uriString.toUri()
 
     }
     override suspend fun setPhotoUri(uri: Uri) {

@@ -37,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 
 
 //Mapa de divisas y simbolos
@@ -133,7 +134,7 @@ fun CreateAccountsComponent(
                     onClickButton = {
                         scope.launch(Dispatchers.IO) {
                             try {
-                                val amountDecimal = accountBalance.toDoubleOrNull() ?: 0.0
+                                val amountDecimal = accountBalance.toBigDecimalOrNull() ?: BigDecimal.ZERO
                                 accountsViewModel.addAccount(
                                     Account(
                                         name = accountName,

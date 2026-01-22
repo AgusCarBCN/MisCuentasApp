@@ -22,6 +22,7 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.math.BigDecimal
 import kotlin.math.abs
 
 
@@ -37,7 +38,8 @@ fun CategoryBudgetItemControl(
     val spendingLimitMessage= stringResource(id = R.string.limitMax)
     val expensePercent= stringResource(id = R.string.percentexpense)
     // Estado para almacenar el total de gastos por categoría
-    var expensesByCategory by remember { mutableDoubleStateOf(0.0) }
+    var expensesByCategory by remember { mutableStateOf(BigDecimal.ZERO) }
+
 
 
     // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
@@ -46,7 +48,7 @@ fun CategoryBudgetItemControl(
             category.id,
             category.fromDate,
             category.toDate
-        ) ?: 0.0
+        )  ?: BigDecimal.ZERO
     }
 
     // Variables de estado para el límite de gasto y porcentaje
@@ -188,7 +190,7 @@ fun CategoryBudgetItemControl(
         val expenseControlText= stringResource(id = R.string.expenseControl)
         val spendingLimitMessage= stringResource(id = R.string.limitMax)
         // Estado para almacenar el total de gastos por categoría
-        var expensesByAccount by remember { mutableDoubleStateOf(0.0) }
+        var expensesByAccount by remember { mutableStateOf(BigDecimal.ZERO) }
 
         // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
         LaunchedEffect(Unit) {
@@ -196,11 +198,11 @@ fun CategoryBudgetItemControl(
                 account.id,
                 account.fromDate,
                 account.toDate
-            ) ?: 0.0
+            ) ?: BigDecimal.ZERO
         }
 
         // Variables de estado para el límite de gasto y porcentaje
-        val spendingLimit by remember { mutableDoubleStateOf(account.spendingLimit) }  // Límite de gasto inicial
+        val spendingLimit by remember { mutableStateOf(account.spendingLimit) }  // Límite de gasto inicial
 
         val spendingPercentage =
             (abs(expensesByAccount.toFloat()) / spendingLimit.toFloat()).coerceIn(

@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import java.math.BigDecimal
 
 @Dao
 interface CategoryDao {
@@ -29,7 +30,7 @@ interface CategoryDao {
 
     // 5. Update periodSpendingLimit category
     @Query("UPDATE CategoryEntity SET periodSpendingLimit = :newAmount WHERE id = :categoryId")
-    suspend fun updateSpendingLimitCategory(categoryId: Int, newAmount:Double)
+    suspend fun updateSpendingLimitCategory(categoryId: Int, newAmount: BigDecimal)
 
    // 6. Update date From  category control expense
     @Query("UPDATE CategoryEntity SET fromDate = :newDate WHERE id = :categoryId")

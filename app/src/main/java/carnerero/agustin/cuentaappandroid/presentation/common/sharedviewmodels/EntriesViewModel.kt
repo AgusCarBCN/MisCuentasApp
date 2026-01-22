@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import java.util.Date
 import javax.inject.Inject
 import kotlin.math.abs
@@ -42,7 +43,6 @@ class EntriesViewModel @Inject constructor(
     private val addEntry: InsertEntryUseCase,
     private val getTotalIncomes: GetSumTotalIncomesUseCase,
     private val getTotalExpenses: GetSumTotalExpensesUseCase,
-    private val getAllEntriesDB: GetAllEntriesDatabaseUseCase,
     private val getAllIncomes: GetAllIncomesUseCase,
     private val getAllExpenses: GetAllExpensesUseCase,
     private val getFilteredEntries: GetFilteredEntriesUseCase,
@@ -58,11 +58,11 @@ class EntriesViewModel @Inject constructor(
     ) : ViewModel() {
 
 
-    private val _totalIncomes = MutableLiveData<Double>()
-    val totalIncomes: LiveData<Double> = _totalIncomes
+    private val _totalIncomes = MutableLiveData<BigDecimal>()
+    val totalIncomes: LiveData<BigDecimal> = _totalIncomes
 
-    private val _totalExpenses = MutableLiveData<Double>()
-    val totalExpenses: LiveData<Double> = _totalExpenses
+    private val _totalExpenses = MutableLiveData<BigDecimal>()
+    val totalExpenses: LiveData<BigDecimal> = _totalExpenses
 
     //LiveData para la habilitación del boton
     private val _enableConfirmButton = MutableLiveData<Boolean>()
@@ -130,8 +130,8 @@ class EntriesViewModel @Inject constructor(
                            description:String,
                            dateFrom: String = Date().dateFormat(),
                            dateTo: String = Date().dateFormat(),
-                           amountMin: Double = 0.0,
-                           amountMax: Double = Double.MAX_VALUE,
+                           amountMin: BigDecimal = BigDecimal.ZERO,
+                           amountMax: BigDecimal = BigDecimal("1E10"),
                            selectedOptions: Int = 0)
 
     {
@@ -219,7 +219,7 @@ class EntriesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
                 addEntry.invoke(entry)
-                if (entry.amount >= 0.0) {
+                if (entry.amount >= BigDecimal.ZERO) {
                     getTotalIncomes()
                 } else {
                     getTotalExpenses()
@@ -234,7 +234,7 @@ class EntriesViewModel @Inject constructor(
             getTotal()
         }
     }
-    fun updateEntry(id: Long, description: String, amount: Double, date: String) {
+    fun updateEntry(id: Long, description: String, amount: BigDecimal, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 updateEntry.invoke(id,description,amount,date)
@@ -262,7 +262,7 @@ class EntriesViewModel @Inject constructor(
         _entryDTOSelected.value = entryDTO
     }
 
-    fun updateEntriesAmountByExchangeRate(rate:Double){
+    fun updateEntriesAmountByExchangeRate(rate: BigDecimal){
         viewModelScope.launch(Dispatchers.IO) {
             updateEntriesAmountByExchangeRate.invoke(rate)
         }
@@ -285,7 +285,7 @@ class EntriesViewModel @Inject constructor(
     }
     fun setInitialData(entryDTO: EntryDTO) {
         _entryDescriptionModify.value = entryDTO.description
-        _entryAmountModify.value = abs(entryDTO.amount).toString()
+        _entryAmountModify.value = (entryDTO.amount.abs()).toString()
     }
 
     fun onAmountChanged(idAccountFrom:Int,idAccountTo:Int,newAmount: String) {
@@ -304,7 +304,7 @@ class EntriesViewModel @Inject constructor(
     fun onChangeTransferButton(newValue:Boolean){
         _enableConfirmTransferButton.postValue(newValue)
     }
-    fun upDateAmountEntry(entryId:Long,newAmount:Double){
+    fun upDateAmountEntry(entryId:Long,newAmount: BigDecimal){
         viewModelScope.launch(Dispatchers.IO){
             updateAmountEntry.invoke(entryId,newAmount)
         }

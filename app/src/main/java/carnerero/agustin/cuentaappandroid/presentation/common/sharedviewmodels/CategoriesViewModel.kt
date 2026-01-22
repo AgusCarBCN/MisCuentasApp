@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -400,7 +401,7 @@ class CategoriesViewModel @Inject constructor(
             getAllCategoriesByType(CategoryType.EXPENSE)
         }
     }
-    fun upDateSpendingLimitCategory(categoryId: Int, newAmount: Double) {
+    fun upDateSpendingLimitCategory(categoryId: Int, newAmount: BigDecimal) {
         viewModelScope.launch(Dispatchers.IO) {
             upDateSpendingLimit.invoke(categoryId, newAmount)
             getAllCategoriesChecked(CategoryType.EXPENSE)
@@ -411,7 +412,7 @@ class CategoriesViewModel @Inject constructor(
 
     suspend fun sumOfExpensesByCategory(categoryId:Int,
                                         fromDate:String,
-                                        toDate:String): Double? {
+                                        toDate:String): BigDecimal? {
 
         return try {
             withContext(Dispatchers.IO) {
@@ -436,7 +437,7 @@ class CategoriesViewModel @Inject constructor(
 
         val expensePercentageMap = categories.associateWith { category ->
             val expenses = sumOfExpensesByCategory(category.id,category.fromDate,category.toDate) ?: 0.0
-            val percentage = (abs(expenses) / abs(category.spendingLimit)).toFloat().coerceIn(0.0f, 1.0f)
+            val percentage = (abs(expenses.toDouble()) / abs(category.spendingLimit.toDouble())).toFloat().coerceIn(0.0f, 1.0f)
             percentage
         }
         _expensePercentageFlow.value = expensePercentageMap

@@ -34,6 +34,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.math.BigDecimal
 
 
 @Composable
@@ -42,8 +43,8 @@ fun HomeScreen(
     accountsViewModel: AccountsViewModel,
     entriesViewModel: EntriesViewModel
 ) {
-    val incomes by entriesViewModel.totalIncomes.observeAsState(0.0)
-    val expenses by entriesViewModel.totalExpenses.observeAsState(0.0)
+    val incomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
+    val expenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
 
     // Observa el estado de la lista de cuentas

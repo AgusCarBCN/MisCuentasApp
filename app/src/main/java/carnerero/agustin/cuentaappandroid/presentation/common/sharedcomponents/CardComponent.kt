@@ -53,6 +53,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 
 
 @Composable
@@ -304,7 +305,7 @@ fun CategoryCardWithCheckbox(category: Category,
                         } else {
                             categoriesViewModel.upDateSpendingLimitCategory(
                                 category.id,
-                                spendingLimit.toDouble()
+                                spendingLimit.toBigDecimal()
                             )
                             categoriesViewModel.onEnableDialogChange(false)
                             categoriesViewModel.upDateCategoryDates(category.id, fromDate, toDate)
@@ -422,7 +423,7 @@ fun AccountCardWithCheckbox(
                         } else {
                             accountsViewModel.upDateSpendingLimitAccount(
                                 account.id,
-                                spendingLimit.toDouble()
+                                spendingLimit.toBigDecimal()
                             )
                             accountsViewModel.onEnableDialogChange(false)
                             accountsViewModel.upDateAccountsDates(account.id, fromDate, toDate)
@@ -486,7 +487,7 @@ fun EntryCardWithCheckBox(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
+                color = if (entry.amount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
                 style=MaterialTheme.typography.bodyLarge
@@ -570,7 +571,7 @@ fun EntryCardWithIcon(
                     append(Utils.numberFormat(entry.amount, currencyCode))
                     append(". ")
                     append(
-                        if (entry.amount >= 0) income
+                        if (entry.amount >= BigDecimal.ZERO) income
                         else expense
                     )
                 }
@@ -595,7 +596,7 @@ fun EntryCardWithIcon(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if (entry.amount >= 0) LocalCustomColorsPalette.current.incomeColor
+                color = if (entry.amount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
                 else LocalCustomColorsPalette.current.expenseColor,
                 textAlign = TextAlign.End,
                 style=MaterialTheme.typography.bodyLarge
