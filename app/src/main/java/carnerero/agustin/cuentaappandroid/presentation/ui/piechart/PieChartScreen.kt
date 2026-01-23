@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +45,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.Date
 import kotlin.math.cos
 import kotlin.math.sin
@@ -56,19 +58,15 @@ fun PieChartScreen(
     searchViewModel: SearchViewModel
 ) {
 
-    val getTotalIncomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
-    val getTotalExpenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
-    val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
-    val fromDate by searchViewModel.selectedFromDate.observeAsState("01/01/1900")
     val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
     val accountSelected by accountViewModel.accountSelected.observeAsState()
 
+    val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
+    val fromDate by searchViewModel.selectedFromDate.observeAsState("01/01/1900")
+
     val idAccount = accountSelected?.id ?: 1
 
-    //LaunchedEffect para ejecutar lógica dependiente de la UI o que deba reaccionar a cambios
-    // en la composición
     LaunchedEffect(idAccount, fromDate, toDate) {
-        entriesViewModel.getTotalByDate(idAccount, fromDate, toDate)
         entriesViewModel.getFilteredEntries(
             idAccount,
             "",
@@ -80,117 +78,98 @@ fun PieChartScreen(
         )
     }
 
-    /* Agrupa las entradas por el nombre de la categoría. Esto crea un mapa donde la clave
-    es el nombre de la categoría, y el valor es una lista de entradas que pertenecen a esa categoría.*/
-    val groupedEntriesByCategoryName = listOfEntries.groupBy { it.nameResource }
-
-    /*Calcula el total de cada categoría. Usamos `mapValues` para transformar los valores del mapa anterior.
-   En lugar de la lista de entradas de cada categoría, ahora el valor será la suma de los montos de esas entradas.*/
-    val categoryTotals = groupedEntriesByCategoryName.mapValues { (_, entries) ->
-        entries.sumOf { it.amount } // Suma el monto de cada entrada en la lista de esa categoría
+    // Agrupar por categoría
+    val categoryTotals = remember(listOfEntries) {
+        listOfEntries
+            .groupBy { it.nameResource }
+            .mapValues { (_, entries) ->
+                entries.sumOf { it.amount }
+            }
+            .toList()
     }
 
-    /* Convierte el mapa de totales de categorías en una lista de pares clave-valor.
-    Cada elemento de la lista será un par (categoryName, totalAmount), que facilita el acceso secuencial*/
-    val categoryList = categoryTotals.toList()
+    // Ingresos
+    val incomeList = remember(categoryTotals) {
+        categoryTotals
+            .filter { it.second > BigDecimal.ZERO }
+            .map { it.second to it.first.toString() }
+    }
 
-    val incomeList: MutableList<Pair<Float, String>> = mutableListOf()
-    val expenseList: MutableList<Pair<Float, String>> = mutableListOf()
+    // Gastos
+    val expenseList = remember(categoryTotals) {
+        categoryTotals
+            .filter { it.second < BigDecimal.ZERO }
+            .map { it.second.abs() to it.first.toString() }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 30.dp)
-            .verticalScroll(
-                rememberScrollState()
-            ),
-        verticalArrangement = Arrangement.Center,
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
         AccountSelector(300, 20, stringResource(id = R.string.selectanaccount), accountViewModel)
-        HeadSetting(title = stringResource(id = R.string.daterange), MaterialTheme.typography.headlineSmall)
-        Row(
-            modifier = Modifier
-                .width(360.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            DatePickerSearch(
-                modifier = Modifier.weight(0.5f)
-                    .padding(10.dp),
-                R.string.fromdate,
-                searchViewModel,
-                true
+
+        if (incomeList.isNotEmpty()) {
+            HeadSetting(
+                title = stringResource(id = R.string.incomechart),
+                MaterialTheme.typography.headlineMedium
             )
-            DatePickerSearch(
-                modifier = Modifier.weight(0.5f)
-                    .padding(10.dp),
-                R.string.todate,
-                searchViewModel,
-                false
-            )
+            ChartPie(incomeList)
         }
 
-        //Calculate percent of entries and adding to percentsList
-        categoryList.forEach { category ->
-            if (category.second >= BigDecimal.ZERO) {
-                incomeList.add((category.second / getTotalIncomes).toFloat() to stringResource(id = category.first))
-
-            } else {
-                expenseList.add((category.second / getTotalExpenses).toFloat() to stringResource(id = category.first))
-
-            }
+        if (expenseList.isNotEmpty()) {
+            HeadSetting(
+                title = stringResource(id = R.string.expensechart),
+                MaterialTheme.typography.headlineMedium
+            )
+            ChartPie(expenseList)
         }
-        if (listOfEntries.isNotEmpty()) {
-            if(incomeList.isNotEmpty()) {
-                HeadSetting(title = stringResource(id = R.string.incomechart), MaterialTheme.typography.headlineMedium)
-                ChartPie(incomeList)
-            }
-            if(expenseList.isNotEmpty()) {
-                HeadSetting(title = stringResource(id = R.string.expensechart), MaterialTheme.typography.headlineMedium)
-                ChartPie(expenseList)
-            }
 
-        } else {
+        if (incomeList.isEmpty() && expenseList.isEmpty()) {
             Text(
-                modifier = Modifier.padding(50.dp),
+                modifier = Modifier.padding(40.dp),
                 text = stringResource(id = R.string.noentries),
-                color = LocalCustomColorsPalette.current.textColor,
-                style=MaterialTheme.typography.bodyLarge
-
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
-
 }
 
 @Composable
-fun ChartPie(listOfEntries: MutableList<Pair<Float, String>>) {
+fun ChartPie(listOfEntries: List<Pair<BigDecimal, String>>) {
+
+    if (listOfEntries.isEmpty()) return
+
     val initAngle = -90f
-    var currentAngle: Float
-    var endAngle: Float
-    //val total = listOfEntries.sum()
-    // Sumar todos los valores Float en la lista
-    // Extraer los valores Float y sumar
-    val total: Float = listOfEntries.map { it.first }.sum()
     val textColorPieChart = Color.Black
     val isDarkTheme = isSystemInDarkTheme()
-    val legends = mutableListOf<Legend>()
-    // Lista para almacenar los colores generados
-    val colors = mutableListOf<Color>()
 
-    // Generar colores aleatorios para cada segmento
-    listOfEntries.forEach { entry ->
-        val color = colorGenerator(isDarkTheme) // Cambia esto si deseas un método diferente
-        colors.add(color)
-        legends.add(Legend(entry.second, color)) // Cambia esto si deseas un método diferente
+    // Total como BigDecimal
+    val total = remember(listOfEntries) {
+        listOfEntries.fold(BigDecimal.ZERO) { acc, entry ->
+            acc + entry.first
+        }
+    }
+
+    if (total == BigDecimal.ZERO) return
+
+    // Colores estables
+    val colors = remember(listOfEntries, isDarkTheme) {
+        listOfEntries.map { colorGenerator(isDarkTheme) }
+    }
+
+    // Leyendas (Strings ya resueltos)
+    val legends = remember(listOfEntries, colors) {
+        listOfEntries.mapIndexed { index, entry ->
+            Legend(entry.second, colors[index])
+        }
     }
 
     Row(modifier = Modifier.padding(10.dp)) {
-        // Gráfico circular
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -203,52 +182,59 @@ fun ChartPie(listOfEntries: MutableList<Pair<Float, String>>) {
                     .size(200.dp)
                     .align(Alignment.Center)
             ) {
-                val centerX = size.width / 2
-                val centerY = size.height / 2
+                var currentAngle = initAngle
 
-                // Dibuja cada segmento
-                currentAngle = initAngle // Reinicia el ángulo actual para el nuevo dibujo
                 listOfEntries.forEachIndexed { index, element ->
-                    endAngle = (element.first / total) * 360
-                    val midAngle = currentAngle + endAngle / 2
 
-                    // Dibuja el arco
+                    // (valor / total) * 360 → BigDecimal
+                    val sweepAngle =
+                        element.first
+                            .divide(total, 4, RoundingMode.HALF_UP)
+                            .multiply(BigDecimal(360))
+                            .toFloat()
+
+                    val midAngle = currentAngle + sweepAngle / 2
+
                     drawArc(
                         color = colors[index],
                         startAngle = currentAngle,
-                        sweepAngle = endAngle,
+                        sweepAngle = sweepAngle,
                         useCenter = true,
                         style = Fill
                     )
 
-                    // Actualiza el ángulo actual
-                    currentAngle += endAngle
+                    val percent =
+                        element.first
+                            .divide(total, 2, RoundingMode.HALF_UP)
+                            .multiply(BigDecimal(100))
+                            .toInt()
 
-                    // Calcula las coordenadas para el texto
-                    val textX = centerX + (size.width / 3) * cos(
-                        Math.toRadians(midAngle.toDouble()).toFloat()
-                    )
-                    val textY = centerY + (size.height / 3) * sin(
-                        Math.toRadians(midAngle.toDouble()).toFloat()
+                    val textX = center.x + (size.width / 3) *
+                            cos(Math.toRadians(midAngle.toDouble())).toFloat()
+                    val textY = center.y + (size.height / 3) *
+                            sin(Math.toRadians(midAngle.toDouble())).toFloat()
+
+                    drawContext.canvas.nativeCanvas.drawText(
+                        "$percent%",
+                        textX,
+                        textY,
+                        Paint().asFrameworkPaint().apply {
+                            color = textColorPieChart.toArgb()
+                            textSize = 35f
+                            isFakeBoldText = true
+                        }
                     )
 
-                    // Dibuja el texto con el porcentaje
-                    val percent = (element.first / total * 100).toInt()
-                    val text = "$percent%"
-                    val textPaint = Paint().asFrameworkPaint()
-                    textPaint.color = textColorPieChart.toArgb()
-                    textPaint.textSize = 35f
-                    textPaint.isFakeBoldText = true
-                    drawContext.canvas.nativeCanvas.drawText(text, textX, textY, textPaint)
+                    currentAngle += sweepAngle
                 }
             }
         }
+
         Column(modifier = Modifier.weight(0.35f)) {
-            legends.forEach { element ->
-                LegendItem(element.color, element.legend)
+            legends.forEach {
+                LegendItem(it.color, it.legend)
             }
         }
-
     }
 }
 

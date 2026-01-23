@@ -166,7 +166,7 @@ interface EntryDao {
     @Query(
         """
     SELECT SUM(amount) FROM EntryEntity 
-    WHERE amount >= 0
+    WHERE amount < 0
     AND accountId = :accountId
     AND SUBSTR(date, 6, 2) = :month  -- Extrae el mes
     AND SUBSTR(date, 1, 4) = :year   -- Extrae el año
@@ -178,7 +178,7 @@ interface EntryDao {
         year: String    // 'YYYY'
     ): BigDecimal?
 
-    // 22. Get all incomes
+    // 22. Get all expenses
     @Query(
         """
     SELECT e.id,
