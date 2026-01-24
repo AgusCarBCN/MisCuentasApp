@@ -11,6 +11,7 @@ import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.Date
 
 @Dao
@@ -50,6 +51,7 @@ interface EntryDao {
         val entries = getAllEntries()
         entries.forEach { entry ->
             val newAmount = entry.amount.multiply(rate)
+                .setScale(8, RoundingMode.HALF_UP)
             updateEntryFields(entry.id, entry.description, newAmount, entry.date)
         }
     }

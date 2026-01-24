@@ -275,10 +275,8 @@ class EntriesViewModel @Inject constructor(
         _listOfEntriesDTO.value = currentEntries.toList() // Actualiza el estado
     }
 
-
     fun onEntryDTOSelected(entryDTO: EntryDTO)
     {
-
         _entryDTOSelected.value = entryDTO
     }
 
@@ -329,7 +327,6 @@ class EntriesViewModel @Inject constructor(
             updateAmountEntry.invoke(entryId,newAmount)
         }
     }
-
 
     fun getTotal() {
         viewModelScope.launch(Dispatchers.IO) {

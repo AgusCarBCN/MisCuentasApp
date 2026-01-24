@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 /*Permiten que una función pueda ser pausada y reanudada en un contexto de corutinas,
  lo que facilita la ejecución de operaciones que podrían bloquear el hilo principal*/
@@ -87,6 +88,7 @@ interface AccountDao {
         val accounts = getAllAccounts()
         accounts.forEach { account ->
             val newBalance = account.balance.multiply(rate)
+                .setScale(8, RoundingMode.HALF_UP)
             updateAccountBalance(account.id, newBalance)
         }
     }

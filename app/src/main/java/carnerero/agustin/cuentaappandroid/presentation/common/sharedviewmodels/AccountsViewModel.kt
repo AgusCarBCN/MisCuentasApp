@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.math.BigDecimal
+import java.math.RoundingMode
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -548,14 +549,15 @@ class AccountsViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 val response = converterCurrency.invoke(fromCurrency, toCurrency)
                 response.body()?.conversion_rate?.let { rate ->
-                    // Convertir a BigDecimal de forma segura
-                    BigDecimal.valueOf(rate)
+                    // Convertir a BigDecimal de forma más precisa
+                    BigDecimal(rate.toString())
                 }
             }
         } catch (e: IOException) {
             null
         }
     }
+
 
     suspend fun sumOfExpensesByAccount(accountId:Int,
                                         fromDate:String,
