@@ -10,6 +10,7 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteEntryUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByDateUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesDatabaseUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
@@ -47,6 +48,7 @@ class EntriesViewModel @Inject constructor(
     private val getAllExpenses: GetAllExpensesUseCase,
     private val getFilteredEntries: GetFilteredEntriesUseCase,
     private val getAllEntriesByAccount: GetAllEntriesByAccountUseCase,
+    private val getAllEntriesByDate: GetAllEntriesByDateUseCase,
     private val getTotalIncomesByDate: GetSumTotalIncomesByDate,
     private val getTotalExpensesByDate: GetSumTotalExpensesByDateUseCase,
     private val updateAmountEntry: UpdateAmountUseCase,
@@ -108,7 +110,25 @@ class EntriesViewModel @Inject constructor(
         getTotal()
         getAllEntriesDTO()
     }
+    fun getAllEntriesByDateDTO(accountId:Int,
+                               fromDate: String,
+                               toDate: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            flow {
+                val entries = getAllEntriesByDate.getEntriesByDate(accountId,fromDate,toDate)
+                emit(entries)
+            }
+                .catch { e ->
+                    // Manejo de errores
+                    _listOfEntriesDTO.value = emptyList() // O alguna acción que maneje el error
+                    Log.e("ViewModel", "Error getting incomes: ${e.message}")
+                }
+                .collect { entries ->
+                    _listOfEntriesDTO.value = entries
+                }
+        }
 
+    }
 
     fun getAllEntriesDTO(){
         viewModelScope.launch(Dispatchers.IO) {

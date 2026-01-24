@@ -265,6 +265,33 @@ interface EntryDao {
     )
     suspend fun getAllEntriesByAccountDTO(accountId: Int): List<EntryDTO>
 
+    @Query(
+        """
+    SELECT e.id,
+           e.description,
+           e.amount,
+           e.date,
+           c.nameResource,
+           c.iconResource,
+           e.accountId,
+           a.name ,
+           e.categoryId,
+           c.categoryType
+    FROM EntryEntity e
+    INNER JOIN AccountEntity a ON e.accountId = a.id
+     INNER JOIN CategoryEntity c ON e.categoryId = c.id
+        WHERE accountId = :accountId
+            AND e.date >= :dateFrom 
+            AND e.date <= :dateTo   
+ORDER BY date DESC, e.id DESC
+"""
+    )
+    suspend fun getAllEntriesByDateDTO(accountId: Int,
+                                       dateFrom: String = Date().dateFormat(),
+                                       dateTo: String = Date().dateFormat() ): List<EntryDTO>
+
+
+
     // 26. Get all entries filtered
     @Query(
         """

@@ -416,4 +416,5 @@
     <string name="checkbox">Selection</string>
     <string name="ischeckedtodelete"> is checked to delete</string>
     <string name="isuncheckedtodelete"> is unchecked to delete</string>
+    <string name="pie_label">%1$s (%2$.1f%%)</string>
 </resources>

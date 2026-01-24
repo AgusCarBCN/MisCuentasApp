@@ -76,6 +76,12 @@ class EntryRepository @Inject constructor(
             amountMax,
             selectedOptions
         )
+    suspend fun getEntriesByDate(accountId:Int,
+                                 fromDate: String=Date().dateFormat(),
+                                 toDate: String=Date().dateFormat()
+    ):List<EntryDTO> =entryDao.getAllEntriesByDateDTO(accountId,
+        fromDate,
+        toDate)
 
         // 5️⃣ Actualizar montos
         suspend fun updateEntriesAmountByExchangeRate(rate: BigDecimal) {
