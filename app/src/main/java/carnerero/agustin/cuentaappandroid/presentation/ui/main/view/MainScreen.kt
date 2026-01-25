@@ -100,7 +100,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccounts
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StadisticsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
@@ -179,7 +179,7 @@ fun MainScreen(
                 {
                     TopBarApp(
                         scope, drawerState, title,
-                        (if (selectedScreen == IconOptions.HOME) userName else "").toString()
+                        (if (selectedScreen == IconOptions.HOME) userName else "")
                     )
                 },
                 { BottomAppBar(mainViewModel)
@@ -410,7 +410,7 @@ fun MainScreen(
                         }
 
                         IconOptions.STADISTICS -> {
-                            StadisticsScreen(mainViewModel)
+                            StatisticsScreen(mainViewModel)
                             title=R.string.stadistics
                         }
                         IconOptions.SPENDING_CONTROL -> {

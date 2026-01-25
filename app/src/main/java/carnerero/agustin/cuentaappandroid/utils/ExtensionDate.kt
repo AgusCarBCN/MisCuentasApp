@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.utils
 
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 

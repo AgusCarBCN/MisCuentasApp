@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,8 +38,6 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
     val scope = rememberCoroutineScope()
     val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
-    val accounts by accountsViewModel.listOfAccounts.observeAsState()
-    val entries by entriesViewModel.listOfEntriesDB.collectAsState()
     val messageFormatCurrencyChange = stringResource(id = R.string.currencyformatchange)
     val messageCurrencyChange = stringResource(id = R.string.currencychange)
     val messageErrorConnexionApi=stringResource(id = R.string.apierror)

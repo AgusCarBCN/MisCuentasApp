@@ -36,9 +36,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.math.BigDecimal
-import java.math.RoundingMode
 import javax.inject.Inject
-import kotlin.math.abs
 
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
@@ -238,7 +236,6 @@ class AccountsViewModel @Inject constructor(
     val isEnableChangeBalanceButton: LiveData<Boolean> = _isEnableChangeBalanceButton
 
     private val _isConfirmTransfer = MutableLiveData<Boolean>()
-    val isConfirmTransfer: LiveData<Boolean> = _isConfirmTransfer
 
     private val _isCurrencyExpanded = MutableLiveData<Boolean>()
     val isCurrencyExpanded: LiveData<Boolean> = _isCurrencyExpanded
@@ -289,9 +286,6 @@ class AccountsViewModel @Inject constructor(
 
     private val _spendingLimit=MutableLiveData<String>()
     val spendingLimit: LiveData<String> = _spendingLimit
-
-    private val _conversionCurrencyRate = MutableLiveData<BigDecimal>()
-    val conversionCurrencyRate: LiveData<BigDecimal> = _conversionCurrencyRate
 
     private val _enableDialog=MutableLiveData<Boolean>()
     val enableDialog: LiveData<Boolean> = _enableDialog
@@ -553,7 +547,7 @@ class AccountsViewModel @Inject constructor(
                     BigDecimal(rate.toString())
                 }
             }
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             null
         }
     }
@@ -568,7 +562,7 @@ class AccountsViewModel @Inject constructor(
                 val result=getSumExpensesByAccount.invoke(accountId,fromDate,toDate)
                 result
             }
-        }catch(e: IOException) {
+        }catch(_: IOException) {
             null
         }
     }
@@ -592,7 +586,7 @@ class AccountsViewModel @Inject constructor(
         _expensePercentageFlow.value = expensePercentageMap
     }
     // Función para refrescar el porcentaje de gasto (opcional)
-    fun UpdateExpensePercentage() {
+    fun updateExpensePercentageFun(){
         viewModelScope.launch {
             updateExpensePercentage()
         }

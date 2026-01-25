@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +29,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     //MutableStateFlow de entrada seleccionada a modificar
     private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
-    val entryDTOSelected: LiveData<EntryDTO?> = _entryDTOSelected
 
     private val _showExitDialog=MutableStateFlow(false)
     val showExitDialog: MutableStateFlow<Boolean> = _showExitDialog
@@ -49,11 +47,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
             _selectedScreen.emit(screen)
 
         }
-    }
-
-    fun onEntryDTOSelected(entryDTO: EntryDTO)
-    {
-        _entryDTOSelected.value = entryDTO
     }
 
 

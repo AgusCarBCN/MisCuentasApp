@@ -30,6 +30,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Row
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import androidx.core.net.toUri
 
 @Composable
 
@@ -149,7 +150,7 @@ fun AboutApp() {
 fun SendEmail() {
     val context = LocalContext.current
     val sendEmailIntent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:agusticar@gmail.com") // Configurar el correo del destinatario
+        data = "mailto:agusticar@gmail.com".toUri() // Configurar el correo del destinatario
     }
 
     context.startActivity(sendEmailIntent) // Iniciar el correo electrónico
@@ -174,7 +175,7 @@ private fun shareLinkGooglePlayStore(context: Context, msg: String) {
 
 private fun openGooglePlayStore(context: Context, link: String) {
 
-    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+    context.startActivity(Intent(Intent.ACTION_VIEW, link.toUri()))
 
 }
 
@@ -182,7 +183,7 @@ private fun visitMyGitHub(context: Context) {
 
     val githubUrl = "https://github.com/AgusCarBCN"
 
-    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl)))
+    context.startActivity(Intent(Intent.ACTION_VIEW, githubUrl.toUri()))
 
 }
 

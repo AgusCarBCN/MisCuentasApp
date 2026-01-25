@@ -11,16 +11,12 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteE
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByDateUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesDatabaseUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilteredEntriesUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesByDateUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesByDate
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.InsertEntryUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.UpdateAmountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.UpdateEntriesAmountByExchangeRateUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.UpdateEntryUseCase
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -37,7 +33,6 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.util.Date
 import javax.inject.Inject
-import kotlin.math.abs
 
 @HiltViewModel
 class EntriesViewModel @Inject constructor(
@@ -49,9 +44,6 @@ class EntriesViewModel @Inject constructor(
     private val getFilteredEntries: GetFilteredEntriesUseCase,
     private val getAllEntriesByAccount: GetAllEntriesByAccountUseCase,
     private val getAllEntriesByDate: GetAllEntriesByDateUseCase,
-    private val getTotalIncomesByDate: GetSumTotalIncomesByDate,
-    private val getTotalExpensesByDate: GetSumTotalExpensesByDateUseCase,
-    private val updateAmountEntry: UpdateAmountUseCase,
     private val getAllEntriesDTO: GeAllEntriesUseCase,
     private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase,
     private val deleteEntry: DeleteEntryUseCase,
@@ -99,7 +91,6 @@ class EntriesViewModel @Inject constructor(
 
     // MutableStateFlow para la lista de entradas
     private val _listOfEntriesDB = MutableStateFlow<List<Entry>>(emptyList())
-    val listOfEntriesDB: StateFlow<List<Entry>> = _listOfEntriesDB.asStateFlow()
 
     //MutableStateFlow de entrada seleccionada a modificar
     private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
@@ -322,33 +313,12 @@ class EntriesViewModel @Inject constructor(
     fun onChangeTransferButton(newValue:Boolean){
         _enableConfirmTransferButton.postValue(newValue)
     }
-    fun upDateAmountEntry(entryId:Long,newAmount: BigDecimal){
-        viewModelScope.launch(Dispatchers.IO){
-            updateAmountEntry.invoke(entryId,newAmount)
-        }
-    }
 
     fun getTotal() {
         viewModelScope.launch(Dispatchers.IO) {
             // Ejecutar ambas funciones en paralelo
             val totalIncomesDeferred = async { getTotalIncomes.invoke() }
             val totalExpensesDeferred = async { getTotalExpenses.invoke() }
-
-            // Esperar los resultados
-            val totalIncomes = totalIncomesDeferred.await()
-            val totalExpenses = totalExpensesDeferred.await()
-
-            // Publicar los resultados en LiveData
-            _totalIncomes.postValue(totalIncomes)
-            _totalExpenses.postValue(totalExpenses)
-        }
-    }
-
-    fun getTotalByDate(accountId:Int,fromDate:String,toDate:String){
-        viewModelScope.launch(Dispatchers.IO) {
-            // Ejecutar ambas funciones en paralelo
-            val totalIncomesDeferred = async { getTotalIncomesByDate.invoke(accountId,fromDate,toDate) }
-            val totalExpensesDeferred = async { getTotalExpensesByDate.invoke(accountId,fromDate,toDate) }
 
             // Esperar los resultados
             val totalIncomes = totalIncomesDeferred.await()

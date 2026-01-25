@@ -173,7 +173,7 @@ fun CreateProfileComponent(
                                 )
                             )
                             selectedImageUri?.let { createViewModel.saveImageUri(it) }
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(
                                     event = SnackBarEvent(
@@ -203,7 +203,6 @@ fun CreateProfileComponent(
 fun ProfileImageWithCamera(viewModel: ProfileViewModel) {
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val selectedImageUriSelected by viewModel.selectedImageUri.observeAsState(null)
     val selectedImageUriSavedFromFile by viewModel.selectedImageUriSaved.observeAsState(null)
     // Llama a `onImageNoSelected()` si no hay una imagen seleccionada o guardada
     //viewModel.onImageNoSelected()

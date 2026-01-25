@@ -27,8 +27,8 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 fun RadioButtonSearch(searchViewModel: SearchViewModel) {
     val options = searchViewModel.options
     val selectedOptionIndex by searchViewModel.selectedOptionIndex.observeAsState(0)
-    val selectedText= stringResource(id = R.string.selected)
-    val unSelectedText= stringResource(id = R.string.isunchecked)
+    stringResource(id = R.string.selected)
+    stringResource(id = R.string.isunchecked)
     Row {
         options.forEachIndexed { index, option ->
             val radioButtonContentDescription= stringResource(option)

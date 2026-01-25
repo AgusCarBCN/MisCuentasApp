@@ -24,6 +24,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.math.BigDecimal
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -58,7 +59,7 @@ fun CategoryBudgetItemControl(
         0.0f,
         1.0f
     ))
-    val spendingPercent = Math.round(spendingPercentage * 100)
+    val spendingPercent = (spendingPercentage * 100).roundToInt()
 
 
     // Color de la barra de progreso según el porcentaje
@@ -209,7 +210,7 @@ fun CategoryBudgetItemControl(
                 0.0f,
                 1.0f
             ) // Porcentaje de gasto
-        val spendingPercent = Math.round(spendingPercentage * 100)
+        val spendingPercent = (spendingPercentage * 100).roundToInt()
         // Color de la barra de progreso según el porcentaje
         val progressColor = when {
             spendingPercentage < 0.5f -> LocalCustomColorsPalette.current.progressBar50

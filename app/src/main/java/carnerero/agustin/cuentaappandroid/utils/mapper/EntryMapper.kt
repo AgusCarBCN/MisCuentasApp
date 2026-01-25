@@ -5,7 +5,7 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 
 class EntryMapper {
 
-    public fun entryDtoToEntry(dto: EntryDTO): Entry {
+    fun entryDtoToEntry(dto: EntryDTO): Entry {
         return Entry(
             id=dto.id,
             description = dto.description,

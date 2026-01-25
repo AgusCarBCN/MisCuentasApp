@@ -15,7 +15,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 
 @Composable
-fun StadisticsScreen(mainViewModel: MainViewModel)
+fun StatisticsScreen(mainViewModel: MainViewModel)
 {
 
     Column(

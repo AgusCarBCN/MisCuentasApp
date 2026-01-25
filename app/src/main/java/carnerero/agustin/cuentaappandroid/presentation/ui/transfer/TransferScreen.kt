@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -63,7 +62,7 @@ fun Transfer(
     //SnackBarMessage
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
     val transferSuccessMessage = message(resource = R.string.transferdone)
-    var operationStatus = 1
+    var operationStatus: Int
     Column(
         modifier = Modifier
             .fillMaxWidth()

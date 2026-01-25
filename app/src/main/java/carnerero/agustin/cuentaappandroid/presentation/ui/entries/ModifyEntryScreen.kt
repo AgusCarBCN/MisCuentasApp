@@ -36,7 +36,6 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 @Composable
 fun ModifyEntry(entryDTO: EntryDTO,
@@ -46,7 +45,6 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 mainViewModel: MainViewModel
                 )
 {
-    val selectedEntryDTO by entriesViewModel.entryDTOSelected.observeAsState()
     // Sincroniza los datos iniciales del ViewModel
     LaunchedEffect(entryDTO) {
         entriesViewModel.setInitialData(entryDTO)

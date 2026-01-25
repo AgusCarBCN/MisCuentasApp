@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toFile
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
@@ -82,7 +81,7 @@ fun SettingScreen(
     val messageExport = stringResource(id = R.string.exportData)
     val messageImport = stringResource(id = R.string.loadbackup)
     val messageNoEntries = stringResource(id = R.string.noentries)
-    val messageNoAccounts = stringResource(id = R.string.noaccounts)
+    stringResource(id = R.string.noaccounts)
     val messageNoValidEntriesFile=stringResource(id = R.string.novalidrecordcsv)
     val messageNoValidAccountsFile=stringResource(id = R.string.novalidaccountscsv)
     val messageEntriesWithoutAccounts= stringResource(id = R.string.loadentrieswithoutaccount)
@@ -132,7 +131,7 @@ fun SettingScreen(
                                     }
                                 }
 
-                        } catch (e: IOException) {
+                        } catch (_: IOException) {
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(event = SnackBarEvent(errorExport))
                             }
@@ -173,7 +172,7 @@ fun SettingScreen(
                                 )
                             }
                         }
-                    } catch (e: IOException) {
+                    } catch (_: IOException) {
                         withContext(Dispatchers.Main) {
                             SnackBarController.sendEvent(
                                 event = SnackBarEvent(
@@ -214,7 +213,7 @@ fun SettingScreen(
                                 )
                             }
                         }
-                    } catch (e: IOException) {
+                    } catch (_: IOException) {
                         withContext(Dispatchers.Main) {
                             SnackBarController.sendEvent(
                                 event = SnackBarEvent(

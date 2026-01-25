@@ -80,7 +80,7 @@ fun CreateAccountsComponent(
                 Text(
                     modifier = Modifier
                         .padding(50.dp),
-                    text = if (!isCurrencyExpanded) stringResource(id = R.string.createAccount) else "",
+                    text = stringResource(id = R.string.createAccount),
                    style=MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     color = LocalCustomColorsPalette.current.textColor
@@ -149,7 +149,7 @@ fun CreateAccountsComponent(
                                     )
                                 }
 
-                            } catch (e: Exception) {
+                            } catch (_: Exception) {
                                 withContext(Dispatchers.Main) {
                                     SnackBarController.sendEvent(
                                         event = SnackBarEvent(
@@ -176,7 +176,7 @@ fun CreateAccountsComponent(
                                 try {
                                     accountsViewModel.setCurrencyCode(currencyShowedCode)
                                     categoriesViewModel.populateCategories()
-                                }catch (e: Exception) {
+                                }catch (_: Exception) {
                                     withContext(Dispatchers.Main) {
                                         SnackBarController.sendEvent(
                                             event = SnackBarEvent(

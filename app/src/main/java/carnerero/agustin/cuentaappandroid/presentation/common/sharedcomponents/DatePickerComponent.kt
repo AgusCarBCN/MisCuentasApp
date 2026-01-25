@@ -50,7 +50,7 @@ fun DatePickerSearch(
         searchViewModel.selectedToDate.observeAsState("")
     }.value
     //Mensaje de error de fechas
-    val messageDateError= stringResource(id = R.string.datefromoverdateto)
+    stringResource(id = R.string.datefromoverdateto)
     val dateFromText= "${stringResource(id = R.string.fromdate)} $selectedDate"
     val dateToText= "${stringResource(id = R.string.todate)} $selectedDate"
 

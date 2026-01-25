@@ -30,7 +30,6 @@ class LoginViewModel @Inject constructor(
     val selectedImageUriSaved: LiveData<Uri?> = _selectedImageUriSaved
 
     private val _user = MutableLiveData<UserProfile>()
-    private val user: LiveData<UserProfile> = _user
 
     // LiveData para los campos de introduccion de Login
 

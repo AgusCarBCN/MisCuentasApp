@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class GetAllEntriesDatabaseUseCase   @Inject constructor(private val repository: EntryRepository){
 
-
+    suspend operator fun invoke():List<EntryDTO> =
+        repository.getAllEntriesDTO()
 
 }

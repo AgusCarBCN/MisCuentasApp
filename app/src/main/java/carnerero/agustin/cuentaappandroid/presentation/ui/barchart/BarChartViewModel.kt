@@ -27,14 +27,9 @@ class BarChartViewModel @Inject constructor(
     val barChartData: LiveData<MutableList<BarChartData>> = _barChartData
 
     private val _showYearPicker = MutableLiveData<Boolean>()
-    val showYearPicker: LiveData<Boolean> = _showYearPicker
 
     private val _selectedYear = MutableLiveData<String>("2024")
     val selectedYear: LiveData<String> = _selectedYear
-
-    fun onShowYearPicker(newValue: Boolean) {
-        _showYearPicker.value = newValue
-    }
 
     fun onSelectedYear(year: String) {
         _selectedYear.value = year

@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 data class TutorialItem(
     private val title: String,
     private val description: String,
-    @DrawableRes private val icon: Int
+    @param:DrawableRes private val icon: Int
 ) {
 
     val titleItem: String

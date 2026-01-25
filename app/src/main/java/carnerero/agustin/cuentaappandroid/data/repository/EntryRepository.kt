@@ -50,8 +50,6 @@ class EntryRepository @Inject constructor(
         suspend fun getSumOfExpensesEntriesForMonth(accountId: Int, month: String, year: String): BigDecimal =
             entryDao.getSumOfExpenseEntriesForMonth(accountId, month, year) ?: BigDecimal.ZERO
 
-        // 3️⃣ Listar entradas
-        suspend fun getAllEntries(): List<Entry> = entryDao.getAllEntries()
         suspend fun getAllEntriesDTO(): List<EntryDTO> = entryDao.getAllEntriesDTO()
         suspend fun getAllIncomesDTO(): List<EntryDTO> = entryDao.getAllIncomesDTO()
         suspend fun getAllExpensesDTO(): List<EntryDTO> = entryDao.getAllExpensesDTO()
@@ -88,7 +86,7 @@ class EntryRepository @Inject constructor(
             entryDao.updateEntriesAmountByExchangeRate(rate)
         }
 
-        suspend fun updateEntry(id: Long, description: String,newAmount: BigDecimal,date: String,) {
+        suspend fun updateEntry(id: Long, description: String,newAmount: BigDecimal,date: String) {
             entryDao.updateEntryFields(id,description,newAmount,date)
         }
 

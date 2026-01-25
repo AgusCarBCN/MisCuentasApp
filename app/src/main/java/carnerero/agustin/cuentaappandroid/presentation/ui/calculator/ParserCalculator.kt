@@ -1,5 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.calculator
 
+import kotlin.math.roundToInt
+
 class ParserCalculator(private val input:String="") {
 
 
@@ -56,7 +58,7 @@ class ParserCalculator(private val input:String="") {
             val result = parseExpression(tokenizer)
 
             // Redondeamos el resultado a dos decimales usando Math.round
-            return Math.round(result * 100) / 100.0
+            return (result * 100).roundToInt() / 100.0
             //return parseExpression(tokenizer)
         }
 

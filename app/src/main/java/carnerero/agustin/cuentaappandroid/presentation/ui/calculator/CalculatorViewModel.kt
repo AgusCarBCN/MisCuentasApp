@@ -67,7 +67,7 @@ class CalculatorViewModel @Inject constructor (private val parser: ParserCalcula
             _expression.value = try {
                 val result = _expression.value?.let { parser.evaluate(it)  }
                 result.toString()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 "Error"
             }
         }

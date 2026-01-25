@@ -11,11 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import kotlinx.serialization.BinaryFormat
 import java.math.BigDecimal
 
 
@@ -90,7 +88,7 @@ fun NotificationAccountObserver(
     notificationService: NotificationService
 ) {
     // Update expense percentage
-    accountsViewModel.UpdateExpensePercentage()
+    accountsViewModel.updateExpensePercentageFun()
     val expensePercentageMap by accountsViewModel.expensePercentageFlow.collectAsState()
     val codeCurrency by accountsViewModel.currencyCodeSelected.observeAsState("USD")
 

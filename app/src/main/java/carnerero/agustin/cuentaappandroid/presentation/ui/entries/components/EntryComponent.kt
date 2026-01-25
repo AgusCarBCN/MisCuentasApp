@@ -29,7 +29,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -57,7 +56,6 @@ import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import kotlin.math.abs
 
 @OptIn(ExperimentalFoundationApi::class) // Habilitar API experimental
 @Composable
@@ -185,8 +183,7 @@ fun ItemEntry(
     val date = stringResource(id = R.string.fromdate)
     val amount = stringResource(id = R.string.amountentrie)
     val entryAmount=entry.amount
-    val iconText =
-        "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
+    "${entry.description} ${stringResource(id = R.string.itemicon)}  ${stringResource(entry.nameResource)}"
     Column(modifier = Modifier.semantics {
         contentDescription =
             " ${entry.description}, $date: ${entry.date}, $amount:${

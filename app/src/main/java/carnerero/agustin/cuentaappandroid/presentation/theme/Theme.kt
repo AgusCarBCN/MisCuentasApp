@@ -2,10 +2,8 @@ package carnerero.agustin.cuentaappandroid.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.PathSegment
 
 
 // Implementación del tema con soporte para tema claro/oscuro y colores dinámicos
