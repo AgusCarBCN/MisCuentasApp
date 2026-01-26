@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,6 +65,20 @@ fun SearchScreen(
     val messageAmountError = stringResource(id = R.string.amountfromoverdateto)
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     searchViewModel.onEnableSearchButton()
+
+
+    LaunchedEffect(id, entryDescription, fromDate, toDate, fromAmount, toAmount, selectedOption) {
+        // Esto solo se ejecutará cuando cambie cualquiera de los valores clave
+        entriesViewModel.getFilteredEntries(
+            accountId = id,
+            description = entryDescription,
+            dateFrom = fromDate,
+            dateTo = toDate,
+            amountMin = fromAmount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
+            amountMax = toAmount.toBigDecimalOrNull() ?: BigDecimal("1E10"),
+            selectedOptions = selectedOption?:0
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -154,15 +170,7 @@ fun SearchScreen(
                     }
 
                 } else {
-                    entriesViewModel.getFilteredEntries(
-                        id,
-                        entryDescription,
-                        fromDate,
-                        toDate,
-                        fromAmount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
-                        toAmount.toBigDecimalOrNull() ?: BigDecimal("1E10"),
-                        selectedOption ?: 0
-                    )
+
                     when (typeOfSearch) {
                         TypeOfSearch.SEARCH -> mainViewModel.selectScreen(IconOptions.ENTRIES)
                         TypeOfSearch.DELETE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)

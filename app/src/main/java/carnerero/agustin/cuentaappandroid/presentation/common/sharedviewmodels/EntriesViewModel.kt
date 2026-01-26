@@ -99,7 +99,7 @@ class EntriesViewModel @Inject constructor(
 
     init{
         getTotal()
-        getAllEntriesDTO()
+      //  getAllEntriesDTO()
     }
     fun getAllEntriesByDateDTO(accountId:Int,
                                fromDate: String,

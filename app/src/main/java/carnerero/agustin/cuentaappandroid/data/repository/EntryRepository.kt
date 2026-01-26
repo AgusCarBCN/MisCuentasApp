@@ -59,21 +59,36 @@ class EntryRepository @Inject constructor(
         // 4️⃣ Filtrado de entradas
         suspend fun getEntriesFiltered(
             accountId: Int,
-            descriptionAmount: String,
-            fromDate: String = Date().dateFormat(),
-            toDate: String = Date().dateFormat(),
+            descriptionAmount: String? = null,
+            dateFrom: String = Date().dateFormat(),
+            dateTo: String = Date().dateFormat(),
             amountMin: BigDecimal = BigDecimal.ZERO,
-            amountMax: BigDecimal = BigDecimal("1E10"), // máximo arbitrario
+            amountMax: BigDecimal = BigDecimal("1E10"),
             selectedOptions: Int = 0
-        ): List<EntryDTO> = entryDao.getFilteredEntriesDTO(
-            accountId,
-            descriptionAmount,
-            fromDate,
-            toDate,
-            amountMin,
-            amountMax,
-            selectedOptions
-        )
+        ): List<EntryDTO> {
+
+            // Preparamos el valor de búsqueda de texto
+            val searchPattern = descriptionAmount?.let { "%$it%" }
+
+            // Obtenemos los datos básicos de la DB
+            val entries = entryDao.getEntriesBasic(accountId, searchPattern, dateFrom, dateTo)
+
+            // Filtramos montos y tipo de transacción en Kotlin
+            return entries.filter { entry ->
+                val amount = entry.amount
+
+                val amountOk = amount.abs() >= amountMin && amount.abs() <= amountMax
+
+                val typeOk = when (selectedOptions) {
+                    2 -> true // ambos
+                    0 -> amount >= BigDecimal.ZERO // ingresos
+                    1 -> amount < BigDecimal.ZERO  // gastos
+                    else -> true
+                }
+                amountOk && typeOk
+            }
+        }
+
     suspend fun getEntriesByDate(accountId:Int,
                                  fromDate: String=Date().dateFormat(),
                                  toDate: String=Date().dateFormat()

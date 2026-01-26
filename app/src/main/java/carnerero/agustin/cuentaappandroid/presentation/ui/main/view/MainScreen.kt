@@ -146,10 +146,10 @@ fun MainScreen(
         NotificationAccountObserver(accountsViewModel,
             notificationService)
     }
-    LaunchedEffect(Unit) {
-        entriesViewModel.getAllIncomes()  // Llamar a la función para cargar las entradas
-2
-    }
+    /*LaunchedEffect(Unit) {
+        entriesViewModel.getAllEntriesDTO()  // Llamar a la función para cargar las entradas
+
+    }*/
 
     //Boton de atrás te lleva al Home
     BackHandler(true) {

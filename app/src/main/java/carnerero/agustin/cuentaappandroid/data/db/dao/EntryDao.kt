@@ -305,39 +305,24 @@ ORDER BY date DESC, e.id DESC
        c.nameResource,
        c.iconResource,
        e.accountId,
-       a.name ,
+       a.name,
        e.categoryId,
        c.categoryType
-       
-FROM EntryEntity e
-INNER JOIN AccountEntity a ON e.accountId = a.id
-INNER JOIN CategoryEntity c ON e.categoryId = c.id
- WHERE e.accountId = :accountId
-           
-        AND e.date >= :dateFrom 
-        AND e.date <= :dateTo      
-        AND ABS(e.amount) >= :amountMin 
-        AND ABS(e.amount) <= :amountMax
-        AND (
-            (:selectedOptions = 2) 
-            OR (:selectedOptions = 0 AND e.amount >= 0.0)
-            OR (:selectedOptions = 1 AND e.amount < 0.0)                  
-        )
-         AND (:descriptionAmount LIKE "" OR e.description LIKE :descriptionAmount)
-         ORDER BY date DESC, e.id DESC
-
-"""
+    FROM EntryEntity e
+    INNER JOIN AccountEntity a ON e.accountId = a.id
+    INNER JOIN CategoryEntity c ON e.categoryId = c.id
+    WHERE e.accountId = :accountId
+      AND e.date BETWEEN :dateFrom AND :dateTo
+      AND (:descriptionAmount IS NULL OR e.description LIKE :descriptionAmount)
+    ORDER BY e.date DESC, e.id DESC
+    """
     )
-    suspend fun getFilteredEntriesDTO(
+    suspend fun getEntriesBasic(
         accountId: Int,
-        descriptionAmount: String,
+        descriptionAmount: String? = null,
         dateFrom: String = Date().dateFormat(),
-        dateTo: String = Date().dateFormat(),
-        amountMin: BigDecimal = BigDecimal.ZERO,
-        amountMax: BigDecimal = BigDecimal("1E10"),
-        selectedOptions: Int = 0
+        dateTo: String = Date().dateFormat()
     ): List<EntryDTO>
-
     // Método para actualizar solo los campos específicos de la entrada
     @Query(
         "UPDATE EntryEntity SET description = :description, amount = :amount, date = :date WHERE id = :id"

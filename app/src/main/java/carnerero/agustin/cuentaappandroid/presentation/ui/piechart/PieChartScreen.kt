@@ -63,6 +63,7 @@ fun PieChartScreen(
 
     }
 
+
     // Agrupar por categoría
     val categoryTotals = remember(listOfEntries) {
         listOfEntries
