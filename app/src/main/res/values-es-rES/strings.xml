@@ -28,7 +28,7 @@
     <string name="seeall">Ver ingresos y gastos</string>
     <string name="yourentries">Tus registros</string>
     <!--On Boarding-->
-    <string name="title0">Bienvenido a misCuentasApp</string>
+    <string name="title0">Bienvenido a Mis Cuentas</string>
     <string name="title1">Crea tu perfil</string>
     <string name="title2">Crea tus cuentas</string>
     <string name="title3">Anota tus ingresos y gastos diarios</string>
@@ -206,7 +206,7 @@
     <string name="iconsAttribution">Iconos de rango de fecha</string>
     <string name="attributionicon"> creado por </string>
     <string name="attributionicons">creados por</string>
-    <string name="version">Version 4.0</string>
+    <string name="version">Version 4.1</string>
     <string name="description">
     \t\t\tMis cuentas es una aplicación diseñada para facilitar el control de tus ingresos y gastos. Con esta herramienta, puedes gestionar eficientemente los movimientos de una a varias cuentas, añadir ingresos, registrar gastos, realizar transferencias entre  cuentas y obtener estadísticas detalladas mediante búsquedas de movimientos.
 

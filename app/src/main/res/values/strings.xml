@@ -30,7 +30,7 @@
 
     <!--String onBoarding -->
 
-    <string name="title0">Wellcome to MyAccountsApp</string>
+    <string name="title0">Wellcome to MyAccounts App</string>
     <string name="title1">Create your profile</string>
     <string name="title2">Create your accounts</string>
     <string name="title3">Record your daily income and expenses</string>
@@ -213,7 +213,7 @@
     <string name="attributionicons">made by</string>
     <string name="atributions">Attributions</string>
     <string name="iconsAttribution">Icons</string>
-    <string name="version">Version 3.12</string>
+    <string name="version">Version 4.1</string>
     <string name="description">
 
     \t\t\tMy Accounts is an application designed to simplify the management of your income and expenses. With this tool, you can efficiently handle transactions for one to several accounts, add income, record expenses, transfer funds between  accounts, and generate detailed statistics through transaction searches.
