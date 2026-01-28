@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import carnerero.agustin.cuentaappandroid.MainActivity.Companion.CHANEL_NOTIFICATION
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
@@ -43,6 +44,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.AppNavHost
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
@@ -59,18 +61,7 @@ class MainActivity : ComponentActivity() {
         const val CHANEL_NOTIFICATION = "NotificationChannel"
 
     }
-
-    private val tutorialViewModel: TutorialViewModel by viewModels()
-    private val profileViewModel: ProfileViewModel by viewModels()
-    private val accountViewModel: AccountsViewModel by viewModels()
-    private val categoriesViewModel: CategoriesViewModel by viewModels()
-    private val entriesViewModel: EntriesViewModel by viewModels()
-    private val loginViewModel: LoginViewModel by viewModels()
     private val settingViewModel: SettingViewModel by viewModels()
-    private val searchViewModel: SearchViewModel by viewModels()
-    private val barChartViewModel: BarChartViewModel by viewModels()
-    private val mainViewModel: MainViewModel by viewModels()
-    private val calculatorViewModel: CalculatorViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +75,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navigationController = rememberNavController()
-            val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
-            val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
+
             val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
             MisCuentasTheme(darkTheme = switchDarkTheme) {
@@ -124,70 +114,8 @@ class MainActivity : ComponentActivity() {
                         SnackbarHost(hostState = snackbarHostState)
                     }
                 ) { innerPadding ->
-
-                    NavHost(
-                        navController = navigationController,
-                        startDestination = if (showTutorial) Routes.Tutorial.route
-                        else Routes.Login.route
-
-                    ) {
-                        composable(Routes.Tutorial.route) {
-                            Tutorial(
-                                tutorialViewModel,
-                                navToScreen = {
-                                    navigationController.navigate(
-                                        if (toLogin) Routes.Login.route
-                                        else Routes.CreateProfile.route
-                                    )
-                                },
-                                modifier = Modifier.padding(innerPadding),
-                            )
-                        }
-
-                        composable(Routes.CreateProfile.route) {
-                            CreateProfileComponent(profileViewModel,
-                                navToBackLogin = { navigationController.popBackStack() },
-                                navToCreateAccounts = { navigationController.navigate(Routes.CreateAccounts.route) })
-                        }
-
-                        composable(Routes.CreateAccounts.route) {
-                            CreateAccountsComponent(accountViewModel,categoriesViewModel, navToLogin = {
-                                navigationController.navigate(Routes.Login.route)
-                            },
-                                navToBack = { navigationController.popBackStack() }
-                            )
-
-                        }
-                        composable(Routes.Login.route) {
-                            LoginComponent(
-                                loginViewModel,
-                                modifier = Modifier.fillMaxSize(),
-                                navToMain = {
-                                    navigationController.navigate(Routes.Home.route)
-                                }
-                            )
-                        }
-                        composable(Routes.Home.route) {
-                            MainScreen(
-                                mainViewModel,
-                                accountViewModel,
-                                categoriesViewModel,
-                                profileViewModel,
-                                settingViewModel,
-                                entriesViewModel,
-                                searchViewModel,
-                                calculatorViewModel,
-                                barChartViewModel,
-                                navToCreateAccounts = {
-                                    navigationController.navigate(Routes.CreateAccounts.route)
-                                }
-
-                            )
-
-                        }
-
-
-                    }
+                    AppNavHost(navigationController,
+                        modifier = Modifier.padding(innerPadding))
 
                 }
             }
