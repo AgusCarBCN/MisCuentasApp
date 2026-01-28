@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountCard
@@ -39,21 +41,23 @@ import java.math.BigDecimal
 
 @Composable
 fun HomeScreen(
-    mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
-    entriesViewModel: EntriesViewModel
+    mainViewModel: MainViewModel = hiltViewModel(),
+    accountsViewModel: AccountsViewModel = hiltViewModel(),
+    entriesViewModel: EntriesViewModel = hiltViewModel(),
+    navToEntries: ()->Unit
 ) {
     val incomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
     val expenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
-
+    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
     // Observa el estado de la lista de cuentas
     val accounts by accountsViewModel.listOfAccounts.observeAsState(listOf())   // Observa el estado de la lista de cuentas
-
+    val accountSelected by accountsViewModel.accountSelected.observeAsState()
     LaunchedEffect(Unit) {
         entriesViewModel.getTotal()
         accountsViewModel.getAllAccounts()
     }
+
 
     Column(
         modifier = Modifier
@@ -72,15 +76,19 @@ fun HomeScreen(
                 HeadCard(modifier = Modifier.weight(0.5f),
                     Utils.numberFormat(incomes,currencyCodeSelected),
                     true,
-                    onClickCard={mainViewModel.selectScreen(IconOptions.ENTRIES)
+                    onClickCard={
+                    //mainViewModel.selectScreen(IconOptions.ENTRIES)
                     entriesViewModel.getAllIncomes()
+                    navToEntries()
                     })
                 Spacer(modifier = Modifier.width(5.dp))  // Espacio entre los dos cards
                 HeadCard(modifier = Modifier.weight(0.5f),
                     Utils.numberFormat(expenses,currencyCodeSelected),
                     false,
-                    onClickCard={mainViewModel.selectScreen(IconOptions.ENTRIES)
+                    onClickCard={
+                        //mainViewModel.selectScreen(IconOptions.ENTRIES)
                     entriesViewModel.getAllExpenses()
+                    navToEntries()
                     })
             }
 
@@ -101,8 +109,13 @@ fun HomeScreen(
                         account,
                         currencyCodeSelected,
                         R.string.seeall,
-                        onClickCard = { mainViewModel.selectScreen(IconOptions.ENTRIES)
+                        onClickCard = { //mainViewModel.selectScreen(IconOptions.ENTRIES)
+
                             entriesViewModel.getAllEntriesByAccount(account.id)
+                            if(listOfEntries.isNotEmpty()){
+                                navToEntries()
+                            }
+
                         }
                     )  // Crea un card para cada cuenta en la lista
                     Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)

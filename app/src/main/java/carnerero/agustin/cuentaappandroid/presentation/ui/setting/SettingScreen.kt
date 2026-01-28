@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
@@ -55,10 +56,10 @@ import java.util.Date
 @Composable
 
 fun SettingScreen(
-    settingViewModel: SettingViewModel,
-    mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
-    entriesViewModel: EntriesViewModel,
+    settingViewModel: SettingViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel=hiltViewModel(),
+    accountsViewModel: AccountsViewModel=hiltViewModel(),
+    entriesViewModel: EntriesViewModel=hiltViewModel(),
     navToCreateAccounts: () -> Unit
 ) {
     val context = LocalContext.current

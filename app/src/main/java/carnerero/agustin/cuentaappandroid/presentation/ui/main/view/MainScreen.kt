@@ -57,6 +57,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
@@ -95,6 +99,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScree
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
@@ -122,10 +128,11 @@ fun MainScreen(
     searchViewModel: SearchViewModel = hiltViewModel(),
     calculatorViewModel: CalculatorViewModel = hiltViewModel(),
     barChartView: BarChartViewModel=hiltViewModel(),
-    navToCreateAccounts: () -> Unit
+    navController: NavController
+
 
 ) {
-
+    val innerNavController = rememberNavController()
     val context= LocalContext.current
     val notificationService= NotificationService(context)
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
@@ -182,16 +189,35 @@ fun MainScreen(
                         (if (selectedScreen == IconOptions.HOME) userName else "")
                     )
                 },
-                { BottomAppBar(mainViewModel)
+                { BottomAppBar(innerNavController
+                    )
                 },
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
-
-                Column(
+                //MainNavHost(innerNavController,Modifier.padding(innerPadding))
+                NavHost(
+                    navController = innerNavController,
+                    startDestination = Routes.Home.route,
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    AdmobBanner()
+                    composable(Routes.Home.route) {
+                        HomeScreen(navToEntries = { innerNavController.navigate(Routes.Records.route) })
+                    }
+                    composable(Routes.Search.route) {
+                        SearchScreen(typeOfSearch = TypeOfSearch.SEARCH)
+                    }
+                    composable(Routes.Settings.route) {
+                        SettingScreen { innerNavController.navigate(Routes.CreateAccounts.route) }
+                    }
+                    composable(Routes.Profile.route) {
+                        ProfileScreen()
+                    }
+                    composable(Routes.Records.route) {
+                        EntryList(listOfEntries = entries, currencyCode = currencyCode)
+                    }
+                }
+                    /*AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()
                     }
@@ -417,13 +443,16 @@ fun MainScreen(
                             SpendingControlScreen(mainViewModel)
                             title=R.string.spendingcontrol
                         }
-                    }
+                    }*/
 
                 }
             }
-        }
+
     )
-}
+        }
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -450,7 +479,7 @@ private fun TopBarApp(scope: CoroutineScope, drawerState: DrawerState, title: In
 
 
 @Composable
-private fun BottomAppBar(viewModel: MainViewModel) {
+private fun BottomAppBar(navController: NavController) {
 
     BottomAppBar(
         containerColor = LocalCustomColorsPalette.current.barBackground,
@@ -459,18 +488,26 @@ private fun BottomAppBar(viewModel: MainViewModel) {
             IconButtonApp("Home",
                 R.drawable.home,
 
-                onClickButton = { viewModel.selectScreen(IconOptions.HOME) })
+                onClickButton = {
+                    //viewModel.selectScreen(IconOptions.HOME)
+                    navController.navigate(Routes.Home.route)
+                     })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
             IconButtonApp("Search", R.drawable.search, onClickButton = {
-                viewModel.selectScreen(IconOptions.SEARCH)
+                navController.navigate(Routes.Search.route)
+                //viewModel.selectScreen(IconOptions.SEARCH)
             })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
             IconButtonApp("Settings", R.drawable.settings,
-                onClickButton = { viewModel.selectScreen(IconOptions.SETTINGS) })
+                onClickButton = {
+                    //viewModel.selectScreen(IconOptions.SETTINGS)
+                    navController.navigate(Routes.Settings.route)
+                })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp("Profile", R.drawable.profile, onClickButton = {
-                viewModel.selectScreen(IconOptions.PROFILE)
-
+            IconButtonApp("Profile", R.drawable.profile,
+                onClickButton = {
+                //viewModel.selectScreen(IconOptions.PROFILE)
+                    navController.navigate(Routes.Profile.route)
             })
         },
         tonalElevation = 5.dp

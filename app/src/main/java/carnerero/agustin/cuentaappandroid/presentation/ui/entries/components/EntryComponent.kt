@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.model.EntryWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
@@ -60,13 +62,14 @@ import java.math.BigDecimal
 @OptIn(ExperimentalFoundationApi::class) // Habilitar API experimental
 @Composable
 fun EntryList(
-    entriesViewModel: EntriesViewModel,
     listOfEntries: List<EntryDTO>,
-    currencyCode: String
+    currencyCode: String,
+    entriesViewModel: EntriesViewModel = hiltViewModel()
+    //accountViewModel: AccountsViewModel= hiltViewModel()
 ) {
-
     val enableByDate by entriesViewModel.enableOptionList.observeAsState(true)
-
+    //val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")
+    //val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
     // Agrupar las entradas por fecha
     val groupedEntriesByDate =
         listOfEntries.groupBy { it.date }  // Asumiendo que it.date es un String o LocalDate

@@ -38,7 +38,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreatePr
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.Routes
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel

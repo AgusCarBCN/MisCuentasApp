@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 
@@ -46,10 +47,10 @@ import java.util.Date
 
 @Composable
 fun SearchScreen(
-    accountViewModel: AccountsViewModel,
-    searchViewModel: SearchViewModel,
-    entriesViewModel: EntriesViewModel,
-    mainViewModel: MainViewModel,
+    accountViewModel: AccountsViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel= hiltViewModel(),
+    entriesViewModel: EntriesViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel =hiltViewModel(),
     typeOfSearch: TypeOfSearch
 ) {
     val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")

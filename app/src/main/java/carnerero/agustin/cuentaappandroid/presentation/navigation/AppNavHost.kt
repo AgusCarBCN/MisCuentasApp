@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.text.font.Typeface
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -14,8 +16,13 @@ import androidx.navigation.compose.composable
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.Routes
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
+import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 
@@ -63,17 +70,16 @@ fun AppNavHost(navController: NavHostController,
             LoginComponent(
                 modifier = Modifier.fillMaxSize(),
                 navToMain = {
-                    navController.navigate(Routes.Home.route)
+                    navController.navigate(Routes.Main.route)
                 }
             )
         }
-        composable(Routes.Home.route) {
+        composable(Routes.Main.route) {
             MainScreen(
-                navToCreateAccounts = {
-                    navController.navigate(Routes.CreateAccounts.route)
-                }
+               navController = navController
             )
         }
+
     }
 }
 
