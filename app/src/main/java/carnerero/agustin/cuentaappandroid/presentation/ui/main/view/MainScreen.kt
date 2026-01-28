@@ -195,8 +195,8 @@ fun MainScreen(
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
-                //MainNavHost(innerNavController,Modifier.padding(innerPadding))
-                NavHost(
+                MainNavHost(innerNavController,Modifier.padding(innerPadding))
+               /* NavHost(
                     navController = innerNavController,
                     startDestination = Routes.Home.route,
                     modifier = Modifier.padding(innerPadding)
@@ -214,9 +214,9 @@ fun MainScreen(
                         ProfileScreen()
                     }
                     composable(Routes.Records.route) {
-                        EntryList(listOfEntries = entries, currencyCode = currencyCode)
+                        EntryList()
                     }
-                }
+                }*/
                     /*AdmobBanner()
                     if (selectedScreen != IconOptions.EXIT) {
                         profileViewModel.onButtonProfileNoSelected()

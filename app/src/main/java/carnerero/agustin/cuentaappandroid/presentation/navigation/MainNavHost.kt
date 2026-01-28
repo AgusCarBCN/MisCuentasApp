@@ -37,7 +37,10 @@ fun MainNavHost(innerNavController: NavHostController,
         composable(Routes.Profile.route) {
             ProfileScreen()
         }
+        composable(Routes.Records.route) {
+            EntryList()
 
+        }
         // Drawer menu
 
     }

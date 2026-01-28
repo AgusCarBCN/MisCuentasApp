@@ -49,16 +49,13 @@ fun HomeScreen(
     val incomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
     val expenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
-    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
+    val accounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
     // Observa el estado de la lista de cuentas
-    val accounts by accountsViewModel.listOfAccounts.observeAsState(listOf())   // Observa el estado de la lista de cuentas
-    val accountSelected by accountsViewModel.accountSelected.observeAsState()
+
     LaunchedEffect(Unit) {
         entriesViewModel.getTotal()
         accountsViewModel.getAllAccounts()
     }
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,12 +107,8 @@ fun HomeScreen(
                         currencyCodeSelected,
                         R.string.seeall,
                         onClickCard = { //mainViewModel.selectScreen(IconOptions.ENTRIES)
-
                             entriesViewModel.getAllEntriesByAccount(account.id)
-                            if(listOfEntries.isNotEmpty()){
                                 navToEntries()
-                            }
-
                         }
                     )  // Crea un card para cada cuenta en la lista
                     Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)

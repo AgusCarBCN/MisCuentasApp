@@ -96,10 +96,12 @@ class EntriesViewModel @Inject constructor(
     private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
     val entryDTOSelected: LiveData<EntryDTO?> = _entryDTOSelected
 
+    private val _loading = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = _loading
 
     init{
         getTotal()
-      //  getAllEntriesDTO()
+        getAllEntriesDTO()
     }
     fun getAllEntriesByDateDTO(accountId:Int,
                                fromDate: String,
@@ -174,6 +176,8 @@ class EntriesViewModel @Inject constructor(
     fun getAllIncomes() {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
+                _loading.value = true
+                _listOfEntriesDTO.value = emptyList()
                 val entries = getAllIncomes.invoke()
                 emit(entries)
             }
@@ -185,6 +189,7 @@ class EntriesViewModel @Inject constructor(
                 .collect {/* entries ->
                     _listOfEntries.value = entries*/
                     _listOfEntriesDTO.value = it
+                    _loading.value = false
                 }
 
         }
@@ -195,6 +200,8 @@ class EntriesViewModel @Inject constructor(
     fun getAllExpenses() {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
+                _loading.value = true
+                _listOfEntriesDTO.value = emptyList()
                 val entries = getAllExpenses.invoke()
                 emit(entries)
             }
@@ -204,6 +211,7 @@ class EntriesViewModel @Inject constructor(
                 }
                 .collect { entries ->
                     _listOfEntriesDTO.value = entries
+                    _loading.value=false
                 }
         }
     }
@@ -212,6 +220,8 @@ class EntriesViewModel @Inject constructor(
     fun getAllEntriesByAccount(accountId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
+                _loading.value = true
+                _listOfEntriesDTO.value = emptyList()
                 val entries = getAllEntriesByAccount.invoke(accountId)
                 emit(entries)
             }
@@ -221,6 +231,7 @@ class EntriesViewModel @Inject constructor(
                 }
                 .collect { entries ->
                     _listOfEntriesDTO.value = entries
+                    _loading.value=false
                 }
         }
     }

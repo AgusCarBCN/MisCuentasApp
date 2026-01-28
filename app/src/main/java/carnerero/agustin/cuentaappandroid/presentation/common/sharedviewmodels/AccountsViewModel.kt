@@ -302,6 +302,7 @@ class AccountsViewModel @Inject constructor(
             updateExpensePercentage()
 
         }
+        getAllAccounts()
     }
 
 
