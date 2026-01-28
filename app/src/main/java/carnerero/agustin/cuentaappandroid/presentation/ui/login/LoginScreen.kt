@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginComponent(
-    loginViewModel: LoginViewModel,
+    loginViewModel: LoginViewModel = hiltViewModel(),
     modifier: Modifier,
     navToMain: () -> Unit,
 ) {

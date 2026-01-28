@@ -56,6 +56,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
@@ -112,16 +113,15 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
-
-    mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
-    categoriesViewModel: CategoriesViewModel,
-    profileViewModel: ProfileViewModel,
-    settingViewModel: SettingViewModel,
-    entriesViewModel: EntriesViewModel,
-    searchViewModel: SearchViewModel,
-    calculatorViewModel: CalculatorViewModel,
-    barChartView: BarChartViewModel,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    accountsViewModel: AccountsViewModel = hiltViewModel(),
+    categoriesViewModel: CategoriesViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel= hiltViewModel(),
+    settingViewModel: SettingViewModel = hiltViewModel(),
+    entriesViewModel: EntriesViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel = hiltViewModel(),
+    calculatorViewModel: CalculatorViewModel = hiltViewModel(),
+    barChartView: BarChartViewModel=hiltViewModel(),
     navToCreateAccounts: () -> Unit
 
 ) {

@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -46,8 +47,8 @@ import java.math.BigDecimal
 @Composable
 
 fun CreateAccountsComponent(
-    accountsViewModel: AccountsViewModel,
-    categoriesViewModel: CategoriesViewModel,
+    accountsViewModel: AccountsViewModel = hiltViewModel(),
+    categoriesViewModel: CategoriesViewModel = hiltViewModel(),
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {

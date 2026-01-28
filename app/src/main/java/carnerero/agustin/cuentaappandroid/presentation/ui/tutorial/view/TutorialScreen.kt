@@ -41,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
@@ -49,12 +50,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Tutorial(
-    tutorialViewModel: TutorialViewModel,
+    tutorialViewModel: TutorialViewModel= hiltViewModel(),
     navToScreen: () -> Unit,
-    listOfItems: List<TutorialItem> = getItems(),
     modifier: Modifier
 ) {
-
+    val listOfItems=getItems()
     val toLogin by tutorialViewModel.toLogin.observeAsState(false)
 
     ConstraintLayout(

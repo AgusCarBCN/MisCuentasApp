@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -54,7 +55,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun CreateProfileComponent(
-    createViewModel: ProfileViewModel,
+    createViewModel: ProfileViewModel = hiltViewModel (),
     navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {
