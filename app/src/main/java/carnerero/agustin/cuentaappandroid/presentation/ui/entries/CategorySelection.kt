@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -22,40 +23,42 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 
 
 @Composable
-
-fun CategorySelector(mainViewModel: MainViewModel, categoriesViewModel: CategoriesViewModel, type: CategoryType) {
-
-
+fun CategorySelector(
+    categoriesViewModel: CategoriesViewModel,
+    type: CategoryType,
+    navToNewEntry: () -> Unit
+) {
     val listOfCategories by categoriesViewModel.listOfCategories.observeAsState(listOf())
 
     LaunchedEffect(type) {
         categoriesViewModel.getAllCategoriesByType(type)
     }
 
-
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Título
         HeadSetting(
             title = (if (type == CategoryType.INCOME) stringResource(id = R.string.chooseincome) else stringResource(
                 id = R.string.chooseexpense
             )), MaterialTheme.typography.headlineSmall
-
         )
+
+        // Grid de categorías ocupa el resto del espacio
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp)
-
         ) {
             items(listOfCategories.size) { index ->
-                CategoryEntries(listOfCategories[index],
-                    modifier = Modifier
-                        .padding(10.dp),
+                CategoryEntries(
+                    category = listOfCategories[index],
+                    modifier = Modifier.padding(10.dp),
                     onClickItem = {
-                        mainViewModel.selectScreen(IconOptions.NEW_AMOUNT)
                         categoriesViewModel.onCategorySelected(listOfCategories[index])
-                    })
+                        navToNewEntry()
+                    }
+                )
             }
         }
     }
-
-
+}

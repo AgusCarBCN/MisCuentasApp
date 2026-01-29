@@ -47,11 +47,12 @@ import java.util.Date
 
 @Composable
 fun SearchScreen(
-    accountViewModel: AccountsViewModel = hiltViewModel(),
-    searchViewModel: SearchViewModel= hiltViewModel(),
-    entriesViewModel: EntriesViewModel = hiltViewModel(),
-    mainViewModel: MainViewModel =hiltViewModel(),
-    typeOfSearch: TypeOfSearch
+    accountViewModel: AccountsViewModel,
+    searchViewModel: SearchViewModel,
+    entriesViewModel: EntriesViewModel ,
+    mainViewModel: MainViewModel ,
+    typeOfSearch: TypeOfSearch,
+    navToEntries:()->Unit
 ) {
     val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")
     val toAmount by searchViewModel.toAmount.observeAsState("0.0")
@@ -66,6 +67,7 @@ fun SearchScreen(
     val messageAmountError = stringResource(id = R.string.amountfromoverdateto)
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     searchViewModel.onEnableSearchButton()
+
 
 
     LaunchedEffect(id, entryDescription, fromDate, toDate, fromAmount, toAmount, selectedOption) {
@@ -171,12 +173,16 @@ fun SearchScreen(
                     }
 
                 } else {
+                    when(typeOfSearch){
+                        TypeOfSearch.SEARCH -> navToEntries()
+                        TypeOfSearch.DELETE -> TODO()
+                        TypeOfSearch.UPDATE -> TODO()
 
-                    when (typeOfSearch) {
-                        TypeOfSearch.SEARCH -> mainViewModel.selectScreen(IconOptions.ENTRIES)
-                        TypeOfSearch.DELETE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
-                        TypeOfSearch.UPDATE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                     }
+                        //TypeOfSearch.SEARCH -> //mainViewModel.selectScreen(IconOptions.ENTRIES)
+                        //TypeOfSearch.DELETE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
+                        //TypeOfSearch.UPDATE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
+
 
                 }
             }

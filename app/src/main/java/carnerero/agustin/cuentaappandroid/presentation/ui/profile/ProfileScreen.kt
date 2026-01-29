@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 
-fun ProfileScreen(createViewModel: ProfileViewModel= hiltViewModel()) {
+fun ProfileScreen(createViewModel: ProfileViewModel) {
     val updatedMessages = listOf(
         stringResource(id = R.string.userNameUpdated),  // Aquí obtienes el texto real del recurso
         stringResource(id = R.string.nameUpdated),

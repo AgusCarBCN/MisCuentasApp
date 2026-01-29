@@ -1,10 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 
 
-import android.app.Activity
 import android.os.Build
-import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -24,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -42,10 +38,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,62 +50,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
-import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
-import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorUI
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithEditIcon
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.UserImage
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
-import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.EntryAccountList
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.EntryCategoryList
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.ExpenseControlAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.ExpenseControlCategoriesScreen
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
 import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermissionDialog
-import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.menu.components.BottomMyAccountsBar
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -120,33 +80,25 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel ,
-    accountsViewModel: AccountsViewModel = hiltViewModel(),
-    categoriesViewModel: CategoriesViewModel = hiltViewModel(),
-    profileViewModel: ProfileViewModel = hiltViewModel(),
-    settingViewModel: SettingViewModel = hiltViewModel(),
-    entriesViewModel: EntriesViewModel = hiltViewModel(),
-    searchViewModel: SearchViewModel = hiltViewModel(),
-    calculatorViewModel: CalculatorViewModel = hiltViewModel(),
-    barChartView: BarChartViewModel = hiltViewModel(),
-    navController: NavController
-
+    mainViewModel: MainViewModel,
+    accountsViewModel: AccountsViewModel,
+    categoriesViewModel: CategoriesViewModel,
+    profileViewModel: ProfileViewModel,
+    settingViewModel: SettingViewModel
 
 ) {
+
+    // NavController para manejar la navegación entre pantallas
     val innerNavController = rememberNavController()
+    // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
+    val navBackStackEntry by innerNavController.currentBackStackEntryAsState()
     val context = LocalContext.current
     val notificationService = NotificationService(context)
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val selectedScreen by mainViewModel.selectedScreen.collectAsState()
-    val showExitDialog by mainViewModel.showExitDialog.collectAsState()
-    val showDeleteAccountDialog by mainViewModel.showDeleteAccountDialog.collectAsState()
-    val entries by entriesViewModel.listOfEntriesDTO.collectAsState()
-    val selectedEntryDTO by entriesViewModel.entryDTOSelected.observeAsState()
-    val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
-    val settingAccountOption by settingViewModel.deleteAccountOption.observeAsState(false)
-    val selectedAccount by accountsViewModel.accountSelected.observeAsState()
+
     if (enableNotifications) {
         NotificationCategoriesObserver(
             categoriesViewModel,
@@ -158,37 +110,33 @@ fun MainScreen(
             notificationService
         )
     }
-    /*LaunchedEffect(Unit) {
-        entriesViewModel.getAllEntriesDTO()  // Llamar a la función para cargar las entradas
 
-    }*/
-
-    //Boton de atrás te lleva al Home
-    BackHandler(true) {
-        mainViewModel.selectScreen(IconOptions.HOME)
-        searchViewModel.resetFields()
-    }
 
     val userName by profileViewModel.name.observeAsState("")
-    var title: Int by remember { mutableIntStateOf(R.string.hometitle) }
+    val title by mainViewModel.title.observeAsState(R.string.greeting)
 
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
-    LaunchedEffect(key1 = selectedScreen) {
+    LaunchedEffect(key1 = navBackStackEntry) {
         if (drawerState.isOpen) {
             drawerState.close() // Cierra el drawer cuando se selecciona una opción
         }
     }
-
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { DrawerContent(mainViewModel, profileViewModel) },
+        drawerContent = {
+            DrawerMyAccountsContent(
+                mainViewModel,
+                profileViewModel,
+                innerNavController
+            )
+        },
         scrimColor = Color.Transparent,
         content = {
             // Main content goes here
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
                 {
-                    TopBarApp(
+                    TopMyAccountsBar(
                         scope, drawerState, title,
                         (if (selectedScreen == IconOptions.HOME) userName else "")
                     )
@@ -209,236 +157,8 @@ fun MainScreen(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun TopBarApp(scope: CoroutineScope, drawerState: DrawerState, title: Int, name: String) {
-
-    TopAppBar(
-        title = { Text(text = stringResource(id = title) + " " + name) },
-        navigationIcon = {
-            IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                Icon(
-                    if (drawerState.isOpen) Icons.Filled.Close else Icons.Filled.Menu,
-                    contentDescription = "Side menu",
-                    tint = LocalCustomColorsPalette.current.topBarContent
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = LocalCustomColorsPalette.current.barBackground,
-            titleContentColor = LocalCustomColorsPalette.current.topBarContent,
-            actionIconContentColor = LocalCustomColorsPalette.current.topBarContent
-        )
-    )
-}
 
 
-@Composable
-private fun BottomAppBar(
-    navController: NavController
-) {
 
-    BottomAppBar(
-        containerColor = LocalCustomColorsPalette.current.barBackground,
-        contentColor = LocalCustomColorsPalette.current.topBarContent,
-        actions = {
-            IconButtonApp(
-                "Home",
-                R.drawable.home,
-
-                onClickButton = {
-                    navController.navigate(Routes.Home.route)
-                })
-            Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp("Search", R.drawable.search, onClickButton = {
-                navController.navigate(Routes.Search.route)
-                //viewModel.selectScreen(IconOptions.SEARCH)
-            })
-            Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp(
-                "Settings", R.drawable.settings,
-                onClickButton = {
-                    //viewModel.selectScreen(IconOptions.SETTINGS)
-                    navController.navigate(Routes.Settings.route)
-                })
-            Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp(
-                "Profile", R.drawable.profile,
-                onClickButton = {
-                    //viewModel.selectScreen(IconOptions.PROFILE)
-                    navController.navigate(Routes.Profile.route)
-                })
-        },
-        tonalElevation = 5.dp
-    )
-}
-
-
-//Implementacion de Menú de la izquierda
-@Composable
-private fun DrawerContent(
-    viewModel: MainViewModel,
-    profileViewModel: ProfileViewModel
-
-) {
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(0.75f)
-            .padding(top = 62.dp)
-            .background(color = Color.Transparent)
-
-    ) {
-
-        HeadDrawerMenu(profileViewModel)
-        Column(
-            modifier = Modifier
-                .background(LocalCustomColorsPalette.current.drawerColor)
-        ) {
-            TitleOptions(R.string.management)
-            ClickableRow(OptionItem(R.string.newincome, R.drawable.ic_incomes), onClick = {
-                viewModel.selectScreen(IconOptions.INCOME_OPTIONS)
-            })
-            ClickableRow(OptionItem(R.string.newexpense, R.drawable.ic_expenses), onClick = {
-                viewModel.selectScreen(IconOptions.EXPENSE_OPTIONS)
-            })
-            ClickableRow(OptionItem(R.string.transfer, R.drawable.transferoption), onClick = {
-                viewModel.selectScreen(IconOptions.TRANSFER)
-            })
-            ClickableRow(OptionItem(R.string.stadistics, R.drawable.ic_staditics), onClick = {
-                viewModel.selectScreen(IconOptions.STADISTICS)
-            })
-            ClickableRow(
-                OptionItem(R.string.spendingcontrol, R.drawable.ic_expensecontrol),
-                onClick = {
-                    viewModel.selectScreen(IconOptions.SPENDING_CONTROL)
-
-                })
-            ClickableRow(OptionItem(R.string.calculator, R.drawable.ic_calculate), onClick = {
-                viewModel.selectScreen(IconOptions.CALCULATOR)
-            })
-            TitleOptions(R.string.aboutapp)
-            ClickableRow(OptionItem(R.string.about, R.drawable.info), onClick = {
-                viewModel.selectScreen(IconOptions.ABOUT)
-            })
-            ClickableRow(
-                OptionItem(R.string.exitapp, R.drawable.exitapp),
-                onClick = {
-                    viewModel.selectScreen(IconOptions.EXIT)
-                    viewModel.showExitDialog(true)
-                })
-        }
-    }
-}
-
-//Implementacion de la cabecerera del menu desplegable izquierda
-@Composable
-fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
-
-    val selectedImageUriSaved by profileViewModel.selectedImageUriSaved.observeAsState(null)
-
-    profileViewModel.loadImageUri()
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(LocalCustomColorsPalette.current.headDrawerColor),
-        Arrangement.SpaceEvenly,
-        Alignment.CenterVertically
-
-
-    ) {
-        Box(modifier = Modifier.weight(0.4f)) {
-            selectedImageUriSaved?.let { UserImage(it, 80) }
-        }
-
-    }
-
-}
-
-
-// Implementación de Row clickable para cada opción del menú de la izquierda
-@Composable
-private fun ClickableRow(
-    option: OptionItem,
-    onClick: () -> Unit,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
-) {
-    // Detectar si la fila está presionada
-    val isPressed by interactionSource.collectIsPressedAsState()
-
-    // Definir el color de fondo dependiendo si está presionado o no
-    val backgroundColor by animateColorAsState(
-        targetValue = if (isPressed) LocalCustomColorsPalette.current.rowDrawerPressed
-        else LocalCustomColorsPalette.current.drawerColor,
-        label = "row clickable color"
-    )
-    val contentRowColor by animateColorAsState(
-        targetValue = if (isPressed) LocalCustomColorsPalette.current.invertedTextColor
-        else LocalCustomColorsPalette.current.contentBarColor,
-        label = "row clickable color"
-    )
-    // Fila clickable con color de fondo animado
-    Row(
-        modifier = Modifier
-            .clickable(
-                onClick = { onClick() },
-                interactionSource = interactionSource,
-                indication = null // Esto elimina el efecto predeterminado de ripple
-            )
-            .background(backgroundColor) // Aplicar el color de fondo dinámico
-            .padding(16.dp) // Agregar padding
-            .fillMaxWidth(), // Ocupar todo el ancho disponible
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Icon(
-            painter = painterResource(id = option.resourceIconItem),
-            contentDescription = "Side menu",
-            modifier = Modifier.size(28.dp),
-            tint = contentRowColor
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = stringResource(id = option.resourceTitleItem),
-            color = contentRowColor,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-
-@Composable
-private fun TitleOptions(title: Int) {
-
-    Text(
-        text = stringResource(id = title),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        color = LocalCustomColorsPalette.current.contentDrawerColor,
-        //fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
-        fontWeight = FontWeight.Bold,
-        fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() }
-
-    )
-}
-
-
-@Composable
-private fun IconButtonApp(title: String, resourceIcon: Int, onClickButton: () -> Unit) {
-// Creamos una fuente de interacciones para el IconButton
-    val interactionSource = remember { MutableInteractionSource() }
-    // Detectamos si el botón está presionado
-
-    val isPressed by interactionSource.collectIsPressedAsState()
-
-    IconButton(
-        onClick = onClickButton,
-        interactionSource = interactionSource
-    ) {
-        IconComponent(isPressed, title, resourceIcon, 28)
-    }
-
-}
 
 

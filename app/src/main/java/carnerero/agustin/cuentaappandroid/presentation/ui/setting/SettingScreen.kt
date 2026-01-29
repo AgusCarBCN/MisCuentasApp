@@ -56,10 +56,10 @@ import java.util.Date
 @Composable
 
 fun SettingScreen(
-    settingViewModel: SettingViewModel = hiltViewModel(),
-    mainViewModel: MainViewModel=hiltViewModel(),
-    accountsViewModel: AccountsViewModel=hiltViewModel(),
-    entriesViewModel: EntriesViewModel=hiltViewModel(),
+    settingViewModel: SettingViewModel ,
+    mainViewModel: MainViewModel,
+    accountsViewModel: AccountsViewModel,
+    entriesViewModel: EntriesViewModel,
     navToCreateAccounts: () -> Unit
 ) {
     val context = LocalContext.current

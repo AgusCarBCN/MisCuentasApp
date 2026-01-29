@@ -13,6 +13,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
@@ -24,6 +27,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 
@@ -31,8 +35,13 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 @Composable
 fun AppNavHost(navController: NavHostController,
                modifier: Modifier) {
-    val tutorialViewModel: TutorialViewModel = hiltViewModel()
     val mainViewModel: MainViewModel =hiltViewModel()
+    val tutorialViewModel: TutorialViewModel = hiltViewModel()
+    val settingViewModel: SettingViewModel=hiltViewModel()
+    val accountsViewModel: AccountsViewModel = hiltViewModel()
+    val categoriesViewModel: CategoriesViewModel=hiltViewModel()
+    val profileViewModel : ProfileViewModel=hiltViewModel()
+
     val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
     val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
     NavHost(
@@ -75,7 +84,10 @@ fun AppNavHost(navController: NavHostController,
         composable(Routes.Main.route) {
             MainScreen(
                 mainViewModel,
-              navController=navController
+                accountsViewModel,
+                categoriesViewModel,
+                profileViewModel ,
+                settingViewModel
             )
         }
     }

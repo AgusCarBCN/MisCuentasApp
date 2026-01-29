@@ -65,7 +65,7 @@ import java.math.BigDecimal
 @Composable
 fun EntryList(
     entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel = hiltViewModel()
+    accountViewModel: AccountsViewModel
 ) {
     val enableByDate by entriesViewModel.enableOptionList.observeAsState(true)
     val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")

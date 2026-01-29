@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.menu.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.model
 
 data class OptionItem(private val resourceTitle: Int, private val resourceIcon: Int) {
     val resourceTitleItem: Int

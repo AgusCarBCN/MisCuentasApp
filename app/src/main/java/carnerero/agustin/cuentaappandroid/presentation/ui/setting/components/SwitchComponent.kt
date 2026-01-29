@@ -139,7 +139,7 @@ fun HeadSetting(title: String,textStyle: TextStyle) {
         text = title,
         style= textStyle,
         modifier = Modifier
-            .padding(top = 15.dp, bottom = 15.dp)
+            .padding(top = 20.dp, bottom = 20.dp)
             .fillMaxWidth()
             .semantics {
                 contentDescription=title

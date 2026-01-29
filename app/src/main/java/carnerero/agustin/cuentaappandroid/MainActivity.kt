@@ -61,7 +61,8 @@ class MainActivity : ComponentActivity() {
         const val CHANEL_NOTIFICATION = "NotificationChannel"
 
     }
-    private val settingViewModel: SettingViewModel by viewModels()
+
+    private val settingViewModel : SettingViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
