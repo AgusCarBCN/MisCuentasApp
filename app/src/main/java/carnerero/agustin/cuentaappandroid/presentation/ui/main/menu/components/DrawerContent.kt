@@ -42,7 +42,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
 
 @Composable
-public fun DrawerMyAccountsContent(
+fun DrawerMyAccountsContent(
     viewModel: MainViewModel,
     profileViewModel: ProfileViewModel,
     navController: NavController

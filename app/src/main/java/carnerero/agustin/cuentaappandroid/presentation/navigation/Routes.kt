@@ -37,6 +37,10 @@ sealed class Routes(val route:String,
 
     data object Statistics: Routes("statistics",R.string.stadistics,R.drawable.ic_staditics)
 
+    data object BarChart: Routes("bar_chart",R.string.barchart,R.drawable.barchartoption)
+
+    data object PieChart: Routes("pie_chart",R.string.piechart,R.drawable.ic_piechart)
+
     data object SpendingControl: Routes("spending_control",R.string.spendingcontrol,R.drawable.ic_expensecontrol)
 
     data object Calculator: Routes("calculator",R.string.calculator,R.drawable.ic_calculate)

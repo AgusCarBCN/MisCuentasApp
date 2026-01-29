@@ -15,7 +15,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 
 @Composable
-fun StatisticsScreen(mainViewModel: MainViewModel)
+fun StatisticsScreen(
+                     navToBarChart:()->Unit,
+                     navToPieChart:()->Unit)
 {
 
     Column(
@@ -32,14 +34,14 @@ fun StatisticsScreen(mainViewModel: MainViewModel)
             description = stringResource(id = R.string.barchartdes),
             iconResource = R.drawable.barchartoption,
             onClick = {
-                mainViewModel.selectScreen(IconOptions.BARCHART)
+               navToBarChart()
             })
 
         RowComponent(title = stringResource(id = R.string.piechart),
             description = stringResource(id = R.string.piechartdes),
             iconResource = R.drawable.ic_piechart,
             onClick = {
-                mainViewModel.selectScreen(IconOptions.PIE_CHART)
+                navToPieChart()
             })
 
     }

@@ -45,10 +45,11 @@ import java.util.Date
 @Composable
 
 fun NewEntry(
-    mainViewModel: MainViewModel,
+
     entryViewModel: EntriesViewModel,
     categoriesViewModel: CategoriesViewModel,
-    accountViewModel: AccountsViewModel
+    accountViewModel: AccountsViewModel,
+    navToBack:()->Unit
 ) {
     val scope = rememberCoroutineScope()
     val descriptionEntry by entryViewModel.entryName.observeAsState("")
@@ -182,7 +183,7 @@ fun NewEntry(
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {
-                mainViewModel.selectScreen(IconOptions.HOME)
+              navToBack
             }
         )
     }
