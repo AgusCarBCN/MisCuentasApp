@@ -1,8 +1,10 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,8 +38,12 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _showDeleteAccountDialog= MutableStateFlow(false)
     val showDeleteAccountDialog: MutableStateFlow<Boolean> = _showDeleteAccountDialog
 
+    private val _title = MutableLiveData<Int>()
+    val title: LiveData<Int> = _title
 
-
+    init {
+        _title.value = R.string.greeting
+    }
 
         // Función que permite cambiar la pantalla seleccionada.
     // Utiliza viewModelScope para lanzar una corrutina y emitir un nuevo valor.
@@ -48,7 +54,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
         }
     }
-
+    fun updateTitle(newTitle: Int) {
+        _title.value = newTitle
+    }
 
     fun showExitDialog(newValue:Boolean){
         viewModelScope.launch {

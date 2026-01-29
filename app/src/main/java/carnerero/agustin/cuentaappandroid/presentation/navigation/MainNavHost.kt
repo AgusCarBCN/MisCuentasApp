@@ -4,9 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
@@ -18,6 +22,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 @Composable
 fun MainNavHost(innerNavController: NavHostController,
                modifier: Modifier) {
+    val entriesViewModel : EntriesViewModel = hiltViewModel()
+    val accountsViewModel: AccountsViewModel = hiltViewModel()
+    val searchViewModel : SearchViewModel = hiltViewModel()
     NavHost(
         navController = innerNavController,
         startDestination = Routes.Home.route,
@@ -26,7 +33,10 @@ fun MainNavHost(innerNavController: NavHostController,
        // BottomAppBar menu
 
         composable(Routes.Home.route) {
-            HomeScreen(navToEntries = {innerNavController.navigate(Routes.Records.route)})
+            HomeScreen(
+                accountsViewModel,
+                entriesViewModel,
+                 {innerNavController.navigate(Routes.Records.route)})
         }
         composable(Routes.Search.route) {
             SearchScreen(typeOfSearch = TypeOfSearch.SEARCH)
@@ -38,7 +48,7 @@ fun MainNavHost(innerNavController: NavHostController,
             ProfileScreen()
         }
         composable(Routes.Records.route) {
-            EntryList()
+            EntryList(entriesViewModel)
 
         }
         // Drawer menu

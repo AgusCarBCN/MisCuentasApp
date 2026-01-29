@@ -61,135 +61,120 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-@OptIn(ExperimentalFoundationApi::class) // Habilitar API experimental
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EntryList(
-
-
-    entriesViewModel: EntriesViewModel = hiltViewModel(),
-    accountViewModel: AccountsViewModel= hiltViewModel()
+    entriesViewModel: EntriesViewModel,
+    accountViewModel: AccountsViewModel = hiltViewModel()
 ) {
     val enableByDate by entriesViewModel.enableOptionList.observeAsState(true)
     val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")
     val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
 
-    val isLoading by entriesViewModel.loading.collectAsState()
+    // Agrupar las entradas por fecha
+    val groupedEntriesByDate = listOfEntries.groupBy { it.date }
+    // Agrupar las entradas por categoría
+    val entriesByCategory = Utils.getMapOfEntriesByCategory(listOfEntries)
 
-
-        if(isLoading) {
-            CircularProgressIndicator()
-        }
-
-        else  {
-
-            // Agrupar las entradas por fecha
-            val groupedEntriesByDate =
-                listOfEntries.groupBy { it.date }  // Asumiendo que it.date es un String o LocalDate
-
-            val entriesByCategory = Utils.getMapOfEntriesByCategory(listOfEntries)
-
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+    ) {
+        // Row de botones By Date / By Category
+        if (listOfEntries.isNotEmpty()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (listOfEntries.isNotEmpty()) {
-                    TextButton(onClick = { entriesViewModel.onEnableByDate(true) }) {
-                        Text(
-                            text = stringResource(id = R.string.bydate),
-                            color = if (enableByDate) LocalCustomColorsPalette.current.textHeadColor
-                            else LocalCustomColorsPalette.current.textColor,
-                            fontSize = 18.sp
-                        )
-                    }
-                    TextButton(onClick = { entriesViewModel.onEnableByDate(false) }) {
-                        Text(
-                            text = stringResource(id = R.string.bycategory),
-                            color = if (enableByDate) LocalCustomColorsPalette.current.textColor
-                            else LocalCustomColorsPalette.current.textHeadColor,
-                            fontSize = 18.sp
-                        )
-                    }
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.recordsnotfound),
-                            color = LocalCustomColorsPalette.current.textColor,
-                            textAlign = TextAlign.Center,
-                            fontSize = with(LocalDensity.current) {
-                                dimensionResource(id = R.dimen.text_body_extra_large).toSp()
-                            }
-                        )
-                    }
-
+                TextButton(onClick = { entriesViewModel.onEnableByDate(true) }) {
+                    Text(
+                        text = stringResource(id = R.string.bydate),
+                        color = if (enableByDate) LocalCustomColorsPalette.current.textHeadColor
+                        else LocalCustomColorsPalette.current.textColor,
+                        fontSize = 18.sp
+                    )
+                }
+                TextButton(onClick = { entriesViewModel.onEnableByDate(false) }) {
+                    Text(
+                        text = stringResource(id = R.string.bycategory),
+                        color = if (!enableByDate) LocalCustomColorsPalette.current.textHeadColor
+                        else LocalCustomColorsPalette.current.textColor,
+                        fontSize = 18.sp
+                    )
                 }
             }
-            LazyColumn(
+        } else {
+            // Mensaje cuando no hay registros
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
-
+                    .weight(1f),
+                contentAlignment = Alignment.Center
             ) {
-                if (enableByDate) {
-                    groupedEntriesByDate.forEach { (date, entries) ->
-                        // Mostrar una cabecera sticky para la fecha
-                        stickyHeader {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(70.dp)
-                                    .background(LocalCustomColorsPalette.current.backgroundPrimary),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
+                Text(
+                    text = stringResource(id = R.string.recordsnotfound),
+                    color = LocalCustomColorsPalette.current.textColor,
+                    textAlign = TextAlign.Center,
+                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() }
+                )
+            }
+        }
 
-                                Text(
-                                    modifier = Modifier
-                                        .background(LocalCustomColorsPalette.current.backgroundPrimary)
-                                        .fillParentMaxWidth()
-                                        .padding(start = 15.dp),
-                                    text = Utils.toDateFormatDayMonth(date),
-                                    textAlign = TextAlign.Start,
-                                    color = LocalCustomColorsPalette.current.textColor,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                            }
+        // LazyColumn con los registros
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            if (enableByDate) {
+                groupedEntriesByDate.forEach { (date, entries) ->
+                    // Sticky Header con la fecha
+                    stickyHeader {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(
+                                text = Utils.toDateFormatDayMonth(date),
+                                color = LocalCustomColorsPalette.current.textColor,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(start = 16.dp)
+                            )
                         }
-
-                        // Mostrar los elementos de ese grupo
-                        items(entries) { entry ->
-                            ItemEntry(
-                                entry,
+                    }
+                    items(entries) { entry ->
+                        ItemEntry(
+                            entry = entry,
+                            currencyCode = currencyCode
+                        )
+                    }
+                }
+            } else {
+                entriesByCategory.toList()
+                    .sortedByDescending { (_, info) -> info.second?.abs() }
+                    .forEach { (categoryName, info) ->
+                        val (icon, total) = info
+                        item {
+                            ItemCategory(
+                                categoryName = categoryName,
+                                categoryIcon = icon,
+                                amount = total,
                                 currencyCode = currencyCode
                             )
                         }
                     }
-                } else {
-                    items(
-                        entriesByCategory.toList()
-                            .sortedByDescending { (_, info) ->
-
-                                info.second?.abs()
-
-                            }) { (categoryName, info) ->
-                        val (icon, total) = info // Desestructurar el ícono y el total
-                        ItemCategory(
-                            categoryName = categoryName,
-                            categoryIcon = icon,
-                            amount = total,
-                            currencyCode
-                        )
-                    }
-
-                }
             }
         }
     }
+}
+
 @Composable
 
 fun ItemEntry(

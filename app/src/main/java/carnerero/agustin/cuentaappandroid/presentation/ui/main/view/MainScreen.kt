@@ -99,6 +99,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScree
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
@@ -119,22 +120,22 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel ,
     accountsViewModel: AccountsViewModel = hiltViewModel(),
     categoriesViewModel: CategoriesViewModel = hiltViewModel(),
-    profileViewModel: ProfileViewModel= hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
     settingViewModel: SettingViewModel = hiltViewModel(),
     entriesViewModel: EntriesViewModel = hiltViewModel(),
     searchViewModel: SearchViewModel = hiltViewModel(),
     calculatorViewModel: CalculatorViewModel = hiltViewModel(),
-    barChartView: BarChartViewModel=hiltViewModel(),
+    barChartView: BarChartViewModel = hiltViewModel(),
     navController: NavController
 
 
 ) {
     val innerNavController = rememberNavController()
-    val context= LocalContext.current
-    val notificationService= NotificationService(context)
+    val context = LocalContext.current
+    val notificationService = NotificationService(context)
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -146,12 +147,16 @@ fun MainScreen(
     val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
     val settingAccountOption by settingViewModel.deleteAccountOption.observeAsState(false)
     val selectedAccount by accountsViewModel.accountSelected.observeAsState()
-    if(enableNotifications) {
-        NotificationCategoriesObserver(categoriesViewModel,
+    if (enableNotifications) {
+        NotificationCategoriesObserver(
+            categoriesViewModel,
             accountsViewModel,
-            notificationService)
-        NotificationAccountObserver(accountsViewModel,
-            notificationService)
+            notificationService
+        )
+        NotificationAccountObserver(
+            accountsViewModel,
+            notificationService
+        )
     }
     /*LaunchedEffect(Unit) {
         entriesViewModel.getAllEntriesDTO()  // Llamar a la función para cargar las entradas
@@ -172,7 +177,6 @@ fun MainScreen(
         if (drawerState.isOpen) {
             drawerState.close() // Cierra el drawer cuando se selecciona una opción
         }
-
     }
 
     ModalNavigationDrawer(
@@ -189,269 +193,20 @@ fun MainScreen(
                         (if (selectedScreen == IconOptions.HOME) userName else "")
                     )
                 },
-                { BottomAppBar(innerNavController
+                {
+                    BottomMyAccountsBar(
+                        mainViewModel,
+                        innerNavController
                     )
                 },
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
-                MainNavHost(innerNavController,Modifier.padding(innerPadding))
-               /* NavHost(
-                    navController = innerNavController,
-                    startDestination = Routes.Home.route,
-                    modifier = Modifier.padding(innerPadding)
-                ) {
-                    composable(Routes.Home.route) {
-                        HomeScreen(navToEntries = { innerNavController.navigate(Routes.Records.route) })
-                    }
-                    composable(Routes.Search.route) {
-                        SearchScreen(typeOfSearch = TypeOfSearch.SEARCH)
-                    }
-                    composable(Routes.Settings.route) {
-                        SettingScreen { innerNavController.navigate(Routes.CreateAccounts.route) }
-                    }
-                    composable(Routes.Profile.route) {
-                        ProfileScreen()
-                    }
-                    composable(Routes.Records.route) {
-                        EntryList()
-                    }
-                }*/
-                    /*AdmobBanner()
-                    if (selectedScreen != IconOptions.EXIT) {
-                        profileViewModel.onButtonProfileNoSelected()
-                    }
-                    when (selectedScreen) {
-                        IconOptions.HOME -> {
-                            HomeScreen(mainViewModel, accountsViewModel, entriesViewModel)
-                            title = R.string.greeting
-                            searchViewModel.resetFields()
-                        }
-
-                        IconOptions.PROFILE -> {
-                            ProfileScreen(profileViewModel)
-                            title = R.string.profiletitle
-                        }
-
-                        IconOptions.SEARCH -> {
-                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,
-                                TypeOfSearch.SEARCH)
-                            title = R.string.searchtitle
-                        }
-                        IconOptions.SEARCH_DELETE -> {
-                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,
-                                TypeOfSearch.DELETE)
-                            title = R.string.searchtitledelete
-                        }
-                        IconOptions.SEARCH_UPDATE -> {
-                            SearchScreen(accountsViewModel,searchViewModel,entriesViewModel,mainViewModel,
-                                TypeOfSearch.UPDATE)
-                            title = R.string.searchtitlemodify
-                        }
-                        IconOptions.SETTINGS -> {
-                            SettingScreen(
-                                settingViewModel,
-                                mainViewModel,
-                                accountsViewModel,
-                                entriesViewModel,
-                                navToCreateAccounts,
-                            )
-                            title = R.string.settingstitle
-                        }
-
-                        IconOptions.INCOME_OPTIONS -> {
-                            LaunchedEffect(Unit) {
-                                categoriesViewModel.getAllCategoriesByType(CategoryType.INCOME)
-
-                            }
-                            CategorySelector(mainViewModel, categoriesViewModel, CategoryType.INCOME)
-                            title = R.string.newincome
-                        }
-
-                        IconOptions.TRANSFER -> {
-                            Transfer(mainViewModel, accountsViewModel, entriesViewModel)
-                            title = R.string.transfer
-                        }
-
-                        IconOptions.SETTING_ACCOUNTS -> {
-                            AccountList(
-                                mainViewModel,
-                                accountsViewModel,
-                                settingAccountOption
-                            )
-                            title = R.string.accountsetting
-
-                        }
-                        IconOptions.DELETE_ACCOUNT -> {
-                            ModelDialog(R.string.titledelete,
-                                R.string.deleteinfo,
-                                showDialog = showDeleteAccountDialog,
-                                onConfirm = {
-                                selectedAccount?.let { accountsViewModel.deleteAccount(it) }
-                                    mainViewModel.showDeleteAccountDialog(false)
-                                    mainViewModel.selectScreen(IconOptions.HOME)
-
-                                },
-                                onDismiss = {
-                                    mainViewModel.showDeleteAccountDialog(false)
-                                    mainViewModel.selectScreen(IconOptions.HOME)
-                                })
-
-                        }
-                        IconOptions.ABOUT -> {
-                            AboutScreen(mainViewModel)
-                            title = R.string.abouttitle
-                        }
-
-                        IconOptions.EXIT -> {
-                            // Obtén el contexto actual de la aplicación
-                            val localContext = LocalContext.current
-                            // Verifica si el contexto es una actividad
-                            val activity = localContext as? Activity
-
-                            ModelDialog(R.string.exitapp,
-                                R.string.exitinfo,
-                                showDialog = showExitDialog,
-                                onConfirm = {
-                                    activity?.finish()
-                                },
-                                onDismiss = {
-                                    mainViewModel.showExitDialog(false)
-                                    mainViewModel.selectScreen(IconOptions.HOME)
-                                })
-
-                        }
-
-                        IconOptions.ABOUT_DESCRIPTION -> {
-                            AboutApp()
-                            title = R.string.abouttitle
-                        }
-
-                        IconOptions.EXPENSE_OPTIONS -> {
-                            LaunchedEffect(Unit) {
-                              categoriesViewModel.getAllCategoriesByType(CategoryType.EXPENSE)
-                            }
-                            CategorySelector(mainViewModel, categoriesViewModel, CategoryType.EXPENSE)
-                            title = R.string.newexpense
-                        }
-
-                        IconOptions.NEW_AMOUNT -> {
-                            NewEntry(mainViewModel, entriesViewModel,categoriesViewModel, accountsViewModel)
-
-                        }
-
-                        IconOptions.CHANGE_CURRENCY -> ChangeCurrencyScreen(mainViewModel,
-                            accountsViewModel,
-                            entriesViewModel)
-                        IconOptions.ENTRIES -> {
-                            EntryList(entriesViewModel,entries, currencyCode)
-                            title = R.string.yourentries
-                        }
-
-                        IconOptions.EDIT_ACCOUNTS -> {
-                            ModifyAccountsComponent(mainViewModel,
-                                accountsViewModel)
-                        }
-
-                        IconOptions.BARCHART -> {
-                            BarChartScreen(
-                            accountsViewModel,
-                            barChartView,
-                            settingViewModel
-                        )
-                        title=R.string.barchart
-                        }
-                        IconOptions.CALCULATOR -> {
-                            CalculatorUI(calculatorViewModel)
-                        title=R.string.calculator}
-                        IconOptions.EMAIL -> SendEmail()
-                        IconOptions.PIE_CHART -> {
-                            PieChartScreen(
-                                entriesViewModel,
-                                accountsViewModel,
-                                searchViewModel
-                            )
-                            title=R.string.piechart
-                        }
-                        IconOptions.SELECT_CATEGORIES -> {
-                           EntryCategoryList (categoriesViewModel,searchViewModel)
-                            title=R.string.selectcategories
-                        }
-
-                        IconOptions.CATEGORY_EXPENSE_CONTROL -> {
-                            ExpenseControlCategoriesScreen(categoriesViewModel,
-                                accountsViewModel)
-                            title=R.string.categorycontrol
-                        }
-
-                        IconOptions.SELECT_ACCOUNTS -> {
-                            EntryAccountList(
-                                accountsViewModel,
-                                searchViewModel
-                            )
-                            title=R.string.selectaccounts
-                        }
-
-                        IconOptions.ACCOUNT_EXPENSE_CONTROL ->
-                            ExpenseControlAccountsScreen(
-                                accountsViewModel
-                            )
-
-                        IconOptions.ENTRIES_TO_DELETE -> {
-                            EntriesWithCheckBox(
-                                entriesViewModel,
-                                accountsViewModel,
-                                entries,
-                                currencyCode
-                            )
-                            title=R.string.selectEntries
-
-                        }
-
-                        IconOptions.ENTRIES_TO_UPDATE -> {
-                            EntriesWithEditIcon(
-                                entriesViewModel ,
-                                mainViewModel,
-                                entries ,
-                                currencyCode
-                            )
-                            title=R.string.selectEntries
-
-                        }
-
-                        IconOptions.MODIFY_ENTRY -> {
-                            selectedEntryDTO?.let { entry ->
-                                ModifyEntry(
-                                    entry,
-                                    entriesViewModel,
-                                    searchViewModel,
-                                    accountsViewModel,
-                                    mainViewModel
-                                )
-                            } ?: run {
-                                // Maneja el caso nulo, por ejemplo, muestra un mensaje de error
-                                Log.e("ModifyEntry", "selectedEntryDTO is null")
-                            }
-                            title=R.string.modifyentry
-                        }
-
-                        IconOptions.STADISTICS -> {
-                            StatisticsScreen(mainViewModel)
-                            title=R.string.stadistics
-                        }
-                        IconOptions.SPENDING_CONTROL -> {
-                            SpendingControlScreen(mainViewModel)
-                            title=R.string.spendingcontrol
-                        }
-                    }*/
-
-                }
+                MainNavHost(innerNavController, Modifier.padding(innerPadding))
             }
-
-    )
         }
-
-
+    )
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -479,36 +234,40 @@ private fun TopBarApp(scope: CoroutineScope, drawerState: DrawerState, title: In
 
 
 @Composable
-private fun BottomAppBar(navController: NavController) {
+private fun BottomAppBar(
+    navController: NavController
+) {
 
     BottomAppBar(
         containerColor = LocalCustomColorsPalette.current.barBackground,
         contentColor = LocalCustomColorsPalette.current.topBarContent,
         actions = {
-            IconButtonApp("Home",
+            IconButtonApp(
+                "Home",
                 R.drawable.home,
 
                 onClickButton = {
-                    //viewModel.selectScreen(IconOptions.HOME)
                     navController.navigate(Routes.Home.route)
-                     })
+                })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
             IconButtonApp("Search", R.drawable.search, onClickButton = {
                 navController.navigate(Routes.Search.route)
                 //viewModel.selectScreen(IconOptions.SEARCH)
             })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp("Settings", R.drawable.settings,
+            IconButtonApp(
+                "Settings", R.drawable.settings,
                 onClickButton = {
                     //viewModel.selectScreen(IconOptions.SETTINGS)
                     navController.navigate(Routes.Settings.route)
                 })
             Spacer(modifier = Modifier.weight(1f, true)) // Espacio entre íconos
-            IconButtonApp("Profile", R.drawable.profile,
+            IconButtonApp(
+                "Profile", R.drawable.profile,
                 onClickButton = {
-                //viewModel.selectScreen(IconOptions.PROFILE)
+                    //viewModel.selectScreen(IconOptions.PROFILE)
                     navController.navigate(Routes.Profile.route)
-            })
+                })
         },
         tonalElevation = 5.dp
     )
@@ -549,10 +308,12 @@ private fun DrawerContent(
             ClickableRow(OptionItem(R.string.stadistics, R.drawable.ic_staditics), onClick = {
                 viewModel.selectScreen(IconOptions.STADISTICS)
             })
-            ClickableRow(OptionItem(R.string.spendingcontrol, R.drawable.ic_expensecontrol), onClick = {
-                viewModel.selectScreen(IconOptions.SPENDING_CONTROL)
+            ClickableRow(
+                OptionItem(R.string.spendingcontrol, R.drawable.ic_expensecontrol),
+                onClick = {
+                    viewModel.selectScreen(IconOptions.SPENDING_CONTROL)
 
-            })
+                })
             ClickableRow(OptionItem(R.string.calculator, R.drawable.ic_calculate), onClick = {
                 viewModel.selectScreen(IconOptions.CALCULATOR)
             })
@@ -675,7 +436,7 @@ private fun IconButtonApp(title: String, resourceIcon: Int, onClickButton: () ->
         onClick = onClickButton,
         interactionSource = interactionSource
     ) {
-        IconComponent(isPressed,title, resourceIcon, 28)
+        IconComponent(isPressed, title, resourceIcon, 28)
     }
 
 }

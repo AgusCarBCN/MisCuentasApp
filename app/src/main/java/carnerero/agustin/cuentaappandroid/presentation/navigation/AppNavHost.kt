@@ -19,6 +19,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
@@ -30,16 +31,14 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 @Composable
 fun AppNavHost(navController: NavHostController,
                modifier: Modifier) {
-
     val tutorialViewModel: TutorialViewModel = hiltViewModel()
-
+    val mainViewModel: MainViewModel =hiltViewModel()
     val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
     val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
     NavHost(
         navController = navController,
         startDestination = if (showTutorial) Routes.Tutorial.route
         else Routes.Login.route
-
     ) {
         composable(Routes.Tutorial.route) {
             Tutorial(
@@ -64,7 +63,6 @@ fun AppNavHost(navController: NavHostController,
                 navToLogin = {navController.navigate(Routes.Login.route)},
                 navToBack = { navController.popBackStack() }
             )
-
         }
         composable(Routes.Login.route) {
             LoginComponent(
@@ -76,10 +74,10 @@ fun AppNavHost(navController: NavHostController,
         }
         composable(Routes.Main.route) {
             MainScreen(
-               navController = navController
+                mainViewModel,
+              navController=navController
             )
         }
-
     }
 }
 

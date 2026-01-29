@@ -41,21 +41,15 @@ import java.math.BigDecimal
 
 @Composable
 fun HomeScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
-    accountsViewModel: AccountsViewModel = hiltViewModel(),
-    entriesViewModel: EntriesViewModel = hiltViewModel(),
+    accountsViewModel: AccountsViewModel,
+    entriesViewModel: EntriesViewModel,
     navToEntries: ()->Unit
 ) {
     val incomes by entriesViewModel.totalIncomes.observeAsState(BigDecimal.ZERO)
     val expenses by entriesViewModel.totalExpenses.observeAsState(BigDecimal.ZERO)
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
     val accounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
-    // Observa el estado de la lista de cuentas
 
-    LaunchedEffect(Unit) {
-        entriesViewModel.getTotal()
-        accountsViewModel.getAllAccounts()
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,7 +68,6 @@ fun HomeScreen(
                     Utils.numberFormat(incomes,currencyCodeSelected),
                     true,
                     onClickCard={
-                    //mainViewModel.selectScreen(IconOptions.ENTRIES)
                     entriesViewModel.getAllIncomes()
                     navToEntries()
                     })
@@ -83,7 +76,6 @@ fun HomeScreen(
                     Utils.numberFormat(expenses,currencyCodeSelected),
                     false,
                     onClickCard={
-                        //mainViewModel.selectScreen(IconOptions.ENTRIES)
                     entriesViewModel.getAllExpenses()
                     navToEntries()
                     })
@@ -106,9 +98,9 @@ fun HomeScreen(
                         account,
                         currencyCodeSelected,
                         R.string.seeall,
-                        onClickCard = { //mainViewModel.selectScreen(IconOptions.ENTRIES)
+                        onClickCard = {
                             entriesViewModel.getAllEntriesByAccount(account.id)
-                                navToEntries()
+                            navToEntries()
                         }
                     )  // Crea un card para cada cuenta en la lista
                     Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)

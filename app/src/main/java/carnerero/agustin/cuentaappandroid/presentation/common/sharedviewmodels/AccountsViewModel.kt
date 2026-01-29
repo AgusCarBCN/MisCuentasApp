@@ -300,7 +300,6 @@ class AccountsViewModel @Inject constructor(
             onAccountUpdated()
             getListOfCurrencyCode()
             updateExpensePercentage()
-
         }
         getAllAccounts()
     }
