@@ -30,6 +30,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
+import carnerero.agustin.cuentaappandroid.utils.navigateSingleTop
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -39,7 +40,7 @@ fun MainNavHost(
 ) {
     val mainViewModel: MainViewModel = hiltViewModel()
     val settingViewModel: SettingViewModel = hiltViewModel()
-    val barChartViewModel: BarChartViewModel=hiltViewModel()
+    val barChartViewModel: BarChartViewModel = hiltViewModel()
     val categoriesViewModel: CategoriesViewModel = hiltViewModel()
     val entriesViewModel: EntriesViewModel = hiltViewModel()
     val accountsViewModel: AccountsViewModel = hiltViewModel()
@@ -109,29 +110,18 @@ fun MainNavHost(
         }
         composable(Routes.Statistics.route) {
             StatisticsScreen(
-           navToBarChart = {
-               navController.navigate(Routes.BarChart.route) {
-                   popUpTo(navController.graph.findStartDestination().id) {
-                       saveState = true
-                   }
-                   launchSingleTop = true
-                   restoreState = true
-               }
-           }){
-                navController.navigate(Routes.PieChart.route) {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+                navToBarChart = {
+                    navController.navigateSingleTop(Routes.BarChart.route)
+
+                }) {
+                navController.navigateSingleTop(Routes.PieChart.route)
             }
         }
         composable(Routes.PieChart.route) {
             PieChartScreen(entriesViewModel, accountsViewModel, searchViewModel)
         }
-        composable(Routes.BarChart.route){
-            BarChartScreen(accountsViewModel, barChartViewModel,settingViewModel)
+        composable(Routes.BarChart.route) {
+            BarChartScreen(accountsViewModel, barChartViewModel, settingViewModel)
         }
     }
 }

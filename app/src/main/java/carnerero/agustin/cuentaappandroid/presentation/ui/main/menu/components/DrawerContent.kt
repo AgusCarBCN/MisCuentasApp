@@ -40,6 +40,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
+import carnerero.agustin.cuentaappandroid.utils.navigateSingleTop
 
 @Composable
 fun DrawerMyAccountsContent(
@@ -73,24 +74,26 @@ fun DrawerMyAccountsContent(
 
             drawerMenuManageItems.forEach { item ->
                 ClickableRow(OptionItem(item.labelResource!!, item.iconResource!!), onClick = {
-                    navController.navigate(item.route) {
+                    navController.navigateSingleTop(item.route)
+                    /*navController.navigate(item.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
-                    }
+                    }*/
                 })
             }
             TitleOptions(R.string.aboutapp)
             ClickableRow(OptionItem(about.labelResource!!, about.iconResource!!), onClick = {
-                navController.navigate(about.route) {
+               navController.navigateSingleTop(about.route)
+               /* navController.navigate(about.route) {
                     popUpTo(navController.graph.findStartDestination().id) {
                         saveState = true
                     }
                     launchSingleTop = true
                     restoreState = true
-                }
+                }*/
             })
             ClickableRow(
                 OptionItem(R.string.exitapp, R.drawable.exitapp),

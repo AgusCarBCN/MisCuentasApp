@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 
 
+import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
@@ -64,6 +65,7 @@ import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserv
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
 import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermissionDialog
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
@@ -93,6 +95,8 @@ fun MainScreen(
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
     val navBackStackEntry by innerNavController.currentBackStackEntryAsState()
     val context = LocalContext.current
+    // Verifica si el contexto es una actividad
+    val activity = context as? Activity
     val notificationService = NotificationService(context)
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -111,8 +115,8 @@ fun MainScreen(
         )
     }
 
-
     val userName by profileViewModel.name.observeAsState("")
+    val showExitDialog by mainViewModel.showExitDialog.collectAsState()
     val title by mainViewModel.title.observeAsState(R.string.greeting)
 
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
@@ -154,6 +158,16 @@ fun MainScreen(
             }
         }
     )
+    ModelDialog(R.string.exitapp,
+        R.string.exitinfo,
+        showDialog = showExitDialog,
+        onConfirm = {
+            activity?.finish()
+        },
+        onDismiss = {
+            mainViewModel.showExitDialog(false)
+            mainViewModel.selectScreen(IconOptions.HOME)
+        })
 }
 
 
