@@ -6,8 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
@@ -21,6 +23,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartScree
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorUI
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
@@ -30,6 +34,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScree
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
@@ -67,23 +72,23 @@ fun MainNavHost(
             )
             { navController.navigate(Routes.Records.route) }
         }
-        composable(Routes.Search.route) {
+         composable(Routes.Search.route) {
             SearchScreen(
                 accountsViewModel,
                 searchViewModel,
                 entriesViewModel,
-                mainViewModel,
                 TypeOfSearch.SEARCH,
-                { navController.navigate(Routes.Records.route) })
+                navController)
         }
         composable(Routes.Settings.route) {
             SettingScreen(
                 settingViewModel,
                 mainViewModel,
                 accountsViewModel,
-                entriesViewModel
+                entriesViewModel,
+                navController
             )
-            { navController.navigate(Routes.CreateAccounts.route) }
+
         }
         composable(Routes.Profile.route) {
             ProfileScreen(profileViewModel)
@@ -93,8 +98,8 @@ fun MainNavHost(
                 entriesViewModel,
                 accountsViewModel
             )
-
         }
+
         // Drawer menu
         composable(Routes.NewIncome.route) {
             CategorySelector(categoriesViewModel, CategoryType.INCOME) {
@@ -148,5 +153,45 @@ fun MainNavHost(
         composable(Routes.Email.route){
             SendEmail()
         }
+
+
+        composable(Routes.AddAccount.route){
+            CreateAccountsComponent(
+                accountsViewModel,
+                categoriesViewModel,
+                navToLogin = {navController.navigate(Routes.Login.route)},
+                navToBack = { navController.popBackStack() }
+            )
+        }
+        composable(Routes.ModifyAccount.route){
+            AccountList(accountsViewModel, false)
+        }
+        composable(Routes.DeleteAccount.route) {
+            AccountList(accountsViewModel, true)
+        }
+
+        composable(Routes.DeleteRecords.route) {
+            SearchScreen(
+                accountsViewModel,
+                searchViewModel,
+                entriesViewModel,
+                TypeOfSearch.DELETE,
+                navController)
+
+        }
+        composable(Routes.ModifyRecords.route) {
+            SearchScreen(
+                accountsViewModel,
+                searchViewModel,
+                entriesViewModel,
+                TypeOfSearch.UPDATE,
+                navController)
+
+        }
+        composable(Routes.ChangeCurrency.route) {
+            ChangeCurrencyScreen(accountsViewModel,entriesViewModel)
+            {navController.navigate(Routes.Home.route)}
+        }
+        }
+
     }
-}

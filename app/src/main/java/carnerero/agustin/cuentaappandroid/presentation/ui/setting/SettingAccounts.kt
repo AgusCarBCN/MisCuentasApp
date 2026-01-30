@@ -41,7 +41,7 @@ import java.math.BigDecimal
 
 @Composable
 fun AccountList(
-    mainViewModel: MainViewModel,
+    /*mainViewModel: MainViewModel*/
     accountsViewModel: AccountsViewModel,
     option: Boolean
 ) {
@@ -84,10 +84,11 @@ fun AccountList(
                         currencyCode,
                         if (option) R.string.deleteaccount else R.string.modify,
                         onClickCard = {
-                            mainViewModel.selectScreen(if (option) IconOptions.DELETE_ACCOUNT else IconOptions.EDIT_ACCOUNTS)
+                            //mainViewModel.selectScreen(if (option) IconOptions.DELETE_ACCOUNT else IconOptions.EDIT_ACCOUNTS)
+
                             accountsViewModel.onAccountSelected(account)
                             if (option) {
-                                mainViewModel.showDeleteAccountDialog(true)
+                               // mainViewModel.showDeleteAccountDialog(true)
                             }
                         }
                     )  // Crea un card para cada cuenta en la lista

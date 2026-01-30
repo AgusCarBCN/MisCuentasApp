@@ -30,9 +30,10 @@ import kotlinx.coroutines.withContext
 @Composable
 
 
-fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
+fun ChangeCurrencyScreen(/*mainViewModel: MainViewModel*/
                          accountsViewModel: AccountsViewModel,
-                         entriesViewModel: EntriesViewModel
+                         entriesViewModel: EntriesViewModel,
+                         navToHome:()->Unit
 ) {
 
     val scope = rememberCoroutineScope()
@@ -94,7 +95,8 @@ fun ChangeCurrencyScreen(mainViewModel: MainViewModel,
             true,
             onClickButton = {
                 accountsViewModel.onCurrencyShowedChange(currencyCodeSelected)
-                mainViewModel.selectScreen(IconOptions.HOME)
+                navToHome()
+                //mainViewModel.selectScreen(IconOptions.HOME)
             })
     }
 }

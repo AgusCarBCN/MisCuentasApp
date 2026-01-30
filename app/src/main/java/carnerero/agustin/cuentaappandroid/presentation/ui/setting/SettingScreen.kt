@@ -27,12 +27,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
@@ -40,11 +41,13 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Hea
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.ConfigureAccountItem
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,9 +63,18 @@ fun SettingScreen(
     mainViewModel: MainViewModel,
     accountsViewModel: AccountsViewModel,
     entriesViewModel: EntriesViewModel,
-    navToCreateAccounts: () -> Unit
+    navController: NavHostController
 ) {
     val context = LocalContext.current
+
+    val configureAccountsItems = listOf(
+        ConfigureAccountItem(Routes.AddAccount,R.string.desadd_an_account),
+        ConfigureAccountItem(Routes.DeleteAccount,R.string.desdelete_an_account),
+        ConfigureAccountItem(Routes.ModifyAccount,R.string.desedit_account),
+        ConfigureAccountItem(Routes.DeleteRecords,R.string.deleteentrydes),
+        ConfigureAccountItem(Routes.ModifyRecords,R.string.modifyentrydes),
+        ConfigureAccountItem(Routes.ChangeCurrency,R.string.deschangecurrency)
+    )
     LaunchedEffect(Unit) {
         entriesViewModel.getAllEntriesDTO()
     }
@@ -74,6 +86,7 @@ fun SettingScreen(
     val switchNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val entries by entriesViewModel.listOfEntriesDTO.collectAsState()
     val accounts by accountsViewModel.listOfAccounts.observeAsState(mutableListOf())
+    val title by mainViewModel.title.observeAsState()
     val entriesCSV = toEntryCSV(entries)
     val accountsCSV = toAccountCSV(accounts)
     val date = Date().dateFormat()
@@ -261,7 +274,6 @@ fun SettingScreen(
             else false,
             onClickSwitch = {
                 settingViewModel.onSwitchNotificationsClicked(it)
-
             }
         )
 
@@ -313,13 +325,23 @@ fun SettingScreen(
             MaterialTheme.typography.headlineSmall
         )
 
+        configureAccountsItems.forEach { item->
+            RowComponent(title = stringResource(id =item.itemRoute.labelResource!!),
+                description = stringResource(id = item.description),
+                iconResource = item.itemRoute.iconResource!!,
+                onClick = {
+                    mainViewModel.updateTitle(item.itemRoute.labelResource)
+                    navController.navigateTopLevel(item.itemRoute.route)
+                    //accountsViewModel.onDisableCurrencySelector()
+                })
+        }
+/*
         RowComponent(title = stringResource(id = R.string.add_an_account),
             description = stringResource(id = R.string.desadd_an_account),
             iconResource = R.drawable.add,
             onClick = {
-                navToCreateAccounts()
                 accountsViewModel.onDisableCurrencySelector()
-            })
+                            })
         RowComponent(title = stringResource(id = R.string.edit_account),
             description = stringResource(id = R.string.desedit_account),
             iconResource = R.drawable.edit,
@@ -352,7 +374,7 @@ fun SettingScreen(
         RowComponent(title = stringResource(id = R.string.changecurrency),
             description = stringResource(id = R.string.deschangecurrency),
             iconResource = R.drawable.exchange,
-            onClick = { mainViewModel.selectScreen(IconOptions.CHANGE_CURRENCY) })
+            onClick = { mainViewModel.selectScreen(IconOptions.CHANGE_CURRENCY) })*/
     }
 }
 

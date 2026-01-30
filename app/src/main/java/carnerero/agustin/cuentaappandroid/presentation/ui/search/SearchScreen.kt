@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 
@@ -37,6 +38,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
@@ -49,10 +51,9 @@ import java.util.Date
 fun SearchScreen(
     accountViewModel: AccountsViewModel,
     searchViewModel: SearchViewModel,
-    entriesViewModel: EntriesViewModel ,
-    mainViewModel: MainViewModel ,
+    entriesViewModel: EntriesViewModel,
     typeOfSearch: TypeOfSearch,
-    navToEntries:()->Unit
+    navController: NavController
 ) {
     val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")
     val toAmount by searchViewModel.toAmount.observeAsState("0.0")
@@ -174,14 +175,11 @@ fun SearchScreen(
 
                 } else {
                     when(typeOfSearch){
-                        TypeOfSearch.SEARCH -> navToEntries()
+                        TypeOfSearch.SEARCH -> navController.navigate(Routes.Records.route)
                         TypeOfSearch.DELETE -> TODO()
                         TypeOfSearch.UPDATE -> TODO()
 
                     }
-                        //TypeOfSearch.SEARCH -> //mainViewModel.selectScreen(IconOptions.ENTRIES)
-                        //TypeOfSearch.DELETE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_DELETE)
-                        //TypeOfSearch.UPDATE -> mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
 
 
                 }
