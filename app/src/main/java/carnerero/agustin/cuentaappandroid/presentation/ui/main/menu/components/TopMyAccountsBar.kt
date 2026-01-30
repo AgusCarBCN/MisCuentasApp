@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-public fun TopMyAccountsBar(scope: CoroutineScope, drawerState: DrawerState, title: Int, name: String) {
+fun TopMyAccountsBar(scope: CoroutineScope, drawerState: DrawerState, title: Int) {
 
     TopAppBar(
-        title = { Text(text = stringResource(id = title) + " " + name) },
+        title = { Text(text = stringResource(id = title) ) },
         navigationIcon = {
             IconButton(onClick = { scope.launch { drawerState.open() } }) {
                 Icon(

@@ -3,7 +3,6 @@ package carnerero.agustin.cuentaappandroid
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,27 +24,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import carnerero.agustin.cuentaappandroid.MainActivity.Companion.CHANEL_NOTIFICATION
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.AppNavHost
-import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
 import carnerero.agustin.cuentaappandroid.utils.ObserveAsEvents
@@ -62,7 +47,12 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    private val settingViewModel : SettingViewModel by viewModels()
+    private val settingViewModel: SettingViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+    private val accountsViewModel: AccountsViewModel by viewModels()
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private val tutorialViewModel: TutorialViewModel by viewModels ()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +106,12 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     AppNavHost(navigationController,
+                        mainViewModel,
+                        accountsViewModel,
+                        settingViewModel,
+                        tutorialViewModel,
+                        categoriesViewModel,
+                        profileViewModel,
                         modifier = Modifier.padding(innerPadding))
 
                 }

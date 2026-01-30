@@ -34,7 +34,8 @@ import androidx.core.net.toUri
 
 @Composable
 
-fun AboutScreen(mainViewModel: MainViewModel) {
+fun AboutScreen(navToAbout:()->Unit,
+                navToEmail:()->Unit) {
     val message = stringResource(id = R.string.share)
     val context = LocalContext.current
     val appClimgingCompanionLink =
@@ -63,7 +64,7 @@ fun AboutScreen(mainViewModel: MainViewModel) {
             description = stringResource(id = R.string.desaboutapp),
             iconResource = R.drawable.info,
             onClick = {
-                mainViewModel.selectScreen(IconOptions.ABOUT_DESCRIPTION)
+                navToAbout()
             })
         RowComponent(title = stringResource(id = R.string.share),
             description = stringResource(id = R.string.desshare),
@@ -76,7 +77,7 @@ fun AboutScreen(mainViewModel: MainViewModel) {
         RowComponent(title = stringResource(id = R.string.contactme),
             description = stringResource(id = R.string.desemail),
             iconResource = R.drawable.email,
-            onClick = { mainViewModel.selectScreen(IconOptions.EMAIL) })
+            onClick = { navToEmail()})
         RowComponent(title = stringResource(id = R.string.visitmygithub),
             description = stringResource(id = R.string.visitmygithubdes),
             iconResource = R.drawable.github,

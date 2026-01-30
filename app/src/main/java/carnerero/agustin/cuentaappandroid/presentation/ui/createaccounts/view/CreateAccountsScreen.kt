@@ -47,8 +47,8 @@ import java.math.BigDecimal
 @Composable
 
 fun CreateAccountsComponent(
-    accountsViewModel: AccountsViewModel = hiltViewModel(),
-    categoriesViewModel: CategoriesViewModel = hiltViewModel(),
+    accountsViewModel: AccountsViewModel ,
+    categoriesViewModel: CategoriesViewModel,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {

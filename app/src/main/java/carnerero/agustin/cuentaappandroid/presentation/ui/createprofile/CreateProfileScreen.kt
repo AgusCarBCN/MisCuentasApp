@@ -55,7 +55,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun CreateProfileComponent(
-    createViewModel: ProfileViewModel = hiltViewModel (),
+    createViewModel: ProfileViewModel,
     navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {

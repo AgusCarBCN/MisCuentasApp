@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Tutorial(
-    tutorialViewModel: TutorialViewModel= hiltViewModel(),
+    tutorialViewModel: TutorialViewModel,
     navToScreen: () -> Unit,
     modifier: Modifier
 ) {

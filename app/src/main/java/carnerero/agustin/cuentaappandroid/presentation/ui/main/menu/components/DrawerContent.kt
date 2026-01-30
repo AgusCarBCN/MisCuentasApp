@@ -31,16 +31,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.UserImage
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
-import carnerero.agustin.cuentaappandroid.utils.navigateSingleTop
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 @Composable
 fun DrawerMyAccountsContent(
@@ -74,7 +72,7 @@ fun DrawerMyAccountsContent(
 
             drawerMenuManageItems.forEach { item ->
                 ClickableRow(OptionItem(item.labelResource!!, item.iconResource!!), onClick = {
-                    navController.navigateSingleTop(item.route)
+                    navController.navigateTopLevel(item.route)
                     /*navController.navigate(item.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
@@ -86,7 +84,7 @@ fun DrawerMyAccountsContent(
             }
             TitleOptions(R.string.aboutapp)
             ClickableRow(OptionItem(about.labelResource!!, about.iconResource!!), onClick = {
-               navController.navigateSingleTop(about.route)
+               navController.navigateTopLevel(about.route)
                /* navController.navigate(about.route) {
                     popUpTo(navController.graph.findStartDestination().id) {
                         saveState = true

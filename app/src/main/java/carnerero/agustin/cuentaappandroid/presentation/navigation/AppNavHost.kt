@@ -34,13 +34,13 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun AppNavHost(navController: NavHostController,
+               mainViewModel: MainViewModel,
+               accountsViewModel: AccountsViewModel,
+               settingViewModel: SettingViewModel,
+               tutorialViewModel: TutorialViewModel,
+               categoriesViewModel: CategoriesViewModel,
+               profileViewModel: ProfileViewModel,
                modifier: Modifier) {
-    val mainViewModel: MainViewModel =hiltViewModel()
-    val tutorialViewModel: TutorialViewModel = hiltViewModel()
-    val settingViewModel: SettingViewModel=hiltViewModel()
-    val accountsViewModel: AccountsViewModel = hiltViewModel()
-    val categoriesViewModel: CategoriesViewModel=hiltViewModel()
-    val profileViewModel : ProfileViewModel=hiltViewModel()
 
     val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
     val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
@@ -51,6 +51,7 @@ fun AppNavHost(navController: NavHostController,
     ) {
         composable(Routes.Tutorial.route) {
             Tutorial(
+                tutorialViewModel,
                 navToScreen = {
                     navController.navigate(
                         if (toLogin) Routes.Login.route
@@ -63,12 +64,15 @@ fun AppNavHost(navController: NavHostController,
 
         composable(Routes.CreateProfile.route) {
             CreateProfileComponent(
+                profileViewModel,
                 navToBackLogin = { navController.popBackStack() },
                 navToCreateAccounts = { navController.navigate(Routes.CreateAccounts.route) })
         }
 
         composable(Routes.CreateAccounts.route) {
             CreateAccountsComponent(
+                accountsViewModel,
+                categoriesViewModel,
                 navToLogin = {navController.navigate(Routes.Login.route)},
                 navToBack = { navController.popBackStack() }
             )

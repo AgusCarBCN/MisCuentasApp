@@ -15,7 +15,7 @@ sealed class Routes(val route:String,
 
     // Bottom menu items
 
-     data object Home : Routes("home",R.string.greeting,R.drawable.home)
+     data object Home : Routes("home",R.string.home,R.drawable.home)
 
     data object Search : Routes("search",R.string.search,R.drawable.search)
 
@@ -46,6 +46,10 @@ sealed class Routes(val route:String,
     data object Calculator: Routes("calculator",R.string.calculator,R.drawable.ic_calculate)
 
     data object About: Routes("about",R.string.about,R.drawable.info)
+
+    data object AboutDescription: Routes("about_app",R.string.aboutapp,R.drawable.info)
+
+    data object Email: Routes("email",R.string.email,R.drawable.email)
 
     data object NewEntry:Routes(route="new_entry")
 

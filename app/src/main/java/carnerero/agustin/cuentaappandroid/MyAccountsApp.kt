@@ -8,7 +8,4 @@ import dagger.hilt.android.HiltAndroidApp
  * está configurada para trabajar con Hilt para la inyección de dependencias.
  */
 @HiltAndroidApp
-class MisCuentasApp : Application() {
-
-
-}
+class MyAccountsApp : Application()

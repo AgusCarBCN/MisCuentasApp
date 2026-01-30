@@ -3,7 +3,7 @@ package carnerero.agustin.cuentaappandroid.utils
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 
-fun NavController.navigateSingleTop(route: String) {
+fun NavController.navigateTopLevel(route: String) {
     // Navega a la ruta especificada (por ejemplo, "home" o "settings")
     navigate(route) {
         // Borra del stack de navegación todas las pantallas hasta el destino de inicio

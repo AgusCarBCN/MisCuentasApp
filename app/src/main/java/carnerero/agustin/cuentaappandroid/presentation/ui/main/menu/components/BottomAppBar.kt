@@ -31,13 +31,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.utils.navigateSingleTop
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 
 @Composable
@@ -74,7 +73,7 @@ fun BottomMyAccountsBar(mainViewModel: MainViewModel,
                 bottomBarItems.forEach { item ->
                     IconBottomBarApp(item.labelResource!!, item.iconResource!!) {
                         mainViewModel.updateTitle(item.labelResource)
-                        navController.navigateSingleTop(item.route)
+                        navController.navigateTopLevel(item.route)
                         }
                     }
                 }

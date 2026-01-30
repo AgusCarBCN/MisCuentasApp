@@ -42,9 +42,9 @@ import java.util.Date
 @Composable
 
 fun Transfer(
-    mainViewModel: MainViewModel,
     accountViewModel: AccountsViewModel,
-    entryViewModel: EntriesViewModel
+    entryViewModel: EntriesViewModel,
+    navToHome:()->Unit
 ) {
 
     val accountFrom by accountViewModel.accountSelected.observeAsState()
@@ -166,7 +166,8 @@ fun Transfer(
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {
-                mainViewModel.selectScreen(IconOptions.HOME)
+                navToHome()
+                //mainViewModel.selectScreen(IconOptions.HOME)
             }
 
         )
