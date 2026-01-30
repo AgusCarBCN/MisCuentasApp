@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -29,26 +32,33 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.B
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 @Composable
 fun AccountList(
-    /*mainViewModel: MainViewModel*/
+    mainViewModel: MainViewModel,
     accountsViewModel: AccountsViewModel,
-    option: Boolean
+    option: Boolean,
+    navController: NavController
 ) {
     val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
     accountsViewModel.getAllAccounts()
     // Observa el estado de la lista de cuentas
     val accounts by accountsViewModel.listOfAccounts.observeAsState(null)   // Observa el estado de la lista de cuentas
+    val accountSelected by accountsViewModel.accountSelected.observeAsState(null)
+    val showDeleteAccountDialog by mainViewModel.showDeleteAccountDialog.collectAsState(false)
 
 
     Column(
@@ -84,11 +94,14 @@ fun AccountList(
                         currencyCode,
                         if (option) R.string.deleteaccount else R.string.modify,
                         onClickCard = {
-                            //mainViewModel.selectScreen(if (option) IconOptions.DELETE_ACCOUNT else IconOptions.EDIT_ACCOUNTS)
-
                             accountsViewModel.onAccountSelected(account)
+
                             if (option) {
-                               // mainViewModel.showDeleteAccountDialog(true)
+                                mainViewModel.showDeleteAccountDialog(true)
+                            }else{
+                                navController.navigateTopLevel(Routes.ModifyAccountItem.createRoute(
+                                    accountSelected?.id ?: 0
+                                ))
                             }
                         }
                     )  // Crea un card para cada cuenta en la lista
@@ -97,21 +110,33 @@ fun AccountList(
             }
         }
     }
+    ModelDialog(
+        R.string.titledelete,
+        R.string.deleteinfo,
+        showDialog = showDeleteAccountDialog,
+        onConfirm = {
+            accountSelected?.let { accountsViewModel.deleteAccount(it) }
+            mainViewModel.showDeleteAccountDialog(false)
+           },
+        onDismiss = {
+            mainViewModel.showDeleteAccountDialog(false)
+        })
+
 }
 
 @Composable
 fun ModifyAccountsComponent(
-    mainViewModel: MainViewModel,
     accountsViewModel: AccountsViewModel,
+    accountId: Int?,
+    navToHome:()->Unit
 
     ) {
     val scope = rememberCoroutineScope()
-
     val nameButtonChange by accountsViewModel.isEnableChangeNameButton.observeAsState(false)
     val balanceButtonChange by accountsViewModel.isEnableChangeBalanceButton.observeAsState(false)
-    val accountSelected by accountsViewModel.accountSelected.observeAsState()
+    //val accountSelected by accountsViewModel.accountSelected.observeAsState()
 
-    val accountId=accountSelected?.id?:0
+    //val accountId = accountSelected?.id ?: 0
 
     val name by accountsViewModel.newName.observeAsState("")
     val balance by accountsViewModel.newAmount.observeAsState("")
@@ -126,7 +151,10 @@ fun ModifyAccountsComponent(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        HeadSetting(title = stringResource(id = R.string.edit_account), MaterialTheme.typography.headlineSmall)
+        HeadSetting(
+            title = stringResource(id = R.string.edit_account),
+            MaterialTheme.typography.headlineSmall
+        )
 
         IconAnimated(
             iconResource = R.drawable.configaccountoption, sizeIcon = 120,
@@ -143,14 +171,15 @@ fun ModifyAccountsComponent(
             BoardType.TEXT,
             false
         )
-        ModelButton(text = stringResource(id = R.string.change),
+        ModelButton(
+            text = stringResource(id = R.string.change),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             nameButtonChange,
             onClickButton = {
                 try {
                     scope.launch(Dispatchers.IO) {
-                        accountsViewModel.upDateAccountName(accountId,name)
+                        accountsViewModel.upDateAccountName(accountId!!, name)
                         SnackBarController.sendEvent(event = SnackBarEvent(nameChanged))
                     }
                 } catch (e: Exception) {
@@ -164,7 +193,7 @@ fun ModifyAccountsComponent(
         TextFieldComponent(
             modifier = Modifier.width(360.dp),
             stringResource(id = R.string.enteramount),
-           balance,
+            balance,
             onTextChange = {
                 accountsViewModel.onTextBalanceChanged(it)
             },
@@ -174,15 +203,16 @@ fun ModifyAccountsComponent(
 
 
 
-        ModelButton(text = stringResource(id = R.string.change),
+        ModelButton(
+            text = stringResource(id = R.string.change),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             balanceButtonChange,
             onClickButton = {
                 try {
                     scope.launch(Dispatchers.IO) {
-                        val newBalance=balance.toBigDecimalOrNull()?: BigDecimal.ZERO
-                        accountsViewModel.upDateAccountBalance(accountId,newBalance)
+                        val newBalance = balance.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                        accountsViewModel.upDateAccountBalance(accountId!!, newBalance)
                         SnackBarController.sendEvent(event = SnackBarEvent(balanceChanged))
 
                     }
@@ -194,19 +224,16 @@ fun ModifyAccountsComponent(
             }
         )
 
-        ModelButton(text = stringResource(id = R.string.backButton),
+        ModelButton(
+            text = stringResource(id = R.string.backButton),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(360.dp),
             true,
             onClickButton = {
-                mainViewModel.selectScreen(IconOptions.HOME)
-
-
-
+               navToHome()
             }
         )
-
     }
-    }
+}
 
 

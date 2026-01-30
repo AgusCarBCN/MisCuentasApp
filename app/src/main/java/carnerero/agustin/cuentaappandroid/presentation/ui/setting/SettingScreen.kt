@@ -324,7 +324,6 @@ fun SettingScreen(
             title = stringResource(id = R.string.accountsetting),
             MaterialTheme.typography.headlineSmall
         )
-
         configureAccountsItems.forEach { item->
             RowComponent(title = stringResource(id =item.itemRoute.labelResource!!),
                 description = stringResource(id = item.description),
@@ -332,49 +331,8 @@ fun SettingScreen(
                 onClick = {
                     mainViewModel.updateTitle(item.itemRoute.labelResource)
                     navController.navigateTopLevel(item.itemRoute.route)
-                    //accountsViewModel.onDisableCurrencySelector()
                 })
         }
-/*
-        RowComponent(title = stringResource(id = R.string.add_an_account),
-            description = stringResource(id = R.string.desadd_an_account),
-            iconResource = R.drawable.add,
-            onClick = {
-                accountsViewModel.onDisableCurrencySelector()
-                            })
-        RowComponent(title = stringResource(id = R.string.edit_account),
-            description = stringResource(id = R.string.desedit_account),
-            iconResource = R.drawable.edit,
-            onClick = {
-                settingViewModel.onSelectAccountOption(false)
-                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
-            })
-        RowComponent(title = stringResource(id = R.string.delete_an_account),
-            description = stringResource(id = R.string.desdelete_an_account),
-            iconResource = R.drawable.baseline_delete_24,
-            onClick = {
-                settingViewModel.onSelectAccountOption(true)
-                mainViewModel.selectScreen(IconOptions.SETTING_ACCOUNTS)
-            }
-        )
-        RowComponent(title = stringResource(id = R.string.deleteentry),
-            description = stringResource(id = R.string.deleteentrydes),
-            iconResource = R.drawable.ic_databasedelete,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.SEARCH_DELETE)
-            }
-        )
-        RowComponent(title = stringResource(id = R.string.modifyentry),
-            description = stringResource(id = R.string.modifyentrydes),
-            iconResource = R.drawable.ic_databaseupdate,
-            onClick = {
-                mainViewModel.selectScreen(IconOptions.SEARCH_UPDATE)
-            }
-        )
-        RowComponent(title = stringResource(id = R.string.changecurrency),
-            description = stringResource(id = R.string.deschangecurrency),
-            iconResource = R.drawable.exchange,
-            onClick = { mainViewModel.selectScreen(IconOptions.CHANGE_CURRENCY) })*/
     }
 }
 

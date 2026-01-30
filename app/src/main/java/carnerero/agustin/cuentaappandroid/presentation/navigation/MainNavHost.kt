@@ -35,6 +35,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
@@ -164,10 +165,10 @@ fun MainNavHost(
             )
         }
         composable(Routes.ModifyAccount.route){
-            AccountList(accountsViewModel, false)
+            AccountList(mainViewModel,accountsViewModel, false,navController)
         }
         composable(Routes.DeleteAccount.route) {
-            AccountList(accountsViewModel, true)
+            AccountList(mainViewModel,accountsViewModel, true,navController)
         }
 
         composable(Routes.DeleteRecords.route) {
@@ -191,6 +192,14 @@ fun MainNavHost(
         composable(Routes.ChangeCurrency.route) {
             ChangeCurrencyScreen(accountsViewModel,entriesViewModel)
             {navController.navigate(Routes.Home.route)}
+        }
+        composable(
+            Routes.ModifyAccountItem.route,
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("id")
+            ModifyAccountsComponent(accountsViewModel,id)
+            {navController.navigateTopLevel(Routes.Home.route)}
         }
         }
 

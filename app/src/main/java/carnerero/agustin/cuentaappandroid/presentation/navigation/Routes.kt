@@ -63,7 +63,7 @@ sealed class Routes(
 
     data object AddAccount : Routes("add_account", R.string.add_an_account, R.drawable.add)
 
-    data object ModifyAccount : Routes("modify_account", R.string.modify, R.drawable.edit)
+    data object ModifyAccount : Routes("modify_account",  R.string.edit_account, R.drawable.edit)
 
     data object DeleteAccount :
         Routes("delete_account", R.string.delete_an_account, R.drawable.baseline_delete_24)
@@ -77,7 +77,8 @@ sealed class Routes(
     data object ChangeCurrency :
         Routes("change_currency", R.string.changeCurrency, R.drawable.exchange)
 
-
-
+    data object ModifyAccountItem: Routes("modify_account/{id}",R.string.modify,R.drawable.configaccountoption){
+        fun createRoute(id:Int):String="modify_account/$id"
+    }
 
 }
