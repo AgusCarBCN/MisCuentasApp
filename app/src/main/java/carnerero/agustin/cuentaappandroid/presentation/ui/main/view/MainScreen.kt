@@ -79,7 +79,7 @@ fun MainScreen(
 
 
     val showExitDialog by mainViewModel.showExitDialog.collectAsState()
-    val title by mainViewModel.title.observeAsState(R.string.greeting)
+    val title by mainViewModel.title.observeAsState(R.string.home)
 
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
     LaunchedEffect(key1 = navBackStackEntry) {
