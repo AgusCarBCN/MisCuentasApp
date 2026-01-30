@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val title: LiveData<Int> = _title
 
     init {
-        _title.value = R.string.greeting
+        _title.value = R.string.home
     }
 
         // Función que permite cambiar la pantalla seleccionada.

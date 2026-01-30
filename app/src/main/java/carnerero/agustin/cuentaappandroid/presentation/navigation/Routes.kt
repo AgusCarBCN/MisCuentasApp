@@ -10,6 +10,8 @@ sealed class Routes(
     val iconResource: Int? = null
 ) {
 
+    data object Splash:Routes(route="gate")
+
     data object Main : Routes("main")
     data object CreateProfile : Routes("create profile", R.string.profile, R.drawable.profile)
     data object CreateAccounts : Routes("create accounts", R.string.createAccount, R.drawable.add)
