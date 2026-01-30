@@ -41,6 +41,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -175,16 +176,12 @@ fun SearchScreen(
 
                 } else {
                     when(typeOfSearch){
-                        TypeOfSearch.SEARCH -> navController.navigate(Routes.Records.route)
-                        TypeOfSearch.DELETE -> TODO()
-                        TypeOfSearch.UPDATE -> TODO()
-
+                        TypeOfSearch.SEARCH -> navController.navigateTopLevel(Routes.Records.route)
+                        TypeOfSearch.DELETE -> navController.navigateTopLevel(Routes.RecordsToDelete.route)
+                        TypeOfSearch.UPDATE -> navController.navigateTopLevel(Routes.RecordsToModify.route)
                     }
-
-
                 }
             }
         )
-
     }
 }

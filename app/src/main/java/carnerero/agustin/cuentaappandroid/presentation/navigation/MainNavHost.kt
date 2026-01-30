@@ -10,7 +10,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithIcon
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
@@ -26,7 +30,10 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
+import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
@@ -41,6 +48,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewMod
 import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
+import com.google.gson.Gson
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -56,7 +64,7 @@ fun MainNavHost(
 
     val barChartViewModel: BarChartViewModel = hiltViewModel()
     val entriesViewModel: EntriesViewModel = hiltViewModel()
-    val calculatorViewModel: CalculatorViewModel=hiltViewModel()
+    val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchViewModel = hiltViewModel()
 
     NavHost(
@@ -73,13 +81,14 @@ fun MainNavHost(
             )
             { navController.navigate(Routes.Records.route) }
         }
-         composable(Routes.Search.route) {
+        composable(Routes.Search.route) {
             SearchScreen(
                 accountsViewModel,
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.SEARCH,
-                navController)
+                navController
+            )
         }
         composable(Routes.Settings.route) {
             SettingScreen(
@@ -99,6 +108,12 @@ fun MainNavHost(
                 entriesViewModel,
                 accountsViewModel
             )
+        }
+        composable(Routes.RecordsToDelete.route) {
+            EntriesWithCheckBox(entriesViewModel,accountsViewModel)
+        }
+        composable(Routes.RecordsToModify.route) {
+            EntriesWithEditIcon(entriesViewModel,accountsViewModel,navController)
         }
 
         // Drawer menu
@@ -135,40 +150,43 @@ fun MainNavHost(
         composable(Routes.BarChart.route) {
             BarChartScreen(accountsViewModel, barChartViewModel, settingViewModel)
         }
-        composable(Routes.Transfer.route){
-            Transfer(accountsViewModel,
-                entriesViewModel)
-            {navController.navigate(Routes.Home.route)}
+        composable(Routes.Transfer.route) {
+            Transfer(
+                accountsViewModel,
+                entriesViewModel
+            )
+            { navController.navigate(Routes.Home.route) }
         }
-        composable(Routes.Calculator.route){
+        composable(Routes.Calculator.route) {
             CalculatorUI(calculatorViewModel)
         }
-        composable(Routes.About.route){
-            AboutScreen({navController.navigate(Routes.AboutDescription.route)})
-            {navController.navigate(Routes.Email.route)
+        composable(Routes.About.route) {
+            AboutScreen({ navController.navigate(Routes.AboutDescription.route) })
+            {
+                navController.navigate(Routes.Email.route)
             }
         }
         composable(Routes.AboutDescription.route) {
             AboutApp()
         }
-        composable(Routes.Email.route){
+        composable(Routes.Email.route) {
             SendEmail()
         }
 
 
-        composable(Routes.AddAccount.route){
+        composable(Routes.AddAccount.route) {
             CreateAccountsComponent(
                 accountsViewModel,
                 categoriesViewModel,
-                navToLogin = {navController.navigate(Routes.Login.route)},
+                navToLogin = { navController.navigate(Routes.Login.route) },
                 navToBack = { navController.popBackStack() }
             )
         }
-        composable(Routes.ModifyAccount.route){
-            AccountList(mainViewModel,accountsViewModel, false,navController)
+        composable(Routes.ModifyAccount.route) {
+            AccountList(mainViewModel, accountsViewModel, false, navController)
         }
         composable(Routes.DeleteAccount.route) {
-            AccountList(mainViewModel,accountsViewModel, true,navController)
+            AccountList(mainViewModel, accountsViewModel, true, navController)
         }
 
         composable(Routes.DeleteRecords.route) {
@@ -177,7 +195,8 @@ fun MainNavHost(
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.DELETE,
-                navController)
+                navController
+            )
 
         }
         composable(Routes.ModifyRecords.route) {
@@ -186,21 +205,33 @@ fun MainNavHost(
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.UPDATE,
-                navController)
+                navController
+            )
 
         }
         composable(Routes.ChangeCurrency.route) {
-            ChangeCurrencyScreen(accountsViewModel,entriesViewModel)
-            {navController.navigate(Routes.Home.route)}
+            ChangeCurrencyScreen(accountsViewModel, entriesViewModel)
+            { navController.navigate(Routes.Home.route) }
         }
         composable(
             Routes.ModifyAccountItem.route,
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("id")
-            ModifyAccountsComponent(accountsViewModel,id)
-            {navController.navigateTopLevel(Routes.Home.route)}
+            ModifyAccountsComponent(accountsViewModel, id)
+            { navController.navigateTopLevel(Routes.Home.route) }
         }
+        composable(
+            Routes.ModifyRecordItem.route,
+            arguments = listOf(navArgument("recordJson") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val recordJson = backStackEntry.arguments?.getString("recordJson")
+            val entry = Gson().fromJson(recordJson, EntryDTO::class.java) // Deserialización
+            // Obtener el parámetro
+            ModifyEntry(entry,entriesViewModel, searchViewModel,accountsViewModel ) {navController.navigateTopLevel(Routes.Home.route) }
         }
-
     }
+}
+
+
+

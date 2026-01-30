@@ -29,9 +29,9 @@ sealed class Routes(
 
     data object Records : Routes("entries", R.string.yourentries)
 
-    data object RecordToDelete : Routes("entries_delete", R.string.deleteentries)
+    data object RecordsToDelete : Routes("entries_delete", R.string.deleteentries)
 
-    data object RecordToModify : Routes("entries_modify", R.string.modify)
+    data object RecordsToModify : Routes("entries_modify", R.string.modify)
 
     // Drawer content items
 
@@ -79,6 +79,9 @@ sealed class Routes(
 
     data object ModifyAccountItem: Routes("modify_account/{id}",R.string.modify,R.drawable.configaccountoption){
         fun createRoute(id:Int):String="modify_account/$id"
+    }
+    data object ModifyRecordItem: Routes("modify_record/{recordJson}",R.string.modifyentry,R.drawable.ic_databaseupdate){
+        fun createRoute(recordJson:String):String="modify_record/$recordJson"
     }
 
 }

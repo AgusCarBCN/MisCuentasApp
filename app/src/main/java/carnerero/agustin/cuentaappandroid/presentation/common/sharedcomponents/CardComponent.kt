@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
@@ -49,8 +50,11 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -542,11 +546,14 @@ fun EntryCardWithCheckBox(
 @Composable
 fun EntryCardWithIcon(
     entry: EntryDTO,
-    currencyCode: String,
+    accountsViewModel: AccountsViewModel,
     entriesViewModel: EntriesViewModel,
-    mainViewModel: MainViewModel
+    navController: NavController
+
 
 ) {
+    val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
+    val entryJson = Uri.encode(Gson().toJson(entry))
     val income= stringResource(id = R.string.incomeoption)
     val expense= stringResource(id = R.string.expenseoption)
     val edit=stringResource(id = R.string.modifyentry)
@@ -633,7 +640,8 @@ fun EntryCardWithIcon(
                     .size(24.dp)
                     .clickable {
                         entriesViewModel.onEntryDTOSelected(entry)
-                        mainViewModel.selectScreen(IconOptions.MODIFY_ENTRY)
+                        navController.navigate(Routes.ModifyRecordItem.createRoute(entryJson))
+
                     }
             )
 

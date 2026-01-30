@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +35,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -42,7 +44,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 entriesViewModel: EntriesViewModel,
                 searchViewModel: SearchViewModel,
                 accountsViewModel: AccountsViewModel,
-                mainViewModel: MainViewModel
+                navToHome:()->Unit,
                 )
 {
     // Sincroniza los datos iniciales del ViewModel
@@ -54,7 +56,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
     val descriptionEntry by entriesViewModel.entryDescriptionModify.observeAsState(description)
     val amountEntry by entriesViewModel.entryAmountModify.observeAsState(amount)
     val dateSelected by searchViewModel.selectedFromDate.observeAsState(entryDTO.date)
-
+    val entryJson = Uri.encode(Gson().toJson(entryDTO))
     val messageModify= stringResource(id = R.string.modifyentrymsg)
     val scope = rememberCoroutineScope()
 
@@ -119,6 +121,8 @@ fun ModifyEntry(entryDTO: EntryDTO,
                 val updateBalanceExpense = amountEntry.toBigDecimal().negate().add(amountBefore)
 
                 val entryDTOUpdated= EntryDTO(
+
+
                     entryDTO.id,
                     descriptionEntry,
                     if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()
@@ -137,7 +141,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
                         else amountEntry.toBigDecimal().negate(),
                         dateSelected)
                 entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
-                mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
+                //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                 //Actualiza balance de cuenta
                 accountsViewModel.updateAccountBalance(
                     entryDTO.accountId,
@@ -158,7 +162,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
             modifier = Modifier.width(320.dp),
             true,
             onClickButton = {
-                mainViewModel.selectScreen(IconOptions.HOME)
+                navToHome()
             }
         )
 

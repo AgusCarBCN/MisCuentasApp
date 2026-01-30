@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.model.EntryWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
@@ -317,10 +318,10 @@ fun ItemCategory(
 @Composable
 fun EntriesWithCheckBox(
     entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel,
-    listOfEntries: List<EntryDTO>,
-    currencyCode: String
+    accountViewModel: AccountsViewModel
 ) {
+    val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")
+    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
     // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
     // remember(listOfEntries):
     // - Al observar listOfEntries, remember reconstruye listOfEntriesWithCheckBox cada vez que listOfEntries cambia.
@@ -431,10 +432,12 @@ fun EntriesWithCheckBox(
 @Composable
 fun EntriesWithEditIcon(
     entriesViewModel: EntriesViewModel,
-    mainViewModel: MainViewModel,
-    listOfEntries: List<EntryDTO>,
-    currencyCode: String
+    accountViewModel: AccountsViewModel,
+    navController: NavController
+
 ) {
+
+    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -446,9 +449,10 @@ fun EntriesWithEditIcon(
         items(listOfEntries) { entry ->
             EntryCardWithIcon(
                 entry,
-                currencyCode,
+                accountViewModel,
                 entriesViewModel,
-                mainViewModel
+                navController,
+
             )
         }
     }
