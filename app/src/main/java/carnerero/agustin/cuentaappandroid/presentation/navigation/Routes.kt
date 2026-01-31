@@ -91,7 +91,7 @@ sealed class Routes(
         R.string.accountscontrol,
         R.drawable.ic_selectaccounts)
 
-    data object SpendingControlByAccount:Routes("total_expense",
+    data object SpendingControlByAccount:Routes("spending_control_by_account",
         R.string.expensecontrol,
         R.drawable.ic_expensetotal)
 
@@ -99,7 +99,7 @@ sealed class Routes(
         R.string.selectcategories,
         R.drawable.ic_selectcategories)
 
-    data object SpendingControlByCategory:Routes("select_categories",
+    data object SpendingControlByCategory:Routes("spending_control_by_category",
         R.string.categorycontrol,
         R.drawable.ic_categorycontrol)
 

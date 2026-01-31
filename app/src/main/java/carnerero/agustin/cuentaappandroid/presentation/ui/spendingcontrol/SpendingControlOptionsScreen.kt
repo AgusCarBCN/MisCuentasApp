@@ -37,7 +37,6 @@ fun SpendingControlOptionsScreen(navController: NavController) {
             MaterialTheme.typography.headlineSmall
         )
 
-
         optionList.forEach { item ->
             RowComponent(
                 stringResource(item.itemRoute.labelResource!!),
@@ -47,5 +46,6 @@ fun SpendingControlOptionsScreen(navController: NavController) {
                     navController.navigateTopLevel(item.itemRoute.route)
                 })
         }
+
     }
 }

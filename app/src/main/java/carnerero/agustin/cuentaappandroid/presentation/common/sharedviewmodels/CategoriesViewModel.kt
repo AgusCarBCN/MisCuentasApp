@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -347,6 +348,7 @@ class CategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             updateExpensePercentage()
         }
+        getAllCategoriesByType(CategoryType.EXPENSE)
     }
     fun populateCategories(){
         viewModelScope.launch(Dispatchers.IO)
@@ -372,8 +374,15 @@ class CategoriesViewModel @Inject constructor(
     }
 
     fun getAllCategoriesByType(type: CategoryType){
-        viewModelScope.launch(Dispatchers.IO){
-            _listOfCategories.postValue(getAllCategoriesByType.invoke(type))
+
+        viewModelScope.launch {
+            try {
+                val accounts = withContext(Dispatchers.IO) { getAllCategoriesByType.invoke(type) }
+                _listOfCategories.postValue(accounts)
+                Log.d("Categories", "Fetched all categories successfully.Total categories: ${_listOfCategories.value?.size}" )
+            } catch (e: Exception) {
+                Log.e("Categories", "Error fetching all categories: ${e.message}", e)
+            }
         }
 
     }

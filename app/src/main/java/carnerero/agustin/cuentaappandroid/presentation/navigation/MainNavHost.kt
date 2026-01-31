@@ -242,6 +242,7 @@ fun MainNavHost(
         }
         composable(Routes.SelectCategories.route) {
             SelectCategoriesScreen(categoriesViewModel, searchViewModel)
+
         }
         composable(Routes.SpendingControlByCategory.route){
             SpendingControlByCategoriesScreen(categoriesViewModel,accountsViewModel)
