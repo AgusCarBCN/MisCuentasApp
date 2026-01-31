@@ -1,4 +1,4 @@
-# Mis Cuentas App
+# Mis Cuentas 
 
 Una aplicación Android para la gestión financiera personal con soporte para múltiples cuentas y control de gastos detallado.
 
@@ -63,7 +63,7 @@ La aplicación también cuenta con una práctica calculadora integrada, permiti�
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/AgusCarBCN/MisCuentasAppBigdecimal.git
+git clone https://github.com/AgusCarBCN/MisCuentasApp.git
 ```
 
 2. Abre el proyecto en Android Studio

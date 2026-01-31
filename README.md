@@ -1,4 +1,4 @@
-# MisCuentasAppBigDecimal
+# My Accounts
 
 An Android application for personal financial management with support for multiple accounts and detailed expense control.
 
@@ -63,7 +63,7 @@ The application also features a handy integrated calculator, allowing you to per
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AgusCarBCN/MisCuentasAppBigdecimal.git
+git clone https://github.com/AgusCarBCN/MisCuentasApp.git
 ```
 
 2. Open the project in Android Studio
