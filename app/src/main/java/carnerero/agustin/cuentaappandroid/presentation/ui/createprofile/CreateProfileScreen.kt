@@ -45,6 +45,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.B
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
@@ -56,6 +57,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun CreateProfileComponent(
     createViewModel: ProfileViewModel,
+    categoriesViewModel: CategoriesViewModel,
     navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {
@@ -173,6 +175,7 @@ fun CreateProfileComponent(
                                     name, userName, password
                                 )
                             )
+                            categoriesViewModel.populateCategories()
                             selectedImageUri?.let { createViewModel.saveImageUri(it) }
                         } catch (_: Exception) {
                             withContext(Dispatchers.Main) {

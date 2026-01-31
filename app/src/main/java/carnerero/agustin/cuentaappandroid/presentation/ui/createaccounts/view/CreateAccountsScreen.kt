@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -47,37 +48,48 @@ import java.math.BigDecimal
 @Composable
 
 fun CreateAccountsComponent(
-    accountsViewModel: AccountsViewModel ,
-    categoriesViewModel: CategoriesViewModel,
+    accountsViewModel: AccountsViewModel,
+    enableSelector:Boolean,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {
+
+
+    val scope = rememberCoroutineScope()
+    val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
+    val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
+    val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
+    val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
+    val accountName by accountsViewModel.name.observeAsState("")
+    val accountBalance by accountsViewModel.amount.observeAsState("")
+    val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(
+        enableSelector
+    )
+    val newAccountCreated = message(resource = R.string.newaccountcreated)
+    val errorAccountCreated = message(resource = R.string.erroraccountcreated)
+    val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
+    LaunchedEffect(Unit) {
+        accountsViewModel.getListOfCurrencyCode()
+        accountsViewModel.getAllAccounts()
+
+    }
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(LocalCustomColorsPalette.current.backgroundPrimary) // Reemplaza con tu color de fondo
     ) {
-
-        val scope = rememberCoroutineScope()
-        val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
-        val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
-        val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
-        val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
-        val accountName by accountsViewModel.name.observeAsState("")
-        val accountBalance by accountsViewModel.amount.observeAsState("")
-        val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(true)
-        val newAccountCreated = message(resource = R.string.newaccountcreated)
-        val errorAccountCreated = message(resource = R.string.erroraccountcreated)
-        val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
-        LaunchedEffect(Unit) {
-            accountsViewModel.getListOfCurrencyCode()
-            accountsViewModel.getAllAccounts()
-        }
         Column(
-
+            modifier =if(enableSelector)
+                Modifier.fillMaxSize()
+                    .padding(top=30.dp)
+                    else Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             if (!isCurrencyExpanded) {
                 Text(
@@ -146,6 +158,10 @@ fun CreateAccountsComponent(
                                         balance = amountDecimal
                                     )
                                 )
+
+                                if (listOfAccounts.isEmpty()) {
+                                    accountsViewModel.enableCurrencySelector
+                                }
                                 withContext(Dispatchers.Main) {
                                     SnackBarController.sendEvent(
                                         event = SnackBarEvent(
@@ -153,7 +169,6 @@ fun CreateAccountsComponent(
                                         )
                                     )
                                 }
-
                             } catch (_: Exception) {
                                 withContext(Dispatchers.Main) {
                                     SnackBarController.sendEvent(
@@ -166,51 +181,50 @@ fun CreateAccountsComponent(
                         }
                     }
                 )
-            }
-            if (listOfAccounts.isEmpty()) {
-                if (enableCurrencySelector) {
-                    CurrencySelector(accountsViewModel)
-                }
-                if (!isCurrencyExpanded) {
-                    if (enableCurrencySelector) {
-                        ModelButton(
-                            text = stringResource(id = R.string.confirmButton),
-                            MaterialTheme.typography.labelLarge,
-                            modifier = Modifier.width(360.dp),
-                            true,
-                            onClickButton = {
-                                scope.launch(Dispatchers.IO) {
-                                    try {
-                                        accountsViewModel.setCurrencyCode(currencyShowedCode)
-                                        categoriesViewModel.populateCategories()
-                                    } catch (_: Exception) {
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                event = SnackBarEvent(
-                                                    errorWritingDataStore
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-                                navToLogin()
-                            }
-                        )
+                ModelButton(
+                    text = stringResource(id = R.string.backButton),
+                    MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.width(360.dp),
+                    true,
+                    onClickButton = {
+                        accountsViewModel.resetFields()
+                        navToBack()
                     }
+                )
+
+            }
+            if (enableCurrencySelector) {
+                CurrencySelector(accountsViewModel)
+            }
+            if (!isCurrencyExpanded) {
+                if (enableCurrencySelector) {
                     ModelButton(
-                        text = stringResource(id = R.string.backButton),
+                        text = stringResource(id = R.string.confirmButton),
                         MaterialTheme.typography.labelLarge,
                         modifier = Modifier.width(360.dp),
-                        true,
+                        enableSelector,
                         onClickButton = {
-                            accountsViewModel.resetFields()
-                            navToBack()
+                            scope.launch(Dispatchers.IO) {
+                                try {
+                                    accountsViewModel.setCurrencyCode(currencyShowedCode)
 
+                                } catch (_: Exception) {
+                                    withContext(Dispatchers.Main) {
+                                        SnackBarController.sendEvent(
+                                            event = SnackBarEvent(
+                                                errorWritingDataStore
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                            navToLogin()
                         }
                     )
                 }
             }
+
         }
     }
-}
 
+}

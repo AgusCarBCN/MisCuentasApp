@@ -24,14 +24,16 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun AppNavHost(navController: NavHostController,
-               mainViewModel: MainViewModel,
-               accountsViewModel: AccountsViewModel,
-               settingViewModel: SettingViewModel,
-               tutorialViewModel: TutorialViewModel,
-               categoriesViewModel: CategoriesViewModel,
-               profileViewModel: ProfileViewModel
-               ) {
+fun AppNavHost(
+    navController: NavHostController,
+    mainViewModel: MainViewModel,
+    accountsViewModel: AccountsViewModel,
+    settingViewModel: SettingViewModel,
+    tutorialViewModel: TutorialViewModel,
+    categoriesViewModel: CategoriesViewModel,
+    profileViewModel: ProfileViewModel,
+    modifier: Modifier
+) {
 
     val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
     val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
@@ -60,6 +62,7 @@ fun AppNavHost(navController: NavHostController,
         composable(Routes.CreateProfile.route) {
             CreateProfileComponent(
                 profileViewModel,
+                categoriesViewModel,
                 navToBackLogin = { navController.popBackStack() },
                 navToCreateAccounts = { navController.navigate(Routes.CreateAccounts.route) })
         }
@@ -67,7 +70,7 @@ fun AppNavHost(navController: NavHostController,
         composable(Routes.CreateAccounts.route) {
             CreateAccountsComponent(
                 accountsViewModel,
-                categoriesViewModel,
+                true,
                 navToLogin = {navController.navigate(Routes.Login.route)},
                 navToBack = { navController.popBackStack() }
             )

@@ -393,7 +393,10 @@ class AccountsViewModel @Inject constructor(
         _enableCurrencySelector.postValue(false)
 
     }
-
+    fun onEnableCurrencySelector()
+    {
+        _enableCurrencySelector.postValue(true)
+    }
     fun resetFields() {
         _name.postValue("") // Vaciar el nombre de la cuenta
         _amount.postValue("") // Vaciar el balance de la cuenta

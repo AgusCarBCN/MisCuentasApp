@@ -10,7 +10,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -36,7 +35,6 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
 import carnerero.agustin.cuentaappandroid.utils.ObserveAsEvents
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import com.google.android.gms.ads.MobileAds
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -62,21 +60,50 @@ class MainActivity : ComponentActivity() {
         createChannel()
         enableEdgeToEdge()
         setContent {
+            val scope = rememberCoroutineScope()
+            val snackBarHostState = remember {
+                SnackbarHostState()
+            }
+            ObserveAsEvents(
+                flow = SnackBarController.events,
+                snackBarHostState
+            ) { event ->
+                scope.launch {
+                    snackBarHostState.currentSnackbarData?.dismiss()
 
+                    val result = snackBarHostState.showSnackbar(
+                        message = event.message,
+                        actionLabel = event.action?.name,
+                        duration = SnackbarDuration.Short
+                    )
+
+                    if (result == SnackbarResult.ActionPerformed) {
+                        event.action?.action?.invoke()
+                    }
+                }
+            }
             val navigationController = rememberNavController()
             val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
             MisCuentasTheme(darkTheme = switchDarkTheme) {
-                MobileAds.initialize(this){
+                MobileAds.initialize(this) {
                     Log.d(TAG, "onCreate: initAds")
                 }
-               AppNavHost(navigationController,
+                Scaffold(
+                    snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+                ) { innerPadding->
+                    AppNavHost(
+                        navigationController,
                         mainViewModel,
                         accountsViewModel,
                         settingViewModel,
                         tutorialViewModel,
                         categoriesViewModel,
-                        profileViewModel)
+                        profileViewModel,
+                        Modifier.padding(innerPadding)
+                        )
+                }
+
             }
         }
     }

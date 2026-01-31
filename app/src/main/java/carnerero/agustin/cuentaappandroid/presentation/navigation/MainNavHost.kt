@@ -173,14 +173,14 @@ fun MainNavHost(
             SendEmail()
         }
 
-
         composable(Routes.AddAccount.route) {
             CreateAccountsComponent(
                 accountsViewModel,
-                categoriesViewModel,
-                navToLogin = { navController.navigate(Routes.Login.route) },
+                false,
+                navToLogin = {navController.navigate(Routes.Home.route)},
                 navToBack = { navController.popBackStack() }
             )
+
         }
         composable(Routes.ModifyAccount.route) {
             AccountList(mainViewModel, accountsViewModel, false, navController)
