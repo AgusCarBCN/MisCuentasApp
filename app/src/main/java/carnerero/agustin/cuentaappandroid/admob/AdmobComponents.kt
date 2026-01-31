@@ -20,7 +20,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
-fun adaptiveAdSize(): AdSize {
+private fun adaptiveAdSize(): AdSize {
     val context = LocalContext.current
     val density = LocalDensity.current.density
     val metrics: WindowMetrics = context.getSystemService(WindowManager::class.java).currentWindowMetrics
