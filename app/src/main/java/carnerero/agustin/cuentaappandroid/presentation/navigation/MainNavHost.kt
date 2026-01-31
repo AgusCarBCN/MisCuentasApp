@@ -60,8 +60,7 @@ fun MainNavHost(
     categoriesViewModel: CategoriesViewModel,
     mainViewModel: MainViewModel,
     accountsViewModel: AccountsViewModel,
-    profileViewModel: ProfileViewModel,
-    modifier: Modifier
+    profileViewModel: ProfileViewModel
 ) {
 
     val barChartViewModel: BarChartViewModel = hiltViewModel()
@@ -71,8 +70,7 @@ fun MainNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.route,
-        modifier = modifier
+        startDestination = Routes.Home.route
     ) {
         // BottomAppBar menu
 

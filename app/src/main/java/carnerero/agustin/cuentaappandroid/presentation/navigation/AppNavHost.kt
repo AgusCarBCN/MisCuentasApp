@@ -30,8 +30,8 @@ fun AppNavHost(navController: NavHostController,
                settingViewModel: SettingViewModel,
                tutorialViewModel: TutorialViewModel,
                categoriesViewModel: CategoriesViewModel,
-               profileViewModel: ProfileViewModel,
-               modifier: Modifier) {
+               profileViewModel: ProfileViewModel
+               ) {
 
     val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
     val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
@@ -54,8 +54,7 @@ fun AppNavHost(navController: NavHostController,
                             inclusive = true
                         }
                     }
-                },
-                modifier = modifier)
+                })
         }
 
         composable(Routes.CreateProfile.route) {

@@ -51,8 +51,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Tutorial(
     tutorialViewModel: TutorialViewModel,
-    navToScreen: () -> Unit,
-    modifier: Modifier
+    navToScreen: () -> Unit
 ) {
     val listOfItems=getItems()
     val toLogin by tutorialViewModel.toLogin.observeAsState(false)

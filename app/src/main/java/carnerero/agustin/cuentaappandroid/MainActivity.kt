@@ -61,57 +61,22 @@ class MainActivity : ComponentActivity() {
         //Crea canal para las notificaciones
         createChannel()
         enableEdgeToEdge()
-
         setContent {
 
             val navigationController = rememberNavController()
-
             val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
             MisCuentasTheme(darkTheme = switchDarkTheme) {
                 MobileAds.initialize(this){
                     Log.d(TAG, "onCreate: initAds")
                 }
-                val snackbarHostState = remember {
-                    SnackbarHostState()
-                }
-                val scope = rememberCoroutineScope()
-
-                ObserveAsEvents(
-                    flow = SnackBarController.events,
-                    snackbarHostState
-                ) { event ->
-                    scope.launch {
-                        snackbarHostState.currentSnackbarData?.dismiss()
-
-                        val result = snackbarHostState.showSnackbar(
-                            message = event.message,
-                            actionLabel = event.action?.name,
-                            duration = SnackbarDuration.Short
-                        )
-
-                        if (result == SnackbarResult.ActionPerformed) {
-                            event.action?.action?.invoke()
-                        }
-                    }
-                }
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    snackbarHost = {
-                        SnackbarHost(hostState = snackbarHostState)
-                    }
-                ) { innerPadding ->
-                    AppNavHost(navigationController,
+               AppNavHost(navigationController,
                         mainViewModel,
                         accountsViewModel,
                         settingViewModel,
                         tutorialViewModel,
                         categoriesViewModel,
-                        profileViewModel,
-                        modifier = Modifier.padding(innerPadding))
-
-                }
+                        profileViewModel)
             }
         }
     }
