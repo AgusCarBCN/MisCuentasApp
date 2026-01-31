@@ -63,7 +63,7 @@ The application also features a handy integrated calculator, allowing you to per
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/MisCuentasAppBigdecimal.git
+git clone https://github.com/AgusCarBCN/MisCuentasAppBigdecimal.git
 ```
 
 2. Open the project in Android Studio
@@ -132,7 +132,7 @@ This project is licensed under the MIT License. See the [`LICENSE`](LICENSE) fil
 
 - **Developer**: Agustin Carnerero Peña
 - **Email**: agusticar@gmail.com
-- **GitHub**: [Your GitHub Profile]
+- **GitHub**: https://github.com/AgusCarBCN
 
 ## 🙏 Acknowledgments
 
