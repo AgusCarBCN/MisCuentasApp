@@ -44,7 +44,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     companion object {
         const val CHANEL_NOTIFICATION = "NotificationChannel"
-
     }
 
     private val settingViewModel: SettingViewModel by viewModels()
@@ -76,9 +75,7 @@ class MainActivity : ComponentActivity() {
                 val snackbarHostState = remember {
                     SnackbarHostState()
                 }
-
                 val scope = rememberCoroutineScope()
-
 
                 ObserveAsEvents(
                     flow = SnackBarController.events,

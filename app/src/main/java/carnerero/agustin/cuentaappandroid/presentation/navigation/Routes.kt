@@ -1,8 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 
 sealed class Routes(
     val route: String,
@@ -50,8 +48,7 @@ sealed class Routes(
 
     data object PieChart : Routes("pie_chart", R.string.piechart, R.drawable.ic_piechart)
 
-    data object SpendingControl :
-        Routes("spending_control", R.string.spendingcontrol, R.drawable.ic_expensecontrol)
+
 
     data object Calculator : Routes("calculator", R.string.calculator, R.drawable.ic_calculate)
 
@@ -79,11 +76,32 @@ sealed class Routes(
     data object ChangeCurrency :
         Routes("change_currency", R.string.changeCurrency, R.drawable.exchange)
 
+
     data object ModifyAccountItem: Routes("modify_account/{id}",R.string.modify,R.drawable.configaccountoption){
         fun createRoute(id:Int):String="modify_account/$id"
     }
     data object ModifyRecordItem: Routes("modify_record/{recordJson}",R.string.modifyentry,R.drawable.ic_databaseupdate){
         fun createRoute(recordJson:String):String="modify_record/$recordJson"
     }
+
+    data object SpendingControl :
+        Routes("spending_control", R.string.spendingcontrol, R.drawable.ic_expensecontrol)
+
+    data object SelectAccounts:Routes("select_accounts",
+        R.string.accountscontrol,
+        R.drawable.ic_selectaccounts)
+
+    data object SpendingControlByAccount:Routes("total_expense",
+        R.string.expensecontrol,
+        R.drawable.ic_expensetotal)
+
+    data object SelectCategories:Routes("select_categories",
+        R.string.selectcategories,
+        R.drawable.ic_selectcategories)
+
+    data object SpendingControlByCategory:Routes("select_categories",
+        R.string.categorycontrol,
+        R.drawable.ic_categorycontrol)
+
 
 }

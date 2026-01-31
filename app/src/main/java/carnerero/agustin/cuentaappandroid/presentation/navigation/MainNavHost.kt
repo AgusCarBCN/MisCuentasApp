@@ -12,9 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithIcon
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
@@ -45,6 +42,11 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SelectAccountScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SelectCategoriesScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByCategoriesScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.Transfer
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
@@ -213,6 +215,7 @@ fun MainNavHost(
             ChangeCurrencyScreen(accountsViewModel, entriesViewModel)
             { navController.navigate(Routes.Home.route) }
         }
+
         composable(
             Routes.ModifyAccountItem.route,
             arguments = listOf(navArgument("id") { type = NavType.IntType })
@@ -229,6 +232,21 @@ fun MainNavHost(
             val entry = Gson().fromJson(recordJson, EntryDTO::class.java) // Deserialización
             // Obtener el parámetro
             ModifyEntry(entry,entriesViewModel, searchViewModel,accountsViewModel ) {navController.navigateTopLevel(Routes.Home.route) }
+        }
+        composable(Routes.SpendingControl.route) {
+            SpendingControlOptionsScreen(navController)
+        }
+        composable(Routes.SelectAccounts.route) {
+            SelectAccountScreen(accountsViewModel,searchViewModel)
+        }
+        composable(Routes.SpendingControlByAccount.route){
+            SpendingControlByAccountsScreen(accountsViewModel)
+        }
+        composable(Routes.SelectCategories.route) {
+            SelectCategoriesScreen(categoriesViewModel, searchViewModel)
+        }
+        composable(Routes.SpendingControlByCategory.route){
+            SpendingControlByCategoriesScreen(categoriesViewModel,accountsViewModel)
         }
     }
 }

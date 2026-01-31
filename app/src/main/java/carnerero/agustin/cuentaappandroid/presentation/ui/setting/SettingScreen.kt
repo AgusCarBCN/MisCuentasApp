@@ -35,13 +35,12 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.ConfigureAccountItem
+import carnerero.agustin.cuentaappandroid.presentation.common.model.RowComponentItem
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -68,12 +67,12 @@ fun SettingScreen(
     val context = LocalContext.current
 
     val configureAccountsItems = listOf(
-        ConfigureAccountItem(Routes.AddAccount,R.string.desadd_an_account),
-        ConfigureAccountItem(Routes.DeleteAccount,R.string.desdelete_an_account),
-        ConfigureAccountItem(Routes.ModifyAccount,R.string.desedit_account),
-        ConfigureAccountItem(Routes.DeleteRecords,R.string.deleteentrydes),
-        ConfigureAccountItem(Routes.ModifyRecords,R.string.modifyentrydes),
-        ConfigureAccountItem(Routes.ChangeCurrency,R.string.deschangecurrency)
+        RowComponentItem(Routes.AddAccount,R.string.desadd_an_account),
+        RowComponentItem(Routes.DeleteAccount,R.string.desdelete_an_account),
+        RowComponentItem(Routes.ModifyAccount,R.string.desedit_account),
+        RowComponentItem(Routes.DeleteRecords,R.string.deleteentrydes),
+        RowComponentItem(Routes.ModifyRecords,R.string.modifyentrydes),
+        RowComponentItem(Routes.ChangeCurrency,R.string.deschangecurrency)
     )
     LaunchedEffect(Unit) {
         entriesViewModel.getAllEntriesDTO()

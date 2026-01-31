@@ -24,8 +24,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SpacerApp
 
 @Composable
 
-fun ExpenseControlCategoriesScreen(categoriesViewModel: CategoriesViewModel,
-                                   accountsViewModel: AccountsViewModel
+fun SpendingControlByCategoriesScreen(categoriesViewModel: CategoriesViewModel,
+                                      accountsViewModel: AccountsViewModel
 )
 
 {
@@ -65,7 +65,7 @@ fun ExpenseControlCategoriesScreen(categoriesViewModel: CategoriesViewModel,
 }
 @Composable
 
-fun ExpenseControlAccountsScreen(accountsViewModel: AccountsViewModel)
+fun SpendingControlByAccountsScreen(accountsViewModel: AccountsViewModel)
 {
     // Observa la lista de categorías desde el ViewModel
     val listOfAccountsChecked by accountsViewModel.listOfAccountsChecked.observeAsState(emptyList())

@@ -60,6 +60,7 @@ fun CreateAccountsComponent(
 
         val scope = rememberCoroutineScope()
         val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
+        val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
         val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
         val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
         val accountName by accountsViewModel.name.observeAsState("")
@@ -67,9 +68,10 @@ fun CreateAccountsComponent(
         val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(true)
         val newAccountCreated = message(resource = R.string.newaccountcreated)
         val errorAccountCreated = message(resource = R.string.erroraccountcreated)
-        val errorWritingDataStore= message(resource = R.string.errorwritingdatastore)
+        val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
         LaunchedEffect(Unit) {
             accountsViewModel.getListOfCurrencyCode()
+            accountsViewModel.getAllAccounts()
         }
         Column(
 
@@ -82,7 +84,7 @@ fun CreateAccountsComponent(
                     modifier = Modifier
                         .padding(50.dp),
                     text = stringResource(id = R.string.createAccount),
-                   style=MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     color = LocalCustomColorsPalette.current.textColor
                 )
@@ -105,7 +107,7 @@ fun CreateAccountsComponent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.createaccountmsg),
-                    style=MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = LocalCustomColorsPalette.current.textColor
                 )
@@ -128,14 +130,16 @@ fun CreateAccountsComponent(
                     BoardType.DECIMAL,
                     false
                 )
-                ModelButton(text = stringResource(id = R.string.addAccount),
+                ModelButton(
+                    text = stringResource(id = R.string.addAccount),
                     MaterialTheme.typography.labelLarge,
                     modifier = Modifier.width(360.dp),
                     isEnableButton,
                     onClickButton = {
                         scope.launch(Dispatchers.IO) {
                             try {
-                                val amountDecimal = accountBalance.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                                val amountDecimal =
+                                    accountBalance.toBigDecimalOrNull() ?: BigDecimal.ZERO
                                 accountsViewModel.addAccount(
                                     Account(
                                         name = accountName,
@@ -163,44 +167,48 @@ fun CreateAccountsComponent(
                     }
                 )
             }
-            if (enableCurrencySelector) {
-                CurrencySelector(accountsViewModel)
-            }
-            if (!isCurrencyExpanded) {
+            if (listOfAccounts.isEmpty()) {
                 if (enableCurrencySelector) {
-                    ModelButton(text = stringResource(id = R.string.confirmButton),
-                      MaterialTheme.typography.labelLarge,
+                    CurrencySelector(accountsViewModel)
+                }
+                if (!isCurrencyExpanded) {
+                    if (enableCurrencySelector) {
+                        ModelButton(
+                            text = stringResource(id = R.string.confirmButton),
+                            MaterialTheme.typography.labelLarge,
+                            modifier = Modifier.width(360.dp),
+                            true,
+                            onClickButton = {
+                                scope.launch(Dispatchers.IO) {
+                                    try {
+                                        accountsViewModel.setCurrencyCode(currencyShowedCode)
+                                        categoriesViewModel.populateCategories()
+                                    } catch (_: Exception) {
+                                        withContext(Dispatchers.Main) {
+                                            SnackBarController.sendEvent(
+                                                event = SnackBarEvent(
+                                                    errorWritingDataStore
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+                                navToLogin()
+                            }
+                        )
+                    }
+                    ModelButton(
+                        text = stringResource(id = R.string.backButton),
+                        MaterialTheme.typography.labelLarge,
                         modifier = Modifier.width(360.dp),
                         true,
                         onClickButton = {
-                            scope.launch(Dispatchers.IO) {
-                                try {
-                                    accountsViewModel.setCurrencyCode(currencyShowedCode)
-                                    categoriesViewModel.populateCategories()
-                                }catch (_: Exception) {
-                                    withContext(Dispatchers.Main) {
-                                        SnackBarController.sendEvent(
-                                            event = SnackBarEvent(
-                                                errorWritingDataStore
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                            navToLogin()
+                            accountsViewModel.resetFields()
+                            navToBack()
+
                         }
                     )
                 }
-                ModelButton(text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.width(360.dp),
-                    true,
-                    onClickButton = {
-                        accountsViewModel.resetFields()
-                        navToBack()
-
-                    }
-                )
             }
         }
     }
