@@ -4,6 +4,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
@@ -115,13 +117,20 @@ fun MainScreen(
                 containerColor = LocalCustomColorsPalette.current.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
-                MainNavHost(innerNavController,
-                    settingViewModel,
-                    categoriesViewModel,
-                    mainViewModel,
-                    accountsViewModel,
-                    profileViewModel,
-                    Modifier.padding(innerPadding))
+                Column(
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    AdmobBanner()
+                    MainNavHost(
+                        innerNavController,
+                        settingViewModel,
+                        categoriesViewModel,
+                        mainViewModel,
+                        accountsViewModel,
+                        profileViewModel,
+                        Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
     )
