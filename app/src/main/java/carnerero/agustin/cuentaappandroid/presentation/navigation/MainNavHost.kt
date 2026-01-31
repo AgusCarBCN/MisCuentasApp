@@ -3,8 +3,6 @@ package carnerero.agustin.cuentaappandroid.presentation.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -63,10 +61,10 @@ fun MainNavHost(
     profileViewModel: ProfileViewModel
 ) {
 
-    val barChartViewModel: BarChartViewModel = hiltViewModel()
-    val entriesViewModel: EntriesViewModel = hiltViewModel()
-    val calculatorViewModel: CalculatorViewModel = hiltViewModel()
-    val searchViewModel: SearchViewModel = hiltViewModel()
+    val barChartViewModel: BarChartViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
+    val entriesViewModel: EntriesViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
+    val calculatorViewModel: CalculatorViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
+    val searchViewModel: SearchViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
 
     NavHost(
         navController = navController,
