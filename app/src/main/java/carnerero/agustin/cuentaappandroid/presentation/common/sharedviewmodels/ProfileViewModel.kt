@@ -12,8 +12,12 @@ import carnerero.agustin.cuentaappandroid.domain.datastore.SaveUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetToLoginUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -154,6 +158,31 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun createProfile(name :String,
+                      userName:String,
+                      password:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val selectedImageUri= _selectedImageUri.value
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    setUserDataProfile(
+                        UserProfile(
+                            name, userName, password
+                        )
+                    )
+                    selectedImageUri?.let { saveImageUri(it) }
+                } catch (_: Exception) {
+                    withContext(Dispatchers.Main) {
+                        SnackBarController.sendEvent(
+                            event = SnackBarEvent(
+                                "Error writing Data Store"
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     private fun enableConfirmButton(
         name: String,

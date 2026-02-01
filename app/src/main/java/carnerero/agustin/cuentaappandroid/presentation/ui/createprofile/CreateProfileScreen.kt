@@ -8,14 +8,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,11 +40,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
@@ -61,143 +65,156 @@ fun CreateProfileComponent(
     navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {
-
-
     val name by createViewModel.name.observeAsState("")
     val userName by createViewModel.username.observeAsState("")
     val password by createViewModel.password.observeAsState("")
     val selectedImageUri by createViewModel.selectedImageUri.observeAsState(null)
-    //val selectedImageUriSaved by createViewModel.selectedImageUri.observeAsState( null)
     val repeatPassword by createViewModel.repeatPassword.observeAsState("")
     val scope = rememberCoroutineScope()
     val enableButton by createViewModel.enableButton.observeAsState(false)
 
     val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary) // Reemplaza con tu color de fondo
-    ) {
-        val (profileImage, box) = createRefs()
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val imageHeight = maxHeight * 0.40f
+        val contentHeight = maxHeight * 0.60f
 
-        Column(modifier = Modifier
-            .constrainAs(profileImage) {
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)               // Termina en el lado derecho del padre
-                start.linkTo(parent.start)
-                bottom.linkTo(box.top)
-                // Parte inferior anclada al padre
-            }) {
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
 
-            ProfileImageWithCamera(createViewModel)
-        }
-        Column(modifier = Modifier
-            .constrainAs(box) {
-                top.linkTo(profileImage.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-            }
-
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(LocalCustomColorsPalette.current.backgroundPrimary) // Reemplaza con tu color de fondo
         ) {
+            val (profileImage, box) = createRefs()
 
-            TextFieldComponent(
-                modifier = Modifier.width(360.dp),
-                stringResource(id = R.string.enterName),
-                name,
-                onTextChange = {
-                    createViewModel.onTextFieldsChanged(
-                        it,
-                        userName,
-                        password,
-                        repeatPassword
-                    )
-                },
-                BoardType.TEXT,
-                false
-            )
-            TextFieldComponent(
-                modifier = Modifier.width(360.dp),
-                stringResource(id = R.string.enterUsername),
-                userName,
-                onTextChange = {
-                    createViewModel.onTextFieldsChanged(
-                        name,
-                        it,
-                        password,
-                        repeatPassword
-                    )
-                },
-                BoardType.TEXT,
-                false
-            )
-            TextFieldComponent(
-                modifier = Modifier.width(360.dp),
-                stringResource(id = R.string.enterPassword),
-                password,
-                onTextChange = {
-                    createViewModel.onTextFieldsChanged(
-                        name,
-                        userName,
-                        it,
-                        repeatPassword
-                    )
-                },
-                BoardType.PASSWORD,
-                true
-            )
-            TextFieldComponent(
-                modifier = Modifier.width(360.dp),
-                stringResource(id = R.string.repeatpassword),
-                repeatPassword,
-                onTextChange = {
-                    createViewModel.onTextFieldsChanged(
-                        name,
-                        userName,
-                        password,
-                        it
-                    )
-                },
-                BoardType.PASSWORD,
-                true
-            )
-            ModelButton(text = stringResource(id = R.string.confirmButton),
-                MaterialTheme.typography.labelLarge,
-                modifier = Modifier.width(360.dp),
-                enableButton,
-                onClickButton = {
-                    navToCreateAccounts()
+            Column(
+                modifier = Modifier
+                    .height(imageHeight)
+                    .constrainAs(profileImage) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)               // Termina en el lado derecho del padre
+                        start.linkTo(parent.start)
+                        bottom.linkTo(box.top)
+                        // Parte inferior anclada al padre
+                    }) {
 
-                    scope.launch(Dispatchers.IO) {
-                        try {
-                            createViewModel.setUserDataProfile(
-                                UserProfile(
-                                    name, userName, password
-                                )
-                            )
-                            categoriesViewModel.populateCategories()
-                            selectedImageUri?.let { createViewModel.saveImageUri(it) }
-                        } catch (_: Exception) {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        errorWritingDataStore
+                ProfileImageWithCamera(createViewModel)
+            }
+            Column(
+                modifier = Modifier
+                    .height(contentHeight)
+                    .verticalScroll(rememberScrollState())
+                    .constrainAs(box) {
+                        top.linkTo(profileImage.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
+
+            ) {
+
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(id = R.string.enterName),
+                    name,
+                    onTextChange = {
+                        createViewModel.onTextFieldsChanged(
+                            it,
+                            userName,
+                            password,
+                            repeatPassword
+                        )
+                    },
+                    BoardType.TEXT,
+                    false
+                )
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(id = R.string.enterUsername),
+                    userName,
+                    onTextChange = {
+                        createViewModel.onTextFieldsChanged(
+                            name,
+                            it,
+                            password,
+                            repeatPassword
+                        )
+                    },
+                    BoardType.TEXT,
+                    false
+                )
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(id = R.string.enterPassword),
+                    password,
+                    onTextChange = {
+                        createViewModel.onTextFieldsChanged(
+                            name,
+                            userName,
+                            it,
+                            repeatPassword
+                        )
+                    },
+                    BoardType.PASSWORD,
+                    true
+                )
+                TextFieldComponent(
+                    modifier = fieldModifier ,
+                    stringResource(id = R.string.repeatpassword),
+                    repeatPassword,
+                    onTextChange = {
+                        createViewModel.onTextFieldsChanged(
+                            name,
+                            userName,
+                            password,
+                            it
+                        )
+                    },
+                    BoardType.PASSWORD,
+                    true
+                )
+                ModelButton(
+                    text = stringResource(id = R.string.confirmButton),
+                    MaterialTheme.typography.labelLarge,
+                    modifier = fieldModifier ,
+                    enableButton,
+                    onClickButton = {
+                        navToCreateAccounts()
+                        createViewModel.createProfile(name,userName,password)
+                        categoriesViewModel.populateCategories()
+                        /*scope.launch(Dispatchers.IO) {
+                            try {
+                                createViewModel.setUserDataProfile(
+                                    UserProfile(
+                                        name, userName, password
                                     )
                                 )
+                                selectedImageUri?.let { createViewModel.saveImageUri(it) }
+                            } catch (_: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        event = SnackBarEvent(
+                                            errorWritingDataStore
+                                        )
+                                    )
+                                }
                             }
-                        }
+                        }*/
                     }
-                }
-            )
+                )
 
-            ModelButton(text = stringResource(id = R.string.backButton),
-                MaterialTheme.typography.labelLarge,
-                modifier = Modifier.width(360.dp),
-                true,
-                onClickButton = {
-                    navToBackLogin()
-                }
-            )
+                ModelButton(
+                    text = stringResource(id = R.string.backButton),
+                    MaterialTheme.typography.labelLarge,
+                    modifier = fieldModifier ,
+                    true,
+                    onClickButton = {
+                        navToBackLogin()
+                    }
+                )
+            }
         }
     }
 }
@@ -216,19 +233,21 @@ fun ProfileImageWithCamera(viewModel: ProfileViewModel) {
     ) { uri: Uri? ->
         selectedImageUri = uri
         selectedImageUri?.let { viewModel.onImageSelected(it) }
-            }
+    }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(), // Para que se ajuste al contenido
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+
     ) {
         // Imagen de perfil dentro de una Card circular
 
         Card(
             modifier = Modifier
-                .size(250.dp),
+                .size(250.dp)
+                .padding(top=20.dp),
             shape = CircleShape, // Hace que el Card sea circular
             // Reemplaza lightYellow
         ) {
@@ -288,6 +307,7 @@ fun ProfileImageWithCamera(viewModel: ProfileViewModel) {
         }
     }
 }
+
 
 
 

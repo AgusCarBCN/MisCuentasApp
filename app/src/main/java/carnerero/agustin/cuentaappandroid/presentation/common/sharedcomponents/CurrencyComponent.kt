@@ -4,10 +4,13 @@ package carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -30,9 +33,10 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 
 @Composable
-fun CurrencySelector(accountsViewModel: AccountsViewModel) {
+fun CurrencySelector(accountsViewModel: AccountsViewModel
+                     ) {
 
-     // Divisa mostrada en proceso de seleccion
+    // Divisa mostrada en proceso de seleccion
     val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("USD")
 
     // Obtener el estado de expansión desde el ViewModel
@@ -54,7 +58,7 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
             ModelButton(
                 text = stringResource(id = R.string.selectcurrencyoption),
                 MaterialTheme.typography.labelLarge,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.width(220.dp),
                 onClickButton = { accountsViewModel.onExpandedChange(true) }
             )
 
@@ -80,7 +84,7 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
                     CurrencyListItem(currency) {
                         // Acción al seleccionar la moneda
                         accountsViewModel.onCurrencyShowedChange(currency.currencyCode)
-                       //Cambia el estado a colapsado
+                        //Cambia el estado a colapsado
                         accountsViewModel.onExpandedChange(false)
                     }
 
@@ -89,6 +93,9 @@ fun CurrencySelector(accountsViewModel: AccountsViewModel) {
         }
     }
 }
+
+
+
 
 @Composable
 fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
@@ -113,4 +120,5 @@ fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
         )
     }
 }
+
 

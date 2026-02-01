@@ -26,6 +26,8 @@ import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.UpdateS
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesByDateUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetCurrencyCodeUseCase
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -437,9 +439,20 @@ class AccountsViewModel @Inject constructor(
 
     fun setCurrencyCode(currencyCode: String) {
         viewModelScope.launch {
-            _currencyCodeSelected.value =currencyCode
-            setCurrencyCode.invoke(currencyCode)
+            try {
+                _currencyCodeSelected.value = currencyCode
+                setCurrencyCode.invoke(currencyCode)
 
+            } catch (_: Exception) {
+                withContext(Dispatchers.Main) {
+                    SnackBarController.sendEvent(
+                        event = SnackBarEvent(
+                            "Error to set currency code"
+                        )
+                    )
+                }
+
+            }
         }
     }
 
@@ -594,6 +607,45 @@ class AccountsViewModel @Inject constructor(
             updateExpensePercentage()
         }
     }
+    fun createNewAccount(balance:String,
+                         accountName:String,
+                         messageSuccess:String,
+                         messageError:String){
+
+        val listOfAccounts=_listOfAccounts.value?:emptyList()
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val amountDecimal =
+                    balance.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                addAccount(
+                    Account(
+                        name = accountName,
+                        balance = amountDecimal
+                    )
+                )
+
+                if (listOfAccounts.isEmpty()) {
+                    enableCurrencySelector
+                }
+                withContext(Dispatchers.Main) {
+                    SnackBarController.sendEvent(
+                        event = SnackBarEvent(
+                            messageSuccess
+                        )
+                    )
+                }
+            } catch (_: Exception) {
+                withContext(Dispatchers.Main) {
+                    SnackBarController.sendEvent(
+                        event = SnackBarEvent(
+                            messageError
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun onAccountUpdated() {
         resetFields()
