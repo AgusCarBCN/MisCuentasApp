@@ -1,12 +1,15 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -35,42 +38,49 @@ fun SelectAccountScreen(
     LaunchedEffect(Unit) {
         accountsViewModel.getAllAccounts()
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 30.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeadSetting(title = stringResource(id = R.string.selectaccountcontrol),
-            MaterialTheme.typography.titleLarge)
-        // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f) // Permite que la columna ocupe el espacio disponible
-                .padding(bottom = 16.dp), // Espacio en la parte inferior
-
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth*0.85f
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 30.dp),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(listOfAccounts) { account ->
-                AccountCardWithCheckbox(
-                    account,
-                    currencyCode,
-                    accountsViewModel,
-                    searchViewModel,
-                    onCheckBoxChange = { checked ->
-                        accountsViewModel.updateCheckedAccount(
-                            account.id,
-                            checked
-                        )
-                        if (!account.isChecked) {
-                            accountsViewModel.onEnableDialogChange(true)
+            HeadSetting(
+                title = stringResource(id = R.string.selectaccounts),
+                MaterialTheme.typography.titleLarge
+            )
+            // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
+            LazyColumn(
+                modifier = Modifier
+                    .width(maxWidthDp)
+                    .weight(1f) // Permite que la columna ocupe el espacio disponible
+                    .padding(bottom = 16.dp), // Espacio en la parte inferior
+
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(listOfAccounts) { account ->
+                    AccountCardWithCheckbox(
+                        account,
+                        currencyCode,
+                        accountsViewModel,
+                        searchViewModel,
+                        onCheckBoxChange = { checked ->
+                            accountsViewModel.updateCheckedAccount(
+                                account.id,
+                                checked
+                            )
+                            if (!account.isChecked) {
+                                accountsViewModel.onEnableDialogChange(true)
+                            }
                         }
-                    }
-                )
-                Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)
+                }
             }
         }
     }

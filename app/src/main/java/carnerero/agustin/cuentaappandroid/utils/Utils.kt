@@ -2,9 +2,12 @@ package carnerero.agustin.cuentaappandroid.utils
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.currencyLocales
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
@@ -33,6 +36,7 @@ class Utils {
             return text.isEmpty() || text.matches(Regex("^([1-9]\\d*|0)?(\\.\\d*)?\$"))
 
         }
+
 
         fun convertMillisToDate(millis: Long): String {
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -207,6 +211,12 @@ class Utils {
             }.toMap()
         }
 
+        fun getSortedCategories (listOfCategories: List<Category>,context: Context) :List<Pair<Category,String>>{
 
+            val map: Map<Category, String> =  listOfCategories.associateWith { context.getString(it.nameResource) }
+
+             return map.toList().sortedBy { (_, value) -> value }
+
+        }
     }
 }

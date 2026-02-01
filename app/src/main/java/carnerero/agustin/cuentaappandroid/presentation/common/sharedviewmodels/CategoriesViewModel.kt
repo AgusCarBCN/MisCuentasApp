@@ -344,12 +344,15 @@ class CategoriesViewModel @Inject constructor(
     private val _enableDialog=MutableLiveData<Boolean>()
     val enableDialog: LiveData<Boolean> = _enableDialog
 
+
+
     init {
         viewModelScope.launch {
             updateExpensePercentage()
         }
         getAllCategoriesByType(CategoryType.EXPENSE)
     }
+
     fun populateCategories(){
         viewModelScope.launch(Dispatchers.IO)
          {
@@ -377,8 +380,8 @@ class CategoriesViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val accounts = withContext(Dispatchers.IO) { getAllCategoriesByType.invoke(type) }
-                _listOfCategories.postValue(accounts)
+                val categories = withContext(Dispatchers.IO) { getAllCategoriesByType.invoke(type) }
+                _listOfCategories.postValue(categories)
                 Log.d("Categories", "Fetched all categories successfully.Total categories: ${_listOfCategories.value?.size}" )
             } catch (e: Exception) {
                 Log.e("Categories", "Error fetching all categories: ${e.message}", e)

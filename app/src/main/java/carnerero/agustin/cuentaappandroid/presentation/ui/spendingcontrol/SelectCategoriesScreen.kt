@@ -5,13 +5,16 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -20,17 +23,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CategoryCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.utils.Utils
 
 @Composable
 fun SelectCategoriesScreen(
@@ -38,42 +45,54 @@ fun SelectCategoriesScreen(
     searchViewModel: SearchViewModel
 ) {
     val listOfCategories by categoriesViewModel.listOfCategories.observeAsState(emptyList())
+    val context=LocalContext.current
 
     LaunchedEffect(Unit) {
         categoriesViewModel.getAllCategoriesByType(CategoryType.EXPENSE)
     }
 
-    Log.d("Categories", "Total categories: ${listOfCategories.size}")
+    // Lógica de negocio ya está afuera, solo se llama a Utils
+    val sortedCategories = remember(listOfCategories) {
+        Utils.getSortedCategories(listOfCategories, context)
+    }
 
-    Column(
-        modifier = Modifier.fillMaxSize(), // 🔥 imprescindible
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeadSetting(
-            title = stringResource(id = R.string.selectcategoriescontrol),
-            MaterialTheme.typography.titleLarge
-        )
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(16.dp)
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth*0.85f
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
+            modifier = Modifier.fillMaxSize(), // 🔥 imprescindible
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(listOfCategories) { category ->
-                CategoryCardWithCheckbox(
-                    category,
-                    categoriesViewModel,
-                    searchViewModel,
-                    onCheckBoxChange = { checked ->
-                        categoriesViewModel.updateCheckedCategory(category.id, checked)
-                        if (!category.isChecked) {
-                            categoriesViewModel.onEnableDialogChange(true)
+            HeadSetting(
+                title = stringResource(id = R.string.selectcategories),
+                MaterialTheme.typography.titleLarge
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .width(maxWidthDp)
+                    .weight(1f)
+                    .padding(bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(16.dp)
+            ) {
+                items(sortedCategories) { (category,_) ->
+                    CategoryCardWithCheckbox(
+                        category,
+                        categoriesViewModel,
+                        searchViewModel,
+                        onCheckBoxChange = { checked ->
+                            categoriesViewModel.updateCheckedCategory(category.id, checked)
+                            if (!category.isChecked) {
+                                categoriesViewModel.onEnableDialogChange(true)
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
