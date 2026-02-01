@@ -318,7 +318,7 @@
     <string name="toamount">Hasta cantidad(opcional)</string>
     <string name="incomeoption">Ingresos</string>
     <string name="expenseoption">Gastos</string>
-    <string name="alloption">Ingresos y gastos</string>
+    <string name="alloption">Todos</string>
     <!--calculator-->
     <string name="calcback">"\u232B"</string>
     <!--Charts-->

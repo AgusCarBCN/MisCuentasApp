@@ -2,9 +2,12 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -36,7 +39,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.launch
 
-
 @Composable
 
 fun ProfileScreen(createViewModel: ProfileViewModel) {
@@ -46,7 +48,6 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
         stringResource(id = R.string.passwordUpdated),
         stringResource(id = R.string.photoUpdated)
     )
-
 
 
     val name by createViewModel.name.observeAsState("")
@@ -59,92 +60,117 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
     val enablePasswordButton by createViewModel.enablePasswordButton.observeAsState(false)
 
     val scope = rememberCoroutineScope()
-
-
-
     val snackBarHostState = remember { SnackbarHostState() }
 
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val imageHeight = maxHeight * 0.35f
+        val contentHeight = maxHeight * 0.65f
+        val maxWidthDp=maxWidth*0.85f
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+        Column(modifier = Modifier.verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+
+            ProfileImageWithCamera(createViewModel)
+            Row(
+                modifier = Modifier.width(maxWidthDp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                ModelButton(
+                    text = "Change Photo",
+                    MaterialTheme.typography.labelLarge, modifier = Modifier.width(220.dp),
+                    enableChangeImageButton,
+                    onClickButton = {
+                        scope.launch {
+                            selectedImageUri?.let { createViewModel.saveImageUri(it) }
+                            SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[3]))
+                            createViewModel.buttonState(
+                                false,
+                                enableUserNameButton,
+                                enableNameButton,
+                                enablePasswordButton
+                            )
+                        }
+
+                        Log.d("SaveFromChange", selectedImageUri.toString())
+                    }
+                )
 
 
-        ProfileImageWithCamera(createViewModel)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            ModelButton(
-                text = "Change Photo",
-                MaterialTheme.typography.labelLarge, modifier = Modifier.width(220.dp),
-                enableChangeImageButton,
-                onClickButton = {
+            }
+
+            NewInputComponent(
+                title = stringResource(id = R.string.userName),
+                inputNewText = userName,
+                R.string.userName,
+                onNameTextFieldChanged = { createViewModel.onUserNameChanged(it) },
+                type = BoardType.TEXT,
+                enableUserNameButton,
+                onChangeButtonClick = {
                     scope.launch {
-                        selectedImageUri?.let { createViewModel.saveImageUri(it) }
-                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[3]))
-                        createViewModel.buttonState(false,enableUserNameButton,enableNameButton,enablePasswordButton)
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
+                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[0]))
+                        createViewModel.buttonState(
+                            enableChangeImageButton,
+                            false,
+                            enableNameButton,
+                            enablePasswordButton
+                        )
                     }
 
-                    Log.d("SaveFromChange", selectedImageUri.toString())
                 }
             )
-
+            NewInputComponent(
+                title = stringResource(id = R.string.name),
+                inputNewText = name,
+                R.string.name,
+                onNameTextFieldChanged = { createViewModel.onNameChanged(it) },
+                type = BoardType.TEXT,
+                enableNameButton,
+                onChangeButtonClick = {
+                    scope.launch {
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
+                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[1]))
+                        createViewModel.buttonState(
+                            enableChangeImageButton,
+                            enableUserNameButton,
+                            false,
+                            enablePasswordButton
+                        )
+                    }
+                }
+            )
+            NewInputComponent(
+                title = stringResource(id = R.string.password),
+                inputNewText = password,
+                R.string.password,
+                onNameTextFieldChanged = { createViewModel.onPasswordChanged(it) },
+                type = BoardType.PASSWORD,
+                enablePasswordButton,
+                onChangeButtonClick = {
+                    scope.launch {
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
+                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[2]))
+                        createViewModel.buttonState(
+                            enableChangeImageButton,
+                            enableUserNameButton,
+                            enableNameButton,
+                            false
+                        )
+                    }
+                },
+                true
+            )
 
         }
-
-        NewInputComponent(
-            title = stringResource(id = R.string.userName),
-            inputNewText = userName,
-            R.string.userName,
-            onNameTextFieldChanged = { createViewModel.onUserNameChanged(it) },
-            type = BoardType.TEXT,
-            enableUserNameButton,
-            onChangeButtonClick = {
-                scope.launch {
-                    createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                    SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[0]))
-                    createViewModel.buttonState(enableChangeImageButton,false,enableNameButton,enablePasswordButton)
-                }
-
-            }
-        )
-        NewInputComponent(
-            title = stringResource(id = R.string.name),
-            inputNewText = name,
-            R.string.name,
-            onNameTextFieldChanged = { createViewModel.onNameChanged(it) },
-            type = BoardType.TEXT,
-            enableNameButton,
-            onChangeButtonClick = {
-                scope.launch {
-                    createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                    SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[1]))
-                    createViewModel.buttonState(enableChangeImageButton,enableUserNameButton,false,enablePasswordButton)
-                }
-            }
-        )
-        NewInputComponent(
-            title = stringResource(id = R.string.password),
-            inputNewText = password,
-            R.string.password,
-            onNameTextFieldChanged = { createViewModel.onPasswordChanged(it) },
-            type = BoardType.PASSWORD,
-            enablePasswordButton,
-            onChangeButtonClick = {
-                scope.launch {
-                    createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                    SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[2]))
-                    createViewModel.buttonState(enableChangeImageButton,enableUserNameButton,enableNameButton,false)
-                }
-            },
-            true
-        )
-
+        SnackbarHost(hostState = snackBarHostState)
     }
-    SnackbarHost(hostState = snackBarHostState)
+
 }
-
-
 @Composable
 fun NewInputComponent(
     title: String,

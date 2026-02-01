@@ -61,9 +61,7 @@ fun DatePickerSearch(
     datePickerState.selectedDateMillis?.let { selectedMillis ->
         val dateString = Utils.convertMillisToDate(selectedMillis)
         searchViewModel.onSelectedDate(dateString, isDateFrom)
-
     }
-
 
     Box(modifier = modifier) {
         TextField(

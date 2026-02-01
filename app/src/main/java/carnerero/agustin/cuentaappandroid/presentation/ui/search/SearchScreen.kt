@@ -2,9 +2,12 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -19,11 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
@@ -34,8 +35,6 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.RadioButtonSearch
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
@@ -70,8 +69,6 @@ fun SearchScreen(
     val messageDateError = stringResource(id = R.string.datefromoverdateto)
     searchViewModel.onEnableSearchButton()
 
-
-
     LaunchedEffect(id, entryDescription, fromDate, toDate, fromAmount, toAmount, selectedOption) {
         // Esto solo se ejecutará cuando cambie cualquiera de los valores clave
         entriesViewModel.getFilteredEntries(
@@ -84,104 +81,115 @@ fun SearchScreen(
             selectedOptions = selectedOption?:0
         )
     }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
-            .verticalScroll(
-                rememberScrollState()
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TextFieldComponent(
-            modifier = Modifier.width(360.dp),
-            stringResource(id = R.string.searchentries),
-            entryDescription,
-            onTextChange = { searchViewModel.onEntryDescriptionChanged(it) },
-            BoardType.TEXT,
-            false
-        )
-        HeadSetting(title = stringResource(id = R.string.daterange), androidx.compose.material3.MaterialTheme.typography.headlineSmall)
-        Row(
+
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .width(maxWidthDp*0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
             modifier = Modifier
-                .width(360.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
+                .padding(top = 30.dp)
+                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .verticalScroll(
+                    rememberScrollState()
+                ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            DatePickerSearch(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(10.dp),
-                R.string.fromdate,
-                searchViewModel,
-                true
-            )
-            DatePickerSearch(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(10.dp),
-                R.string.todate,
-                searchViewModel,
+            TextFieldComponent(
+                modifier = fieldModifier,
+                stringResource(id = R.string.searchentries),
+                entryDescription,
+                onTextChange = { searchViewModel.onEntryDescriptionChanged(it) },
+                BoardType.TEXT,
                 false
             )
-        }
-        AccountSelector(300,20,stringResource(id = R.string.selectanaccount), accountViewModel)
-        RadioButtonSearch(searchViewModel)
-        TextFieldComponent(
-            modifier = Modifier.width(360.dp),
-            stringResource(id = R.string.fromamount),
-            fromAmount,
-            onTextChange = {
-                searchViewModel.onAmountsFieldsChange(it, toAmount)
+            HeadSetting(
+                title = stringResource(id = R.string.daterange),
+                androidx.compose.material3.MaterialTheme.typography.headlineSmall
+            )
+            Row(fieldModifier,
+                horizontalArrangement = Arrangement.spacedBy(8.dp))
+            {
+                DatePickerSearch(
+                    modifier = Modifier
+                        .weight(1f),
+                    R.string.fromdate,
+                    searchViewModel,
+                    true
+                )
+                DatePickerSearch(
+                    modifier = Modifier
+                        .weight(1f),
+                    R.string.todate,
+                    searchViewModel,
+                    false
+                )
+            }
+            AccountSelector(
+                300,
+                20,
+                stringResource(id = R.string.selectanaccount),
+                accountViewModel
+            )
+            RadioButtonSearch(searchViewModel,
+                fieldModifier)
+            TextFieldComponent(
+                modifier = fieldModifier,
+                stringResource(id = R.string.fromamount),
+                fromAmount,
+                onTextChange = {
+                    searchViewModel.onAmountsFieldsChange(it, toAmount)
 
-            },
-            BoardType.DECIMAL,
-            false
-        )
-        TextFieldComponent(
-            modifier = Modifier.width(360.dp),
-            stringResource(id = R.string.toamount),
-            toAmount,
-            onTextChange = {
-                searchViewModel.onAmountsFieldsChange(fromAmount, it)
-
-            },
-            BoardType.DECIMAL,
-            false
-        )
-        ModelButton(text = stringResource(id = R.string.search),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(360.dp),
-            enableSearchButton,
-            onClickButton = {
-                if (!searchViewModel.validateAmounts(fromAmount, toAmount)) {
-                    scope.launch(Dispatchers.Main) {
-                        SnackBarController.sendEvent(
-                            event = SnackBarEvent(
-                                messageAmountError
+                },
+                BoardType.DECIMAL,
+                false
+            )
+            TextFieldComponent(
+                modifier = fieldModifier,
+                stringResource(id = R.string.toamount),
+                toAmount,
+                onTextChange = {
+                    searchViewModel.onAmountsFieldsChange(fromAmount, it)
+                },
+                BoardType.DECIMAL,
+                false
+            )
+            ModelButton(
+                text = stringResource(id = R.string.search),
+                MaterialTheme.typography.labelLarge,
+                fieldModifier,
+                enableSearchButton,
+                onClickButton = {
+                    if (!searchViewModel.validateAmounts(fromAmount, toAmount)) {
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    messageAmountError
+                                )
                             )
-                        )
-                    }
-                } else if (!searchViewModel.validateDates()) {
-                    scope.launch(Dispatchers.Main) {
-                        SnackBarController.sendEvent(
-                            event = SnackBarEvent(
-                                messageDateError
+                        }
+                    } else if (!searchViewModel.validateDates()) {
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    messageDateError
+                                )
                             )
-                        )
-                    }
+                        }
 
-                } else {
-                    when(typeOfSearch){
-                        TypeOfSearch.SEARCH -> navController.navigateTopLevel(Routes.Records.route)
-                        TypeOfSearch.DELETE -> navController.navigateTopLevel(Routes.RecordsToDelete.route)
-                        TypeOfSearch.UPDATE -> navController.navigateTopLevel(Routes.RecordsToModify.route)
+                    } else {
+                        when (typeOfSearch) {
+                            TypeOfSearch.SEARCH -> navController.navigateTopLevel(Routes.Records.route)
+                            TypeOfSearch.DELETE -> navController.navigateTopLevel(Routes.RecordsToDelete.route)
+                            TypeOfSearch.UPDATE -> navController.navigateTopLevel(Routes.RecordsToModify.route)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 }

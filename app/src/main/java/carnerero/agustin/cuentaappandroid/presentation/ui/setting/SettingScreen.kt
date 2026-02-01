@@ -7,12 +7,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -67,12 +71,12 @@ fun SettingScreen(
     val context = LocalContext.current
 
     val configureAccountsItems = listOf(
-        RowComponentItem(Routes.AddAccount,R.string.desadd_an_account),
-        RowComponentItem(Routes.DeleteAccount,R.string.desdelete_an_account),
-        RowComponentItem(Routes.ModifyAccount,R.string.desedit_account),
-        RowComponentItem(Routes.DeleteRecords,R.string.deleteentrydes),
-        RowComponentItem(Routes.ModifyRecords,R.string.modifyentrydes),
-        RowComponentItem(Routes.ChangeCurrency,R.string.deschangecurrency)
+        RowComponentItem(Routes.AddAccount, R.string.desadd_an_account),
+        RowComponentItem(Routes.DeleteAccount, R.string.desdelete_an_account),
+        RowComponentItem(Routes.ModifyAccount, R.string.desedit_account),
+        RowComponentItem(Routes.DeleteRecords, R.string.deleteentrydes),
+        RowComponentItem(Routes.ModifyRecords, R.string.modifyentrydes),
+        RowComponentItem(Routes.ChangeCurrency, R.string.deschangecurrency)
     )
     LaunchedEffect(Unit) {
         entriesViewModel.getAllEntriesDTO()
@@ -95,9 +99,9 @@ fun SettingScreen(
     val messageImport = stringResource(id = R.string.loadbackup)
     val messageNoEntries = stringResource(id = R.string.noentries)
     stringResource(id = R.string.noaccounts)
-    val messageNoValidEntriesFile=stringResource(id = R.string.novalidrecordcsv)
-    val messageNoValidAccountsFile=stringResource(id = R.string.novalidaccountscsv)
-    val messageEntriesWithoutAccounts= stringResource(id = R.string.loadentrieswithoutaccount)
+    val messageNoValidEntriesFile = stringResource(id = R.string.novalidrecordcsv)
+    val messageNoValidAccountsFile = stringResource(id = R.string.novalidaccountscsv)
+    val messageEntriesWithoutAccounts = stringResource(id = R.string.loadentrieswithoutaccount)
     val errorExport = stringResource(id = R.string.errorexport)
     val errorImport = stringResource(id = R.string.errorimport)
 
@@ -119,30 +123,30 @@ fun SettingScreen(
                                 )
                             }
                             if (accounts.isNotEmpty()) {
-                                    Utils.writeCsvAccountsFile(
-                                        accountsCSV,
-                                        context,
-                                        fileAccountsName,
-                                        directory
-                                    )
+                                Utils.writeCsvAccountsFile(
+                                    accountsCSV,
+                                    context,
+                                    fileAccountsName,
+                                    directory
+                                )
                             }
                             if (entries.isNotEmpty() || accounts.isNotEmpty()) {
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                event = SnackBarEvent(
-                                                    messageExport
-                                                )
-                                            )
-                                        }
-                                } else {
-                                    withContext(Dispatchers.Main) {
-                                        SnackBarController.sendEvent(
-                                            event = SnackBarEvent(
-                                                messageNoEntries
-                                            )
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        event = SnackBarEvent(
+                                            messageExport
                                         )
-                                    }
+                                    )
                                 }
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        event = SnackBarEvent(
+                                            messageNoEntries
+                                        )
+                                    )
+                                }
+                            }
 
                         } catch (_: IOException) {
                             withContext(Dispatchers.Main) {
@@ -159,14 +163,14 @@ fun SettingScreen(
         contract = ActivityResultContracts.StartActivityForResult()
     ) {
 
-        result ->
+            result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
-                val fileName=uri.path.toString()
+                val fileName = uri.path.toString()
                 // Lanzamiento de una corutina en un contexto de IO
                 scope.launch(Dispatchers.IO) {
                     try {
-                        if(fileName.contains("Records")) {
+                        if (fileName.contains("Records")) {
                             val entriesToRead =
                                 Utils.readCsvEntriesFile(context, uri)
                             for (entry in entriesToRead) {
@@ -176,7 +180,7 @@ fun SettingScreen(
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
                             }
-                        }else{
+                        } else {
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(
                                     event = SnackBarEvent(
@@ -203,11 +207,11 @@ fun SettingScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
-                val fileName=uri.path.toString()
+                val fileName = uri.path.toString()
                 // Lanzamiento de una corutina en un contexto de IO
                 scope.launch(Dispatchers.IO) {
                     try {
-                        if(fileName.contains("Accounts")) {
+                        if (fileName.contains("Accounts")) {
                             val accountsToRead =
                                 Utils.readCsvAccountsFile(context, uri)
                             for (account in accountsToRead) {
@@ -217,7 +221,7 @@ fun SettingScreen(
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
                             }
-                        }else{
+                        } else {
                             withContext(Dispatchers.Main) {
                                 SnackBarController.sendEvent(
                                     event = SnackBarEvent(
@@ -239,102 +243,123 @@ fun SettingScreen(
             }
         }
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 25.dp)
-            .verticalScroll(
-                rememberScrollState()
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .width(maxWidthDp * 0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 25.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            HeadSetting(
+                title = stringResource(id = R.string.appsettings),
+                MaterialTheme.typography.headlineSmall
             )
-    )
-    {
-        HeadSetting(
-            title = stringResource(id = R.string.appsettings),
-            MaterialTheme.typography.headlineSmall
-        )
-        SwitchComponent(
-            title = stringResource(id = R.string.theme),
-            description = stringResource(id = R.string.destheme),
-            switchDarkTheme,
-            onClickSwitch = { settingViewModel.onSwitchDarkThemeClicked(it) }
-        )
-        SwitchComponent(
-            title = stringResource(id = R.string.enableonboarding),
-            description = stringResource(id = R.string.desenableonboarding),
-            switchTutorial,
-            onClickSwitch = { settingViewModel.onSwitchTutorialClicked(it) }
-        )
-        SwitchComponent(
-            title = stringResource(id = R.string.enablenotifications),
-            description = (if (permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
-            else stringResource(id = R.string.permissiondeny)),
-            isChecked = if (permissionNotificationGranted) switchNotifications
-            else false,
-            onClickSwitch = {
-                settingViewModel.onSwitchNotificationsClicked(it)
-            }
-        )
+            SwitchComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.theme),
+                description = stringResource(id = R.string.destheme),
+                switchDarkTheme,
+                onClickSwitch = { settingViewModel.onSwitchDarkThemeClicked(it) }
+            )
+            SwitchComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.enableonboarding),
+                description = stringResource(id = R.string.desenableonboarding),
+                switchTutorial,
+                onClickSwitch = { settingViewModel.onSwitchTutorialClicked(it) }
+            )
+            SwitchComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.enablenotifications),
+                description = (if (permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
+                else stringResource(id = R.string.permissiondeny)),
+                isChecked = if (permissionNotificationGranted) switchNotifications
+                else false,
+                onClickSwitch = {
+                    settingViewModel.onSwitchNotificationsClicked(it)
+                }
+            )
 
-        SpacerApp()
+            SpacerApp()
 
-        HeadSetting(
-            title = stringResource(id = R.string.backup),
-            MaterialTheme.typography.headlineSmall
-        )
+            HeadSetting(
+                title = stringResource(id = R.string.backup),
+                MaterialTheme.typography.headlineSmall
+            )
 
-        RowComponent(title = stringResource(id = R.string.createbackup),
-            description = stringResource(id = R.string.desbackup),
-            iconResource = R.drawable.backup,
-            onClick = {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                pickerExportLauncher.launch(intent)
-            })
-        RowComponent(title = stringResource(id = R.string.loadbackup),
-            description = stringResource(id = R.string.desload),
-            iconResource = R.drawable.download,
-            onClick = {
-                if(accounts.isNotEmpty()) {
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.createbackup),
+                description = stringResource(id = R.string.desbackup),
+                iconResource = R.drawable.backup,
+                onClick = {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                    pickerExportLauncher.launch(intent)
+                })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.loadbackup),
+                description = stringResource(id = R.string.desload),
+                iconResource = R.drawable.download,
+                onClick = {
+                    if (accounts.isNotEmpty()) {
+                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                        intent.addCategory(Intent.CATEGORY_OPENABLE)
+                        intent.type = "*/*"
+                        pickerImportLauncherEntries.launch(intent)
+                    } else {
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    messageEntriesWithoutAccounts
+                                )
+                            )
+                        }
+                    }
+                })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.loadbackupaccount),
+                description = stringResource(id = R.string.desloadaccount),
+                iconResource = R.drawable.download,
+                onClick = {
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                     intent.addCategory(Intent.CATEGORY_OPENABLE)
                     intent.type = "*/*"
-                    pickerImportLauncherEntries.launch(intent)
-                }else{
-                    scope.launch(Dispatchers.Main) {
-                        SnackBarController.sendEvent(event = SnackBarEvent(messageEntriesWithoutAccounts))
-                    }
-                }
-            })
-        RowComponent(title = stringResource(id = R.string.loadbackupaccount),
-            description = stringResource(id = R.string.desloadaccount),
-            iconResource = R.drawable.download,
-            onClick = {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                intent.addCategory(Intent.CATEGORY_OPENABLE)
-                intent.type = "*/*"
-                pickerImportLauncherAccounts.launch(intent)
+                    pickerImportLauncherAccounts.launch(intent)
 
-            })
-
-
-        SpacerApp()
-
-        HeadSetting(
-            title = stringResource(id = R.string.accountsetting),
-            MaterialTheme.typography.headlineSmall
-        )
-        configureAccountsItems.forEach { item->
-            RowComponent(title = stringResource(id =item.itemRoute.labelResource!!),
-                description = stringResource(id = item.description),
-                iconResource = item.itemRoute.iconResource!!,
-                onClick = {
-                    mainViewModel.updateTitle(item.itemRoute.labelResource)
-                    navController.navigateTopLevel(item.itemRoute.route)
                 })
+
+
+            SpacerApp()
+
+            HeadSetting(
+                title = stringResource(id = R.string.accountsetting),
+                MaterialTheme.typography.headlineSmall
+            )
+            configureAccountsItems.forEach { item ->
+                RowComponent(
+                    fieldModifier,
+                    title = stringResource(id = item.itemRoute.labelResource!!),
+                    description = stringResource(id = item.description),
+                    iconResource = item.itemRoute.iconResource!!,
+                    onClick = {
+                        mainViewModel.updateTitle(item.itemRoute.labelResource)
+                        navController.navigateTopLevel(item.itemRoute.route)
+                    })
+            }
         }
     }
 }
-
 @Composable
 fun SpacerApp() {
     Spacer(

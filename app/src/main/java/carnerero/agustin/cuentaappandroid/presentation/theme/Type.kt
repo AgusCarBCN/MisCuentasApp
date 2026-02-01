@@ -71,8 +71,8 @@ val AppTypography = Typography(
     bodySmall = TextStyle(
         fontFamily = latoRegular,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
+        fontSize = 12.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.25.sp
     ),
     bodyMedium = TextStyle(

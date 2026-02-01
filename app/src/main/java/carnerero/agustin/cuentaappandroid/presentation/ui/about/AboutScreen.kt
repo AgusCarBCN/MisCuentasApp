@@ -4,15 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -45,54 +49,73 @@ fun AboutScreen(navToAbout:()->Unit,
     val policyLink =
         "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
 
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 25.dp)
-            .verticalScroll(
-                rememberScrollState()
-            )
-    )
-    {
-        HeadSetting(
-            title = stringResource(id = R.string.aboutapp),
-            MaterialTheme.typography.titleLarge
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .width(maxWidthDp * 0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 25.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                ), horizontalAlignment = Alignment.CenterHorizontally
         )
+        {
+            HeadSetting(
+                title = stringResource(id = R.string.aboutapp),
+                MaterialTheme.typography.titleLarge
+            )
 
-        RowComponent(title = stringResource(id = R.string.about),
-            description = stringResource(id = R.string.desaboutapp),
-            iconResource = R.drawable.info,
-            onClick = {
-                navToAbout()
-            })
-        RowComponent(title = stringResource(id = R.string.share),
-            description = stringResource(id = R.string.desshare),
-            iconResource = R.drawable.share,
-            onClick = { shareLinkGooglePlayStore(context, message) })
-        RowComponent(title = stringResource(id = R.string.rate),
-            description = stringResource(id = R.string.desrate),
-            iconResource = R.drawable.star_rate,
-            onClick = { openGooglePlayStore(context, appMisCuentasLink) })
-        RowComponent(title = stringResource(id = R.string.contactme),
-            description = stringResource(id = R.string.desemail),
-            iconResource = R.drawable.email,
-            onClick = { navToEmail()})
-        RowComponent(title = stringResource(id = R.string.visitmygithub),
-            description = stringResource(id = R.string.visitmygithubdes),
-            iconResource = R.drawable.github,
-            onClick = { visitMyGitHub(context) })
-        RowComponent(title = stringResource(id = R.string.othersapp),
-            description = stringResource(id = R.string.desstore),
-            iconResource = R.drawable.apps,
-            onClick = { openGooglePlayStore(context, appClimgingCompanionLink) })
-        RowComponent(title = stringResource(id = R.string.privacy),
-            description = stringResource(id = R.string.despolicy),
-            iconResource = R.drawable.privacy,
-            onClick = { openGooglePlayStore(context, policyLink) })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.about),
+                description = stringResource(id = R.string.desaboutapp),
+                iconResource = R.drawable.info,
+                onClick = {
+                    navToAbout()
+                })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.share),
+                description = stringResource(id = R.string.desshare),
+                iconResource = R.drawable.share,
+                onClick = { shareLinkGooglePlayStore(context, message) })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.rate),
+                description = stringResource(id = R.string.desrate),
+                iconResource = R.drawable.star_rate,
+                onClick = { openGooglePlayStore(context, appMisCuentasLink) })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.contactme),
+                description = stringResource(id = R.string.desemail),
+                iconResource = R.drawable.email,
+                onClick = { navToEmail() })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.visitmygithub),
+                description = stringResource(id = R.string.visitmygithubdes),
+                iconResource = R.drawable.github,
+                onClick = { visitMyGitHub(context) })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.othersapp),
+                description = stringResource(id = R.string.desstore),
+                iconResource = R.drawable.apps,
+                onClick = { openGooglePlayStore(context, appClimgingCompanionLink) })
+            RowComponent(
+                fieldModifier,
+                title = stringResource(id = R.string.privacy),
+                description = stringResource(id = R.string.despolicy),
+                iconResource = R.drawable.privacy,
+                onClick = { openGooglePlayStore(context, policyLink) })
+        }
     }
 }
-
 @Composable
 @Preview(showBackground = true)
 

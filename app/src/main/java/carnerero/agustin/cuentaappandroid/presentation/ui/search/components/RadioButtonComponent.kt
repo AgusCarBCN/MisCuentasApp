@@ -24,12 +24,13 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 
 
 @Composable
-fun RadioButtonSearch(searchViewModel: SearchViewModel) {
+fun RadioButtonSearch(searchViewModel: SearchViewModel,
+                      modifier: Modifier) {
     val options = searchViewModel.options
     val selectedOptionIndex by searchViewModel.selectedOptionIndex.observeAsState(0)
     stringResource(id = R.string.selected)
     stringResource(id = R.string.isunchecked)
-    Row {
+    Row(modifier) {
         options.forEachIndexed { index, option ->
             val radioButtonContentDescription= stringResource(option)
             Row(
@@ -40,7 +41,7 @@ fun RadioButtonSearch(searchViewModel: SearchViewModel) {
                         selected = (index == selectedOptionIndex),
                         onClick = { searchViewModel.onOptionSelected(index) }
                     )
-                    .padding(8.dp)
+                    .padding(6.dp)
                     .semantics {
                         contentDescription = radioButtonContentDescription
                         selected = index == selectedOptionIndex

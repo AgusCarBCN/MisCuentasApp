@@ -29,16 +29,15 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPa
 
 
 @Composable
-fun SwitchComponent(title:String,
+fun SwitchComponent(modifier: Modifier,
+                    title:String,
                     description:String,
                     isChecked:Boolean,
                     onClickSwitch: (Boolean) -> Unit) {
     val isEnabled= stringResource(id = R.string.isenabled)
     val isDisabled= stringResource(id = R.string.isdisabled)
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, end = 20.dp, start = 20.dp),
+        modifier = modifier,
         Arrangement.SpaceEvenly,
         Alignment.CenterVertically
     ) {
@@ -94,15 +93,14 @@ fun SwitchComponent(title:String,
     }
 }
 @Composable
-fun RowComponent(title: String,
+fun RowComponent(modifier: Modifier,
+                 title: String,
                  description:String,
                  iconResource:Int,
                  onClick: () -> Unit) {
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, end = 20.dp, start = 20.dp)
+        modifier = modifier
             .clickable { onClick() },
         Arrangement.SpaceEvenly,
         Alignment.CenterVertically

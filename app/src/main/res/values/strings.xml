@@ -326,9 +326,9 @@
     <string name="todate">To</string>
     <string name="fromamount">From amount(optional)</string>
     <string name="toamount">To amount(optional)</string>
-    <string name="incomeoption">Incomes</string>
-    <string name="expenseoption">Expenses</string>
-    <string name="alloption">Incomes and Expenses</string>
+    <string name="incomeoption">Income</string>
+    <string name="expenseoption">Expense</string>
+    <string name="alloption">All</string>
     <!--calculator-->
     <string name="calcback">"\u232B"</string>
     <!--Charts-->
