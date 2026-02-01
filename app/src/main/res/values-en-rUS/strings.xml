@@ -143,7 +143,11 @@
     <string name="newName">New name</string>
     <string name="newUserName">New user name</string>
     <string name="newPassword">New password</string>
-    <!--SnackBar messages-->
+    <!--SnackBar messages
+    <string name="saveRecord">Save entries and accounts</string>
+    <string name="loadEntries">Load entries data from file</string>
+    <string name="loadAccounts">Load accounts data from file </string>-->
+    <string name="profileCreated">User profile created</string>
     <string name="novalidrecordcsv">It is not a valid CSV records file.</string>
     <string name="novalidaccountscsv">It is not a valid CSV accounts file.</string>
     <string name="loadentrieswithoutaccount">Create an account or load the CSV file of your accounts before loading the records from the CSV file.</string>

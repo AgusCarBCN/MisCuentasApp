@@ -1,10 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -24,17 +20,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.documentfile.provider.DocumentFile
 import androidx.navigation.NavHostController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
@@ -43,19 +35,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
 import carnerero.agustin.cuentaappandroid.presentation.common.model.RowComponentItem
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.utils.Utils
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.util.Date
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -68,7 +49,7 @@ fun SettingScreen(
     entriesViewModel: EntriesViewModel,
     navController: NavHostController
 ) {
-    val context = LocalContext.current
+
 
     val configureAccountsItems = listOf(
         RowComponentItem(Routes.AddAccount, R.string.desadd_an_account),
@@ -82,170 +63,17 @@ fun SettingScreen(
         entriesViewModel.getAllEntriesDTO()
     }
 
-    val scope = rememberCoroutineScope()
     val permissionNotificationGranted by mainViewModel.notificationPermissionGranted.collectAsState()
     val switchTutorial by settingViewModel.switchTutorial.observeAsState(true)
     val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
     val switchNotifications by settingViewModel.switchNotifications.observeAsState(false)
-    val entries by entriesViewModel.listOfEntriesDTO.collectAsState()
-    val accounts by accountsViewModel.listOfAccounts.observeAsState(mutableListOf())
-    val title by mainViewModel.title.observeAsState()
-    val entriesCSV = toEntryCSV(entries)
-    val accountsCSV = toAccountCSV(accounts)
-    val date = Date().dateFormat()
-    val fileRecordsName = "backupRecords$date"
-    val fileAccountsName = "backupAccounts$date"
-    val messageExport = stringResource(id = R.string.exportData)
-    val messageImport = stringResource(id = R.string.loadbackup)
-    val messageNoEntries = stringResource(id = R.string.noentries)
     stringResource(id = R.string.noaccounts)
-    val messageNoValidEntriesFile = stringResource(id = R.string.novalidrecordcsv)
-    val messageNoValidAccountsFile = stringResource(id = R.string.novalidaccountscsv)
-    val messageEntriesWithoutAccounts = stringResource(id = R.string.loadentrieswithoutaccount)
-    val errorExport = stringResource(id = R.string.errorexport)
-    val errorImport = stringResource(id = R.string.errorimport)
-
-    val pickerExportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                val directory = DocumentFile.fromTreeUri(context, uri) // Direct assignment
-                if (directory != null && directory.isDirectory) {
-                    scope.launch(Dispatchers.IO) {
-                        try {
-                            if (entries.isNotEmpty()) {
-                                Utils.writeCsvEntriesFile(
-                                    entriesCSV,
-                                    context,
-                                    fileRecordsName,
-                                    directory
-                                )
-                            }
-                            if (accounts.isNotEmpty()) {
-                                Utils.writeCsvAccountsFile(
-                                    accountsCSV,
-                                    context,
-                                    fileAccountsName,
-                                    directory
-                                )
-                            }
-                            if (entries.isNotEmpty() || accounts.isNotEmpty()) {
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        event = SnackBarEvent(
-                                            messageExport
-                                        )
-                                    )
-                                }
-                            } else {
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        event = SnackBarEvent(
-                                            messageNoEntries
-                                        )
-                                    )
-                                }
-                            }
-
-                        } catch (_: IOException) {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(event = SnackBarEvent(errorExport))
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-    }
-    val pickerImportLauncherEntries = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) {
-
-            result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                val fileName = uri.path.toString()
-                // Lanzamiento de una corutina en un contexto de IO
-                scope.launch(Dispatchers.IO) {
-                    try {
-                        if (fileName.contains("Records")) {
-                            val entriesToRead =
-                                Utils.readCsvEntriesFile(context, uri)
-                            for (entry in entriesToRead) {
-                                entriesViewModel.addEntry(entry)
-                            }
-                            // Cambiamos al hilo principal para mostrar el SnackBar
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
-                            }
-                        } else {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        messageNoValidEntriesFile
-                                    )
-                                )
-                            }
-                        }
-                    } catch (_: IOException) {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    errorImport
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-    val pickerImportLauncherAccounts = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                val fileName = uri.path.toString()
-                // Lanzamiento de una corutina en un contexto de IO
-                scope.launch(Dispatchers.IO) {
-                    try {
-                        if (fileName.contains("Accounts")) {
-                            val accountsToRead =
-                                Utils.readCsvAccountsFile(context, uri)
-                            for (account in accountsToRead) {
-                                accountsViewModel.addAccount(account)
-                            }
-                            // Cambiamos al hilo principal para mostrar el SnackBar
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
-                            }
-                        } else {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        messageNoValidAccountsFile
-                                    )
-                                )
-                            }
-                        }
-                    } catch (_: IOException) {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    errorImport
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
+    ExportLauncher(entriesViewModel,accountsViewModel,settingViewModel)
+    ImportEntriesLauncher(accountsViewModel,entriesViewModel,settingViewModel)
+    ImportAccountsLauncher(accountsViewModel,settingViewModel)
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
-        val maxHeightDp = maxHeight
+
         val fieldModifier = Modifier
             .width(maxWidthDp * 0.85f) // mismo ancho para TODOS
             .heightIn(min = 48.dp)
@@ -302,8 +130,7 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desbackup),
                 iconResource = R.drawable.backup,
                 onClick = {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                    pickerExportLauncher.launch(intent)
+                    settingViewModel.onChangeShowExportDialog(true)
                 })
             RowComponent(
                 fieldModifier,
@@ -311,20 +138,7 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desload),
                 iconResource = R.drawable.download,
                 onClick = {
-                    if (accounts.isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                        intent.addCategory(Intent.CATEGORY_OPENABLE)
-                        intent.type = "*/*"
-                        pickerImportLauncherEntries.launch(intent)
-                    } else {
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    messageEntriesWithoutAccounts
-                                )
-                            )
-                        }
-                    }
+                    settingViewModel.onChangeShowImportEntriesDialog(true)
                 })
             RowComponent(
                 fieldModifier,
@@ -332,16 +146,9 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desloadaccount),
                 iconResource = R.drawable.download,
                 onClick = {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE)
-                    intent.type = "*/*"
-                    pickerImportLauncherAccounts.launch(intent)
-
+                    settingViewModel.onChangeShowImportAccountsDialog(true)
                 })
-
-
             SpacerApp()
-
             HeadSetting(
                 title = stringResource(id = R.string.accountsetting),
                 MaterialTheme.typography.headlineSmall
@@ -369,40 +176,4 @@ fun SpacerApp() {
             .background(LocalCustomColorsPalette.current.textColor.copy(alpha = 0.2f)) // Ajusta el valor alpha para la opacidad
             .height(1.dp) // Cambié a height para que la línea sea horizontal, ajusta si es necesario
     )
-}
-
-@Composable
-fun toEntryCSV(entries: List<EntryDTO>): MutableList<EntryCSV> {
-
-    val entriesCSV = mutableListOf<EntryCSV>()
-    entries.forEach { entry ->
-        entriesCSV.add(
-            EntryCSV(
-                entry.description,
-                stringResource(id = entry.nameResource),
-                entry.amount.toDouble(),
-                entry.date,
-                entry.name,
-                entry.categoryId,
-                entry.accountId,
-            )
-        )
-    }
-    return entriesCSV
-}
-
-@Composable
-fun toAccountCSV(accounts: List<Account>): MutableList<AccountCSV> {
-
-    val accountsCSV = mutableListOf<AccountCSV>()
-    accounts.forEach { account ->
-        accountsCSV.add(
-            AccountCSV(
-                account.name,
-                account.balance.toDouble(),
-                account.id
-            )
-        )
-    }
-    return accountsCSV
 }

@@ -33,7 +33,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.Ent
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
@@ -99,7 +99,7 @@ fun MainNavHost(
 
         }
         composable(Routes.Profile.route) {
-            ProfileScreen(profileViewModel)
+            UpdateProfileScreen(profileViewModel)
         }
         composable(Routes.Records.route) {
             EntryList(

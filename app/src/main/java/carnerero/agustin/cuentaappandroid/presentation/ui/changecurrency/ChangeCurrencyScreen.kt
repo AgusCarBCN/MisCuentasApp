@@ -2,7 +2,11 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,60 +47,93 @@ fun ChangeCurrencyScreen(/*mainViewModel: MainViewModel*/
     val messageCurrencyChange = stringResource(id = R.string.currencychange)
     val messageErrorConnexionApi=stringResource(id = R.string.apierror)
 
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ) {
-        HeadSetting(title = stringResource(id = R.string.changecurrency),MaterialTheme.typography.headlineMedium )
-        CurrencySelector(accountsViewModel)
-        HeadSetting(title = stringResource(id = R.string.changeformattext),MaterialTheme.typography.headlineSmall )
-        ModelButton(text = stringResource(id = R.string.changeFormat),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(360.dp),
-            true,
-            onClickButton = {
-                scope.launch(Dispatchers.Main) {
-                    accountsViewModel.setCurrencyCode(currencyCodeShowed)
-                    SnackBarController.sendEvent(event = SnackBarEvent(messageFormatCurrencyChange))
-                }
-            }
-        )
-        HeadSetting(title = stringResource(id = R.string.changecurrencytext), MaterialTheme.typography.headlineSmall)
-        ModelButton(text = stringResource(id = R.string.changeCurrency),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(360.dp),
-            true,
-            onClickButton = {
-                scope.launch(Dispatchers.IO) {
-                    accountsViewModel.setCurrencyCode(currencyCodeShowed)
-                    // Llama a conversionCurrencyRate y espera el resultado
-                    val ratio = accountsViewModel.conversionCurrencyRate(currencyCodeSelected, currencyCodeShowed)
-                    Log.d("ratio",ratio.toString())
-                    if(ratio!=null) {
-                        entriesViewModel.updateEntriesAmountByExchangeRate(ratio)
-                        entriesViewModel.getTotal()
-                        entriesViewModel.getAllEntriesDTO()
-                        accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
-                        accountsViewModel.getAllAccounts()
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageCurrencyChange))
-                        }
-                    }else{
-                        SnackBarController.sendEvent(event = SnackBarEvent(messageErrorConnexionApi))
+        ) {
+            HeadSetting(
+                title = stringResource(id = R.string.changecurrency),
+                MaterialTheme.typography.headlineMedium
+            )
+            CurrencySelector(accountsViewModel)
+            HeadSetting(
+                title = stringResource(id = R.string.changeformattext),
+                MaterialTheme.typography.headlineSmall
+            )
+            ModelButton(
+                text = stringResource(id = R.string.changeFormat),
+                MaterialTheme.typography.labelLarge,
+                modifier = fieldModifier,
+                true,
+                onClickButton = {
+                    scope.launch(Dispatchers.Main) {
+                        accountsViewModel.setCurrencyCode(currencyCodeShowed)
+                        SnackBarController.sendEvent(
+                            event = SnackBarEvent(
+                                messageFormatCurrencyChange
+                            )
+                        )
                     }
                 }
-            }
-        )
-        ModelButton(text = stringResource(id = R.string.backButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(360.dp),
-            true,
-            onClickButton = {
-                accountsViewModel.onCurrencyShowedChange(currencyCodeSelected)
-                navToHome()
-                //mainViewModel.selectScreen(IconOptions.HOME)
-            })
+            )
+            HeadSetting(
+                title = stringResource(id = R.string.changecurrencytext),
+                MaterialTheme.typography.headlineSmall
+            )
+            ModelButton(
+                text = stringResource(id = R.string.changeCurrency),
+                MaterialTheme.typography.labelLarge,
+                modifier = fieldModifier,
+                true,
+                onClickButton = {
+                    scope.launch(Dispatchers.IO) {
+                        accountsViewModel.setCurrencyCode(currencyCodeShowed)
+                        // Llama a conversionCurrencyRate y espera el resultado
+                        val ratio = accountsViewModel.conversionCurrencyRate(
+                            currencyCodeSelected,
+                            currencyCodeShowed
+                        )
+                        Log.d("ratio", ratio.toString())
+                        if (ratio != null) {
+                            entriesViewModel.updateEntriesAmountByExchangeRate(ratio)
+                            entriesViewModel.getTotal()
+                            entriesViewModel.getAllEntriesDTO()
+                            accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
+                            accountsViewModel.getAllAccounts()
+                            withContext(Dispatchers.Main) {
+                                SnackBarController.sendEvent(
+                                    event = SnackBarEvent(
+                                        messageCurrencyChange
+                                    )
+                                )
+                            }
+                        } else {
+                            SnackBarController.sendEvent(
+                                event = SnackBarEvent(
+                                    messageErrorConnexionApi
+                                )
+                            )
+                        }
+                    }
+                }
+            )
+            ModelButton(
+                text = stringResource(id = R.string.backButton),
+                MaterialTheme.typography.labelLarge,
+                modifier = fieldModifier,
+                true,
+                onClickButton = {
+                    accountsViewModel.onCurrencyShowedChange(currencyCodeSelected)
+                    navToHome()
+
+                })
+        }
     }
 }

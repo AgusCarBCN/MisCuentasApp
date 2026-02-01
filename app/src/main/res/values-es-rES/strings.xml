@@ -143,7 +143,11 @@
     <string name="newName">Nuevo nombre</string>
     <string name="newUserName">Nuevo usuario</string>
     <string name="newPassword">Nueva contraseña</string>
-    <!--SnackBar messages-->
+    <!--SnackBar messages
+    <string name="saveRecord">Guarda tus datos de registros y cuentas</string>
+    <string name="loadEntries">Cargar datos de registros desde fichero</string>
+    <string name="loadAccounts">Cargar datos de cuentas desde fichero</string>-->
+    <string name="profileCreated">Has creado tu perfil</string>
     <string name="novalidrecordcsv">No es un archivo de registros CSV valido.</string>
     <string name="novalidaccountscsv">No es un archivo de cuentas CSV valido.</string>
     <string name="loadentrieswithoutaccount">Crea una cuenta o carga el archivo csv de tus cuentas antes de cargar el archivo csv de registros.</string>

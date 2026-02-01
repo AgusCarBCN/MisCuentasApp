@@ -49,6 +49,15 @@ class SettingViewModel @Inject constructor(
     private val _deleteAccountOption = MutableLiveData<Boolean>()
     val deleteAccountOption: LiveData<Boolean> = _deleteAccountOption
 
+    private val _showExportDialog = MutableLiveData<Boolean>()
+    val showExportDialog: LiveData<Boolean> = _showExportDialog
+
+    private val _showImportAccountsDialog = MutableLiveData<Boolean>()
+    val showImportAccountsDialog: LiveData<Boolean> = _showImportAccountsDialog
+
+    private val _showImportEntriesDialog = MutableLiveData<Boolean>()
+    val showImportEntriesDialog: LiveData<Boolean> = _showImportEntriesDialog
+
     init {
 
         getSwitchTutorial()
@@ -65,6 +74,15 @@ class SettingViewModel @Inject constructor(
             _switchTutorial.value = checked
 
         }
+    }
+    fun onChangeShowExportDialog(newValue:Boolean){
+        _showExportDialog.value=newValue
+    }
+    fun onChangeShowImportEntriesDialog(newValue:Boolean){
+        _showImportEntriesDialog.value=newValue
+    }
+    fun onChangeShowImportAccountsDialog(newValue:Boolean){
+        _showImportAccountsDialog.value=newValue
     }
 
     fun onSwitchDarkThemeClicked(checked: Boolean) {

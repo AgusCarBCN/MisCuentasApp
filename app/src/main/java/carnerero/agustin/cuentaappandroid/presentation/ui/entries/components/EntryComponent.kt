@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -76,11 +78,17 @@ fun EntryList(
     val groupedEntriesByDate = listOfEntries.groupBy { it.date }
     // Agrupar las entradas por categoría
     val entriesByCategory = Utils.getMapOfEntriesByCategory(listOfEntries)
-
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth*0.85f
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(LocalCustomColorsPalette.current.backgroundPrimary),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Row de botones By Date / By Category
         if (listOfEntries.isNotEmpty()) {
@@ -128,8 +136,9 @@ fun EntryList(
         // LazyColumn con los registros
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+                .width(maxWidthDp)
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (enableByDate) {
                 groupedEntriesByDate.forEach { (date, entries) ->
@@ -175,7 +184,7 @@ fun EntryList(
         }
     }
 }
-
+}
 @Composable
 
 fun ItemEntry(

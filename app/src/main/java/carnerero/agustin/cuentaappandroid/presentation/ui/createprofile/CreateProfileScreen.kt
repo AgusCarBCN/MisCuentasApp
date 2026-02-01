@@ -72,8 +72,7 @@ fun CreateProfileComponent(
     val repeatPassword by createViewModel.repeatPassword.observeAsState("")
     val scope = rememberCoroutineScope()
     val enableButton by createViewModel.enableButton.observeAsState(false)
-
-    val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
+    val messageProfileCreated = message(resource =R.string.profileCreated )
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val imageHeight = maxHeight * 0.35f
         val contentHeight = maxHeight * 0.65f
@@ -182,26 +181,8 @@ fun CreateProfileComponent(
                     enableButton,
                     onClickButton = {
                         navToCreateAccounts()
-                        createViewModel.createProfile(name,userName,password)
+                        createViewModel.createProfile(name,userName,password,messageProfileCreated)
                         categoriesViewModel.populateCategories()
-                        /*scope.launch(Dispatchers.IO) {
-                            try {
-                                createViewModel.setUserDataProfile(
-                                    UserProfile(
-                                        name, userName, password
-                                    )
-                                )
-                                selectedImageUri?.let { createViewModel.saveImageUri(it) }
-                            } catch (_: Exception) {
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        event = SnackBarEvent(
-                                            errorWritingDataStore
-                                        )
-                                    )
-                                }
-                            }
-                        }*/
                     }
                 )
 

@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -20,16 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
@@ -37,11 +32,10 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileI
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-import kotlinx.coroutines.launch
 
 @Composable
 
-fun ProfileScreen(createViewModel: ProfileViewModel) {
+fun UpdateProfileScreen(createViewModel: ProfileViewModel) {
     val updatedMessages = listOf(
         stringResource(id = R.string.userNameUpdated),  // Aquí obtienes el texto real del recurso
         stringResource(id = R.string.nameUpdated),
@@ -59,17 +53,10 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
     val enableUserNameButton by createViewModel.enableUserNameButton.observeAsState(false)
     val enablePasswordButton by createViewModel.enablePasswordButton.observeAsState(false)
 
-    val scope = rememberCoroutineScope()
-    val snackBarHostState = remember { SnackbarHostState() }
+
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
-        val imageHeight = maxHeight * 0.35f
-        val contentHeight = maxHeight * 0.65f
         val maxWidthDp=maxWidth*0.85f
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-
 
         Column(modifier = Modifier.verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally) {
@@ -85,22 +72,16 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
                     MaterialTheme.typography.labelLarge, modifier = Modifier.width(220.dp),
                     enableChangeImageButton,
                     onClickButton = {
-                        scope.launch {
-                            selectedImageUri?.let { createViewModel.saveImageUri(it) }
-                            SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[3]))
+                        selectedImageUri?.let { createViewModel.saveImageUri(it,updatedMessages[3])}
+
                             createViewModel.buttonState(
                                 false,
                                 enableUserNameButton,
                                 enableNameButton,
                                 enablePasswordButton
                             )
-                        }
-
-                        Log.d("SaveFromChange", selectedImageUri.toString())
                     }
                 )
-
-
             }
 
             NewInputComponent(
@@ -111,17 +92,13 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
                 type = BoardType.TEXT,
                 enableUserNameButton,
                 onChangeButtonClick = {
-                    scope.launch {
-                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[0]))
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password),updatedMessages[0])
                         createViewModel.buttonState(
                             enableChangeImageButton,
                             false,
                             enableNameButton,
                             enablePasswordButton
                         )
-                    }
-
                 }
             )
             NewInputComponent(
@@ -132,16 +109,13 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
                 type = BoardType.TEXT,
                 enableNameButton,
                 onChangeButtonClick = {
-                    scope.launch {
-                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[1]))
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password),updatedMessages[1])
                         createViewModel.buttonState(
                             enableChangeImageButton,
                             enableUserNameButton,
                             false,
                             enablePasswordButton
                         )
-                    }
                 }
             )
             NewInputComponent(
@@ -152,22 +126,19 @@ fun ProfileScreen(createViewModel: ProfileViewModel) {
                 type = BoardType.PASSWORD,
                 enablePasswordButton,
                 onChangeButtonClick = {
-                    scope.launch {
-                        createViewModel.setUserDataProfile(UserProfile(name, userName, password))
-                        SnackBarController.sendEvent(event = SnackBarEvent(updatedMessages[2]))
+                        createViewModel.setUserDataProfile(UserProfile(name, userName, password),
+                            updatedMessages[2])
                         createViewModel.buttonState(
                             enableChangeImageButton,
                             enableUserNameButton,
                             enableNameButton,
                             false
                         )
-                    }
                 },
                 true
             )
-
         }
-        SnackbarHost(hostState = snackBarHostState)
+
     }
 
 }

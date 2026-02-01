@@ -70,7 +70,7 @@ class ProfileViewModel @Inject constructor(
     val selectedImageUriSaved: LiveData<Uri?> = _selectedImageUriSaved
 
 
-    init{
+    init {
         viewModelScope.launch {
 
             val user = getProfileData.invoke()
@@ -89,26 +89,28 @@ class ProfileViewModel @Inject constructor(
         //Verificaciones para activar boton de confirmar
         _enableButton.value = enableConfirmButton(name, userName, password, newPassword)
     }
-    fun onNameChanged(newName: String){
+
+    fun onNameChanged(newName: String) {
         _name.value = newName
-        _enableNameButton.value=true
+        _enableNameButton.value = true
     }
 
-    fun onUserNameChanged(newUserName: String){
+    fun onUserNameChanged(newUserName: String) {
         _username.value = newUserName
-        _enableUserNameButton.value=true
+        _enableUserNameButton.value = true
     }
 
-    fun onPasswordChanged(newPassword: String){
+    fun onPasswordChanged(newPassword: String) {
         _password.value = newPassword
-        _enablePasswordButton.value=true
+        _enablePasswordButton.value = true
     }
-    fun onImageSelected(selectedImage:Uri)
-    {
+
+    fun onImageSelected(selectedImage: Uri) {
         _selectedImageUri.value = selectedImage
-        _enableChangeImage.value=true
+        _enableChangeImage.value = true
     }
-    fun onButtonProfileNoSelected(){
+
+    fun onButtonProfileNoSelected() {
         viewModelScope.launch {
 
             val user = getProfileData.invoke()
@@ -117,50 +119,56 @@ class ProfileViewModel @Inject constructor(
             _password.value = user.profilePass
         }
 
-        _enableChangeImage.value=false
-        _enableNameButton.value=false
-        _enablePasswordButton.value=false
-        _enablePasswordButton.value=false
+        _enableChangeImage.value = false
+        _enableNameButton.value = false
+        _enablePasswordButton.value = false
+        _enablePasswordButton.value = false
 
     }
-    fun saveImageUri(uri:Uri){
+
+    fun saveImageUri(uri: Uri,message:String="") {
         viewModelScope.launch {
             saveUri(uri)
             //Actualizo para ver cambios de manera inmediata
-            _selectedImageUriSaved.value=uri
+            _selectedImageUriSaved.value = uri
+            SnackBarController.sendEvent(event = SnackBarEvent(message))
         }
     }
-    fun loadImageUri(){
+
+    fun loadImageUri() {
         viewModelScope.launch {
             _selectedImageUriSaved.value = getUri()
         }
     }
-    fun buttonState(photo:Boolean,useName:Boolean,name:Boolean,password:Boolean){
-        _enableChangeImage.value=photo
-        _enableNameButton.value=name
-        _enablePasswordButton.value=password
-        _enableUserNameButton.value=useName
+
+    fun buttonState(photo: Boolean, useName: Boolean, name: Boolean, password: Boolean) {
+        _enableChangeImage.value = photo
+        _enableNameButton.value = name
+        _enablePasswordButton.value = password
+        _enableUserNameButton.value = useName
     }
 
     // Función para setear un nuevo valor para toLogin en el repositorio
 
     // Función para setear un nuevo valor para toLogin en el repositorio
-    fun setUserDataProfile(newProfile: UserProfile) {
+    fun setUserDataProfile(newProfile: UserProfile, message: String) {
         viewModelScope.launch {
             // Llamar a la función suspend de tu repositorio
             setProfileData(newProfile)
             setLoginTo(true)
-
-        //Actualizamos los valores para reflejar cambios en UI
-            _name.value=newProfile.name
-            _username.value=newProfile.userName
-            _password.value=newProfile.profilePass
+            //Actualizamos los valores para reflejar cambios en UI
+            _name.value = newProfile.name
+            _username.value = newProfile.userName
+            _password.value = newProfile.profilePass
+            SnackBarController.sendEvent(event = SnackBarEvent(message))
         }
     }
 
+
     fun createProfile(name :String,
                       userName:String,
-                      password:String){
+                      password:String,
+                      message: String){
         viewModelScope.launch(Dispatchers.IO) {
             val selectedImageUri= _selectedImageUri.value
             viewModelScope.launch(Dispatchers.IO) {
@@ -168,7 +176,7 @@ class ProfileViewModel @Inject constructor(
                     setUserDataProfile(
                         UserProfile(
                             name, userName, password
-                        )
+                        ),message
                     )
                     selectedImageUri?.let { saveImageUri(it) }
                 } catch (_: Exception) {
