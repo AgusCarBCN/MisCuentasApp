@@ -13,6 +13,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -47,7 +49,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialItem
 import kotlinx.coroutines.launch
-
+/*
 @Composable
 fun Tutorial(
     tutorialViewModel: TutorialViewModel,
@@ -108,7 +110,80 @@ fun Tutorial(
         )
     }
 
+}*/
+@Composable
+fun Tutorial(
+    tutorialViewModel: TutorialViewModel,
+    navToScreen: () -> Unit
+) {
+    val toLogin by tutorialViewModel.toLogin.observeAsState(false)
+    val listOfItems = getItems()
+
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+    ) {
+
+        val contentWidth = maxWidth * 0.9f
+
+        val pagerState = rememberPagerState(
+            pageCount = { listOfItems.size }
+        )
+
+        ConstraintLayout(
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            val (pagerRef, buttonRef) = createRefs()
+
+            Column(
+                modifier = Modifier
+                    .constrainAs(pagerRef) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(buttonRef.top)
+                    }
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) { page ->
+                    ItemCard(item = listOfItems[page])
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                CircleIndicator(
+                    totalDots = listOfItems.size,
+                    selectedIndex = pagerState.targetPage
+                )
+            }
+
+            ModelButton(text = stringResource(id =if(toLogin) R.string.loginButton else R.string.createProfileButton),
+                MaterialTheme.typography.labelLarge
+                ,modifier = Modifier
+                    .width(contentWidth)
+                    .constrainAs(buttonRef) {
+                        bottom.linkTo(parent.bottom, margin = 16.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    , true,
+                onClickButton = {navToScreen()}
+
+            )
+        }
+    }
+
 }
+
 
 @Composable
 private fun ItemCard(item: TutorialItem) {
@@ -165,7 +240,7 @@ private fun ItemCard(item: TutorialItem) {
                     .width(250.dp)
                     .height(200.dp)
                     .align(Alignment.CenterHorizontally),
-                colorFilter =if(item.iconItem!=R.drawable.contabilidad)androidx.compose.ui.graphics.ColorFilter.tint(color.value)
+                colorFilter =if(item.iconItem!=R.drawable.contabilidad) ColorFilter.tint(color.value)
                 else null
             )
             Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
