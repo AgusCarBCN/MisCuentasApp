@@ -154,6 +154,7 @@
     <string name="noentries">No entries yet</string>
     <string name="noaccounts">No accounts created yet</string>
     <string name="inValidLogin">Invalid login</string>
+    <string name="inValidUserName">Invalid user name</string>
     <string name="userNameUpdated">User name updated</string>
     <string name="nameUpdated">Name updated</string>
     <string name="passwordUpdated">Password updated</string>

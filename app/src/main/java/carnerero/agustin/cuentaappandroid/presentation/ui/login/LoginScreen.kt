@@ -6,12 +6,19 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -70,175 +77,162 @@ fun LoginComponent(
     /* Se usa para gestionar el estado del Snackbar. Esto te permite mostrar y controlar el Snackbar
      desde cualquier parte de tu UI.*/
     val messageInvalidLogin= message(resource = R.string.inValidLogin)
-
+    val messageInvalidUserName= message(resource = R.string.inValidUserName)
     loginViewModel.getLoginImage()
-    ConstraintLayout(
-        modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.lightYellow))
-    ) {
-        // Crear referencias para las cajas
-        val (imageBox, loginBox) = createRefs()
 
-        // Caja de imagen en la parte superior, ocupando el 50% de la altura
-        Column(
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+
+        val imageHeight = maxHeight * 0.5f
+        val contentHeight = maxHeight * 0.5f
+
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
+
+        ConstraintLayout(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f)
-                .background(LocalCustomColorsPalette.current.imageBackground)
-                .constrainAs(imageBox) {
-                    top.linkTo(parent.top)          // Parte superior anclada al padre
-                    start.linkTo(parent.start)      // Empieza en el lado izquierdo del padre
-                    end.linkTo(parent.end)          // Termina en el lado derecho del padre
-                    bottom.linkTo(loginBox.top)     // Parte inferior anclada al loginBox
-                },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .background(LocalCustomColorsPalette.current.backgroundPrimary)
         ) {
-            Image(
-                painter = if (image == Uri.EMPTY) painterResource(id = R.drawable.contabilidad)
-                else rememberAsyncImagePainter(image), // Carga la imagen desde el Uri ,
-                contentDescription = "Profile Image",
-                contentScale = ContentScale.Crop,
-                modifier = if (image == Uri.EMPTY) Modifier
-                    .size(250.dp)
+            val (imageBox, loginBox) = createRefs()
+
+
+            // Caja de imagen (arriba)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(imageHeight)
                     .background(LocalCustomColorsPalette.current.imageBackground)
-                else Modifier
-                    .fillMaxSize()
-            )
-
-        }
-
-        // Caja de login en la parte inferior, ocupando el otro 50% de la altura
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)  // Color de fondo
-                .constrainAs(loginBox) {
-                    top.linkTo(imageBox.bottom)          // Parte superior anclada al imageBox
-                    start.linkTo(parent.start)           // Empieza en el lado izquierdo del padre
-                    end.linkTo(parent.end)               // Termina en el lado derecho del padre
-                    bottom.linkTo(parent.bottom)         // Parte inferior anclada al padre
-                },
-
-            verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (!enableNewPasswordFields) {
-                Text(
-                    text = loginViewModel.getGreeting(name),
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
-                    color = LocalCustomColorsPalette.current.textColor,
-                    fontWeight = FontWeight.Bold
-                )
-                TextFieldComponent(
-                    modifier = Modifier.width(360.dp),
-                    stringResource(id = R.string.enterUsername),
-                    userName,
-                    onTextChange = { loginViewModel.onLoginChanged(it, password) },
-                    BoardType.TEXT
-                )
-                TextFieldComponent(
-                    modifier = Modifier.width(360.dp),
-                    stringResource(id =R.string.enterPassword),
-                    password,
-                    onTextChange = { loginViewModel.onLoginChanged(userName, it) },
-                    BoardType.PASSWORD,
-                    true
-                )
-                ModelButton(text = stringResource(id = R.string.loginButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.width(360.dp),
-                    enableLoginButton,
-                    onClickButton = {
-                        if (validateLogin) {
-                            navToMain()
-                        } else{
-                            scope.launch(Dispatchers.Main) {
-                                SnackBarController.sendEvent(event = SnackBarEvent(messageInvalidLogin))
-                            }
-                        }
-
-                    }
-                )
-
-                TextButton(
-                    onClick = {
-                        loginViewModel.onEnableNewPasswordFields(true)
+                    .constrainAs(imageBox) {
+                        top.linkTo(parent.top)
                     },
-                    content = {
-                        Text(
-                            text = stringResource(id = R.string.forgotpassword),
-                            style=MaterialTheme.typography.labelSmall,
-                            color = LocalCustomColorsPalette.current.textColor
-                        )
-                    }
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = if (image == Uri.EMPTY)
+                        painterResource(id = R.drawable.contabilidad)
+                    else rememberAsyncImagePainter(image),
+                    contentDescription = "Profile image",
+                    modifier = if (image == Uri.EMPTY) Modifier .size(250.dp)
+                        .background(LocalCustomColorsPalette.current.imageBackground) else Modifier .fillMaxSize()
+                   ,contentScale = ContentScale.Crop
                 )
-
             }
-            if (enableNewPasswordFields) {
-                TextFieldComponent(
-                    modifier = Modifier.width(360.dp),
-                    stringResource(id = R.string.requestuser),
-                    userNameNewPassword,
-                    onTextChange = { loginViewModel.onUpdatePasswordChange(it, newPassword) },
-                    BoardType.TEXT
-                )
-
-                TextFieldComponent(
-                    modifier = Modifier.width(360.dp),
-                    stringResource(id = R.string.newpassword),
-                    newPassword,
-                    onTextChange = {
-                        loginViewModel.onUpdatePasswordChange(
-                            userNameNewPassword,
-                            it
-                        )
+            // Caja de login en la parte inferior, ocupando el otro 50% de la altura
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(contentHeight)
+                    .verticalScroll(rememberScrollState())
+                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                    .constrainAs(loginBox) {
+                        top.linkTo(imageBox.bottom)
+                        bottom.linkTo(parent.bottom)
                     },
-                    BoardType.PASSWORD,
-                    true
-                )
-                ModelButton(text = stringResource(id = R.string.confirmButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.width(360.dp),
-                    enableConfirmButton,
-                    onClickButton = {
-                        if (validateConfirm) {
-                            try {
-                                scope.launch {
-                                    loginViewModel.updatePassword(newPassword)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-                                    /*snackbarHostState.showSnackbar(
-                                        "contraseña actualizada $newPassword",
-                                        duration = SnackbarDuration.Short
-                                    )*/
-                                    loginViewModel.onEnableNewPasswordFields(false)
-                                }
-                            } catch (e: Exception) {
-                                Log.e("DataStore", "Error Updating password", e)
+                if (!enableNewPasswordFields) {
+                    Text(
+                        modifier= Modifier.padding(top=10.dp),
+                        text = loginViewModel.getGreeting(name),
+                        fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
+                        color = LocalCustomColorsPalette.current.textColor,
+                        fontWeight = FontWeight.Bold
+                    )
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.enterUsername),
+                        userName,
+                        onTextChange = { loginViewModel.onLoginChanged(it, password) },
+                        BoardType.TEXT
+                    )
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.enterPassword),
+                        password,
+                        onTextChange = { loginViewModel.onLoginChanged(userName, it) },
+                        BoardType.PASSWORD,
+                        true
+                    )
+                    ModelButton(
+                        text = stringResource(id = R.string.loginButton),
+                        MaterialTheme.typography.labelLarge,
+                        modifier = fieldModifier,
+                        enableLoginButton,
+                        onClickButton = {
+                            if (validateLogin) {
+                                navToMain()
+                            } else {
+                                loginViewModel.sendMessage(messageInvalidLogin)
                             }
-                        } else {
-
-                            loginViewModel.onClearFields()
                         }
-                    }
-                )
+                    )
 
-                ModelButton(text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.width(360.dp),
-                    true,
-                    onClickButton = {
-                        loginViewModel.onEnableNewPasswordFields(false)
-                    }
-                )
+                    TextButton(
+                        onClick = {
+                            loginViewModel.onEnableNewPasswordFields(true)
+                        },
+                        content = {
+                            Text(
+                                text = stringResource(id = R.string.forgotpassword),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = LocalCustomColorsPalette.current.textColor
+                            )
+                        }
+                    )
 
+                }
+                if (enableNewPasswordFields) {
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.requestuser),
+                        userNameNewPassword,
+                        onTextChange = { loginViewModel.onUpdatePasswordChange(it, newPassword) },
+                        BoardType.TEXT
+                    )
 
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.newpassword),
+                        newPassword,
+                        onTextChange = {
+                            loginViewModel.onUpdatePasswordChange(
+                                userNameNewPassword,
+                                it
+                            )
+                        },
+                        BoardType.PASSWORD,
+                        true
+                    )
+                    ModelButton(
+                        text = stringResource(id = R.string.confirmButton),
+                        MaterialTheme.typography.labelLarge,
+                        modifier = fieldModifier ,
+                        enableConfirmButton,
+                        onClickButton = {
+                            loginViewModel.confirmNewPassword(newPassword,
+                                validateConfirm,
+                                messageInvalidUserName)
+
+                        }
+                    )
+
+                    ModelButton(
+                        text = stringResource(id = R.string.backButton),
+                        MaterialTheme.typography.labelLarge,
+                        modifier = fieldModifier ,
+                        true,
+                        onClickButton = {
+                            loginViewModel.onEnableNewPasswordFields(false)
+                        }
+                    )
+                }
             }
         }
     }
-
 }
 
 

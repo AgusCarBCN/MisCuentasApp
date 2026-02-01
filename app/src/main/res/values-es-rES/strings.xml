@@ -150,6 +150,7 @@
     <string name="noentries">No hay registros todavia</string>
     <string name="noaccounts">No hay cuentas creadas todavia.</string>
     <string name="inValidLogin">Inicio de sesion invalido</string>
+    <string name="inValidUserName">Nombre de usuario no valido</string>
     <string name="userNameUpdated">Nombre de usuario actualizado</string>
     <string name="nameUpdated">Nombre actualizado</string>
     <string name="passwordUpdated">Contraseña actualizada</string>

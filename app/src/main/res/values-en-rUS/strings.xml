@@ -180,7 +180,7 @@
     <string name="deleteentries">You have deleted the selected records</string>
     <string name="nodeleteentries">There are no selected records to delete</string>
     <string name="modifyentrymsg">You have edited this record</string>
-
+    <string name="inValidUserName">Invalid user name</string>
     <!--TopBar titles-->
     <string name="hometitle">Home</string>
     <string name="searchtitle">Search</string>

@@ -13,7 +13,10 @@ import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCas
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpDatePasswordUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import javax.inject.Inject
@@ -139,6 +142,28 @@ class LoginViewModel @Inject constructor(
         _enableNewPasswordFields.value = enableNewPasswordFields
     }
 
+    fun confirmNewPassword(
+            newPassword: String,
+            validateConfirm: Boolean,
+            invalidLogin:String
+        ) {
+            if (!validateConfirm) {
+                onClearFields()
+                sendMessage(invalidLogin)
+                return
+            }
+
+            viewModelScope.launch {
+                try {
+                    updatePassword(newPassword)
+                    onEnableNewPasswordFields(false)
+                } catch (e: Exception) {
+                    Log.e("LoginViewModel", "Error updating password", e)
+                }
+            }
+        }
+
+
     @Composable
     fun getGreeting(userName: String): String {
         val hour = LocalTime.now().hour
@@ -170,6 +195,15 @@ class LoginViewModel @Inject constructor(
             userName == userProfile.profileUserName
         } else {
             false
+        }
+    }
+    public fun sendMessage(message: String){
+        viewModelScope.launch(Dispatchers.Main) {
+            SnackBarController.sendEvent(
+                event = SnackBarEvent(
+                    message
+                )
+            )
         }
     }
 }
