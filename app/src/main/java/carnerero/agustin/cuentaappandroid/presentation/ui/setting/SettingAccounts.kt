@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -98,12 +99,15 @@ fun AccountList(
 
                             if (option) {
                                 mainViewModel.showDeleteAccountDialog(true)
-                            }else{
-                                navController.navigateTopLevel(Routes.ModifyAccountItem.createRoute(
-                                    accountSelected?.id ?: 0
-                                ))
+                            } else {
+                                navController.navigateTopLevel(
+                                    Routes.ModifyAccountItem.createRoute(
+                                        accountSelected?.id ?: 0
+                                    )
+                                )
                             }
-                        }
+                        },
+                        modifier = Modifier.fillMaxWidth()
                     )  // Crea un card para cada cuenta en la lista
                     Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)
                 }

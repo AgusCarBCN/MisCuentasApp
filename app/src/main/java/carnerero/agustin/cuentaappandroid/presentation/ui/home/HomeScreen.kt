@@ -2,13 +2,18 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -50,66 +55,80 @@ fun HomeScreen(
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
     val accounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary),
-        verticalArrangement = Arrangement.Center,  // Centra los elementos verticalmente
-        horizontalAlignment = Alignment.CenterHorizontally  // Centra los elementos horizontalmente
-    ) {
-        if (accounts.isEmpty()) {
-            Text(text = stringResource(id = R.string.noaccounts),
-                color = LocalCustomColorsPalette.current.textColor,
-                fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() })
-        }
-        else{
-            Row(modifier = Modifier.padding(top = 20.dp)) {
-                HeadCard(modifier = Modifier.weight(0.5f),
-                    Utils.numberFormat(incomes,currencyCodeSelected),
-                    true,
-                    onClickCard={
-                    entriesViewModel.getAllIncomes()
-                    navToEntries()
-                    })
-                Spacer(modifier = Modifier.width(5.dp))  // Espacio entre los dos cards
-                HeadCard(modifier = Modifier.weight(0.5f),
-                    Utils.numberFormat(expenses,currencyCodeSelected),
-                    false,
-                    onClickCard={
-                    entriesViewModel.getAllExpenses()
-                    navToEntries()
-                    })
-            }
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val maxHeightDp = maxHeight
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f) // mismo ancho para TODOS
+            .heightIn(min = 48.dp)
 
-            Spacer(modifier = Modifier.width(5.dp))
-            HeadSetting(title = stringResource(id = R.string.youraccounts),
-                MaterialTheme.typography.headlineMedium)
-
-            // Mostrar las cuentas si están disponibles
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-
-            ) {
-                items(accounts) { account -> // Solo utiliza accounts
-                    AccountCard(
-                        account,
-                        currencyCodeSelected,
-                        R.string.seeall,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(LocalCustomColorsPalette.current.backgroundPrimary),
+            verticalArrangement = Arrangement.Center,  // Centra los elementos verticalmente
+            horizontalAlignment = Alignment.CenterHorizontally  // Centra los elementos horizontalmente
+        ) {
+            if (accounts.isEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.noaccounts),
+                    color = LocalCustomColorsPalette.current.textColor,
+                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() })
+            } else {
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(fieldModifier,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HeadCard(
+                        modifier = Modifier.weight(1f),
+                        Utils.numberFormat(incomes, currencyCodeSelected),
+                        true,
                         onClickCard = {
-                            entriesViewModel.getAllEntriesByAccount(account.id)
+                            entriesViewModel.getAllIncomes()
                             navToEntries()
-                        }
-                    )  // Crea un card para cada cuenta en la lista
-                    Spacer(modifier = Modifier.height(20.dp))  // Espacio entre cada card (separación)
+                        })
+
+                    HeadCard(
+                        modifier = Modifier.weight(1f),
+                        Utils.numberFormat(expenses, currencyCodeSelected),
+                        false,
+                        onClickCard = {
+                            entriesViewModel.getAllExpenses()
+                            navToEntries()
+                        })
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                HeadSetting(
+                    title = stringResource(id = R.string.youraccounts),
+                    MaterialTheme.typography.headlineMedium
+                )
+
+                // Mostrar las cuentas si están disponibles
+                LazyColumn(
+                    modifier = fieldModifier,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                    ) {
+                    items(accounts) { account -> // Solo utiliza accounts
+                        AccountCard(
+                            account,
+                            currencyCodeSelected,
+                            R.string.seeall,
+                            onClickCard = {
+                                entriesViewModel.getAllEntriesByAccount(account.id)
+                                navToEntries()
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .widthIn(max = maxWidthDp * 0.9f)
+                        )  // Crea un card para cada cuenta en la lista
+                         // Espacio entre cada card (separación)
+                    }
                 }
             }
         }
     }
- }
-
+}
 
 
 

@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -35,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
@@ -97,8 +100,7 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
             disabledContentColor = LocalCustomColorsPalette.current.incomeColor
 
         ),
-        modifier = Modifier
-            .size(width = 180.dp, height = 120.dp)
+        modifier =modifier
     ) {
         Text(
             text = amount,
@@ -133,7 +135,8 @@ fun AccountCard(
     account: Account,
     currencyCode: String,
     textButton: Int,
-    onClickCard: () -> Unit
+    onClickCard: () -> Unit,
+    modifier: Modifier
 ) {
     val contentText=stringResource(textButton)
     ElevatedCard(
@@ -147,56 +150,62 @@ fun AccountCard(
             disabledContentColor = LocalCustomColorsPalette.current.incomeColor
 
         ),
-        modifier = Modifier
-            .size(width = 360.dp, height = 120.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 120.dp)   // Altura mínima
+            .widthIn(max = 420.dp)    // Limita ancho máximo en tablets
     ) {
-        Row(
-            modifier = Modifier.padding(5.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = account.name,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.6f),
-                textAlign = TextAlign.Start,
-                color = LocalCustomColorsPalette.current.textColor,
-                style=MaterialTheme.typography.headlineSmall
-            )
-            Spacer(modifier = Modifier.height(12.dp)) // Espacio entre el texto y el botón
-            Text(
-                text = Utils.numberFormat(account.balance, currencyCode),
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.4f),
-                textAlign = TextAlign.End,
-                style=MaterialTheme.typography.headlineSmall
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp)) // Espacio entre el texto y el botón
 
-        TextButton(
-            onClick = {
-                onClickCard()
-            },
-            content = {
-                Text(
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .fillMaxWidth()
-                        .semantics {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = account.name,
+                        modifier = Modifier.weight(0.6f),
+                        textAlign = TextAlign.Start,
+                        color = LocalCustomColorsPalette.current.textColor,
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+
+                    Text(
+                        text = Utils.numberFormat(account.balance, currencyCode),
+                        modifier = Modifier.weight(0.4f),
+                        textAlign = TextAlign.End,
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                TextButton(
+                    onClick = onClickCard,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = contentText,
+                        textAlign = TextAlign.Start,
+                        color = LocalCustomColorsPalette.current.textColor,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.semantics {
                             contentDescription = "$contentText ${account.name}"
-                        },
-                    text = stringResource(id = textButton),
-                    textAlign = TextAlign.Start,
-                    color = LocalCustomColorsPalette.current.textColor,
-                    style=MaterialTheme.typography.bodyLarge
-                )
+                        }
+                    )
+                }
             }
-        )
+        }
     }
-}
+
 
 @Composable
 fun CategoryCardWithCheckbox(category: Category,
