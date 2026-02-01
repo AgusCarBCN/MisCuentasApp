@@ -75,8 +75,8 @@ fun CreateProfileComponent(
 
     val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
     BoxWithConstraints(Modifier.fillMaxSize()) {
-        val imageHeight = maxHeight * 0.40f
-        val contentHeight = maxHeight * 0.60f
+        val imageHeight = maxHeight * 0.35f
+        val contentHeight = maxHeight * 0.65f
 
         val fieldModifier = Modifier
             .fillMaxWidth(0.85f) // mismo ancho para TODOS
