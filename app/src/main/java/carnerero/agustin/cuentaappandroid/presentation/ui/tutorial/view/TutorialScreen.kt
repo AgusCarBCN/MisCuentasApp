@@ -1,6 +1,8 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view
 
 
+import android.R.attr.top
+import android.content.res.Configuration
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -20,9 +22,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -38,161 +43,91 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialItem
 import kotlinx.coroutines.launch
-/*
+
 @Composable
 fun Tutorial(
     tutorialViewModel: TutorialViewModel,
     navToScreen: () -> Unit
 ) {
-    val listOfItems=getItems()
-    val toLogin by tutorialViewModel.toLogin.observeAsState(false)
-
-    ConstraintLayout(
-
-        modifier= Modifier
-            .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
-    ) {
-
-        val (horizontalPager, loginButton) = createRefs()
-        //Cargar valor de DataStore...
-
-        val pagerState = rememberPagerState(pageCount = {
-            listOfItems.size  // Cada página corresponde a un item de la lista
-        })
-
-        Column(
-            modifier=Modifier.constrainAs(horizontalPager) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(loginButton.top)
-            }
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-
-            ) { page ->
-                // Contenido de cada página
-                ItemCard(item = listOfItems[page]) // Mostrando un item en cada página
-            }
-
-            CircleIndicator(totalDots = listOfItems.size, pagerState.targetPage)
-        }
-
-
-        ModelButton(text = stringResource(id =if(toLogin) R.string.loginButton else R.string.createProfileButton),
-            MaterialTheme.typography.labelLarge
-           ,modifier = Modifier
-                .width(360.dp)
-                .constrainAs(loginButton) {
-                    top.linkTo(horizontalPager.bottom)          // Parte superior anclada al imageBox
-                    start.linkTo(parent.start)           // Empieza en el lado izquierdo del padre
-                    end.linkTo(parent.end)               // Termina en el lado derecho del padre
-                    bottom.linkTo(parent.bottom)         // Parte inferior anclada al padre
-                }, true,
-            onClickButton = {navToScreen()}
-
-        )
-    }
-
-}*/
-@Composable
-fun Tutorial(
-    tutorialViewModel: TutorialViewModel,
-    navToScreen: () -> Unit
-) {
+    // Detectar orientacion
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val toLogin by tutorialViewModel.toLogin.observeAsState(false)
     val listOfItems = getItems()
-
+    val pagerState = rememberPagerState(
+        pageCount = { listOfItems.size }
+    )
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(LocalCustomColorsPalette.current.backgroundPrimary)
     ) {
-
-        val contentWidth = maxWidth * 0.9f
-
-        val pagerState = rememberPagerState(
-            pageCount = { listOfItems.size }
-        )
-
-        ConstraintLayout(
-            modifier = Modifier.fillMaxSize()
-        ) {
-
-            val (pagerRef, buttonRef) = createRefs()
-
-            Column(
-                modifier = Modifier
-                    .constrainAs(pagerRef) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(buttonRef.top)
-                    }
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                HorizontalPager(
-                    state = pagerState,
+        val buttonField = maxWidth * 0.85f
+        Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                ) { page ->
-                    ItemCard(item = listOfItems[page])
+                        .padding(top=if(isLandscape)20.dp else 80.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    ) { page ->
+                        ItemCard(item = listOfItems[page], isLandscape)
+                    }
+                    //Spacer(modifier = Modifier.height(12.dp))
+                    CircleIndicator(
+                        totalDots = listOfItems.size,
+                        selectedIndex = pagerState.targetPage
+                    )
+                    ModelButton(
+                        text = stringResource(id = if (toLogin) R.string.loginButton else R.string.createProfileButton),
+                        MaterialTheme.typography.labelLarge,
+                        modifier = Modifier
+                            .padding(top=20.dp)
+                            .width(buttonField)
+                            .heightIn(min = 48.dp)
+                       , true,
+                        onClickButton = { navToScreen() }
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
-
-                CircleIndicator(
-                    totalDots = listOfItems.size,
-                    selectedIndex = pagerState.targetPage
-                )
             }
-
-            ModelButton(text = stringResource(id =if(toLogin) R.string.loginButton else R.string.createProfileButton),
-                MaterialTheme.typography.labelLarge
-                ,modifier = Modifier
-                    .width(contentWidth)
-                    .constrainAs(buttonRef) {
-                        bottom.linkTo(parent.bottom, margin = 16.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-                    , true,
-                onClickButton = {navToScreen()}
-
-            )
         }
-    }
 
-}
 
 
 @Composable
-private fun ItemCard(item: TutorialItem) {
+private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
+
+
 
     // Creamos un animatable para manejar el color del ícono
     val initColor = LocalCustomColorsPalette.current.imageTutorialInit
     val targetColor = LocalCustomColorsPalette.current.imageTutorialTarget
     val color = remember { Animatable(initColor) }
     val coroutineScope = rememberCoroutineScope()
+
+    val configuration = LocalConfiguration.current
+    val isPortrait =
+        configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
+
     // Iniciamos una corrutina para animar el color de manera infinita
     if (item.iconItem != R.drawable.contabilidad) {
         LaunchedEffect(Unit) {
@@ -208,57 +143,95 @@ private fun ItemCard(item: TutorialItem) {
             }
         }
     }
-    // Un card sencillo que muestra título, descripción e ícono
-    Card(
+
+    Column(
         modifier = Modifier
-            .width(360.dp)
-            .height(460.dp)
-
+            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
+        Text(
+            text = item.titleItem,
             modifier = Modifier
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .width(360.dp)
+                .padding(top = 15.dp, bottom = 15.dp)
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineMedium,
+            color = (LocalCustomColorsPalette.current.boldTextColor)
+        )
+        Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = item.titleItem,
-                modifier = Modifier
-                    .width(360.dp)
-                    .padding(top = 15.dp, bottom = 15.dp)
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center,
-                style=MaterialTheme.typography.headlineMedium,
-                color = (LocalCustomColorsPalette.current.boldTextColor)
-            )
-            Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
-            Image(
-                painter = painterResource(id = item.iconItem),
-                contentDescription = null, // No se requiere descripción accesible para imágenes decorativas
-                modifier = Modifier
-                    .width(250.dp)
-                    .height(200.dp)
-                    .align(Alignment.CenterHorizontally),
-                colorFilter =if(item.iconItem!=R.drawable.contabilidad) ColorFilter.tint(color.value)
-                else null
-            )
-            Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
-            Text(
-                text = item.descriptionItem,
-                modifier = Modifier
-                    .width(360.dp)
-                    .height(220.dp)
-                    .padding(top = 10.dp, bottom = 5.dp)
-                    .align(Alignment.CenterHorizontally),
-                style=MaterialTheme.typography.labelLarge,
-                color = LocalCustomColorsPalette.current.textColor
-            )
+            val imageSize =
+                if (isPortrait) maxHeight * 0.35f
+                else maxHeight * 0.5f
+            if (isPortrait) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = item.iconItem),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(imageSize)
+                            .padding(bottom = 16.dp),
+                        contentScale = ContentScale.Fit,
+                        colorFilter = if (item.iconItem != R.drawable.contabilidad) ColorFilter.tint(
+                            color.value
+                        )
+                        else null
+                    )
+                    Text(
+                        text = item.descriptionItem,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = LocalCustomColorsPalette.current.textColor
+                    )
+                }
+            }
+                else{
 
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Image(
+                            painter = painterResource(id = item.iconItem),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(imageSize)
+                                .padding(end = 16.dp),
+                            contentScale = ContentScale.Fit,
+                            colorFilter = if (item.iconItem != R.drawable.contabilidad) ColorFilter.tint(
+                                color.value
+                            )
+                            else null
+                        )
+                        Text(
+                            text = item.descriptionItem,
+                            modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = LocalCustomColorsPalette.current.textColor
+                        )
+                    }
+                }
+            }
         }
-
     }
-}
+
+
+
 
 
 @Composable
