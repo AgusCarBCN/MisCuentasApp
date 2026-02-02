@@ -14,8 +14,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginComponent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
@@ -60,7 +60,7 @@ fun AppNavHost(
         }
 
         composable(Routes.CreateProfile.route) {
-            CreateProfileComponent(
+            CreateProfileScreen(
                 profileViewModel,
                 categoriesViewModel,
                 navToBackLogin = { navController.popBackStack() },
@@ -76,7 +76,7 @@ fun AppNavHost(
             )
         }
         composable(Routes.Login.route) {
-            LoginComponent(
+            LoginScreen(
                 modifier = Modifier.fillMaxSize(),
                 navToMain = {
                     navController.navigate(Routes.Main.route)

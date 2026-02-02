@@ -1,296 +1,92 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
 
 
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
+import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import carnerero.agustin.cuentaappandroid.R
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @Composable
-fun CreateProfileComponent(
+fun CreateProfileScreen(
     createViewModel: ProfileViewModel,
     categoriesViewModel: CategoriesViewModel,
     navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {
-    val name by createViewModel.name.observeAsState("")
-    val userName by createViewModel.username.observeAsState("")
-    val password by createViewModel.password.observeAsState("")
-    val selectedImageUri by createViewModel.selectedImageUri.observeAsState(null)
-    val repeatPassword by createViewModel.repeatPassword.observeAsState("")
-    val scope = rememberCoroutineScope()
-    val enableButton by createViewModel.enableButton.observeAsState(false)
-    val messageProfileCreated = message(resource =R.string.profileCreated )
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     BoxWithConstraints(Modifier.fillMaxSize()) {
-        val imageHeight = maxHeight * 0.35f
-        val contentHeight = maxHeight * 0.65f
 
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(LocalCustomColorsPalette.current.backgroundPrimary) // Reemplaza con tu color de fondo
-        ) {
-            val (profileImage, box) = createRefs()
-
-            Column(
-                modifier = Modifier
-                    .height(imageHeight)
-                    .constrainAs(profileImage) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)               // Termina en el lado derecho del padre
-                        start.linkTo(parent.start)
-                        bottom.linkTo(box.top)
-                        // Parte inferior anclada al padre
-                    }) {
-
-                ProfileImageWithCamera(createViewModel)
-            }
-            Column(
-                modifier = Modifier
-                    .height(contentHeight)
-                    .verticalScroll(rememberScrollState())
-                    .constrainAs(box) {
-                        top.linkTo(profileImage.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
-
-            ) {
-
-                TextFieldComponent(
-                    modifier = fieldModifier,
-                    stringResource(id = R.string.enterName),
-                    name,
-                    onTextChange = {
-                        createViewModel.onTextFieldsChanged(
-                            it,
-                            userName,
-                            password,
-                            repeatPassword
-                        )
-                    },
-                    BoardType.TEXT,
-                    false
-                )
-                TextFieldComponent(
-                    modifier = fieldModifier,
-                    stringResource(id = R.string.enterUsername),
-                    userName,
-                    onTextChange = {
-                        createViewModel.onTextFieldsChanged(
-                            name,
-                            it,
-                            password,
-                            repeatPassword
-                        )
-                    },
-                    BoardType.TEXT,
-                    false
-                )
-                TextFieldComponent(
-                    modifier = fieldModifier,
-                    stringResource(id = R.string.enterPassword),
-                    password,
-                    onTextChange = {
-                        createViewModel.onTextFieldsChanged(
-                            name,
-                            userName,
-                            it,
-                            repeatPassword
-                        )
-                    },
-                    BoardType.PASSWORD,
-                    true
-                )
-                TextFieldComponent(
-                    modifier = fieldModifier ,
-                    stringResource(id = R.string.repeatpassword),
-                    repeatPassword,
-                    onTextChange = {
-                        createViewModel.onTextFieldsChanged(
-                            name,
-                            userName,
-                            password,
-                            it
-                        )
-                    },
-                    BoardType.PASSWORD,
-                    true
-                )
-                ModelButton(
-                    text = stringResource(id = R.string.confirmButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = fieldModifier ,
-                    enableButton,
-                    onClickButton = {
-                        navToCreateAccounts()
-                        createViewModel.createProfile(name,userName,password,messageProfileCreated)
-                        categoriesViewModel.populateCategories()
-                    }
-                )
-
-                ModelButton(
-                    text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = fieldModifier ,
-                    true,
-                    onClickButton = {
-                        navToBackLogin()
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-
-fun ProfileImageWithCamera(viewModel: ProfileViewModel) {
-
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val selectedImageUriSavedFromFile by viewModel.selectedImageUriSaved.observeAsState(null)
-    // Llama a `onImageNoSelected()` si no hay una imagen seleccionada o guardada
-    //viewModel.onImageNoSelected()
-    // Lanza el selector de imágenes
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        selectedImageUri = uri
-        selectedImageUri?.let { viewModel.onImageSelected(it) }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(), // Para que se ajuste al contenido
-        contentAlignment = Alignment.Center,
-
-    ) {
-        // Imagen de perfil dentro de una Card circular
-
-        Card(
-            modifier = Modifier
-                .size(250.dp)
-                .padding(top=20.dp),
-            shape = CircleShape, // Hace que el Card sea circular
-            // Reemplaza lightYellow
-        ) {
-            if (selectedImageUri == null) {
-                Image(
-                    painter = if (selectedImageUriSavedFromFile == null || selectedImageUriSavedFromFile == Uri.EMPTY) painterResource(
-                        id = R.drawable.contabilidad
-                    )
-                    else rememberAsyncImagePainter(model = selectedImageUriSavedFromFile), // Reemplaza con tu imagen de placeholder
-                    contentDescription = "Profile Image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize() // La imagen ocupa todo el Card
-                )
-            }
-            // Imagen de perfil
-            selectedImageUri?.let { uri ->
-
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(uri)
-                            .crossfade(true)
-                            .build()
-                    ),
-                    contentDescription = "Profile Image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize() // La imagen ocupa todo el Card
-
-                )
-            }
-        }
-
-        // Ícono de cámara superpuesto en la esquina inferior izquierda
-        Card(
-            modifier = Modifier
-                .size(50.dp) // Tamaño del ícono de cámara
-                .align(Alignment.Center) // Posición en la esquina inferior izquierda
-                .offset(x = 80.dp, y = (100).dp),
-            shape = CircleShape,
-
-            ) {
-            Icon(
-                painter = painterResource(id = R.drawable.camera), // Reemplaza con tu ícono de cámara
-                contentDescription = "Camera Icon",
-                tint = LocalCustomColorsPalette.current.iconCamara, // Reemplaza con tu color de ícono
+        val contentWidth=maxWidth*0.5f
+        if (isLandscape) {
+            Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LocalCustomColorsPalette.current.disableButton)
-                    .clickable {
-                        photoPickerLauncher.launch("image/*")
-
-                    }
+                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            ) {
+                ProfileImageWithCamera(
+                    modifier = Modifier
+                        .width(contentWidth)
+                        .wrapContentHeight()
+                        .padding(top = 50.dp)
+                        ,
+                    createViewModel)
+                CreateContentSection(
+                    Modifier
+                        .width(contentWidth)
+                        .verticalScroll(rememberScrollState()
+                            ),
+                    createViewModel,
+                    categoriesViewModel,
+                    navToCreateAccounts
+                )
+                { navToBackLogin }
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             )
-
+            {
+                ProfileImageWithCamera(
+                    Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                    .padding(bottom = 20.dp),
+                    createViewModel)
+                CreateContentSection(
+                    Modifier
+                        .verticalScroll(rememberScrollState()),
+                    createViewModel,
+                    categoriesViewModel,
+                    navToCreateAccounts
+                )
+                { navToBackLogin }
+            }
         }
     }
 }
-
-
-
-
-
 

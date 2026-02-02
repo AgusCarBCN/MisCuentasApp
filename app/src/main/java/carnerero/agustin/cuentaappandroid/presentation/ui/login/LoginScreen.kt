@@ -21,7 +21,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.Conte
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.ImageSection
 
 @Composable
-fun LoginComponent(
+fun LoginScreen(
     loginViewModel: LoginViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel(),
     modifier: Modifier,
     navToMain: () -> Unit,

@@ -165,37 +165,7 @@ fun CreateAccountsComponent(
                                 accountName,
                                 messageSuccess,
                                 messageError)
-                           /* scope.launch(Dispatchers.IO) {
-                                try {
-                                    val amountDecimal =
-                                        accountBalance.toBigDecimalOrNull() ?: BigDecimal.ZERO
-                                    accountsViewModel.addAccount(
-                                        Account(
-                                            name = accountName,
-                                            balance = amountDecimal
-                                        )
-                                    )
 
-                                    if (listOfAccounts.isEmpty()) {
-                                        accountsViewModel.enableCurrencySelector
-                                    }
-                                    withContext(Dispatchers.Main) {
-                                        SnackBarController.sendEvent(
-                                            event = SnackBarEvent(
-                                                newAccountCreated
-                                            )
-                                        )
-                                    }
-                                } catch (_: Exception) {
-                                    withContext(Dispatchers.Main) {
-                                        SnackBarController.sendEvent(
-                                            event = SnackBarEvent(
-                                                errorAccountCreated
-                                            )
-                                        )
-                                    }
-                                }
-                            }*/
                         }
                     )
                     ModelButton(
