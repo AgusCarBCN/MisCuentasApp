@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
@@ -57,11 +57,11 @@ fun BottomMyAccountsBar(mainViewModel: MainViewModel,
     BottomAppBar(
         modifier = Modifier
             .height(80.dp)
-            .background( LocalCustomColorsPalette.current.backgroundPrimary)
+            .background( colors.backgroundPrimary)
             .clip(RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp))
             ,
-        containerColor = LocalCustomColorsPalette.current.barBackground,
-        contentColor = LocalCustomColorsPalette.current.textColor,
+        containerColor = colors.barBackground,
+        contentColor = colors.textColor,
         actions = {
             Row(
                 modifier = Modifier
@@ -118,9 +118,9 @@ private fun IconComponent(isPressed: Boolean, label: Int, iconResource: Int) {
     )
     val indicatorColor by animateColorAsState(
         targetValue = if (isPressed) {
-            LocalCustomColorsPalette.current.iconColor
+            colors.iconColor
         } else {
-            LocalCustomColorsPalette.current.iconColor
+            colors.iconColor
         },
         label = "indicator color",
         animationSpec = tween(

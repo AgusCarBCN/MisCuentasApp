@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,14 +19,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
 
 @Composable
@@ -53,7 +51,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
             ,
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -64,7 +62,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 modifier= Modifier.padding(top=10.dp),
                 text = loginViewModel.getGreeting(name),
                 fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 fontWeight = FontWeight.Bold
             )
             TextFieldComponent(
@@ -104,7 +102,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
                     Text(
                         text = stringResource(id = R.string.forgotpassword),
                         style = MaterialTheme.typography.labelSmall,
-                        color = LocalCustomColorsPalette.current.textColor
+                        color = colors.textColor
                     )
                 }
             )

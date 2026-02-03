@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
 import coil.compose.rememberAsyncImagePainter
 
@@ -25,7 +25,7 @@ fun ImageSection(modifier: Modifier,
     val image by loginViewModel.selectedImageUriSaved.observeAsState(initial = null)
     Column(
         modifier = modifier
-            .background(LocalCustomColorsPalette.current.imageBackground),
+            .background(colors.imageBackground),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
@@ -31,10 +30,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,10 +70,10 @@ fun NewEntry(
     var operationStatus: Int
 
     val initColor =
-        if (type== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeInit
-        else LocalCustomColorsPalette.current.iconExpenseInit
-    val targetColor = if (type== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeTarget
-    else LocalCustomColorsPalette.current.iconExpenseTarget
+        if (type== CategoryType.INCOME) colors.iconIncomeInit
+        else colors.iconExpenseInit
+    val targetColor = if (type== CategoryType.INCOME) colors.iconIncomeTarget
+    else colors.iconExpenseTarget
     Column(
         modifier = Modifier
             .fillMaxWidth()

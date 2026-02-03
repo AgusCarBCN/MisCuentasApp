@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting
 
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +37,9 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -65,14 +62,14 @@ fun AccountList(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary),
+            .background(colors.backgroundPrimary),
         verticalArrangement = Arrangement.Center,  // Centra los elementos verticalmente
         horizontalAlignment = Alignment.CenterHorizontally  // Centra los elementos horizontalmente
     ) {
         if (accounts.isNullOrEmpty()) {
             Text(
                 text = stringResource(id = R.string.noaccounts),
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 fontSize = 18.sp
             )
         } else {
@@ -162,8 +159,8 @@ fun ModifyAccountsComponent(
 
         IconAnimated(
             iconResource = R.drawable.configaccountoption, sizeIcon = 120,
-            LocalCustomColorsPalette.current.imageTutorialInit,
-            LocalCustomColorsPalette.current.imageTutorialTarget
+            colors.imageTutorialInit,
+            colors.imageTutorialTarget
         )
 
 

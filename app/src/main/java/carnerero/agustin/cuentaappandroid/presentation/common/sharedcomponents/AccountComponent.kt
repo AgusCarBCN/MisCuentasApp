@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 
@@ -59,7 +59,7 @@ fun AccountSelector(
     Column(
         modifier = Modifier
             .width(size.dp)
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
             .padding(5.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -67,21 +67,21 @@ fun AccountSelector(
         Row(
             modifier = Modifier
                 .padding(5.dp)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                .background(colors.backgroundPrimary),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = if (isDraggingUp) R.drawable.arrow_up else R.drawable.arrow_down),
                 contentDescription = null,
-                tint = LocalCustomColorsPalette.current.textColor,
+                tint = colors.textColor,
                 modifier = Modifier
                     .width(36.dp)
                     .padding(end = 8.dp)
             )
             Text(
                 text = title,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 modifier = Modifier.padding(vertical = 10.dp),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge
@@ -96,7 +96,7 @@ fun AccountSelector(
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(LocalCustomColorsPalette.current.backgroundSecondary)
+                    .background(colors.backgroundSecondary)
                     .height(60.dp),
             ) { page ->
                 // Actualiza la cuenta seleccionada en ViewModel
@@ -118,7 +118,7 @@ fun AccountSelector(
 
                     },
                         text = accounts[page].name,
-                        color = LocalCustomColorsPalette.current.textColor,
+                        color = colors.textColor,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyLarge
                     )
@@ -129,7 +129,7 @@ fun AccountSelector(
 
                     },
                         text = balanceFormatted,
-                        color = LocalCustomColorsPalette.current.incomeColor,
+                        color = colors.incomeColor,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyLarge

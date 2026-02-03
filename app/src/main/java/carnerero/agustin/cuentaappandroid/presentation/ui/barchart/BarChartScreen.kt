@@ -27,14 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.R
-
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.components.YearSelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
@@ -333,7 +332,7 @@ fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>)
                     text = item,
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.titleMedium,
-                    color = LocalCustomColorsPalette.current.textHeadColor
+                    color = colors.textHeadColor
                 )
             }
         }
@@ -351,26 +350,26 @@ fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>)
                     text = stringResource(element.month), // Obtener el nombre del mes
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = LocalCustomColorsPalette.current.textColor
+                    color = colors.textColor
                 )
                 Text(
                     text = Utils.numberFormat(element.incomes.toBigDecimal(),currencyCodeSelected), // Formato para ingresos
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = LocalCustomColorsPalette.current.incomeColor
+                    color = colors.incomeColor
                 )
                 Text(
                     text = Utils.numberFormat(element.expenses.toBigDecimal(),currencyCodeSelected), // Formato para gastos
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = LocalCustomColorsPalette.current.expenseColor
+                    color = colors.expenseColor
                 )
                 Text(
                     text = Utils.numberFormat(element.result.toBigDecimal(),currencyCodeSelected), // Formato para resultado
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = if(element.result>=0) LocalCustomColorsPalette.current.incomeColor
-                    else LocalCustomColorsPalette.current.expenseColor
+                    color = if(element.result>=0) colors.incomeColor
+                    else colors.expenseColor
                 )
             }
             Spacer(modifier = Modifier.height(4.dp)) // Espaciado entre filas
@@ -384,7 +383,7 @@ private fun SpacerTable() {
         modifier = Modifier
             .width(360.dp)
             .padding(10.dp)
-            .background(LocalCustomColorsPalette.current.textColor.copy(alpha = 0.2f)) // Ajusta el valor alpha para la opacidad
+            .background(colors.textColor.copy(alpha = 0.2f)) // Ajusta el valor alpha para la opacidad
             .height(1.dp) // Cambié a height para que la línea sea horizontal, ajusta si es necesario
     )
 }

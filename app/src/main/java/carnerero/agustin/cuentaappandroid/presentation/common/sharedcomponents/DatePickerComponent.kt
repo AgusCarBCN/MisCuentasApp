@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 
@@ -83,18 +83,18 @@ fun DatePickerSearch(
                 .fillMaxWidth()
                 .height(64.dp),
             colors = TextFieldDefaults.colors(
-                focusedTextColor = LocalCustomColorsPalette.current.textColor,
+                focusedTextColor = colors.textColor,
                 focusedIndicatorColor = Color.Transparent,  // Sin borde cuando está enfocado
                 unfocusedIndicatorColor = Color.Transparent,  // Sin borde cuando no está enfocado
-                focusedContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-                unfocusedContainerColor = LocalCustomColorsPalette.current.unfocusedContainerTextField,
-                unfocusedTextColor = LocalCustomColorsPalette.current.textColor,
-                focusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                unfocusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                disabledLabelColor = LocalCustomColorsPalette.current.textColor,
-                disabledTextColor = LocalCustomColorsPalette.current.textColor,
-                unfocusedTrailingIconColor = LocalCustomColorsPalette.current.textColor,
-                focusedTrailingIconColor = LocalCustomColorsPalette.current.textColor
+                focusedContainerColor = colors.focusedContainerTextField,
+                unfocusedContainerColor = colors.unfocusedContainerTextField,
+                unfocusedTextColor = colors.textColor,
+                focusedLabelColor = colors.textColor,
+                unfocusedLabelColor = colors.textColor,
+                disabledLabelColor = colors.textColor,
+                disabledTextColor = colors.textColor,
+                unfocusedTrailingIconColor = colors.textColor,
+                focusedTrailingIconColor = colors.textColor
             )
         )
 
@@ -103,52 +103,52 @@ fun DatePickerSearch(
             DatePickerDialog(
                 onDismissRequest = { searchViewModel.onShowDatePicker(false, isDateFrom) },
                 colors = DatePickerColors(
-                    containerColor = LocalCustomColorsPalette.current.drawerColor,
-                    titleContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    headlineContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    weekdayContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    subheadContentColor = LocalCustomColorsPalette.current.textColor,
-                    navigationContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    yearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    disabledYearContentColor = LocalCustomColorsPalette.current.disableButton,
-                    dayContentColor = LocalCustomColorsPalette.current.textColor,
-                    currentYearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    selectedYearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    disabledSelectedYearContentColor = LocalCustomColorsPalette.current.disableButton,
-                    disabledSelectedYearContainerColor = LocalCustomColorsPalette.current.disableButton,
-                    selectedYearContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-                    selectedDayContainerColor = LocalCustomColorsPalette.current.textColor,
-                    disabledSelectedDayContainerColor = LocalCustomColorsPalette.current.disableButton,
-                    selectedDayContentColor = LocalCustomColorsPalette.current.textButtonColorPressed,
-                    disabledSelectedDayContentColor = LocalCustomColorsPalette.current.disableButton,
-                    disabledDayContentColor = LocalCustomColorsPalette.current.disableButton,
-                    todayContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                    todayDateBorderColor = LocalCustomColorsPalette.current.disableButton,
-                    dayInSelectionRangeContainerColor = LocalCustomColorsPalette.current.buttonColorPressed,
-                    dayInSelectionRangeContentColor = LocalCustomColorsPalette.current.textButtonColorPressed,
-                    dividerColor = LocalCustomColorsPalette.current.disableButton,
+                    containerColor = colors.drawerColor,
+                    titleContentColor = colors.textHeadColor,
+                    headlineContentColor = colors.textHeadColor,
+                    weekdayContentColor = colors.textHeadColor,
+                    subheadContentColor = colors.textColor,
+                    navigationContentColor = colors.textHeadColor,
+                    yearContentColor = colors.textHeadColor,
+                    disabledYearContentColor = colors.disableButton,
+                    dayContentColor = colors.textColor,
+                    currentYearContentColor = colors.textHeadColor,
+                    selectedYearContentColor = colors.textHeadColor,
+                    disabledSelectedYearContentColor = colors.disableButton,
+                    disabledSelectedYearContainerColor = colors.disableButton,
+                    selectedYearContainerColor = colors.focusedContainerTextField,
+                    selectedDayContainerColor = colors.textColor,
+                    disabledSelectedDayContainerColor = colors.disableButton,
+                    selectedDayContentColor = colors.textButtonColorPressed,
+                    disabledSelectedDayContentColor = colors.disableButton,
+                    disabledDayContentColor = colors.disableButton,
+                    todayContentColor = colors.textHeadColor,
+                    todayDateBorderColor = colors.disableButton,
+                    dayInSelectionRangeContainerColor = colors.buttonColorPressed,
+                    dayInSelectionRangeContentColor = colors.textButtonColorPressed,
+                    dividerColor = colors.disableButton,
                     dateTextFieldColors = TextFieldDefaults.colors(
-                        focusedTextColor = LocalCustomColorsPalette.current.textColor,
+                        focusedTextColor = colors.textColor,
                         focusedIndicatorColor = Color.Transparent,  // Sin borde cuando está enfocado
                         unfocusedIndicatorColor = Color.Transparent,  // Sin borde cuando no está enfocado
-                        focusedContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-                        unfocusedContainerColor = LocalCustomColorsPalette.current.unfocusedContainerTextField,
-                        unfocusedTextColor = LocalCustomColorsPalette.current.textColor,
-                        focusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                        unfocusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                        disabledLabelColor = LocalCustomColorsPalette.current.textColor,
-                        disabledTextColor = LocalCustomColorsPalette.current.textColor,
-                        unfocusedTrailingIconColor = LocalCustomColorsPalette.current.textColor,
-                        focusedTrailingIconColor = LocalCustomColorsPalette.current.textColor
+                        focusedContainerColor = colors.focusedContainerTextField,
+                        unfocusedContainerColor = colors.unfocusedContainerTextField,
+                        unfocusedTextColor = colors.textColor,
+                        focusedLabelColor = colors.textColor,
+                        unfocusedLabelColor = colors.textColor,
+                        disabledLabelColor = colors.textColor,
+                        disabledTextColor = colors.textColor,
+                        unfocusedTrailingIconColor = colors.textColor,
+                        focusedTrailingIconColor = colors.textColor
                     )
                 ),
                 confirmButton = {
                     TextButton(
                         colors = ButtonColors(
-                            containerColor = LocalCustomColorsPalette.current.drawerColor,
-                            contentColor = LocalCustomColorsPalette.current.textColor,
-                            disabledContainerColor = LocalCustomColorsPalette.current.disableButton,
-                            disabledContentColor = LocalCustomColorsPalette.current.disableButton,
+                            containerColor = colors.drawerColor,
+                            contentColor = colors.textColor,
+                            disabledContainerColor = colors.disableButton,
+                            disabledContentColor = colors.disableButton,
 
                         ),
                         onClick = {
@@ -167,10 +167,10 @@ fun DatePickerSearch(
                 dismissButton = {
                     TextButton(
                         colors = ButtonColors(
-                            containerColor = LocalCustomColorsPalette.current.drawerColor,
-                            contentColor = LocalCustomColorsPalette.current.textColor,
-                            disabledContainerColor = LocalCustomColorsPalette.current.disableButton,
-                            disabledContentColor = LocalCustomColorsPalette.current.disableButton,
+                            containerColor = colors.drawerColor,
+                            contentColor = colors.textColor,
+                            disabledContainerColor = colors.disableButton,
+                            disabledContentColor = colors.disableButton,
 
                             ),
                         onClick = {
@@ -190,43 +190,43 @@ fun DatePickerSearch(
                         state = datePickerState,
                         showModeToggle = false,
                         colors = DatePickerColors(
-                            containerColor = LocalCustomColorsPalette.current.drawerColor,
-                            titleContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            headlineContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            weekdayContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            subheadContentColor = LocalCustomColorsPalette.current.textColor,
-                            navigationContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            yearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            disabledYearContentColor = LocalCustomColorsPalette.current.disableButton,
-                            dayContentColor = LocalCustomColorsPalette.current.textColor,
-                            currentYearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            selectedYearContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            disabledSelectedYearContentColor = LocalCustomColorsPalette.current.disableButton,
-                            disabledSelectedYearContainerColor = LocalCustomColorsPalette.current.disableButton,
-                            selectedYearContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-                            selectedDayContainerColor = LocalCustomColorsPalette.current.textColor,
-                            disabledSelectedDayContainerColor = LocalCustomColorsPalette.current.disableButton,
-                            selectedDayContentColor = LocalCustomColorsPalette.current.textButtonColorPressed,
-                            disabledSelectedDayContentColor = LocalCustomColorsPalette.current.disableButton,
-                            disabledDayContentColor = LocalCustomColorsPalette.current.disableButton,
-                            todayContentColor = LocalCustomColorsPalette.current.textHeadColor,
-                            todayDateBorderColor = LocalCustomColorsPalette.current.disableButton,
-                            dayInSelectionRangeContainerColor = LocalCustomColorsPalette.current.buttonColorPressed,
-                            dayInSelectionRangeContentColor = LocalCustomColorsPalette.current.textButtonColorPressed,
-                            dividerColor = LocalCustomColorsPalette.current.disableButton,
+                            containerColor = colors.drawerColor,
+                            titleContentColor = colors.textHeadColor,
+                            headlineContentColor = colors.textHeadColor,
+                            weekdayContentColor = colors.textHeadColor,
+                            subheadContentColor = colors.textColor,
+                            navigationContentColor = colors.textHeadColor,
+                            yearContentColor = colors.textHeadColor,
+                            disabledYearContentColor = colors.disableButton,
+                            dayContentColor = colors.textColor,
+                            currentYearContentColor = colors.textHeadColor,
+                            selectedYearContentColor = colors.textHeadColor,
+                            disabledSelectedYearContentColor = colors.disableButton,
+                            disabledSelectedYearContainerColor = colors.disableButton,
+                            selectedYearContainerColor = colors.focusedContainerTextField,
+                            selectedDayContainerColor = colors.textColor,
+                            disabledSelectedDayContainerColor = colors.disableButton,
+                            selectedDayContentColor = colors.textButtonColorPressed,
+                            disabledSelectedDayContentColor = colors.disableButton,
+                            disabledDayContentColor = colors.disableButton,
+                            todayContentColor = colors.textHeadColor,
+                            todayDateBorderColor = colors.disableButton,
+                            dayInSelectionRangeContainerColor = colors.buttonColorPressed,
+                            dayInSelectionRangeContentColor = colors.textButtonColorPressed,
+                            dividerColor = colors.disableButton,
                             dateTextFieldColors = TextFieldDefaults.colors(
-                                focusedTextColor = LocalCustomColorsPalette.current.textColor,
+                                focusedTextColor = colors.textColor,
                                 focusedIndicatorColor = Color.Transparent,  // Sin borde cuando está enfocado
                                 unfocusedIndicatorColor = Color.Transparent,  // Sin borde cuando no está enfocado
-                                focusedContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-                                unfocusedContainerColor = LocalCustomColorsPalette.current.unfocusedContainerTextField,
-                                unfocusedTextColor = LocalCustomColorsPalette.current.textColor,
-                                focusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                                unfocusedLabelColor = LocalCustomColorsPalette.current.textColor,
-                                disabledLabelColor = LocalCustomColorsPalette.current.textColor,
-                                disabledTextColor = LocalCustomColorsPalette.current.textColor,
-                                unfocusedTrailingIconColor = LocalCustomColorsPalette.current.textColor,
-                                focusedTrailingIconColor = LocalCustomColorsPalette.current.textColor
+                                focusedContainerColor = colors.focusedContainerTextField,
+                                unfocusedContainerColor = colors.unfocusedContainerTextField,
+                                unfocusedTextColor = colors.textColor,
+                                focusedLabelColor = colors.textColor,
+                                unfocusedLabelColor = colors.textColor,
+                                disabledLabelColor = colors.textColor,
+                                disabledTextColor = colors.textColor,
+                                unfocusedTrailingIconColor = colors.textColor,
+                                focusedTrailingIconColor = colors.textColor
                             )
                         )
                     )

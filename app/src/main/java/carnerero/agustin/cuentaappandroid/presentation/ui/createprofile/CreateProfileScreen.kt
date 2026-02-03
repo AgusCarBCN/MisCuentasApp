@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -22,7 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 @Composable
@@ -42,7 +41,7 @@ fun CreateProfileScreen(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                    .background(colors.backgroundPrimary)
             ) {
                 ProfileImageWithCamera(
                     modifier = Modifier
@@ -66,7 +65,7 @@ fun CreateProfileScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                    .background(colors.backgroundPrimary),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             )

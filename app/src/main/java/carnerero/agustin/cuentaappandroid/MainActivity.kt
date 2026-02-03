@@ -32,6 +32,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewMod
 import carnerero.agustin.cuentaappandroid.presentation.navigation.AppNavHost
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
+import carnerero.agustin.cuentaappandroid.presentation.theme.rememberWindowSize
 import carnerero.agustin.cuentaappandroid.utils.ObserveAsEvents
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import com.google.android.gms.ads.MobileAds
@@ -82,10 +83,11 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+            val windowSize= rememberWindowSize()
             val navigationController = rememberNavController()
             val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
 
-            MisCuentasTheme(darkTheme = switchDarkTheme) {
+            MisCuentasTheme(windowSize,darkTheme = switchDarkTheme) {
                 MobileAds.initialize(this) {
                     Log.d(TAG, "onCreate: initAds")
                 }

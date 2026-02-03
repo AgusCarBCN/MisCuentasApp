@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.entries.components
 
 
-import android.R.attr.entries
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,7 +41,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.model.EntryWithCheckBox
@@ -56,9 +53,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.E
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithIcon
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SpacerApp
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,7 +83,7 @@ fun EntryList(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary),
+            .background(colors.backgroundPrimary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Row de botones By Date / By Category
@@ -102,16 +98,16 @@ fun EntryList(
                 TextButton(onClick = { entriesViewModel.onEnableByDate(true) }) {
                     Text(
                         text = stringResource(id = R.string.bydate),
-                        color = if (enableByDate) LocalCustomColorsPalette.current.textHeadColor
-                        else LocalCustomColorsPalette.current.textColor,
+                        color = if (enableByDate) colors.textHeadColor
+                        else colors.textColor,
                         fontSize = 18.sp
                     )
                 }
                 TextButton(onClick = { entriesViewModel.onEnableByDate(false) }) {
                     Text(
                         text = stringResource(id = R.string.bycategory),
-                        color = if (!enableByDate) LocalCustomColorsPalette.current.textHeadColor
-                        else LocalCustomColorsPalette.current.textColor,
+                        color = if (!enableByDate) colors.textHeadColor
+                        else colors.textColor,
                         fontSize = 18.sp
                     )
                 }
@@ -126,7 +122,7 @@ fun EntryList(
             ) {
                 Text(
                     text = stringResource(id = R.string.recordsnotfound),
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     textAlign = TextAlign.Center,
                     fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() }
                 )
@@ -148,12 +144,12 @@ fun EntryList(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
-                                .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                                .background(colors.backgroundPrimary),
                             contentAlignment = Alignment.CenterStart
                         ) {
                             Text(
                                 text = Utils.toDateFormatDayMonth(date),
-                                color = LocalCustomColorsPalette.current.textColor,
+                                color = colors.textColor,
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(start = 16.dp)
                             )
@@ -217,7 +213,7 @@ fun ItemEntry(
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textHeadColor
+                color = colors.textHeadColor
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
@@ -225,8 +221,8 @@ fun ItemEntry(
                 modifier = Modifier
                     .weight(0.4f),
 
-                    color = if (entryAmount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
-                    else LocalCustomColorsPalette.current.expenseColor
+                    color = if (entryAmount >= BigDecimal.ZERO) colors.incomeColor
+                    else colors.expenseColor
                ,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge
@@ -242,7 +238,7 @@ fun ItemEntry(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = entry.iconResource),
                 contentDescription = null,
-                tint = LocalCustomColorsPalette.current.textColor
+                tint = colors.textColor
             )
             Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
             Text(
@@ -251,9 +247,9 @@ fun ItemEntry(
                     .padding(10.dp)
                     .weight(0.4f),
                 color = if (entryAmount.toDouble() > 0.0 )
-                    LocalCustomColorsPalette.current.incomeColor
+                    colors.incomeColor
                 else
-                    LocalCustomColorsPalette.current.expenseColor
+                    colors.expenseColor
                 ,
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge
@@ -264,7 +260,7 @@ fun ItemEntry(
                 modifier = Modifier
                     .padding(10.dp)
                     .weight(0.4f),
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -293,7 +289,7 @@ fun ItemCategory(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = categoryIcon ?: 0),
                 contentDescription = "icon",
-                tint = LocalCustomColorsPalette.current.textColor
+                tint = colors.textColor
             )
             Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
             Text(
@@ -301,7 +297,7 @@ fun ItemCategory(
                 modifier = Modifier
                     .padding(10.dp)
                     .weight(0.4f),
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge
 
@@ -311,8 +307,8 @@ fun ItemCategory(
                 text = Utils.numberFormat((amount ?: BigDecimal.ZERO) , currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if ((amount ?: BigDecimal.ZERO) >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
-                else LocalCustomColorsPalette.current.expenseColor,
+                color = if ((amount ?: BigDecimal.ZERO) >= BigDecimal.ZERO) colors.incomeColor
+                else colors.expenseColor,
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge
 
@@ -360,7 +356,7 @@ fun EntriesWithCheckBox(
             ) {
                 Text(
                     text = stringResource(id = R.string.recordsnotfound),
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     textAlign = TextAlign.Center,
                     fontSize = with(LocalDensity.current) {
                         dimensionResource(id = R.dimen.text_body_extra_large).toSp()
@@ -373,7 +369,7 @@ fun EntriesWithCheckBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .background(colors.backgroundPrimary)
                 .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
             contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
@@ -450,7 +446,7 @@ fun EntriesWithEditIcon(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
             .padding(bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
         contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido

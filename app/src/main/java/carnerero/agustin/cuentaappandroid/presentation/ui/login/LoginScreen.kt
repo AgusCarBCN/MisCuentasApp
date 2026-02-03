@@ -16,7 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.ContentSection
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.ImageSection
 
@@ -42,12 +42,12 @@ fun LoginScreen(
         if (isLandscape) {
             Row(modifier = Modifier
                 .fillMaxSize()
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)) {
+                .background(colors.backgroundPrimary)) {
                 ImageSection(
                     Modifier
                         .fillMaxHeight()
                         .width(imageWidth)
-                        .background(LocalCustomColorsPalette.current.imageBackground),
+                        .background(colors.imageBackground),
                     loginViewModel
                 )
                 ContentSection(
@@ -60,13 +60,13 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                    .background(colors.backgroundPrimary)
             ) {
                 ImageSection(
                     Modifier
                         .fillMaxWidth()
                         .height(imageHeight)
-                        .background(LocalCustomColorsPalette.current.imageBackground),
+                        .background(colors.imageBackground),
                     loginViewModel
                 )
                 ContentSection(

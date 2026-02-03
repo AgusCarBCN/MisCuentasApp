@@ -25,8 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 @Composable
@@ -59,18 +58,18 @@ fun TextFieldComponent(
         visualTransformation = if (textInvisible && !visiblePasswordIcon) PasswordVisualTransformation() else VisualTransformation.None, // Change display based on boolean
 
         colors = TextFieldDefaults.colors(
-            focusedTextColor = LocalCustomColorsPalette.current.textColor,
+            focusedTextColor = colors.textColor,
             focusedIndicatorColor = Color.Transparent,  // Sin borde cuando está enfocado
             unfocusedIndicatorColor = Color.Transparent,  // Sin borde cuando no está enfocado
-            focusedContainerColor = LocalCustomColorsPalette.current.focusedContainerTextField,
-            unfocusedContainerColor = LocalCustomColorsPalette.current.unfocusedContainerTextField,
-            unfocusedTextColor = LocalCustomColorsPalette.current.textColor,
-            focusedLabelColor = LocalCustomColorsPalette.current.textColor,
-            unfocusedLabelColor = LocalCustomColorsPalette.current.textColor,
-            disabledLabelColor = LocalCustomColorsPalette.current.textColor,
-            disabledTextColor = LocalCustomColorsPalette.current.textColor,
-            unfocusedTrailingIconColor = LocalCustomColorsPalette.current.textColor,
-            focusedTrailingIconColor = LocalCustomColorsPalette.current.textColor),
+            focusedContainerColor = colors.focusedContainerTextField,
+            unfocusedContainerColor = colors.unfocusedContainerTextField,
+            unfocusedTextColor = colors.textColor,
+            focusedLabelColor = colors.textColor,
+            unfocusedLabelColor = colors.textColor,
+            disabledLabelColor = colors.textColor,
+            disabledTextColor = colors.textColor,
+            unfocusedTrailingIconColor = colors.textColor,
+            focusedTrailingIconColor = colors.textColor),
 
         trailingIcon = {
             if (type == BoardType.PASSWORD) {

@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -30,12 +29,12 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.model.RowComponentItem
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 
@@ -173,7 +172,7 @@ fun SpacerApp() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
-            .background(LocalCustomColorsPalette.current.textColor.copy(alpha = 0.2f)) // Ajusta el valor alpha para la opacidad
+            .background(colors.textColor.copy(alpha = 0.2f)) // Ajusta el valor alpha para la opacidad
             .height(1.dp) // Cambié a height para que la línea sea horizontal, ajusta si es necesario
     )
 }

@@ -38,7 +38,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.model.Legend
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -260,7 +260,7 @@ fun LegendItem(color: Color,
         // Texto de la leyenda
         Text(
             text = stringResource(label)+" "+percent,
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style=MaterialTheme.typography.bodyMedium
 
         )

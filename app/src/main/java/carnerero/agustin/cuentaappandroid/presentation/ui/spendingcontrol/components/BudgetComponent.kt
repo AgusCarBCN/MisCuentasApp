@@ -20,7 +20,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.math.BigDecimal
 import kotlin.math.abs
@@ -64,9 +64,9 @@ fun CategoryBudgetItemControl(
 
     // Color de la barra de progreso según el porcentaje
     val progressColor = when {
-        spendingPercentage < 0.5f -> LocalCustomColorsPalette.current.progressBar50
-        spendingPercentage < 0.8f -> LocalCustomColorsPalette.current.progressBar80
-        else -> LocalCustomColorsPalette.current.progressBar100
+        spendingPercentage < 0.5f -> colors.progressBar50
+        spendingPercentage < 0.8f -> colors.progressBar80
+        else -> colors.progressBar100
     }
 
     Column(
@@ -90,14 +90,14 @@ fun CategoryBudgetItemControl(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(category.iconResource),
                 contentDescription = "icon",
-                tint = LocalCustomColorsPalette.current.expenseColor
+                tint = colors.expenseColor
             )
             Text(
                 text = stringResource(category.nameResource),
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible
-                color = LocalCustomColorsPalette.current.textHeadColor,
+                color = colors.textHeadColor,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineMedium
             )
@@ -114,7 +114,7 @@ fun CategoryBudgetItemControl(
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -123,7 +123,7 @@ fun CategoryBudgetItemControl(
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
 
@@ -140,13 +140,13 @@ fun CategoryBudgetItemControl(
             }",
 
             style = MaterialTheme.typography.bodyLarge,
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
         Text(
             text ="$spendingLimitMessage: ${Utils.numberFormat(spendingLimit, currencyCode)}",
             style = MaterialTheme.typography.bodyLarge,
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
@@ -154,7 +154,7 @@ fun CategoryBudgetItemControl(
         Text(
             text = "$expensePercent $spendingPercent %" ,
             style = MaterialTheme.typography.bodyLarge,
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
         )
 
@@ -164,7 +164,7 @@ fun CategoryBudgetItemControl(
             modifier = Modifier
                 .width(320.dp)
                 .height(10.dp)
-                .background(LocalCustomColorsPalette.current.drawerColor)
+                .background(colors.drawerColor)
                 .clip(RoundedCornerShape(5.dp))
         ) {
             Box(
@@ -213,9 +213,9 @@ fun CategoryBudgetItemControl(
         val spendingPercent = (spendingPercentage * 100).roundToInt()
         // Color de la barra de progreso según el porcentaje
         val progressColor = when {
-            spendingPercentage < 0.5f -> LocalCustomColorsPalette.current.progressBar50
-            spendingPercentage < 0.8f -> LocalCustomColorsPalette.current.progressBar80
-            else -> LocalCustomColorsPalette.current.progressBar100
+            spendingPercentage < 0.5f -> colors.progressBar50
+            spendingPercentage < 0.8f -> colors.progressBar80
+            else -> colors.progressBar100
         }
 
         Column(
@@ -234,7 +234,7 @@ fun CategoryBudgetItemControl(
                 modifier = Modifier
                     .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                 , // Hace que el texto ocupe espacio disponible
-                color = LocalCustomColorsPalette.current.textHeadColor,
+                color = colors.textHeadColor,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineMedium
             )
@@ -251,7 +251,7 @@ fun CategoryBudgetItemControl(
                     modifier = Modifier
                         .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                     , // Hace que el texto ocupe espacio disponible
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -260,7 +260,7 @@ fun CategoryBudgetItemControl(
                     modifier = Modifier
                         .padding(start = 5.dp) // Ajusta el espacio entre el icono y el texto
                     , // Hace que el texto ocupe espacio disponible
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -275,20 +275,20 @@ fun CategoryBudgetItemControl(
                     )
                 } ",
                 style = MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
             )
             Text(
                 text ="$spendingLimitMessage: ${Utils.numberFormat(spendingLimit, currencyCode)}",
                 style = MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
             )
 
             Text(
                 text = "$expensePercent $spendingPercent %" ,
                 style = MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 modifier = Modifier.padding(bottom = 8.dp, top = 8.dp)
             )
 
@@ -299,7 +299,7 @@ fun CategoryBudgetItemControl(
                 modifier = Modifier
                     .width(320.dp)
                     .height(10.dp)
-                    .background(LocalCustomColorsPalette.current.drawerColor)
+                    .background(colors.drawerColor)
                     .clip(RoundedCornerShape(5.dp))
             ) {
                 Box(

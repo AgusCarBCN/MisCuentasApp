@@ -24,8 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 @Composable
@@ -45,10 +44,10 @@ fun SwitchComponent(modifier: Modifier,
             Text(text = title,
                 modifier=Modifier.padding(bottom = 5.dp),
                 style=MaterialTheme.typography.titleLarge,
-                color = LocalCustomColorsPalette.current.textColor)
+                color = colors.textColor)
             Text(text = description,
                 style=MaterialTheme.typography.bodyMedium,
-                color= LocalCustomColorsPalette.current.textColor)
+                color= colors.textColor)
 
         }
         Switch(modifier = Modifier
@@ -72,22 +71,22 @@ fun SwitchComponent(modifier: Modifier,
             You can find an example in the next section.
              */
             colors = SwitchColors(
-                checkedThumbColor = LocalCustomColorsPalette.current.thumbCheckedColor, // Color del thumb activado
-                checkedTrackColor = LocalCustomColorsPalette.current.trackCheckedColor,      // Color del track activado
-                checkedBorderColor = LocalCustomColorsPalette.current.trackCheckedColor,         // Color del borde activado
-                checkedIconColor = LocalCustomColorsPalette.current.backgroundSwitch,          // Color del icono activado
-                uncheckedThumbColor = LocalCustomColorsPalette.current.thumbDefaultColor,  // Color del thumb desactivado
-                uncheckedTrackColor = LocalCustomColorsPalette.current.trackDefaultColor,       // Color del track desactivado
-                uncheckedBorderColor = LocalCustomColorsPalette.current.backgroundSwitch,          // Color del borde desactivado
-                uncheckedIconColor = LocalCustomColorsPalette.current.backgroundSwitch,           // Color del icono desactivado
-                disabledCheckedThumbColor = LocalCustomColorsPalette.current.thumbDefaultColor, // Color del thumb activado cuando está deshabilitado
-                disabledCheckedTrackColor = LocalCustomColorsPalette.current.trackDefaultColor, // Color del track activado cuando está deshabilitado
-                disabledCheckedBorderColor = LocalCustomColorsPalette.current.backgroundSwitch,    // Color del borde activado cuando está deshabilitado
-                disabledCheckedIconColor = LocalCustomColorsPalette.current.backgroundSwitch,     // Color del icono activado cuando está deshabilitado
-                disabledUncheckedThumbColor = LocalCustomColorsPalette.current.thumbDefaultColor, // Color del thumb desactivado cuando está deshabilitado
-                disabledUncheckedTrackColor = LocalCustomColorsPalette.current.trackDefaultColor, // Color del track desactivado cuando está deshabilitado
-                disabledUncheckedBorderColor = LocalCustomColorsPalette.current.backgroundSwitch,    // Color del borde desactivado cuando está deshabilitado
-                disabledUncheckedIconColor = LocalCustomColorsPalette.current.backgroundSwitch      // Color del icono desactivado cuando está deshabilitado
+                checkedThumbColor = colors.thumbCheckedColor, // Color del thumb activado
+                checkedTrackColor = colors.trackCheckedColor,      // Color del track activado
+                checkedBorderColor = colors.trackCheckedColor,         // Color del borde activado
+                checkedIconColor = colors.backgroundSwitch,          // Color del icono activado
+                uncheckedThumbColor = colors.thumbDefaultColor,  // Color del thumb desactivado
+                uncheckedTrackColor = colors.trackDefaultColor,       // Color del track desactivado
+                uncheckedBorderColor = colors.backgroundSwitch,          // Color del borde desactivado
+                uncheckedIconColor = colors.backgroundSwitch,           // Color del icono desactivado
+                disabledCheckedThumbColor = colors.thumbDefaultColor, // Color del thumb activado cuando está deshabilitado
+                disabledCheckedTrackColor = colors.trackDefaultColor, // Color del track activado cuando está deshabilitado
+                disabledCheckedBorderColor = colors.backgroundSwitch,    // Color del borde activado cuando está deshabilitado
+                disabledCheckedIconColor = colors.backgroundSwitch,     // Color del icono activado cuando está deshabilitado
+                disabledUncheckedThumbColor = colors.thumbDefaultColor, // Color del thumb desactivado cuando está deshabilitado
+                disabledUncheckedTrackColor = colors.trackDefaultColor, // Color del track desactivado cuando está deshabilitado
+                disabledUncheckedBorderColor = colors.backgroundSwitch,    // Color del borde desactivado cuando está deshabilitado
+                disabledUncheckedIconColor = colors.backgroundSwitch      // Color del icono desactivado cuando está deshabilitado
             )
         )
     }
@@ -113,18 +112,18 @@ fun RowComponent(modifier: Modifier,
                 .weight(0.10f)
                 .size(24.dp)
                 .padding(end = 10.dp),
-            tint = LocalCustomColorsPalette.current.textColor
+            tint = colors.textColor
         )
         Column(modifier = Modifier.weight(0.90f)) {
             Text(
                 text = title,
                 modifier=Modifier.padding(bottom = 5.dp),
                 style=MaterialTheme.typography.titleLarge,
-                color = LocalCustomColorsPalette.current.textColor
+                color = colors.textColor
             )
             Text(
                 text = description,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 style=MaterialTheme.typography.bodyMedium
             )
         }
@@ -142,7 +141,7 @@ fun HeadSetting(title: String,textStyle: TextStyle) {
             .semantics {
                 contentDescription=title
             },
-        color = LocalCustomColorsPalette.current.textHeadColor,
+        color = colors.textHeadColor,
         textAlign = TextAlign.Center
     )
 }

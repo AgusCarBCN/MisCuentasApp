@@ -50,13 +50,10 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.E
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -94,10 +91,10 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = if (isIncome) LocalCustomColorsPalette.current.incomeColor else LocalCustomColorsPalette.current.expenseColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = if (isIncome) colors.incomeColor else colors.expenseColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
 
         ),
         modifier =modifier
@@ -122,7 +119,7 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
                         .fillMaxWidth(),
                     text = stringResource(id = if (isIncome) R.string.seeincome else R.string.seeexpense),
                     textAlign = TextAlign.Center,
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -144,10 +141,10 @@ fun AccountCard(
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = LocalCustomColorsPalette.current.incomeColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = colors.incomeColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
 
         ),
         modifier = modifier
@@ -170,7 +167,7 @@ fun AccountCard(
                         text = account.name,
                         modifier = Modifier.weight(0.6f),
                         textAlign = TextAlign.Start,
-                        color = LocalCustomColorsPalette.current.textColor,
+                        color = colors.textColor,
                         style = MaterialTheme.typography.headlineSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -195,7 +192,7 @@ fun AccountCard(
                     Text(
                         text = contentText,
                         textAlign = TextAlign.Start,
-                        color = LocalCustomColorsPalette.current.textColor,
+                        color = colors.textColor,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.semantics {
                             contentDescription = "$contentText ${account.name}"
@@ -232,10 +229,10 @@ fun CategoryCardWithCheckbox(category: Category,
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = LocalCustomColorsPalette.current.incomeColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = colors.incomeColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
         ),   modifier = Modifier
             .size(width = 360.dp, height = 80.dp)
 
@@ -260,14 +257,14 @@ fun CategoryCardWithCheckbox(category: Category,
                     modifier = Modifier
                         .size(42.dp)
                         .padding(end = 10.dp),
-                    tint = LocalCustomColorsPalette.current.textHeadColor
+                    tint = colors.textHeadColor
                 )
                 Column {
                     Text(
                         text = stringResource(id = category.nameResource),
                         modifier = Modifier.padding(bottom = 5.dp),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = LocalCustomColorsPalette.current.textColor
+                        color = colors.textColor
                     )
                     Text(
                         text = if (category.isChecked) stringResource(id = R.string.categorychecked)
@@ -278,7 +275,7 @@ fun CategoryCardWithCheckbox(category: Category,
                             contentDescription = if(category.isChecked) "$categoryName $checked"
                             else "$categoryName $unchecked"
                         },
-                        color = LocalCustomColorsPalette.current.textColor,
+                        color = colors.textColor,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -292,9 +289,9 @@ fun CategoryCardWithCheckbox(category: Category,
                 checked = category.isChecked,
                 onCheckedChange = onCheckBoxChange,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = LocalCustomColorsPalette.current.drawerColor,
-                    uncheckedColor = LocalCustomColorsPalette.current.textColor,
-                    checkmarkColor = LocalCustomColorsPalette.current.incomeColor
+                    checkedColor = colors.drawerColor,
+                    uncheckedColor = colors.textColor,
+                    checkmarkColor = colors.incomeColor
                 )
             )
         }
@@ -355,10 +352,10 @@ fun AccountCardWithCheckbox(
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = LocalCustomColorsPalette.current.incomeColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = colors.incomeColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
         ),
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
@@ -379,7 +376,7 @@ fun AccountCardWithCheckbox(
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.headlineSmall,
-                color = LocalCustomColorsPalette.current.textColor
+                color = colors.textColor
             )
             Spacer(modifier = Modifier.height(12.dp)) // Espacio entre el texto y el botón
             Text(
@@ -405,16 +402,16 @@ fun AccountCardWithCheckbox(
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyMedium,
-                color = LocalCustomColorsPalette.current.textColor
+                color = colors.textColor
             )
             Checkbox(
                 modifier = Modifier.weight(0.2f), // Ajuste proporcional para el checkbox
                 checked = account.isChecked,
                 onCheckedChange = onCheckBoxChange,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = LocalCustomColorsPalette.current.drawerColor,
-                    uncheckedColor = LocalCustomColorsPalette.current.textColor,
-                    checkmarkColor = LocalCustomColorsPalette.current.incomeColor
+                    checkedColor = colors.drawerColor,
+                    uncheckedColor = colors.textColor,
+                    checkmarkColor = colors.incomeColor
                 )
             )
             if (account.isChecked) {
@@ -468,10 +465,10 @@ fun EntryCardWithCheckBox(
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = LocalCustomColorsPalette.current.incomeColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = colors.incomeColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
         ),
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
@@ -493,15 +490,15 @@ fun EntryCardWithCheckBox(
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textHeadColor
+                color = colors.textHeadColor
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if (entry.amount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
-                else LocalCustomColorsPalette.current.expenseColor,
+                color = if (entry.amount >= BigDecimal.ZERO) colors.incomeColor
+                else colors.expenseColor,
                 textAlign = TextAlign.End,
                 style=MaterialTheme.typography.bodyLarge
             )
@@ -522,7 +519,7 @@ fun EntryCardWithCheckBox(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = entry.iconResource),
                 contentDescription = null,
-                tint = LocalCustomColorsPalette.current.textColor
+                tint = colors.textColor
             )
             Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
             Text(
@@ -531,7 +528,7 @@ fun EntryCardWithCheckBox(
                     .padding(10.dp)
                     .weight(0.4f)
                 ,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.bodyLarge
 
@@ -544,9 +541,9 @@ fun EntryCardWithCheckBox(
                     onSelectionChange()
                 },
                 colors = CheckboxDefaults.colors(
-                    checkedColor = LocalCustomColorsPalette.current.drawerColor,
-                    uncheckedColor = LocalCustomColorsPalette.current.textColor,
-                    checkmarkColor = LocalCustomColorsPalette.current.incomeColor
+                    checkedColor = colors.drawerColor,
+                    uncheckedColor = colors.textColor,
+                    checkmarkColor = colors.incomeColor
                 )
             )
         }
@@ -571,10 +568,10 @@ fun EntryCardWithIcon(
             defaultElevation = 6.dp
         ),
         colors = CardColors(
-            containerColor = LocalCustomColorsPalette.current.drawerColor,
-            contentColor = LocalCustomColorsPalette.current.incomeColor,
-            disabledContainerColor = LocalCustomColorsPalette.current.drawerColor,
-            disabledContentColor = LocalCustomColorsPalette.current.incomeColor
+            containerColor = colors.drawerColor,
+            contentColor = colors.incomeColor,
+            disabledContainerColor = colors.drawerColor,
+            disabledContentColor = colors.incomeColor
         ),
         modifier = Modifier
             .size(width = 360.dp, height = 120.dp)
@@ -605,15 +602,15 @@ fun EntryCardWithIcon(
                     .weight(0.6f),
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textHeadColor
+                color = colors.textHeadColor
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = Utils.numberFormat(entry.amount, currencyCode),
                 modifier = Modifier
                     .weight(0.4f),
-                color = if (entry.amount >= BigDecimal.ZERO) LocalCustomColorsPalette.current.incomeColor
-                else LocalCustomColorsPalette.current.expenseColor,
+                color = if (entry.amount >= BigDecimal.ZERO) colors.incomeColor
+                else colors.expenseColor,
                 textAlign = TextAlign.End,
                 style=MaterialTheme.typography.bodyLarge
             )
@@ -628,7 +625,7 @@ fun EntryCardWithIcon(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = entry.iconResource),
                 contentDescription = null,
-                tint = LocalCustomColorsPalette.current.textColor
+                tint = colors.textColor
             )
             Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
             Text(
@@ -637,14 +634,14 @@ fun EntryCardWithIcon(
                     .padding(10.dp)
                     .weight(0.4f)
                 ,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 textAlign = TextAlign.Start,
                 style=MaterialTheme.typography.bodyLarge
             )
             Icon(
                 painter = painterResource(id = R.drawable.edit),
                 contentDescription = "$edit ${entry.description}" ,
-                tint = LocalCustomColorsPalette.current.textColor,
+                tint = colors.textColor,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {

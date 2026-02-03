@@ -30,11 +30,9 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,10 +59,10 @@ fun ModifyEntry(entryDTO: EntryDTO,
     val scope = rememberCoroutineScope()
 
     val initColor =
-        if (entryDTO.categoryType== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeInit
-        else LocalCustomColorsPalette.current.iconExpenseInit
-    val targetColor = if (entryDTO.categoryType== CategoryType.INCOME) LocalCustomColorsPalette.current.iconIncomeTarget
-    else LocalCustomColorsPalette.current.iconExpenseTarget
+        if (entryDTO.categoryType== CategoryType.INCOME) colors.iconIncomeInit
+        else colors.iconExpenseInit
+    val targetColor = if (entryDTO.categoryType== CategoryType.INCOME) colors.iconIncomeTarget
+    else colors.iconExpenseTarget
 
 
     Column(

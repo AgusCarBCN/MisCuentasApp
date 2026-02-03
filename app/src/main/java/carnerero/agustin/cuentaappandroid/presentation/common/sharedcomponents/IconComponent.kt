@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import kotlinx.coroutines.launch
 
 
@@ -43,9 +43,9 @@ fun IconComponent(isPressed: Boolean, label:String,iconResource: Int, iconSize: 
     )
     val indicatorColor by animateColorAsState(
         targetValue = if (isPressed) {
-            LocalCustomColorsPalette.current.iconInvert
+            colors.iconInvert
         } else {
-            LocalCustomColorsPalette.current.iconColor
+            colors.iconColor
         },
         label = "indicator color",
         animationSpec = tween(

@@ -20,7 +20,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 @Composable
@@ -55,15 +55,15 @@ fun RadioButtonSearch(searchViewModel: SearchViewModel,
                         selected = index == selectedOptionIndex
                     },
                     colors = RadioButtonDefaults.colors(
-                        selectedColor = LocalCustomColorsPalette.current.buttonColorPressed,
-                        unselectedColor = LocalCustomColorsPalette.current.textColor,
-                        disabledSelectedColor = LocalCustomColorsPalette.current.disableButton,
-                        disabledUnselectedColor = LocalCustomColorsPalette.current.disableButton
+                        selectedColor = colors.buttonColorPressed,
+                        unselectedColor = colors.textColor,
+                        disabledSelectedColor = colors.disableButton,
+                        disabledUnselectedColor = colors.disableButton
                     )
                 )
                 Text(
                     text = stringResource(id = option),
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     style=MaterialTheme.typography.bodySmall
                 )
             }

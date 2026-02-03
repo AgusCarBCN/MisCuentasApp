@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import kotlinx.coroutines.launch
 
 @Composable
@@ -33,10 +33,10 @@ fun ModelButton(
     enabledButton: Boolean = true,
     onClickButton: () -> Unit
 ) {// Creamos un animatable para manejar el color del ícono
-    val initColorButton = LocalCustomColorsPalette.current.buttonColorDefault
-    val targetColorButton = LocalCustomColorsPalette.current.buttonTransition
-    val initColorText = LocalCustomColorsPalette.current.textButtonColorDefault
-    val targetColorText = LocalCustomColorsPalette.current.textTransition
+    val initColorButton = colors.buttonColorDefault
+    val targetColorButton = colors.buttonTransition
+    val initColorText = colors.textButtonColorDefault
+    val targetColorText = colors.textTransition
     val colorButton = remember { Animatable(initColorButton) }
     val colorText = remember { Animatable(initColorText) }
     val coroutineScope = rememberCoroutineScope()
@@ -70,9 +70,9 @@ fun ModelButton(
     val pressed by interactionSource.collectIsPressedAsState()
     // Definir colores
 
-    val pressedContentColor = LocalCustomColorsPalette.current.textButtonColorPressed
-    val pressedContainerColor = LocalCustomColorsPalette.current.buttonColorPressed
-    val disabled= LocalCustomColorsPalette.current.disableButton
+    val pressedContentColor = colors.textButtonColorPressed
+    val pressedContainerColor = colors.buttonColorPressed
+    val disabled= colors.disableButton
     Button(
         onClick = {
             onClickButton() // Ejecutar el clic pasado como parámetro

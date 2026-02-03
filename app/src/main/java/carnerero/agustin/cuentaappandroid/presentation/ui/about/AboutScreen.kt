@@ -2,7 +2,6 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.about
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -31,10 +30,8 @@ import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import androidx.core.net.toUri
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 @Composable
 
@@ -138,7 +135,7 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style = MaterialTheme.typography.bodyLarge
         )
         Text(
@@ -146,7 +143,7 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, end = 20.dp, start = 20.dp),
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
@@ -154,7 +151,7 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp, end = 20.dp, start = 20.dp),
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
@@ -162,7 +159,7 @@ fun AboutApp() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp, end = 20.dp, start = 20.dp),
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style = MaterialTheme.typography.bodyMedium
         )
 
@@ -230,7 +227,7 @@ private fun SetupAttributions() {
                     withLink(
                         LinkAnnotation.Url(
                             url,
-                            TextLinkStyles(SpanStyle(color = LocalCustomColorsPalette.current.link,
+                            TextLinkStyles(SpanStyle(color = colors.link,
                                 fontSize =14.sp
                             )
                         ))

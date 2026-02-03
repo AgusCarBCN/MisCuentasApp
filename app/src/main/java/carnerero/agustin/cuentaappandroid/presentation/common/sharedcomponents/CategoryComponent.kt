@@ -19,14 +19,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+
 @Composable
 fun CategoryEntries(category: Category, modifier: Modifier, onClickItem: () -> Unit) {
     // Determinamos el color inicial y objetivo sin animación
     val initColor = if (category.type == CategoryType.INCOME) {
-        LocalCustomColorsPalette.current.iconIncomeInit
+        colors.iconIncomeInit
     } else {
-        LocalCustomColorsPalette.current.iconExpenseInit
+        colors.iconExpenseInit
     }
 
 
@@ -49,7 +50,7 @@ fun CategoryEntries(category: Category, modifier: Modifier, onClickItem: () -> U
         Text(
             text = stringResource(id = category.nameResource), // Nombre de la categoría
             style=MaterialTheme.typography.labelMedium,
-            color = LocalCustomColorsPalette.current.textColor, // Color del texto
+            color = colors.textColor, // Color del texto
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(vertical = 8.dp)
         )

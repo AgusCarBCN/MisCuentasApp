@@ -36,8 +36,8 @@ import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermis
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
 
@@ -117,7 +117,7 @@ fun MainScreen(
                     )
                 },
 
-                containerColor = LocalCustomColorsPalette.current.backgroundPrimary
+                containerColor = colors.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)
                 Column(

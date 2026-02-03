@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 @Composable
@@ -31,16 +31,16 @@ fun ModelDialog(
 ) {
 
     if (showDialog) {
-        AlertDialog(containerColor= LocalCustomColorsPalette.current.drawerColor,
+        AlertDialog(containerColor= colors.drawerColor,
             onDismissRequest = { onDismiss() },
 
             title={Text(stringResource(id = title),
                 style=MaterialTheme.typography.titleMedium,
-                color = LocalCustomColorsPalette.current.textHeadColor)},
+                color = colors.textHeadColor)},
 
             text={Text(stringResource(id = message),
                 style=MaterialTheme.typography.bodySmall,
-                color = LocalCustomColorsPalette.current.textColor)}
+                color = colors.textColor)}
             ,
             confirmButton = {
                 ModelButton(text = stringResource(id = R.string.confirmButton),
@@ -71,14 +71,14 @@ fun NotificationDialog(
 ) {
 
     if (showDialog) {
-        AlertDialog(containerColor= LocalCustomColorsPalette.current.drawerColor,
+        AlertDialog(containerColor= colors.drawerColor,
             onDismissRequest = { onDismiss() },
 
             icon= {
                 Icon(
                     painter = painterResource(id = R.drawable.notificationoption),
                     contentDescription = "notification icon",
-                    tint = LocalCustomColorsPalette.current.textColor,
+                    tint = colors.textColor,
                     modifier = Modifier
                         .size(24.dp)
                 )
@@ -86,7 +86,7 @@ fun NotificationDialog(
 
             text={Text(stringResource(id = R.string.notification_required),
                 style=MaterialTheme.typography.bodySmall,
-                color = LocalCustomColorsPalette.current.textColor)}
+                color = colors.textColor)}
             ,
             confirmButton = {
                 ModelButton(text = stringResource(id = R.string.confirmButton),
@@ -122,12 +122,12 @@ fun ModelDialogWithTextField(
 ) {
     if (showDialog) {
         AlertDialog(
-            containerColor = LocalCustomColorsPalette.current.backgroundPrimary,
+            containerColor = colors.backgroundPrimary,
             onDismissRequest = { onDismiss() },
             title = {
                 Text(
                     name,
-                    color = LocalCustomColorsPalette.current.textHeadColor,
+                    color = colors.textHeadColor,
                     style=MaterialTheme.typography.titleSmall
                 )
             },

@@ -28,9 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +53,7 @@ fun YearSelector(
     Column(
         modifier = Modifier
             .width(180.dp)
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
             .padding(5.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -62,14 +61,14 @@ fun YearSelector(
         Row(
             modifier = Modifier
                 .padding(5.dp)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary),
+                .background(colors.backgroundPrimary),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = if (isDraggingUp) R.drawable.arrow_up else R.drawable.arrow_down),
                 contentDescription = null,
-                tint = LocalCustomColorsPalette.current.textColor,
+                tint = colors.textColor,
                 modifier = Modifier
                     .width(36.dp)
                     .padding(end = 8.dp)
@@ -77,7 +76,7 @@ fun YearSelector(
             Text(
                 text = stringResource(id = R.string.year),
                 style= MaterialTheme.typography.bodyLarge,
-                color = LocalCustomColorsPalette.current.textColor,
+                color = colors.textColor,
                 modifier = Modifier.padding(vertical = 10.dp),
                 textAlign = TextAlign.Start
             )
@@ -91,7 +90,7 @@ fun YearSelector(
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(LocalCustomColorsPalette.current.backgroundSecondary)
+                    .background(colors.backgroundSecondary)
                     .height(60.dp),
             ) { page ->
                 // Actualiza la cuenta seleccionada en ViewModel
@@ -104,7 +103,7 @@ fun YearSelector(
                     Text(
                         text = years[page],
                         style= MaterialTheme.typography.bodyLarge,
-                        color = LocalCustomColorsPalette.current.textColor,
+                        color = colors.textColor,
                         textAlign = TextAlign.Center
                     )
 

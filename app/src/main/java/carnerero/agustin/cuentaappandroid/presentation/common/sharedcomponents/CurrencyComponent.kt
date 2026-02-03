@@ -33,69 +33,8 @@ import androidx.wear.compose.material3.Text
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-/*
-@Composable
-fun CurrencySelector(accountsViewModel: AccountsViewModel
-                     ) {
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
-    // Divisa mostrada en proceso de seleccion
-    val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("USD")
-
-    // Obtener el estado de expansión desde el ViewModel
-    val isExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
-    val currencies by accountsViewModel.currencyCodeList.observeAsState(listOf())
-    accountsViewModel.getListOfCurrencyCode()
-
-    // Contenedor principal
-    Column(
-        modifier = Modifier
-            .width(360.dp)
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
-            .padding(5.dp)
-    ) {
-        if (!isExpanded) {
-
-
-            // Botón para expandir/colapsar la lista de divisas
-            ModelButton(
-                text = stringResource(id = R.string.selectcurrencyoption),
-                MaterialTheme.typography.labelLarge,
-                modifier = Modifier.width(220.dp),
-                onClickButton = { accountsViewModel.onExpandedChange(true) }
-            )
-
-            // Mostrar la moneda seleccionada actualmente
-            Text(
-                text = "${stringResource(id = R.string.selectedcurrency)} $currencyCodeShowed",
-                color = LocalCustomColorsPalette.current.textColor,
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                style=MaterialTheme.typography.bodyLarge
-            )
-        } else {
-            // Mostrar solo la lista de divisas si isExpanded es verdadero
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(LocalCustomColorsPalette.current.backgroundPrimary)
-            ) {
-                items(currencies) { currency ->
-                    // Elemento de la lista
-                    CurrencyListItem(currency) {
-                        // Acción al seleccionar la moneda
-                        accountsViewModel.onCurrencyShowedChange(currency.currencyCode)
-                        //Cambia el estado a colapsado
-                        accountsViewModel.onExpandedChange(false)
-                    }
-
-                }
-            }
-        }
-    }
-}*/
 @Composable
 fun CurrencySelector(
     accountsViewModel: AccountsViewModel,
@@ -111,7 +50,7 @@ fun CurrencySelector(
         Column(
             modifier = Modifier
                 .width(contentWidth)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .background(colors.backgroundPrimary)
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -131,7 +70,7 @@ fun CurrencySelector(
 
                 Text(
                     text = "${stringResource(id = R.string.selectedcurrency)} $currencyCodeShowed",
-                    color = LocalCustomColorsPalette.current.textColor,
+                    color = colors.textColor,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -179,7 +118,7 @@ fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
         Spacer(modifier = Modifier.width(15.dp)) // Espaciador entre la imagen y el texto
         Text(
             text = currency.currencyDescription,
-            color = LocalCustomColorsPalette.current.textColor,
+            color = colors.textColor,
             style=MaterialTheme.typography.bodyMedium
         )
     }

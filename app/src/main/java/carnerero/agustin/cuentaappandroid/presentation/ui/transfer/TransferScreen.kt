@@ -28,10 +28,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -77,8 +75,8 @@ fun Transfer(
         IconAnimated(
             R.drawable.transferoption,
             120,
-            initColor = LocalCustomColorsPalette.current.buttonColorDefault,
-            targetColor = LocalCustomColorsPalette.current.buttonColorPressed
+            initColor = colors.buttonColorDefault,
+            targetColor = colors.buttonColorPressed
         )
 
         TextFieldComponent(

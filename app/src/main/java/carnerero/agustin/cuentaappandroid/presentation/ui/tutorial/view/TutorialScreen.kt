@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view
 
 
-import android.R.attr.top
 import android.content.res.Configuration
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColorAsState
@@ -27,9 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,10 +46,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialItem
 import kotlinx.coroutines.launch
 
@@ -72,7 +68,7 @@ fun Tutorial(
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
     ) {
         val buttonField = maxWidth * 0.85f
         Column(
@@ -118,8 +114,8 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
 
 
     // Creamos un animatable para manejar el color del ícono
-    val initColor = LocalCustomColorsPalette.current.imageTutorialInit
-    val targetColor = LocalCustomColorsPalette.current.imageTutorialTarget
+    val initColor = colors.imageTutorialInit
+    val targetColor = colors.imageTutorialTarget
     val color = remember { Animatable(initColor) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -146,7 +142,7 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
 
     Column(
         modifier = Modifier
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -159,7 +155,7 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
                 .align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
-            color = (LocalCustomColorsPalette.current.boldTextColor)
+            color = (colors.boldTextColor)
         )
         Spacer(modifier = Modifier.width(5.dp)) // Espacio entre imagen y texto
         BoxWithConstraints(
@@ -192,7 +188,7 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
                         text = item.descriptionItem,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelLarge,
-                        color = LocalCustomColorsPalette.current.textColor
+                        color = colors.textColor
                     )
                 }
             }
@@ -222,7 +218,7 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
                             text = item.descriptionItem,
                             modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.labelLarge,
-                            color = LocalCustomColorsPalette.current.textColor
+                            color = colors.textColor
                         )
                     }
                 }
@@ -306,9 +302,9 @@ private fun CircleIndicator(
                 )
                 val indicatorColor by animateColorAsState(
                     targetValue = if (index == selectedIndex) {
-                        LocalCustomColorsPalette.current.indicatorSelected
+                        colors.indicatorSelected
                     } else {
-                        LocalCustomColorsPalette.current.indicatorDefault
+                        colors.indicatorDefault
                     },
                     label = "indicator color $index",
                     animationSpec = tween(

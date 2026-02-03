@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,7 +37,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import kotlinx.coroutines.Dispatchers
@@ -92,7 +91,7 @@ fun SearchScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 30.dp)
-                .background(LocalCustomColorsPalette.current.backgroundPrimary)
+                .background(colors.backgroundPrimary)
                 .verticalScroll(
                     rememberScrollState()
                 ),

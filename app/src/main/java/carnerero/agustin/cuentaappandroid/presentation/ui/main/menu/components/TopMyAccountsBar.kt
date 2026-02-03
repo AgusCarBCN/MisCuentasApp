@@ -12,7 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -27,14 +27,14 @@ fun TopMyAccountsBar(scope: CoroutineScope, drawerState: DrawerState, title: Int
                 Icon(
                     if (drawerState.isOpen) Icons.Filled.Close else Icons.Filled.Menu,
                     contentDescription = "Side menu",
-                    tint = LocalCustomColorsPalette.current.topBarContent
+                    tint = colors.topBarContent
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = LocalCustomColorsPalette.current.barBackground,
-            titleContentColor = LocalCustomColorsPalette.current.topBarContent,
-            actionIconContentColor = LocalCustomColorsPalette.current.topBarContent
+            containerColor = colors.barBackground,
+            titleContentColor = colors.topBarContent,
+            actionIconContentColor = colors.topBarContent
         )
     )
 }

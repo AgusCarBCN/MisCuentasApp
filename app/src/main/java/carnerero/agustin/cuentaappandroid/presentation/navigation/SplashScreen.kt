@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import kotlinx.coroutines.delay
 
 @Composable
@@ -64,7 +64,7 @@ fun SplashScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary),
+            .background(colors.backgroundPrimary),
         contentAlignment = Alignment.Center
     ) {
         AnimatedVisibility(visible = isVisible) {

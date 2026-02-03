@@ -8,11 +8,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -30,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -108,10 +106,10 @@ fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
                 Icon(
                     painter = painterResource(id = R.drawable.camera), // Reemplaza con tu ícono de cámara
                     contentDescription = "Camera Icon",
-                    tint = LocalCustomColorsPalette.current.iconCamara, // Reemplaza con tu color de ícono
+                    tint = colors.iconCamara, // Reemplaza con tu color de ícono
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(LocalCustomColorsPalette.current.disableButton)
+                        .background(colors.disableButton)
                         .clickable {
                             photoPickerLauncher.launch("image/*")
 

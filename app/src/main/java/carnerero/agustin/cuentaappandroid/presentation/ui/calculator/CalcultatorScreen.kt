@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
 import kotlinx.coroutines.delay
 
 @Composable
@@ -50,7 +50,7 @@ fun CalculatorUI(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(LocalCustomColorsPalette.current.backgroundPrimary)
+            .background(colors.backgroundPrimary)
     ) {
         Column(
             modifier = Modifier
@@ -74,7 +74,7 @@ fun CalculatorUI(
                             text = expression,
                             style = MaterialTheme.typography.displayMedium,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Start,
-                            color = LocalCustomColorsPalette.current.textColor
+                            color = colors.textColor
                         )
 
                         // Cursor
@@ -83,7 +83,7 @@ fun CalculatorUI(
                                 modifier = Modifier
                                     .width(2.dp) // Ancho del cursor
                                     .height(36.dp) // Altura del cursor
-                                    .background(LocalCustomColorsPalette.current.textColor) // Color del cursor
+                                    .background(colors.textColor) // Color del cursor
                                     .align(Alignment.CenterEnd) // Alinear al final del texto
                                     .padding(horizontal = 4.dp) // Espacio a los lados del cursor
                             )
@@ -108,10 +108,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.clear()
                         },
-                    LocalCustomColorsPalette.current.initDelCalc,
-                    LocalCustomColorsPalette.current.targetDelCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initDelCalc,
+                    colors.targetDelCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
                 CalculatorButton(
                     symbol = "(",
@@ -121,10 +121,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("(")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
                 CalculatorButton(
                     symbol = ")",
@@ -134,10 +134,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append(")")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
                 CalculatorButton(
                     symbol = "÷",
@@ -147,10 +147,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("÷")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
             }
             Row(
@@ -168,10 +168,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("7")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "8",
@@ -181,10 +181,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("8")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "9",
@@ -194,10 +194,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("9")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "×",
@@ -207,10 +207,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("×")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
             }
             Row(
@@ -228,10 +228,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("4")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "5",
@@ -241,10 +241,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("5")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "6",
@@ -254,10 +254,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("6")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "-",
@@ -267,10 +267,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("-")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
             }
             Row(
@@ -288,10 +288,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("1")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "2",
@@ -301,10 +301,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("2")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "3",
@@ -314,10 +314,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("3")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = "+",
@@ -327,10 +327,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("+")
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
             }
             Row(
@@ -348,10 +348,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append("0")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = ".",
@@ -361,10 +361,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.append(".")
                         },
-                    LocalCustomColorsPalette.current.buttonColorDefault,
-                    LocalCustomColorsPalette.current.buttonTransition,
-                    LocalCustomColorsPalette.current.textButtonColorDefault,
-                    LocalCustomColorsPalette.current.textTransition
+                    colors.buttonColorDefault,
+                    colors.buttonTransition,
+                    colors.textButtonColorDefault,
+                    colors.textTransition
                 )
                 CalculatorButton(
                     symbol = stringResource(id = R.string.calcback),
@@ -374,10 +374,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.delete()
                         },
-                    LocalCustomColorsPalette.current.initDelCalc,
-                    LocalCustomColorsPalette.current.targetDelCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initDelCalc,
+                    colors.targetDelCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
                 CalculatorButton(
                     symbol = "=",
@@ -387,10 +387,10 @@ fun CalculatorUI(
                         .clickable {
                             viewModel.evaluate()
                         },
-                    LocalCustomColorsPalette.current.initOperatorCalc,
-                    LocalCustomColorsPalette.current.targetOperatorCalc,
-                    LocalCustomColorsPalette.current.textInitOperatorCalc,
-                    LocalCustomColorsPalette.current.textTargetOperatorCalc
+                    colors.initOperatorCalc,
+                    colors.targetOperatorCalc,
+                    colors.textInitOperatorCalc,
+                    colors.textTargetOperatorCalc
                 )
             }
         }

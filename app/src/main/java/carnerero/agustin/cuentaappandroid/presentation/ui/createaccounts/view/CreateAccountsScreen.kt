@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -26,22 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CurrencySelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.math.BigDecimal
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
 
 //Mapa de divisas y simbolos
@@ -84,7 +75,7 @@ fun CreateAccountsComponent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LocalCustomColorsPalette.current.backgroundPrimary) // Reemplaza con tu color de fondo
+                .background(colors.backgroundPrimary) // Reemplaza con tu color de fondo
         ) {
             Column(
                 modifier = if (enableSelector)
@@ -106,7 +97,7 @@ fun CreateAccountsComponent(
                         text = stringResource(id = R.string.createAccount),
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center,
-                        color = LocalCustomColorsPalette.current.textColor
+                        color = colors.textColor
                     )
                     if (!enableCurrencySelector) {
                         Column(
@@ -118,8 +109,8 @@ fun CreateAccountsComponent(
                         ) {
                             IconAnimated(
                                 iconResource = R.drawable.configaccountoption, sizeIcon = 120,
-                                LocalCustomColorsPalette.current.imageTutorialInit,
-                                LocalCustomColorsPalette.current.imageTutorialTarget
+                                colors.imageTutorialInit,
+                                colors.imageTutorialTarget
                             )
                         }
                     }
@@ -129,7 +120,7 @@ fun CreateAccountsComponent(
                         text = stringResource(id = R.string.createaccountmsg),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
-                        color = LocalCustomColorsPalette.current.textColor
+                        color = colors.textColor
                     )
 
                     TextFieldComponent(

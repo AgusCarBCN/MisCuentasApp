@@ -35,7 +35,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.UserImage
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.theme.LocalCustomColorsPalette
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
@@ -66,7 +66,7 @@ fun DrawerMyAccountsContent(
         HeadDrawerMenu(profileViewModel)
         Column(
             modifier = Modifier
-                .background(LocalCustomColorsPalette.current.drawerColor)
+                .background(colors.drawerColor)
         ) {
             TitleOptions(R.string.management)
 
@@ -112,7 +112,7 @@ fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LocalCustomColorsPalette.current.headDrawerColor),
+            .background(colors.headDrawerColor),
         Arrangement.SpaceEvenly,
         Alignment.CenterVertically
 
@@ -139,13 +139,13 @@ private fun ClickableRow(
 
     // Definir el color de fondo dependiendo si está presionado o no
     val backgroundColor by animateColorAsState(
-        targetValue = if (isPressed) LocalCustomColorsPalette.current.rowDrawerPressed
-        else LocalCustomColorsPalette.current.drawerColor,
+        targetValue = if (isPressed) colors.rowDrawerPressed
+        else colors.drawerColor,
         label = "row clickable color"
     )
     val contentRowColor by animateColorAsState(
-        targetValue = if (isPressed) LocalCustomColorsPalette.current.invertedTextColor
-        else LocalCustomColorsPalette.current.contentBarColor,
+        targetValue = if (isPressed) colors.invertedTextColor
+        else colors.contentBarColor,
         label = "row clickable color"
     )
     // Fila clickable con color de fondo animado
@@ -185,7 +185,7 @@ private fun TitleOptions(title: Int) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        color = LocalCustomColorsPalette.current.contentDrawerColor,
+        color = colors.contentDrawerColor,
         //fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_large).toSp() },
         fontWeight = FontWeight.Bold,
         fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() }
