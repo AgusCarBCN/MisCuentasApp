@@ -6,22 +6,19 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 
-@Composable
+/*@Composable
 fun CalculatorButton(
     symbol: String,
     modifier: Modifier = Modifier,
@@ -64,7 +61,7 @@ fun CalculatorButton(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .size(100.dp) // Ajusta el tamaño del botón (cuadrado)
-            .clip(RoundedCornerShape(16.dp)) // Esquinas redondeadas
+            .clip(CircleShape) // Esquinas redondeadas
             .background(colorButton.value) // Color de fondo
             .then(modifier)) // Hacer que el Box sea clickeable
 
@@ -73,6 +70,53 @@ fun CalculatorButton(
             text = symbol,
             style= MaterialTheme.typography.displayLarge,
             color = colorText.value,
+        )
+    }
+}*/
+@Composable
+fun CalculatorButton(
+    symbol: String,
+    modifier: Modifier = Modifier,
+    initColorButton: Color,
+    targetColorButton: Color,
+    initColorText: Color,
+    targetColorText: Color
+) {
+
+    val colorButton = remember { Animatable(initColorButton) }
+    val colorText = remember { Animatable(initColorText) }
+
+    LaunchedEffect(Unit) {
+        colorButton.animateTo(
+            targetValue = targetColorButton,
+            animationSpec = infiniteRepeatable(
+                animation = tween(5000),
+                repeatMode = RepeatMode.Reverse
+            )
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        colorText.animateTo(
+            targetValue = targetColorText,
+            animationSpec = infiniteRepeatable(
+                animation = tween(2000),
+                repeatMode = RepeatMode.Reverse
+            )
+        )
+    }
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .aspectRatio(1f)      // 🔑 siempre cuadrado
+            .clip(CircleShape)    // 🔵 redondo
+            .background(colorButton.value)
+    ) {
+        Text(
+            text = symbol,
+            style = MaterialTheme.typography.displayLarge,
+            color = colorText.value
         )
     }
 }

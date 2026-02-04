@@ -86,19 +86,20 @@ fun MainScreen(
     val title by mainViewModel.title.observeAsState(R.string.home)
     val isPortrait=orientation== OrientationApp.Portrait
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
-    LaunchedEffect(key1 = navBackStackEntry) {
+    LaunchedEffect(key1 = navBackStackEntry,isPortrait) {
         if (drawerState.isOpen) {
             drawerState.close() // Cierra el drawer cuando se selecciona una opción
         }
     }
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerState ,
         drawerContent = {
+            if(isPortrait){
             DrawerMyAccountsContent(
                 mainViewModel,
                 profileViewModel,
                 innerNavController
-            )
+            )}
         },
         scrimColor = Color.Transparent,
         content = {

@@ -5,13 +5,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -39,7 +43,10 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.E
 import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.model.Legend
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Date
@@ -55,11 +62,11 @@ fun PieChartScreen(
     val accountSelected by accountViewModel.accountSelected.observeAsState()
     val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
     val fromDate by searchViewModel.selectedFromDate.observeAsState(Date().dateFormat())
-
+    val isPortrait = orientation == OrientationApp.Portrait
     val idAccount = accountSelected?.id ?: 1
 
     LaunchedEffect(idAccount, fromDate, toDate) {
-        entriesViewModel.getAllEntriesByDateDTO(idAccount,fromDate,toDate)
+        entriesViewModel.getAllEntriesByDateDTO(idAccount, fromDate, toDate)
 
     }
 
@@ -87,54 +94,75 @@ fun PieChartScreen(
             .filter { it.second < BigDecimal.ZERO }
             .map { it.second.abs() to it.first }
     }
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val layoutWidth = maxWidth * 0.85f
+        val layoutHeight=maxHeight
+        if (isPortrait) {
+            Column(
+                modifier = Modifier
+                    .widthIn(layoutWidth)
+                    .padding(top = dimens.extraLarge)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AccountSelector(
+                    stringResource(id = R.string.selectanaccount),
+                    accountViewModel,
+                    modifier = Modifier.width(300.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .width(360.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DatePickerSearch(
+                        modifier = Modifier.weight(0.5f)
+                            .padding(10.dp),
+                        R.string.fromdate,
+                        searchViewModel,
+                        true
+                    )
+                    DatePickerSearch(
+                        modifier = Modifier.weight(0.5f)
+                            .padding(10.dp),
+                        R.string.todate,
+                        searchViewModel,
+                        false
+                    )
+                }
+                if (incomeList.isNotEmpty()) {
+                    HeadSetting(
+                        title = stringResource(id = R.string.incomechart),
+                        MaterialTheme.typography.headlineMedium
+                    )
+                    ChartPie(Modifier.fillMaxWidth().padding(top = dimens.extraLarge), incomeList)
+                }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+                if (expenseList.isNotEmpty()) {
+                    HeadSetting(
+                        title = stringResource(id = R.string.expensechart),
+                        MaterialTheme.typography.headlineMedium
+                    )
+                    ChartPie(Modifier.fillMaxWidth().padding(top = dimens.extraLarge), expenseList)
+                }
+            }
 
-        AccountSelector( stringResource(id = R.string.selectanaccount), accountViewModel,modifier=Modifier.width(300.dp))
-        Row(
+        }
+        else{
+            Row(
             modifier = Modifier
-                .width(360.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            DatePickerSearch(
-                modifier = Modifier.weight(0.5f)
-                    .padding(10.dp),
-                R.string.fromdate,
-                searchViewModel,
-                true
-            )
-            DatePickerSearch(
-                modifier = Modifier.weight(0.5f)
-                    .padding(10.dp),
-                R.string.todate,
-                searchViewModel,
-                false
-            )
-        }
-        if (incomeList.isNotEmpty()) {
-            HeadSetting(
-                title = stringResource(id = R.string.incomechart),
-                MaterialTheme.typography.headlineMedium
-            )
-            ChartPie(incomeList)
-        }
+                .widthIn(layoutWidth)
+                .padding(top = dimens.extraLarge),
+            horizontalArrangement = Arrangement.spacedBy(dimens.smallMedium),
+                verticalAlignment = Alignment.CenterVertically
+        ){
+                ChartPie(Modifier.weight(1f), incomeList)
+                ChartPie(Modifier.weight(1f), expenseList)
+            }
 
-        if (expenseList.isNotEmpty()) {
-            HeadSetting(
-                title = stringResource(id = R.string.expensechart),
-                MaterialTheme.typography.headlineMedium
-            )
-            ChartPie(expenseList)
         }
-
         if (incomeList.isEmpty() && expenseList.isEmpty()) {
             Text(
                 modifier = Modifier.padding(40.dp),
@@ -145,8 +173,12 @@ fun PieChartScreen(
     }
 }
 
+
+
+
+
 @Composable
-fun ChartPie(listOfEntries: List<Pair<BigDecimal, Int>>) {
+fun ChartPie(modifier:Modifier,listOfEntries: List<Pair<BigDecimal, Int>>) {
 
     if (listOfEntries.isEmpty()) return
 
@@ -176,7 +208,7 @@ fun ChartPie(listOfEntries: List<Pair<BigDecimal, Int>>) {
         }
     }
 
-    Row(modifier = Modifier.padding(10.dp)) {
+    Row(modifier ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()

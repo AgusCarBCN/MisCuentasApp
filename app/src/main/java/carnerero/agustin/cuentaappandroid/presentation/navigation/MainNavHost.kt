@@ -20,7 +20,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorUI
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorPortraitUI
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
@@ -156,7 +157,7 @@ fun MainNavHost(
             { navController.navigate(Routes.Home.route) }
         }
         composable(Routes.Calculator.route) {
-            CalculatorUI(calculatorViewModel)
+            CalculatorScreen(calculatorViewModel)
         }
         composable(Routes.About.route) {
             AboutScreen({ navController.navigate(Routes.AboutDescription.route) })
