@@ -51,7 +51,15 @@ fun  MisCuentasTheme(
         is WindowSize.Medium -> mediumDimensions
         else -> largeDimensions
     }
-
+    /** ***************** Determine the dimensions *****************
+     * Based on size determine the text-unit
+     ** ***************** Determine the dimensions ***************** **/
+    val textUnits = when(sizeThatMatters){
+        is WindowSize.Small -> smallCustomTextUnits
+        is WindowSize.Compact -> compactCustomTextUnits
+        is WindowSize.Medium -> mediumCustomTextUnits
+        else -> largeCustomTextUnits
+    }
 
     /** ***************** Determine the dimensions *****************
      * Based on size determine the typography
@@ -66,7 +74,8 @@ fun  MisCuentasTheme(
     CompositionLocalProvider(
         LocalCustomColorsPalette provides customColorsPalette,
         LocalOrientationMode provides orientation,
-        LocalAppDimens provides dimensions
+        LocalAppDimens provides dimensions,
+        LocalAppTextUnits provides textUnits
     )
     // here is the important point, where you will expose custom objects
     {

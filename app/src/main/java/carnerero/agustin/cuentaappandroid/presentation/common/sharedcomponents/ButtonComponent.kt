@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 fun ModelButton(
     text: String,
     textStyle:TextStyle,
-    modifier: Modifier = Modifier, // Permitir modificar el botón desde el exterior
+    modifier: Modifier, // Permitir modificar el botón desde el exterior
     enabledButton: Boolean = true,
     onClickButton: () -> Unit
 ) {// Creamos un animatable para manejar el color del ícono

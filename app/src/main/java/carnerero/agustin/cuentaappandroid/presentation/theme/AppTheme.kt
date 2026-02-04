@@ -18,4 +18,8 @@ object AppTheme{
     val orientation : OrientationApp
         @Composable
         get() = LocalOrientationMode.current
+
+    val textUnit : CustomTextUnits
+        @Composable
+        get() = LocalAppTextUnits.current
 }

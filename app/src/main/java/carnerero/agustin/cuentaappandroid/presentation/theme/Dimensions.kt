@@ -1,6 +1,7 @@
 package com.kapps.differentscreensizesyt.ui.theme
 
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -49,6 +50,6 @@ val largeDimensions = Dimensions(
     extraLarge = 32.dp
 )
 
-val LocalAppDimens = compositionLocalOf {
+val LocalAppDimens =  staticCompositionLocalOf {
     smallDimensions
 }
