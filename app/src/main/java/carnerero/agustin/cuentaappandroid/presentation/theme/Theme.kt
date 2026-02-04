@@ -71,11 +71,19 @@ fun  MisCuentasTheme(
         is WindowSize.Large -> largeTypography()
     }
 
+    val iconsSize= when (windowSize.width) {
+        is WindowSize.Small -> phoneIconSizes
+        is WindowSize.Compact -> phoneIconSizes
+        is WindowSize.Medium -> mediumIconSizes
+        is WindowSize.Large -> tabletIconSizes
+    }
+
     CompositionLocalProvider(
         LocalCustomColorsPalette provides customColorsPalette,
         LocalOrientationMode provides orientation,
         LocalAppDimens provides dimensions,
-        LocalAppTextUnits provides textUnits
+        LocalAppTextUnits provides textUnits,
+        LocalIconSizes provides iconsSize
     )
     // here is the important point, where you will expose custom objects
     {

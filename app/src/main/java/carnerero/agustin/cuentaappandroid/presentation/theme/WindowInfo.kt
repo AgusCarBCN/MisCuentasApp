@@ -23,14 +23,15 @@ data class WindowSizeClass(
 fun rememberWindowSize():WindowSizeClass{
 
     val config = LocalConfiguration.current
-
-    val width by remember(config){
+    val width = config.screenWidthDp
+    val height = config.screenHeightDp
+    /*val width by remember(config){
         mutableIntStateOf(config.screenWidthDp)
     }
 
     val height by remember(config){
         mutableIntStateOf(config.screenHeightDp)
-    }
+    }*/
 
     val windowWidthClass = when {
         width <= 360 -> WindowSize.Small(width)
