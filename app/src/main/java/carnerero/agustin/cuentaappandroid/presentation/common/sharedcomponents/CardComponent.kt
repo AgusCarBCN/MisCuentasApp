@@ -161,7 +161,7 @@ fun AccountCard(
                     .padding(dimens.smallMedium)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(dimens.extraLarge),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -193,7 +193,7 @@ fun AccountCard(
                 ) {
                     Text(
                         text = contentText,
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.End,
                         color = colors.textColor,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.semantics {

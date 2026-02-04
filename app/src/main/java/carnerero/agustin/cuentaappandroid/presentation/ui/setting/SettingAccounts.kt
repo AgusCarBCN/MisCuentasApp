@@ -135,8 +135,7 @@ fun ModifyAccountsComponent(
     val scope = rememberCoroutineScope()
     val nameButtonChange by accountsViewModel.isEnableChangeNameButton.observeAsState(false)
     val balanceButtonChange by accountsViewModel.isEnableChangeBalanceButton.observeAsState(false)
-    //val accountSelected by accountsViewModel.accountSelected.observeAsState()
-
+    //al accountSelected by accountsViewModel.accountSelected.observeAsState()
     //val accountId = accountSelected?.id ?: 0
 
     val name by accountsViewModel.newName.observeAsState("")
