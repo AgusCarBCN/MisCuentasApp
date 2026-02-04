@@ -9,7 +9,8 @@ data class Dimensions(
     val smallMedium:Dp,
     val medium:Dp,
     val mediumLarge:Dp,
-    val large:Dp
+    val large:Dp,
+    val extraLarge:Dp
 )
 
 val smallDimensions = Dimensions(
@@ -17,7 +18,8 @@ val smallDimensions = Dimensions(
     smallMedium = 4.dp,
     medium = 6.dp,
     mediumLarge = 9.dp,
-    large = 13.dp
+    large = 13.dp,
+    extraLarge = 15.dp
 )
 
 val compactDimensions = Dimensions(
@@ -25,7 +27,8 @@ val compactDimensions = Dimensions(
     smallMedium = 5.dp,
     medium = 8.dp,
     mediumLarge = 11.dp,
-    large = 15.dp
+    large = 15.dp,
+    extraLarge=18.dp
 )
 
 val mediumDimensions = Dimensions(
@@ -33,7 +36,8 @@ val mediumDimensions = Dimensions(
     smallMedium = 7.dp,
     medium = 10.dp,
     mediumLarge = 13.dp,
-    large = 18.dp
+    large = 18.dp,
+    extraLarge = 25.dp
 )
 
 val largeDimensions = Dimensions(
@@ -41,7 +45,8 @@ val largeDimensions = Dimensions(
     smallMedium = 11.dp,
     medium = 15.dp,
     mediumLarge = 20.dp,
-    large = 25.dp
+    large = 25.dp,
+    extraLarge = 32.dp
 )
 
 val LocalAppDimens = compositionLocalOf {

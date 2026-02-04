@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 
 
 @Composable
@@ -151,7 +152,7 @@ fun ModelDialogWithTextField(
                         DatePickerSearch(
                             modifier = Modifier
                                 .width(240.dp)
-                                .padding(bottom = 10.dp)
+                                .padding(bottom = dimens.medium)
                                 , // Espacio a la derecha para separar de forma equitativa
                             R.string.fromdate,
                             searchViewModel = searchViewModel,

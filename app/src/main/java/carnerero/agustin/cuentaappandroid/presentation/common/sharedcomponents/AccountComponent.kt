@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 
@@ -60,13 +61,13 @@ fun AccountSelector(
         modifier = Modifier
             .width(size.dp)
             .background(colors.backgroundPrimary)
-            .padding(5.dp),
+            .padding(dimens.small),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier
-                .padding(5.dp)
+                .padding(dimens.small)
                 .background(colors.backgroundPrimary),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
@@ -82,7 +83,7 @@ fun AccountSelector(
             Text(
                 text = title,
                 color = colors.textColor,
-                modifier = Modifier.padding(vertical = 10.dp),
+                modifier = Modifier.padding(vertical = dimens.medium),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.bodyLarge
             )
@@ -90,7 +91,7 @@ fun AccountSelector(
 
         Card(
             modifier = Modifier.width(size.dp),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(dimens.mediumLarge)
         ) {
             VerticalPager(
                 state = pagerState,

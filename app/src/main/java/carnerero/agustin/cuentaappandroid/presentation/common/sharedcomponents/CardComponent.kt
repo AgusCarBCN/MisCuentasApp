@@ -53,6 +53,7 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +68,7 @@ fun UserImage(uri: Uri, size: Int) {
     Card(
         modifier = Modifier
             .size(size.dp)
-            .padding(10.dp),
+            .padding(dimens.medium),
         shape = CircleShape
     )
 
@@ -88,7 +89,7 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = dimens.small
         ),
         colors = CardColors(
             containerColor = colors.drawerColor,
@@ -102,12 +103,12 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
         Text(
             text = amount,
             modifier = Modifier
-                .padding(top = 12.dp)
+                .padding(top = dimens.mediumLarge)
                 .fillMaxWidth(),
             textAlign = TextAlign.Center,
             style=MaterialTheme.typography.headlineSmall
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(dimens.medium))
         TextButton(
             onClick = {
                 onClickCard()
@@ -115,7 +116,7 @@ fun HeadCard(modifier: Modifier, amount: String, isIncome: Boolean, onClickCard:
             content = {
                 Text(
                     modifier = Modifier
-                        .padding(5.dp)
+                        .padding(dimens.small)
                         .fillMaxWidth(),
                     text = stringResource(id = if (isIncome) R.string.seeincome else R.string.seeexpense),
                     textAlign = TextAlign.Center,
@@ -138,7 +139,7 @@ fun AccountCard(
     val contentText=stringResource(textButton)
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = dimens.small
         ),
         colors = CardColors(
             containerColor = colors.drawerColor,
@@ -156,7 +157,7 @@ fun AccountCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(dimens.smallMedium)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -183,7 +184,7 @@ fun AccountCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(dimens.smallMedium))
 
                 TextButton(
                     onClick = onClickCard,

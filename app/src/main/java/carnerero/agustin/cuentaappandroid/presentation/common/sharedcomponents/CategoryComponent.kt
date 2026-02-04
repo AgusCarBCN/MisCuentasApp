@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 
 @Composable
 fun CategoryEntries(category: Category, modifier: Modifier, onClickItem: () -> Unit) {
@@ -52,7 +53,7 @@ fun CategoryEntries(category: Category, modifier: Modifier, onClickItem: () -> U
             style=MaterialTheme.typography.labelMedium,
             color = colors.textColor, // Color del texto
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = dimens.smallMedium)
         )
     }
 }

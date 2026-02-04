@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import kotlinx.coroutines.launch
 
 @Composable
@@ -81,8 +82,8 @@ fun ModelButton(
         enabled = enabledButton,
         modifier = modifier
             .wrapContentHeight() // Altura ajustable
-            .padding(10.dp),
-        shape = RoundedCornerShape(10.dp),
+            .padding(dimens.medium),
+        shape = RoundedCornerShape(dimens.medium),
         colors = ButtonDefaults.buttonColors(
             contentColor = if (pressed) pressedContentColor else colorText.value,
             containerColor = if (pressed) pressedContainerColor else colorButton.value,

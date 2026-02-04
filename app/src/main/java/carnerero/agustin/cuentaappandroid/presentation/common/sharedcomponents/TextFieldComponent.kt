@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 
 
 @Composable
@@ -52,7 +53,7 @@ fun TextFieldComponent(
 
         modifier = modifier
             .wrapContentHeight() // Altura ajustable
-            .padding(16.dp), keyboardOptions = KeyboardOptions.Default.copy(
+            .padding(dimens.mediumLarge), keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = getBoardType(type) // Set the keyboard type based on the input parameter
         ),
         visualTransformation = if (textInvisible && !visiblePasswordIcon) PasswordVisualTransformation() else VisualTransformation.None, // Change display based on boolean

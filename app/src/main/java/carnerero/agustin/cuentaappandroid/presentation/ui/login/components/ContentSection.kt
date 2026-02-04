@@ -26,6 +26,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
 
 @Composable
@@ -59,7 +60,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
 
         if (!enableNewPasswordFields) {
             Text(
-                modifier= Modifier.padding(top=10.dp),
+                modifier= Modifier.padding(top=dimens.extraLarge),
                 text = loginViewModel.getGreeting(name),
                 fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
                 color = colors.textColor,

@@ -34,6 +34,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 
 @Composable
 fun CurrencySelector(
@@ -51,7 +52,7 @@ fun CurrencySelector(
             modifier = Modifier
                 .width(contentWidth)
                 .background(colors.backgroundPrimary)
-                .padding(8.dp),
+                .padding(dimens.smallMedium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -66,7 +67,7 @@ fun CurrencySelector(
                     }
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(dimens.medium))
 
                 Text(
                     text = "${stringResource(id = R.string.selectedcurrency)} $currencyCodeShowed",
@@ -107,7 +108,7 @@ fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onCurrencySelected) // Acción al hacer clic
-            .padding(16.dp),
+            .padding(dimens.mediumLarge),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -115,7 +116,7 @@ fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
             contentDescription = "${currency.currencyCode} flag",
             modifier = Modifier.size(36.dp)
         )
-        Spacer(modifier = Modifier.width(15.dp)) // Espaciador entre la imagen y el texto
+        Spacer(modifier = Modifier.width(dimens.mediumLarge)) // Espaciador entre la imagen y el texto
         Text(
             text = currency.currencyDescription,
             color = colors.textColor,
