@@ -10,7 +10,7 @@ fun CalculatorScreen( viewModel: CalculatorViewModel){
     val isLandScape=orientation == OrientationApp.Landscape
 
     if(isLandScape){
-        CalculatorUILandscape(viewModel)
+        CalculatorLandscapeUI(viewModel)
     }else{
         CalculatorPortraitUI(viewModel)
     }
