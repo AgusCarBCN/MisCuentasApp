@@ -52,7 +52,6 @@ fun BottomMyAccountsBar(mainViewModel: MainViewModel,
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     // Obtiene el destino actual de navegación (la ruta o identificador de la pantalla activa)
     navBackStackEntry?.destination
-
     // Inicializa con el primer ícono
     BottomAppBar(
         modifier = Modifier

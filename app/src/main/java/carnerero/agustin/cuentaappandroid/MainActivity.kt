@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues.TAG
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
@@ -30,12 +34,14 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.P
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.AppNavHost
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.MisCuentasTheme
 import carnerero.agustin.cuentaappandroid.presentation.theme.rememberWindowSize
 import carnerero.agustin.cuentaappandroid.utils.ObserveAsEvents
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import com.google.android.gms.ads.MobileAds
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -51,6 +57,8 @@ class MainActivity : ComponentActivity() {
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
     private val tutorialViewModel: TutorialViewModel by viewModels ()
+
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {

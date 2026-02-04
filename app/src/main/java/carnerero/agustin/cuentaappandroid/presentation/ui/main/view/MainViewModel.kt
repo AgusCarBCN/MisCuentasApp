@@ -35,6 +35,11 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _showExitDialog=MutableStateFlow(false)
     val showExitDialog: MutableStateFlow<Boolean> = _showExitDialog
 
+    private val _isLandScape=MutableStateFlow(false)
+    val isLandScape: MutableStateFlow<Boolean> = _isLandScape
+
+
+
     private val _showDeleteAccountDialog= MutableStateFlow(false)
     val showDeleteAccountDialog: MutableStateFlow<Boolean> = _showDeleteAccountDialog
 
@@ -53,6 +58,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
             _selectedScreen.emit(screen)
 
         }
+    }
+    fun isLandScape(isLandScape:Boolean):Boolean{
+        return isLandScape
     }
     fun updateTitle(newTitle: Int) {
         _title.value = newTitle

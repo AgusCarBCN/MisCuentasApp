@@ -37,9 +37,11 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +55,8 @@ fun MainScreen(
     settingViewModel: SettingViewModel
 
 ) {
-
+    val isLanScape=orientation== OrientationApp.Landscape
+    mainViewModel.isLandScape(isLanScape)
     // NavController para manejar la navegación entre pantallas
     val innerNavController = rememberNavController()
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
@@ -65,8 +68,6 @@ fun MainScreen(
     val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
-
 
     if (enableNotifications) {
         NotificationCategoriesObserver(
@@ -83,7 +84,7 @@ fun MainScreen(
 
     val showExitDialog by mainViewModel.showExitDialog.collectAsState()
     val title by mainViewModel.title.observeAsState(R.string.home)
-
+    val isPortrait=orientation== OrientationApp.Portrait
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
     LaunchedEffect(key1 = navBackStackEntry) {
         if (drawerState.isOpen) {
@@ -101,22 +102,21 @@ fun MainScreen(
         },
         scrimColor = Color.Transparent,
         content = {
-
             // Main content goes here
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
                 {
-                    TopMyAccountsBar(
+                    if(isPortrait){TopMyAccountsBar(
                         scope,drawerState,title
-                    )
+                    )}
                 },
                 {
+                    if(isPortrait){
                     BottomMyAccountsBar(
                         mainViewModel,
                         innerNavController
-                    )
+                    )}
                 },
-
                 containerColor = colors.backgroundPrimary
             ) { innerPadding ->
                 RequestNotificationPermissionDialog(mainViewModel)

@@ -34,6 +34,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.A
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.components.YearSelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
@@ -45,9 +46,9 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import java.util.Calendar
 import kotlin.math.abs
-
 
 @Composable
 
@@ -57,7 +58,6 @@ fun BarChartScreen(
     settingViewModel: SettingViewModel
 
 ) {
-
     val year = Calendar.getInstance().get(Calendar.YEAR)
     val accountSelected by accountViewModel.accountSelected.observeAsState()
     val yearSelected by barChartViewModel.selectedYear.observeAsState()
@@ -65,7 +65,7 @@ fun BarChartScreen(
     val isDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
     val context = LocalContext.current
     val idAccount = accountSelected?.id ?: 1
-    Log.d("account", accountSelected?.name ?: "")
+    val isPortrait =orientation== OrientationApp.Portrait
     LaunchedEffect(idAccount, yearSelected) {
         barChartViewModel.barChartDataByMonth(idAccount, yearSelected ?: year.toString())
     }
@@ -79,41 +79,50 @@ fun BarChartScreen(
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            Row(
-                Modifier
+            if (isPortrait) {
+                Row(
+                    Modifier
+                        .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(dimens.small)
+                ) {
+                    AccountSelector(
+                        title = stringResource(id = R.string.account),
+                        accountViewModel = accountViewModel,
+                        modifier = Modifier.weight(0.75f)
+                    )
+
+                    YearSelector(
+                        barChartViewModel = barChartViewModel,
+                        modifier = Modifier.weight(0.25f)
+                    )
+                }
+                BarChart( Modifier.fillMaxWidth().height(400.dp),context, data, isDarkTheme)
+                BarChartResult(Modifier.fillMaxWidth().height(400.dp),context, data, isDarkTheme)
+                Table( Modifier
                     .fillMaxWidth()
-                    , horizontalArrangement =  Arrangement.spacedBy(dimens.small)
-            ) {
-                AccountSelector(
-                    title = stringResource(id = R.string.account),
-                    accountViewModel = accountViewModel,
-                    modifier = Modifier.weight(0.75f)
-                )
-
-                YearSelector(
-                    barChartViewModel = barChartViewModel,
-                    modifier = Modifier.weight(0.25f)
-                )
+                    .padding(start = 15.dp),accountViewModel, data)
             }
-
-            HeadSetting(
-                title = stringResource(id = R.string.alloption),
-                MaterialTheme.typography.headlineMedium
-            )
-            BarChart(context, data, isDarkTheme)
-            HeadSetting(
-                title = stringResource(id = R.string.result),
-                MaterialTheme.typography.headlineMedium
-            )
-            BarChartResult(context, data, isDarkTheme)
-            Table(accountViewModel, data)
+        else {
+            Row( Modifier
+                .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(dimens.small)
+            ){
+                BarChart(Modifier.weight(0.5f).height(200.dp),context, data, isDarkTheme)
+                BarChartResult(Modifier.weight(0.5f).height(200.dp),context, data, isDarkTheme)
+            }
+            Row( Modifier
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+            ){
+                Table( Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp),accountViewModel, data)
+            }
         }
-
     }
+}
 
 
 @Composable
 fun BarChart(
+    modifier: Modifier,
     context: Context,
     data: MutableList<BarChartData>,
     isDarkTheme: Boolean
@@ -182,10 +191,8 @@ fun BarChart(
 
             }
         },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(410.dp)
-            .padding(5.dp)
+        modifier = modifier
+
             ,
         update = { chart ->
             // Prepare bar entries for each category
@@ -224,6 +231,7 @@ fun BarChart(
 
 @Composable
 fun BarChartResult(
+    modifier: Modifier,
     context: Context,
     data: MutableList<BarChartData>,
     isDarkTheme: Boolean
@@ -291,10 +299,8 @@ fun BarChartResult(
 
             }
         },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(410.dp)
-            .padding(5.dp)
+        modifier = modifier
+
         ,
         update = { chart ->
             // Prepare bar entries for each category
@@ -321,7 +327,7 @@ fun BarChartResult(
 }
 
 @Composable
-fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>) {
+fun Table(modifier: Modifier,accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>) {
 
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
     // Encabezados de la tabla

@@ -72,6 +72,7 @@ fun YearSelector(
         Row(
             modifier = Modifier.fillMaxWidth()
                 .background(colors.backgroundPrimary),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
