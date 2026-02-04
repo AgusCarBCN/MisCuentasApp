@@ -32,6 +32,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Hea
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
 import androidx.core.net.toUri
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.rememberWindowSize
 
 @Composable
 
@@ -45,6 +47,7 @@ fun AboutScreen(navToAbout:()->Unit,
         "https://play.google.com/store/apps/details?id=carnerero.agustin.cuentaappandroid&hl=es&gl=US"
     val policyLink =
         "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
+    val windows= rememberWindowSize()
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
@@ -55,7 +58,7 @@ fun AboutScreen(navToAbout:()->Unit,
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 25.dp)
+                .padding(bottom = dimens.extraLarge)
                 .verticalScroll(
                     rememberScrollState()
                 ), horizontalAlignment = Alignment.CenterHorizontally

@@ -103,7 +103,7 @@ fun NewEntry(
             BoardType.DECIMAL,
             false
         )
-        AccountSelector(300,20,stringResource(id = R.string.selectanaccount), accountViewModel)
+        AccountSelector(stringResource(id = R.string.selectanaccount), accountViewModel, modifier = Modifier.width(300.dp))
         ModelButton(text = stringResource(id = if (type== CategoryType.INCOME) R.string.newincome else R.string.newexpense),
             MaterialTheme.typography.labelLarge,
             modifier = Modifier.width(320.dp),

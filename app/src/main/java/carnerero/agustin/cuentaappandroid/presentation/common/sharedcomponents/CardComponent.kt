@@ -54,6 +54,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.iconSize
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -256,14 +257,14 @@ fun CategoryCardWithCheckbox(category: Category,
                     painter = painterResource(id = category.iconResource),
                     contentDescription = "$iconItem $categoryName",
                     modifier = Modifier
-                        .size(42.dp)
-                        .padding(end = 10.dp),
+                        .size(iconSize.extraLarge)
+                        .padding(end = dimens.medium),
                     tint = colors.textHeadColor
                 )
                 Column {
                     Text(
                         text = stringResource(id = category.nameResource),
-                        modifier = Modifier.padding(bottom = 5.dp),
+                        modifier = Modifier.padding(bottom = dimens.small),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.textColor
                     )

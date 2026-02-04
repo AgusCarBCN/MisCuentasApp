@@ -120,7 +120,6 @@ fun ModifyEntry(entryDTO: EntryDTO,
 
                 val entryDTOUpdated= EntryDTO(
 
-
                     entryDTO.id,
                     descriptionEntry,
                     if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()

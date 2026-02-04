@@ -87,13 +87,14 @@ fun Transfer(
             BoardType.DECIMAL,
             false
         )
-        AccountSelector(300, 20, stringResource(id = R.string.originaccount), accountViewModel)
+        AccountSelector(stringResource(id = R.string.originaccount), accountViewModel,modifier=Modifier.width(300.dp))
         AccountSelector(
-            300,
-            20,
+
+
             stringResource(id = R.string.destinationaccount),
             accountViewModel,
-            true
+            true,
+            modifier = Modifier.width(300.dp)
         )
         Log.d("amount", amountTransfer)
         if ((accountTo == accountFrom) ||

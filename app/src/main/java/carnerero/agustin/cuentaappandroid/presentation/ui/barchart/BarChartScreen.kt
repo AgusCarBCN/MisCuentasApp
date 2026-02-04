@@ -4,11 +4,14 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -27,13 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.components.YearSelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.components.YearSelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
@@ -53,46 +57,59 @@ fun BarChartScreen(
     settingViewModel: SettingViewModel
 
 ) {
+
     val year = Calendar.getInstance().get(Calendar.YEAR)
     val accountSelected by accountViewModel.accountSelected.observeAsState()
     val yearSelected by barChartViewModel.selectedYear.observeAsState()
     val data by barChartViewModel.barChartData.observeAsState(mutableListOf())
     val isDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
-    val context= LocalContext.current
+    val context = LocalContext.current
     val idAccount = accountSelected?.id ?: 1
-    Log.d("account",accountSelected?.name?:"")
-    LaunchedEffect(idAccount,yearSelected) {
-        barChartViewModel.barChartDataByMonth(idAccount,yearSelected?:year.toString())
+    Log.d("account", accountSelected?.name ?: "")
+    LaunchedEffect(idAccount, yearSelected) {
+        barChartViewModel.barChartDataByMonth(idAccount, yearSelected ?: year.toString())
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-        ) {
-
-        Row(
+        Column(
             modifier = Modifier
-                .width(300.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
+                .padding(top = dimens.extraLarge,start=dimens.extraLarge,end=dimens.extraLarge)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
-            AccountSelector(200, 10, stringResource(id = R.string.account), accountViewModel)
-            YearSelector(barChartViewModel)
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    , horizontalArrangement =  Arrangement.spacedBy(dimens.small)
+            ) {
+                AccountSelector(
+                    title = stringResource(id = R.string.account),
+                    accountViewModel = accountViewModel,
+                    modifier = Modifier.weight(0.75f)
+                )
+
+                YearSelector(
+                    barChartViewModel = barChartViewModel,
+                    modifier = Modifier.weight(0.25f)
+                )
+            }
+
+            HeadSetting(
+                title = stringResource(id = R.string.alloption),
+                MaterialTheme.typography.headlineMedium
+            )
+            BarChart(context, data, isDarkTheme)
+            HeadSetting(
+                title = stringResource(id = R.string.result),
+                MaterialTheme.typography.headlineMedium
+            )
+            BarChartResult(context, data, isDarkTheme)
+            Table(accountViewModel, data)
         }
 
-        HeadSetting(title = stringResource(id = R.string.alloption), MaterialTheme.typography.headlineMedium)
-        BarChart(context, data,isDarkTheme)
-        HeadSetting(title = stringResource(id = R.string.result), MaterialTheme.typography.headlineMedium)
-        BarChartResult(context, data,isDarkTheme)
-        Table(accountViewModel,data)
     }
-
-}
 
 
 @Composable
@@ -323,8 +340,9 @@ fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>)
         ) {
         // Encabezados
         Row(
-            modifier = Modifier.fillMaxWidth().
-            padding(start=15.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             header.forEach { item ->
@@ -341,8 +359,9 @@ fun Table(accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>)
         // Datos
         data.forEach { element ->
             Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start=15.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
 
             ) {

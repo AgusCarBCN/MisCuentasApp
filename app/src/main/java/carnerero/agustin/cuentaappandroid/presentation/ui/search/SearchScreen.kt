@@ -38,6 +38,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.E
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import kotlinx.coroutines.Dispatchers
@@ -129,10 +130,11 @@ fun SearchScreen(
                 )
             }
             AccountSelector(
-                300,
-                20,
+
+
                 stringResource(id = R.string.selectanaccount),
-                accountViewModel
+                accountViewModel,
+                modifier = Modifier.width(300.dp)
             )
             RadioButtonSearch(searchViewModel,
                 fieldModifier)

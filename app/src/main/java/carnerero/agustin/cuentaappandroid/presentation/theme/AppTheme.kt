@@ -22,4 +22,8 @@ object AppTheme{
     val textUnit : CustomTextUnits
         @Composable
         get() = LocalAppTextUnits.current
+
+    val iconSize: IconSizes
+        @Composable
+        get() = LocalIconSizes.current
 }

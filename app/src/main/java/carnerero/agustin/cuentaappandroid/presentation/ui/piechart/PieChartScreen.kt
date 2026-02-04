@@ -96,7 +96,7 @@ fun PieChartScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        AccountSelector(300, 20, stringResource(id = R.string.selectanaccount), accountViewModel)
+        AccountSelector( stringResource(id = R.string.selectanaccount), accountViewModel,modifier=Modifier.width(300.dp))
         Row(
             modifier = Modifier
                 .width(360.dp)
