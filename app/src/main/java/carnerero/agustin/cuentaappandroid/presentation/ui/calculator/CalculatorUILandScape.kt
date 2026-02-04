@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton2
 import kotlinx.coroutines.delay
 
 
@@ -55,9 +54,9 @@ fun CalculatorLandscapeUI(
 
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
-        listOf("AC", "(", ")", "÷", "sin", "cos", "tan"),
+        listOf("AC", "(", ")", "÷", "PV", "FV", "rate"),
         listOf("7", "8", "9", "×", "log", "ln", "√"),
-        listOf("4", "5", "6", "-", "x²", "x³", "xʸ"),
+        listOf("4", "5", "6", "-", "x²", "xʸ","Ppc"),
         listOf("1", "2", "3", "+", "π", "e", "("),
         listOf("0", ".", "⌫", "=", ")", "%", "±")
     )
@@ -130,7 +129,7 @@ fun CalculatorLandscapeUI(
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
-                                "sin", "cos", "tan", "log", "ln", "√", "x²", "x³", "xʸ", "π", "e" -> listOf(
+                                "PV", "FV", "rate", "log", "ln", "√", "x²", "Ppc", "xʸ", "π", "e" -> listOf(
                                     colors.initOperatorCalc,
                                     colors.targetOperatorCalc,
                                     colors.textInitOperatorCalc,
@@ -155,14 +154,14 @@ fun CalculatorLandscapeUI(
                                             "⌫" -> viewModel.delete()
                                             "=" -> viewModel.evaluate()
                                             "±" -> viewModel.evaluate()
-                                            "sin" -> viewModel.append("sin(")
-                                            "cos" -> viewModel.append("cos(")
-                                            "tan" -> viewModel.append("tan(")
+                                            "FV" -> viewModel.append("FV")
+                                            "PV" -> viewModel.append("Pv")
+                                            "rate" -> viewModel.append("rate")
+                                            "Ppc" -> viewModel.append("Ppc")
                                             "log" -> viewModel.append("log(")
                                             "ln" -> viewModel.append("ln(")
                                             "√" -> viewModel.append("√(")
                                             "x²" -> viewModel.append("²")
-                                            "x³" -> viewModel.append("³")
                                             "xʸ" -> viewModel.append("^")
                                             "π" -> viewModel.append("π")
                                             "e" -> viewModel.append("e")
