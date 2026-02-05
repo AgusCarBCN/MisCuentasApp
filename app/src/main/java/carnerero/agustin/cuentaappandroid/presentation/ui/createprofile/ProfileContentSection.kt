@@ -25,8 +25,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.P
 fun CreateContentSection(modifier: Modifier,
                          createViewModel: ProfileViewModel,
                          categoriesViewModel: CategoriesViewModel,
-                         navToCreateAccounts:()->Unit,
-                         navToLogin:()->Unit){
+                         navToCreateAccounts:()->Unit
+                         ){
 
     val name by createViewModel.name.observeAsState("")
     val userName by createViewModel.username.observeAsState("")
@@ -115,16 +115,6 @@ fun CreateContentSection(modifier: Modifier,
                     messageProfileCreated
                 )
                 categoriesViewModel.populateCategories()
-            }
-        )
-
-        ModelButton(
-            text = stringResource(id = R.string.backButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = modifierField,
-            true,
-            onClickButton = {
-                navToLogin()
             }
         )
     }

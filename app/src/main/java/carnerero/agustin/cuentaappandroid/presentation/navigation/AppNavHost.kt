@@ -63,7 +63,6 @@ fun AppNavHost(
             CreateProfileScreen(
                 profileViewModel,
                 categoriesViewModel,
-                navToBackLogin = { navController.popBackStack() },
                 navToCreateAccounts = { navController.navigate(Routes.CreateAccounts.route) })
         }
 

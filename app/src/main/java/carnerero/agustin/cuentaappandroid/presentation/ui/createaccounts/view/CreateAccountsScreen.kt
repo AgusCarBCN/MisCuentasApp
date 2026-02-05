@@ -33,6 +33,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 
 
 //Mapa de divisas y simbolos
@@ -80,10 +81,10 @@ fun CreateAccountsComponent(
             Column(
                 modifier = if (enableSelector)
                     Modifier.fillMaxSize()
-                        .padding(top = 30.dp)
+                        .padding(top =dimens.extraLarge)
                 else Modifier
                     .fillMaxWidth()
-                    .padding(top = 30.dp)
+                    .padding(top = dimens.extraLarge)
                     .verticalScroll(
                         rememberScrollState()
                     ),
@@ -93,7 +94,7 @@ fun CreateAccountsComponent(
                 if (!isCurrencyExpanded) {
                     Text(
                         modifier = Modifier
-                            .padding(50.dp),
+                            .padding(dimens.extraLarge),
                         text = stringResource(id = R.string.createAccount),
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center,
@@ -156,17 +157,6 @@ fun CreateAccountsComponent(
                                 accountName,
                                 messageSuccess,
                                 messageError)
-
-                        }
-                    )
-                    ModelButton(
-                        text = stringResource(id = R.string.backButton),
-                        MaterialTheme.typography.labelLarge,
-                        modifier = fieldModifier,
-                        true,
-                        onClickButton = {
-                            accountsViewModel.resetFields()
-                            navToBack()
                         }
                     )
 
@@ -183,24 +173,21 @@ fun CreateAccountsComponent(
                             modifier = fieldModifier,
                             enableSelector,
                             onClickButton = {
-                                /*scope.launch(Dispatchers.IO) {
-                                    try {
-                                        accountsViewModel.setCurrencyCode(currencyShowedCode)
-
-                                    } catch (_: Exception) {
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                event = SnackBarEvent(
-                                                    errorWritingDataStore
-                                                )
-                                            )
-                                        }
-                                    }
-                                }*/
                                 accountsViewModel.setCurrencyCode(currencyShowedCode)
                                 navToLogin()
                             }
                         )
+                        ModelButton(
+                            text = stringResource(id = R.string.backButton),
+                            MaterialTheme.typography.labelLarge,
+                            modifier = fieldModifier,
+                            true,
+                            onClickButton = {
+                                accountsViewModel.resetFields()
+                                navToBack()
+                            }
+                        )
+
                     }
                 }
 

@@ -28,7 +28,6 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 fun CreateProfileScreen(
     createViewModel: ProfileViewModel,
     categoriesViewModel: CategoriesViewModel,
-    navToBackLogin: () -> Unit,
     navToCreateAccounts: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
@@ -59,7 +58,6 @@ fun CreateProfileScreen(
                     categoriesViewModel,
                     navToCreateAccounts
                 )
-                { navToBackLogin }
             }
         } else {
             Column(
@@ -83,7 +81,7 @@ fun CreateProfileScreen(
                     categoriesViewModel,
                     navToCreateAccounts
                 )
-                { navToBackLogin }
+
             }
         }
     }
