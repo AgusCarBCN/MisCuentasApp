@@ -1,52 +1,111 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.search
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.RadioButtonSearch
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchLandscapeLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchPortraitLayout
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.util.Date
 
+@Composable
+fun SearchScreen(
+    accountViewModel: AccountsViewModel,
+    searchViewModel: SearchViewModel,
+    entriesViewModel: EntriesViewModel,
+    typeOfSearch: TypeOfSearch,
+    navController: NavController
+) {
+    val configuration = LocalConfiguration.current
+    val isTwoPane = configuration.screenWidthDp >= 600
 
+    val fromAmount by searchViewModel.fromAmount.observeAsState("0.0")
+    val toAmount by searchViewModel.toAmount.observeAsState("0.0")
+    val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
+    val fromDate by searchViewModel.selectedFromDate.observeAsState(Date().dateFormat())
+    val entryDescription by searchViewModel.entryDescription.observeAsState("")
+    val enableSearchButton by searchViewModel.enableSearchButton.observeAsState(false)
+    val selectedAccount by accountViewModel.accountSelected.observeAsState()
+    val selectedOption by searchViewModel.selectedOptionIndex.observeAsState()
+
+    val id = selectedAccount?.id ?: 0
+    val scope = rememberCoroutineScope()
+
+    val messageAmountError = stringResource(R.string.amountfromoverdateto)
+    val messageDateError = stringResource(R.string.datefromoverdateto)
+
+    searchViewModel.onEnableSearchButton()
+
+    LaunchedEffect(
+        id, entryDescription, fromDate, toDate,
+        fromAmount, toAmount, selectedOption
+    ) {
+        entriesViewModel.getFilteredEntries(
+            accountId = id,
+            description = entryDescription,
+            dateFrom = fromDate,
+            dateTo = toDate,
+            amountMin = fromAmount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
+            amountMax = toAmount.toBigDecimalOrNull() ?: BigDecimal("1E10"),
+            selectedOptions = selectedOption ?: 0
+        )
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.backgroundPrimary)
+    ) {
+        if (isTwoPane) {
+            SearchLandscapeLayout(
+                accountViewModel,
+                searchViewModel,
+                fromAmount,
+                toAmount,
+                entryDescription,
+                enableSearchButton,
+                scope,
+                messageAmountError,
+                messageDateError,
+                typeOfSearch,
+                navController
+            )
+        } else {
+            SearchPortraitLayout(
+                accountViewModel,
+                searchViewModel,
+                fromAmount,
+                toAmount,
+                entryDescription,
+                enableSearchButton,
+                scope,
+                messageAmountError,
+                messageDateError,
+                typeOfSearch,
+                navController
+            )
+        }
+    }
+}
+
+
+
+/*
 @Composable
 fun SearchScreen(
     accountViewModel: AccountsViewModel,
@@ -193,4 +252,4 @@ fun SearchScreen(
             )
         }
     }
-}
+}*/

@@ -18,8 +18,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.BarChartScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
@@ -32,7 +32,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.Ent
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
@@ -45,8 +45,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.Select
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.stadistics.StatisticsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.Transfer
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.StatisticsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferScreen
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.google.gson.Gson
 
@@ -149,7 +149,7 @@ fun MainNavHost(
             BarChartScreen(accountsViewModel, barChartViewModel, settingViewModel)
         }
         composable(Routes.Transfer.route) {
-            Transfer(
+            TransferScreen(
                 accountsViewModel,
                 entriesViewModel
             )

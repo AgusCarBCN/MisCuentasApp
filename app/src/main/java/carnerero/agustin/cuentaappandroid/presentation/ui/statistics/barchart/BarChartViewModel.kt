@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.barchart
+package carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart
 
 
 import android.util.Log
@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumExpensesByMonthUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumIncomesByMonthUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.model.BarChartData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

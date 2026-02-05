@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.model
 
 data class BarChartData(
     val month: Int,

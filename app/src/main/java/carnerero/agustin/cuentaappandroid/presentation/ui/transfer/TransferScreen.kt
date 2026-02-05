@@ -39,7 +39,7 @@ import java.util.Date
 
 @Composable
 
-fun Transfer(
+fun TransferScreen(
     accountViewModel: AccountsViewModel,
     entryViewModel: EntriesViewModel,
     navToHome:()->Unit

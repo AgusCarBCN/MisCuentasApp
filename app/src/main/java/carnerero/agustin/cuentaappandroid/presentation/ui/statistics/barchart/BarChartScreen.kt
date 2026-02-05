@@ -1,17 +1,14 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.barchart
+package carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart
 
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -35,13 +32,13 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.components.YearSelector
-import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.model.BarChartData
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.components.YearSelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.model.BarChartData
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -153,7 +150,7 @@ fun BarChart(
                     granularity = 1f
                     isGranularityEnabled = true // Asegura que la granularidad se respete
                     labelCount = months.size // Establece el número de etiquetas en el total de meses
-                    position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+                    position = XAxis.XAxisPosition.BOTTOM
                     setDrawGridLines(false)
                     textColor = if(isDarkTheme) ContextCompat.getColor(context, R.color.lightYellow)
                     else ContextCompat.getColor(context, R.color.darkBrown)
@@ -262,7 +259,7 @@ fun BarChartResult(
                     granularity = 1f
                     isGranularityEnabled = true // Asegura que la granularidad se respete
                     labelCount = months.size // Establece el número de etiquetas en el total de meses
-                    position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+                    position = XAxis.XAxisPosition.BOTTOM
                     setDrawGridLines(false)
                     textColor = if(isDarkTheme) ContextCompat.getColor(context, R.color.lightYellow)
                     else ContextCompat.getColor(context, R.color.darkBrown)

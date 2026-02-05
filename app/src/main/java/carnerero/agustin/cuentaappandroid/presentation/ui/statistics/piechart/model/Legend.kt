@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.piechart.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.stadistics
+package carnerero.agustin.cuentaappandroid.presentation.ui.statistics
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.RowComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 
 @Composable
 fun StatisticsScreen(
