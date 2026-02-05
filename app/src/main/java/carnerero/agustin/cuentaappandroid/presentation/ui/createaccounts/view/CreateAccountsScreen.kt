@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,11 +35,68 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.m
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.layouts.LandScapeLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.layouts.PortraitLayout
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 //Mapa de divisas y simbolos
+@Composable
+fun CreateAccountsComponent(
+    accountsViewModel: AccountsViewModel,
+    enableSelector: Boolean,
+    navToLogin: () -> Unit,
+    navToBack: () -> Unit
+) {
+    val isPortrait = orientation == OrientationApp.Portrait
 
+    val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
+    val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
+    val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
+    val accountName by accountsViewModel.name.observeAsState("")
+    val accountBalance by accountsViewModel.amount.observeAsState("")
+    val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(enableSelector)
 
+    LaunchedEffect(Unit) {
+        accountsViewModel.getListOfCurrencyCode()
+        accountsViewModel.getAllAccounts()
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.backgroundPrimary)
+    ) {
+        if (isPortrait) {
+            PortraitLayout(
+                accountsViewModel,
+                enableCurrencySelector,
+                isCurrencyExpanded,
+                isEnableButton,
+                accountName,
+                accountBalance,
+                currencyShowedCode,
+                navToLogin,
+                navToBack
+            )
+        } else {
+            LandScapeLayout (
+                accountsViewModel,
+                enableCurrencySelector,
+                isCurrencyExpanded,
+                isEnableButton,
+                accountName,
+                accountBalance,
+                currencyShowedCode,
+                navToLogin,
+                navToBack
+            )
+        }
+    }
+}
+
+/*
 @Composable
 
 fun CreateAccountsComponent(
@@ -194,4 +252,4 @@ fun CreateAccountsComponent(
             }
         }
     }
-}
+}*/
