@@ -20,11 +20,10 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.barchart.BarChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorPortraitUI
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
@@ -34,7 +33,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.Ent
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.piechart.PieChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.UpdateProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
@@ -173,7 +172,7 @@ fun MainNavHost(
         }
 
         composable(Routes.AddAccount.route) {
-            CreateAccountsComponent(
+            CreateAccountsScreen(
                 accountsViewModel,
                 false,
                 navToLogin = {navController.navigate(Routes.Home.route)},

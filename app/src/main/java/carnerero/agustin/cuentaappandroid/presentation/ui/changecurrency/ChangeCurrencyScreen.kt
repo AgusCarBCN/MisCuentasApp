@@ -1,7 +1,9 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,13 +26,69 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.C
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
+
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.layouts.ChangeCurrencyLandScapeLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.layouts.ChangeCurrencyPortraitLayout
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
+@Composable
+fun ChangeCurrencyScreen(
+    accountsViewModel: AccountsViewModel,
+    entriesViewModel: EntriesViewModel,
+    navToHome: () -> Unit
+) {
+    val isPortrait = orientation == OrientationApp.Portrait
+    val scope = rememberCoroutineScope()
+
+    val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
+    val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
+
+    val messageFormatCurrencyChange = stringResource(R.string.currencyformatchange)
+    val messageCurrencyChange = stringResource(R.string.currencychange)
+    val messageErrorConnexionApi = stringResource(R.string.apierror)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.backgroundPrimary)
+    ) {
+        if (isPortrait) {
+            ChangeCurrencyPortraitLayout (
+                accountsViewModel,
+                entriesViewModel,
+                scope,
+                currencyCodeShowed,
+                currencyCodeSelected,
+                messageFormatCurrencyChange,
+                messageCurrencyChange,
+                messageErrorConnexionApi,
+                navToHome
+            )
+        } else {
+            ChangeCurrencyLandScapeLayout (
+                accountsViewModel,
+                entriesViewModel,
+                scope,
+                currencyCodeShowed,
+                currencyCodeSelected,
+                messageFormatCurrencyChange,
+                messageCurrencyChange,
+                messageErrorConnexionApi,
+                navToHome
+            )
+        }
+    }
+}
+
+
+/*
 @Composable
 
 
@@ -136,4 +194,4 @@ fun ChangeCurrencyScreen(/*mainViewModel: MainViewModel*/
                 })
         }
     }
-}
+}*/

@@ -1,6 +1,8 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.profile
+package carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,8 +30,36 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileImageWithCamera
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.layouts.UpdateProfileLandscapeLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.layouts.UpdateProfilePortraitLayout
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
+@Composable
+fun UpdateProfileScreen(createViewModel: ProfileViewModel) {
+    val isPortrait = orientation == OrientationApp.Portrait
+
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.backgroundPrimary)
+    ) {
+        if (isPortrait) {
+            UpdateProfilePortraitLayout(
+                createViewModel,
+
+            )
+        } else {
+            UpdateProfileLandscapeLayout(
+                createViewModel
+            )
+        }
+    }
+}
+
+/*
 @Composable
 
 fun UpdateProfileScreen(createViewModel: ProfileViewModel) {
@@ -49,7 +79,6 @@ fun UpdateProfileScreen(createViewModel: ProfileViewModel) {
     val enableNameButton by createViewModel.enableNameButton.observeAsState(false)
     val enableUserNameButton by createViewModel.enableUserNameButton.observeAsState(false)
     val enablePasswordButton by createViewModel.enablePasswordButton.observeAsState(false)
-
 
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
@@ -141,8 +170,8 @@ fun UpdateProfileScreen(createViewModel: ProfileViewModel) {
 
     }
 
-}
-@Composable
+}*/
+/*@Composable
 fun NewInputComponent(
     title: String,
     inputNewText: String,
@@ -189,4 +218,4 @@ fun NewInputComponent(
             )
         }
     }
-}
+}*/

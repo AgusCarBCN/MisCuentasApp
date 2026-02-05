@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsComponent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
@@ -67,7 +67,7 @@ fun AppNavHost(
         }
 
         composable(Routes.CreateAccounts.route) {
-            CreateAccountsComponent(
+            CreateAccountsScreen(
                 accountsViewModel,
                 true,
                 navToLogin = {navController.navigate(Routes.Login.route)},
