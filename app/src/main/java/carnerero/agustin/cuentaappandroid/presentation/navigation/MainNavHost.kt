@@ -25,8 +25,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.entries.EntryFormScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.NewEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
@@ -126,7 +126,7 @@ fun MainNavHost(
             }
         }
         composable(Routes.NewEntry.route) {
-            NewEntry(
+            EntryFormScreen (
                 entriesViewModel,
                 categoriesViewModel,
                 accountsViewModel

@@ -92,7 +92,7 @@ fun TransferScreen(
                 /** -------- LEFT (ICON + INPUT AMOUNT) -------- */
                 Column(
                     modifier = Modifier
-                        .weight(0.4f)                       ,
+                        .weight(0.5f)                       ,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -126,7 +126,7 @@ fun TransferScreen(
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                        .weight(0.6f)
+                        .weight(0.5f)
                         .padding(top = 40.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

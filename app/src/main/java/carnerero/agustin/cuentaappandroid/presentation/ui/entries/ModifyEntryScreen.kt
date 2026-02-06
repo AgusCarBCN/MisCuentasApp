@@ -2,8 +2,12 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.entries
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -33,7 +37,10 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import com.google.gson.Gson
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -63,106 +70,263 @@ fun ModifyEntry(entryDTO: EntryDTO,
         else colors.iconExpenseInit
     val targetColor = if (entryDTO.categoryType== CategoryType.INCOME) colors.iconIncomeTarget
     else colors.iconExpenseTarget
+    val isLandscape =
+        orientation == OrientationApp.Landscape
 
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxWidthDp = maxWidth
+        val fieldModifier = Modifier
+            .fillMaxWidth(0.85f)
+            .heightIn(min = 48.dp)
+            .padding(dimens.small)
+        if (isLandscape) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 30.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .verticalScroll(
-                rememberScrollState()
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        IconAnimated(entryDTO.iconResource, 120, initColor, targetColor)
-        HeadSetting(
-            title = stringResource(R.string.modifydes), MaterialTheme.typography.headlineMedium
-        )
-        TextFieldComponent(
-            modifier = Modifier.width(320.dp),
-            stringResource(id = R.string.desamount),
-            descriptionEntry,
-            onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry)},
-
-            BoardType.TEXT,
-            false
-        )
-        HeadSetting(
-            title = stringResource(R.string.modifydate), MaterialTheme.typography.headlineMedium
-        )
-        DatePickerSearch(
-            modifier = Modifier.width(300.dp),
-            R.string.modifydate,
-            searchViewModel,
-            true
-        )
-        HeadSetting(
-            title = stringResource(R.string.modifyamount), MaterialTheme.typography.headlineMedium
-        )
-        TextFieldComponent(
-            modifier = Modifier.width(320.dp),
-            stringResource(id = R.string.modifyamount),
-            amountEntry,
-            onTextChange = { entriesViewModel.onTextFieldsChangedModify(descriptionEntry, it)},
-
-            BoardType.DECIMAL,
-            false
-        )
-        ModelButton(text = stringResource(id = R.string.modifyButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(320.dp),
-            true,
-            onClickButton = {
-                val amountBefore=entryDTO.amount
-                val updateBalanceIncome=amountEntry.toBigDecimal()-amountBefore
-                val updateBalanceExpense = amountEntry.toBigDecimal().negate().add(amountBefore)
-
-                val entryDTOUpdated= EntryDTO(
-
-                    entryDTO.id,
-                    descriptionEntry,
-                    if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()
-                    else amountEntry.toBigDecimal().negate(),
-                    dateSelected,
-                    entryDTO.iconResource,
-                    entryDTO.nameResource,
-                    entryDTO.accountId,
-                    entryDTO.name,
-                    entryDTO.categoryId,
-                    entryDTO.categoryType
-                )
-                    entriesViewModel.updateEntry(entryDTO.id,
+                /** -------- LEFT (FORM) -------- */
+                Column(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    IconAnimated(entryDTO.iconResource, 120, initColor, targetColor)
+                    HeadSetting(
+                        title = stringResource(R.string.modifydes),
+                        MaterialTheme.typography.headlineMedium
+                    )
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.desamount),
                         descriptionEntry,
-                        if(entryDTO.categoryType== CategoryType.INCOME) amountEntry.toBigDecimal()
-                        else amountEntry.toBigDecimal().negate(),
-                        dateSelected)
-                entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
-                //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
-                //Actualiza balance de cuenta
-                accountsViewModel.updateAccountBalance(
-                    entryDTO.accountId,
-                    if(entryDTO.categoryType== CategoryType.INCOME) updateBalanceIncome
-                    else updateBalanceExpense,
-                    false
-                )
+                        onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry) },
+
+                        BoardType.TEXT,
+                        false
+                    )
+                }
+                /** -------- RIGHT (ACTIONS) -------- */
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .weight(0.5f)
+                        .padding(top = 40.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HeadSetting(
+                        title = stringResource(R.string.modifydate),
+                        MaterialTheme.typography.headlineMedium
+                    )
+                    DatePickerSearch(
+                        modifier = fieldModifier,
+                        R.string.modifydate,
+                        searchViewModel,
+                        true
+                    )
+                    HeadSetting(
+                        title = stringResource(R.string.modifyamount),
+                        MaterialTheme.typography.headlineMedium
+                    )
+                    TextFieldComponent(
+                        modifier = fieldModifier,
+                        stringResource(id = R.string.modifyamount),
+                        amountEntry,
+                        onTextChange = {
+                            entriesViewModel.onTextFieldsChangedModify(
+                                descriptionEntry,
+                                it
+                            )
+                        },
+
+                        BoardType.DECIMAL,
+                        false
+                    )
+                    Row(
+                        modifier = fieldModifier,
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(dimens.medium)
+                    ) {
+                        ModelButton(
+                            text = stringResource(id = R.string.modifyButton),
+                            MaterialTheme.typography.labelSmall,
+                            modifier = fieldModifier.weight(1f),
+                            true,
+                            onClickButton = {
+                                val amountBefore = entryDTO.amount
+                                val updateBalanceIncome = amountEntry.toBigDecimal() - amountBefore
+                                val updateBalanceExpense =
+                                    amountEntry.toBigDecimal().negate().add(amountBefore)
+
+                                val entryDTOUpdated = EntryDTO(
+
+                                    entryDTO.id,
+                                    descriptionEntry,
+                                    if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                                    else amountEntry.toBigDecimal().negate(),
+                                    dateSelected,
+                                    entryDTO.iconResource,
+                                    entryDTO.nameResource,
+                                    entryDTO.accountId,
+                                    entryDTO.name,
+                                    entryDTO.categoryId,
+                                    entryDTO.categoryType
+                                )
+                                entriesViewModel.updateEntry(
+                                    entryDTO.id,
+                                    descriptionEntry,
+                                    if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                                    else amountEntry.toBigDecimal().negate(),
+                                    dateSelected
+                                )
+                                entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
+                                //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
+                                //Actualiza balance de cuenta
+                                accountsViewModel.updateAccountBalance(
+                                    entryDTO.accountId,
+                                    if (entryDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
+                                    else updateBalanceExpense,
+                                    false
+                                )
 
 
-                entriesViewModel.getTotal()
-                scope.launch(Dispatchers.Main) {
-                    SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
+                                entriesViewModel.getTotal()
+                                scope.launch(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
+                                }
+                            }
+                        )
+                        ModelButton(
+                            text = stringResource(id = R.string.backButton),
+                            MaterialTheme.typography.labelSmall,
+                            modifier = fieldModifier.weight(1f),
+                            true,
+                            onClickButton = {
+                                navToHome()
+                            }
+                        )
+
+                    }
                 }
             }
-        )
-        ModelButton(text = stringResource(id = R.string.backButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(320.dp),
-            true,
-            onClickButton = {
-                navToHome()
-            }
-        )
 
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp)
+                    .verticalScroll(
+                        rememberScrollState()
+                    ),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconAnimated(entryDTO.iconResource, 120, initColor, targetColor)
+                HeadSetting(
+                    title = stringResource(R.string.modifydes),
+                    MaterialTheme.typography.headlineMedium
+                )
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(id = R.string.desamount),
+                    descriptionEntry,
+                    onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry) },
+
+                    BoardType.TEXT,
+                    false
+                )
+                HeadSetting(
+                    title = stringResource(R.string.modifydate),
+                    MaterialTheme.typography.headlineMedium
+                )
+                DatePickerSearch(
+                    modifier = fieldModifier,
+                    R.string.modifydate,
+                    searchViewModel,
+                    true
+                )
+                HeadSetting(
+                    title = stringResource(R.string.modifyamount),
+                    MaterialTheme.typography.headlineMedium
+                )
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(id = R.string.modifyamount),
+                    amountEntry,
+                    onTextChange = {
+                        entriesViewModel.onTextFieldsChangedModify(
+                            descriptionEntry,
+                            it
+                        )
+                    },
+
+                    BoardType.DECIMAL,
+                    false
+                )
+                ModelButton(
+                    text = stringResource(id = R.string.modifyButton),
+                    MaterialTheme.typography.labelLarge,
+                    modifier = fieldModifier,
+                    true,
+                    onClickButton = {
+                        val amountBefore = entryDTO.amount
+                        val updateBalanceIncome = amountEntry.toBigDecimal() - amountBefore
+                        val updateBalanceExpense =
+                            amountEntry.toBigDecimal().negate().add(amountBefore)
+
+                        val entryDTOUpdated = EntryDTO(
+
+                            entryDTO.id,
+                            descriptionEntry,
+                            if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                            else amountEntry.toBigDecimal().negate(),
+                            dateSelected,
+                            entryDTO.iconResource,
+                            entryDTO.nameResource,
+                            entryDTO.accountId,
+                            entryDTO.name,
+                            entryDTO.categoryId,
+                            entryDTO.categoryType
+                        )
+                        entriesViewModel.updateEntry(
+                            entryDTO.id,
+                            descriptionEntry,
+                            if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                            else amountEntry.toBigDecimal().negate(),
+                            dateSelected
+                        )
+                        entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
+                        //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
+                        //Actualiza balance de cuenta
+                        accountsViewModel.updateAccountBalance(
+                            entryDTO.accountId,
+                            if (entryDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
+                            else updateBalanceExpense,
+                            false
+                        )
+
+
+                        entriesViewModel.getTotal()
+                        scope.launch(Dispatchers.Main) {
+                            SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
+                        }
+                    }
+                )
+                ModelButton(
+                    text = stringResource(id = R.string.backButton),
+                    MaterialTheme.typography.labelLarge,
+                    modifier = fieldModifier,
+                    true,
+                    onClickButton = {
+                        navToHome()
+                    }
+                )
+
+            }
+        }
     }
 
 }
