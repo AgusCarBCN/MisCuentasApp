@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -10,9 +11,11 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerColors
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,6 +23,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -29,7 +33,9 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +46,7 @@ fun DatePickerSearch(
     searchViewModel: SearchViewModel,
     isDateFrom:Boolean
 ) {
-
+    val isLandscape=orientation== OrientationApp.Landscape
     val showDatePicker by if(isDateFrom) searchViewModel.showDatePickerFrom.observeAsState(false)
     else searchViewModel.showDatePickerTo.observeAsState(false)
     // Observa la fecha seleccionada según si es "From" o "To"
@@ -56,7 +62,8 @@ fun DatePickerSearch(
 
 
 // Estado del DatePicker
-    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = null) // Reiniciamos el estado para cada nueva apertura
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = null,
+        initialDisplayMode =if(isLandscape) DisplayMode.Input else DisplayMode.Picker) // Reiniciamos el estado para cada nueva apertura
     // Actualiza la fecha en el ViewModel al cambiar la selección en DatePicker
     datePickerState.selectedDateMillis?.let { selectedMillis ->
         val dateString = Utils.convertMillisToDate(selectedMillis)
@@ -188,6 +195,7 @@ fun DatePickerSearch(
 
                     DatePicker(
                         state = datePickerState,
+                        modifier=Modifier.heightIn(min = 340.dp),
                         showModeToggle = false,
                         colors = DatePickerColors(
                             containerColor = colors.drawerColor,
@@ -233,8 +241,9 @@ fun DatePickerSearch(
 
                 }
             }
+            }
         }
-    }
+
 
 
 

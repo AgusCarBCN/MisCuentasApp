@@ -20,9 +20,11 @@ import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.AmountsFields2
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchAmountFields
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchButton
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchPrimaryFields
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchPrimaryFields2
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -46,21 +48,23 @@ fun SearchLandscapeLayout(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp)
+            .padding(top=24.dp)
     ) {
         // IZQUIERDA → CRITERIOS
         Column(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            SearchPrimaryFields(
+            SearchPrimaryFields2(searchViewModel,entryDescription,fieldModifier)
+           /* SearchPrimaryFields(
                 accountViewModel,
                 searchViewModel,
                 entryDescription,
                 fieldModifier
-            )
+            )*/
         }
 
         Spacer(Modifier.width(32.dp))
@@ -73,12 +77,13 @@ fun SearchLandscapeLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SearchAmountFields(
+            AmountsFields2(accountViewModel,searchViewModel,fromAmount,toAmount,fieldModifier)
+            /*SearchAmountFields(
                 searchViewModel,
                 fromAmount,
                 toAmount,
                 fieldModifier
-            )
+            )*/
 
             SearchButton(
                 enableSearchButton,

@@ -318,8 +318,8 @@
     <string name="searchentries">Buscar entradas(opcional)</string>
     <string name="fromdate">Desde</string>
     <string name="todate">Hasta</string>
-    <string name="fromamount">Desde cantidad(opcional)</string>
-    <string name="toamount">Hasta cantidad(opcional)</string>
+    <string name="fromamount">Desde cantidad</string>
+    <string name="toamount">Hasta cantidad</string>
     <string name="incomeoption">Ingresos</string>
     <string name="expenseoption">Gastos</string>
     <string name="alloption">Todos</string>
