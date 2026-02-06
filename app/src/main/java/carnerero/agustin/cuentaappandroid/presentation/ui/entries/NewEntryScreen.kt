@@ -77,7 +77,7 @@ fun EntryFormScreen(
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
     val noAccounts = message(resource = R.string.noaccounts)
     var operationStatus: Int
-
+    val isValidAmount=accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)
     val initColor =
         if (type == CategoryType.INCOME) colors.iconIncomeInit
         else colors.iconExpenseInit
@@ -177,17 +177,17 @@ fun EntryFormScreen(
                             modifier = fieldModifier.weight(1f),
                             enableConfirmButton,
                             onClickButton = {
-                                operationStatus =
+                                /*operationStatus =
                                     if (type == CategoryType.EXPENSE) {
                                         if (accountViewModel.isValidExpense(
                                                 amountEntry.toBigDecimalOrNull()
                                                     ?: BigDecimal.ZERO
                                             )
                                         ) 1 else 0
-                                    } else 1
+                                    } else 1*/
 
                                 scope.launch(Dispatchers.IO) {
-                                    if (operationStatus == 1) {
+                                    if (isValidAmount) {
                                         entryViewModel.addEntry(
                                             Entry(
                                                 description = descriptionEntry,
@@ -308,7 +308,50 @@ fun EntryFormScreen(
                     modifier = fieldModifier,
                     enableConfirmButton,
                     onClickButton = {
-                        // misma lógica (idéntica a la de arriba)
+                        scope.launch(Dispatchers.IO) {
+                            if (isValidAmount) {
+                                entryViewModel.addEntry(
+                                    Entry(
+                                        description = descriptionEntry,
+                                        amount = if (type == CategoryType.INCOME)
+                                            amount else negativeAmount,
+                                        date = Date().dateFormat(),
+                                        categoryId = categoryId,
+                                        accountId = idAccount
+                                    )
+                                )
+
+                                accountViewModel.updateAccountBalance(
+                                    idAccount,
+                                    if (type == CategoryType.INCOME)
+                                        amount else negativeAmount,
+                                    false
+                                )
+
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        SnackBarEvent(
+                                            if (type == CategoryType.INCOME)
+                                                newIncomeMessage
+                                            else
+                                                newExpenseMessage
+                                        )
+                                    )
+                                }
+                            } else if (accountSelected == null) {
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        SnackBarEvent(noAccounts)
+                                    )
+                                }
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    SnackBarController.sendEvent(
+                                        SnackBarEvent(amountOverBalanceMessage)
+                                    )
+                                }
+                            }
+                        }
                     }
                 )
 
