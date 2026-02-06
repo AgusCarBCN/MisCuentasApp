@@ -2,7 +2,6 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.search.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,7 +12,6 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 

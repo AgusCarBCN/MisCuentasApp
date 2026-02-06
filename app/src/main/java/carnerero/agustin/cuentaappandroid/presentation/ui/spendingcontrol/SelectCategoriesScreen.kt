@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +38,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Hea
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 @Composable
 fun SelectCategoriesScreen(
@@ -46,7 +49,6 @@ fun SelectCategoriesScreen(
 ) {
     val listOfCategories by categoriesViewModel.listOfCategories.observeAsState(emptyList())
     val context=LocalContext.current
-
     LaunchedEffect(Unit) {
         categoriesViewModel.getAllCategoriesByType(CategoryType.EXPENSE)
     }
@@ -59,13 +61,14 @@ fun SelectCategoriesScreen(
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth*0.85f
-        val maxHeightDp = maxHeight
+        val maxLandscapeWidthDp = maxWidthDp*0.85f
         val fieldModifier = Modifier
             .fillMaxWidth(0.85f) // mismo ancho para TODOS
             .heightIn(min = 48.dp)
         Column(
             modifier = Modifier.fillMaxSize(), // 🔥 imprescindible
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             HeadSetting(
                 title = stringResource(id = R.string.selectcategories),
@@ -74,10 +77,11 @@ fun SelectCategoriesScreen(
 
             LazyColumn(
                 modifier = Modifier
-                    .width(maxWidthDp)
+                    .width( maxWidthDp)
                     .weight(1f)
                     .padding(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(16.dp)
             ) {
                 items(sortedCategories) { (category,_) ->

@@ -10,6 +10,7 @@ import carnerero.agustin.cuentaappandroid.R
 
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.domain.apidata.ConvertCurrencyUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.DeleteAccountByIdUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsCheckedUseCase
@@ -29,6 +30,7 @@ import carnerero.agustin.cuentaappandroid.domain.datastore.SetCurrencyCodeUseCas
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,6 +40,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.math.BigDecimal
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,7 +60,7 @@ class AccountsViewModel @Inject constructor(
     private val updateSpendingLimit: UpdateSpendingLimitAccountUseCase,
     private val updateFromDate: UpdateAccountDateFromUseCase,
     private val updateToDate: UpdateAccountDateToUseCase,
-    private val updateAccountsBalanceByExchangeRate: UpdateAccountBalanceByExchangeRateUseCase
+    private val updateAccountsBalanceByExchangeRate: UpdateAccountBalanceByExchangeRateUseCase,
 
 ) : ViewModel() {
     private val currencies=
@@ -645,7 +648,6 @@ class AccountsViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun onAccountUpdated() {
         resetFields()

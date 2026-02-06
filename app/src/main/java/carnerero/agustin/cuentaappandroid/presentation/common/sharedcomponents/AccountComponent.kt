@@ -64,7 +64,7 @@ fun AccountSelector(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            Modifier.fillMaxWidth(),
+            modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -75,7 +75,6 @@ fun AccountSelector(
                 modifier = Modifier.size(24.dp)
 
             )
-            Spacer(modifier = Modifier.width(dimens.small))
             Text(
                 text = title,
                 color = colors.textColor,
@@ -84,7 +83,7 @@ fun AccountSelector(
                 style = MaterialTheme.typography.bodyLarge
             )
         }
-        Spacer(modifier = Modifier.width(dimens.small))
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
