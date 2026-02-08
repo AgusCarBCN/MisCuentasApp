@@ -92,14 +92,16 @@ fun TransferScreen(
                 /** -------- LEFT (ICON + INPUT AMOUNT) -------- */
                 Column(
                     modifier = Modifier
-                        .weight(0.5f)                       ,
+                        .weight(0.5f)
+                        .padding(top=dimens.extraLarge),
+
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
 
                     IconAnimated(
                         R.drawable.transferoption,
-                        120,
+                        200,
                         initColor = colors.buttonColorDefault,
                         targetColor = colors.buttonColorPressed
                     )

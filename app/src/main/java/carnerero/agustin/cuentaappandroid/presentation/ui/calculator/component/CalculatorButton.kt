@@ -67,7 +67,7 @@ fun CalculatorButton(
     ) {
         Text(
             text = symbol,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.displayMedium,
             color = colorText.value
         )
     }

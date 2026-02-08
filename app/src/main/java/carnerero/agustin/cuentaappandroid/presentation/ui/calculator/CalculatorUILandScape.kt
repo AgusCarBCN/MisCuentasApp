@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -27,8 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
@@ -42,9 +44,11 @@ fun CalculatorLandscapeUI(
     val expression by viewModel.expression.observeAsState("")
     val buttonSpacing = 6.dp
     var isCursorVisible by remember { mutableStateOf(true) }
-    val context = LocalContext.current
-
+    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
     // Alternar la visibilidad del cursor cada 500 ms
+    // Get cursor position
+    val cursorOffset = textLayoutResult?.takeIf { it.layoutInput.text.text.length >= expression.length }
+        ?.getCursorRect(expression.length)
     LaunchedEffect(Unit) {
         while (true) {
             delay(500)
@@ -54,13 +58,20 @@ fun CalculatorLandscapeUI(
 
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
-        listOf("AC", "(", ")", "÷", "PV", "FV", "rate"),
-        listOf("7", "8", "9", "×", "log", "ln", "√"),
-        listOf("4", "5", "6", "-", "x²", "xʸ","Ppc"),
-        listOf("1", "2", "3", "+", "π", "e", "("),
-        listOf("0", ".", "⌫", "=", ")", "%", "±")
+        listOf("AC", "(", ")", "÷", "mod", "PV", "FV"),
+        listOf("7", "8", "9", "×", "log", "IS", "IC"),
+        listOf("4", "5", "6", "-", "x²", "DI","PR"),
+        listOf("1", "2", "3", "+", "xʸ", "FX", "PMT"),
+        listOf("0", ".", "⌫", "=", "%", "√", "±")
     )
-
+    //PV valor presente
+    //FV valor futuro
+    //PMT cuota prestamo
+    //IS Interes simple
+    //IC interes compuesto
+    //DI Rendimiento por dividendo
+    //PR Payout ratio
+    //FX cambio de divisas o tipo de cambio
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth * 0.95f
 
@@ -80,24 +91,31 @@ fun CalculatorLandscapeUI(
             ) {
                 Text(
                     text = expression,
-                    style = MaterialTheme.typography.displayLarge,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Start,
+                    style = MaterialTheme.typography.displayMedium,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.End,
                     color = colors.textColor,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    onTextLayout = { textLayoutResult = it }
                 )
-
-                if (isCursorVisible) {
+                if (isCursorVisible && cursorOffset != null) {
                     Box(
                         modifier = Modifier
-                            .width(3.dp)
-                            .height(48.dp)
-                            .background(colors.textColor)
-                            .align(Alignment.CenterEnd)
-                            .padding(horizontal = 6.dp)
+                            .offset {
+                                IntOffset(
+                                    cursorOffset.left.toInt(),
+                                    cursorOffset.top.toInt()
+                                )
+                            }
+                            .width(2.dp)
+                            .height(with(LocalDensity.current) {
+                                cursorOffset.height.toDp()
+                            })
+                            .background(Color.White)
                     )
                 }
+
             }
 
             // Contenedor de botones en landscape

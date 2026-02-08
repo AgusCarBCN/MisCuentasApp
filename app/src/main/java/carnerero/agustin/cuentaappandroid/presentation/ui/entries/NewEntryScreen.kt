@@ -107,21 +107,22 @@ fun EntryFormScreen(
                 Column(
                     modifier = Modifier
                         .weight(0.5f)
+                        .padding(top=dimens.extraLarge)
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
                     IconAnimated(
                         iconResource = iconResource,
-                        sizeIcon = 120,
+                        sizeIcon = 200,
                         initColor = initColor,
                         targetColor = targetColor
                     )
 
-                    HeadSetting(
+                    /*HeadSetting(
                         title = stringResource(id = titleResource),
                         MaterialTheme.typography.headlineMedium
-                    )
+                    )*/
 
                     TextFieldComponent(
                         modifier = fieldModifier,

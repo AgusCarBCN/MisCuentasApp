@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -26,8 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
@@ -42,6 +48,11 @@ fun CalculatorPortraitUI(
     val expression by viewModel.expression.observeAsState("")
     val buttonSpacing = 8.dp
     var isCursorVisible by remember { mutableStateOf(true) }
+    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
+    // Get cursor position
+    val cursorOffset = textLayoutResult?.takeIf { it.layoutInput.text.text.length >= expression.length }
+        ?.getCursorRect(expression.length)
+
     val context= LocalContext.current
     // Alternar la visibilidad del cursor cada 500 ms
     LaunchedEffect(Unit) {
@@ -79,18 +90,28 @@ fun CalculatorPortraitUI(
                 Text(
                     text = expression,
                     style = MaterialTheme.typography.displayMedium,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Start,
-                    color = colors.textColor
-                )
+                    textAlign = TextAlign.End,
+                    color = colors.textColor,
+                    onTextLayout = { textLayoutResult = it }
 
-                if (isCursorVisible) {
+                )
+                // Get cursor position
+                /*val cursorOffset = textLayoutResult?.takeIf { it.layoutInput.text.text.length >= expression.length }
+                    ?.getCursorRect(expression.length)*/
+                if (isCursorVisible && cursorOffset != null) {
                     Box(
                         modifier = Modifier
+                            .offset {
+                                IntOffset(
+                                    cursorOffset.left.toInt(),
+                                    cursorOffset.top.toInt()
+                                )
+                            }
                             .width(2.dp)
-                            .height(36.dp)
-                            .background(colors.textColor)
-                            .align(Alignment.CenterEnd)
-                            .padding(horizontal = 4.dp)
+                            .height(with(LocalDensity.current) {
+                                cursorOffset.height.toDp()
+                            })
+                            .background(Color.White)
                     )
                 }
             }
