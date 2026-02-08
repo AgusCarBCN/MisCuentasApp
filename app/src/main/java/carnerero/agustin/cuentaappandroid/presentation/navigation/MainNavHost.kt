@@ -156,7 +156,7 @@ fun MainNavHost(
             { navController.navigate(Routes.Home.route) }
         }
         composable(Routes.Calculator.route) {
-            CalculatorScreen(calculatorViewModel)
+            CalculatorScreen(calculatorViewModel,accountsViewModel)
         }
         composable(Routes.About.route) {
             AboutScreen({ navController.navigate(Routes.AboutDescription.route) })

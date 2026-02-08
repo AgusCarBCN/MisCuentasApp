@@ -143,7 +143,10 @@
     <string name="newName">Nuevo nombre</string>
     <string name="newUserName">Nuevo usuario</string>
     <string name="newPassword">Nueva contraseña</string>
+    <string name="noImplement">No implementado</string>
     <!--SnackBar messages
+
+
     <string name="saveRecord">Guarda tus datos de registros y cuentas</string>
     <string name="loadEntries">Cargar datos de registros desde fichero</string>
     <string name="loadAccounts">Cargar datos de cuentas desde fichero</string>-->

@@ -1,11 +1,12 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.calculator
 
-import kotlin.math.roundToInt
-
-
+import java.lang.Math.log
+import kotlin.math.sqrt
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.math.roundToInt
+import kotlin.math.ln
+import kotlin.math.log2
+import kotlin.math.pow
 
 class ParserCalculator(private val input: String = "") {
 
@@ -21,7 +22,7 @@ class ParserCalculator(private val input: String = "") {
             return
         }
 
-        // Número (con punto decimal)
+        // Número
         if (input[pos].isDigit() || input[pos] == '.') {
             val sb = StringBuilder()
             while (pos < input.length && (input[pos].isDigit() || input[pos] == '.')) {
@@ -32,8 +33,205 @@ class ParserCalculator(private val input: String = "") {
             return
         }
 
+        // Funciones: √ y log
+        if (input[pos] == '\u221A') { // √
+            token = "√"
+            pos++
+            return
+        }
+        if (input.startsWith("log", pos)) {
+            token = "log"
+            pos += 3
+            return
+        }
+
         // Operadores o paréntesis
-        if ("+-×÷()%".contains(input[pos])) {
+        if ("+-×÷()^".contains(input[pos])) {
+            token = input[pos].toString()
+            pos++
+            return
+        }
+
+        // MOD como palabra
+        if (input.startsWith("MOD", pos, ignoreCase = true)) {
+            token = "MOD"
+            pos += 3
+            return
+        }
+
+        // Porcentaje como símbolo
+        if (input[pos] == '%') {
+            token = "%"
+            pos++
+            return
+        }
+
+        throw IllegalArgumentException("Carácter inválido: ${input[pos]}")
+    }
+
+    fun evaluate(expression: String): BigDecimal {
+        val tokenizer = ParserCalculator(expression)
+        tokenizer.nextToken()
+        val result = parseExpression(tokenizer)
+        return result.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()
+    }
+
+    // Suma y resta
+    private fun parseExpression(tokenizer: ParserCalculator): BigDecimal {
+        var result = parseTerm(tokenizer)
+
+        while (tokenizer.token in listOf("+", "-")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val term = parseTerm(tokenizer)
+            result = when (op) {
+                "+" -> result.add(term)
+                "-" -> result.subtract(term)
+                else -> throw IllegalStateException("Operador inválido: $op")
+            }
+        }
+        return result
+    }
+
+    // Multiplicación, división y MOD
+    private fun parseTerm(tokenizer: ParserCalculator): BigDecimal {
+        var result = parseFactor(tokenizer)
+
+        while (tokenizer.token in listOf("×", "÷", "MOD")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val factor = parseFactor(tokenizer)
+            result = when (op) {
+                "×" -> result.multiply(factor)
+                "÷" -> result.divide(factor, 10, RoundingMode.HALF_UP)
+                "MOD" -> mod(result, factor)
+                else -> throw IllegalStateException("Operador inválido: $op")
+            }
+        }
+        return result
+    }
+
+    // Factor: número, paréntesis, raíz, log, unario y exponente
+    private fun parseFactor(tokenizer: ParserCalculator): BigDecimal {
+        if (tokenizer.token == null) throw IllegalArgumentException("Falta el factor")
+
+        // Funciones unarias primero
+        if (tokenizer.token == "√") {
+            tokenizer.nextToken()
+            val value = parseFactor(tokenizer)
+            if (value < BigDecimal.ZERO) throw IllegalArgumentException("Raíz cuadrada de número negativo")
+            return BigDecimal(sqrt(value.toDouble())).setScale(10, RoundingMode.HALF_UP)
+        }
+
+        if (tokenizer.token == "log") {
+            tokenizer.nextToken()
+            val value = parseFactor(tokenizer)
+            if (value <= BigDecimal.ZERO) throw IllegalArgumentException("Logaritmo de número no positivo")
+            val result = ln(value.toDouble()) / ln(10.0)
+            return BigDecimal(result).setScale(10, RoundingMode.HALF_UP)
+
+        //return BigDecimal(log2(value.toDouble())).setScale(10, RoundingMode.HALF_UP)
+        }
+
+        // Operador unario
+        if (tokenizer.token in listOf("+", "-")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val factor = parseFactor(tokenizer)
+            return if (op == "+") factor else factor.negate()
+        }
+
+        // Número
+        tokenizer.token!!.toBigDecimalOrNull()?.let {
+            tokenizer.nextToken()
+            var value = it
+
+            // Porcentaje
+            if (tokenizer.token == "%") {
+                value = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+                tokenizer.nextToken()
+            }
+
+            // Exponente
+            if (tokenizer.token == "^") {
+                tokenizer.nextToken()
+                val exponent = parseFactor(tokenizer)
+                value = BigDecimal(value.toDouble().pow(exponent.toDouble()))
+                    .setScale(10, RoundingMode.HALF_UP)
+            }
+
+            return value
+        }
+
+        // Paréntesis
+        if (tokenizer.token == "(") {
+            tokenizer.nextToken()
+            val value = parseExpression(tokenizer)
+            if (tokenizer.token == ")") {
+                tokenizer.nextToken()
+                // Porcentaje después del paréntesis
+                if (tokenizer.token == "%") {
+                    val result = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+                    tokenizer.nextToken()
+                    return result
+                }
+                return value
+            } else {
+                throw IllegalArgumentException("Falta el paréntesis de cierre")
+            }
+        }
+
+        throw IllegalArgumentException("Factor inválido: ${tokenizer.token}")
+    }
+
+    // Función MOD
+    private fun mod(a: BigDecimal, b: BigDecimal): BigDecimal {
+        val quotient = a.divideToIntegralValue(b)
+        return a.subtract(quotient.multiply(b))
+    }
+}
+
+
+/*class ParserCalculator(private val input: String = "") {
+
+    private var pos = 0
+    private var token: String? = null
+
+    // Avanza al siguiente token
+    private fun nextToken() {
+        while (pos < input.length && input[pos].isWhitespace()) pos++
+
+        if (pos == input.length) {
+            token = null
+            return
+        }
+
+        // Número
+        if (input[pos].isDigit() || input[pos] == '.') {
+            val sb = StringBuilder()
+            while (pos < input.length && (input[pos].isDigit() || input[pos] == '.')) {
+                sb.append(input[pos])
+                pos++
+            }
+            token = sb.toString()
+            return
+        }
+
+        // Funciones: √, log
+        if (input[pos] == '\u221A') { // √
+            token = "√"
+            pos++
+            return
+        }
+
+        if (input.startsWith("log", pos)) {
+            token = "log"
+            pos += 3
+            return
+        }
+
+        // Operadores o paréntesis
+        if ("+-×÷()%^".contains(input[pos])) {
             token = input[pos].toString()
             pos++
             return
@@ -46,7 +244,6 @@ class ParserCalculator(private val input: String = "") {
         val tokenizer = ParserCalculator(expression)
         tokenizer.nextToken()
         val result = parseExpression(tokenizer)
-        // Redondeo a 10 decimales para precisión
         return result.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()
     }
 
@@ -84,21 +281,22 @@ class ParserCalculator(private val input: String = "") {
     private fun parseFactor(tokenizer: ParserCalculator): BigDecimal {
         if (tokenizer.token == null) throw IllegalArgumentException("Falta el factor")
 
-        // Número
-        tokenizer.token!!.toBigDecimalOrNull()?.let {
+        // Funciones unarias primero: √ y log
+        if (tokenizer.token == "√") {
             tokenizer.nextToken()
-            var value = it
-
-            // Manejar porcentaje
-            if (tokenizer.token == "%") {
-                value = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
-                tokenizer.nextToken()
-            }
-
-            return value
+            val value = parseFactor(tokenizer)
+            if (value < BigDecimal.ZERO) throw IllegalArgumentException("Raíz cuadrada de número negativo")
+            return BigDecimal(sqrt(value.toDouble())).setScale(10, RoundingMode.HALF_UP)
         }
 
-        // Operador unario
+        if (tokenizer.token == "log") {
+            tokenizer.nextToken()
+            val value = parseFactor(tokenizer)
+            if (value <= BigDecimal.ZERO) throw IllegalArgumentException("Logaritmo de número no positivo")
+            return BigDecimal(ln(value.toDouble())).setScale(10, RoundingMode.HALF_UP)
+        }
+
+        // Operador unario +/-
         if (tokenizer.token in listOf("+", "-")) {
             val op = tokenizer.token!!
             tokenizer.nextToken()
@@ -110,20 +308,40 @@ class ParserCalculator(private val input: String = "") {
             }
         }
 
+        // Número
+        tokenizer.token!!.toBigDecimalOrNull()?.let {
+            tokenizer.nextToken()
+            var value = it
+
+            // Porcentaje
+            if (tokenizer.token == "%") {
+                value = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+                tokenizer.nextToken()
+            }
+
+            // Exponente
+            if (tokenizer.token == "^") {
+                tokenizer.nextToken()
+                val exponent = parseFactor(tokenizer)
+                value = BigDecimal(value.toDouble().pow(exponent.toDouble()))
+                    .setScale(10, RoundingMode.HALF_UP)
+            }
+
+            return value
+        }
+
         // Paréntesis
         if (tokenizer.token == "(") {
             tokenizer.nextToken()
             val value = parseExpression(tokenizer)
             if (tokenizer.token == ")") {
                 tokenizer.nextToken()
-
-                // Manejar porcentaje después de paréntesis
+                // Porcentaje después de paréntesis
                 if (tokenizer.token == "%") {
                     val result = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
                     tokenizer.nextToken()
                     return result
                 }
-
                 return value
             } else {
                 throw IllegalArgumentException("Falta el paréntesis de cierre")
@@ -132,7 +350,7 @@ class ParserCalculator(private val input: String = "") {
 
         throw IllegalArgumentException("Factor inválido: ${tokenizer.token}")
     }
-}
+}*/
 
 
 /*class ParserCalculator(private val input:String="") {

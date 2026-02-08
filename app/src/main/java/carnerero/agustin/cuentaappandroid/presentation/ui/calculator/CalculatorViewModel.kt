@@ -20,10 +20,9 @@ class CalculatorViewModel @Inject constructor(private val parser: ParserCalculat
     fun append(char: String) {
         if (char in "0123456789") {
             _expression.value += char
-        } else if (char in "+-×÷%") {
+        } else if (char in "+-×÷%√^") {
             if (_expression.value?.isNotEmpty() == true) {
                 val lastChar = _expression.value!!.last()
-
                 // if last char is an operator, replace it with the new operator
                 if (lastChar in "+-×÷%") {
                     _expression.value = _expression.value!!.dropLast(1)
@@ -53,6 +52,12 @@ class CalculatorViewModel @Inject constructor(private val parser: ParserCalculat
             _expression.value += char
         } else if (char == ")") {
             _expression.value += char
+        }
+        else if(char=="log "){
+            _expression.value+=char
+        }
+        else if(char==" mod "){
+            _expression.value+=char
         }
     }
 

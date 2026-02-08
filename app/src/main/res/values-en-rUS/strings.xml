@@ -147,6 +147,7 @@
     <string name="saveRecord">Save entries and accounts</string>
     <string name="loadEntries">Load entries data from file</string>
     <string name="loadAccounts">Load accounts data from file </string>-->
+    <string name="noImplement">Not implemented</string>
     <string name="profileCreated">User profile created</string>
     <string name="novalidrecordcsv">It is not a valid CSV records file.</string>
     <string name="novalidaccountscsv">It is not a valid CSV accounts file.</string>
