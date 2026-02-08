@@ -254,6 +254,16 @@ class AccountsViewModel @Inject constructor(
     private val _currencyCodeSelected = MutableLiveData<String>()
     val currencyCodeSelected: LiveData<String> = _currencyCodeSelected
 
+    private val _fromCurrency = MutableLiveData<String>()
+    val fromCurrency: LiveData<String> = _fromCurrency
+
+    private val _toCurrency = MutableLiveData<String>()
+    val toCurrency: LiveData<String> = _toCurrency
+
+    private val _showDialogConverter = MutableLiveData<Boolean>()
+    val showDialogConverter: LiveData<Boolean> = _showDialogConverter
+
+
     // LiveData para los campos de texto
     private val _name = MutableLiveData<String>()
     val name: LiveData<String> = _name
@@ -276,7 +286,7 @@ class AccountsViewModel @Inject constructor(
     //LiveDatas de transferencia entre cuentas
 
     private val _destinationAccount = MutableLiveData<Account?>()
-    val destinationAccount: MutableLiveData<Account?> = _destinationAccount
+   val destinationAccount: MutableLiveData<Account?> = _destinationAccount
 
     private val _listOfAccounts = MutableLiveData<List<Account>>()
     val listOfAccounts: LiveData<List<Account>> = _listOfAccounts
@@ -309,7 +319,18 @@ class AccountsViewModel @Inject constructor(
         getAllAccounts()
     }
 
-
+    fun onShowDialogConverter(newValue: Boolean){
+        _showDialogConverter.value=newValue
+    }
+    fun onChangeCurrencyTo(newValue:String){
+        _toCurrency.value=newValue
+    }
+    fun onChangeCurrencyFrom(newValue: String){
+        _fromCurrency.value = newValue
+    }
+    fun onChangeAmount(newValue:String){
+        _amount.value=newValue
+    }
     fun addAccount(account: Account) {
         viewModelScope.launch {
             try {

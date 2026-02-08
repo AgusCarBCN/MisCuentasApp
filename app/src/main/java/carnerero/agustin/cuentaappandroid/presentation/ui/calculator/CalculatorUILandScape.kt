@@ -31,14 +31,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.data.network.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CurrencyDialogConverter
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import kotlinx.coroutines.CoroutineScope
@@ -52,18 +56,23 @@ fun CalculatorLandscapeUI(
     calculatorViewModel: CalculatorViewModel,
     accountsViewModel: AccountsViewModel
 ) {
+    val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
+    val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
+    val showConverterDialog by accountsViewModel.showDialogConverter.observeAsState(false)
+
     val expression by calculatorViewModel.expression.observeAsState("")
     val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
-    val scope=rememberCoroutineScope ()
-    val message= stringResource(R.string.noImplement)
+    val scope = rememberCoroutineScope()
+    val message = stringResource(R.string.noImplement)
     val buttonSpacing = 6.dp
     var isCursorVisible by remember { mutableStateOf(true) }
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
     // Alternar la visibilidad del cursor cada 500 ms
     // Get cursor position
-    val cursorOffset = textLayoutResult?.takeIf { it.layoutInput.text.text.length >= expression.length }
-        ?.getCursorRect(expression.length)
+    val cursorOffset =
+        textLayoutResult?.takeIf { it.layoutInput.text.text.length >= expression.length }
+            ?.getCursorRect(expression.length)
     LaunchedEffect(Unit) {
         while (true) {
             delay(500)
@@ -75,7 +84,7 @@ fun CalculatorLandscapeUI(
     val buttonRows = listOf(
         listOf("AC", "(", ")", "÷", "mod", "PV", "FV"),
         listOf("7", "8", "9", "×", "log", "SI", "CI"),
-        listOf("4", "5", "6", "-", "√", "DI","DR"),
+        listOf("4", "5", "6", "-", "√", "DI", "DR"),
         listOf("1", "2", "3", "+", "xʸ", "FX", "PMT"),
         listOf("0", ".", "⌫", "±", "%", "EAR", "=")
     )
@@ -88,6 +97,14 @@ fun CalculatorLandscapeUI(
     //PR Payout ratio
     //FX cambio de divisas o tipo de cambio
     //EAR Tasa de interés efectiva (Effective Interest Rate, EAR)
+
+
+    if(showConverterDialog) {
+        CurrencyDialogConverter(
+            { accountsViewModel.onShowDialogConverter(false) },
+            accountsViewModel = accountsViewModel,
+        )
+    }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth * 0.95f
 
@@ -108,7 +125,7 @@ fun CalculatorLandscapeUI(
                 Text(
                     text = expression,
                     style = MaterialTheme.typography.displayMedium,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.End,
+                    textAlign = TextAlign.End,
                     color = colors.textColor,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -150,26 +167,29 @@ fun CalculatorLandscapeUI(
                         horizontalArrangement = Arrangement.spacedBy(buttonSpacing)
                     ) {
                         row.forEach { symbol ->
-                            val (bgStart, bgEnd, textStart, textEnd) = when(symbol) {
+                            val (bgStart, bgEnd, textStart, textEnd) = when (symbol) {
                                 "AC", "⌫", "±" -> listOf(
                                     colors.initDelCalc,
                                     colors.targetDelCalc,
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
+
                                 "+", "-", "×", "÷", "=", "(", ")", "%",
-                                     "log","√","xʸ","mod"-> listOf(
+                                "log", "√", "xʸ", "mod" -> listOf(
                                     colors.initOperatorCalc,
                                     colors.targetOperatorCalc,
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
-                                "PV", "FV", "SI", "CI", "DI", "FX", "PMT", "EAR","DR" -> listOf(
+
+                                "PV", "FV", "SI", "CI", "DI", "FX", "PMT", "EAR", "DR" -> listOf(
                                     colors.financeCalColor,
                                     colors.financeCalColor,
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
+
                                 else -> listOf(
                                     colors.buttonColorDefault,
                                     colors.buttonTransition,
@@ -184,7 +204,7 @@ fun CalculatorLandscapeUI(
                                     .weight(1f)
                                     .fillMaxHeight()
                                     .clickable {
-                                        when(symbol) {
+                                        when (symbol) {
                                             "AC" -> calculatorViewModel.clear()
                                             "⌫" -> calculatorViewModel.delete()
                                             "=" -> calculatorViewModel.evaluate()
@@ -194,15 +214,32 @@ fun CalculatorLandscapeUI(
                                             "√" -> calculatorViewModel.append("√")
                                             "xʸ" -> calculatorViewModel.append("^")
                                             "%" -> calculatorViewModel.append("%")
-                                            "PV" -> notImplement("$message PV",scope)
-                                            "FV" -> notImplement("$message FV",scope)
-                                            "SI" -> notImplement("$message SI",scope)
-                                            "CI" -> notImplement("$message SC",scope)
-                                            "DI" -> notImplement("$message DI",scope)
-                                            "DR" -> notImplement("$message DR",scope)
-                                            "FX" -> notImplement("$message FX",scope)
-                                            "PMT" ->notImplement("$message PMT",scope)
-                                            "EAR" -> notImplement("$message EAR",scope)
+                                            "PV" -> notImplement("$message PV", scope)
+                                            "FV" -> notImplement("$message FV", scope)
+                                            "SI" -> notImplement("$message SI", scope)
+                                            "CI" -> notImplement("$message SC", scope)
+                                            "DI" -> notImplement("$message DI", scope)
+                                            "DR" -> notImplement("$message DR", scope)
+                                            "FX" -> {
+                                                accountsViewModel.onShowDialogConverter(true)
+                                                /*scope.launch(Dispatchers.IO) {
+                                                    val ratio =
+                                                        accountsViewModel.conversionCurrencyRate(
+                                                            fromCurrency,
+                                                            toCurrency
+                                                        )
+                                                    val number = expression.toBigDecimalOrNull()
+                                                    if (number != null) {
+                                                        val result = expression.plus(ratio)
+                                                        calculatorViewModel.onExpressionChange(
+                                                            result
+                                                        )
+                                                    }
+                                                }*/
+                                            }
+
+                                            "PMT" -> notImplement("$message PMT", scope)
+                                            "EAR" -> notImplement("$message EAR", scope)
 
                                             else -> calculatorViewModel.append(symbol)
                                         }
@@ -222,9 +259,12 @@ fun CalculatorLandscapeUI(
         }
     }
 }
-private fun notImplement(message: String,
-                        scope: CoroutineScope){
-   scope.launch(Dispatchers.Main) {
+
+private fun notImplement(
+    message: String,
+    scope: CoroutineScope
+) {
+    scope.launch(Dispatchers.Main) {
         SnackBarController.sendEvent(
             event = SnackBarEvent(
                 message
@@ -235,42 +275,52 @@ private fun notImplement(message: String,
 
 @Composable
 private fun ModelCurrencyDialog(
-    title:Int,
-    message:Int,
+    title: Int,
+    message: Int,
     showDialog: Boolean,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
 
     if (showDialog) {
-        AlertDialog(containerColor= colors.drawerColor,
+        AlertDialog(
+            containerColor = colors.drawerColor,
             onDismissRequest = { onDismiss() },
 
-            title={Text(stringResource(id = title),
-                style=MaterialTheme.typography.titleMedium,
-                color = colors.textHeadColor)},
+            title = {
+                Text(
+                    stringResource(id = title),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colors.textHeadColor
+                )
+            },
 
-            text={Text(stringResource(id = message),
-                style=MaterialTheme.typography.bodySmall,
-                color = colors.textColor)}
-            ,
+            text = {
+                Text(
+                    stringResource(id = message),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.textColor
+                )
+            },
             confirmButton = {
-                ModelButton(text = stringResource(id = R.string.confirmButton),
+                ModelButton(
+                    text = stringResource(id = R.string.confirmButton),
                     MaterialTheme.typography.labelSmall,
                     modifier = Modifier.width(130.dp),
                     true,
                     onClickButton = {
                         onConfirm()
-                    } )
+                    })
             },
             dismissButton = {
-                ModelButton(text = stringResource(id = R.string.cancelButton),
+                ModelButton(
+                    text = stringResource(id = R.string.cancelButton),
                     MaterialTheme.typography.labelSmall,
                     modifier = Modifier.width(130.dp),
                     true,
                     onClickButton = {
                         onDismiss()
-                    } )
+                    })
             }
         )
     }

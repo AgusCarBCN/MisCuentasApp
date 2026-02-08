@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -12,11 +15,15 @@ class CalculatorViewModel @Inject constructor(private val parser: ParserCalculat
     private val _expression = MutableLiveData("")
     val expression: LiveData<String> = _expression
 
-
     fun clear() {
+
         _expression.value = ""
     }
 
+    fun onExpressionChange(newValue:String){
+
+        _expression.value=newValue
+    }
     fun append(char: String) {
         if (char in "0123456789") {
             _expression.value += char
