@@ -125,7 +125,7 @@ fun MainScreen(
                     Modifier.padding(innerPadding)
                 )
                  {
-                    AdmobBanner()
+                    //AdmobBanner()
                     MainNavHost(
                         innerNavController,
                         settingViewModel,

@@ -173,7 +173,7 @@ fun CalculatorLandscapeUI(
                                             "AC" -> viewModel.clear()
                                             "⌫" -> viewModel.delete()
                                             "=" -> viewModel.evaluate()
-                                            "±" -> viewModel.evaluate()
+                                            "±" -> viewModel.changeSign()
                                             "FV" -> viewModel.append("FV")
                                             "PV" -> viewModel.append("Pv")
                                             "rate" -> viewModel.append("rate")
