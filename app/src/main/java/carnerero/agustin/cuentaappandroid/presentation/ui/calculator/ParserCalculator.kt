@@ -2,7 +2,140 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.calculator
 
 import kotlin.math.roundToInt
 
-class ParserCalculator(private val input:String="") {
+
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.roundToInt
+
+class ParserCalculator(private val input: String = "") {
+
+    private var pos = 0
+    private var token: String? = null
+
+    // Avanza al siguiente token
+    private fun nextToken() {
+        while (pos < input.length && input[pos].isWhitespace()) pos++
+
+        if (pos == input.length) {
+            token = null
+            return
+        }
+
+        // Número (con punto decimal)
+        if (input[pos].isDigit() || input[pos] == '.') {
+            val sb = StringBuilder()
+            while (pos < input.length && (input[pos].isDigit() || input[pos] == '.')) {
+                sb.append(input[pos])
+                pos++
+            }
+            token = sb.toString()
+            return
+        }
+
+        // Operadores o paréntesis
+        if ("+-×÷()%".contains(input[pos])) {
+            token = input[pos].toString()
+            pos++
+            return
+        }
+
+        throw IllegalArgumentException("Carácter inválido: ${input[pos]}")
+    }
+
+    fun evaluate(expression: String): BigDecimal {
+        val tokenizer = ParserCalculator(expression)
+        tokenizer.nextToken()
+        val result = parseExpression(tokenizer)
+        // Redondeo a 10 decimales para precisión
+        return result.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()
+    }
+
+    private fun parseExpression(tokenizer: ParserCalculator): BigDecimal {
+        var result = parseTerm(tokenizer)
+
+        while (tokenizer.token in listOf("+", "-")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val term = parseTerm(tokenizer)
+            result = when (op) {
+                "+" -> result.add(term)
+                "-" -> result.subtract(term)
+                else -> throw IllegalStateException("Operador inválido: $op")
+            }
+        }
+        return result
+    }
+
+    private fun parseTerm(tokenizer: ParserCalculator): BigDecimal {
+        var result = parseFactor(tokenizer)
+        while (tokenizer.token in listOf("×", "÷")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val factor = parseFactor(tokenizer)
+            result = when (op) {
+                "×" -> result.multiply(factor)
+                "÷" -> result.divide(factor, 10, RoundingMode.HALF_UP)
+                else -> throw IllegalStateException("Operador inválido: $op")
+            }
+        }
+        return result
+    }
+
+    private fun parseFactor(tokenizer: ParserCalculator): BigDecimal {
+        if (tokenizer.token == null) throw IllegalArgumentException("Falta el factor")
+
+        // Número
+        tokenizer.token!!.toBigDecimalOrNull()?.let {
+            tokenizer.nextToken()
+            var value = it
+
+            // Manejar porcentaje
+            if (tokenizer.token == "%") {
+                value = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+                tokenizer.nextToken()
+            }
+
+            return value
+        }
+
+        // Operador unario
+        if (tokenizer.token in listOf("+", "-")) {
+            val op = tokenizer.token!!
+            tokenizer.nextToken()
+            val factor = parseFactor(tokenizer)
+            return when (op) {
+                "+" -> factor
+                "-" -> factor.negate()
+                else -> throw IllegalStateException("Operador inválido: $op")
+            }
+        }
+
+        // Paréntesis
+        if (tokenizer.token == "(") {
+            tokenizer.nextToken()
+            val value = parseExpression(tokenizer)
+            if (tokenizer.token == ")") {
+                tokenizer.nextToken()
+
+                // Manejar porcentaje después de paréntesis
+                if (tokenizer.token == "%") {
+                    val result = value.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+                    tokenizer.nextToken()
+                    return result
+                }
+
+                return value
+            } else {
+                throw IllegalArgumentException("Falta el paréntesis de cierre")
+            }
+        }
+
+        throw IllegalArgumentException("Factor inválido: ${tokenizer.token}")
+    }
+}
+
+
+/*class ParserCalculator(private val input:String="") {
 
 
         // Almacena la posición del carácter actual
@@ -163,7 +296,7 @@ class ParserCalculator(private val input:String="") {
         }
     }
 
-
+*/
 
 
 

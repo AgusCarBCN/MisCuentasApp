@@ -59,10 +59,10 @@ fun CalculatorLandscapeUI(
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
         listOf("AC", "(", ")", "÷", "mod", "PV", "FV"),
-        listOf("7", "8", "9", "×", "log", "IS", "IC"),
-        listOf("4", "5", "6", "-", "x²", "DI","PR"),
+        listOf("7", "8", "9", "×", "log", "SI", "CI"),
+        listOf("4", "5", "6", "-", "√", "DI","PR"),
         listOf("1", "2", "3", "+", "xʸ", "FX", "PMT"),
-        listOf("0", ".", "⌫", "=", "%", "√", "±")
+        listOf("0", ".", "⌫", "±", "%", "EAR", "=")
     )
     //PV valor presente
     //FV valor futuro
@@ -72,6 +72,7 @@ fun CalculatorLandscapeUI(
     //DI Rendimiento por dividendo
     //PR Payout ratio
     //FX cambio de divisas o tipo de cambio
+    //EAR Tasa de interés efectiva (Effective Interest Rate, EAR)
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth * 0.95f
 
@@ -112,7 +113,7 @@ fun CalculatorLandscapeUI(
                             .height(with(LocalDensity.current) {
                                 cursorOffset.height.toDp()
                             })
-                            .background(Color.White)
+                            .background(colors.textColor)
                     )
                 }
 
@@ -141,15 +142,16 @@ fun CalculatorLandscapeUI(
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
-                                "+", "-", "×", "÷", "=", "(", ")", "%" -> listOf(
+                                "+", "-", "×", "÷", "=", "(", ")", "%",
+                                     "log","√","xʸ","mod"-> listOf(
                                     colors.initOperatorCalc,
                                     colors.targetOperatorCalc,
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )
-                                "PV", "FV", "rate", "log", "ln", "√", "x²", "Ppc", "xʸ", "π", "e" -> listOf(
-                                    colors.initOperatorCalc,
-                                    colors.targetOperatorCalc,
+                                "PV", "FV", "SI", "CI", "DI", "FX", "PMT", "EAR","PR" -> listOf(
+                                    colors.financeCalColor,
+                                    colors.financeCalColor,
                                     colors.textInitOperatorCalc,
                                     colors.textTargetOperatorCalc
                                 )

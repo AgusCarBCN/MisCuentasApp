@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.theme
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import carnerero.agustin.cuentaappandroid.presentation.theme.DeepBlue
 
 @Immutable
 data class CustomColorsPalette(
@@ -57,6 +58,7 @@ data class CustomColorsPalette(
     val initDelCalc:Color = Color.Unspecified,
     val targetDelCalc:Color = Color.Unspecified,
     val numberCalColor:Color = Color.Unspecified,
+    val financeCalColor:Color=Color.Unspecified,
     val progressBar50:Color = Color.Unspecified,
     val progressBar80:Color = Color.Unspecified,
     val progressBar100:Color = Color.Unspecified,
@@ -116,9 +118,8 @@ val LightCustomColorsPalette = CustomColorsPalette(
     progressBar50 = greenDark,
     progressBar80 = SoftPeach,
     progressBar100 = redDark,
-    link= DeepBlue
-
-
+    link= DeepBlue,
+    financeCalColor = DeepBlue
 )
 val DarkCustomColorsPalette = CustomColorsPalette(
     buttonColorDefault =  PeachyCreamTransition,
@@ -173,7 +174,8 @@ val DarkCustomColorsPalette = CustomColorsPalette(
     progressBar50 = greenPistachio,
     progressBar80 = BurntPeach,
     progressBar100 = coralRed,
-    link= BlueLighter
+    link= BlueLighter,
+    financeCalColor = BlueLighter
 )
 
 val LocalCustomColorsPalette = staticCompositionLocalOf { CustomColorsPalette() }

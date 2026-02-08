@@ -111,7 +111,7 @@ fun CalculatorPortraitUI(
                             .height(with(LocalDensity.current) {
                                 cursorOffset.height.toDp()
                             })
-                            .background(Color.White)
+                            .background(colors.textColor)
                     )
                 }
             }
