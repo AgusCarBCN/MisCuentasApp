@@ -35,9 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.network.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
@@ -50,9 +48,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.math.BigDecimal
-import java.math.MathContext
 
 
 @Composable
@@ -68,9 +63,9 @@ fun CalculatorLandscapeUI(
 
     val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
     val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
-    val showConverterDialog by calculatorViewModel.showDialogConverter.observeAsState(false)
-    val showFinanceDialog by calculatorViewModel.showDialogFinance.observeAsState(false)
-    val expression by calculatorViewModel.expression.observeAsState("")
+    val showConverterDialog = calculatorViewModel.showDialogConverter
+
+    val expression = calculatorViewModel.expression
 
     val scope = rememberCoroutineScope()
     val message = stringResource(R.string.noImplement)
@@ -91,11 +86,12 @@ fun CalculatorLandscapeUI(
 
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
-        listOf("AC", "(", ")", "÷", "mod", "PV", "FV"),
-        listOf("7", "8", "9", "×", "log", "SI", "CI"),
-        listOf("4", "5", "6", "-", "√", "DI", "DR"),
-        listOf("1", "2", "3", "+", "xʸ", "FX", "PMT"),
-        listOf("0", ".", "⌫", "±", "%", "EAR", "=")
+
+        listOf("AC", "(", ")", "÷", "mod", "PVc", "FVc"),
+        listOf("7", "8", "9", "×", "log", "PVs", "FVs"),
+        listOf("4", "5", "6", "-", "√", "Rate", "Time"),
+        listOf("1", "2", "3", "+", "xʸ", "Int", "PMT"),
+        listOf("0", ".", "⌫", "±", "%", "FX", "=")
     )
     //PV valor presente
     //FV valor futuro
@@ -121,10 +117,31 @@ fun CalculatorLandscapeUI(
             showDialog = showDialog,
             onConfirm = {
                 // Decide según el título qué calcular
-                if (titleRes == R.string.presentValueTitle) {
-                    calculatorViewModel.calculatePresentValue()
-                } else if (titleRes == R.string.futureValueTitle) {
-                    calculatorViewModel.calculateFutureValue()
+                when (titleRes) {
+                    R.string.presentValueTitle -> {
+                        calculatorViewModel.calculatePresentValueCompound()
+                    }
+                    R.string.futureValueTitle -> {
+                        calculatorViewModel.calculateFutureValueCompound()
+                    }
+                    R.string.presentValueSimpleTitle -> {
+                        calculatorViewModel.calculatePresentValueSimple()
+                    }
+                    R.string.futureValueSimpleTitle -> {
+                        calculatorViewModel.calculateFutureValueSimple()
+                    }
+                    R.string.loanPaymentTitle->{
+                        calculatorViewModel.calculateLoanPaymentCompound()
+                    }
+                    R.string.interestEarnedTitle->{
+                        calculatorViewModel.calculateInterestEarned()
+                    }
+                    R.string.numberOfPeriodsTitle->{
+                        calculatorViewModel.calculatePeriodsRequired()
+                    }
+                    R.string.requiredInterestRateTitle->{
+                        calculatorViewModel.calculateRequiredInterestRate()
+                    }
                 }
             },
             onDismiss = { calculatorViewModel.closeDialog() }
@@ -221,7 +238,7 @@ fun CalculatorLandscapeUI(
                                     colors.textTargetOperatorCalc
                                 )
 
-                                "PV", "FV", "SI", "CI", "DI", "FX", "PMT", "EAR", "DR" -> listOf(
+                                "PVc", "FVc", "PVs", "FVs", "Rate", "FX", "PMT", "Time", "Int" -> listOf(
                                     colors.financeCalColor,
                                     colors.financeCalColor,
                                     colors.textInitOperatorCalc,
@@ -252,29 +269,65 @@ fun CalculatorLandscapeUI(
                                             "√" -> calculatorViewModel.append("√")
                                             "xʸ" -> calculatorViewModel.append("^")
                                             "%" -> calculatorViewModel.append("%")
-                                            "PV" -> {
-                                                    calculatorViewModel.openDialog(R.string.presentValueTitle,
-                                                        R.string.presentValueDes,
+                                            "PVc" -> {
+                                                    calculatorViewModel.openDialog(R.string.presentValueCompoundTitle,
+                                                        R.string.presentValueCompoundDes,
                                                         listOf(R.string.futureValueTitle,
                                                             R.string.rateperiod,
                                                         R.string.numberOfPeriods))
                                             }
-                                            "FV" ->  {
-                                                calculatorViewModel.openDialog(R.string.futureValueTitle,
-                                                    R.string.futureValueDes,
+                                            "FVc" ->  {
+                                                calculatorViewModel.openDialog(R.string.futureValueCompoundTitle,
+                                                    R.string.futureValueCompoundDes,
                                                     listOf(R.string.presentValueTitle,
                                                         R.string.rateperiod,
                                                         R.string.numberOfPeriods))
                                             }
-                                            "SI" -> notImplement("$message SI", scope)
-                                            "CI" -> notImplement("$message SC", scope)
-                                            "DI" -> notImplement("$message DI", scope)
-                                            "DR" -> notImplement("$message DR", scope)
+                                            "PVs" -> {
+                                                calculatorViewModel.openDialog(R.string.presentValueSimpleTitle,
+                                                    R.string.presentValueSimpleDes,
+                                                    listOf(R.string.futureValueTitle,
+                                                        R.string.rateperiod,
+                                                        R.string.numberOfPeriods) )
+                                            }
+                                            "FVs" -> {
+                                                calculatorViewModel.openDialog(R.string.futureValueSimpleTitle,
+                                                    R.string.futureValueSimpleDes,
+                                                    listOf(R.string.presentValueTitle,
+                                                        R.string.rateperiod,
+                                                        R.string.numberOfPeriods) )
+                                            }
+                                            "Rate" -> {
+                                                calculatorViewModel.openDialog(R.string.requiredInterestRateTitle,
+                                                    R.string.requiredInterestRateDes,
+                                                    listOf(R.string.rate_inputPV,
+                                                        R.string.rate_inputFV,
+                                                        R.string.rateperiod))
+                                            }
+                                            "Time" -> {
+                                                calculatorViewModel.openDialog(R.string.numberOfPeriodsTitle,
+                                                    R.string.numberOfPeriodsDes,
+                                                    listOf(R.string.time_inputPV,
+                                                        R.string.time_inputFV,
+                                                        R.string.time_inputRate))
+                                            }
                                             "FX" -> {
                                                 calculatorViewModel.onShowDialogConverter(true)
                                             }
-                                            "PMT" -> notImplement("$message PMT", scope)
-                                            "EAR" -> notImplement("$message EAR", scope)
+                                            "PMT" -> {
+                                                calculatorViewModel.openDialog(R.string.loanPaymentTitle,
+                                                    R.string.loanPaymentDes,
+                                                    listOf(R.string.presentValueTitle,
+                                                        R.string.rateperiod,
+                                                        R.string.numberOfPeriods) )
+                                            }
+                                            "Int" -> {
+                                                calculatorViewModel.openDialog(R.string.interestEarnedTitle,
+                                                    R.string.interestEarnedDes,
+                                                    listOf(R.string.int_inputPV,
+                                                        R.string.int_inputRate,
+                                                        R.string.int_inputPeriods))
+                                            }
 
                                             else -> calculatorViewModel.append(symbol)
                                         }

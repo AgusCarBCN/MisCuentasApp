@@ -64,7 +64,7 @@ fun FinanceDialog(
                     textAlign = TextAlign.Center,
                     color = colors.textHeadColor
                 )
-                Spacer(modifier = Modifier.width(dimens.extraLarge))
+                Spacer(modifier = Modifier.width(dimens.small))
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = "Info",

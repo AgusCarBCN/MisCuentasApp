@@ -45,7 +45,7 @@ import kotlinx.coroutines.delay
 fun CalculatorPortraitUI(
     viewModel: CalculatorViewModel,
 ) {
-    val expression by viewModel.expression.observeAsState("")
+    val expression =viewModel.expression
     val buttonSpacing = 8.dp
     var isCursorVisible by remember { mutableStateOf(true) }
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }

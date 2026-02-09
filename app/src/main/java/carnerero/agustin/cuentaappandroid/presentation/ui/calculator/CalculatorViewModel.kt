@@ -5,18 +5,14 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.domain.apidata.ConvertCurrencyUseCase
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -50,81 +46,92 @@ class CalculatorViewModel @Inject constructor(
     var calculationResult by mutableStateOf<BigDecimal?>(null)
         private set
 
-    // Expresion de la pantalla de la calculadora
-    private val _expression = MutableLiveData("")
-    val expression: LiveData<String> = _expression
+    // Texto que se muestra en la pantalla
+    var expression by mutableStateOf("")
+        private set
+
+    // Mostrar / ocultar el diálogo
+    var showDialogConverter by mutableStateOf(false)
+        private set
+    // Valor presente
+    var inputPV by mutableStateOf("")
+        private set
+
+    // Valor futuro
+    var inputFV by mutableStateOf("")
+        private set
+
+    // Tasa de interés
+    var inputRate by mutableStateOf("")
+        private set
+
+    // Número de períodos
+    var inputPeriods by mutableStateOf("")
+        private set
+
+    // Tipo de interés simple o compuesto
+    var isCompound by mutableStateOf(true)
+        private set
 
 
-    private val _showDialogConverter = MutableLiveData<Boolean>()
-    val showDialogConverter: LiveData<Boolean> = _showDialogConverter
-
-    private val _showDialogFinance = MutableLiveData<Boolean>()
-    val showDialogFinance: LiveData<Boolean> = _showDialogFinance
 
     fun clear() {
 
-        _expression.value = ""
+        expression = ""
     }
 
-    fun onShowFinanceDialog(newValue: Boolean) {
-        _showDialogFinance.value = newValue
-    }
 
-    fun onExpressionChange(newValue: String) {
-
-        _expression.value = newValue
-    }
 
     fun append(char: String) {
         if (char in "0123456789") {
-            _expression.value += char
+            expression += char
         } else if (char in "+-×÷%√^") {
-            if (_expression.value?.isNotEmpty() == true) {
-                val lastChar = _expression.value!!.last()
+            if (expression.isNotEmpty()) {
+                val lastChar = expression.last()
                 // if last char is an operator, replace it with the new operator
                 if (lastChar in "+-×÷%") {
-                    _expression.value = _expression.value!!.dropLast(1)
+                    expression = expression.dropLast(1)
                 }
             }
-            _expression.value += char
+            expression += char
         } else if (char == ".") {
-            if (_expression.value?.isNotEmpty() == true) {
-                val lastChar = _expression.value!!.last()
+            if (expression.isNotEmpty()) {
+                val lastChar = expression.last()
                 if (lastChar != '.') {
                     // if last char is an operator, and the current char is a dot, add a zero before the dot
                     if (lastChar in "+-×÷") {
-                        _expression.value += "0"
+                        expression += "0"
                     }
-                    _expression.value += char
+                    expression += char
                 }
             }
 
         } else if (char == "(") {
-            if (_expression.value?.isNotEmpty() == true) {
-                val lastChar = _expression.value!!.last()
+            if (expression.isNotEmpty()) {
+                val lastChar = expression.last()
                 // if last char is not a operator, add a multiplication operator before the parenthesis
                 if (lastChar !in "+-×÷") {
-                    _expression.value += "×"
+                    expression += "×"
                 }
             }
-            _expression.value += char
+            expression += char
         } else if (char == ")") {
-            _expression.value += char
+            expression += char
         } else if (char == "log ") {
-            _expression.value += char
+            expression += char
         } else if (char == " mod ") {
-            _expression.value += char
+            expression += char
         }
     }
 
     fun delete() {
-        if (_expression.value?.isNotEmpty() == true) {
-            _expression.value = _expression.value!!.dropLast(1)
+        if (expression.isNotEmpty()) {
+            expression = expression.dropLast(1)
         }
     }
 
     fun changeSign() {
-        val expr = _expression.value ?: ""
+        val expr = expression
         if (expr.isEmpty()) return
 
         // Regex para encontrar el último número (entero o decimal)
@@ -144,37 +151,11 @@ class CalculatorViewModel @Inject constructor(
             }
 
             // Reemplazamos solo el último número en la expresión
-            _expression.value = expr.substring(0, start) + newNumber + expr.substring(end)
+            expression = expr.substring(0, start) + newNumber + expr.substring(end)
         }
     }
-
-    fun convertCurrency(
-        fromCurrency: String,
-        toCurrency: String,
-        accountsViewModel: AccountsViewModel
-    ) {
-        val currentExpression = _expression.value ?: return
-
-        viewModelScope.launch {
-
-            val result = withContext(Dispatchers.IO) {
-                val ratio = accountsViewModel
-                    .conversionCurrencyRate(fromCurrency, toCurrency)
-
-                currentExpression
-                    .toBigDecimalOrNull()
-                    ?.multiply(ratio ?: BigDecimal.ONE)
-                    ?: BigDecimal.ZERO
-            }
-
-            _expression.value = result.toString()
-            accountsViewModel.onShowDialogConverter(false)
-
-        }
-    }
-
     fun conversionCurrencyRate(fromCurrency: String, toCurrency: String) {
-        val currentExpression = _expression.value ?: return
+        val currentExpression = expression
 
         viewModelScope.launch {
             try {
@@ -189,8 +170,8 @@ class CalculatorViewModel @Inject constructor(
                     ?.multiply(rate.toBigDecimal())
                     ?: BigDecimal.ZERO
 
-                _expression.value = result.toString()
-                _showDialogConverter.value = false
+                expression = result.toString()
+                showDialogConverter = false
 
             } catch (_: IOException) {
                 SnackBarController.sendEvent(
@@ -214,7 +195,7 @@ class CalculatorViewModel @Inject constructor(
      * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
      * @return Valor futuro redondeado a 2 decimales
      */
-    fun futureValue(
+    fun futureValueCompound(
         presentValue: BigDecimal,
         rate: BigDecimal,
         periods: Double
@@ -229,7 +210,7 @@ class CalculatorViewModel @Inject constructor(
         val fvDouble = presentValue.toDouble() * base.pow(periods)
 
         // Convertimos a BigDecimal y redondeamos a 2 decimales
-        _expression.value= BigDecimal(fvDouble).setScale(2, RoundingMode.HALF_UP).toString()
+        expression= BigDecimal(fvDouble).setScale(2, RoundingMode.HALF_UP).toString()
     }
 
     /**
@@ -243,7 +224,7 @@ class CalculatorViewModel @Inject constructor(
      * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
      * @return Valor presente redondeado a 2 decimales
      */
-    fun presentValue(
+    fun presentValueCompound(
         futureValue: BigDecimal,
         rate: BigDecimal,
         periods: Double
@@ -258,12 +239,165 @@ class CalculatorViewModel @Inject constructor(
         val pvDouble = futureValue.toDouble() / base.pow(periods)
 
         // Convertimos a BigDecimal y redondeamos a 2 decimales
-         _expression.value=BigDecimal(pvDouble).setScale(2, RoundingMode.HALF_UP).toString()
+         expression=BigDecimal(pvDouble).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+    /**
+     * Calcula el Valor Futuro (FV) con interés simple.
+     *
+     * Fórmula:
+     * FV = PV * (1 + r * n)
+     *
+     * @param presentValue Valor presente (PV)
+     * @param rate Tasa de interés en porcentaje (por ejemplo 5 para 5%)
+     * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
+     * @return Valor futuro redondeado a 2 decimales
+     */
+    fun futureValueSimple(
+        presentValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        // Convertimos la tasa de porcentaje a decimal
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+
+        // FV = PV * (1 + r * n)
+        val fv = presentValue * (BigDecimal.ONE + rateDecimal * BigDecimal(periods))
+
+        // Redondeamos a 2 decimales y guardamos en expression
+        expression = fv.setScale(2, RoundingMode.HALF_UP).toString()
+    }
+
+    /**
+     * Calcula el Valor Presente (PV) con interés simple.
+     *
+     * Fórmula:
+     * PV = FV / (1 + r * n)
+     *
+     * @param futureValue Valor futuro (FV)
+     * @param rate Tasa de interés en porcentaje (por ejemplo 5 para 5%)
+     * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
+     * @return Valor presente redondeado a 2 decimales
+     */
+    fun presentValueSimple(
+        futureValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        // Convertimos la tasa de porcentaje a decimal
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+
+        // PV = FV / (1 + r * n)
+        val pv = futureValue / (BigDecimal.ONE + rateDecimal * BigDecimal(periods))
+
+        // Redondeamos a 2 decimales y guardamos en expression
+        expression = pv.setScale(2, RoundingMode.HALF_UP).toString()
+    }
+    /**
+     * Calcula el pago periódico de un préstamo (PMT) con interés compuesto.
+     *
+     * Fórmula:
+     * PMT = PV × (r / (1 - (1 + r)^-n))
+     *
+     * @param loanAmount Monto del préstamo (PV)
+     * @param rate Tasa de interés en porcentaje
+     * @param periods Número de períodos, puede ser decimal (por ejemplo meses o años)
+     * @return Pago periódico redondeado a 2 decimales
+     */
+    fun loanPaymentCompound(
+        loanAmount: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+        val rDouble = rateDecimal.toDouble()
+        val pmtDouble = loanAmount.toDouble() * (rDouble / (1 - (1 + rDouble).pow(-periods)))
+        expression = BigDecimal(pmtDouble).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+    /**
+     * Calcula el interés acumulado de una inversión.
+     *
+     * Fórmula:
+     * Simple: Interest = PV × r × n
+     * Compound: Interest = PV × ((1 + r)^n - 1)
+     *
+     * @param presentValue Valor presente (PV)
+     * @param rate Tasa de interés en porcentaje
+     * @param periods Número de períodos, puede ser decimal (por ejemplo años o meses)
+     * @param compound Si es true, usa interés compuesto; si false, interés simple
+     * @return Interés acumulado redondeado a 2 decimales
+     */
+    fun interestEarned(
+        presentValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double,
+        compound: Boolean = false
+    ) {
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+        val interest = if (compound) {
+            val base = 1 + rateDecimal.toDouble()
+            presentValue.toDouble() * (base.pow(periods) - 1)
+        } else {
+            presentValue.toDouble() * rateDecimal.toDouble() * periods
+        }
+        expression = BigDecimal(interest).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+    /**
+     * Calcula el número de períodos necesarios para alcanzar un valor futuro.
+     *
+     * Fórmula:
+     * Simple: n = (FV - PV) / (PV × r)
+     * Compound: n = ln(FV / PV) / ln(1 + r)
+     *
+     * @param presentValue Valor presente (PV)
+     * @param futureValue Valor futuro deseado (FV)
+     * @param rate Tasa de interés en porcentaje
+     * @param compound Si es true, usa interés compuesto; si false, interés simple
+     * @return Número de períodos redondeado a 2 decimales
+     */
+    fun periodsRequired(
+        presentValue: BigDecimal,
+        futureValue: BigDecimal,
+        rate: BigDecimal,
+        compound: Boolean = false
+    ) {
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+        val periods = if (compound) {
+            kotlin.math.ln(futureValue.toDouble() / presentValue.toDouble()) / kotlin.math.ln(1 + rateDecimal.toDouble())
+        } else {
+            (futureValue.toDouble() - presentValue.toDouble()) / (presentValue.toDouble() * rateDecimal.toDouble())
+        }
+        expression = BigDecimal(periods).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+    /**
+     * Calcula la tasa de interés requerida para alcanzar un valor futuro.
+     *
+     * Fórmula:
+     * Simple: r = (FV - PV) / (PV × n)
+     * Compound: r = (FV / PV)^(1/n) - 1
+     *
+     * @param presentValue Valor presente (PV)
+     * @param futureValue Valor futuro deseado (FV)
+     * @param periods Número de períodos, puede ser decimal
+     * @param compound Si es true, usa interés compuesto; si false, interés simple
+     * @return Tasa de interés requerida (%) redondeada a 2 decimales
+     */
+    fun requiredInterestRate(
+        presentValue: BigDecimal,
+        futureValue: BigDecimal,
+        periods: Double,
+        compound: Boolean = false
+    ) {
+        val rate = if (compound) {
+            (futureValue.toDouble() / presentValue.toDouble()).pow(1 / periods) - 1
+        } else {
+            (futureValue.toDouble() - presentValue.toDouble()) / (presentValue.toDouble() * periods)
+        }
+        expression = BigDecimal(rate * 100).setScale(2, RoundingMode.HALF_UP).toString()
     }
 
     fun evaluate() {
-        _expression.value = try {
-            val result = _expression.value?.let { parser.evaluate(it) }
+        expression= try {
+            val result = expression.let { parser.evaluate(it) }
             result.toString()
         } catch (_: Exception) {
             "Error"
@@ -271,7 +405,7 @@ class CalculatorViewModel @Inject constructor(
     }
 
     fun onShowDialogConverter(newValue: Boolean) {
-        _showDialogConverter.value = newValue
+        showDialogConverter = newValue
     }
 
     // Abrir diálogo
@@ -301,7 +435,7 @@ class CalculatorViewModel @Inject constructor(
     }
 
     // CALCULAR Valor Presente (PV)
-    fun calculatePresentValue() {
+    fun calculatePresentValueCompound() {
         val fv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
         val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
         val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
@@ -312,11 +446,11 @@ class CalculatorViewModel @Inject constructor(
             }
         }
 
-        presentValue(fv, rate, periods)
+        presentValueCompound(fv, rate, periods)
         closeDialog()
     }
 
-    fun calculateFutureValue() {
+    fun calculateFutureValueCompound() {
         val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
         val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
         val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
@@ -326,7 +460,95 @@ class CalculatorViewModel @Inject constructor(
                 SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
             }
         }
-        futureValue(pv, rate, periods)
+        futureValueCompound(pv, rate, periods)
+        closeDialog()
+    }
+    fun calculatePresentValueSimple() {
+        val fv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+
+        if (fv == null || rate == null) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+        }
+
+        presentValueSimple(fv, rate, periods)
+        closeDialog()
+    }
+    fun calculateFutureValueSimple() {
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+
+        if (pv == null || rate == null) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+        }
+        futureValueSimple(pv, rate, periods)
+        closeDialog()
+    }
+    fun calculateLoanPaymentCompound(){
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+        if (pv == null || rate == null) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+        }
+        loanPaymentCompound(pv, rate, periods)
+        closeDialog()
+
+    }
+    fun calculateInterestEarned() {
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+        //val compound = isCompoundField // por ejemplo, un toggle booleano
+
+        if (pv == BigDecimal.ZERO || rate == BigDecimal.ZERO || periods == 0.0) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+            return
+        }
+
+        interestEarned(pv, rate, periods, true)
+        closeDialog()
+    }
+    fun calculatePeriodsRequired() {
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val fv = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(2)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        //val compound = isCompoundField
+
+        if (pv == BigDecimal.ZERO || fv == BigDecimal.ZERO || rate == BigDecimal.ZERO) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+            return
+        }
+
+        periodsRequired(pv, fv, rate, true)
+        closeDialog()
+    }
+    fun calculateRequiredInterestRate() {
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val fv = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+        //val compound = isCompoundField
+
+        if (pv == BigDecimal.ZERO || fv == BigDecimal.ZERO || periods == 0.0) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+            return
+        }
+
+        requiredInterestRate(pv, fv, periods, true)
         closeDialog()
     }
 

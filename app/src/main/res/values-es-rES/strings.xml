@@ -423,6 +423,54 @@
     <string name="futureValueDes">Calcula el valor futuro de una inversión</string>
     <string name="numberOfPeriods">Años</string>
     <string name="rateperiod">Tasa de descuento anual %</string>
+    <!-- Valor Presente / Interés Simple -->
+    <string name="presentValueSimpleTitle">Valor Presente (Interés Simple)</string>
+    <string name="presentValueSimpleDes">Calcula el valor presente de una inversión usando interés simple: PV = FV / (1 + r × n)</string>
 
+    <!-- Valor Futuro / Interés Simple -->
+    <string name="futureValueSimpleTitle">Valor Futuro (Interés Simple)</string>
+    <string name="futureValueSimpleDes">Calcula el valor futuro de una inversión usando interés simple: FV = PV × (1 + r × n)</string>
+
+    <!-- Valor Presente / Interés Compuesto -->
+    <string name="presentValueCompoundTitle">Valor Presente (Interés Compuesto)</string>
+    <string name="presentValueCompoundDes">Calcula el valor presente de una inversión usando interés compuesto: PV = FV / (1 + r)^n</string>
+
+    <!-- Valor Futuro / Interés Compuesto -->
+    <string name="futureValueCompoundTitle">Valor Futuro (Interés Compuesto)</string>
+    <string name="futureValueCompoundDes">Calcula el valor futuro de una inversión usando interés compuesto: FV = PV × (1 + r)^n</string>
+    <!-- Pago de Préstamo -->
+    <string name="loanPaymentTitle">Pago de Préstamo</string>
+    <string name="loanPaymentDes">Calcula el pago periódico de un préstamo usando la fórmula: PMT = PV × (r / (1 - (1 + r)^-n))</string>
+    <!-- Interés Acumulado -->
+    <string name="interestEarnedTitle">INT</string>
+    <string name="interestEarnedDes">Calcula el interés generado por una inversión:
+Simple: Interés = PV × r × n
+Compuesto: Interés = PV × ((1 + r)^n - 1)</string>
+
+    <!-- Número de Períodos Necesarios -->
+    <string name="numberOfPeriodsTitle">TIME</string>
+    <string name="numberOfPeriodsDes">Calcula el número de períodos necesarios para alcanzar un valor futuro:
+Simple: n = (FV - PV) / (PV × r)
+Compuesto: n = ln(FV / PV) / ln(1 + r)</string>
+
+    <!-- Tasa de Interés Requerida -->
+    <string name="requiredInterestRateTitle">RATE</string>
+    <string name="requiredInterestRateDes">Calcula la tasa de interés requerida para alcanzar un valor futuro:
+Simple: r = (FV - PV) / (PV × n)
+Compuesto: r = (FV / PV)^(1/n) - 1</string>
+    <!-- Entradas para Interés Acumulado -->
+    <string name="int_inputPV">Valor Presente (PV)</string>
+    <string name="int_inputRate">Tasa (%)</string>
+    <string name="int_inputPeriods">Períodos</string>
+
+    <!-- Entradas para Número de Períodos Necesarios -->
+    <string name="time_inputPV">Valor Presente (PV)</string>
+    <string name="time_inputFV">Valor Futuro (FV)</string>
+    <string name="time_inputRate">Tasa (%)</string>
+
+    <!-- Entradas para Tasa de Interés Requerida -->
+    <string name="rate_inputPV">Valor Presente (PV)</string>
+    <string name="rate_inputFV">Valor Futuro (FV)</string>
+    <string name="rate_inputPeriods">Períodos</string>
 
 </resources>

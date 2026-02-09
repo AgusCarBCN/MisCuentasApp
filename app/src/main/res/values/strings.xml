@@ -430,6 +430,57 @@
     <string name="numberOfPeriods">Years</string>
     <string name="rateperiod">Annual discount rate %</string>
 
+    <!-- Valor Presente / Interés Simple -->
+    <string name="presentValueSimpleTitle">Present Value (Simple Interest)</string>
+    <string name="presentValueSimpleDes">Calculate the present value of an investment using simple interest: PV = FV / (1 + r × n)</string>
+
+    <!-- Valor Futuro / Interés Simple -->
+    <string name="futureValueSimpleTitle">Future Value (Simple Interest)</string>
+    <string name="futureValueSimpleDes">Calculate the future value of an investment using simple interest: FV = PV × (1 + r × n)</string>
+
+    <!-- Valor Presente / Interés Compuesto -->
+    <string name="presentValueCompoundTitle">Present Value (Compound Interest)</string>
+    <string name="presentValueCompoundDes">Calculate the present value of an investment using compound interest: PV = FV / (1 + r)^n</string>
+
+    <!-- Valor Futuro / Interés Compuesto -->
+    <string name="futureValueCompoundTitle">Future Value (Compound Interest)</string>
+    <string name="futureValueCompoundDes">Calculate the future value of an investment using compound interest: FV = PV × (1 + r)^n</string>
+
+    <!-- Loan Payment -->
+    <string name="loanPaymentTitle">Loan Payment</string>
+    <string name="loanPaymentDes">Calculate the periodic payment for a loan using the formula: PMT = PV × (r / (1 - (1 + r)^-n))</string>
+    <!-- Interest Earned -->
+    <string name="interestEarnedTitle">INT</string>
+    <string name="interestEarnedDes">Calculate the interest earned on an investment:
+Simple: Interest = PV × r × n
+Compound: Interest = PV × ((1 + r)^n - 1)</string>
+
+    <!-- Number of Periods Required -->
+    <string name="numberOfPeriodsTitle">TIME</string>
+    <string name="numberOfPeriodsDes">Calculate the number of periods required to reach a future value:
+Simple: n = (FV - PV) / (PV × r)
+Compound: n = ln(FV / PV) / ln(1 + r)</string>
+
+    <!-- Required Interest Rate -->
+    <string name="requiredInterestRateTitle">RATE</string>
+    <string name="requiredInterestRateDes">Calculate the required interest rate to reach a future value:
+Simple: r = (FV - PV) / (PV × n)
+Compound: r = (FV / PV)^(1/n) - 1</string>
+    <!-- Inputs for Interest Earned -->
+    <string name="int_inputPV">Present Value (PV)</string>
+    <string name="int_inputRate">Rate (%)</string>
+    <string name="int_inputPeriods">Periods</string>
+
+    <!-- Inputs for Number of Periods Required -->
+    <string name="time_inputPV">Present Value (PV)</string>
+    <string name="time_inputFV">Future Value (FV)</string>
+    <string name="time_inputRate">Rate (%)</string>
+
+    <!-- Inputs for Required Interest Rate -->
+    <string name="rate_inputPV">Present Value (PV)</string>
+    <string name="rate_inputFV">Future Value (FV)</string>
+    <string name="rate_inputPeriods">Periods</string>
+
 
 </resources>
 
