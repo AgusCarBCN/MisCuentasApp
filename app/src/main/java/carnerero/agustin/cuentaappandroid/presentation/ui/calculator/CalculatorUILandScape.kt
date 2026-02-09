@@ -43,6 +43,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CurrencyDialogConverter
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.FinanceDialog
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import kotlinx.coroutines.CoroutineScope
@@ -59,10 +60,16 @@ fun CalculatorLandscapeUI(
     calculatorViewModel: CalculatorViewModel,
     accountsViewModel: AccountsViewModel
 ) {
+    val showDialog = calculatorViewModel.showDialog
+    val titleRes = calculatorViewModel.currentTitleRes
+    val descriptionRes = calculatorViewModel.currentDescriptionRes
+    val fieldLabels = calculatorViewModel.currentFieldLabels
+    val fieldValues = calculatorViewModel.fieldValues
+
     val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
     val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
     val showConverterDialog by calculatorViewModel.showDialogConverter.observeAsState(false)
-
+    val showFinanceDialog by calculatorViewModel.showDialogFinance.observeAsState(false)
     val expression by calculatorViewModel.expression.observeAsState("")
 
     val scope = rememberCoroutineScope()
@@ -99,6 +106,30 @@ fun CalculatorLandscapeUI(
     //PR Payout ratio
     //FX cambio de divisas o tipo de cambio
     //EAR Tasa de interés efectiva (Effective Interest Rate, EAR)
+
+
+        FinanceDialog(
+            titleRes = titleRes,
+            descriptionRes = descriptionRes,
+            fieldLabels = fieldLabels,
+            fieldValues = fieldValues,
+            onFieldValuesChange = listOf(
+                { calculatorViewModel.updateFieldValue(0, it) },
+                { calculatorViewModel.updateFieldValue(1, it) },
+                { calculatorViewModel.updateFieldValue(2, it) }
+            ),
+            showDialog = showDialog,
+            onConfirm = {
+                // Decide según el título qué calcular
+                if (titleRes == R.string.presentValueTitle) {
+                    calculatorViewModel.calculatePresentValue()
+                } else if (titleRes == R.string.futureValueTitle) {
+                    calculatorViewModel.calculateFutureValue()
+                }
+            },
+            onDismiss = { calculatorViewModel.closeDialog() }
+        )
+
 
 
     if(showConverterDialog) {
@@ -221,30 +252,27 @@ fun CalculatorLandscapeUI(
                                             "√" -> calculatorViewModel.append("√")
                                             "xʸ" -> calculatorViewModel.append("^")
                                             "%" -> calculatorViewModel.append("%")
-                                            "PV" -> notImplement("$message PV", scope)
-                                            "FV" -> notImplement("$message FV", scope)
+                                            "PV" -> {
+                                                    calculatorViewModel.openDialog(R.string.presentValueTitle,
+                                                        R.string.presentValueDes,
+                                                        listOf(R.string.futureValueTitle,
+                                                            R.string.rateperiod,
+                                                        R.string.numberOfPeriods))
+                                            }
+                                            "FV" ->  {
+                                                calculatorViewModel.openDialog(R.string.futureValueTitle,
+                                                    R.string.futureValueDes,
+                                                    listOf(R.string.presentValueTitle,
+                                                        R.string.rateperiod,
+                                                        R.string.numberOfPeriods))
+                                            }
                                             "SI" -> notImplement("$message SI", scope)
                                             "CI" -> notImplement("$message SC", scope)
                                             "DI" -> notImplement("$message DI", scope)
                                             "DR" -> notImplement("$message DR", scope)
                                             "FX" -> {
                                                 calculatorViewModel.onShowDialogConverter(true)
-                                                /*scope.launch(Dispatchers.IO) {
-                                                    val ratio =
-                                                        accountsViewModel.conversionCurrencyRate(
-                                                            fromCurrency,
-                                                            toCurrency
-                                                        )
-                                                    val number = expression.toBigDecimalOrNull()
-                                                    if (number != null) {
-                                                        val result = expression.plus(ratio)
-                                                        calculatorViewModel.onExpressionChange(
-                                                            result
-                                                        )
-                                                    }
-                                                }*/
                                             }
-
                                             "PMT" -> notImplement("$message PMT", scope)
                                             "EAR" -> notImplement("$message EAR", scope)
 

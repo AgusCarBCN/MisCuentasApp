@@ -1,9 +1,15 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.calculator
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.domain.apidata.ConvertCurrencyUseCase
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
@@ -15,7 +21,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.math.BigDecimal
+import java.math.RoundingMode
 import javax.inject.Inject
+import kotlin.math.pow
 
 @HiltViewModel
 class CalculatorViewModel @Inject constructor(
@@ -23,19 +31,43 @@ class CalculatorViewModel @Inject constructor(
     private val converterCurrency: ConvertCurrencyUseCase
 ) : ViewModel() {
 
+    // Diálogo
+    var showDialog by mutableStateOf(false)
+        private set
+
+    var currentTitleRes by mutableIntStateOf(R.string.presentValueTitle)
+        private set
+    var currentDescriptionRes by mutableIntStateOf(R.string.presentValueDes)
+        private set
+    var currentFieldLabels = mutableStateListOf<Int>()
+        private set
+
+    // Valores de los campos
+    var fieldValues = mutableStateListOf("", "", "")
+        private set
+
+    // Resultado calculado (puede actualizar _expression en CalculatorViewModel si quieres)
+    var calculationResult by mutableStateOf<BigDecimal?>(null)
+        private set
+
+    // Expresion de la pantalla de la calculadora
     private val _expression = MutableLiveData("")
     val expression: LiveData<String> = _expression
 
-    private val _ratio = MutableLiveData(BigDecimal.ONE)
-
-    val ratio: LiveData<BigDecimal> = _ratio
 
     private val _showDialogConverter = MutableLiveData<Boolean>()
     val showDialogConverter: LiveData<Boolean> = _showDialogConverter
 
+    private val _showDialogFinance = MutableLiveData<Boolean>()
+    val showDialogFinance: LiveData<Boolean> = _showDialogFinance
+
     fun clear() {
 
         _expression.value = ""
+    }
+
+    fun onShowFinanceDialog(newValue: Boolean) {
+        _showDialogFinance.value = newValue
     }
 
     fun onExpressionChange(newValue: String) {
@@ -141,30 +173,6 @@ class CalculatorViewModel @Inject constructor(
         }
     }
 
-    /*fun conversionCurrencyRate(fromCurrency: String, toCurrency: String) {
-        viewModelScope.launch {
-            try {
-                val response = converterCurrency.invoke(fromCurrency, toCurrency)
-                response.body()?.conversion_rate?.let { rate ->
-                   val currentExpression=_expression.value
-                   val result= currentExpression
-                       ?.toBigDecimalOrNull()
-                       ?.multiply(rate.toBigDecimal())
-                       ?: BigDecimal.ZERO
-                    _expression.value=result.toString()
-                    _showDialogConverter.value=false
-                }
-            } catch (_: Exception) {
-                withContext(Dispatchers.Main) {
-                    SnackBarController.sendEvent(
-                        event = SnackBarEvent(
-                            "No internet connection"
-                        )
-                    )
-                }
-            }
-        }
-    }*/
     fun conversionCurrencyRate(fromCurrency: String, toCurrency: String) {
         val currentExpression = _expression.value ?: return
 
@@ -195,7 +203,63 @@ class CalculatorViewModel @Inject constructor(
             }
         }
     }
+    /**
+     * Calcula el Valor Futuro (FV) compuesto.
+     *
+     * Fórmula:
+     * FV = PV * (1 + r)^n
+     *
+     * @param presentValue Valor presente (PV)
+     * @param rate Tasa de interés en porcentaje (por ejemplo 5 para 5%)
+     * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
+     * @return Valor futuro redondeado a 2 decimales
+     */
+    fun futureValue(
+        presentValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        // Convertimos la tasa de porcentaje a decimal
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
 
+        // Base para la potencia: 1 + r
+        val base = 1 + rateDecimal.toDouble()
+
+        // Calculamos FV usando Double para permitir períodos decimales
+        val fvDouble = presentValue.toDouble() * base.pow(periods)
+
+        // Convertimos a BigDecimal y redondeamos a 2 decimales
+        _expression.value= BigDecimal(fvDouble).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+
+    /**
+     * Calcula el Valor Presente (PV) compuesto.
+     *
+     * Fórmula:
+     * PV = FV / (1 + r)^n
+     *
+     * @param futureValue Valor futuro (FV)
+     * @param rate Tasa de interés en porcentaje (por ejemplo 5 para 5%)
+     * @param periods Número de períodos, puede ser decimal (por ejemplo 2.5 años)
+     * @return Valor presente redondeado a 2 decimales
+     */
+    fun presentValue(
+        futureValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        // Convertimos la tasa de porcentaje a decimal
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+
+        // Base para la potencia: 1 + r
+        val base = 1 + rateDecimal.toDouble()
+
+        // Calculamos PV usando Double para permitir períodos decimales
+        val pvDouble = futureValue.toDouble() / base.pow(periods)
+
+        // Convertimos a BigDecimal y redondeamos a 2 decimales
+         _expression.value=BigDecimal(pvDouble).setScale(2, RoundingMode.HALF_UP).toString()
+    }
 
     fun evaluate() {
         _expression.value = try {
@@ -205,9 +269,68 @@ class CalculatorViewModel @Inject constructor(
             "Error"
         }
     }
-    fun onShowDialogConverter(newValue: Boolean){
-        _showDialogConverter.value=newValue
+
+    fun onShowDialogConverter(newValue: Boolean) {
+        _showDialogConverter.value = newValue
     }
+
+    // Abrir diálogo
+    fun openDialog(
+        titleRes: Int,
+        descriptionRes: Int,
+        labels: List<Int>
+    ) {
+        currentTitleRes = titleRes
+        currentDescriptionRes = descriptionRes
+        currentFieldLabels.clear()
+        currentFieldLabels.addAll(labels)
+        fieldValues.clear()
+        fieldValues.addAll(listOf("", "", "")) // limpiar valores
+        calculationResult = null
+        showDialog = true
+    }
+
+    // Actualizar un campo
+    fun updateFieldValue(index: Int, value: String) {
+        if (index in 0..2) fieldValues[index] = value
+    }
+
+    // Cerrar diálogo
+    fun closeDialog() {
+        showDialog = false
+    }
+
+    // CALCULAR Valor Presente (PV)
+    fun calculatePresentValue() {
+        val fv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+
+        if (fv == null || rate == null) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+        }
+
+        presentValue(fv, rate, periods)
+        closeDialog()
+    }
+
+    fun calculateFutureValue() {
+        val pv = fieldValues.getOrNull(0)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val rate = fieldValues.getOrNull(1)?.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        val periods = fieldValues.getOrNull(2)?.toDoubleOrNull() ?: 0.0
+
+        if (pv == null || rate == null) {
+            viewModelScope.launch {
+                SnackBarController.sendEvent(SnackBarEvent("Campos inválidos"))
+            }
+        }
+        futureValue(pv, rate, periods)
+        closeDialog()
+    }
+
+
 }
 
 

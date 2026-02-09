@@ -425,11 +425,11 @@
 
     <string name="presentValueTitle">Present Value</string>
     <string name="futureValueTitle">Future Value</string>
-    <string name="presentValueDes">Calculates the present value of an investment</string>
-    <string name="futureValueDes">Calculates the future value of an investment</string>
-    <string name="numberOfPeriods">Number of periods</string>
-    <string name="periodPaid">Periodic payment</string>
-    <string name="rateperiod">Periodic interest rate</string>
+    <string name="presentValueDes">Calculate the present value of an investment</string>
+    <string name="futureValueDes">Calculate the future value of an investment</string>
+    <string name="numberOfPeriods">Years</string>
+    <string name="rateperiod">Annual discount rate %</string>
+
 
 </resources>
 

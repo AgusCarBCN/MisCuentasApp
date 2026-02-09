@@ -421,8 +421,8 @@
     <string name="futureValueTitle">Valor futuro</string>
     <string name="presentValueDes">Calcula el valor presente de una inversión</string>
     <string name="futureValueDes">Calcula el valor futuro de una inversión</string>
-    <string name="numberOfPeriods">Número de períodos</string>
-    <string name="periodPaid">Pago periódico</string>
-    <string name="rateperiod">Tasa de interés periódica</string>
+    <string name="numberOfPeriods">Años</string>
+    <string name="rateperiod">Tasa de descuento anual %</string>
+
 
 </resources>
