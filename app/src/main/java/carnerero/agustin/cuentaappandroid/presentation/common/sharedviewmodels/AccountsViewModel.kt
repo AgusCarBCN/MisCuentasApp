@@ -586,10 +586,10 @@ class AccountsViewModel @Inject constructor(
                     // Convertir a BigDecimal de forma más precisa
                     BigDecimal(rate.toString())
                 }
+
             }
         } catch (_: IOException) {
-            null
-        }
+          null}
     }
 
 

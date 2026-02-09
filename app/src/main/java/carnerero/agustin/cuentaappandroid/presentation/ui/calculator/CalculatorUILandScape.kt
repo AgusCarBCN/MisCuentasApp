@@ -49,6 +49,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.math.BigDecimal
+import java.math.MathContext
 
 
 @Composable
@@ -58,11 +61,10 @@ fun CalculatorLandscapeUI(
 ) {
     val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
     val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
-    val showConverterDialog by accountsViewModel.showDialogConverter.observeAsState(false)
+    val showConverterDialog by calculatorViewModel.showDialogConverter.observeAsState(false)
 
     val expression by calculatorViewModel.expression.observeAsState("")
-    val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
-    val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
+
     val scope = rememberCoroutineScope()
     val message = stringResource(R.string.noImplement)
     val buttonSpacing = 6.dp
@@ -101,8 +103,13 @@ fun CalculatorLandscapeUI(
 
     if(showConverterDialog) {
         CurrencyDialogConverter(
-            { accountsViewModel.onShowDialogConverter(false) },
-            accountsViewModel = accountsViewModel,
+            accountsViewModel,
+            { calculatorViewModel.onShowDialogConverter(false) },
+            {
+                //calculatorViewModel.convertCurrency(fromCurrency,toCurrency,accountsViewModel)
+                calculatorViewModel.conversionCurrencyRate(fromCurrency,toCurrency)
+               // calculatorViewModel.onShowDialogConverter(false)
+            }
         )
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
@@ -221,7 +228,7 @@ fun CalculatorLandscapeUI(
                                             "DI" -> notImplement("$message DI", scope)
                                             "DR" -> notImplement("$message DR", scope)
                                             "FX" -> {
-                                                accountsViewModel.onShowDialogConverter(true)
+                                                calculatorViewModel.onShowDialogConverter(true)
                                                 /*scope.launch(Dispatchers.IO) {
                                                     val ratio =
                                                         accountsViewModel.conversionCurrencyRate(

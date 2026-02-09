@@ -29,6 +29,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -48,6 +49,7 @@ import androidx.compose.ui.window.PopupProperties
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
@@ -95,8 +97,10 @@ fun CurrencyDialogConverter(
 */
 @Composable
 fun CurrencyDialogConverter(
+    accountsViewModel: AccountsViewModel,
     onDismiss: () -> Unit,
-    accountsViewModel: AccountsViewModel
+    onAction:()->Unit
+
 ) {
     val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
     val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
@@ -131,6 +135,15 @@ fun CurrencyDialogConverter(
                 ) { selected ->
                     accountsViewModel.onChangeCurrencyTo(selected.currencyCode)
                 }
+                ModelButton(text = stringResource(
+                    id = R.string.confirmButton
+                ),
+                    MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.width(320.dp),
+                    true,
+                    onClickButton = {
+                        onAction()
+                    })
 
             }
         }
@@ -144,7 +157,7 @@ fun DropdownMenuComponent(
     onOptionSelected: (Currency) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val buttonWidth = remember { mutableStateOf(0) }
+    val buttonWidth = remember { mutableIntStateOf(0) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         // Label del dropdown
