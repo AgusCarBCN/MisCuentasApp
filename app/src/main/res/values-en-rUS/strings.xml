@@ -422,4 +422,13 @@
     <string name="ischeckedtodelete"> is checked to delete</string>
     <string name="isuncheckedtodelete"> is unchecked to delete</string>
     <string name="pie_label">%1$s (%2$.1f%%)</string>
+
+    <string name="presentValueTitle">Present Value</string>
+    <string name="futureValueTitle">Future Value</string>
+    <string name="presentValueDes">Calculates the present value of an investment</string>
+    <string name="futureValueDes">Calculates the future value of an investment</string>
+    <string name="numberOfPeriods">Number of periods</string>
+    <string name="periodPaid">Periodic payment</string>
+    <string name="rateperiod">Periodic interest rate</string>
+
 </resources>

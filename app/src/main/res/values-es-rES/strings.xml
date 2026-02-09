@@ -416,4 +416,13 @@
     <string name="ischeckedtodelete">seleccionado para borrar</string>
     <string name="isuncheckedtodelete">No seleccionado para borrar</string>
     <string name="pie_label">%1$s (%2$.1f%%)</string>
+
+    <string name="presentValueTitle">Valor presente</string>
+    <string name="futureValueTitle">Valor futuro</string>
+    <string name="presentValueDes">Calcula el valor presente de una inversión</string>
+    <string name="futureValueDes">Calcula el valor futuro de una inversión</string>
+    <string name="numberOfPeriods">Número de períodos</string>
+    <string name="periodPaid">Pago periódico</string>
+    <string name="rateperiod">Tasa de interés periódica</string>
+
 </resources>
