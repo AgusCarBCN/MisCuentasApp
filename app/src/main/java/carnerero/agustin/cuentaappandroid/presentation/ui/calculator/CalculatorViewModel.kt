@@ -19,6 +19,7 @@ import java.io.IOException
 import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject
+import kotlin.math.ln
 import kotlin.math.pow
 
 @HiltViewModel
@@ -56,26 +57,6 @@ class CalculatorViewModel @Inject constructor(
     // Mostrar / ocultar el diálogo
     var showDialogConverter by mutableStateOf(false)
         private set
-    // Valor presente
-    var inputPV by mutableStateOf("")
-        private set
-
-    // Valor futuro
-    var inputFV by mutableStateOf("")
-        private set
-
-    // Tasa de interés
-    var inputRate by mutableStateOf("")
-        private set
-
-    // Número de períodos
-    var inputPeriods by mutableStateOf("")
-        private set
-
-    // Tipo de interés simple o compuesto
-    var isCompound by mutableStateOf(true)
-        private set
-
 
 
     fun clear() {
@@ -158,7 +139,7 @@ class CalculatorViewModel @Inject constructor(
         }
     }
     fun conversionCurrencyRate(amount: BigDecimal?, fromCurrency: String, toCurrency: String) {
-        val currentExpression = expression
+
         viewModelScope.launch {
             try {
                 val rate = withContext(Dispatchers.IO) {
@@ -172,7 +153,7 @@ class CalculatorViewModel @Inject constructor(
                     ?: BigDecimal.ZERO
 
                 expression = result.toString()
-                //showDialogConverter = false
+
 
             } catch (_: IOException) {
                 SnackBarController.sendEvent(
@@ -261,12 +242,17 @@ class CalculatorViewModel @Inject constructor(
         // Convertimos la tasa de porcentaje a decimal
         val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
 
+        // Convertimos periods a BigDecimal
+        val periodsBD = BigDecimal.valueOf(periods)
+
         // FV = PV * (1 + r * n)
-        val fv = presentValue * (BigDecimal.ONE + rateDecimal * BigDecimal(periods))
+        val factor = BigDecimal.ONE.add(rateDecimal.multiply(periodsBD))
+        val fv = presentValue.multiply(factor)
 
         // Redondeamos a 2 decimales y guardamos en expression
         expression = fv.setScale(2, RoundingMode.HALF_UP).toString()
     }
+
 
     /**
      * Calcula el Valor Presente (PV) con interés simple.
@@ -287,115 +273,131 @@ class CalculatorViewModel @Inject constructor(
         // Convertimos la tasa de porcentaje a decimal
         val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
 
+        // Convertimos periods a BigDecimal
+        val periodsBD = BigDecimal.valueOf(periods)
+
         // PV = FV / (1 + r * n)
-        val pv = futureValue / (BigDecimal.ONE + rateDecimal * BigDecimal(periods))
+        val denominator = BigDecimal.ONE.add(rateDecimal.multiply(periodsBD))
+        val pv = futureValue.divide(denominator, 10, RoundingMode.HALF_UP)
 
         // Redondeamos a 2 decimales y guardamos en expression
         expression = pv.setScale(2, RoundingMode.HALF_UP).toString()
     }
+
     /**
      * Calcula el pago periódico de un préstamo (PMT) con interés compuesto.
      *
      * Fórmula:
      * PMT = PV × (r / (1 - (1 + r)^-n))
-     *
-     * @param loanAmount Monto del préstamo (PV)
-     * @param rate Tasa de interés en porcentaje
-     * @param periods Número de períodos, puede ser decimal (por ejemplo meses o años)
-     * @return Pago periódico redondeado a 2 decimales
      */
     fun loanPaymentCompound(
         loanAmount: BigDecimal,
         rate: BigDecimal,
         periods: Double
     ) {
-        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
-        val rDouble = rateDecimal.toDouble()
-        val pmtDouble = loanAmount.toDouble() * (rDouble / (1 - (1 + rDouble).pow(-periods)))
-        expression = BigDecimal(pmtDouble).setScale(2, RoundingMode.HALF_UP).toString()
-    }
-    /**
-     * Calcula el interés acumulado de una inversión.
-     *
-     * Fórmula:
-     * Simple: Interest = PV × r × n
-     * Compound: Interest = PV × ((1 + r)^n - 1)
-     *
-     * @param presentValue Valor presente (PV)
-     * @param rate Tasa de interés en porcentaje
-     * @param periods Número de períodos, puede ser decimal (por ejemplo años o meses)
-     * @param compound Si es true, usa interés compuesto; si false, interés simple
-     * @return Interés acumulado redondeado a 2 decimales
-     */
-    fun interestEarned(
-        presentValue: BigDecimal,
-        rate: BigDecimal,
-        periods: Double,
-        compound: Boolean = false
-    ) {
-        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
-        val interest = if (compound) {
-            val base = 1 + rateDecimal.toDouble()
-            presentValue.toDouble() * (base.pow(periods) - 1)
-        } else {
-            presentValue.toDouble() * rateDecimal.toDouble() * periods
+        if (loanAmount <= BigDecimal.ZERO) {
+            expression = "Error: El monto del préstamo debe ser mayor que 0"
+            return
         }
-        expression = BigDecimal(interest).setScale(2, RoundingMode.HALF_UP).toString()
-    }
-    /**
-     * Calcula el número de períodos necesarios para alcanzar un valor futuro.
-     *
-     * Fórmula:
-     * Simple: n = (FV - PV) / (PV × r)
-     * Compound: n = ln(FV / PV) / ln(1 + r)
-     *
-     * @param presentValue Valor presente (PV)
-     * @param futureValue Valor futuro deseado (FV)
-     * @param rate Tasa de interés en porcentaje
-     * @param compound Si es true, usa interés compuesto; si false, interés simple
-     * @return Número de períodos redondeado a 2 decimales
-     */
-    fun periodsRequired(
-        presentValue: BigDecimal,
-        futureValue: BigDecimal,
-        rate: BigDecimal,
-        compound: Boolean = false
-    ) {
+        if (rate <= BigDecimal.ZERO) {
+            expression = "Error: La tasa debe ser mayor que 0"
+            return
+        }
+        if (periods <= 0) {
+            expression = "Error: El número de períodos debe ser mayor que 0"
+            return
+        }
+
         val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
-        val periods = if (compound) {
-            kotlin.math.ln(futureValue.toDouble() / presentValue.toDouble()) / kotlin.math.ln(1 + rateDecimal.toDouble())
-        } else {
-            (futureValue.toDouble() - presentValue.toDouble()) / (presentValue.toDouble() * rateDecimal.toDouble())
-        }
-        expression = BigDecimal(periods).setScale(2, RoundingMode.HALF_UP).toString()
-    }
-    /**
-     * Calcula la tasa de interés requerida para alcanzar un valor futuro.
-     *
-     * Fórmula:
-     * Simple: r = (FV - PV) / (PV × n)
-     * Compound: r = (FV / PV)^(1/n) - 1
-     *
-     * @param presentValue Valor presente (PV)
-     * @param futureValue Valor futuro deseado (FV)
-     * @param periods Número de períodos, puede ser decimal
-     * @param compound Si es true, usa interés compuesto; si false, interés simple
-     * @return Tasa de interés requerida (%) redondeada a 2 decimales
-     */
-    fun requiredInterestRate(
-        presentValue: BigDecimal,
-        futureValue: BigDecimal,
-        periods: Double,
-        compound: Boolean = false
-    ) {
-        val rate = if (compound) {
-            (futureValue.toDouble() / presentValue.toDouble()).pow(1 / periods) - 1
-        } else {
-            (futureValue.toDouble() - presentValue.toDouble()) / (presentValue.toDouble() * periods)
-        }
-        expression = BigDecimal(rate * 100).setScale(2, RoundingMode.HALF_UP).toString()
+        val pmt = loanAmount.toDouble() * (rateDecimal.toDouble() / (1 - (1 + rateDecimal.toDouble()).pow(-periods)))
+        expression = BigDecimal(pmt).setScale(2, RoundingMode.HALF_UP).toString()
     }
 
+    /**
+     * Calcula el interés acumulado de una inversión con interés compuesto.
+     *
+     * Fórmula:
+     * Interest = PV × ((1 + r)^n - 1)
+     */
+    fun interestEarnedCompound(
+        presentValue: BigDecimal,
+        rate: BigDecimal,
+        periods: Double
+    ) {
+        if (presentValue <= BigDecimal.ZERO) {
+            expression = "Error: El valor presente debe ser mayor que 0"
+            return
+        }
+        if (rate <= BigDecimal.ZERO) {
+            expression = "Error: La tasa debe ser mayor que 0"
+            return
+        }
+        if (periods <= 0) {
+            expression = "Error: El número de períodos debe ser mayor que 0"
+            return
+        }
+
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+        val interest = presentValue.toDouble() * ((1 + rateDecimal.toDouble()).pow(periods) - 1)
+        expression = BigDecimal(interest).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+
+    /**
+     * Calcula el número de períodos necesarios para alcanzar un valor futuro con interés compuesto.
+     *
+     * Fórmula:
+     * n = ln(FV / PV) / ln(1 + r)
+     */
+    fun periodsRequiredCompound(
+        presentValue: BigDecimal,
+        futureValue: BigDecimal,
+        rate: BigDecimal
+    ) {
+        if (presentValue <= BigDecimal.ZERO) {
+            expression = "Error: El valor presente debe ser mayor que 0"
+            return
+        }
+        if (futureValue <= presentValue) {
+            expression = "Error: El valor futuro debe ser mayor que el presente"
+            return
+        }
+        if (rate <= BigDecimal.ZERO) {
+            expression = "Error: La tasa debe ser mayor que 0"
+            return
+        }
+
+        val rateDecimal = rate.divide(BigDecimal(100), 10, RoundingMode.HALF_UP)
+        val periods = ln(futureValue.toDouble() / presentValue.toDouble()) / ln(1 + rateDecimal.toDouble())
+        expression = BigDecimal(periods).setScale(2, RoundingMode.HALF_UP).toString()
+    }
+
+    /**
+     * Calcula la tasa de interés requerida para alcanzar un valor futuro con interés compuesto.
+     *
+     * Fórmula:
+     * r = (FV / PV)^(1/n) - 1
+     */
+    fun requiredInterestRateCompound(
+        presentValue: BigDecimal,
+        futureValue: BigDecimal,
+        periods: Double
+    ) {
+        if (presentValue <= BigDecimal.ZERO) {
+            expression = "Error: El valor presente debe ser mayor que 0"
+            return
+        }
+        if (futureValue <= presentValue) {
+            expression = "Error: El valor futuro debe ser mayor que el presente"
+            return
+        }
+        if (periods <= 0) {
+            expression = "Error: El número de períodos debe ser mayor que 0"
+            return
+        }
+
+        val rate = (futureValue.toDouble() / presentValue.toDouble()).pow(1 / periods) - 1
+        expression = BigDecimal(rate * 100).setScale(2, RoundingMode.HALF_UP).toString()
+    }
     fun evaluate() {
         expression= try {
             val result = expression.let { parser.evaluate(it) }
@@ -409,9 +411,6 @@ class CalculatorViewModel @Inject constructor(
         showDialogConverter = newValue
     }
 
-    fun openCurrencyDialog(){
-        showDialogConverter=true
-    }
     fun closeCurrencyDialog(){
         showDialogConverter=false
     }
@@ -533,7 +532,7 @@ class CalculatorViewModel @Inject constructor(
             return
         }
 
-        interestEarned(pv, rate, periods, true)
+        interestEarnedCompound(pv, rate, periods)
         closeDialog()
     }
     fun calculatePeriodsRequired() {
@@ -549,7 +548,7 @@ class CalculatorViewModel @Inject constructor(
             return
         }
 
-        periodsRequired(pv, fv, rate, true)
+        periodsRequiredCompound(pv, fv, rate)
         closeDialog()
     }
     fun calculateRequiredInterestRate() {
@@ -565,7 +564,7 @@ class CalculatorViewModel @Inject constructor(
             return
         }
 
-        requiredInterestRate(pv, fv, periods, true)
+        requiredInterestRateCompound(pv, fv, periods)
         closeDialog()
     }
 

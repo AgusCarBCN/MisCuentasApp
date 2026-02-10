@@ -114,10 +114,10 @@ fun CalculatorLandscapeUI(
             onConfirm = {
                 // Decide según el título qué calcular
                 when (titleRes) {
-                    R.string.presentValueTitle -> {
+                    R.string.presentValueCompoundTitle -> {
                         calculatorViewModel.calculatePresentValueCompound()
                     }
-                    R.string.futureValueTitle -> {
+                    R.string.futureValueCompoundTitle -> {
                         calculatorViewModel.calculateFutureValueCompound()
                     }
                     R.string.presentValueSimpleTitle -> {
