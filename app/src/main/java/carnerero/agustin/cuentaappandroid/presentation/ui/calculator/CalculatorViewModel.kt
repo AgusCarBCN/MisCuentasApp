@@ -42,9 +42,12 @@ class CalculatorViewModel @Inject constructor(
     var fieldValues = mutableStateListOf("", "", "")
         private set
 
+    var amount by mutableStateOf("")
+    private set
+
     // Resultado calculado (puede actualizar _expression en CalculatorViewModel si quieres)
-    var calculationResult by mutableStateOf<BigDecimal?>(null)
-        private set
+   /* var calculationResult by mutableStateOf<BigDecimal?>(null)
+        private set*/
 
     // Texto que se muestra en la pantalla
     var expression by mutableStateOf("")
@@ -408,6 +411,12 @@ class CalculatorViewModel @Inject constructor(
         showDialogConverter = newValue
     }
 
+    fun openCurrencyDialog(){
+        showDialogConverter=true
+    }
+    fun closeCurrencyDialog(){
+        showDialogConverter=false
+    }
     // Abrir diálogo
     fun openDialog(
         titleRes: Int,
@@ -420,8 +429,11 @@ class CalculatorViewModel @Inject constructor(
         currentFieldLabels.addAll(labels)
         fieldValues.clear()
         fieldValues.addAll(listOf("", "", "")) // limpiar valores
-        calculationResult = null
+       // calculationResult = null
         showDialog = true
+    }
+    fun updateAmount(value:String){
+        amount=value
     }
 
     // Actualizar un campo

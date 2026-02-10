@@ -480,6 +480,9 @@ Compound: r = (FV / PV)^(1/n) - 1</string>
     <string name="rate_inputPV">Present Value (PV)</string>
     <string name="rate_inputFV">Future Value (FV)</string>
     <string name="rate_inputPeriods">Periods</string>
+    <string name="currency_dialog_title">Currency Converter</string>
+    <string name="currency_dialog_des">Converts an amount of money from one currency to another</string>
+    <string name="currency_dialog_input">Amount</string>
 
 
 </resources>

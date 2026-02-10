@@ -473,4 +473,9 @@ Compuesto: r = (FV / PV)^(1/n) - 1</string>
     <string name="rate_inputFV">Valor Futuro (FV)</string>
     <string name="rate_inputPeriods">Períodos</string>
 
+    <string name="currency_dialog_title">Conversor de divisas</string>
+    <string name="currency_dialog_des">Convierte una cantidad de dinero de una divisa a otra</string>
+    <string name="currency_dialog_input">Cantidad</string>
+
+
 </resources>
