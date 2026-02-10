@@ -157,9 +157,8 @@ class CalculatorViewModel @Inject constructor(
             expression = expr.substring(0, start) + newNumber + expr.substring(end)
         }
     }
-    fun conversionCurrencyRate(fromCurrency: String, toCurrency: String) {
+    fun conversionCurrencyRate(amount: BigDecimal?, fromCurrency: String, toCurrency: String) {
         val currentExpression = expression
-
         viewModelScope.launch {
             try {
                 val rate = withContext(Dispatchers.IO) {
@@ -168,13 +167,12 @@ class CalculatorViewModel @Inject constructor(
                         ?: throw IllegalStateException("Invalid response")
                 }
 
-                val result = currentExpression
-                    .toBigDecimalOrNull()
+                val result = amount
                     ?.multiply(rate.toBigDecimal())
                     ?: BigDecimal.ZERO
 
                 expression = result.toString()
-                showDialogConverter = false
+                //showDialogConverter = false
 
             } catch (_: IOException) {
                 SnackBarController.sendEvent(
@@ -444,6 +442,13 @@ class CalculatorViewModel @Inject constructor(
     // Cerrar diálogo
     fun closeDialog() {
         showDialog = false
+    }
+    //Currency conversion
+
+    fun currencyConvert(fromCurrency: String,toCurrency: String){
+        val amount=amount.toBigDecimalOrNull()?: BigDecimal.ZERO
+        conversionCurrencyRate(amount,fromCurrency,toCurrency)
+        closeCurrencyDialog()
     }
 
     // CALCULAR Valor Presente (PV)

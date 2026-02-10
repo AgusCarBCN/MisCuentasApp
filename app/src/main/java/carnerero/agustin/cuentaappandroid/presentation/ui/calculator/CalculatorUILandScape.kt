@@ -41,7 +41,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.A
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CurrencyDialogConverter
-import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.FinanceDialog
+import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.FinanceFunctionsDialog
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import kotlinx.coroutines.CoroutineScope
@@ -64,7 +64,7 @@ fun CalculatorLandscapeUI(
     val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
     val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
     val showConverterDialog = calculatorViewModel.showDialogConverter
-
+    val amount =calculatorViewModel.amount
     val expression = calculatorViewModel.expression
 
     val scope = rememberCoroutineScope()
@@ -93,18 +93,14 @@ fun CalculatorLandscapeUI(
         listOf("1", "2", "3", "+", "xʸ", "Int", "PMT"),
         listOf("0", ".", "⌫", "±", "%", "FX", "=")
     )
-    //PV valor presente
-    //FV valor futuro
-    //PMT cuota prestamo
-    //IS Interes simple
-    //IC interes compuesto
-    //DI Rendimiento por dividendo
-    //PR Payout ratio
-    //FX cambio de divisas o tipo de cambio
-    //EAR Tasa de interés efectiva (Effective Interest Rate, EAR)
+        CurrencyDialogConverter(accountsViewModel,
+            amount,
+            {calculatorViewModel.updateAmount(it)},
+            showConverterDialog,
+            onConfirm = {calculatorViewModel.currencyConvert(fromCurrency,toCurrency)}
+            ) { calculatorViewModel.closeCurrencyDialog()}
 
-
-        FinanceDialog(
+        FinanceFunctionsDialog(
             titleRes = titleRes,
             descriptionRes = descriptionRes,
             fieldLabels = fieldLabels,
@@ -149,17 +145,7 @@ fun CalculatorLandscapeUI(
 
 
 
-    if(showConverterDialog) {
-        CurrencyDialogConverter(
-            accountsViewModel,
-            { calculatorViewModel.onShowDialogConverter(false) },
-            {
-                //calculatorViewModel.convertCurrency(fromCurrency,toCurrency,accountsViewModel)
-                calculatorViewModel.conversionCurrencyRate(fromCurrency,toCurrency)
-               // calculatorViewModel.onShowDialogConverter(false)
-            }
-        )
-    }
+
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth * 0.95f
 

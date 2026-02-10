@@ -34,10 +34,9 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
 
 @Composable
-fun FinanceDialog(
+fun FinanceFunctionsDialog(
     titleRes: Int,                     // Título del diálogo (PV, FV, etc.)
     descriptionRes: Int? = null,       // Descripción opcional
     fieldLabels: List<Int>,            // Etiquetas de los campos (hasta 3)
