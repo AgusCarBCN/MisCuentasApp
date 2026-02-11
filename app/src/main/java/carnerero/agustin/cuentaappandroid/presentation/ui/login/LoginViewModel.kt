@@ -1,26 +1,232 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.login
 
-import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpDatePasswordUseCase
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import javax.inject.Inject
 
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val getUserProfileData: GetUserProfileDataUseCase,
+    private val upDatePassword: UpDatePasswordUseCase,
+    private val getUri: GetPhotoFromUriUseCase
+) : ViewModel() {
+
+    // ---------------------------
+    // STATE
+    // ---------------------------
+
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState
+
+    private val _event = MutableSharedFlow<LoginEvent>()
+
+    val event = _event.asSharedFlow()
+
+
+    private var userProfile: UserProfile? = null
+
+    // ---------------------------
+    // INIT
+    // ---------------------------
+
+    init {
+        viewModelScope.launch {
+            userProfile = getUserProfileData()
+            _uiState.update {
+                it.copy(
+                    name = userProfile?.profileName.orEmpty(),
+                    selectedImageUri = getUri()
+                )
+            }
+        }
+    }
+
+    // ---------------------------
+    // LOGIN INPUTS
+    // ---------------------------
+
+    fun onUserNameChange(value: String) {
+        _uiState.update { current ->
+            current.copy(
+                userName = value,
+                enableLoginButton = isLoginEnabled(
+                    value,
+                    current.password
+                )
+            )
+        }
+    }
+
+    fun onPasswordChange(value: String) {
+        _uiState.update { current ->
+            current.copy(
+                password = value,
+                enableLoginButton = isLoginEnabled(
+                    current.userName,
+                    value
+                )
+            )
+        }
+    }
+
+    fun onLoginClick() {
+        val state = _uiState.value
+        val user = userProfile ?: return
+        viewModelScope.launch {
+            if (state.userName == user.profileUserName &&
+                state.password == user.profilePass
+            ) {
+                _event.emit(LoginEvent.NavigateToMain)  // Evento de navegación
+            } else {
+                _event.emit(LoginEvent.ShowInvalidLogin)  // Snackbar
+            }
+        }
+    }
+
+
+    // ---------------------------
+    // NUEVA CONTRASEÑA
+    // ---------------------------
+
+    fun onNewPasswordUserNameChange(value: String) {
+        _uiState.update { current ->
+            current.copy(
+                userNameNewPassword = value,
+                enableConfirmButton = isConfirmEnabled(
+                    value,
+                    current.newPassword
+                )
+            )
+        }
+    }
+
+    fun onNewPasswordChange(value: String) {
+        _uiState.update { current ->
+            current.copy(
+                newPassword = value,
+                enableConfirmButton = isConfirmEnabled(
+                    current.userNameNewPassword,
+                    value
+                )
+            )
+        }
+    }
+
+    fun enableNewPasswordFields(enable: Boolean) {
+        _uiState.update {
+            it.copy(showNewPasswordFields = enable)
+        }
+    }
+
+
+    fun confirmNewPassword() {
+        val state = _uiState.value
+        val user = userProfile ?: return
+        viewModelScope.launch {
+            if (state.userNameNewPassword != user.profileUserName) {
+                _event.emit(LoginEvent.ShowInvalidUserName)
+                clearNewPasswordFields()
+            }
+        }
+
+        viewModelScope.launch {
+            try {
+                upDatePassword(state.newPassword)
+                userProfile = getUserProfileData()
+
+                _uiState.update {
+                    it.copy(
+                        showNewPasswordFields = false,
+                        userNameNewPassword = "",
+                        newPassword = "",
+                        enableConfirmButton = false
+                    )
+                }
+
+            } catch (e: Exception) {
+                Log.e("LoginViewModel", "Error updating password", e)
+            }
+        }
+    }
+
+    private fun clearNewPasswordFields() {
+        _uiState.update {
+            it.copy(
+                userNameNewPassword = "",
+                newPassword = "",
+                enableConfirmButton = false
+            )
+        }
+    }
+
+    // ---------------------------
+    // IMAGE
+    // ---------------------------
+
+    fun getLoginImage() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(selectedImageUri = getUri())
+            }
+        }
+    }
+
+    // ---------------------------
+    // GREETING
+    // ---------------------------
+
+    @Composable
+    fun getGreeting(userName: String): String {
+        val hour = LocalTime.now().hour
+
+        val greeting = when (hour) {
+            in 6..11 -> stringResource(id = R.string.goodmornig)
+            in 12..17 -> stringResource(id = R.string.goodafternoon)
+            else -> stringResource(id = R.string.goodevening)
+        }
+
+        return "$greeting, $userName"
+    }
+
+    // ---------------------------
+    // VALIDATION HELPERS
+    // ---------------------------
+
+    private fun isLoginEnabled(userName: String, password: String): Boolean {
+        return userName.isNotBlank() &&
+                password.isNotBlank() &&
+                password.length >= 6
+    }
+
+    private fun isConfirmEnabled(userName: String, password: String): Boolean {
+        return userName.isNotBlank() &&
+                password.isNotBlank() &&
+                password.length >= 6
+    }
+
+
+}
+
+
+/*
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUserProfileData: GetUserProfileDataUseCase,
@@ -72,6 +278,11 @@ class LoginViewModel @Inject constructor(
     private val _enableNewPasswordFields = MutableLiveData<Boolean>()
     val enableNewPasswordFields: LiveData<Boolean> = _enableNewPasswordFields
 
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState
+
+
+
     init {
         // Cargar el valor inicial de toLogin desde el repositorio al inicializar el ViewModel
         viewModelScope.launch {
@@ -82,6 +293,33 @@ class LoginViewModel @Inject constructor(
 
         }
     }
+
+    fun onUserNameChange(value: String) {
+        updateState { it.copy(userName = value) }
+        validateLogin()
+    }
+
+    fun onPasswordChange(value: String) {
+        updateState { it.copy(password = value) }
+        validateLogin()
+    }
+
+    private fun validateLogin() {
+        val state = _uiState.value
+        _uiState.update {
+            it.copy(
+                enableLoginButton =
+                    state.userName.isNotBlank() &&
+                            state.password.isNotBlank()
+            )
+        }
+    }
+
+
+    private inline fun updateState(block: (LoginUiState) -> LoginUiState) {
+        _uiState.update(block)
+    }
+
     fun getLoginImage(){
         viewModelScope.launch {
             _selectedImageUriSaved.value = getUri()
@@ -206,4 +444,4 @@ class LoginViewModel @Inject constructor(
             )
         }
     }
-}
+}*/

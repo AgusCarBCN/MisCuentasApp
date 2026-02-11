@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
@@ -28,26 +30,30 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.m
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 
 @Composable
 fun ContentSection(loginViewModel: LoginViewModel,
                    modifier:Modifier,
                    navToMain:()->Unit){
-
-    val name by loginViewModel.name.observeAsState("")
-    val userName by loginViewModel.userName.observeAsState("")
-    val password by loginViewModel.password.observeAsState("")
-    val userNameNewPassword by loginViewModel.userNameNewPassword.observeAsState("")
-    val newPassword by loginViewModel.newPassword.observeAsState("")
-    val enableLoginButton by loginViewModel.enableLoginButton.observeAsState(false)
-    val enableConfirmButton by loginViewModel.enableConfirmButton.observeAsState(false)
-    val enableNewPasswordFields by loginViewModel.enableNewPasswordFields.observeAsState(false)
-    val validateLogin by loginViewModel.validateLoginButton.observeAsState(false)
-    val validateConfirm by loginViewModel.validateConfirmButton.observeAsState(false)
-    /* Se usa para gestionar el estado del Snackbar. Esto te permite mostrar y controlar el Snackbar
-     desde cualquier parte de tu UI.*/
+    val state by loginViewModel.uiState.collectAsStateWithLifecycle()
     val messageInvalidLogin= message(resource = R.string.inValidLogin)
     val messageInvalidUserName= message(resource = R.string.inValidUserName)
+
+    LaunchedEffect(Unit) {
+        loginViewModel.event.collect { event ->
+            when (event) {
+                is LoginEvent.NavigateToMain -> navToMain()
+                is LoginEvent.ShowInvalidLogin -> {
+                    SnackBarController.sendEvent(SnackBarEvent(messageInvalidLogin))
+                }
+                is LoginEvent.ShowInvalidUserName -> (SnackBarController.sendEvent(SnackBarEvent(messageInvalidUserName)))
+            }
+        }
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,10 +64,10 @@ fun ContentSection(loginViewModel: LoginViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        if (!enableNewPasswordFields) {
+        if (!state.showNewPasswordFields) {
             Text(
                 modifier= Modifier.padding(top=dimens.extraLarge),
-                text = loginViewModel.getGreeting(name),
+                text = loginViewModel.getGreeting(state.name),
                 fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
                 color = colors.textColor,
                 fontWeight = FontWeight.Bold
@@ -69,15 +75,15 @@ fun ContentSection(loginViewModel: LoginViewModel,
             TextFieldComponent(
                 modifier = modifier,
                 stringResource(id = R.string.enterUsername),
-                userName,
-                onTextChange = { loginViewModel.onLoginChanged(it, password) },
+                state.userName,
+                onTextChange = loginViewModel::onUserNameChange,
                 BoardType.TEXT
             )
             TextFieldComponent(
                 modifier = modifier,
                 stringResource(id = R.string.enterPassword),
-                password,
-                onTextChange = { loginViewModel.onLoginChanged(userName, it) },
+                state.password,
+                onTextChange = loginViewModel::onPasswordChange,
                 BoardType.PASSWORD,
                 true
             )
@@ -85,19 +91,15 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 text = stringResource(id = R.string.loginButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = modifier,
-                enableLoginButton,
+                state.enableLoginButton,
                 onClickButton = {
-                    if (validateLogin) {
-                        navToMain()
-                    } else {
-                        loginViewModel.sendMessage(messageInvalidLogin)
-                    }
+                    loginViewModel.onLoginClick()
                 }
             )
 
             TextButton(
                 onClick = {
-                    loginViewModel.onEnableNewPasswordFields(true)
+                    loginViewModel.enableNewPasswordFields(true)
                 },
                 content = {
                     Text(
@@ -108,24 +110,21 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 }
             )
         }
-        if (enableNewPasswordFields) {
+        if (state.showNewPasswordFields) {
             TextFieldComponent(
                 modifier = modifier,
                 stringResource(id = R.string.requestuser),
-                userNameNewPassword,
-                onTextChange = { loginViewModel.onUpdatePasswordChange(it, newPassword) },
+                state.userNameNewPassword,
+                onTextChange = {loginViewModel.onNewPasswordUserNameChange(it)},
                 BoardType.TEXT
             )
 
             TextFieldComponent(
                 modifier = modifier,
                 stringResource(id = R.string.newpassword),
-                newPassword,
+                state.newPassword,
                 onTextChange = {
-                    loginViewModel.onUpdatePasswordChange(
-                        userNameNewPassword,
-                        it
-                    )
+                    loginViewModel.onNewPasswordChange(it)
                 },
                 BoardType.PASSWORD,
                 true
@@ -134,12 +133,9 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 text = stringResource(id = R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = modifier ,
-                enableConfirmButton,
+                state.enableConfirmButton,
                 onClickButton = {
-                    loginViewModel.confirmNewPassword(newPassword,
-                        validateConfirm,
-                        messageInvalidUserName)
-
+                    loginViewModel.confirmNewPassword()
                 }
             )
 
@@ -149,7 +145,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 modifier = modifier ,
                 true,
                 onClickButton = {
-                    loginViewModel.onEnableNewPasswordFields(false)
+                    loginViewModel.enableNewPasswordFields(false)
                 }
             )
         }

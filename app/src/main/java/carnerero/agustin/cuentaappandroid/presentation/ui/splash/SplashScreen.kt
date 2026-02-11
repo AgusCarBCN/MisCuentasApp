@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.navigation
+package carnerero.agustin.cuentaappandroid.presentation.ui.splash
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.AnimatedVisibility
@@ -26,22 +26,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun SplashScreen(
-    navController: NavHostController,
-    showTutorial: Boolean?
+    tutorialViewModel: TutorialViewModel,
+    navToTutorial:()->Unit,
+    navToLogin:()->Unit,
 ) {
     var isVisible by remember { mutableStateOf(false) }
-
+    val state by tutorialViewModel.uiState.collectAsStateWithLifecycle()
     val scaleAnimation = remember { Animatable(initialValue = 0f) }
-
-    LaunchedEffect(key1 = true,showTutorial) {
-
+   // tutorialViewModel.onFromSplash()
+    // Animación de logo
+    LaunchedEffect(key1 = true,state.showTutorial) {
         isVisible = true // Activar visibilidad después de la inicialización
         scaleAnimation.animateTo(
             targetValue = 0.5F,
@@ -51,13 +56,10 @@ fun SplashScreen(
             )
         )
         delay(3000) // Espera 3 segundos antes de navegar
-        navController.navigate(
-            if (showTutorial == true) Routes.Tutorial.route
-            else Routes.Login.route
-        ) {
-            popUpTo(Routes.Splash.route) {
-                inclusive = true
-            }
+        if(state.showTutorial){
+            navToTutorial()
+        }else{
+            navToLogin()
         }
     }
 
@@ -78,7 +80,8 @@ fun SplashScreen(
                         .border(4.dp, Color.Transparent, RoundedCornerShape(24.dp))
                         .background(Color.Transparent)
                         .padding(8.dp),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+
                 )
             }
         }

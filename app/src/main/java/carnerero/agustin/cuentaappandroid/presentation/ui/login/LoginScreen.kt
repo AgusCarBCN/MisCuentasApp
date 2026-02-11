@@ -29,6 +29,7 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         loginViewModel.getLoginImage()
     }
+
     // Detectar orientacion
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE

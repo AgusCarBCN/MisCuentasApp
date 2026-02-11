@@ -2,10 +2,9 @@ package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,6 +18,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.splash.SplashScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 
@@ -34,29 +34,20 @@ fun AppNavHost(
     profileViewModel: ProfileViewModel,
     modifier: Modifier
 ) {
-
-    val toLogin by tutorialViewModel.toLogin.observeAsState(false) // Defaults to `false`
-    val showTutorial by tutorialViewModel.showTutorial.observeAsState(true)
     NavHost(
         navController = navController,
         startDestination = Routes.Splash.route
     ) {
         composable(Routes.Splash.route) {
-            SplashScreen(navController,showTutorial)
+            SplashScreen(tutorialViewModel,
+                {navController.navigate(Routes.Tutorial.route)},
+                {navController.navigate(Routes.Login.route)})
         }
         composable(Routes.Tutorial.route) {
             Tutorial(
                 tutorialViewModel,
-                navToScreen = {
-                    navController.navigate(
-                        if (toLogin) Routes.Login.route
-                        else Routes.CreateProfile.route
-                    ) {
-                        popUpTo(Routes.Tutorial.route) {
-                            inclusive = true
-                        }
-                    }
-                })
+                navToLogin = {navController.navigate(Routes.Login.route)},
+            {navController.navigate(Routes.CreateProfile.route)})
         }
 
         composable(Routes.CreateProfile.route) {

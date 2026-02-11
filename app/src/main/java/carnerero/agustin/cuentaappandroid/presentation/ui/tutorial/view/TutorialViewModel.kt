@@ -1,78 +1,71 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view
 
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetShowTutorialUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetToLoginUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.SetShowTutorialUseCase
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TutorialViewModel @Inject constructor(
     private val getLoginValue: GetToLoginUseCase,
-    private val getShowTutorial: GetShowTutorialUseCase,
-    private val setShowTutorial: SetShowTutorialUseCase
+    private val getShowTutorial: GetShowTutorialUseCase
 ) :
     ViewModel() {
 
+    private val _uiState = MutableStateFlow(TutorialUiState())
+    val uiState: StateFlow<TutorialUiState> = _uiState
 
-    // LiveData para observar el valor de toLogin
-    private val _toLogin = MutableLiveData<Boolean>(false)
-    val toLogin: LiveData<Boolean> = _toLogin
+    private val _tutorialEvent = MutableSharedFlow<TutorialEvent>()
 
-    private val _showTutorial = MutableLiveData<Boolean>()
-    val showTutorial: LiveData<Boolean> = _showTutorial
+    val tutorialEvent = _tutorialEvent.asSharedFlow()
+
 
     init {
         // Launch separate coroutines to manage the two LiveData values independently
         loadToLoginValue()
-        loadShowTutorialValue()
+        getShowTutorialValue()
+
     }
 
-    fun onChangeShowTutorial(newValue:Boolean) {
+
+    fun onFromOnBoardingClick() {
+        val state = _uiState.value
         viewModelScope.launch {
-            _showTutorial.value = newValue
-            setShowTutorial.invoke(newValue)  // Update the value in the data store repository
+            if (state.toLogin) {
+                _tutorialEvent.emit(TutorialEvent.NavigateToLogin)
+            }
+            else {
+                _tutorialEvent.emit(TutorialEvent.NavigateToCreateProfile)
+            }
         }
     }
 
     // Load `toLogin` value separately
     private fun loadToLoginValue() {
         viewModelScope.launch {
-            try {
-                val loginValue = getLoginValue() // Fetch the value using the use case
-                _toLogin.value = loginValue
-                Log.d("TutorialViewModel", "Success getting toLogin value: $loginValue")
-            } catch (e: Exception) {
-                Log.e("TutorialViewModel", "Error getting toLogin value: ${e.message}")
-            }
+                _uiState.update {
+                    it.copy(toLogin =getLoginValue())
+                }
         }
-    }
-    fun getValueShowTutorial():Boolean? {
-        viewModelScope.launch {
-            _showTutorial.value=getShowTutorial()
-        }
-        return _showTutorial.let { _showTutorial.value }
     }
 
     // Load `showTutorial` value separately
-    private fun loadShowTutorialValue() {
+    private fun getShowTutorialValue() {
         viewModelScope.launch {
-            try {
-                val tutorialValue = getShowTutorial() // Fetch the value using the use case
-                _showTutorial.value = tutorialValue
-                Log.d("TutorialViewModel", "Success getting showTutorial value: $tutorialValue")
-            } catch (e: Exception) {
-                Log.e("TutorialViewModel", "Error getting showTutorial value: ${e.message}")
+            _uiState.update {
+                it.copy(showTutorial =getShowTutorial())
             }
         }
     }
-
-
-}
+  }

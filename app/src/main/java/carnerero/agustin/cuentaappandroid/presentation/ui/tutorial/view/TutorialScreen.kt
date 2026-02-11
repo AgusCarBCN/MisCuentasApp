@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -46,21 +45,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialItem
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import kotlinx.coroutines.launch
 
 @Composable
 fun Tutorial(
     tutorialViewModel: TutorialViewModel,
-    navToScreen: () -> Unit
+    navToLogin: () -> Unit,
+    navToCreateProfile: () -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        tutorialViewModel.tutorialEvent.collect { event ->
+            when (event) {
+                is TutorialEvent.NavigateToLogin -> navToLogin()
+                is TutorialEvent.NavigateToCreateProfile -> navToCreateProfile()
+            }
+        }
+    }
+
     // Detectar orientacion
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val toLogin by tutorialViewModel.toLogin.observeAsState(false)
+    val isLandscape = orientation == OrientationApp.Landscape
+    val state by tutorialViewModel.uiState.collectAsStateWithLifecycle()
     val listOfItems = getItems()
     val pagerState = rememberPagerState(
         pageCount = { listOfItems.size }
@@ -72,45 +84,40 @@ fun Tutorial(
     ) {
         val buttonField = maxWidth * 0.85f
         Column(
-                    modifier = Modifier
-                        .padding(top=if(isLandscape)20.dp else 80.dp)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    HorizontalPager(
-                        state = pagerState,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) { page ->
-                        ItemCard(item = listOfItems[page], isLandscape)
-                    }
-                    //Spacer(modifier = Modifier.height(12.dp))
-                    CircleIndicator(
-                        totalDots = listOfItems.size,
-                        selectedIndex = pagerState.targetPage
-                    )
-                    ModelButton(
-                        text = stringResource(id = if (toLogin) R.string.loginButton else R.string.createProfileButton),
-                        MaterialTheme.typography.labelLarge,
-                        modifier = Modifier
-                            .padding(top=20.dp)
-                            .width(buttonField)
-                            .heightIn(min = 48.dp)
-                       , true,
-                        onClickButton = { navToScreen() }
-                    )
-                }
-
+            modifier = Modifier
+                .padding(top = if (isLandscape) 20.dp else 80.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) { page ->
+                ItemCard(item = listOfItems[page], isLandscape)
             }
+            CircleIndicator(
+                totalDots = listOfItems.size,
+                selectedIndex = pagerState.targetPage
+            )
+            ModelButton(
+                text = stringResource(id = if (state.toLogin) R.string.loginButton else R.string.createProfileButton),
+                MaterialTheme.typography.labelLarge,
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .width(buttonField)
+                    .heightIn(min = 48.dp), true,
+                onClickButton = { tutorialViewModel.onFromOnBoardingClick() }
+            )
         }
-
+    }
+}
 
 
 @Composable
-private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
-
+private fun ItemCard(item: TutorialItem, isLandscape: Boolean) {
 
 
     // Creamos un animatable para manejar el color del ícono
@@ -191,43 +198,39 @@ private fun ItemCard(item: TutorialItem,isLandscape:Boolean) {
                         color = colors.textColor
                     )
                 }
-            }
-                else{
+            } else {
 
-                    Row(
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Image(
+                        painter = painterResource(id = item.iconItem),
+                        contentDescription = null,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Image(
-                            painter = painterResource(id = item.iconItem),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(imageSize)
-                                .padding(end = 16.dp),
-                            contentScale = ContentScale.Fit,
-                            colorFilter = if (item.iconItem != R.drawable.contabilidad) ColorFilter.tint(
-                                color.value
-                            )
-                            else null
+                            .size(imageSize)
+                            .padding(end = 16.dp),
+                        contentScale = ContentScale.Fit,
+                        colorFilter = if (item.iconItem != R.drawable.contabilidad) ColorFilter.tint(
+                            color.value
                         )
-                        Text(
-                            text = item.descriptionItem,
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = colors.textColor
-                        )
-                    }
+                        else null
+                    )
+                    Text(
+                        text = item.descriptionItem,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = colors.textColor
+                    )
                 }
             }
         }
     }
-
-
-
+}
 
 
 @Composable
@@ -280,8 +283,8 @@ private fun CircleIndicator(
     selectedIndex: Int,
     modifier: Modifier = Modifier
 ) {
-    val indicatorSelected= stringResource(id = R.string.indicatorSelected)
-    val indicatorUnSelected= stringResource(id = R.string.indicatorNoSelected)
+    val indicatorSelected = stringResource(id = R.string.indicatorSelected)
+    val indicatorUnSelected = stringResource(id = R.string.indicatorNoSelected)
     Column(
         modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -297,7 +300,10 @@ private fun CircleIndicator(
                 // Animación de escala para el punto seleccionado
                 val scale = animateFloatAsState(
                     targetValue = if (index == selectedIndex) 1.1f else 1f, // Escala más grande si es el seleccionado
-                    animationSpec = spring(dampingRatio = Spring.DampingRatioHighBouncy, stiffness = Spring.StiffnessLow),
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioHighBouncy,
+                        stiffness = Spring.StiffnessLow
+                    ),
                     label = "indicatorTutorial $index"
                 )
                 val indicatorColor by animateColorAsState(
@@ -314,11 +320,12 @@ private fun CircleIndicator(
                 )
 
                 Icon(
-                    painter = painterResource (if(index==selectedIndex)R.drawable.indicatorselected
-                    else R.drawable.circleindicator ),
-                    contentDescription = if(index==selectedIndex)"$indicatorSelected $index"
-                    else "$indicatorUnSelected $index"
-                    ,
+                    painter = painterResource(
+                        if (index == selectedIndex) R.drawable.indicatorselected
+                        else R.drawable.circleindicator
+                    ),
+                    contentDescription = if (index == selectedIndex) "$indicatorSelected $index"
+                    else "$indicatorUnSelected $index",
                     tint = indicatorColor,
                     modifier = Modifier
                         .scale(scale.value)

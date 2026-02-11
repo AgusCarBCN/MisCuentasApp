@@ -288,7 +288,7 @@ fun CalculatorLandscapeUI(
                                                     R.string.requiredInterestRateDes,
                                                     listOf(R.string.rate_inputPV,
                                                         R.string.rate_inputFV,
-                                                        R.string.rateperiod))
+                                                        R.string.rate_inputPeriods))
                                             }
                                             "Time" -> {
                                                 calculatorViewModel.openDialog(R.string.numberOfPeriodsTitle,
