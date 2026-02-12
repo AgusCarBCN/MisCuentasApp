@@ -21,7 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ModelButton(
     text: String,
-    textStyle:TextStyle,
+    textStyle: TextStyle,
     modifier: Modifier, // Permitir modificar el botón desde el exterior
     enabledButton: Boolean = true,
     onClickButton: () -> Unit

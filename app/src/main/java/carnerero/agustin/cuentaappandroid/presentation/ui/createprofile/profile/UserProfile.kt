@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.main.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile
 
 data class UserProfile (
     val name: String,

@@ -44,7 +44,7 @@ fun SplashScreen(
     var isVisible by remember { mutableStateOf(false) }
     val state by tutorialViewModel.uiState.collectAsStateWithLifecycle()
     val scaleAnimation = remember { Animatable(initialValue = 0f) }
-   // tutorialViewModel.onFromSplash()
+
     // Animación de logo
     LaunchedEffect(key1 = true,state.showTutorial) {
         isVisible = true // Activar visibilidad después de la inicialización

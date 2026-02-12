@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,16 +17,15 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
 
 @Composable
 fun ProfileInputsSection(
     createViewModel: ProfileViewModel
 
 ) {
-    val updatedMessages = listOf(
+  /*  val updatedMessages = listOf(
         stringResource(id = R.string.userNameUpdated),  // Aquí obtienes el texto real del recurso
         stringResource(id = R.string.nameUpdated),
         stringResource(id = R.string.passwordUpdated)
@@ -95,7 +92,7 @@ fun ProfileInputsSection(
             )
         },
         true
-    )
+    )*/
 }
 
 @Composable

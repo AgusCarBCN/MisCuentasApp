@@ -44,7 +44,8 @@ fun ModelDialog(
                 color = colors.textColor)}
             ,
             confirmButton = {
-                ModelButton(text = stringResource(id = R.string.confirmButton),
+                ModelButton(
+                    text = stringResource(id = R.string.confirmButton),
                     MaterialTheme.typography.labelSmall,
                     modifier = Modifier.width(130.dp),
                     true,
@@ -53,7 +54,8 @@ fun ModelDialog(
                     } )
             },
             dismissButton = {
-                ModelButton(text = stringResource(id = R.string.cancelButton),
+                ModelButton(
+                    text = stringResource(id = R.string.cancelButton),
                     MaterialTheme.typography.labelSmall,
                     modifier = Modifier.width(130.dp),
                     true,
@@ -90,7 +92,8 @@ fun NotificationDialog(
                 color = colors.textColor)}
             ,
             confirmButton = {
-                ModelButton(text = stringResource(id = R.string.confirmButton),
+                ModelButton(
+                    text = stringResource(id = R.string.confirmButton),
                     MaterialTheme.typography.labelSmall,
                     modifier = Modifier.width(130.dp),
                     true,
@@ -99,7 +102,8 @@ fun NotificationDialog(
                     } )
             },
             dismissButton = {
-                ModelButton(text = stringResource(id = R.string.cancelButton),
+                ModelButton(
+                    text = stringResource(id = R.string.cancelButton),
                     MaterialTheme.typography.labelSmall ,
                     modifier = Modifier.width(130.dp),
                     true,

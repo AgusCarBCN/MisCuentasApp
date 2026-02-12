@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.datastore.preferences.core.edit
 import carnerero.agustin.cuentaappandroid.data.pref.UserPreferencesKeys
 import carnerero.agustin.cuentaappandroid.data.pref.dataStore
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext

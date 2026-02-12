@@ -391,7 +391,8 @@ fun EntriesWithCheckBox(
             }
         }
         if (listOfEntries.isNotEmpty()) {
-            ModelButton(text = stringResource(
+            ModelButton(
+                text = stringResource(
                 id = R.string.deleteButton
             ),
                 MaterialTheme.typography.labelLarge,

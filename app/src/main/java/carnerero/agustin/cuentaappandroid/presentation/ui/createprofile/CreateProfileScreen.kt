@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
 
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -17,11 +16,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 @Composable
@@ -30,8 +29,8 @@ fun CreateProfileScreen(
     categoriesViewModel: CategoriesViewModel,
     navToCreateAccounts: () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    val isLandscape = orientation == OrientationApp.Landscape
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
 

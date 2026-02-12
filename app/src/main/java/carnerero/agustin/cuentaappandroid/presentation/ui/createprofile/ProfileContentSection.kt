@@ -7,18 +7,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 
 @Composable
 
@@ -28,12 +34,26 @@ fun CreateContentSection(modifier: Modifier,
                          navToCreateAccounts:()->Unit
                          ){
 
-    val name by createViewModel.name.observeAsState("")
-    val userName by createViewModel.username.observeAsState("")
-    val password by createViewModel.password.observeAsState("")
-    val repeatPassword by createViewModel.repeatPassword.observeAsState("")
-    val enableButton by createViewModel.enableButton.observeAsState(false)
+    val state by createViewModel.uiState.collectAsStateWithLifecycle()
+    val eventEffect by createViewModel.effect.collectAsState(initial = ProfileEffect.Idle)
     val messageProfileCreated = message(resource = R.string.profileCreated)
+    val enableButton=state.name.isNotBlank() &&
+            state.username.length >= 3 &&
+            state.password.length >= 6 &&
+            state.password == state.repeatPassword
+
+    LaunchedEffect(eventEffect) {
+        when (eventEffect) {
+            is ProfileEffect.NavigateToCreateAccounts -> {
+                navToCreateAccounts()
+            }
+            is ProfileEffect.ProfileSavedMessage ->{
+                SnackBarController.sendEvent(SnackBarEvent(messageProfileCreated))
+            }
+
+            else -> {}
+        }
+    }
     val modifierField = Modifier
         .fillMaxWidth(0.85f)
         .heightIn(min = 48.dp)
@@ -44,14 +64,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField ,
             stringResource(id = R.string.enterName),
-            name,
+            state.name,
             onTextChange = {
-                createViewModel.onTextFieldsChanged(
-                    it,
-                    userName,
-                    password,
-                    repeatPassword
-                )
+                createViewModel.onUserEvent(ProfileUiEvent.OnNameChange(it))
             },
             BoardType.TEXT,
             false
@@ -59,14 +74,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.enterUsername),
-            userName,
+            state.username,
             onTextChange = {
-                createViewModel.onTextFieldsChanged(
-                    name,
-                    it,
-                    password,
-                    repeatPassword
-                )
+                createViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))
             },
             BoardType.TEXT,
             false
@@ -74,14 +84,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.enterPassword),
-            password,
+            state.password,
             onTextChange = {
-                createViewModel.onTextFieldsChanged(
-                    name,
-                    userName,
-                    it,
-                    repeatPassword
-                )
+                createViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))
             },
             BoardType.PASSWORD,
             true
@@ -89,14 +94,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.repeatpassword),
-            repeatPassword,
+            state.repeatPassword,
             onTextChange = {
-                createViewModel.onTextFieldsChanged(
-                    name,
-                    userName,
-                    password,
-                    it
-                )
+                createViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))
             },
             BoardType.PASSWORD,
             true
@@ -107,13 +107,10 @@ fun CreateContentSection(modifier: Modifier,
             modifier = modifierField,
             enableButton,
             onClickButton = {
-                navToCreateAccounts()
-                createViewModel.createProfile(
-                    name,
-                    userName,
-                    password,
-                    messageProfileCreated
-                )
+                val profile= UserProfile(state.name,state.username,state.password)
+                createViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(profile))
+
+               // createViewModel.createProfile(profile)
                 categoriesViewModel.populateCategories()
             }
         )

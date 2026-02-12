@@ -12,11 +12,13 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.Greet
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEffect
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginUiState
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

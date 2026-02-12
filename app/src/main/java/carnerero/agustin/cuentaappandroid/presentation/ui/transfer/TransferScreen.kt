@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.transfer
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -43,7 +42,6 @@ import java.util.Date
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import kotlinx.coroutines.CoroutineScope
 
 
 @Composable

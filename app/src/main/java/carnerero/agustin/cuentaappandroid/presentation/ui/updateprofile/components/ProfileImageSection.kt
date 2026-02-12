@@ -12,14 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileImageWithCamera
 
 @Composable
 fun ProfileImageSection(
     createProfileViewModel: ProfileViewModel
 
-) {
+) {/*
     val message= stringResource(id = R.string.photoUpdated)
     val selectedImageUri by createProfileViewModel.selectedImageUri.observeAsState(null)
     val enableChangeImage by createProfileViewModel.enableChangeImage.observeAsState(false)
@@ -48,5 +48,5 @@ fun ProfileImageSection(
             enableName,
             enablePassword
         )
-    }
+    }*/
 }

@@ -26,9 +26,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
@@ -39,7 +40,9 @@ import coil.request.ImageRequest
 fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val selectedImageUriSavedFromFile by viewModel.selectedImageUriSaved.observeAsState(null)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    //val selectedImageUriSavedFromFile by viewModel.selectedImageUriSaved.observeAsState(null)
     // Llama a `onImageNoSelected()` si no hay una imagen seleccionada o guardada
     //viewModel.onImageNoSelected()
     // Lanza el selector de imágenes
@@ -47,7 +50,9 @@ fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedImageUri = uri
-        selectedImageUri?.let { viewModel.onImageSelected(it) }
+        selectedImageUri?.let {
+            viewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))
+        }
     }
 
     Box(
@@ -65,10 +70,10 @@ fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
             ) {
                 if (selectedImageUri == null) {
                     Image(
-                        painter = if (selectedImageUriSavedFromFile == null || selectedImageUriSavedFromFile == Uri.EMPTY) painterResource(
+                        painter = if (state.selectedImageUriSaved == null || state.selectedImageUriSaved == Uri.EMPTY) painterResource(
                             id = R.drawable.contabilidad
                         )
-                        else rememberAsyncImagePainter(model = selectedImageUriSavedFromFile), // Reemplaza con tu imagen de placeholder
+                        else rememberAsyncImagePainter(model = state.selectedImageUriSaved), // Reemplaza con tu imagen de placeholder
                         contentDescription = "Profile Image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

@@ -1,7 +1,7 @@
 package carnerero.agustin.cuentaappandroid.domain.datastore
 
 import carnerero.agustin.cuentaappandroid.data.repository.UserDataStoreRepository
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 import javax.inject.Inject
 
 /*/ Este es un método suspendido que usa el operador `invoke`.
