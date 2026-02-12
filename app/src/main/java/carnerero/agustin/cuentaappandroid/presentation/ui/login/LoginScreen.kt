@@ -26,9 +26,9 @@ fun LoginScreen(
     modifier: Modifier,
     navToMain: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         loginViewModel.getLoginImage()
-    }
+    }*/
 
     // Detectar orientacion
     val configuration = LocalConfiguration.current

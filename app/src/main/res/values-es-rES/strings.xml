@@ -19,7 +19,7 @@
     <string name="forgotpassword">¿Olvidaste la contraseña?</string>
     <string name="requestuser">Introduce nombre de usuario(paso 1)</string>
     <string name="newpassword">Introduce nueva contraseña (paso 2)</string>
-    <string name="goodmornig">Buenos días</string>
+    <string name="goodmorning">Buenos días</string>
     <string name="goodafternoon">Buenas tardes</string>
     <string name="goodevening">Buenas noches</string>
     <!--Home-->

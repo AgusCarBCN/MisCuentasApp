@@ -12,8 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -34,40 +34,49 @@ import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 
 @Composable
-fun ContentSection(loginViewModel: LoginViewModel,
-                   modifier:Modifier,
-                   navToMain:()->Unit){
+fun ContentSection(
+    loginViewModel: LoginViewModel,
+    modifier: Modifier,
+    navToHome: () -> Unit
+) {
     val state by loginViewModel.uiState.collectAsStateWithLifecycle()
-    val messageInvalidLogin= message(resource = R.string.inValidLogin)
-    val messageInvalidUserName= message(resource = R.string.inValidUserName)
-
-    LaunchedEffect(Unit) {
-        loginViewModel.event.collect { event ->
-            when (event) {
-                is LoginEvent.NavigateToMain -> navToMain()
-                is LoginEvent.ShowInvalidLogin -> {
-                    SnackBarController.sendEvent(SnackBarEvent(messageInvalidLogin))
-                }
-                is LoginEvent.ShowInvalidUserName -> (SnackBarController.sendEvent(SnackBarEvent(messageInvalidUserName)))
-            }
-        }
+    val eventEffect by loginViewModel.effect.collectAsState(initial = LoginEffect.Idle)
+    val messageInvalidLogin = message(resource = R.string.inValidLogin)
+    val messageInvalidUserName = message(resource = R.string.inValidUserName)
+    val greeting = when(loginViewModel.getGreetingHour()) {
+        GreetingType.MORNING -> stringResource(R.string.goodmorning)+" ${state.name}"
+        GreetingType.AFTERNOON -> stringResource(R.string.goodafternoon)+" ${state.name}"
+        GreetingType.EVENING -> stringResource(R.string.goodevening)+" ${state.name}"
     }
 
+    LaunchedEffect(eventEffect) {
+        when (eventEffect) {
+            is LoginEffect.NavigateToHome -> {
+                navToHome()
+            }
+            is LoginEffect.ShowInvalidCredentialsMessage -> {
+                SnackBarController.sendEvent(SnackBarEvent(messageInvalidLogin))
+            }
+            is LoginEffect.ShowInvalidUserNameMessage -> (SnackBarController.sendEvent(
+                SnackBarEvent(messageInvalidUserName)
+            ))
+        }
+
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
-            .background(colors.backgroundPrimary)
-            ,
+            .background(colors.backgroundPrimary),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         if (!state.showNewPasswordFields) {
             Text(
-                modifier= Modifier.padding(top=dimens.extraLarge),
-                text = loginViewModel.getGreeting(state.name),
+                modifier = Modifier.padding(top = dimens.extraLarge),
+                text = greeting,
                 fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_title_medium).toSp() },
                 color = colors.textColor,
                 fontWeight = FontWeight.Bold
@@ -76,14 +85,14 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 modifier = modifier,
                 stringResource(id = R.string.enterUsername),
                 state.userName,
-                onTextChange = loginViewModel::onUserNameChange,
+                onTextChange = {loginViewModel.onUserEvent(LoginUiEvent.OnUserNameChange(it))},
                 BoardType.TEXT
             )
             TextFieldComponent(
                 modifier = modifier,
                 stringResource(id = R.string.enterPassword),
                 state.password,
-                onTextChange = loginViewModel::onPasswordChange,
+                onTextChange = {loginViewModel.onUserEvent(LoginUiEvent.OnPasswordChange(it))},
                 BoardType.PASSWORD,
                 true
             )
@@ -93,13 +102,13 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 modifier = modifier,
                 state.enableLoginButton,
                 onClickButton = {
-                    loginViewModel.onLoginClick()
+                    loginViewModel.onUserEvent(LoginUiEvent.OnLoginClickOk)
                 }
             )
 
             TextButton(
                 onClick = {
-                    loginViewModel.enableNewPasswordFields(true)
+                    loginViewModel.onUserEvent(LoginUiEvent.OnForgotPasswordClick)
                 },
                 content = {
                     Text(
@@ -115,7 +124,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 modifier = modifier,
                 stringResource(id = R.string.requestuser),
                 state.userNameNewPassword,
-                onTextChange = {loginViewModel.onNewPasswordUserNameChange(it)},
+                onTextChange = { loginViewModel.onUserEvent(LoginUiEvent.OnNewPasswordUserNameChange(it)) },
                 BoardType.TEXT
             )
 
@@ -124,7 +133,7 @@ fun ContentSection(loginViewModel: LoginViewModel,
                 stringResource(id = R.string.newpassword),
                 state.newPassword,
                 onTextChange = {
-                    loginViewModel.onNewPasswordChange(it)
+                    loginViewModel.onUserEvent(LoginUiEvent.OnNewPasswordChange(it))
                 },
                 BoardType.PASSWORD,
                 true
@@ -132,20 +141,20 @@ fun ContentSection(loginViewModel: LoginViewModel,
             ModelButton(
                 text = stringResource(id = R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
-                modifier = modifier ,
+                modifier = modifier,
                 state.enableConfirmButton,
                 onClickButton = {
-                    loginViewModel.confirmNewPassword()
+                    loginViewModel.onUserEvent(LoginUiEvent.OnConfirmNewPasswordClick)
                 }
             )
 
             ModelButton(
                 text = stringResource(id = R.string.backButton),
                 MaterialTheme.typography.labelLarge,
-                modifier = modifier ,
+                modifier = modifier,
                 true,
                 onClickButton = {
-                    loginViewModel.enableNewPasswordFields(false)
+                    loginViewModel.onUserEvent(LoginUiEvent.OnBackToLoginClick)
                 }
             )
         }

@@ -24,9 +24,9 @@ import coil.compose.rememberAsyncImagePainter
 fun ImageSection(modifier: Modifier,
     loginViewModel: LoginViewModel
 ) {
-      LaunchedEffect(Unit) {
+     /* LaunchedEffect(Unit) {
           loginViewModel.getLoginImage()
-      }
+      }*/
 
     //val image =loginViewModel.getLoginImage()
     val state by loginViewModel.uiState.collectAsStateWithLifecycle()
