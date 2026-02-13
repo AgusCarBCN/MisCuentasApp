@@ -6,7 +6,9 @@ sealed class CreateAccountEvent {
 
     data class BalanceChanged(val value: String) : CreateAccountEvent()
 
-    data class CurrencySelected(val currency: Currency) : CreateAccountEvent()
+    data class CurrencySelected(val currency: String) : CreateAccountEvent()
 
-    object Submit : CreateAccountEvent()
+    object AddAccount : CreateAccountEvent()
+
+    object Confirm: CreateAccountEvent()
 }

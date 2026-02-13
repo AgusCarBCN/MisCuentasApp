@@ -91,6 +91,7 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
     override suspend fun setCurrencyCode(currencyCode: String) {
         context.dataStore.edit { preferences ->
             preferences[UserPreferencesKeys.CURRENCY_CODE] = currencyCode
+            Log.d("DATASTORE", "Saved currency inside edit = $currencyCode")
         }
     }
 

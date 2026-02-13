@@ -23,6 +23,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.Ba
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.EntryFormScreen
@@ -65,7 +66,7 @@ fun MainNavHost(
     val entriesViewModel: EntriesViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
     val calculatorViewModel: CalculatorViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
     val searchViewModel: SearchViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
-
+    val createAccountViewModel: CreateAccountViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -173,7 +174,7 @@ fun MainNavHost(
 
         composable(Routes.AddAccount.route) {
             CreateAccountsScreen(
-                accountsViewModel,
+                createAccountViewModel,
                 false,
                 navToLogin = {navController.navigate(Routes.Home.route)},
                 navToBack = { navController.popBackStack() }

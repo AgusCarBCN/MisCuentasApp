@@ -21,6 +21,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -97,7 +100,7 @@ fun CurrencySelectorV2(
             textStyle = MaterialTheme.typography.labelLarge,
             modifier = Modifier.fillMaxWidth(),
             onClickButton = {
-                state.isExpanded=true
+                createAccountViewModel.onDropdownExpandedChange(true)
             }
         )
 
@@ -111,19 +114,21 @@ fun CurrencySelectorV2(
         )
     }
 
-    if (state.isExpanded) {
+    if (state.isDropdownExpanded) {
         CurrencyDialogV2(createAccountViewModel)
     }
 }
 
 @Composable
-private fun CurrencyDialogV2(createAccountViewModel: CreateAccountViewModel) {
+private fun CurrencyDialogV2(
+    createAccountViewModel: CreateAccountViewModel
+    ) {
 
     val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
 
     Dialog(
         onDismissRequest = {
-           state.isExpanded=false
+          createAccountViewModel.onDropdownExpandedChange(false)
         }
     ) {
         Surface(
@@ -139,8 +144,8 @@ private fun CurrencyDialogV2(createAccountViewModel: CreateAccountViewModel) {
             ) {
                 items(state.currencies) { currency ->
                     CurrencyListItem(currency) {
-                        createAccountViewModel.onEvent(CreateAccountEvent.CurrencySelected(currency))
-                        state.isExpanded=false
+                        createAccountViewModel.onEvent(CreateAccountEvent.CurrencySelected(currency.currencyCode))
+                        createAccountViewModel.onDropdownExpandedChange(false)
                     }
                 }
             }

@@ -15,10 +15,11 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 
 @Composable
-public fun CurrencyAndActions(
+ fun CurrencyAndActions(
     createAccountViewModel: CreateAccountViewModel,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
@@ -26,6 +27,7 @@ public fun CurrencyAndActions(
 
         CurrencySelectorV2(createAccountViewModel)
             val effects by createAccountViewModel.effect.collectAsStateWithLifecycle(initialValue = CreateAccountEffect.Idle)
+            val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
         LaunchedEffect(effects) {
            when(effects){
                is CreateAccountEffect.NavigateToLogin -> navToLogin()
@@ -40,7 +42,7 @@ public fun CurrencyAndActions(
                 modifier = Modifier.fillMaxWidth(0.85f),
                 true
             ) {
-                createAccountViewModel.confirm()
+                createAccountViewModel.onEvent(CreateAccountEvent.Confirm)
             }
 
             ModelButton(

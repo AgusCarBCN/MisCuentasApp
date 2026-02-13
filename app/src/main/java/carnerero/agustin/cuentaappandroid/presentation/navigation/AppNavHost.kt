@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileScreen
@@ -33,6 +34,7 @@ fun AppNavHost(
     profileViewModel: ProfileViewModel,
     modifier: Modifier
 ) {
+    val createAccountViewModel: CreateAccountViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Splash.route
@@ -58,7 +60,7 @@ fun AppNavHost(
 
         composable(Routes.CreateAccounts.route) {
             CreateAccountsScreen(
-                accountsViewModel,
+                createAccountViewModel,
                 true,
                 navToLogin = {navController.navigate(Routes.Login.route)},
                 navToBack = { navController.popBackStack() }
