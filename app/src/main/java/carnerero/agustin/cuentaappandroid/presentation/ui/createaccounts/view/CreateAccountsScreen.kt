@@ -6,38 +6,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.layouts.LandScapeLayout
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.layouts.PortraitLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 //Mapa de divisas y simbolos
 @Composable
 fun CreateAccountsScreen(
-    accountsViewModel: AccountsViewModel,
+    createAccountViewModel: CreateAccountViewModel,
     enableSelector: Boolean,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {
     val isPortrait = orientation == OrientationApp.Portrait
-
-    val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
-    val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
-    val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
-    val accountName by accountsViewModel.name.observeAsState("")
-    val accountBalance by accountsViewModel.amount.observeAsState("")
-    val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(enableSelector)
-
-    LaunchedEffect(Unit) {
-        accountsViewModel.getListOfCurrencyCode()
-        accountsViewModel.getAllAccounts()
-    }
 
     Box(
         modifier = Modifier
@@ -46,186 +38,16 @@ fun CreateAccountsScreen(
     ) {
         if (isPortrait) {
             PortraitLayout(
-                accountsViewModel,
-                enableCurrencySelector,
-                isCurrencyExpanded,
-                isEnableButton,
-                accountName,
-                accountBalance,
-                currencyShowedCode,
+              createAccountViewModel,
                 navToLogin,
                 navToBack
             )
         } else {
             LandScapeLayout (
-                accountsViewModel,
-                enableCurrencySelector,
-                isCurrencyExpanded,
-                isEnableButton,
-                accountName,
-                accountBalance,
-                currencyShowedCode,
+              createAccountViewModel,
                 navToLogin,
                 navToBack
             )
         }
     }
 }
-
-/*
-@Composable
-
-fun CreateAccountsComponent(
-    accountsViewModel: AccountsViewModel,
-    enableSelector:Boolean,
-    navToLogin: () -> Unit,
-    navToBack: () -> Unit
-) {
-
-    val scope = rememberCoroutineScope()
-    val currencyShowedCode by accountsViewModel.currencyCodeShowed.observeAsState("EUR")
-    val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
-    val isCurrencyExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
-    val isEnableButton by accountsViewModel.isEnableButton.observeAsState(false)
-    val accountName by accountsViewModel.name.observeAsState("")
-    val accountBalance by accountsViewModel.amount.observeAsState("")
-    val enableCurrencySelector by accountsViewModel.enableCurrencySelector.observeAsState(
-        enableSelector
-    )
-    val messageSuccess = message(resource = R.string.newaccountcreated)
-    val messageError = message(resource = R.string.erroraccountcreated)
-    val errorWritingDataStore = message(resource = R.string.errorwritingdatastore)
-    LaunchedEffect(Unit) {
-        accountsViewModel.getListOfCurrencyCode()
-        accountsViewModel.getAllAccounts()
-
-    }
-
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val contentHeight = maxHeight * 1f
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colors.backgroundPrimary) // Reemplaza con tu color de fondo
-        ) {
-            Column(
-                modifier = if (enableSelector)
-                    Modifier.fillMaxSize()
-                        .padding(top =dimens.extraLarge)
-                else Modifier
-                    .fillMaxWidth()
-                    .padding(top = dimens.extraLarge)
-                    .verticalScroll(
-                        rememberScrollState()
-                    ),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (!isCurrencyExpanded) {
-                    Text(
-                        modifier = Modifier
-                            .padding(dimens.extraLarge),
-                        text = stringResource(id = R.string.createAccount),
-                        style = MaterialTheme.typography.titleLarge,
-                        textAlign = TextAlign.Center,
-                        color = colors.textColor
-                    )
-                    if (!enableCurrencySelector) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(60.dp),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            IconAnimated(
-                                iconResource = R.drawable.configaccountoption, sizeIcon = 120,
-                                colors.imageTutorialInit,
-                                colors.imageTutorialTarget
-                            )
-                        }
-                    }
-
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(id = R.string.createaccountmsg),
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                        color = colors.textColor
-                    )
-
-                    TextFieldComponent(
-                        modifier = fieldModifier,
-                        stringResource(id = R.string.amountName),
-                        accountName,
-                        onTextChange = {
-                            accountsViewModel.onTextFieldsChanged(
-                                it,
-                                accountBalance
-                            )
-                        },
-                        BoardType.TEXT,
-                        false
-                    )
-                    TextFieldComponent(
-                        modifier = fieldModifier,
-                        stringResource(id = R.string.enteramount),
-                        accountBalance,
-                        onTextChange = {
-                            accountsViewModel.onTextFieldsChanged(accountName, it)
-                        },
-                        BoardType.DECIMAL,
-                        false
-                    )
-                    ModelButton(
-                        text = stringResource(id = R.string.addAccount),
-                        MaterialTheme.typography.labelLarge,
-                        modifier = fieldModifier,
-                        isEnableButton,
-                        onClickButton = {
-                            accountsViewModel.createNewAccount(accountBalance,
-                                accountName,
-                                messageSuccess,
-                                messageError)
-                        }
-                    )
-
-                }
-                if (enableCurrencySelector) {
-                    CurrencySelector(accountsViewModel
-                    )
-                }
-                if (!isCurrencyExpanded) {
-                    if (enableCurrencySelector) {
-                        ModelButton(
-                            text = stringResource(id = R.string.confirmButton),
-                            MaterialTheme.typography.labelLarge,
-                            modifier = fieldModifier,
-                            enableSelector,
-                            onClickButton = {
-                                accountsViewModel.setCurrencyCode(currencyShowedCode)
-                                navToLogin()
-                            }
-                        )
-                        ModelButton(
-                            text = stringResource(id = R.string.backButton),
-                            MaterialTheme.typography.labelLarge,
-                            modifier = fieldModifier,
-                            true,
-                            onClickButton = {
-                                accountsViewModel.resetFields()
-                                navToBack()
-                            }
-                        )
-
-                    }
-                }
-
-            }
-        }
-    }
-}*/

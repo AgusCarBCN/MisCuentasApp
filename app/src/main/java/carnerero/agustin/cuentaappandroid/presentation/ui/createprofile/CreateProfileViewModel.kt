@@ -12,11 +12,14 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -34,8 +37,11 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
 
-    private val _effect = Channel<ProfileEffect>(Channel.BUFFERED)
-    val effect = _effect.receiveAsFlow()
+    private val _effect = MutableSharedFlow<ProfileEffect>(
+        replay = 0,
+        extraBufferCapacity = 1
+    )
+    val effect = _effect.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -134,9 +140,9 @@ class ProfileViewModel @Inject constructor(
                         password = profile.password
                     )
                 }
-                 _effect.send(ProfileEffect.ProfileSavedMessage)
+                 _effect.emit(ProfileEffect.ProfileSavedMessage)
                   delay(2000)
-                 _effect.send(ProfileEffect.NavigateToCreateAccounts)
+                 _effect.emit(ProfileEffect.NavigateToCreateAccounts)
             }
         }
 

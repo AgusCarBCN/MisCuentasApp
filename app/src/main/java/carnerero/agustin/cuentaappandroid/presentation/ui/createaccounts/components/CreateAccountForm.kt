@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
@@ -17,19 +21,17 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 
 @Composable
 public fun CreateAccountForm(
-    viewModel: AccountsViewModel,
-    enableCurrencySelector: Boolean,
-    isCurrencyExpanded: Boolean,
-    isEnableButton: Boolean,
-    accountName: String,
-    accountBalance: String
+   createAccountViewModel: CreateAccountViewModel
 ) {
-    val messageSuccess = message(resource = R.string.newaccountcreated)
-    val messageError = message(resource = R.string.erroraccountcreated)
-    if (isCurrencyExpanded) return
+    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
+    val enabledButton=state.isFormValid
 
     val fieldModifier = Modifier
         .fillMaxWidth(0.85f)
@@ -42,20 +44,18 @@ public fun CreateAccountForm(
         color = colors.textColor
     )
 
-    if (!enableCurrencySelector) {
-        IconAnimated(
+    IconAnimated(
             iconResource = R.drawable.configaccountoption,
             sizeIcon = 120,
             colors.imageTutorialInit,
             colors.imageTutorialTarget
-        )
-    }
+     )
 
     TextFieldComponent(
         modifier = fieldModifier,
         stringResource(R.string.amountName),
-        accountName,
-        onTextChange = { viewModel.onTextFieldsChanged(it, accountBalance) },
+        state.accountName,
+        onTextChange = {createAccountViewModel.onEvent(CreateAccountEvent.AccountNameChanged(it))},
         BoardType.TEXT,
         false
     )
@@ -63,8 +63,8 @@ public fun CreateAccountForm(
     TextFieldComponent(
         modifier = fieldModifier,
         stringResource(R.string.enteramount),
-        accountBalance,
-        onTextChange = { viewModel.onTextFieldsChanged(accountName, it) },
+        state.balance,
+        onTextChange = { createAccountViewModel.onEvent(CreateAccountEvent.BalanceChanged(it))},
         BoardType.DECIMAL,
         false
     )
@@ -73,14 +73,9 @@ public fun CreateAccountForm(
         text = stringResource(R.string.addAccount),
         MaterialTheme.typography.labelLarge,
         modifier = fieldModifier,
-        isEnableButton,
+        enabledButton,
         onClickButton = {
-            viewModel.createNewAccount(
-                accountBalance,
-                accountName,
-                messageSuccess,
-                messageError
-            )
+            createAccountViewModel.onEvent(CreateAccountEvent.Submit)
         }
     )
 }

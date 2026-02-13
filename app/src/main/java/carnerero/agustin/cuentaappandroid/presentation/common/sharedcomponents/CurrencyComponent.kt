@@ -28,12 +28,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material3.Text
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
 
 @Composable
 fun CurrencySelector(
@@ -72,6 +75,76 @@ fun CurrencySelector(
 
     if (isExpanded) {
         CurrencyDialog(accountsViewModel)
+    }
+}
+@Composable
+fun CurrencySelectorV2(
+    createAccountViewModel: CreateAccountViewModel,
+    modifier: Modifier = Modifier
+) {
+    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(colors.backgroundPrimary)
+            .padding(dimens.smallMedium),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        ModelButton(
+            text = stringResource(id = R.string.selectcurrencyoption),
+            textStyle = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.fillMaxWidth(),
+            onClickButton = {
+                state.isExpanded=true
+            }
+        )
+
+        Spacer(modifier = Modifier.height(dimens.medium))
+
+        Text(
+            text = "${stringResource(id = R.string.selectedcurrency)} ${state.selectedCurrency}",
+            color = colors.textColor,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+
+    if (state.isExpanded) {
+        CurrencyDialogV2(createAccountViewModel)
+    }
+}
+
+@Composable
+private fun CurrencyDialogV2(createAccountViewModel: CreateAccountViewModel) {
+
+    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
+
+    Dialog(
+        onDismissRequest = {
+           state.isExpanded=false
+        }
+    ) {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = colors.backgroundPrimary,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 400.dp)
+        ) {
+            LazyColumn(
+                modifier = Modifier.padding(dimens.medium),
+                verticalArrangement = Arrangement.spacedBy(dimens.small)
+            ) {
+                items(state.currencies) { currency ->
+                    CurrencyListItem(currency) {
+                        createAccountViewModel.onEvent(CreateAccountEvent.CurrencySelected(currency))
+                        state.isExpanded=false
+                    }
+                }
+            }
+        }
     }
 }
 

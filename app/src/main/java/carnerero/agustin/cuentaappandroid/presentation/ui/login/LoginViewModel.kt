@@ -39,8 +39,12 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState
 
-    private val _effect = Channel<LoginEffect>(Channel.BUFFERED)
-    val effect = _effect.receiveAsFlow()
+    private val _effect = MutableSharedFlow<LoginEffect>(
+        replay = 0,
+        extraBufferCapacity = 1
+    )
+    val effect = _effect.asSharedFlow()
+
 
 
     private var userProfile: UserProfile? = null
@@ -129,9 +133,9 @@ class LoginViewModel @Inject constructor(
             if (state.userName == user.profileUserName &&
                 state.password == user.profilePass
             ) {
-                _effect.send(LoginEffect.NavigateToHome)  // Evento de navegación
+                _effect.emit(LoginEffect.NavigateToHome)  // Evento de navegación
             }else{
-                _effect.send(LoginEffect.ShowInvalidCredentialsMessage)
+                _effect.emit(LoginEffect.ShowInvalidCredentialsMessage)
             }
         }
     }
@@ -188,7 +192,7 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }else{
-                _effect.send(LoginEffect.ShowInvalidUserNameMessage)
+                _effect.emit(LoginEffect.ShowInvalidUserNameMessage)
                 clearNewPasswordFields()
             }
         }

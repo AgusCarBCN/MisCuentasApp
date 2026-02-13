@@ -3,34 +3,44 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.compon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CurrencySelector
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CurrencySelectorV2
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 
 @Composable
 public fun CurrencyAndActions(
-    viewModel: AccountsViewModel,
-    enableCurrencySelector: Boolean,
-    isCurrencyExpanded: Boolean,
-    currencyShowedCode: String,
+    createAccountViewModel: CreateAccountViewModel,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {
-    if (enableCurrencySelector) {
-        CurrencySelector(viewModel)
 
-        if (!isCurrencyExpanded) {
+        CurrencySelectorV2(createAccountViewModel)
+            val effects by createAccountViewModel.effect.collectAsStateWithLifecycle(initialValue = CreateAccountEffect.Idle)
+        LaunchedEffect(effects) {
+           when(effects){
+               is CreateAccountEffect.NavigateToLogin -> navToLogin()
+               is CreateAccountEffect.NavigateBack -> navToBack()
+               else ->{}
+           }
+        }
+
             ModelButton(
                 text = stringResource(R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(0.85f),
                 true
             ) {
-                viewModel.setCurrencyCode(currencyShowedCode)
-                navToLogin()
+                createAccountViewModel.confirm()
             }
 
             ModelButton(
@@ -39,9 +49,8 @@ public fun CurrencyAndActions(
                 modifier = Modifier.fillMaxWidth(0.85f),
                 true
             ) {
-                viewModel.resetFields()
-                navToBack()
+                createAccountViewModel.back()
             }
         }
-    }
-}
+
+

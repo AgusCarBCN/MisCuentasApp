@@ -14,18 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.components.CreateAccountForm
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.components.CurrencyAndActions
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
 
 @Composable
- fun LandScapeLayout(
-    viewModel: AccountsViewModel,
-    enableCurrencySelector: Boolean,
-    isCurrencyExpanded: Boolean,
-    isEnableButton: Boolean,
-    accountName: String,
-    accountBalance: String,
-    currencyShowedCode: String,
+fun LandScapeLayout(
+    createAccountViewModel: CreateAccountViewModel,
     navToLogin: () -> Unit,
     navToBack: () -> Unit
 ) {
@@ -43,12 +40,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.compone
             verticalArrangement = Arrangement.Center
         ) {
             CreateAccountForm(
-                viewModel,
-                enableCurrencySelector,
-                isCurrencyExpanded,
-                isEnableButton,
-                accountName,
-                accountBalance
+                createAccountViewModel
             )
         }
 
@@ -63,10 +55,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.compone
             verticalArrangement = Arrangement.Center
         ) {
             CurrencyAndActions(
-                viewModel,
-                enableCurrencySelector,
-                isCurrencyExpanded,
-                currencyShowedCode,
+                createAccountViewModel,
                 navToLogin,
                 navToBack
             )
