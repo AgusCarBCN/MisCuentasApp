@@ -44,61 +44,23 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currencies
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
-/*
-@Composable
-fun CurrencyDialogConverter(
-    onDismiss: () -> Unit,
-    accountsViewModel: AccountsViewModel
-) {
-    val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
-    val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
-    val currencies by accountsViewModel.currencyCodeList.observeAsState(emptyList())
-    Dialog(
-        onDismissRequest = {
-            onDismiss()
-        }
-    ) {
-
-        Surface(
-            shape = MaterialTheme.shapes.medium,
-            color = colors.backgroundPrimary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 400.dp)
-        ) {
-            Column(Modifier.fillMaxWidth()) {
-                DropdownMenuComponent("from Currency",
-                    fromCurrency,
-                    currencies) {
-                        selected ->
-                    accountsViewModel.onChangeCurrencyFrom(selected.currencyCode)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                DropdownMenuComponent("to Currency",
-                    toCurrency,
-                    currencies) {
-                        selected ->
-                    accountsViewModel.onChangeCurrencyTo(selected.currencyCode)
-                }
-            }
-        }
-    }
-}
-*/
 
 @Composable
 fun CurrencyDialogConverter(
-    accountsViewModel: AccountsViewModel,
+    fromCurrency:String,
+    toCurrency:String,
+    onCurrenciesChange:(String,String)->Unit,
     amountValue: String,               // Valor actual del campo "Amount"
     onAmountChange: (String) -> Unit,  // Callback de cambio
     showDialog: Boolean,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
-    val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
-    val currencies by accountsViewModel.currencyCodeList.observeAsState(emptyList())
+
+
+    val currencies = Currencies.currencies
 
     if (!showDialog) return
 
@@ -153,7 +115,8 @@ fun CurrencyDialogConverter(
                     selectedOption = currencies.find { it.currencyCode == fromCurrency } ?: Currency("EUR", "euro currency",R.drawable.eu),
                     options = currencies
                 ) { selected ->
-                    accountsViewModel.onChangeCurrencyFrom(selected.currencyCode)
+                    onCurrenciesChange(selected.currencyCode,toCurrency)
+                    //accountsViewModel.onChangeCurrencyFrom(selected.currencyCode)
                 }
 
                 DropdownMenuComponent(
@@ -161,7 +124,8 @@ fun CurrencyDialogConverter(
                     selectedOption = currencies.find { it.currencyCode == toCurrency } ?: Currency("USD","usd currency", R.drawable.us),
                     options = currencies
                 ) { selected ->
-                    accountsViewModel.onChangeCurrencyTo(selected.currencyCode)
+                    onCurrenciesChange(fromCurrency,selected.currencyCode)
+                    //accountsViewModel.onChangeCurrencyTo(selected.currencyCode)
                 }
                 // Solo un campo: Amount
                 TextFieldComponent(
@@ -196,60 +160,6 @@ fun CurrencyDialogConverter(
 }
 
 
-/*@Composable
-fun CurrencyDialogConverter(
-    accountsViewModel: AccountsViewModel,
-    onDismiss: () -> Unit,
-    onAction:()->Unit
-
-) {
-    val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
-    val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
-    val currencies by accountsViewModel.currencyCodeList.observeAsState(emptyList())
-
-    Dialog(onDismissRequest = { onDismiss() }) {
-        Surface(
-            shape = MaterialTheme.shapes.medium,
-            color = colors.backgroundPrimary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 400.dp)
-        ) {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                // Dropdown para la moneda "From"
-                DropdownMenuComponent(
-                    label = "From Currency",
-                    selectedOption = currencies.find { it.currencyCode == fromCurrency } ?: Currency("EUR", "euro currency",R.drawable.eu),
-                    options = currencies
-                ) { selected ->
-                    accountsViewModel.onChangeCurrencyFrom(selected.currencyCode)
-                }
-
-                DropdownMenuComponent(
-                    label = "To Currency",
-                    selectedOption = currencies.find { it.currencyCode == toCurrency } ?: Currency("USD","usd currency", R.drawable.us),
-                    options = currencies
-                ) { selected ->
-                    accountsViewModel.onChangeCurrencyTo(selected.currencyCode)
-                }
-                ModelButton(text = stringResource(
-                    id = R.string.confirmButton
-                ),
-                    MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.width(320.dp),
-                    true,
-                    onClickButton = {
-                        onAction()
-                    })
-
-            }
-        }
-    }
-}*/
 @Composable
 fun DropdownMenuComponent(
     label: String,
@@ -276,7 +186,7 @@ fun DropdownMenuComponent(
         Box(
             modifier = Modifier
                 .onGloballyPositioned { coordinates ->
-                    buttonWidth.value = coordinates.size.width // Captura el ancho del botón
+                    buttonWidth.intValue = coordinates.size.width // Captura el ancho del botón
                 }
                 .background(colors.backgroundPrimary, shape = MaterialTheme.shapes.small)
                 .clickable { expanded = !expanded }
@@ -305,7 +215,7 @@ fun DropdownMenuComponent(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.width(with(LocalDensity.current) { buttonWidth.value.toDp() })
+            modifier = Modifier.width(with(LocalDensity.current) { buttonWidth.intValue.toDp() })
         ) {
             options.forEach { currency ->
                 DropdownMenuItem(

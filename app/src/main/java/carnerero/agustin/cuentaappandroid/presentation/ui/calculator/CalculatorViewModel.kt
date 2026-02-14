@@ -28,6 +28,12 @@ class CalculatorViewModel @Inject constructor(
     private val converterCurrency: ConvertCurrencyUseCase
 ) : ViewModel() {
 
+    var fromCurrency by mutableStateOf("EUR")
+        private set
+
+    var toCurrency by mutableStateOf("USD")
+        private set
+
     // Diálogo
     var showDialog by mutableStateOf(false)
         private set
@@ -431,6 +437,10 @@ class CalculatorViewModel @Inject constructor(
     }
     fun updateAmount(value:String){
         amount=value
+    }
+    fun onCurrenciesChange(newFromCurrency:String,newToCurrency:String){
+        fromCurrency=newFromCurrency
+        toCurrency=newToCurrency
     }
 
     // Actualizar un campo

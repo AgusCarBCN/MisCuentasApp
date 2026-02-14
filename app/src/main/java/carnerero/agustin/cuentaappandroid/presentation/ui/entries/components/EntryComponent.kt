@@ -195,7 +195,6 @@ fun EntryListV2(
     val groupedEntriesByDate = entries.groupBy { it.date }
     // Agrupar las entradas por categoría
     val entriesByCategory = Utils.getMapOfEntriesByCategory(entries)
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -21,10 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +35,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CurrencyDialogConverter
@@ -52,8 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CalculatorLandscapeUI(
-    calculatorViewModel: CalculatorViewModel,
-    accountsViewModel: AccountsViewModel
+    calculatorViewModel: CalculatorViewModel
 ) {
     val showDialog = calculatorViewModel.showDialog
     val titleRes = calculatorViewModel.currentTitleRes
@@ -61,14 +57,13 @@ fun CalculatorLandscapeUI(
     val fieldLabels = calculatorViewModel.currentFieldLabels
     val fieldValues = calculatorViewModel.fieldValues
 
-    val fromCurrency by accountsViewModel.fromCurrency.observeAsState("EUR")
-    val toCurrency by accountsViewModel.toCurrency.observeAsState("USD")
+    val fromCurrency =calculatorViewModel.fromCurrency
+    val toCurrency =calculatorViewModel.toCurrency
     val showConverterDialog = calculatorViewModel.showDialogConverter
     val amount =calculatorViewModel.amount
     val expression = calculatorViewModel.expression
 
-    val scope = rememberCoroutineScope()
-    val message = stringResource(R.string.noImplement)
+
     val buttonSpacing = 6.dp
     var isCursorVisible by remember { mutableStateOf(true) }
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -86,14 +81,16 @@ fun CalculatorLandscapeUI(
 
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
-
         listOf("AC", "(", ")", "÷", "mod", "PVc", "FVc"),
         listOf("7", "8", "9", "×", "log", "PVs", "FVs"),
         listOf("4", "5", "6", "-", "√", "Rate", "Time"),
         listOf("1", "2", "3", "+", "xʸ", "Int", "PMT"),
         listOf("0", ".", "⌫", "±", "%", "FX", "=")
     )
-        CurrencyDialogConverter(accountsViewModel,
+        CurrencyDialogConverter(
+            fromCurrency,
+            toCurrency,
+            onCurrenciesChange = calculatorViewModel::onCurrenciesChange,
             amount,
             {calculatorViewModel.updateAmount(it)},
             showConverterDialog,
