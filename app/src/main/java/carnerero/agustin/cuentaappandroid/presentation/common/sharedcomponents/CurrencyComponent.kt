@@ -103,7 +103,7 @@ fun CurrencySelectorV2(
             textStyle = MaterialTheme.typography.labelLarge,
             modifier = Modifier.fillMaxWidth(),
             onClickButton = {
-                onDropdownExpandedChange
+                onDropdownExpandedChange(true)
             }
         )
 
@@ -120,7 +120,7 @@ fun CurrencySelectorV2(
     if (isDropdownExpanded) {
         CurrencyDialogV2(currencies,
             onDropdownExpandedChange,
-            onCurrencySelectedChange
+             onCurrencySelectedChange
             )
     }
 }
@@ -133,7 +133,7 @@ private fun CurrencyDialogV2(
     ) {
     Dialog(
         onDismissRequest = {
-          onDropdownExpandedChange
+          onDropdownExpandedChange(false)
         }
     ) {
         Surface(
@@ -149,8 +149,8 @@ private fun CurrencyDialogV2(
             ) {
                 items(currencies) { currency ->
                     CurrencyListItem(currency) {
-                        onCurrencySelectedChange
-                        onDropdownExpandedChange
+                        onCurrencySelectedChange(currency.currencyCode)
+                        onDropdownExpandedChange(false)
                     }
                 }
             }

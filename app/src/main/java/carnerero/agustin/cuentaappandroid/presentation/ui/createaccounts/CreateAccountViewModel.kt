@@ -54,11 +54,9 @@ class CreateAccountViewModel @Inject constructor(
             _uiState.update {
                 it.copy(
                     currencies = currencies,
-                    selectedCurrency = getCurrencyCode.invoke()
+                    selectedCurrency = currencyCode
                 )
-
             }
-
         }
     }
 
