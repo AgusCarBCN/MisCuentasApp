@@ -20,39 +20,33 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.C
 
 @Composable
  fun CurrencyAndActions(
-    createAccountViewModel: CreateAccountViewModel,
-    navToLogin: () -> Unit,
+    onDropdownExpandedChange:(Boolean)->Unit,
+    onCurrencySelectChange:(String)->Unit,
+    isDropdownExpanded:Boolean,
+    selectedCurrency:String,
+    confirm: () -> Unit,
     navToBack: () -> Unit
 ) {
 
-        CurrencySelectorV2(createAccountViewModel)
-            val effects by createAccountViewModel.effect.collectAsStateWithLifecycle(initialValue = CreateAccountEffect.Idle)
-            val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
-        LaunchedEffect(effects) {
-           when(effects){
-               is CreateAccountEffect.NavigateToLogin -> navToLogin()
-               is CreateAccountEffect.NavigateBack -> navToBack()
-               else ->{}
-           }
-        }
+        CurrencySelectorV2(onDropdownExpandedChange,
+            onCurrencySelectChange,
+            isDropdownExpanded,
+            selectedCurrency,
+            )
 
             ModelButton(
                 text = stringResource(R.string.confirmButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(0.85f),
                 true
-            ) {
-                createAccountViewModel.onEvent(CreateAccountEvent.Confirm)
-            }
+            ) { confirm() }
 
             ModelButton(
                 text = stringResource(R.string.backButton),
                 MaterialTheme.typography.labelLarge,
                 modifier = Modifier.fillMaxWidth(0.85f),
                 true
-            ) {
-                createAccountViewModel.back()
-            }
+            ) { navToBack()}
         }
 
 

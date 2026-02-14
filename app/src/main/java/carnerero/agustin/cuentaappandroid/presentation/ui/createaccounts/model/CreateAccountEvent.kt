@@ -8,7 +8,11 @@ sealed class CreateAccountEvent {
 
     data class CurrencySelected(val currency: String) : CreateAccountEvent()
 
+    data class DropdownExpandedChange(val value:Boolean): CreateAccountEvent()
+
     object AddAccount : CreateAccountEvent()
 
     object Confirm: CreateAccountEvent()
+
+    object BackToCreateProfile: CreateAccountEvent()
 }

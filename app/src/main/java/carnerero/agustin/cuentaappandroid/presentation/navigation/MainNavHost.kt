@@ -175,7 +175,6 @@ fun MainNavHost(
         composable(Routes.AddAccount.route) {
             CreateAccountsScreen(
                 createAccountViewModel,
-                false,
                 navToLogin = {navController.navigate(Routes.Home.route)},
                 navToBack = { navController.popBackStack() }
             )

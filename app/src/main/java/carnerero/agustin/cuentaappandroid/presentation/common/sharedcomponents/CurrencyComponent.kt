@@ -40,6 +40,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currencies
 
 @Composable
 fun CurrencySelector(
@@ -82,13 +83,15 @@ fun CurrencySelector(
 }
 @Composable
 fun CurrencySelectorV2(
-    createAccountViewModel: CreateAccountViewModel,
-    modifier: Modifier = Modifier
+    onDropdownExpandedChange:(Boolean)->Unit,
+    onCurrencySelectedChange: (String) -> Unit,
+    isDropdownExpanded:Boolean,
+    selectedCurrency:String
 ) {
-    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
 
+    val currencies= Currencies.currencies
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .background(colors.backgroundPrimary)
             .padding(dimens.smallMedium),
@@ -100,35 +103,37 @@ fun CurrencySelectorV2(
             textStyle = MaterialTheme.typography.labelLarge,
             modifier = Modifier.fillMaxWidth(),
             onClickButton = {
-                createAccountViewModel.onDropdownExpandedChange(true)
+                onDropdownExpandedChange
             }
         )
 
         Spacer(modifier = Modifier.height(dimens.medium))
 
         Text(
-            text = "${stringResource(id = R.string.selectedcurrency)} ${state.selectedCurrency}",
+            text = "${stringResource(id = R.string.selectedcurrency)} $selectedCurrency",
             color = colors.textColor,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge
         )
     }
 
-    if (state.isDropdownExpanded) {
-        CurrencyDialogV2(createAccountViewModel)
+    if (isDropdownExpanded) {
+        CurrencyDialogV2(currencies,
+            onDropdownExpandedChange,
+            onCurrencySelectedChange
+            )
     }
 }
 
 @Composable
 private fun CurrencyDialogV2(
-    createAccountViewModel: CreateAccountViewModel
+    currencies:List<Currency>,
+    onDropdownExpandedChange: (Boolean) -> Unit,
+    onCurrencySelectedChange:(String)->Unit
     ) {
-
-    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
-
     Dialog(
         onDismissRequest = {
-          createAccountViewModel.onDropdownExpandedChange(false)
+          onDropdownExpandedChange
         }
     ) {
         Surface(
@@ -142,10 +147,10 @@ private fun CurrencyDialogV2(
                 modifier = Modifier.padding(dimens.medium),
                 verticalArrangement = Arrangement.spacedBy(dimens.small)
             ) {
-                items(state.currencies) { currency ->
+                items(currencies) { currency ->
                     CurrencyListItem(currency) {
-                        createAccountViewModel.onEvent(CreateAccountEvent.CurrencySelected(currency.currencyCode))
-                        createAccountViewModel.onDropdownExpandedChange(false)
+                        onCurrencySelectedChange
+                        onDropdownExpandedChange
                     }
                 }
             }

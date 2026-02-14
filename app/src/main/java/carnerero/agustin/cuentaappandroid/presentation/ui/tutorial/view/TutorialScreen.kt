@@ -96,7 +96,7 @@ fun Tutorial(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) { page ->
-                ItemCard(item = listOfItems[page], isLandscape)
+                ItemCard(item = listOfItems[page])
             }
             CircleIndicator(
                 totalDots = listOfItems.size,
@@ -117,7 +117,7 @@ fun Tutorial(
 
 
 @Composable
-private fun ItemCard(item: TutorialItem, isLandscape: Boolean) {
+private fun ItemCard(item: TutorialItem) {
 
 
     // Creamos un animatable para manejar el color del ícono

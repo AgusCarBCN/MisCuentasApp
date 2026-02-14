@@ -17,7 +17,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.compone
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.components.CurrencyAndActions
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
-
+/*
 @Composable
 fun PortraitLayout(
     createAccountViewModel: CreateAccountViewModel,
@@ -43,3 +43,4 @@ fun PortraitLayout(
         )
     }
 }
+*/

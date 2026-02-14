@@ -61,7 +61,6 @@ fun AppNavHost(
         composable(Routes.CreateAccounts.route) {
             CreateAccountsScreen(
                 createAccountViewModel,
-                true,
                 navToLogin = {navController.navigate(Routes.Login.route)},
                 navToBack = { navController.popBackStack() }
             )

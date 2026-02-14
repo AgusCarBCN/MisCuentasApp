@@ -19,12 +19,15 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.compone
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.components.CurrencyAndActions
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
-
+/*
 @Composable
 fun LandScapeLayout(
-    createAccountViewModel: CreateAccountViewModel,
-    navToLogin: () -> Unit,
-    navToBack: () -> Unit
+    selectedCurrency: String,
+    isDropdownExpanded: Boolean,
+    onDropdownExpandedChange: (Boolean) -> Unit,
+    onCurrencySelected: (String) -> Unit,
+    onConfirm: () -> Unit,
+    onBack: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -40,7 +43,7 @@ fun LandScapeLayout(
             verticalArrangement = Arrangement.Center
         ) {
             CreateAccountForm(
-                createAccountViewModel
+
             )
         }
 
@@ -62,3 +65,4 @@ fun LandScapeLayout(
         }
     }
 }
+*/

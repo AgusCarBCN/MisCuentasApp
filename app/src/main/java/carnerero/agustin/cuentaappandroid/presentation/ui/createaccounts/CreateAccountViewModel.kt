@@ -87,6 +87,13 @@ class CreateAccountViewModel @Inject constructor(
             is CreateAccountEvent.Confirm-> {
                 confirm()
             }
+
+            CreateAccountEvent.BackToCreateProfile -> {
+                back()
+            }
+            is CreateAccountEvent.DropdownExpandedChange -> {
+                onDropdownExpandedChange(event.value)
+            }
         }
     }
 
@@ -153,6 +160,7 @@ class CreateAccountViewModel @Inject constructor(
                setCurrencyCode.invoke(currencyCode)
         }
     }
+
 
 }
 

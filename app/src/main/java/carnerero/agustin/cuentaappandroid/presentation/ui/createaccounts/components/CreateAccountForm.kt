@@ -19,13 +19,17 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
 
 @Composable
-public fun CreateAccountForm(
-   createAccountViewModel: CreateAccountViewModel
+fun CreateAccountForm(
+    accountName:String,
+    balance:String,
+    onAccountNameChange:(String)->Unit,
+    onAccountBalanceChange:(String)->Unit,
+    addAccount:()->Unit,
+    isEnabledButton:Boolean
 ) {
-    val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
-    val enabledButton=state.isFormValid
 
     val fieldModifier = Modifier
         .fillMaxWidth(0.85f)
@@ -48,8 +52,8 @@ public fun CreateAccountForm(
     TextFieldComponent(
         modifier = fieldModifier,
         stringResource(R.string.amountName),
-        state.accountName,
-        onTextChange = {createAccountViewModel.onEvent(CreateAccountEvent.AccountNameChanged(it))},
+        accountName,
+        onTextChange =onAccountNameChange,
         BoardType.TEXT,
         false
     )
@@ -57,8 +61,8 @@ public fun CreateAccountForm(
     TextFieldComponent(
         modifier = fieldModifier,
         stringResource(R.string.enteramount),
-        state.balance,
-        onTextChange = { createAccountViewModel.onEvent(CreateAccountEvent.BalanceChanged(it))},
+        balance,
+        onTextChange =  onAccountBalanceChange,
         BoardType.DECIMAL,
         false
     )
@@ -67,9 +71,9 @@ public fun CreateAccountForm(
         text = stringResource(R.string.addAccount),
         MaterialTheme.typography.labelLarge,
         modifier = fieldModifier,
-        enabledButton,
+        isEnabledButton,
         onClickButton = {
-            createAccountViewModel.onEvent(CreateAccountEvent.AddAccount)
+           addAccount()
         }
     )
 }

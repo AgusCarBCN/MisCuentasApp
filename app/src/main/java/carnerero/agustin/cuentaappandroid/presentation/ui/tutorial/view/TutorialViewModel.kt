@@ -27,7 +27,6 @@ class TutorialViewModel @Inject constructor(
     val uiState: StateFlow<TutorialUiState> = _uiState
 
     private val _tutorialEvent = MutableSharedFlow<TutorialEvent>()
-
     val tutorialEvent = _tutorialEvent.asSharedFlow()
 
 
