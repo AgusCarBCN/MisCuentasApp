@@ -181,6 +181,99 @@ fun EntryList(
     }
 }
 }
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun EntryListV2(
+    entries: List<EntryDTO>,
+    currencyCode: String,
+    enableByDate:Boolean,
+    onEnableByDate:(Boolean)->Unit  ,
+    modifier: Modifier
+) {
+
+    // Agrupar las entradas por fecha
+    val groupedEntriesByDate = entries.groupBy { it.date }
+    // Agrupar las entradas por categoría
+    val entriesByCategory = Utils.getMapOfEntriesByCategory(entries)
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TextButton(onClick = { onEnableByDate(true) }) {
+                        Text(
+                            text = stringResource(id = R.string.bydate),
+                            color = if (enableByDate) colors.textHeadColor
+                            else colors.textColor,
+                            fontSize = 18.sp
+                        )
+                    }
+                    TextButton(onClick = { onEnableByDate(false) }) {
+                        Text(
+                            text = stringResource(id = R.string.bycategory),
+                            color = if (!enableByDate) colors.textHeadColor
+                            else colors.textColor,
+                            fontSize = 18.sp
+                        )
+                    }
+                }
+
+            // LazyColumn con los registros
+            LazyColumn(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (enableByDate) {
+                    groupedEntriesByDate.forEach { (date, entries) ->
+                        // Sticky Header con la fecha
+                        stickyHeader {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(50.dp)
+                                    .background(colors.backgroundPrimary),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                Text(
+                                    text = Utils.toDateFormatDayMonth(date),
+                                    color = colors.textColor,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(start = 16.dp)
+                                )
+                            }
+                        }
+                        items(entries) { entry ->
+                            ItemEntry(
+                                entry = entry,
+                                currencyCode = currencyCode
+                            )
+                        }
+                    }
+                } else {
+                    entriesByCategory.toList()
+                        .sortedByDescending { (_, info) -> info.second?.abs() }
+                        .forEach { (categoryName, info) ->
+                            val (icon, total) = info
+                            item {
+                                ItemCategory(
+                                    categoryName = categoryName,
+                                    categoryIcon = icon,
+                                    amount = total,
+                                    currencyCode = currencyCode
+                                )
+                            }
+                        }
+                }
+            }
+
+        }
+
+
+
+
 @Composable
 
 fun ItemEntry(

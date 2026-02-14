@@ -68,7 +68,7 @@ fun AppNavHost(
         composable(Routes.Login.route) {
             LoginScreen(
                 modifier = Modifier.fillMaxSize(),
-                navToMain = {
+                navToMainScreen = {
                     navController.navigate(Routes.Main.route)
                 }
             )

@@ -9,11 +9,15 @@ data class LoginUiState(
     val userName: String = "",
     val password: String = "",
     // Nueva contraseña
-    val userNameNewPassword: String = "",
     val newPassword: String = "",
-    // UI flags
-    val enableLoginButton: Boolean = false,
-    val enableConfirmButton: Boolean = false,
-    val showNewPasswordFields: Boolean = false
-)
+    val showNewPasswordFields:Boolean=false
+){
+    val enableButton: Boolean
+        get()=userName.isNotBlank() &&
+                ((password.isNotBlank() && password.length >= 6)
+                        ||
+                (newPassword.isNotBlank() && newPassword.length>=6))
+
+
+}
 

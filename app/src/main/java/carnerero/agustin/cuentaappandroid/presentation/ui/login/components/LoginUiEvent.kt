@@ -8,6 +8,7 @@ sealed class LoginUiEvent {
     data class OnNewPasswordUserNameChange(val value: String) : LoginUiEvent()
     data class OnNewPasswordChange(val value: String) : LoginUiEvent()
 
+
     data object OnBackToLoginClick : LoginUiEvent()
     data object OnLoginClickOk : LoginUiEvent()
     data object OnForgotPasswordClick : LoginUiEvent()

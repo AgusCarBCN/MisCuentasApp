@@ -21,16 +21,11 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun ImageSection(modifier: Modifier,
-    loginViewModel: LoginViewModel
+fun ImageSection(
+    modifier: Modifier,
+    imageUri:Uri?
 ) {
-     /* LaunchedEffect(Unit) {
-          loginViewModel.getLoginImage()
-      }*/
 
-    //val image =loginViewModel.getLoginImage()
-    val state by loginViewModel.uiState.collectAsStateWithLifecycle()
-    //val image by loginViewModel.selectedImageUriSaved.observeAsState(initial = null)
     Column(
         modifier = modifier
             .background(colors.imageBackground),
@@ -38,9 +33,9 @@ fun ImageSection(modifier: Modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = if (state.selectedImageUri == Uri.EMPTY)
+            painter = if (imageUri == Uri.EMPTY)
                 painterResource(R.drawable.contabilidad)
-            else rememberAsyncImagePainter(state.selectedImageUri),
+            else rememberAsyncImagePainter(imageUri),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

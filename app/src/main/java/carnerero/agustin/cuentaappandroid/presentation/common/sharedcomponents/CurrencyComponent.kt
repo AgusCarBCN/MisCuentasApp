@@ -148,16 +148,41 @@ private fun CurrencyDialogV2(
                 verticalArrangement = Arrangement.spacedBy(dimens.small)
             ) {
                 items(currencies) { currency ->
-                    CurrencyListItem(currency) {
-                        onCurrencySelectedChange(currency.currencyCode)
+                    CurrencyListItem2(currency){
                         onDropdownExpandedChange(false)
+                        onCurrencySelectedChange(currency.currencyCode)
                     }
                 }
             }
         }
     }
 }
-
+@Composable
+private fun CurrencyListItem2(currency: Currency,
+                              onClick:()->Unit) {
+    // Elemento de lista para mostrar cada moneda
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = {
+               onClick()
+            }) // Acción al hacer clic
+            .padding(dimens.mediumLarge),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = currency.flag),
+            contentDescription = "${currency.currencyCode} flag",
+            modifier = Modifier.size(36.dp)
+        )
+        Spacer(modifier = Modifier.width(dimens.mediumLarge)) // Espaciador entre la imagen y el texto
+        Text(
+            text = currency.currencyDescription,
+            color = colors.textColor,
+            style=MaterialTheme.typography.bodyMedium
+        )
+    }
+}
 
 
 @Composable
@@ -192,70 +217,9 @@ private fun CurrencyDialog(accountsViewModel: AccountsViewModel) {
     }
 }
 
-/*@Composable
-fun CurrencySelector(
-    accountsViewModel: AccountsViewModel,
-    modifier: Modifier = Modifier
-) {
-    val currencyCodeShowed by accountsViewModel.currencyCodeShowed.observeAsState("USD")
-    val isExpanded by accountsViewModel.isCurrencyExpanded.observeAsState(false)
-    val currencies by accountsViewModel.currencyCodeList.observeAsState(emptyList())
-
-    BoxWithConstraints(modifier = modifier) {
-        val contentWidth = maxWidth * 0.9f
-
-        Column(
-            modifier = Modifier
-                .width(contentWidth)
-                .background(colors.backgroundPrimary)
-                .padding(dimens.smallMedium),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (!isExpanded) {
-                ModelButton(
-                    text = stringResource(id = R.string.selectcurrencyoption),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClickButton = {
-                        accountsViewModel.onExpandedChange(true)
-                    }
-                )
-
-                Spacer(modifier = Modifier.height(dimens.medium))
-
-                Text(
-                    text = "${stringResource(id = R.string.selectedcurrency)} $currencyCodeShowed",
-                    color = colors.textColor,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-
-                ) {
-                    items(currencies) { currency ->
-                        CurrencyListItem(currency) {
-                            accountsViewModel.onCurrencyShowedChange(currency.currencyCode)
-                            accountsViewModel.onExpandedChange(false)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}*/
-
-
-
-
 @Composable
-private fun CurrencyListItem(currency: Currency, onCurrencySelected: () -> Unit) {
+private fun CurrencyListItem(currency: Currency,
+                             onCurrencySelected: () -> Unit) {
     // Elemento de lista para mostrar cada moneda
     Row(
         modifier = Modifier

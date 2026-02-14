@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,6 +33,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.Ent
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
@@ -62,11 +64,12 @@ fun MainNavHost(
     profileViewModel: ProfileViewModel
 ) {
 
-    val barChartViewModel: BarChartViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
-    val entriesViewModel: EntriesViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
-    val calculatorViewModel: CalculatorViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
-    val searchViewModel: SearchViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
-    val createAccountViewModel: CreateAccountViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
+    val barChartViewModel: BarChartViewModel = hiltViewModel()
+    val entriesViewModel: EntriesViewModel = hiltViewModel()
+    val calculatorViewModel: CalculatorViewModel =hiltViewModel()
+    val searchViewModel: SearchViewModel = hiltViewModel()
+    val createAccountViewModel: CreateAccountViewModel =hiltViewModel()
+    val homeViewModel: HomeViewModel= hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -75,10 +78,10 @@ fun MainNavHost(
 
         composable(Routes.Home.route) {
             HomeScreen(
-                accountsViewModel,
-                entriesViewModel
+                homeViewModel,
             )
-            { navController.navigate(Routes.Records.route) }
+
+
         }
         composable(Routes.Search.route) {
             SearchScreen(
