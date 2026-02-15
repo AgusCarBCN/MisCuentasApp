@@ -79,14 +79,16 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 EntryListV2(
+                    Modifier.width(maxWidthDp)
+                        .weight(1f),
                     entries,
                     currencyCodeSelected,
                     enableByDate,
                     {
                         homeViewModel.onEvent(HomeUiEvents.ShowEnableByDate(it))
                     },
-                    Modifier.width(maxWidthDp)
-                        .weight(1f)
+                    {homeViewModel.onEvent(HomeUiEvents.SHowEntries(false))},
+
                 )
                 ModelButton(
                     text = stringResource(id = R.string.backButton),

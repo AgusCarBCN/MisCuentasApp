@@ -9,7 +9,6 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllI
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

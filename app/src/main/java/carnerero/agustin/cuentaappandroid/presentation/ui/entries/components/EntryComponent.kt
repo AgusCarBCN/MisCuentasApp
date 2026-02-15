@@ -19,7 +19,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -184,41 +189,84 @@ fun EntryList(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EntryListV2(
+    modifier: Modifier,
     entries: List<EntryDTO>,
     currencyCode: String,
     enableByDate:Boolean,
-    onEnableByDate:(Boolean)->Unit  ,
-    modifier: Modifier
+    onEnableByDate:(Boolean)->Unit,
+    onBackToHome:()->Unit,
+
 ) {
 
     // Agrupar las entradas por fecha
     val groupedEntriesByDate = entries.groupBy { it.date }
     // Agrupar las entradas por categoría
     val entriesByCategory = Utils.getMapOfEntriesByCategory(entries)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    TextButton(onClick = { onEnableByDate(true) }) {
-                        Text(
-                            text = stringResource(id = R.string.bydate),
-                            color = if (enableByDate) colors.textHeadColor
-                            else colors.textColor,
-                            fontSize = 18.sp
-                        )
-                    }
-                    TextButton(onClick = { onEnableByDate(false) }) {
-                        Text(
-                            text = stringResource(id = R.string.bycategory),
-                            color = if (!enableByDate) colors.textHeadColor
-                            else colors.textColor,
-                            fontSize = 18.sp
-                        )
-                    }
-                }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+    ) {
+        // Icono de volver atrás alineado a la izquierda
+        IconButton(
+            onClick = { onBackToHome() },
+            modifier = Modifier.align(Alignment.CenterStart)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBackIosNew,
+                contentDescription = "Volver",
+                tint = colors.textColor
+            )
+        }
+
+        // Contenedor de los botones centrado horizontalmente
+        Row(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = { onEnableByDate(true) }) {
+                Text(
+                    text = stringResource(id = R.string.bydate),
+                    color = if (enableByDate) colors.textHeadColor else colors.textColor,
+                    fontSize = 18.sp
+                )
+            }
+            TextButton(onClick = { onEnableByDate(false) }) {
+                Text(
+                    text = stringResource(id = R.string.bycategory),
+                    color = if (!enableByDate) colors.textHeadColor else colors.textColor,
+                    fontSize = 18.sp
+                )
+            }
+        }
+    }
+
+
+    /*Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TextButton(onClick = { onEnableByDate(true) }) {
+            Text(
+                text = stringResource(id = R.string.bydate),
+                color = if (enableByDate) colors.textHeadColor
+                else colors.textColor,
+                fontSize = 18.sp
+            )
+        }
+        TextButton(onClick = { onEnableByDate(false) }) {
+            Text(
+                text = stringResource(id = R.string.bycategory),
+                color = if (!enableByDate) colors.textHeadColor
+                else colors.textColor,
+                fontSize = 18.sp
+            )
+        }
+    }*/
 
             // LazyColumn con los registros
             LazyColumn(
