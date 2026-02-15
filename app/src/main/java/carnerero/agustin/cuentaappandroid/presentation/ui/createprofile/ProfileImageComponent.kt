@@ -37,21 +37,19 @@ import coil.request.ImageRequest
 
 
 @Composable
-fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
+fun ProfileImageWithCamera(modifier: Modifier,
+                           selectedImageUriSaved:Uri?,
+                           onProfileImageChange:(Uri)->Unit) {
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    //val selectedImageUriSavedFromFile by viewModel.selectedImageUriSaved.observeAsState(null)
-    // Llama a `onImageNoSelected()` si no hay una imagen seleccionada o guardada
-    //viewModel.onImageNoSelected()
     // Lanza el selector de imágenes
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedImageUri = uri
         selectedImageUri?.let {
-            viewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))
+            onProfileImageChange(it)
         }
     }
 
@@ -70,10 +68,10 @@ fun ProfileImageWithCamera(modifier: Modifier,viewModel: ProfileViewModel) {
             ) {
                 if (selectedImageUri == null) {
                     Image(
-                        painter = if (state.selectedImageUriSaved == null || state.selectedImageUriSaved == Uri.EMPTY) painterResource(
+                        painter = if (selectedImageUriSaved == Uri.EMPTY) painterResource(
                             id = R.drawable.contabilidad
                         )
-                        else rememberAsyncImagePainter(model = state.selectedImageUriSaved), // Reemplaza con tu imagen de placeholder
+                        else rememberAsyncImagePainter(model = selectedImageUriSaved), // Reemplaza con tu imagen de placeholder
                         contentDescription = "Profile Image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

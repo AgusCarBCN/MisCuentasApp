@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.InsertCategoryUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SaveUriUseCase
@@ -13,7 +14,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEffect
+import carnerero.agustin.cuentaappandroid.utils.AppDataList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,6 +27,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.invoke
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -31,7 +35,8 @@ class ProfileViewModel @Inject constructor(
     private val getProfileData: GetUserProfileDataUseCase,
     private val setLoginTo: SetToLoginUseCase,
     private val saveUri: SaveUriUseCase,
-    private val getUri: GetPhotoFromUriUseCase
+    private val getUri: GetPhotoFromUriUseCase,
+    private val insertCategory: InsertCategoryUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileUiState())
@@ -45,7 +50,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-           getProfileData()
+            getProfileData()
             loadImageUri()
         }
     }
@@ -77,6 +82,7 @@ class ProfileViewModel @Inject constructor(
             is ProfileUiEvent.OnCreateProfile -> {
                 createProfile(event.value)
             }
+
             else -> {}
         }
     }
@@ -101,10 +107,11 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onPasswordChanged(newPassword: String) {
-            _uiState.update { current ->
-                current.copy(
-                    password = newPassword)
-            }
+        _uiState.update { current ->
+            current.copy(
+                password = newPassword
+            )
+        }
     }
 
     fun onImageSelected(selectedImage: Uri) {
@@ -128,26 +135,39 @@ class ProfileViewModel @Inject constructor(
         profile: UserProfile
     ) {
         viewModelScope.launch {
-                setProfileData(profile)
-                setLoginTo(true)
-                _uiState.value.selectedImageUri?.let {
-                    saveUri(it)
-                }
-                _uiState.update {
-                    it.copy(
-                        name = profile.name,
-                        username = profile.userName,
-                        password = profile.password
-                    )
-                }
-                 _effect.emit(ProfileEffect.ProfileSavedMessage)
-                  delay(2000)
-                 _effect.emit(ProfileEffect.NavigateToCreateAccounts)
+            setProfileData(profile)
+            setLoginTo(true)
+            _uiState.value.selectedImageUri?.let {
+                saveUri(it)
+            }
+            _uiState.update {
+                it.copy(
+                    name = profile.name,
+                    username = profile.userName,
+                    password = profile.password
+                )
+            }
+            populateCategories()
+            _effect.emit(ProfileEffect.ProfileSavedMessage)
+            delay(1000)
+            _effect.emit(ProfileEffect.NavigateToCreateAccounts)
+        }
+    }
+
+    private fun populateCategories() {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val incomeCategories= AppDataList.incomeCategories
+            val expenseCategories= AppDataList.expenseCategories
+            incomeCategories.forEach { category ->
+                insertCategory.invoke(category)
+            }
+            expenseCategories.forEach { category ->
+                insertCategory.invoke(category)
             }
         }
-
-
     }
+}
 
 
 

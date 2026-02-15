@@ -29,54 +29,40 @@ import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 @Composable
 
 fun CreateContentSection(modifier: Modifier,
-                         createViewModel: ProfileViewModel,
-                         categoriesViewModel: CategoriesViewModel,
-                         navToCreateAccounts:()->Unit
+                         name:String,
+                         userName:String,
+                         password:String,
+                         repeatPassword:String,
+                         onNameChange:(String)->Unit,
+                         onUserNameChange:(String)->Unit,
+                         onPasswordChange:(String)->Unit,
+                         onRepeatPasswordChange:(String)->Unit,
+                         createProfile:(UserProfile)->Unit,
+                         enableButton:Boolean
                          ){
 
-    val state by createViewModel.uiState.collectAsStateWithLifecycle()
-    val eventEffect by createViewModel.effect.collectAsState(initial = ProfileEffect.Idle)
-    val messageProfileCreated = message(resource = R.string.profileCreated)
-    val enableButton=state.name.isNotBlank() &&
-            state.username.length >= 3 &&
-            state.password.length >= 6 &&
-            state.password == state.repeatPassword
-
-    LaunchedEffect(eventEffect) {
-        when (eventEffect) {
-            is ProfileEffect.NavigateToCreateAccounts -> {
-                navToCreateAccounts()
-            }
-            is ProfileEffect.ProfileSavedMessage ->{
-                SnackBarController.sendEvent(SnackBarEvent(messageProfileCreated))
-            }
-
-            else -> {}
-        }
-    }
     val modifierField = Modifier
         .fillMaxWidth(0.85f)
         .heightIn(min = 48.dp)
     Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
+        modifier
+
     ) {
         TextFieldComponent(
             modifier = modifierField ,
             stringResource(id = R.string.enterName),
-            state.name,
+            name,
             onTextChange = {
-                createViewModel.onUserEvent(ProfileUiEvent.OnNameChange(it))
-            },
+                onNameChange(it)},
             BoardType.TEXT,
             false
         )
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.enterUsername),
-            state.username,
+            userName,
             onTextChange = {
-                createViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))
+               onUserNameChange(it)
             },
             BoardType.TEXT,
             false
@@ -84,9 +70,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.enterPassword),
-            state.password,
+            password,
             onTextChange = {
-                createViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))
+                onPasswordChange(it)
             },
             BoardType.PASSWORD,
             true
@@ -94,10 +80,9 @@ fun CreateContentSection(modifier: Modifier,
         TextFieldComponent(
             modifier = modifierField,
             stringResource(id = R.string.repeatpassword),
-            state.repeatPassword,
+            repeatPassword,
             onTextChange = {
-                createViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))
-            },
+                onRepeatPasswordChange(it)},
             BoardType.PASSWORD,
             true
         )
@@ -107,11 +92,8 @@ fun CreateContentSection(modifier: Modifier,
             modifier = modifierField,
             enableButton,
             onClickButton = {
-                val profile= UserProfile(state.name,state.username,state.password)
-                createViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(profile))
-
-               // createViewModel.createProfile(profile)
-                categoriesViewModel.populateCategories()
+                val profile= UserProfile(name,userName,password)
+                createProfile(profile)
             }
         )
     }

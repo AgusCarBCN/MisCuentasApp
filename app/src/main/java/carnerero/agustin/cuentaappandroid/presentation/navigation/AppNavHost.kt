@@ -54,7 +54,6 @@ fun AppNavHost(
         composable(Routes.CreateProfile.route) {
             CreateProfileScreen(
                 profileViewModel,
-                categoriesViewModel,
                 navToCreateAccounts = { navController.navigate(Routes.CreateAccounts.route) })
         }
 
