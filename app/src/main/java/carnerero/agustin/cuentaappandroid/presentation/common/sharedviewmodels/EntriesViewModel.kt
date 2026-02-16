@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -138,7 +139,7 @@ class EntriesViewModel @Inject constructor(
                     Log.e("ViewModel", "Error getting incomes: ${e.message}")
                 }
                 .collect { entries ->
-                    _listOfEntriesDTO.value = entries
+                    _listOfEntriesDTO.value = entries.first()
                 }
         }
     }
@@ -191,7 +192,7 @@ class EntriesViewModel @Inject constructor(
                 }
                 .collect {/* entries ->
                     _listOfEntries.value = entries*/
-                    _listOfEntriesDTO.value = it
+                    _listOfEntriesDTO.value = it.first()
                     _loading.value = false
                 }
 
@@ -213,7 +214,7 @@ class EntriesViewModel @Inject constructor(
                     Log.e("ViewModel", "Error getting expenses: ${e.message}")
                 }
                 .collect { entries ->
-                    _listOfEntriesDTO.value = entries
+                    _listOfEntriesDTO.value = entries.first()
                     _loading.value=false
                 }
         }
@@ -233,7 +234,7 @@ class EntriesViewModel @Inject constructor(
                     Log.e("ViewModel", "Error getting entries by account $accountId: ${e.message}")
                 }
                 .collect { entries ->
-                    _listOfEntriesDTO.value = entries
+                    _listOfEntriesDTO.value = entries.first()
                     _loading.value=false
                 }
         }
@@ -245,9 +246,9 @@ class EntriesViewModel @Inject constructor(
 
                 addEntry.invoke(entry)
                 if (entry.amount >= BigDecimal.ZERO) {
-                    getTotalIncomes()
+                    getTotalIncomes().first()
                 } else {
-                    getTotalExpenses()
+                    getTotalExpenses().first()
                 }
             resetFields()
             getTotal()
@@ -339,8 +340,8 @@ class EntriesViewModel @Inject constructor(
             val totalExpenses = totalExpensesDeferred.await()
 
             // Publicar los resultados en LiveData
-            _totalIncomes.postValue(totalIncomes)
-            _totalExpenses.postValue(totalExpenses)
+            _totalIncomes.postValue(totalIncomes.first())
+            _totalExpenses.postValue(totalExpenses.first())
         }
     }
 

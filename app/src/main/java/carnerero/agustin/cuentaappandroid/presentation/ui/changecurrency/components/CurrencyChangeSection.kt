@@ -57,7 +57,7 @@ fun CurrencyChangeSection(
                 entriesViewModel.getTotal()
                 entriesViewModel.getAllEntriesDTO()
                 accountsViewModel.updateAccountsBalancesByExchangeRates(ratio)
-                accountsViewModel.getAllAccounts()
+                //accountsViewModel.getAllAccounts()
 
                 withContext(Dispatchers.Main) {
                     SnackBarController.sendEvent(

@@ -25,7 +25,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
 
 @Composable
 fun SelectAccountScreen(
@@ -36,7 +36,7 @@ fun SelectAccountScreen(
     val listOfAccounts by accountsViewModel.listOfAccounts.observeAsState(emptyList())
     val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
     LaunchedEffect(Unit) {
-        accountsViewModel.getAllAccounts()
+       // accountsViewModel.getAllAccounts()
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth*0.85f

@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -9,13 +10,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
@@ -26,15 +29,17 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.CategorySelector
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.EntryFormScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntriesWithEditIcon
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryList
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.CategorySelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.EntryFormScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.ModifyEntry
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntriesWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntriesWithEditIcon
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
@@ -66,10 +71,11 @@ fun MainNavHost(
 
     val barChartViewModel: BarChartViewModel = hiltViewModel()
     val entriesViewModel: EntriesViewModel = hiltViewModel()
-    val calculatorViewModel: CalculatorViewModel =hiltViewModel()
+    val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchViewModel = hiltViewModel()
-    val createAccountViewModel: CreateAccountViewModel =hiltViewModel()
-    val homeViewModel: HomeViewModel= hiltViewModel()
+    val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    val recordsViewModel: RecordsViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -79,6 +85,7 @@ fun MainNavHost(
         composable(Routes.Home.route) {
             HomeScreen(
                 homeViewModel,
+                navController
             )
 
 
@@ -112,10 +119,10 @@ fun MainNavHost(
             )
         }
         composable(Routes.RecordsToDelete.route) {
-            EntriesWithCheckBox(entriesViewModel,accountsViewModel)
+            EntriesWithCheckBox(entriesViewModel, accountsViewModel)
         }
         composable(Routes.RecordsToModify.route) {
-            EntriesWithEditIcon(entriesViewModel,accountsViewModel,navController)
+            EntriesWithEditIcon(entriesViewModel, accountsViewModel, navController)
         }
 
         // Drawer menu
@@ -126,11 +133,11 @@ fun MainNavHost(
         }
         composable(Routes.NewExpense.route) {
             CategorySelector(categoriesViewModel, CategoryType.EXPENSE) {
-                navController.navigate(Routes.NewEntry.route)
+                navController.navigateTopLevel(Routes.NewEntry.route)
             }
         }
         composable(Routes.NewEntry.route) {
-            EntryFormScreen (
+            EntryFormScreen(
                 entriesViewModel,
                 categoriesViewModel,
                 accountsViewModel
@@ -160,7 +167,7 @@ fun MainNavHost(
             { navController.navigate(Routes.Home.route) }
         }
         composable(Routes.Calculator.route) {
-            CalculatorScreen(calculatorViewModel,accountsViewModel)
+            CalculatorScreen(calculatorViewModel, accountsViewModel)
         }
         composable(Routes.About.route) {
             AboutScreen({ navController.navigate(Routes.AboutDescription.route) })
@@ -178,7 +185,7 @@ fun MainNavHost(
         composable(Routes.AddAccount.route) {
             CreateAccountsScreen(
                 createAccountViewModel,
-                navToLogin = {navController.navigate(Routes.Home.route)},
+                navToLogin = { navController.navigate(Routes.Home.route) },
                 navToBack = { navController.popBackStack() }
             )
 
@@ -230,26 +237,56 @@ fun MainNavHost(
             val recordJson = backStackEntry.arguments?.getString("recordJson")
             val entry = Gson().fromJson(recordJson, EntryDTO::class.java) // Deserialización
             // Obtener el parámetro
-            ModifyEntry(entry,entriesViewModel, searchViewModel,accountsViewModel ) {navController.navigateTopLevel(Routes.Home.route) }
+            ModifyEntry(
+                entry,
+                entriesViewModel,
+                searchViewModel,
+                accountsViewModel
+            ) { navController.navigateTopLevel(Routes.Home.route) }
         }
         composable(Routes.SpendingControl.route) {
             SpendingControlOptionsScreen(navController)
         }
         composable(Routes.SelectAccounts.route) {
-            SelectAccountScreen(accountsViewModel,searchViewModel)
+            SelectAccountScreen(accountsViewModel, searchViewModel)
         }
-        composable(Routes.SpendingControlByAccount.route){
+        composable(Routes.SpendingControlByAccount.route) {
             SpendingControlByAccountsScreen(accountsViewModel)
         }
         composable(Routes.SelectCategories.route) {
             SelectCategoriesScreen(categoriesViewModel, searchViewModel)
 
         }
-        composable(Routes.SpendingControlByCategory.route){
-            SpendingControlByCategoriesScreen(categoriesViewModel,accountsViewModel)
+        composable(Routes.SpendingControlByCategory.route) {
+            SpendingControlByCategoriesScreen(categoriesViewModel, accountsViewModel)
+        }
+
+        composable(
+            route = Routes.RecordScreen.route,
+            arguments = listOf(
+                navArgument("filter") { type = NavType.StringType },
+                navArgument("accountId") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
+        ) { backStackEntry ->
+
+            val filterName = backStackEntry.arguments?.getString("filter") ?: "Incomes"
+            val accountId = backStackEntry.arguments?.getInt("accountId") ?: -1
+
+            val filter = when (filterName) {
+                RecordsFilter.Expenses.routeName -> RecordsFilter.Expenses
+                RecordsFilter.Incomes.routeName -> RecordsFilter.Incomes
+                "RecordsByAccount" -> RecordsFilter.RecordsByAccount(accountId)
+                else -> RecordsFilter.Incomes
+            }
+
+            RecordScreen(recordsViewModel, filter)
         }
     }
-}
+    }
+
 
 
 

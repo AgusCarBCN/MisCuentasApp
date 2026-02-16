@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.data.repository
 
 import carnerero.agustin.cuentaappandroid.data.db.dao.AccountDao
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     }
 
     // 2. Listar todas las cuentas
-    suspend fun getAllAccounts(): List<Account> {
+     fun getAllAccounts(): Flow<List<Account>> {
         return accountDao.getAllAccounts()
     }
 

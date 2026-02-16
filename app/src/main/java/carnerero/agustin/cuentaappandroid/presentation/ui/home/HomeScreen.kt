@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,23 +28,22 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountCard
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.HeadCard
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.ModifyEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.entries.components.EntryListV2
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    navController: NavController
 ) {
 
     val state by homeViewModel.uiState.collectAsStateWithLifecycle()
@@ -53,55 +52,19 @@ fun HomeScreen(
     val totalExpenses = state.totalExpenses
     val accounts = state.accounts
     val currencyCodeSelected = state.currencyCode
-    val entries = state.listOfRecords
-    val message=stringResource(R.string.noentries)
     val isLandscape =
         orientation == OrientationApp.Landscape
-    val showEntries = state.showEntries
-    val enableByDate = state.enableByDate
     LaunchedEffect(effects) {
-
-        if(effects== HomeEffects.ShowNoEntriesMessage){
-            SnackBarController.sendEvent(SnackBarEvent(message))
+        when (effects) {
+            is HomeEffects.NavToRecordsScreen -> {
+                navController.navigate(Routes.RecordScreen.createRoute(state.filter))
+                Log.d("NAVIGATION", "Route:${state.route}")
+                Log.d("NAVIGATION","Route2:${Routes.RecordScreen.route}")
+            }
+            else -> {}
         }
     }
-    if (showEntries) {
-        BoxWithConstraints(Modifier.fillMaxSize()) {
-            val maxWidthDp = maxWidth * 0.85f
-            val maxHeightDp = maxHeight
-            val fieldModifier = Modifier
-                .fillMaxWidth(0.85f) // mismo ancho para TODOS
-                .heightIn(min = 48.dp)
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(colors.backgroundPrimary),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                EntryListV2(
-                    Modifier.width(maxWidthDp)
-                        .weight(1f),
-                    entries,
-                    currencyCodeSelected,
-                    enableByDate,
-                    {
-                        homeViewModel.onEvent(HomeUiEvents.ShowEnableByDate(it))
-                    },
-                    {homeViewModel.onEvent(HomeUiEvents.SHowEntries(false))},
 
-                )
-                ModelButton(
-                    text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = fieldModifier,
-                    true,
-                    onClickButton = {
-                        homeViewModel.onEvent(HomeUiEvents.SHowEntries(false))
-                    }
-                )
-            }
-        }
-    } else {
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
@@ -261,7 +224,7 @@ fun HomeScreen(
             }
         }
     }
-}
+
 
 
 

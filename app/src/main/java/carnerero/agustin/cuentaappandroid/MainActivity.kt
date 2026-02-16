@@ -113,12 +113,14 @@ class MainActivity : ComponentActivity() {
     }
     private fun createChannel() {
         val channel = NotificationChannel(
+
             CHANEL_NOTIFICATION,
             "channelAlert",
             NotificationManager.IMPORTANCE_HIGH
         )
         val notificationManager: NotificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
 
         notificationManager.createNotificationChannel(channel)
     }

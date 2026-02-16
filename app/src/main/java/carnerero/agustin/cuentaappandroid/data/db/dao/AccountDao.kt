@@ -6,6 +6,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.forEach
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -21,7 +24,7 @@ interface AccountDao {
 
     // 2️⃣ Listar todas las cuentas
     @Query("SELECT * FROM AccountEntity")
-    suspend fun getAllAccounts(): List<Account>
+     fun getAllAccounts(): Flow<List<Account>>
 
     // 3️⃣ Borrar cuenta
     @Delete
@@ -83,7 +86,7 @@ interface AccountDao {
 
     // 1️⃣4️⃣ Actualizar balance de todas las cuentas según tipo de cambio
     // NO se puede hacer directamente con BigDecimal en SQL, hacemos en Kotlin
-    @Transaction
+   /* @Transaction
     suspend fun updateAllBalancesByExchangeRate(rate: BigDecimal) {
         val accounts = getAllAccounts()
         accounts.forEach { account ->
@@ -91,5 +94,16 @@ interface AccountDao {
                 .setScale(8, RoundingMode.HALF_UP)
             updateAccountBalance(account.id, newBalance)
         }
+    }*/
+    @Transaction
+    suspend fun updateAllBalancesByExchangeRate(rate: BigDecimal) {
+        // Obtenemos la lista actual de cuentas de manera inmediata
+        val accounts = getAllAccounts().first() // first() obtiene el valor actual del Flow
+        accounts.forEach { account ->
+            val newBalance = account.balance.multiply(rate)
+                .setScale(8, RoundingMode.HALF_UP)
+            updateAccountBalance(account.id, newBalance)
+        }
     }
+
 }

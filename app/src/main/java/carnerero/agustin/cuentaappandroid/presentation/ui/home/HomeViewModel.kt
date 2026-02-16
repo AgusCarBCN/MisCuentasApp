@@ -3,17 +3,19 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
+import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter.*
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.RecordsList
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,11 +25,8 @@ class HomeViewModel @Inject constructor(
     private val getAccounts: GetAllAccountsUseCase,
     private val getTotalIncomes: GetSumTotalIncomesUseCase,
     private val getTotalExpenses: GetSumTotalExpensesUseCase,
-    private val getAllIncomes: GetAllIncomesUseCase,
-    private val getAllExpenses: GetAllExpensesUseCase,
-    private val getCurrencyCode: GetCurrencyCodeUseCase,
-    private val getAllRecordsByAccount: GetAllEntriesByAccountUseCase
-): ViewModel() {
+    private val getCurrencyCode: GetCurrencyCodeUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -36,123 +35,73 @@ class HomeViewModel @Inject constructor(
     val effect = _effect.asSharedFlow()
 
     init {
-        loadInitialData()
+
+        observeInitialData()
     }
 
     fun onEvent(event: HomeUiEvents) {
         when (event) {
             is HomeUiEvents.ShowExpenses -> {
-                getAllExpensesDTO()
-
+                onFilterChange(Expenses)
             }
-            is HomeUiEvents.ShowIncomes ->{
-                getAllIncomesDTO()
-
+            is HomeUiEvents.ShowIncomes -> {
+                onFilterChange(Incomes)
             }
-            is HomeUiEvents.ShowAllRecordsByAccount ->
-            {
-                getAllRecordsByAccountDTO(event.accountId)
+            is HomeUiEvents.ShowAllRecordsByAccount -> {
+                onFilterChange(RecordsByAccount(event.accountId))
             }
-            is HomeUiEvents.ShowEnableByDate->{
-                switchEnableByDate(event.value)
-            }
-
-            is HomeUiEvents.SHowEntries ->{
-                switchShowEntries(event.value)
-            }
-            else ->{
+            else -> {
 
             }
         }
     }
-
-    private fun switchEnableByDate(value:Boolean){
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    enableByDate = value
-                )
-            }
-        }
+    private fun onFilterChange(filter: RecordsFilter) {
+        _uiState.update { it.copy(filter = filter) }
+        navigateToRecords(filter)
     }
-    private fun loadInitialData() {
 
+
+    private fun observeInitialData() {
         viewModelScope.launch {
+            // Obtenemos currencyCode solo una vez
             val currencyCode = getCurrencyCode.invoke()
-            val accounts = getAccounts.invoke()
-            val totalIncomes = getTotalIncomes.invoke()
-            val totalExpenses = getTotalExpenses.invoke()
-            _uiState.update {
-                it.copy(
-                    currencyCode = currencyCode,
+            // Combinamos los flows que cambian
+            combine(
+                getAccounts.invoke(),
+                getTotalIncomes.invoke(),
+                getTotalExpenses.invoke()
+            ) { accounts, totalIncomes, totalExpenses ->
+                // Creamos el nuevo UiState completo
+                _uiState.value.copy(
                     accounts = accounts,
                     totalIncomes = totalIncomes,
-                    totalExpenses = totalExpenses
+                    totalExpenses = totalExpenses,
+                    currencyCode = currencyCode
                 )
+            }.collect { newState ->
+                _uiState.value = newState
             }
+        }
+    }
+    private fun navigateToRecords(filter: RecordsFilter) {
+        val route = when (filter) {
+            RecordsFilter.Expenses ->
+                Routes.RecordScreen.createRoute(RecordsFilter.Expenses)
+
+            RecordsFilter.Incomes ->
+                Routes.RecordScreen.createRoute(RecordsFilter.Incomes)
+
+            is RecordsFilter.RecordsByAccount ->
+                Routes.RecordScreen.createRoute(filter)
+        }
+
+        viewModelScope.launch {
+            _uiState.update { it.copy(route = route) }
+            _effect.emit(HomeEffects.NavToRecordsScreen)
         }
     }
 
-    private fun getAllExpensesDTO() {
-        viewModelScope.launch {
-            val entries = getAllExpenses.invoke()
-            if (entries.isEmpty()) {
-                _effect.emit(HomeEffects.ShowNoEntriesMessage)
-            } else {
-                _uiState.update {
-                    it.copy(
-                        showEntries = true,
-                        listOfRecords = entries
-                    )
-                }
-                _effect.emit(HomeEffects.NavToShowRecordsScreen)
-            }
-        }
-    }
-    private fun getAllIncomesDTO() {
-        viewModelScope.launch {
-            val entries = getAllIncomes.invoke()
-            if (entries.isEmpty()) {
-                _effect.emit(HomeEffects.ShowNoEntriesMessage)
-            } else {
-                _uiState.update {
-                    it.copy(
-                        showEntries = true,
-                        listOfRecords = entries
-                    )
-                }
-                _effect.emit(HomeEffects.NavToShowRecordsScreen)
-            }
-        }
 
-    }
-
-    // Método para obtener todas las entradas por cuenta
-    private fun getAllRecordsByAccountDTO(accountId: Int) {
-        viewModelScope.launch {
-            val entries = getAllRecordsByAccount.invoke(accountId)
-            if(entries.isEmpty()){
-                _effect.emit(HomeEffects.ShowNoEntriesMessage)
-            }else {
-                _uiState.update {
-                    it.copy(
-                        showEntries = true,
-                        listOfRecords = entries
-                    )
-                }
-                _effect.emit(HomeEffects.NavToShowRecordsScreen)
-            }
-        }
-    }
-    fun switchShowEntries(value:Boolean) {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    showEntries = value
-                )
-            }
-        }
-    }
 }
 
 

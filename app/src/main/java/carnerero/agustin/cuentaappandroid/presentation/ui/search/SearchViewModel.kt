@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels
+package carnerero.agustin.cuentaappandroid.presentation.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -76,10 +76,10 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     fun onAmountsFieldsChange(fromAmount: String, toAmount: String) {
         // Validar y actualizar el valor de amount
-        if (Utils.isValidDecimal(fromAmount)) {
+        if (Utils.Companion.isValidDecimal(fromAmount)) {
             _fromAmount.value = fromAmount
         }
-        if (Utils.isValidDecimal(toAmount)) {
+        if (Utils.Companion.isValidDecimal(toAmount)) {
             _toAmount.value = toAmount
         }
         if (validateAmounts(fromAmount, toAmount)) {
@@ -113,8 +113,8 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     fun validateDates(): Boolean {
         val fromDateString = _selectedFromDate.value ?: Date().dateFormat()
         val toDateString = _selectedToDate.value ?: Date().dateFormat()
-        val fromDate = Utils.convertStringToLocalDate(fromDateString)
-        val toDate = Utils.convertStringToLocalDate(toDateString)
+        val fromDate = Utils.Companion.convertStringToLocalDate(fromDateString)
+        val toDate = Utils.Companion.convertStringToLocalDate(toDateString)
         return fromDate.isBefore(toDate) || fromDate.isEqual(toDate)
     }
 

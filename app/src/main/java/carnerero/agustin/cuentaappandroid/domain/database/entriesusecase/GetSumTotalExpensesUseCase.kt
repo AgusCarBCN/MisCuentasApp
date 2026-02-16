@@ -1,11 +1,12 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
 import carnerero.agustin.cuentaappandroid.data.repository.EntryRepository
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class GetSumTotalExpensesUseCase  @Inject constructor(private val repository: EntryRepository){
 
-    suspend operator fun invoke(): BigDecimal = repository.getSumExpenses()
+    operator fun invoke(): Flow<BigDecimal> = repository.getSumExpenses()
 
 }

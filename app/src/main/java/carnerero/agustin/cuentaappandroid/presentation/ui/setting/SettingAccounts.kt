@@ -52,7 +52,7 @@ fun AccountList(
     navController: NavController
 ) {
     val currencyCode by accountsViewModel.currencyCodeShowed.observeAsState("USD")
-    accountsViewModel.getAllAccounts()
+    //accountsViewModel.getAllAccounts()
     // Observa el estado de la lista de cuentas
     val accounts by accountsViewModel.listOfAccounts.observeAsState(null)   // Observa el estado de la lista de cuentas
     val accountSelected by accountsViewModel.accountSelected.observeAsState(null)

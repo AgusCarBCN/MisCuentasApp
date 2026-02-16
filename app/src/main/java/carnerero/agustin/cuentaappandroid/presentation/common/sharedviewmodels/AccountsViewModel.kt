@@ -36,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -316,7 +317,7 @@ class AccountsViewModel @Inject constructor(
             getListOfCurrencyCode()
             updateExpensePercentage()
         }
-        getAllAccounts()
+       // getAllAccounts()
     }
 
     fun onShowDialogConverter(newValue: Boolean){
@@ -396,7 +397,7 @@ class AccountsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val accounts = withContext(Dispatchers.IO) { getAccounts.invoke() }
-                _listOfAccounts.postValue(accounts)
+                _listOfAccounts.postValue(accounts.first())
                 Log.d("Accounts", "Fetched all accounts successfully")
             } catch (e: Exception) {
                 Log.e("Accounts", "Error fetching all accounts: ${e.message}", e)
@@ -568,7 +569,7 @@ class AccountsViewModel @Inject constructor(
     fun updateCheckedAccount(accountId: Int, isChecked: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             updateChecked.invoke(accountId, isChecked)
-            getAllAccounts()
+            //getAllAccounts()
         }
     }
     fun upDateSpendingLimitAccount(accountId: Int, newAmount: BigDecimal) {
@@ -672,7 +673,7 @@ class AccountsViewModel @Inject constructor(
 
     private fun onAccountUpdated() {
         resetFields()
-        getAllAccounts()
+       // getAllAccounts()
     }
 
 

@@ -6,6 +6,8 @@ import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.mapper.EntryMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
 import java.util.Date
 import javax.inject.Inject
@@ -26,11 +28,13 @@ class EntryRepository @Inject constructor(
         }
 
         // 2️⃣ Get sum of incomes and expenses
-        suspend fun getSumIncomes(): BigDecimal =
-            entryDao.getSumOfIncomeEntries() ?: BigDecimal.ZERO
+         fun getSumIncomes(): Flow<BigDecimal> =
+            entryDao.getSumOfIncomeEntries()
+                .map { it ?: BigDecimal.ZERO }
 
-        suspend fun getSumExpenses(): BigDecimal =
-            entryDao.getSumOfExpenseEntries() ?: BigDecimal.ZERO
+         fun getSumExpenses(): Flow<BigDecimal> =
+        entryDao.getSumOfExpenseEntries()
+            .map { it ?: BigDecimal.ZERO }
 
         suspend fun getSumOfExpensesEntriesByCategory(categoryId: Int): BigDecimal =
             entryDao.getSumOfExpenseByCategory(categoryId) ?: BigDecimal.ZERO
@@ -50,10 +54,10 @@ class EntryRepository @Inject constructor(
         suspend fun getSumOfExpensesEntriesForMonth(accountId: Int, month: String, year: String): BigDecimal =
             entryDao.getSumOfExpenseEntriesForMonth(accountId, month, year) ?: BigDecimal.ZERO
 
-        suspend fun getAllEntriesDTO(): List<EntryDTO> = entryDao.getAllEntriesDTO()
-        suspend fun getAllIncomesDTO(): List<EntryDTO> = entryDao.getAllIncomesDTO()
-        suspend fun getAllExpensesDTO(): List<EntryDTO> = entryDao.getAllExpensesDTO()
-        suspend fun getAllEntriesByAccount(accountId: Int): List<EntryDTO> =
+        fun getAllEntriesDTO(): Flow<List<EntryDTO>> = entryDao.getAllEntriesDTO()
+        fun getAllIncomesDTO(): Flow<List<EntryDTO>> = entryDao.getAllIncomesDTO()
+        fun getAllExpensesDTO(): Flow<List<EntryDTO>> = entryDao.getAllExpensesDTO()
+        fun getAllEntriesByAccount(accountId: Int): Flow<List<EntryDTO>> =
             entryDao.getAllEntriesByAccountDTO(accountId)
 
         // 4️⃣ Filtrado de entradas

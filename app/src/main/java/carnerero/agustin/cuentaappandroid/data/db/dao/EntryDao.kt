@@ -10,6 +10,7 @@ import androidx.room.Update
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Date
@@ -71,12 +72,12 @@ interface EntryDao {
     // 12. Get sum of all incomes
     @Transaction
     @Query("SELECT SUM(amount) FROM EntryEntity WHERE amount >= 0")
-    suspend fun getSumOfIncomeEntries(): BigDecimal?
+     fun getSumOfIncomeEntries(): Flow<BigDecimal?>
 
     // 13. Get sum of all expenses
     @Transaction
     @Query("SELECT SUM(amount) FROM EntryEntity WHERE amount < 0")
-    suspend fun getSumOfExpenseEntries(): BigDecimal?
+     fun getSumOfExpenseEntries(): Flow<BigDecimal?>
 
     // 14. Get sum of all expenses by category
     @Transaction
@@ -200,7 +201,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-    suspend fun getAllIncomesDTO(): List<EntryDTO>
+     fun getAllIncomesDTO(): Flow<List<EntryDTO>>
 
     // 23. Get all expenses
     @Query(
@@ -222,7 +223,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-    suspend fun getAllExpensesDTO(): List<EntryDTO>
+     fun getAllExpensesDTO(): Flow<List<EntryDTO>>
 
     // 24. Get all entries
     @Query(
@@ -243,7 +244,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-    suspend fun getAllEntriesDTO(): List<EntryDTO>
+     fun getAllEntriesDTO(): Flow<List<EntryDTO>>
 
     // 25. Get all entries by account
     @Query(
@@ -265,7 +266,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-    suspend fun getAllEntriesByAccountDTO(accountId: Int): List<EntryDTO>
+    fun getAllEntriesByAccountDTO(accountId: Int): Flow<List<EntryDTO>>
 
     @Query(
         """

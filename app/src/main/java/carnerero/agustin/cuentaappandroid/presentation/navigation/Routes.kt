@@ -1,6 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
 
 sealed class Routes(
     val route: String,
@@ -103,5 +104,43 @@ sealed class Routes(
         R.string.categorycontrol,
         R.drawable.ic_categorycontrol)
 
+   /* data object RecordScreen:Routes("records_screen/{filter}",R.string.yourentries)
+    fun createRoute(filter: RecordsFilter): String{
+        return when (filter) {
+            RecordsFilter.Expenses -> "Expenses"
+            RecordsFilter.Incomes -> "Incomes"
+            is RecordsFilter.RecordsByAccount -> "RecordsByAccount/${filter.accountId}"
+
+            RecordsFilter.Empty -> "record_screen/Expenses"
+        }
+    }*/
+   /*data object RecordScreen:Routes("records_screen/{filter}/{accountId}",R.string.yourentries) {
+       fun createRoute(recordFilter: RecordsFilter): String {
+           return when (recordFilter) {
+
+               is RecordsFilter.RecordsByAccount ->
+                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}"
+
+               else ->
+                   "records_screen/${recordFilter.routeName}/-1"
+           }
+       }
+   }*/
+   object RecordScreen : Routes(
+       "records_screen/{filter}/{accountId}",  // La ruta espera dos argumentos
+       R.string.yourentries
+   ) {
+
+       fun createRoute(recordFilter: RecordsFilter): String {
+           return when (recordFilter) {
+               is RecordsFilter.RecordsByAccount ->
+                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}"
+               RecordsFilter.Expenses ->
+                   "records_screen/${RecordsFilter.Expenses.routeName}/-1"
+               RecordsFilter.Incomes ->
+                   "records_screen/${RecordsFilter.Incomes.routeName}/-1"
+           }
+       }
+   }
 
 }
