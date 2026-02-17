@@ -1,15 +1,13 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.get
 
-import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.RecordsList
-import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginScreen
-import com.google.gson.Gson
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsList
 
 @Composable
 fun RecordScreen(

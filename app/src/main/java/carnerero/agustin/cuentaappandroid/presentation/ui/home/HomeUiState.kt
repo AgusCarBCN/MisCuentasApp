@@ -3,7 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.home
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 

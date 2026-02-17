@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.insert
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints

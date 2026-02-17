@@ -1,7 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
 
 sealed class Routes(
     val route: String,

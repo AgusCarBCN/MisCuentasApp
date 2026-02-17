@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.modify
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement

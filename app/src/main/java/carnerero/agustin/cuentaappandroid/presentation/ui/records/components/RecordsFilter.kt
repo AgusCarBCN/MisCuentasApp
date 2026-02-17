@@ -1,7 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.common.model
-
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.components
 
 sealed class RecordsFilter(val routeName: String) {
     object Expenses : RecordsFilter("Expenses")

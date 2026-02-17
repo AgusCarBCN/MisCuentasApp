@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -22,9 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -142,7 +139,7 @@ fun RecordsList(
                             }
                         }
                         items(entries) { entry ->
-                            ItemEntry(
+                            ItemRecord(
                                 entry = entry,
                                 currencyCode = currencyCode
                             )
@@ -154,7 +151,7 @@ fun RecordsList(
                         .forEach { (categoryName, info) ->
                             val (icon, total) = info
                             item {
-                                ItemCategory(
+                                ItemCategoryRecord(
                                     categoryName = categoryName,
                                     categoryIcon = icon,
                                     amount = total,
@@ -169,7 +166,7 @@ fun RecordsList(
 }
 @Composable
 
-private fun ItemEntry(
+private fun ItemRecord(
     entry: EntryDTO,
     currencyCode: String
 ) {
@@ -258,7 +255,7 @@ private fun ItemEntry(
 }
 
 @Composable
-private fun ItemCategory(
+private fun ItemCategoryRecord (
     categoryName: Int?,
     categoryIcon: Int?,
     amount: BigDecimal?,

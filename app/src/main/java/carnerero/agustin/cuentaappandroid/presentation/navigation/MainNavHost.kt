@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -10,10 +9,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.common.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
@@ -29,16 +27,16 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.CategorySelector
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.EntryFormScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.ModifyEntry
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntriesWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntriesWithEditIcon
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.EntryList
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.CategorySelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.insert.EntryFormScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.insert.EntriesWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.insert.EntriesWithEditIcon
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.insert.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen

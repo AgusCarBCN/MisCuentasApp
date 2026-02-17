@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
