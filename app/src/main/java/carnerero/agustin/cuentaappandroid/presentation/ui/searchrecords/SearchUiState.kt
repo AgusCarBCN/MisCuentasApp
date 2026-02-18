@@ -1,7 +1,7 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.search
+package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.utils.Utils
 
 

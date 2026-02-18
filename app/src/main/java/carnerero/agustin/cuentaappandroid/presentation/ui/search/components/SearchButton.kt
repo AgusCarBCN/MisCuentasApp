@@ -10,7 +10,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel

@@ -126,25 +126,28 @@ sealed class Routes(
            }
        }
    }*/
-   object RecordScreen : Routes(
-       "records_screen/{filter}/{accountId}",  // La ruta espera dos argumentos
+ data object SearchRecords : Routes(
+       "records_screen/{filter}/{accountId}/{searchFilter}",  // La ruta espera dos argumentos
        R.string.yourentries
    ) {
 
        fun createRoute(recordFilter: RecordsFilter): String {
            return when (recordFilter) {
                is RecordsFilter.RecordsByAccount ->
-                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}"
+                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}/searchFilter"
                RecordsFilter.Expenses ->
-                   "records_screen/${RecordsFilter.Expenses.routeName}/-1"
+                   "records_screen/${RecordsFilter.Expenses.routeName}/-1/searchFilter"
                RecordsFilter.Incomes ->
-                   "records_screen/${RecordsFilter.Incomes.routeName}/-1"
+                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/searchFilter"
 
-               RecordsFilter.All -> "records_screen/${RecordsFilter.Incomes.routeName}/-1"
-               is RecordsFilter.Search -> TODO()
+               RecordsFilter.All -> "records_screen/${RecordsFilter.Incomes.routeName}/-1/searchFilter"
+               is RecordsFilter.Search -> "${recordFilter.routeName}/-1/${recordFilter.searchFilter}"
            }
 
 
        }
    }
+    data object SearchRecordsFiltered: Routes("search_records/{searchFilterJson}",R.string.search,R.drawable.search){
+        fun createRoute(searchFilerJason:String):String="search_records/$searchFilerJason"
+    }
 }

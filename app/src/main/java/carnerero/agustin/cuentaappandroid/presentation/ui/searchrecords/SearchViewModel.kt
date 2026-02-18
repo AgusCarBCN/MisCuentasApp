@@ -1,16 +1,12 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.search
+package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeEffects
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Expenses
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Incomes
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.RecordsByAccount
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.TransactionType
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -179,7 +175,7 @@ class SearchViewModelV2 @Inject constructor(
         val searchFilter=_uiState.value.searchFilter
         if(searchFilter!=null) {
             val recordsFilter = RecordsFilter.Search(searchFilter)
-            val route = Routes.RecordScreen.createRoute(recordsFilter)
+            val route = Routes.SearchRecords.createRoute(recordsFilter)
             viewModelScope.launch {
                 _uiState.update { it.copy(route = route) }
                 _effect.emit(SearchEffects.NavToRecordsScreen)

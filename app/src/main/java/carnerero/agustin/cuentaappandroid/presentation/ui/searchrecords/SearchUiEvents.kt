@@ -1,7 +1,6 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.search
+package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiEvents
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.TransactionType
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 
 sealed class SearchUiEvent {
     object ConfirmSearch: SearchUiEvent()

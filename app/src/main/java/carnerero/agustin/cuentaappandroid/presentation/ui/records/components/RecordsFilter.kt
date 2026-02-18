@@ -1,6 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.components
 
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 
 sealed class RecordsFilter(val routeName: String) {
 

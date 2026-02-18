@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -42,8 +43,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewMod
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
@@ -262,28 +263,43 @@ fun MainNavHost(
         }
 
         composable(
-            route = Routes.RecordScreen.route,
+            route = Routes.SearchRecords.route,
             arguments = listOf(
                 navArgument("filter") { type = NavType.StringType },
                 navArgument("accountId") {
                     type = NavType.IntType
                     defaultValue = -1
+                },
+                navArgument("filterJson") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                    nullable = true
                 }
             )
         ) { backStackEntry ->
 
-            val filterName = backStackEntry.arguments?.getString("filter") ?: "Incomes"
-            val accountId = backStackEntry.arguments?.getInt("accountId") ?: -1
+            val filterName =
+                backStackEntry.arguments?.getString("filter") ?: "Incomes"
+
+            val accountId =
+                backStackEntry.arguments?.getInt("accountId") ?: -1
+
+            val filterJson =
+                backStackEntry.arguments?.getString("filterJson")
+
+            val searchFilter = if (!filterJson.isNullOrEmpty()) {
+                val decoded = Uri.decode(filterJson)
+                Gson().fromJson(decoded, SearchFilter::class.java)
+            } else null
 
             val filter = when (filterName) {
                 RecordsFilter.Expenses.routeName -> RecordsFilter.Expenses
                 RecordsFilter.Incomes.routeName -> RecordsFilter.Incomes
                 "RecordsByAccount" -> RecordsFilter.RecordsByAccount(accountId)
-
-                else -> {
-                    RecordsFilter.All
-                }
+                "Search"-> RecordsFilter.Search(searchFilter!!)
+                else -> { RecordsFilter.All }
             }
+
             RecordScreen(recordsViewModel, filter)
         }
     }

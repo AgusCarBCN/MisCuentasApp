@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.search.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model
 
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal

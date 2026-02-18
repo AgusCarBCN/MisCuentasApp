@@ -20,8 +20,8 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.S
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchLandscapeLayout
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchPortraitLayout
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import java.math.BigDecimal
 import java.util.Date
 
 @Composable

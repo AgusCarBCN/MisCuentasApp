@@ -4,8 +4,8 @@ package carnerero.agustin.cuentaappandroid.data.repository
 import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.TransactionType
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.mapper.EntryMapper
 import kotlinx.coroutines.flow.Flow
