@@ -318,12 +318,12 @@ ORDER BY date DESC, e.id DESC
     ORDER BY e.date DESC, e.id DESC
     """
     )
-    suspend fun getEntriesBasic(
+     fun getEntriesBasic(
         accountId: Int,
         descriptionAmount: String? = null,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): List<EntryDTO>
+    ): Flow<List<EntryDTO>>
     // Método para actualizar solo los campos específicos de la entrada
     @Query(
         "UPDATE EntryEntity SET description = :description, amount = :amount, date = :date WHERE id = :id"

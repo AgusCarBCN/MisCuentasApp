@@ -4,6 +4,8 @@ package carnerero.agustin.cuentaappandroid.data.repository
 import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.mapper.EntryMapper
 import kotlinx.coroutines.flow.Flow
@@ -61,37 +63,41 @@ class EntryRepository @Inject constructor(
             entryDao.getAllEntriesByAccountDTO(accountId)
 
         // 4️⃣ Filtrado de entradas
-        suspend fun getEntriesFiltered(
-            accountId: Int,
-            descriptionAmount: String? = null,
-            dateFrom: String = Date().dateFormat(),
-            dateTo: String = Date().dateFormat(),
-            amountMin: BigDecimal = BigDecimal.ZERO,
-            amountMax: BigDecimal = BigDecimal("1E10"),
-            selectedOptions: Int = 0
-        ): List<EntryDTO> {
+        fun getEntriesFiltered(filter: SearchFilter): Flow<List<EntryDTO>> {
 
-            // Preparamos el valor de búsqueda de texto
-            val searchPattern = descriptionAmount?.let { "%$it%" }
+            val searchPattern = filter.description
+                ?.takeIf { it.isNotBlank() }
+                ?.let { "%$it%" }
 
-            // Obtenemos los datos básicos de la DB
-            val entries = entryDao.getEntriesBasic(accountId, searchPattern, dateFrom, dateTo)
+            return entryDao
+                .getEntriesBasic(
+                    accountId = filter.accountId,
+                    descriptionAmount = searchPattern,
+                    dateFrom = filter.dateFrom,
+                    dateTo = filter.dateTo
+                )
+                .map { entries ->
 
-            // Filtramos montos y tipo de transacción en Kotlin
-            return entries.filter { entry ->
-                val amount = entry.amount
+                    entries.filter { entry ->
 
-                val amountOk = amount.abs() >= amountMin && amount.abs() <= amountMax
+                        val amount = entry.amount
+                        val absAmount = amount.abs()
 
-                val typeOk = when (selectedOptions) {
-                    2 -> true // ambos
-                    0 -> amount >= BigDecimal.ZERO // ingresos
-                    1 -> amount < BigDecimal.ZERO  // gastos
-                    else -> true
+                        val amountOk =
+                            absAmount >= filter.amountMin &&
+                                    absAmount <= filter.amountMax
+
+                        val typeOk = when (filter.selectedOption) {
+                            TransactionType.INCOME -> amount >= BigDecimal.ZERO
+                            TransactionType.EXPENSE -> amount < BigDecimal.ZERO
+                            TransactionType.ALL -> true
+                        }
+
+                        amountOk && typeOk
+                    }
                 }
-                amountOk && typeOk
-            }
         }
+
 
     suspend fun getEntriesByDate(accountId:Int,
                                  fromDate: String=Date().dateFormat(),
