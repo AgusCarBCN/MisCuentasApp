@@ -25,7 +25,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountCardWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 
 @Composable
 fun SelectAccountScreen(

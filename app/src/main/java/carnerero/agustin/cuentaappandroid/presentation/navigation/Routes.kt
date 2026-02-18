@@ -127,7 +127,7 @@ sealed class Routes(
        }
    }*/
    object RecordScreen : Routes(
-       "records_screen/{filter}/{accountId}/{search}",  // La ruta espera dos argumentos
+       "records_screen/{filter}/{accountId}",  // La ruta espera dos argumentos
        R.string.yourentries
    ) {
 
@@ -140,11 +140,11 @@ sealed class Routes(
                RecordsFilter.Incomes ->
                    "records_screen/${RecordsFilter.Incomes.routeName}/-1"
 
-               is RecordsFilter.Search ->
-                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/search"
-
-               RecordsFilter.All -> "records_screen/${RecordsFilter.All.routeName}/-1"
+               RecordsFilter.All -> "records_screen/${RecordsFilter.Incomes.routeName}/-1"
+               is RecordsFilter.Search -> TODO()
            }
+
+
        }
    }
 }

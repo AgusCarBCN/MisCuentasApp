@@ -7,7 +7,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController

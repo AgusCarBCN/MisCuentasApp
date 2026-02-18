@@ -23,7 +23,7 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class SearchViewModelV2 @Inject constructor(
     private val getCurrencyCode: GetCurrencyCodeUseCase,
     private val getAccounts: GetAllAccountsUseCase
     ) : ViewModel()

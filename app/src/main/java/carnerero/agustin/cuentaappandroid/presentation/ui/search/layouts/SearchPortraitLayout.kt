@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+
+
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchAmountFields
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.components.SearchButton

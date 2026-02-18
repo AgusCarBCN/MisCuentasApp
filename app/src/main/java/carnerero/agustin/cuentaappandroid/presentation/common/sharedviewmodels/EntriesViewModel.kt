@@ -143,7 +143,7 @@ class EntriesViewModel @Inject constructor(
                 }
         }
     }
-    fun getFilteredEntries(accountId: Int,
+  /*  fun getFilteredEntries(accountId: Int,
                            description:String,
                            dateFrom: String = Date().dateFormat(),
                            dateTo: String = Date().dateFormat(),
@@ -172,7 +172,7 @@ class EntriesViewModel @Inject constructor(
                     _listOfEntriesDTO.value = entries
                 }
         }
-    }
+    }*/
 
 
 

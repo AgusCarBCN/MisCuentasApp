@@ -15,4 +15,4 @@ class GetFilteredEntriesUseCase @Inject constructor(private val repository: Entr
         searchFilter: SearchFilter
     ): Flow<List<EntryDTO>> =
         repository.getEntriesFiltered(searchFilter)
-}g
+}

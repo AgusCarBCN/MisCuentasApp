@@ -15,7 +15,8 @@ import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchViewModel
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
+
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchLandscapeLayout
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.layouts.SearchPortraitLayout
@@ -55,7 +56,8 @@ fun SearchScreen(
         id, entryDescription, fromDate, toDate,
         fromAmount, toAmount, selectedOption
     ) {
-        entriesViewModel.getFilteredEntries(
+        /*entriesViewModel.getFilteredEntries(
+
             accountId = id,
             description = entryDescription,
             dateFrom = fromDate,
@@ -63,7 +65,7 @@ fun SearchScreen(
             amountMin = fromAmount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
             amountMax = toAmount.toBigDecimalOrNull() ?: BigDecimal("1E10"),
             selectedOptions = selectedOption ?: 0
-        )
+        )*/
     }
 
     Box(
