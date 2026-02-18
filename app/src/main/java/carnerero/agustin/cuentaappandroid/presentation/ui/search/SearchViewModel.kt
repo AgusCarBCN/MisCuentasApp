@@ -1,141 +1,189 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import carnerero.agustin.cuentaappandroid.R
+import androidx.lifecycle.viewModelScope
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
+import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeEffects
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Expenses
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Incomes
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.RecordsByAccount
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import java.util.Date
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor() : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val getCurrencyCode: GetCurrencyCodeUseCase,
+    private val getAccounts: GetAllAccountsUseCase
+    ) : ViewModel()
+{
 
-    // Lista de opciones como identificadores de recursos
-    val options = listOf(R.string.incomeoption, R.string.expenseoption, R.string.alloption)
+    private val _uiState = MutableStateFlow(SearchUiState())
+    val uiState: StateFlow<SearchUiState> = _uiState
 
-    // Almacena el índice de la opción seleccionada
-    private val _selectedOptionIndex =
-        MutableLiveData(0) // Por defecto, selecciona la primera opción
-    val selectedOptionIndex: LiveData<Int> = _selectedOptionIndex
-
-    private val _showDatePickerFrom = MutableLiveData<Boolean>()
-    val showDatePickerFrom: LiveData<Boolean> = _showDatePickerFrom
-
-    private val _showDatePickerTo = MutableLiveData<Boolean>()
-    val showDatePickerTo: LiveData<Boolean> = _showDatePickerTo
-
-    private val _selectedFromDate = MutableLiveData<String>()
-    val selectedFromDate: LiveData<String> = _selectedFromDate
-
-    private val _selectedToDate = MutableLiveData<String>()
-    val selectedToDate: LiveData<String> = _selectedToDate
-
-    private val _entryDescription = MutableLiveData<String>()
-    val entryDescription: LiveData<String> = _entryDescription
-
-    private val _fromAmount = MutableLiveData<String>()
-    val fromAmount: LiveData<String> = _fromAmount
-
-    private val _toAmount = MutableLiveData<String>()
-    val toAmount: LiveData<String> = _toAmount
-
-    private val _enableSearchButton = MutableLiveData<Boolean>()
-    val enableSearchButton: LiveData<Boolean> = _enableSearchButton
-
-
+    private val _effect = MutableSharedFlow<SearchEffects>()
+    val effect = _effect.asSharedFlow()
 
     init {
-        resetFields()
+        observeInitialData()
+    }
+    private fun observeInitialData() {
+        viewModelScope.launch {
+            val currencyCode = getCurrencyCode()
+            getAccounts()
+                .collect { accounts ->
+                    _uiState.update { current ->
+                        current.copy(
+                            accounts = accounts,
+                            currencyCode = currencyCode
+                        )
+                    }
+                }
+        }
     }
 
-    // Método para actualizar la opción seleccionada
-    fun onOptionSelected(index: Int) {
-        _selectedOptionIndex.value = index
+    fun onEvent(event: SearchUiEvent){
+        when(event){
+            SearchUiEvent.ConfirmSearch -> {
+                navigateToRecords()
+            }
+            is SearchUiEvent.OnAccountSelect -> {
+                onAccountSelected(event.accountId)
+            }
+            is SearchUiEvent.OnAmountChanges -> {
+                onAmountsFieldsChange(event.amountFrom,event.amountTo)
+            }
+            is SearchUiEvent.OnRecordDescriptionChange -> {
+                onEntryDescriptionChanged(event.newDescription)
+            }
+            is SearchUiEvent.OnSelectDate -> {
+                onSelectedDate(event.date,event.isFromDate)
+            }
+            is SearchUiEvent.OnShowDatePicker -> {
+                _uiState.update { current ->
+                    current.copy(
+                        showDatePickerFrom = if (event.isFromDate) event.show else current.showDatePickerFrom,
+                        showDatePickerTo   = if (!event.isFromDate) event.show else current.showDatePickerTo
+                    )
+                }
+            //onShowDatePicker(event.show,event.isFromDate)
+            }
+            is SearchUiEvent.OnTransactionSelect -> {
+                onOptionSelected(event.type)
+            }
+        }
     }
+    fun onAccountSelected(accountId:Int) {
+        _uiState.update { current ->
+            current.copy(
+                searchFilter = current.searchFilter?.copy(
+                    accountId=accountId
+                )
+            )
+        }
+    }
+
+    fun onOptionSelected(option: TransactionType) {
+        _uiState.update { current ->
+            current.copy(
+                searchFilter = current.searchFilter?.copy(
+                    selectedOption = option
+                )
+            )
+        }
+    }
+
 
     fun onShowDatePicker(newValue: Boolean, isDateFrom: Boolean) {
         if (isDateFrom) {
-            _showDatePickerFrom.value = newValue
+            _uiState.update { current ->
+                current.copy(showDatePickerFrom = newValue)
+            }
         } else {
-            _showDatePickerTo.value = newValue
+            _uiState.update { current ->
+                current.copy(showDatePickerTo = newValue)
+            }
         }
     }
 
 
     fun onSelectedDate(date: String, isDateFrom: Boolean) {
-
         if (isDateFrom) {
-            _selectedFromDate.value = date
+            _uiState.update { current ->
+                current.copy(
+                    searchFilter = current.searchFilter?.copy(
+                        dateFrom = date
+                    )
+                )
+            }
         } else {
-            _selectedToDate.value = date
+            _uiState.update { current ->
+                current.copy(
+                    searchFilter = current.searchFilter?.copy(
+                        dateTo = date
+                    )
+                )
+            }
         }
     }
-
-
 
     fun onAmountsFieldsChange(fromAmount: String, toAmount: String) {
         // Validar y actualizar el valor de amount
         if (Utils.Companion.isValidDecimal(fromAmount)) {
-            _fromAmount.value = fromAmount
+            _uiState.update { current ->
+                current.copy(
+                    searchFilter = current.searchFilter?.copy(
+                        amountMin = fromAmount.toBigDecimalOrNull()?: BigDecimal.ZERO
+                    )
+                )
+            }
         }
         if (Utils.Companion.isValidDecimal(toAmount)) {
-            _toAmount.value = toAmount
-        }
-        if (validateAmounts(fromAmount, toAmount)) {
-            _enableSearchButton.value = true
-        } else {
-            _enableSearchButton.value = false
+            _uiState.update { current ->
+                current.copy(
+                    searchFilter = current.searchFilter?.copy(
+                        amountMin = toAmount.toBigDecimalOrNull()?: BigDecimal.ZERO
+                    )
+                )
+            }
         }
     }
-
-
     fun onEntryDescriptionChanged(newDescription: String) {
-        _entryDescription.value = newDescription
+        _uiState.update { current ->
+            current.copy(
+                searchFilter = current.searchFilter?.copy(
+                    description = newDescription
+                )
+            )
+        }
     }
-
-    // Método para actualizar la opción seleccionada
-    /* fun onOptionSelected(option: Int) {
-         _selectedOption.value = option
-     }*/
-
-    fun onEnableSearchButton() {
-        val fromDate = _selectedFromDate.value ?: Date().dateFormat()
-        val toDate = _selectedToDate.value ?: Date().dateFormat()
-        val fromAmount = _fromAmount.value ?: "0.0"
-        val toAmount = _toAmount.value ?: "0.0"
-        val enable = validateDates() && validateAmounts(fromAmount, toAmount)
-        _enableSearchButton.value = enable
-
+    fun resetFields(){
+        _uiState.update { current ->
+            current.copy(searchFilter = null,
+                showDatePickerTo = false,
+                showDatePickerFrom = false)
+        }
     }
-
-
-    fun validateDates(): Boolean {
-        val fromDateString = _selectedFromDate.value ?: Date().dateFormat()
-        val toDateString = _selectedToDate.value ?: Date().dateFormat()
-        val fromDate = Utils.Companion.convertStringToLocalDate(fromDateString)
-        val toDate = Utils.Companion.convertStringToLocalDate(toDateString)
-        return fromDate.isBefore(toDate) || fromDate.isEqual(toDate)
+    private fun navigateToRecords() {
+        val searchFilter=_uiState.value.searchFilter
+        if(searchFilter!=null) {
+            val recordsFilter = RecordsFilter.Search(searchFilter)
+            val route = Routes.RecordScreen.createRoute(recordsFilter)
+            viewModelScope.launch {
+                _uiState.update { it.copy(route = route) }
+                _effect.emit(SearchEffects.NavToRecordsScreen)
+            }
+        }
     }
-
-    fun validateAmounts(fromAmount: String, toAmount: String): Boolean {
-        val from = _fromAmount.value?.toDoubleOrNull() ?: 0.0
-        val to = _toAmount.value?.toDoubleOrNull() ?: 0.0
-        return to >= from
-    }
-
-    fun resetFields() {
-        _selectedOptionIndex.value = 0
-        _showDatePickerFrom.value = false
-        _showDatePickerTo.value = false
-        _selectedFromDate.value = Date().dateFormat()
-        _selectedToDate.value = Date().dateFormat()
-        _entryDescription.value = ""
-        _fromAmount.value = ""
-        _toAmount.value = ""
-        _enableSearchButton.value = false
-    }
-
-
-
 }

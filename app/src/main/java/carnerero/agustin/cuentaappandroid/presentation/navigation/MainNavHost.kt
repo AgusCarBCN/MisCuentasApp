@@ -42,6 +42,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.Pi
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.TypeOfSearch
+import carnerero.agustin.cuentaappandroid.presentation.ui.search.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
@@ -266,24 +267,29 @@ fun MainNavHost(
                 navArgument("accountId") {
                     type = NavType.IntType
                     defaultValue = -1
-                }
+                },
+                navArgument("searchJson") { type = NavType.StringType }
             )
         ) { backStackEntry ->
 
             val filterName = backStackEntry.arguments?.getString("filter") ?: "Incomes"
             val accountId = backStackEntry.arguments?.getInt("accountId") ?: -1
-
+            val recordJson = backStackEntry.arguments?.getString("recordJson")
+            val search = Gson().fromJson(recordJson, SearchFilter::class.java) // Deserialización
             val filter = when (filterName) {
                 RecordsFilter.Expenses.routeName -> RecordsFilter.Expenses
                 RecordsFilter.Incomes.routeName -> RecordsFilter.Incomes
                 "RecordsByAccount" -> RecordsFilter.RecordsByAccount(accountId)
-                else -> RecordsFilter.Incomes
+                "Search" -> RecordsFilter.Search(search)
+                else -> {
+                    RecordsFilter.All
+                }
             }
-
             RecordScreen(recordsViewModel, filter)
         }
     }
     }
+
 
 
 

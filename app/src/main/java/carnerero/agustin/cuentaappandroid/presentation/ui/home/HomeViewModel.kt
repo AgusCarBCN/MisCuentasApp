@@ -92,15 +92,14 @@ class HomeViewModel @Inject constructor(
 
             is RecordsByAccount ->
                 Routes.RecordScreen.createRoute(filter)
-        }
 
+            else-> ""
+        }
         viewModelScope.launch {
             _uiState.update { it.copy(route = route) }
             _effect.emit(HomeEffects.NavToRecordsScreen)
         }
     }
-
-
 }
 
 

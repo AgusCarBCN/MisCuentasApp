@@ -24,7 +24,6 @@ fun RecordScreen(
     RecordsList(state.listOfRecords,
         state.currencyCode,
         state.enableByDate,
-        {recordsViewModel.switchEnableByDate(it)})
-
+        {recordsViewModel.onEvent(RecordsUiEvents.ShowEnableByDate(it))})
 }
 

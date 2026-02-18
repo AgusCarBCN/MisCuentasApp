@@ -3,12 +3,17 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.records
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilteredEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
+import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeUiEvents
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Expenses
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiEvents
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -22,10 +27,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecordsViewModel @Inject constructor(
+    private val getAllEntriesDTO: GeAllEntriesUseCase,
     private val getAllIncomes: GetAllIncomesUseCase,
     private val getAllExpenses: GetAllExpensesUseCase,
     private val getAllRecordsByAccount: GetAllEntriesByAccountUseCase,
     private val getCurrencyCode: GetCurrencyCodeUseCase,
+    private val getFilteredEntries: GetFilteredEntriesUseCase
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(RecordsUiState())
@@ -37,15 +44,20 @@ class RecordsViewModel @Inject constructor(
     init {
         loadCurrencyCode()
     }
-
+    fun onEvent(event: RecordsUiEvents) {
+        when (event) {
+            is RecordsUiEvents.ShowEnableByDate -> switchEnableByDate(event.value)
+            else ->{}
+        }
+    }
     // Carga los registros según el filtro
     fun getRecords(filter: RecordsFilter) {
         val recordsFlow: Flow<List<EntryDTO>> = when (filter) {
             RecordsFilter.Expenses -> getAllExpenses.invoke()
             RecordsFilter.Incomes -> getAllIncomes.invoke()
             is RecordsFilter.RecordsByAccount -> getAllRecordsByAccount.invoke(filter.accountId)
-
-
+            is RecordsFilter.Search -> getFilteredEntries.invoke(filter.searchFilter)
+            RecordsFilter.All -> getAllEntriesDTO.invoke()
         }
 
         viewModelScope.launch {

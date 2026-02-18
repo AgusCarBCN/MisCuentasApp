@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GeAllEntriesUseCase @Inject constructor(private val repository: EntryRepository){
 
-    suspend operator fun invoke(): Flow<List<EntryDTO>> =repository.getAllEntriesDTO()
+    operator fun invoke(): Flow<List<EntryDTO>> =repository.getAllEntriesDTO()
 
 
 }
