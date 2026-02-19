@@ -43,6 +43,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewMod
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchViewModelV2
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
@@ -74,6 +76,7 @@ fun MainNavHost(
     val entriesViewModel: EntriesViewModel = hiltViewModel()
     val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchViewModel = hiltViewModel()
+    val searchViewModel2: SearchViewModelV2 = hiltViewModel()
     val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: RecordsViewModel = hiltViewModel()
@@ -92,13 +95,17 @@ fun MainNavHost(
 
         }
         composable(Routes.Search.route) {
-            SearchScreen(
+            RecordSearchScreen(
+                searchViewModel2,
+                navController
+            )
+            /*SearchScreen(
                 accountsViewModel,
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.SEARCH,
                 navController
-            )
+            )*/
         }
         composable(Routes.Settings.route) {
             SettingScreen(
@@ -265,21 +272,23 @@ fun MainNavHost(
         composable(
             route = Routes.SearchRecords.route,
             arguments = listOf(
-                navArgument("filter") { type = NavType.StringType },
+                navArgument("filter") {
+                    type = NavType.StringType
+                },
                 navArgument("accountId") {
                     type = NavType.IntType
                     defaultValue = -1
                 },
                 navArgument("filterJson") {
                     type = NavType.StringType
-                    defaultValue = ""
                     nullable = true
+                    defaultValue = null
                 }
             )
         ) { backStackEntry ->
 
             val filterName =
-                backStackEntry.arguments?.getString("filter") ?: "Incomes"
+                backStackEntry.arguments?.getString("filter") ?: RecordsFilter.All.routeName
 
             val accountId =
                 backStackEntry.arguments?.getInt("accountId") ?: -1
@@ -293,17 +302,31 @@ fun MainNavHost(
             } else null
 
             val filter = when (filterName) {
-                RecordsFilter.Expenses.routeName -> RecordsFilter.Expenses
-                RecordsFilter.Incomes.routeName -> RecordsFilter.Incomes
-                "RecordsByAccount" -> RecordsFilter.RecordsByAccount(accountId)
-                "Search"-> RecordsFilter.Search(searchFilter!!)
-                else -> { RecordsFilter.All }
+
+                RecordsFilter.Expenses.routeName ->
+                    RecordsFilter.Expenses
+
+                RecordsFilter.Incomes.routeName ->
+                    RecordsFilter.Incomes
+
+                RecordsFilter.All.routeName ->
+                    RecordsFilter.All
+
+                "RecordsByAccount" ->
+                    RecordsFilter.RecordsByAccount(accountId)
+
+                "Search" ->
+                    RecordsFilter.Search(searchFilter!!)
+
+                else ->
+                    RecordsFilter.All
             }
 
             RecordScreen(recordsViewModel, filter)
         }
+
     }
-    }
+}
 
 
 

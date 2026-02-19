@@ -1,7 +1,9 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
+import android.net.Uri
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import com.google.gson.Gson
 
 sealed class Routes(
     val route: String,
@@ -126,28 +128,31 @@ sealed class Routes(
            }
        }
    }*/
- data object SearchRecords : Routes(
-       "records_screen/{filter}/{accountId}/{searchFilter}",  // La ruta espera dos argumentos
+   data object SearchRecords : Routes(
+       "records_screen/{filter}/{accountId}/{filterJson}",
        R.string.yourentries
    ) {
 
        fun createRoute(recordFilter: RecordsFilter): String {
            return when (recordFilter) {
+
                is RecordsFilter.RecordsByAccount ->
-                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}/searchFilter"
+                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}/"
+
                RecordsFilter.Expenses ->
-                   "records_screen/${RecordsFilter.Expenses.routeName}/-1/searchFilter"
+                   "records_screen/${RecordsFilter.Expenses.routeName}/-1/"
+
                RecordsFilter.Incomes ->
-                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/searchFilter"
+                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/"
 
-               RecordsFilter.All -> "records_screen/${RecordsFilter.Incomes.routeName}/-1/searchFilter"
-               is RecordsFilter.Search -> "${recordFilter.routeName}/-1/${recordFilter.searchFilter}"
+               RecordsFilter.All ->
+                   "records_screen/${RecordsFilter.All.routeName}/-1/"
+
+               is RecordsFilter.Search -> {
+                   val json = Uri.encode(Gson().toJson(recordFilter.searchFilter))
+                   "records_screen/${recordFilter.routeName}/-1/$json"
+               }
            }
-
-
        }
    }
-    data object SearchRecordsFiltered: Routes("search_records/{searchFilterJson}",R.string.search,R.drawable.search){
-        fun createRoute(searchFilerJason:String):String="search_records/$searchFilerJason"
-    }
 }

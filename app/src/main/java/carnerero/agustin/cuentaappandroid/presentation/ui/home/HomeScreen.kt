@@ -58,7 +58,7 @@ fun HomeScreen(
             is HomeEffects.NavToRecordsScreen -> {
                 navController.navigate(Routes.SearchRecords.createRoute(state.filter))
                 Log.d("NAVIGATION", "Route:${state.route}")
-                Log.d("NAVIGATION","Route2:${Routes.SearchRecords.route}")
+                //Log.d("NAVIGATION","Route2:${Routes.SearchRecords.route}")
             }
             else -> {}
         }

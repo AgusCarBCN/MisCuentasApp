@@ -53,7 +53,7 @@ class RecordsViewModel @Inject constructor(
     // Carga los registros según el filtro
     fun getRecords(filter: RecordsFilter) {
         val recordsFlow: Flow<List<EntryDTO>> = when (filter) {
-            RecordsFilter.Expenses -> getAllExpenses.invoke()
+            Expenses -> getAllExpenses.invoke()
             RecordsFilter.Incomes -> getAllIncomes.invoke()
             is RecordsFilter.RecordsByAccount -> getAllRecordsByAccount.invoke(filter.accountId)
             is RecordsFilter.Search -> getFilteredEntries.invoke(filter.searchFilter)

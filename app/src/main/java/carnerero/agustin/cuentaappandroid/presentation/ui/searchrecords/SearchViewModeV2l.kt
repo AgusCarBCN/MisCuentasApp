@@ -1,13 +1,17 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.Utils
+import com.google.gson.Gson
+import com.google.type.Date
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -172,14 +176,18 @@ class SearchViewModelV2 @Inject constructor(
         }
     }
     private fun navigateToRecords() {
-        val searchFilter=_uiState.value.searchFilter
-        if(searchFilter!=null) {
+        val searchFilter= SearchFilter(
+           1,
+            "Prueba"
+        )
+
             val recordsFilter = RecordsFilter.Search(searchFilter)
+
             val route = Routes.SearchRecords.createRoute(recordsFilter)
             viewModelScope.launch {
                 _uiState.update { it.copy(route = route) }
                 _effect.emit(SearchEffects.NavToRecordsScreen)
             }
-        }
+        //}
     }
 }

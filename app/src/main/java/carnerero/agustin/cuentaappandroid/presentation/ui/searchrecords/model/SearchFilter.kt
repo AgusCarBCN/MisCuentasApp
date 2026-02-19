@@ -6,7 +6,7 @@ import java.util.Date
 
 data class SearchFilter(
     val accountId: Int,
-    val description: String? = null,
+    val description: String? = "Prueba",
     val dateFrom: String= Date().dateFormat(),
     val dateTo: String=Date().dateFormat(),
     val amountMin: BigDecimal = BigDecimal.ZERO,
