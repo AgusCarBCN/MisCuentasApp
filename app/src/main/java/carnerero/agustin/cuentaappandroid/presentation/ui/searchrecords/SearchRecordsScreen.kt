@@ -28,6 +28,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.RadioButtonRecordsSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
@@ -140,6 +141,13 @@ fun RecordSearchScreen(
                         dateField = DateField.TO
                     )
                 }
+                AccountSearchRecordsSelector(R.string.selectanaccount,
+                   state.accounts,
+                    state.currencyCode,
+                    {searchRecordsViewModel.onEvent(SearchUiEvent.OnAccountSelect(it))},
+                    false,
+                    fieldModifier)
+
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(R.string.fromamount),
