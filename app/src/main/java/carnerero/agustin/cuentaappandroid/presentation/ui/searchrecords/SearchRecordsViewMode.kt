@@ -185,7 +185,7 @@ class SearchRecordsViewModel @Inject constructor(
 
         // Construir filtro y ruta
         val recordsFilter = RecordsFilter.Search(searchFilter)
-        val route = Routes.SearchRecords.createRoute(recordsFilter)
+        val route = Routes.ShowRecords.createRoute(recordsFilter)
 
         // Actualizar estado y emitir efecto de navegación
         viewModelScope.launch {

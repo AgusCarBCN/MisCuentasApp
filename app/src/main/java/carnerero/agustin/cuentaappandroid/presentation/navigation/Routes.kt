@@ -128,7 +128,7 @@ sealed class Routes(
            }
        }
    }*/
-   data object SearchRecords : Routes(
+   data object ShowRecords : Routes(
        "records_screen/{filter}/{accountId}/{filterJson}",
        R.string.yourentries
    ) {

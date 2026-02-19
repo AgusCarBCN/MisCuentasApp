@@ -85,13 +85,13 @@ class HomeViewModel @Inject constructor(
     private fun navigateToRecords(filter: RecordsFilter) {
         val route = when (filter) {
             Expenses ->
-                Routes.SearchRecords.createRoute(Expenses)
+                Routes.ShowRecords.createRoute(Expenses)
 
             Incomes ->
-                Routes.SearchRecords.createRoute(Incomes)
+                Routes.ShowRecords.createRoute(Incomes)
 
             is RecordsByAccount ->
-                Routes.SearchRecords.createRoute(filter)
+                Routes.ShowRecords.createRoute(filter)
 
             else-> ""
         }

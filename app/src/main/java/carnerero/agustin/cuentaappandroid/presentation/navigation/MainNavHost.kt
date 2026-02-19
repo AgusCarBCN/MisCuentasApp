@@ -270,7 +270,7 @@ fun MainNavHost(
         }
 
         composable(
-            route = Routes.SearchRecords.route,
+            route = Routes.ShowRecords.route,
             arguments = listOf(
                 navArgument("filter") {
                     type = NavType.StringType

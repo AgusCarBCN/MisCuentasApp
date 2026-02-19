@@ -29,6 +29,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.T
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.RadioButtonRecordsSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
@@ -157,26 +158,24 @@ fun RecordSearchScreen(
                     BoardType.DECIMAL,
                     false
                 )
+
+                RadioButtonRecordsSearch(searchFilter.selectedOption,
+                    {searchRecordsViewModel.onEvent(SearchUiEvent.OnTransactionSelect(it))},
+                fieldModifier)
                 ModelButton(
                     text = stringResource(R.string.search),
                     MaterialTheme.typography.labelLarge,
                     fieldModifier,
                     enableSearchButton
                 ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch) }
+
                 /* AccountSelector(
                     stringResource(R.string.selectanaccount),
                     accountViewModel,
                     modifier = modifier
                 )
 
-                RadioButtonSearch(searchRecordsViewModel, modifier)
-                ModelButton(
-                    text = stringResource(R.string.search),
-                    MaterialTheme.typography.labelLarge,
-                    fieldModifier,
-                    enableSearchButton
-                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch) }
-            }*/
+                */
             }
         }
     }
