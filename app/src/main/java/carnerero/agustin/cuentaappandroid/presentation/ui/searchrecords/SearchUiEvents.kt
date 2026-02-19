@@ -16,7 +16,7 @@ sealed class SearchUiEvent {
         val field: DateField,
         val date: String
     ) : SearchUiEvent()
-    data class OnAmountChanges(
+    data class OnAmountsChanges(
         val amountFrom: String,
         val amountTo: String
     ) : SearchUiEvent()

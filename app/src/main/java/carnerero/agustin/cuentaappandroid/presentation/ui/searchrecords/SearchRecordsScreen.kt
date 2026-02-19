@@ -24,7 +24,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
@@ -140,6 +139,24 @@ fun RecordSearchScreen(
                         dateField = DateField.TO
                     )
                 }
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(R.string.fromamount),
+                    searchFilter.amountMin.toString(),
+                    onTextChange = {
+                      searchRecordsViewModel.onEvent(SearchUiEvent.OnAmountsChanges(it,searchFilter.amountMax.toString())) },
+                    BoardType.DECIMAL,
+                    false
+                )
+
+                TextFieldComponent(
+                    modifier = fieldModifier,
+                    stringResource(R.string.toamount),
+                    searchFilter.amountMax.toString(),
+                    onTextChange = {searchRecordsViewModel.onEvent(SearchUiEvent.OnAmountsChanges(searchFilter.amountMin.toString(),it))},
+                    BoardType.DECIMAL,
+                    false
+                )
                 ModelButton(
                     text = stringResource(R.string.search),
                     MaterialTheme.typography.labelLarge,

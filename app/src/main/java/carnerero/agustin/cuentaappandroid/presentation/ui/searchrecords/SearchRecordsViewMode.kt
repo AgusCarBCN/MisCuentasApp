@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
@@ -15,10 +16,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,13 +55,14 @@ class SearchRecordsViewModel @Inject constructor(
         when (event) {
             SearchUiEvent.ConfirmSearch -> {
                 navigateToRecords()
+                resetFields()
             }
 
             is SearchUiEvent.OnAccountSelect -> {
                 onAccountSelected(event.accountId)
             }
 
-            is SearchUiEvent.OnAmountChanges -> {
+            is SearchUiEvent.OnAmountsChanges -> {
                 onAmountsFieldsChange(event.amountFrom, event.amountTo)
             }
 
@@ -127,10 +127,10 @@ class SearchRecordsViewModel @Inject constructor(
 
     fun onAmountsFieldsChange(fromAmount: String, toAmount: String) {
         _uiState.update { current ->
-            val min = fromAmount.toBigDecimalOrNull() ?: current.searchFilter?.amountMin
-            ?: BigDecimal.ZERO
-            val max = toAmount.toBigDecimalOrNull() ?: current.searchFilter?.amountMax
-            ?: BigDecimal("10000000000") // valor grande por defecto
+            val min = fromAmount.toBigDecimalOrNull() ?: current.searchFilter.amountMin
+
+            val max = toAmount.toBigDecimalOrNull() ?: current.searchFilter.amountMax
+
 
             current.copy(
                 searchFilter = current.searchFilter.copy(
@@ -156,14 +156,14 @@ class SearchRecordsViewModel @Inject constructor(
             current.copy(
                 searchFilter = SearchFilter(),
                 showDatePickerTo = false,
-                showDatePickerFrom = false,
-            )
+                showDatePickerFrom = false
+                            )
         }
     }
 
     private fun navigateToRecords() {
-        val searchFilter = _uiState.value.searchFilter ?: return
-
+        val searchFilter = _uiState.value.searchFilter
+        Log.d("Filter",searchFilter.toString())
         // Validación de montos
         if (searchFilter.amountMax < searchFilter.amountMin) {
             viewModelScope.launch {
@@ -191,6 +191,7 @@ class SearchRecordsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(route = route) }
             _effect.emit(SearchEffects.NavToRecordsScreen)
+
         }
     }
 }

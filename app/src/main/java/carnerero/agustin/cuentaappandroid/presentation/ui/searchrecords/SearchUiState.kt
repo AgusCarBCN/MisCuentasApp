@@ -16,7 +16,7 @@ data class SearchUiState(
 ){
     // Propiedad derivada para habilitar el botón
     val enableSearchButton: Boolean
-        get() = searchFilter?.let { validateAmounts(it) && validateDates(it) } ?: false
+        get() = searchFilter.let { validateAmounts(it) && validateDates(it) }
 
     // Validación de montos
     private fun validateAmounts(filter: SearchFilter): Boolean =
