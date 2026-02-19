@@ -1,33 +1,31 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import com.google.gson.Gson
-import com.google.type.Date
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModelV2 @Inject constructor(
+class SearchRecordsViewModel @Inject constructor(
     private val getCurrencyCode: GetCurrencyCodeUseCase,
     private val getAccounts: GetAllAccountsUseCase
-    ) : ViewModel()
-{
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState
@@ -38,6 +36,7 @@ class SearchViewModelV2 @Inject constructor(
     init {
         observeInitialData()
     }
+
     private fun observeInitialData() {
         viewModelScope.launch {
             val currencyCode = getCurrencyCode()
@@ -53,42 +52,43 @@ class SearchViewModelV2 @Inject constructor(
         }
     }
 
-    fun onEvent(event: SearchUiEvent){
-        when(event){
+    fun onEvent(event: SearchUiEvent) {
+        when (event) {
             SearchUiEvent.ConfirmSearch -> {
                 navigateToRecords()
             }
+
             is SearchUiEvent.OnAccountSelect -> {
                 onAccountSelected(event.accountId)
             }
+
             is SearchUiEvent.OnAmountChanges -> {
-                onAmountsFieldsChange(event.amountFrom,event.amountTo)
+                onAmountsFieldsChange(event.amountFrom, event.amountTo)
             }
+
             is SearchUiEvent.OnRecordDescriptionChange -> {
                 onEntryDescriptionChanged(event.newDescription)
             }
+
             is SearchUiEvent.OnSelectDate -> {
-                onSelectedDate(event.date,event.isFromDate)
+                onSelectedDate(event.field, event.date)
             }
+
             is SearchUiEvent.OnShowDatePicker -> {
-                _uiState.update { current ->
-                    current.copy(
-                        showDatePickerFrom = if (event.isFromDate) event.show else current.showDatePickerFrom,
-                        showDatePickerTo   = if (!event.isFromDate) event.show else current.showDatePickerTo
-                    )
-                }
-            //onShowDatePicker(event.show,event.isFromDate)
+                onShowDatePicker(event.field, event.visible)
             }
+
             is SearchUiEvent.OnTransactionSelect -> {
                 onOptionSelected(event.type)
             }
         }
     }
-    fun onAccountSelected(accountId:Int) {
+
+    fun onAccountSelected(accountId: Int) {
         _uiState.update { current ->
             current.copy(
-                searchFilter = current.searchFilter?.copy(
-                    accountId=accountId
+                searchFilter = current.searchFilter.copy(
+                    accountId = accountId
                 )
             )
         }
@@ -97,7 +97,7 @@ class SearchViewModelV2 @Inject constructor(
     fun onOptionSelected(option: TransactionType) {
         _uiState.update { current ->
             current.copy(
-                searchFilter = current.searchFilter?.copy(
+                searchFilter = current.searchFilter.copy(
                     selectedOption = option
                 )
             )
@@ -105,89 +105,92 @@ class SearchViewModelV2 @Inject constructor(
     }
 
 
-    fun onShowDatePicker(newValue: Boolean, isDateFrom: Boolean) {
-        if (isDateFrom) {
-            _uiState.update { current ->
-                current.copy(showDatePickerFrom = newValue)
-            }
-        } else {
-            _uiState.update { current ->
-                current.copy(showDatePickerTo = newValue)
+    fun onShowDatePicker(field: DateField, visible: Boolean) {
+        _uiState.update { current ->
+            when (field) {
+                DateField.FROM -> current.copy(showDatePickerFrom = visible)
+                DateField.TO -> current.copy(showDatePickerTo = visible)
             }
         }
     }
 
 
-    fun onSelectedDate(date: String, isDateFrom: Boolean) {
-        if (isDateFrom) {
-            _uiState.update { current ->
-                current.copy(
-                    searchFilter = current.searchFilter?.copy(
-                        dateFrom = date
-                    )
-                )
-            }
-        } else {
-            _uiState.update { current ->
-                current.copy(
-                    searchFilter = current.searchFilter?.copy(
-                        dateTo = date
-                    )
-                )
-            }
+    fun onSelectedDate(field: DateField, date: String) {
+        _uiState.update { current ->
+            val updatedSearchFilter = (current.searchFilter).copy(
+                dateFrom = if (field == DateField.FROM) date else current.searchFilter.dateFrom,
+                dateTo = if (field == DateField.TO) date else current.searchFilter.dateTo
+            )
+            current.copy(searchFilter = updatedSearchFilter)
         }
     }
 
     fun onAmountsFieldsChange(fromAmount: String, toAmount: String) {
-        // Validar y actualizar el valor de amount
-        if (Utils.Companion.isValidDecimal(fromAmount)) {
-            _uiState.update { current ->
-                current.copy(
-                    searchFilter = current.searchFilter?.copy(
-                        amountMin = fromAmount.toBigDecimalOrNull()?: BigDecimal.ZERO
-                    )
+        _uiState.update { current ->
+            val min = fromAmount.toBigDecimalOrNull() ?: current.searchFilter?.amountMin
+            ?: BigDecimal.ZERO
+            val max = toAmount.toBigDecimalOrNull() ?: current.searchFilter?.amountMax
+            ?: BigDecimal("10000000000") // valor grande por defecto
+
+            current.copy(
+                searchFilter = current.searchFilter.copy(
+                    amountMin = min,
+                    amountMax = max
                 )
-            }
-        }
-        if (Utils.Companion.isValidDecimal(toAmount)) {
-            _uiState.update { current ->
-                current.copy(
-                    searchFilter = current.searchFilter?.copy(
-                        amountMin = toAmount.toBigDecimalOrNull()?: BigDecimal.ZERO
-                    )
-                )
-            }
+            )
         }
     }
+
     fun onEntryDescriptionChanged(newDescription: String) {
         _uiState.update { current ->
             current.copy(
-                searchFilter = current.searchFilter?.copy(
+                searchFilter = current.searchFilter.copy(
                     description = newDescription
                 )
             )
         }
     }
-    fun resetFields(){
+
+    fun resetFields() {
         _uiState.update { current ->
-            current.copy(searchFilter = null,
+            current.copy(
+                searchFilter = SearchFilter(),
                 showDatePickerTo = false,
-                showDatePickerFrom = false)
+                showDatePickerFrom = false,
+            )
         }
     }
+
     private fun navigateToRecords() {
-        val searchFilter= SearchFilter(
-           1,
-            "Prueba"
-        )
+        val searchFilter = _uiState.value.searchFilter ?: return
 
-            val recordsFilter = RecordsFilter.Search(searchFilter)
-
-            val route = Routes.SearchRecords.createRoute(recordsFilter)
+        // Validación de montos
+        if (searchFilter.amountMax < searchFilter.amountMin) {
             viewModelScope.launch {
-                _uiState.update { it.copy(route = route) }
-                _effect.emit(SearchEffects.NavToRecordsScreen)
+                _effect.emit(SearchEffects.MessageInvalidAmounts)
             }
-        //}
+            return
+        }
+
+        // Validación de fechas
+        val fromDate = Utils.convertStringToLocalDate(searchFilter.dateFrom)
+        val toDate   = Utils.convertStringToLocalDate(searchFilter.dateTo)
+
+        if (fromDate.isAfter(toDate)) {
+            viewModelScope.launch {
+                _effect.emit(SearchEffects.MessageInvalidDates)
+            }
+            return
+        }
+
+        // Construir filtro y ruta
+        val recordsFilter = RecordsFilter.Search(searchFilter)
+        val route = Routes.SearchRecords.createRoute(recordsFilter)
+
+        // Actualizar estado y emitir efecto de navegación
+        viewModelScope.launch {
+            _uiState.update { it.copy(route = route) }
+            _effect.emit(SearchEffects.NavToRecordsScreen)
+        }
     }
 }

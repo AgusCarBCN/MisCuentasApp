@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 
 sealed class SearchUiEvent {
@@ -8,12 +9,12 @@ sealed class SearchUiEvent {
     data class OnTransactionSelect(val type: TransactionType) : SearchUiEvent()
     data class OnRecordDescriptionChange(val newDescription:String) : SearchUiEvent()
     data class OnShowDatePicker(
-        val show: Boolean,
-        val isFromDate: Boolean
+        val field: DateField,
+        val visible: Boolean
     ) : SearchUiEvent()
     data class OnSelectDate(
-        val date: String,
-        val isFromDate: Boolean
+        val field: DateField,
+        val date: String
     ) : SearchUiEvent()
     data class OnAmountChanges(
         val amountFrom: String,

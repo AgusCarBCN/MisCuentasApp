@@ -9,23 +9,23 @@ data class SearchUiState(
 
     val showDatePickerFrom: Boolean = false, // controla el date picker "from"
     val showDatePickerTo: Boolean = false,
-    val searchFilter: SearchFilter? = null,
+    val searchFilter: SearchFilter = SearchFilter(),
     val accounts:List<Account> = emptyList(),
     val currencyCode: String ="EUR",
-    val route:String=""
-) {
-    val enableSearchButton=validateAmounts() && validateDates()
-    private fun validateAmounts(): Boolean {
-        return if (searchFilter != null) {
-            searchFilter.amountMax >= searchFilter.amountMin
-        } else false
+    val route:String="",
+){
+    // Propiedad derivada para habilitar el botón
+    val enableSearchButton: Boolean
+        get() = searchFilter?.let { validateAmounts(it) && validateDates(it) } ?: false
 
-    }
-    private fun validateDates():Boolean {
-        if (searchFilter != null) {
-            val fromDate = Utils.Companion.convertStringToLocalDate(searchFilter.dateFrom)
-            val toDate = Utils.Companion.convertStringToLocalDate(searchFilter.dateTo)
-            return fromDate.isBefore(toDate) || fromDate.isEqual(toDate)
-        }else return false
+    // Validación de montos
+    private fun validateAmounts(filter: SearchFilter): Boolean =
+        filter.amountMax >= filter.amountMin
+
+    // Validación de fechas
+    private fun validateDates(filter: SearchFilter): Boolean {
+        val from = Utils.convertStringToLocalDate(filter.dateFrom)
+        val to = Utils.convertStringToLocalDate(filter.dateTo)
+        return from.isBefore(to) || from.isEqual(to)
     }
 }

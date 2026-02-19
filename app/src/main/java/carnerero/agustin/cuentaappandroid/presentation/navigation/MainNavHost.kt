@@ -44,7 +44,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.Pi
 import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchViewModelV2
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
@@ -76,7 +76,7 @@ fun MainNavHost(
     val entriesViewModel: EntriesViewModel = hiltViewModel()
     val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchViewModel = hiltViewModel()
-    val searchViewModel2: SearchViewModelV2 = hiltViewModel()
+    val searchViewModel2: SearchRecordsViewModel = hiltViewModel()
     val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: RecordsViewModel = hiltViewModel()

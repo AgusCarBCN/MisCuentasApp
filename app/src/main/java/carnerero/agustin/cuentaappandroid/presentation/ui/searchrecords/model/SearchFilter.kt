@@ -5,8 +5,8 @@ import java.math.BigDecimal
 import java.util.Date
 
 data class SearchFilter(
-    val accountId: Int,
-    val description: String? = "Prueba",
+    val accountId: Int=-1,
+    val description: String? = "",
     val dateFrom: String= Date().dateFormat(),
     val dateTo: String=Date().dateFormat(),
     val amountMin: BigDecimal = BigDecimal.ZERO,
