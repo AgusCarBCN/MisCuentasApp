@@ -1,41 +1,45 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.InsertCategoryUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.SaveUriUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SetUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetToLoginUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetUserProfileDataUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateNameUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.UpdatePasswordUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateUsernameUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileEffect
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
-import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEffect
 import carnerero.agustin.cuentaappandroid.utils.AppDataList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.invoke
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val setProfileData: SetUserProfileDataUseCase,
     private val getProfileData: GetUserProfileDataUseCase,
     private val setLoginTo: SetToLoginUseCase,
-    private val saveUri: SaveUriUseCase,
+    private val setUri: SetUriUseCase,
     private val getUri: GetPhotoFromUriUseCase,
+    private val updateName: UpdateNameUseCase,
+    private val updateUsername: UpdateUsernameUseCase,
+    private val updatePassword: UpdatePasswordUseCase,
     private val insertCategory: InsertCategoryUseCase,
 ) : ViewModel() {
 
@@ -50,40 +54,61 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getProfileData()
+            observeInitialData()
+        }
+    }
+    private fun observeInitialData() {
+        viewModelScope.launch {
+            val profileData = getProfileData.invoke()
             loadImageUri()
+
+            _uiState.update {
+                it.copy(
+                    name = profileData.name,
+                    username = profileData.userName,
+                    password = profileData.password,
+                )
+            }
         }
     }
 
 
     fun onUserEvent(event: ProfileUiEvent) {
         when (event) {
-            is ProfileUiEvent.OnNameChange -> {
+            is ProfileUiEvent.OnNameChange -> 
                 onNameChanged(event.value)
-            }
+            
 
-            is ProfileUiEvent.OnUserNameChange -> {
+            is ProfileUiEvent.OnUserNameChange -> 
                 onUserNameChanged(event.value)
-            }
+            
 
-            is ProfileUiEvent.OnPasswordChange -> {
+            is ProfileUiEvent.OnPasswordChange -> 
                 onPasswordChanged(event.value)
-            }
+            
 
-            is ProfileUiEvent.OnRepeatPasswordChange -> {
+            is ProfileUiEvent.OnRepeatPasswordChange -> 
                 onRepeatPassword(event.value)
-            }
+            
 
-            is ProfileUiEvent.OnProfileImageChange -> {
+            is ProfileUiEvent.OnProfileImageChange -> 
                 onImageSelected(event.value)
 
-            }
+            
 
             is ProfileUiEvent.OnCreateProfile -> {
                 createProfile(event.value)
             }
-
-            else -> {}
+          
+            is ProfileUiEvent.UpdateNameProfile -> 
+                updateName(event.newName)
+            
+            is ProfileUiEvent.UpdatePasswordProfile -> updatePassword(event.newPassword)
+            is ProfileUiEvent.UpdatePhotoProfile -> updateProfilePhoto(event.newPhoto)
+            is ProfileUiEvent.UpdateUsernameProfile -> updateUsername(event.newUsername)
+            else -> {
+                
+            }
         }
     }
 
@@ -138,7 +163,7 @@ class ProfileViewModel @Inject constructor(
             setProfileData(profile)
             setLoginTo(true)
             _uiState.value.selectedImageUri?.let {
-                saveUri(it)
+                setUri(it)
             }
             _uiState.update {
                 it.copy(
@@ -151,6 +176,55 @@ class ProfileViewModel @Inject constructor(
             _effect.emit(ProfileEffect.ProfileSavedMessage)
             delay(1000)
             _effect.emit(ProfileEffect.NavigateToCreateAccounts)
+        }
+    }
+    fun updateName(
+       newName:String
+    ) {
+        viewModelScope.launch {
+            updateName.invoke(newName)
+            _uiState.update {
+                it.copy(
+                    name = newName
+                )
+            }
+            _effect.emit(ProfileEffect.UpdateNameMessage)
+        }
+    }
+    fun updateUsername(
+        newUsername:String
+    ) {
+        viewModelScope.launch {
+            updateUsername.invoke(newUsername)
+            _uiState.update {
+                it.copy(
+                    username = newUsername                )
+            }
+            _effect.emit(ProfileEffect.UpdateUsernameMessage)
+        }
+    }
+    fun updatePassword(
+        newPassword:String
+    ) {
+
+        viewModelScope.launch {
+            updatePassword.invoke(newPassword)
+            _uiState.update {
+                it.copy(
+                    password = newPassword
+                )
+            }
+            _effect.emit(ProfileEffect.UpdatePasswordMessage)
+        }
+    }
+    fun updateProfilePhoto(
+        newImage: Uri?
+    ) {
+        viewModelScope.launch {
+            _uiState.value.selectedImageUri?.let {
+                setUri(it)
+            }
+            _effect.emit(ProfileEffect.UpdateImagePhoto)
         }
     }
 

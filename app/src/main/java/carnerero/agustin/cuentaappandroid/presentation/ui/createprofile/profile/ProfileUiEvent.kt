@@ -14,5 +14,11 @@ sealed class ProfileUiEvent(){
     data class OnProfileImageChange(val value:Uri): ProfileUiEvent()
     data class OnCreateProfile(val value: UserProfile) : ProfileUiEvent()
 
+    data class UpdateNameProfile(val newName: String) : ProfileUiEvent()
 
+    data class UpdateUsernameProfile(val newUsername: String) : ProfileUiEvent()
+
+    data class UpdatePasswordProfile(val newPassword: String) : ProfileUiEvent()
+
+    data class UpdatePhotoProfile(val newPhoto: Uri?) : ProfileUiEvent()
 }

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.components
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,80 +19,62 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 
 @Composable
 fun ProfileInputsSection(
-    createViewModel: ProfileViewModel
-
+     name:String,
+     username:String,
+     password:String,
+     onNameChange:(String)->Unit,
+     onUserNameChange:(String)->Unit,
+     onPasswordChange:(String)->Unit,
+     updateName:(String)->Unit,
+     updateUserName:(String)->Unit,
+     updatePassword:(String)->Unit
 ) {
-  /*  val updatedMessages = listOf(
-        stringResource(id = R.string.userNameUpdated),  // Aquí obtienes el texto real del recurso
-        stringResource(id = R.string.nameUpdated),
-        stringResource(id = R.string.passwordUpdated)
-    )
-
-    val name by createViewModel.name.observeAsState("")
-    val userName by createViewModel.username.observeAsState("")
-    val password by createViewModel.password.observeAsState("")
-    val enableChangeImageButton by createViewModel.enableChangeImage.observeAsState(false)
-    val enableNameButton by createViewModel.enableNameButton.observeAsState(false)
-    val enableUserNameButton by createViewModel.enableUserNameButton.observeAsState(false)
-    val enablePasswordButton by createViewModel.enablePasswordButton.observeAsState(false)
-
 
     NewInputComponent(
         title = stringResource(id = R.string.userName),
-        inputNewText = userName,
+        inputNewText = username,
         R.string.userName,
-        onNameTextFieldChanged = { createViewModel.onUserNameChanged(it) },
+        onNameTextFieldChanged = {
+            //createViewModel.onUserNameChanged(it)
+            onUserNameChange(it)},
         type = BoardType.TEXT,
-        enableUserNameButton,
+        true,
         onChangeButtonClick = {
-            createViewModel.setUserDataProfile(UserProfile(name, userName, password),updatedMessages[0])
-            createViewModel.buttonState(
-                enableChangeImageButton,
-                false,
-                enableNameButton,
-                enablePasswordButton
-            )
+            //createViewModel.setUserDataProfile(UserProfile(name, userName, password),updatedMessages[0])
+            updateUserName(username)
         }
     )
     NewInputComponent(
         title = stringResource(id = R.string.name),
         inputNewText = name,
         R.string.name,
-        onNameTextFieldChanged = { createViewModel.onNameChanged(it) },
+        onNameTextFieldChanged = {
+            //createViewModel.onNameChanged(it)
+               onNameChange(it)        },
         type = BoardType.TEXT,
-        enableNameButton,
+        true,
         onChangeButtonClick = {
-            createViewModel.setUserDataProfile(UserProfile(name, userName, password),updatedMessages[1])
-            createViewModel.buttonState(
-                enableChangeImageButton,
-                enableUserNameButton,
-                false,
-                enablePasswordButton
-            )
+           updateName(name)
         }
     )
     NewInputComponent(
         title = stringResource(id = R.string.password),
         inputNewText = password,
         R.string.password,
-        onNameTextFieldChanged = { createViewModel.onPasswordChanged(it) },
+        onNameTextFieldChanged = {
+            //createViewModel.onPasswordChanged(it)
+              onPasswordChange(it)                   },
         type = BoardType.PASSWORD,
-        enablePasswordButton,
+        true,
         onChangeButtonClick = {
-            createViewModel.setUserDataProfile(UserProfile(name, userName, password),
-                updatedMessages[2])
-            createViewModel.buttonState(
-                enableChangeImageButton,
-                enableUserNameButton,
-                enableNameButton,
-                false
-            )
+           updatePassword(password)
         },
         true
-    )*/
+    )
 }
 
 @Composable

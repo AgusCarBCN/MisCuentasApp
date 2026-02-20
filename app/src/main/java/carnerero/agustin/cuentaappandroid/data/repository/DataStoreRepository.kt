@@ -7,14 +7,17 @@ interface DataStoreRepository {
 
     suspend fun getUserDataProfile(): UserProfile
     suspend fun setUserDataProfile(userProfile: UserProfile)
-    suspend fun upDatePassword(newPassword: String)
+
+    suspend fun updateNameProfile(name: String)
+
+    suspend fun updateUsernameProfile(username: String)
+
+    suspend fun updatePassword(newPassword: String)
     suspend fun getShowTutorial(): Boolean?
     suspend fun setShowTutorial(showTutorial: Boolean)
 
     suspend fun getToLogin(): Boolean?
     suspend fun setToLogin(toLogin: Boolean)
-
-
 
     suspend fun getCurrencyCode(): String?
     suspend fun setCurrencyCode(currencyCode: String)

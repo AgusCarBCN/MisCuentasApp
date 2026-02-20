@@ -41,7 +41,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.UpdateProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.UpdateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel

@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.layouts
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile.layouts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
-import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.components.ProfileImageSection
-import carnerero.agustin.cuentaappandroid.presentation.ui.updateprofile.components.ProfileInputsSection
-
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.components.ProfileImageSection
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.components.ProfileInputsSection
+/*
 @Composable
 fun UpdateProfileLandscapeLayout(
     viewModel: ProfileViewModel
@@ -58,4 +58,4 @@ fun UpdateProfileLandscapeLayout(
 
 
     }
-}
+}*/

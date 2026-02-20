@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.UpDatePasswordUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.UpdatePasswordUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.GreetingType
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginEffect
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.components.LoginUiEvent
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUserProfileData: GetUserProfileDataUseCase,
-    private val upDatePassword: UpDatePasswordUseCase,
+    private val upDatePassword: UpdatePasswordUseCase,
     private val getUri: GetPhotoFromUriUseCase
 ) : ViewModel() {
 

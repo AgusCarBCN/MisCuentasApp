@@ -7,4 +7,12 @@ sealed class ProfileEffect {
      data object NavigateToCreateAccounts: ProfileEffect()
      data object ProfileSavedMessage : ProfileEffect()
 
+     data object UpdateNameMessage : ProfileEffect()
+
+     data object UpdateUsernameMessage : ProfileEffect()
+
+     data object UpdatePasswordMessage: ProfileEffect()
+
+     data object UpdateImagePhoto: ProfileEffect()
+
 }

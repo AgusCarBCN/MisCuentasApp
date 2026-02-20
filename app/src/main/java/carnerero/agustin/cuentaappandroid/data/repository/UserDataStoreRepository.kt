@@ -28,9 +28,7 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
                 userName = preferences[UserPreferencesKeys.USERNAME] ?: "",
                 password = preferences[UserPreferencesKeys.PASSWORD] ?: ""
             )
-
         }
-
     }
 
     override suspend fun setUserDataProfile(userProfile: UserProfile) {
@@ -52,7 +50,19 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
         }
     }
 
-    override suspend fun upDatePassword(newPassword: String) {
+    override suspend fun updateNameProfile(name: String) {
+        context.dataStore.edit { preferences ->
+            preferences[UserPreferencesKeys.NAME] = name
+        }
+    }
+
+    override suspend fun updateUsernameProfile(username: String) {
+        context.dataStore.edit { preferences ->
+            preferences[UserPreferencesKeys.USERNAME] = username
+        }
+    }
+
+    override suspend fun updatePassword(newPassword: String) {
         context.dataStore.edit { preferences ->
             preferences[UserPreferencesKeys.PASSWORD] = newPassword
         }
