@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records.components
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model
 
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 

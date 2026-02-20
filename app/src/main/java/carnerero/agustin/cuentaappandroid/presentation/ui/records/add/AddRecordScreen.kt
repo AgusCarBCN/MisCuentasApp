@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records.insert
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.add
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -47,7 +47,7 @@ import java.util.Date
 
 @Composable
 
-fun EntryFormScreen(
+fun AddFormScreen(
     entryViewModel: EntriesViewModel,
     categoriesViewModel: CategoriesViewModel,
     accountViewModel: AccountsViewModel,

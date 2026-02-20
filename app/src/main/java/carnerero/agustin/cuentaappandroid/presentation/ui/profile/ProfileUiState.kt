@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
 import android.net.Uri
 
@@ -15,4 +15,3 @@ data class ProfileUiState(
             password.length >= 6 &&
             password == repeatPassword
 }
-

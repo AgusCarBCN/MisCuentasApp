@@ -26,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver

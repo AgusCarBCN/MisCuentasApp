@@ -11,8 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileImageWithCamera
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.createprofile.ProfileImageWithCamera
 
 @Composable
 fun ProfileImageSection(

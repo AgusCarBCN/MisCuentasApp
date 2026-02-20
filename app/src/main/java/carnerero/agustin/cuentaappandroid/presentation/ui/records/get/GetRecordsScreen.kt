@@ -5,13 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.RecordsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsList
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsList
 
 @Composable
 fun RecordScreen(
-    recordsViewModel: RecordsViewModel,
+    recordsViewModel: GetRecordsViewModel,
     filter: RecordsFilter)
     {
     LaunchedEffect(filter) {
@@ -26,6 +25,6 @@ fun RecordScreen(
     RecordsList(state.listOfRecords,
         state.currencyCode,
         state.enableByDate,
-        {recordsViewModel.onEvent(RecordsUiEvents.ShowEnableByDate(it))})
+        {recordsViewModel.onEvent(GetRecordsUiEvents.ShowEnableByDate(it))})
 }
 

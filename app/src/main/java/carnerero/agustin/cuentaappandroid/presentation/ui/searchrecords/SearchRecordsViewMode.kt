@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
@@ -185,7 +185,7 @@ class SearchRecordsViewModel @Inject constructor(
 
         // Construir filtro y ruta
         val recordsFilter = RecordsFilter.Search(searchFilter)
-        val route = Routes.ShowRecords.createRoute(recordsFilter)
+        val route = Routes.GetRecords.createRoute(recordsFilter)
 
         // Actualizar estado y emitir efecto de navegación
         viewModelScope.launch {

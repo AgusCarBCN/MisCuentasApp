@@ -11,9 +11,9 @@ import androidx.navigation.compose.composable
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.CreateProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.createprofile.CreateProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.login.LoginScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel

@@ -6,8 +6,8 @@ import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllA
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.*
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter.*
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -85,13 +85,13 @@ class HomeViewModel @Inject constructor(
     private fun navigateToRecords(filter: RecordsFilter) {
         val route = when (filter) {
             Expenses ->
-                Routes.ShowRecords.createRoute(Expenses)
+                Routes.GetRecords.createRoute(Expenses)
 
             Incomes ->
-                Routes.ShowRecords.createRoute(Incomes)
+                Routes.GetRecords.createRoute(Incomes)
 
             is RecordsByAccount ->
-                Routes.ShowRecords.createRoute(filter)
+                Routes.GetRecords.createRoute(filter)
 
             else-> ""
         }

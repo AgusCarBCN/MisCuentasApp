@@ -2,7 +2,7 @@ package carnerero.agustin.cuentaappandroid.presentation.navigation
 
 import android.net.Uri
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import com.google.gson.Gson
 
 sealed class Routes(
@@ -106,29 +106,8 @@ sealed class Routes(
         R.string.categorycontrol,
         R.drawable.ic_categorycontrol)
 
-   /* data object RecordScreen:Routes("records_screen/{filter}",R.string.yourentries)
-    fun createRoute(filter: RecordsFilter): String{
-        return when (filter) {
-            RecordsFilter.Expenses -> "Expenses"
-            RecordsFilter.Incomes -> "Incomes"
-            is RecordsFilter.RecordsByAccount -> "RecordsByAccount/${filter.accountId}"
 
-            RecordsFilter.Empty -> "record_screen/Expenses"
-        }
-    }*/
-   /*data object RecordScreen:Routes("records_screen/{filter}/{accountId}",R.string.yourentries) {
-       fun createRoute(recordFilter: RecordsFilter): String {
-           return when (recordFilter) {
-
-               is RecordsFilter.RecordsByAccount ->
-                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}"
-
-               else ->
-                   "records_screen/${recordFilter.routeName}/-1"
-           }
-       }
-   }*/
-   data object ShowRecords : Routes(
+   data object GetRecords : Routes(
        "records_screen/{filter}/{accountId}/{filterJson}",
        R.string.yourentries
    ) {

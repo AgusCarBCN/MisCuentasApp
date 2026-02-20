@@ -17,9 +17,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
 
 @Composable
 fun ProfileInputsSection(

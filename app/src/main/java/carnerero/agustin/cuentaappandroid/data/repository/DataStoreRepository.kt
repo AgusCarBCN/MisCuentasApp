@@ -1,7 +1,7 @@
 package carnerero.agustin.cuentaappandroid.data.repository
 
 import android.net.Uri
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
 
 interface DataStoreRepository {
 

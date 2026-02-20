@@ -57,7 +57,7 @@ fun HomeScreen(
     LaunchedEffect(effects) {
         when (effects) {
             is HomeEffects.NavToRecordsScreen -> {
-                navController.navigateTopLevel(Routes.ShowRecords.createRoute(state.filter))
+                navController.navigateTopLevel(Routes.GetRecords.createRoute(state.filter))
                 Log.d("NAVIGATION", "Route:${state.route}")
                 //Log.d("NAVIGATION","Route2:${Routes.SearchRecords.route}")
             }

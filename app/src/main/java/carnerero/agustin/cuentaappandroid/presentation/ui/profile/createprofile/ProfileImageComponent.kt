@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile.createprofile
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -16,7 +16,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,10 +25,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 

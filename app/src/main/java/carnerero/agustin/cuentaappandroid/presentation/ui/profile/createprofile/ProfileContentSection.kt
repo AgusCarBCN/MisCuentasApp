@@ -1,30 +1,18 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile.createprofile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileEffect
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
 
 @Composable
 

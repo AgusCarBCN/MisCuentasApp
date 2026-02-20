@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
 sealed class ProfileEffect {
 

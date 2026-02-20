@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile.createprofile
 
 
 import androidx.compose.foundation.background
@@ -23,13 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountUiState
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileEffect
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileEffect
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileUiEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp

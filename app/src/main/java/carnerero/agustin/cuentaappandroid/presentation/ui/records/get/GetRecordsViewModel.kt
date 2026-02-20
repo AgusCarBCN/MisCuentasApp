@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.get
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,12 +9,7 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllE
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilteredEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeUiEvents
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.components.RecordsFilter.Expenses
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsEffect
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiEvents
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiState
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordsViewModel @Inject constructor(
+class GetRecordsViewModel @Inject constructor(
     private val getAllEntriesDTO: GeAllEntriesUseCase,
     private val getAllIncomes: GetAllIncomesUseCase,
     private val getAllExpenses: GetAllExpensesUseCase,
@@ -35,25 +30,25 @@ class RecordsViewModel @Inject constructor(
     private val getFilteredEntries: GetFilteredEntriesUseCase
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(RecordsUiState())
-    val uiState: StateFlow<RecordsUiState> = _uiState
+    private val _uiState = MutableStateFlow(GetRecordsUiState())
+    val uiState: StateFlow<GetRecordsUiState> = _uiState
 
-    private val _effect = MutableSharedFlow<RecordsEffect>()
+    private val _effect = MutableSharedFlow<GetRecordsEffect>()
     val effect = _effect.asSharedFlow()
 
     init {
         loadCurrencyCode()
     }
-    fun onEvent(event: RecordsUiEvents) {
+    fun onEvent(event: GetRecordsUiEvents) {
         when (event) {
-            is RecordsUiEvents.ShowEnableByDate -> switchEnableByDate(event.value)
+            is GetRecordsUiEvents.ShowEnableByDate -> switchEnableByDate(event.value)
             else ->{}
         }
     }
     // Carga los registros según el filtro
     fun getRecords(filter: RecordsFilter) {
         val recordsFlow: Flow<List<EntryDTO>> = when (filter) {
-            Expenses -> getAllExpenses.invoke()
+            RecordsFilter.Expenses -> getAllExpenses.invoke()
             RecordsFilter.Incomes -> getAllIncomes.invoke()
             is RecordsFilter.RecordsByAccount -> getAllRecordsByAccount.invoke(filter.accountId)
             is RecordsFilter.Search -> getFilteredEntries.invoke(filter.searchFilter)
@@ -64,7 +59,7 @@ class RecordsViewModel @Inject constructor(
             recordsFlow.collect { list ->
                 _uiState.update { it.copy(listOfRecords = list) }
                 // Emitimos efecto si quieres notificar que hay registros
-                if (list.isNotEmpty()) _effect.emit(RecordsEffect.ShowRecords)
+                if (list.isNotEmpty()) _effect.emit(GetRecordsEffect.ShowRecords)
             }
         }
     }

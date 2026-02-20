@@ -1,6 +1,7 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
 import android.net.Uri
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
 
 sealed class ProfileUiEvent(){
 
@@ -11,7 +12,7 @@ sealed class ProfileUiEvent(){
 
     data class OnRepeatPasswordChange(val value:String): ProfileUiEvent()
 
-    data class OnProfileImageChange(val value:Uri): ProfileUiEvent()
+    data class OnProfileImageChange(val value: Uri): ProfileUiEvent()
     data class OnCreateProfile(val value: UserProfile) : ProfileUiEvent()
 
     data class UpdateNameProfile(val newName: String) : ProfileUiEvent()

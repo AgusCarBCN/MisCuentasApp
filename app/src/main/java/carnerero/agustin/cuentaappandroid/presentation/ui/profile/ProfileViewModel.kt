@@ -1,22 +1,20 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createprofile
+package carnerero.agustin.cuentaappandroid.presentation.ui.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.InsertCategoryUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetUserProfileDataUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.SetUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetToLoginUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.SetUriUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetUserProfileDataUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateNameUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdatePasswordUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateUsernameUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileEffect
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiEvent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.ProfileUiState
-import carnerero.agustin.cuentaappandroid.presentation.ui.createprofile.profile.UserProfile
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileUiEvent
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileUiState
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
 import carnerero.agustin.cuentaappandroid.utils.AppDataList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +23,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -75,39 +72,39 @@ class ProfileViewModel @Inject constructor(
 
     fun onUserEvent(event: ProfileUiEvent) {
         when (event) {
-            is ProfileUiEvent.OnNameChange -> 
+            is ProfileUiEvent.OnNameChange ->
                 onNameChanged(event.value)
-            
 
-            is ProfileUiEvent.OnUserNameChange -> 
+
+            is ProfileUiEvent.OnUserNameChange ->
                 onUserNameChanged(event.value)
-            
 
-            is ProfileUiEvent.OnPasswordChange -> 
+
+            is ProfileUiEvent.OnPasswordChange ->
                 onPasswordChanged(event.value)
-            
 
-            is ProfileUiEvent.OnRepeatPasswordChange -> 
+
+            is ProfileUiEvent.OnRepeatPasswordChange ->
                 onRepeatPassword(event.value)
-            
 
-            is ProfileUiEvent.OnProfileImageChange -> 
+
+            is ProfileUiEvent.OnProfileImageChange ->
                 onImageSelected(event.value)
 
-            
+
 
             is ProfileUiEvent.OnCreateProfile -> {
                 createProfile(event.value)
             }
-          
-            is ProfileUiEvent.UpdateNameProfile -> 
+
+            is ProfileUiEvent.UpdateNameProfile ->
                 updateName(event.newName)
-            
+
             is ProfileUiEvent.UpdatePasswordProfile -> updatePassword(event.newPassword)
             is ProfileUiEvent.UpdatePhotoProfile -> updateProfilePhoto(event.newPhoto)
             is ProfileUiEvent.UpdateUsernameProfile -> updateUsername(event.newUsername)
             else -> {
-                
+
             }
         }
     }
@@ -242,10 +239,3 @@ class ProfileViewModel @Inject constructor(
         }
     }
 }
-
-
-
-
-
-
-
