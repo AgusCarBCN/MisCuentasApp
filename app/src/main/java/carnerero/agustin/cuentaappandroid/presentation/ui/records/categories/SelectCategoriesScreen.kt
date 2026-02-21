@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records.add.components
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.categories
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,27 +9,26 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CategoryEntries
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 
 
 @Composable
-fun CategorySelector(
-    categoriesViewModel: CategoriesViewModel,
-    type: CategoryType,
-    navToNewEntry: () -> Unit
+fun SelectCategoriesScreen(
+    selectCategoriesViewModel: SelectCategoriesViewModel,
+    type: CategoryType
 ) {
-    val listOfCategories by categoriesViewModel.listOfCategories.observeAsState(listOf())
-
+    val state by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
+    val categories=state.categories
     LaunchedEffect(type) {
-        categoriesViewModel.getAllCategoriesByType(type)
+        selectCategoriesViewModel.showCategories(type)
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -47,13 +46,14 @@ fun CategorySelector(
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            items(listOfCategories.size) { index ->
+            items(categories.size) { index ->
                 CategoryEntries(
-                    category = listOfCategories[index],
+                    category = categories[index],
                     modifier = Modifier.padding(10.dp),
                     onClickItem = {
-                        categoriesViewModel.onCategorySelected(listOfCategories[index])
-                        navToNewEntry()
+                        selectCategoriesViewModel.onUserEvent(SelectCategoriesUiEvent.OnCategorySelected(categories[index]))
+                        //categoriesViewModel.onCategorySelected(listOfCategories[index])
+                        //navToNewEntry()
                     }
                 )
             }

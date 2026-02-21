@@ -58,7 +58,6 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val profileData = getProfileData.invoke()
             loadImageUri()
-
             _uiState.update {
                 it.copy(
                     name = profileData.name,

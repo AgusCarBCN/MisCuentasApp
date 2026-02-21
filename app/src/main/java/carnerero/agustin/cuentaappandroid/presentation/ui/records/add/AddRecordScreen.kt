@@ -37,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.E
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import kotlinx.coroutines.Dispatchers
@@ -44,25 +45,27 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.Date
-
+/*
 @Composable
 
-fun AddFormScreen(
-    entryViewModel: EntriesViewModel,
-    categoriesViewModel: CategoriesViewModel,
-    accountViewModel: AccountsViewModel,
+fun AddRecordsScreen(
+    addRecordsViewModel: AddRecordsViewModel,
+    //entryViewModel: EntriesViewModel,
+    //categoriesViewModel: CategoriesViewModel,
+    //accountViewModel: AccountsViewModel,
     navToBack: () -> Unit,
 
 ) {
-    val scope = rememberCoroutineScope()
-    val descriptionEntry by entryViewModel.entryName.observeAsState("")
-    val amountEntry by entryViewModel.entryAmount.observeAsState("")
-    val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
-    val enableConfirmButton by entryViewModel.enableConfirmButton.observeAsState(false)
-    val accountSelected by accountViewModel.accountSelected.observeAsState()
 
-    val idAccount = accountSelected?.id ?: 1
-    val categoryId = categorySelected?.id ?: 1
+    //val scope = rememberCoroutineScope()
+    //val descriptionEntry by entryViewModel.entryName.observeAsState("")
+    //val amountEntry by entryViewModel.entryAmount.observeAsState("")
+    //val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
+    //val enableConfirmButton by entryViewModel.enableConfirmButton.observeAsState(false)
+    //val accountSelected by accountViewModel.accountSelected.observeAsState()
+
+    //val idAccount = accountSelected?.id ?: 1
+    //val categoryId = categorySelected?.id ?: 1
     val type = categorySelected?.type ?: CategoryType.INCOME
     val iconResource = categorySelected?.iconResource ?: 0
     val titleResource = categorySelected?.nameResource ?: 0
@@ -74,7 +77,7 @@ fun AddFormScreen(
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
     val noAccounts = message(resource = R.string.noaccounts)
     var operationStatus: Int
-    val isValidAmount=accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)
+    //val isValidAmount=accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)
     val initColor =
         if (type == CategoryType.INCOME) colors.iconIncomeInit
         else colors.iconExpenseInit
@@ -154,7 +157,7 @@ fun AddFormScreen(
                         false
                     )
 
-                    AccountSelector(
+                    AccountSearchRecordsSelector(
                         stringResource(id = R.string.selectanaccount),
                         accountViewModel,
                         modifier = fieldModifier
@@ -366,7 +369,7 @@ fun AddFormScreen(
     }
 
 }
-
+/*
 /*fun NewEntry(
 
     entryViewModel: EntriesViewModel,

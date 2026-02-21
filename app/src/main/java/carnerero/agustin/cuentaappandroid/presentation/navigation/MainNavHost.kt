@@ -18,7 +18,6 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.C
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
-
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.SendEmail
@@ -29,8 +28,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.components.CategorySelector
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddFormScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithEditIcon
@@ -42,6 +40,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScre
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.GetRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
@@ -80,6 +79,7 @@ fun MainNavHost(
     val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
+    val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -129,22 +129,23 @@ fun MainNavHost(
 
         // Drawer menu
         composable(Routes.NewIncome.route) {
-            CategorySelector(categoriesViewModel, CategoryType.INCOME) {
+            SelectCategoriesScreen(selectCategoriesViewModel, CategoryType.INCOME)
+            /*{
                 navController.navigate(Routes.NewEntry.route)
-            }
+            }*/
         }
         composable(Routes.NewExpense.route) {
-            CategorySelector(categoriesViewModel, CategoryType.EXPENSE) {
+            SelectCategoriesScreen(selectCategoriesViewModel, CategoryType.EXPENSE)/* {
                 navController.navigateTopLevel(Routes.NewEntry.route)
-            }
+            }*/
         }
         composable(Routes.NewEntry.route) {
-            AddFormScreen(
+           /* AddRecordsScreen(
                 entriesViewModel,
                 categoriesViewModel,
                 accountsViewModel
             )
-            { navController.popBackStack() }
+            { navController.popBackStack() }*/
         }
         composable(Routes.Statistics.route) {
             StatisticsScreen(

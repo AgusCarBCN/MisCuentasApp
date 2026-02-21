@@ -16,13 +16,10 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllI
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilteredEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalIncomesUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.InsertEntryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.InsertRecordUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.UpdateEntriesAmountByExchangeRateUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.UpdateEntryUseCase
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -33,14 +30,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigDecimal
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class EntriesViewModel @Inject constructor(
-    private val addEntry: InsertEntryUseCase,
+    private val addRecord: InsertRecordUseCase,
     private val getTotalIncomes: GetSumTotalIncomesUseCase,
     private val getTotalExpenses: GetSumTotalExpensesUseCase,
     private val getAllIncomes: GetAllIncomesUseCase,
@@ -244,7 +239,7 @@ class EntriesViewModel @Inject constructor(
     fun addEntry(entry: Entry) {
         viewModelScope.launch(Dispatchers.IO) {
 
-                addEntry.invoke(entry)
+                addRecord.invoke(entry)
                 if (entry.amount >= BigDecimal.ZERO) {
                     getTotalIncomes().first()
                 } else {
