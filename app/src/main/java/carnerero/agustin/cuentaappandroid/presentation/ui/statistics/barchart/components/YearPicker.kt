@@ -38,7 +38,8 @@ import java.time.LocalDate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YearSelector(
-    barChartViewModel: BarChartViewModel,
+    onSelectedYear:(String)->Unit,
+    //barChartViewModel: BarChartViewModel,
     modifier: Modifier = Modifier
 ) {
     // Obtén el año actual
@@ -65,7 +66,7 @@ fun YearSelector(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Row del título con ícono
-        Row(
+        /*Row(
             modifier = Modifier.fillMaxWidth()
                 .background(colors.backgroundPrimary),
             horizontalArrangement = Arrangement.Center,
@@ -83,7 +84,7 @@ fun YearSelector(
                 style = MaterialTheme.typography.bodyLarge,
                 color = colors.textColor
             )
-        }
+        }*/
 
         // Card del VerticalPager
         Card(
@@ -114,7 +115,7 @@ fun YearSelector(
 
                 // Actualiza el ViewModel
                 LaunchedEffect(pagerState.currentPage) {
-                    barChartViewModel.onSelectedYear(years[pagerState.currentPage])
+                    onSelectedYear(years[pagerState.currentPage])
                 }
             }
         }

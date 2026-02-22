@@ -26,15 +26,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.components.YearSelector
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.model.BarChartData
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
@@ -44,27 +44,25 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import java.util.Calendar
 import kotlin.math.abs
 
 @Composable
 
 fun BarChartScreen(
     accountViewModel: AccountsViewModel,
-    barChartViewModel: BarChartViewModel,
-    settingViewModel: SettingViewModel
-
+    barChartViewModel: BarChartViewModel
 ) {
-    val year = Calendar.getInstance().get(Calendar.YEAR)
-    val accountSelected by accountViewModel.accountSelected.observeAsState()
-    val yearSelected by barChartViewModel.selectedYear.observeAsState()
-    val data by barChartViewModel.barChartData.observeAsState(mutableListOf())
-    val isDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
+    val state by barChartViewModel.uiState.collectAsStateWithLifecycle()
+
+    val isDarkTheme=state.isDarkTheme
+    val accountSelected=state.accountSelected
+    val yearSelected =state.yearSelected
+    val data =state.barchartData
     val context = LocalContext.current
-    val idAccount = accountSelected?.id ?: 1
+
     val isPortrait =orientation== OrientationApp.Portrait
-    LaunchedEffect(idAccount, yearSelected) {
-        barChartViewModel.barChartDataByMonth(idAccount, yearSelected ?: year.toString())
+    LaunchedEffect(accountSelected, yearSelected) {
+        barChartViewModel.barChartDataByMonth(accountSelected, yearSelected)
     }
 
         Column(
@@ -78,17 +76,21 @@ fun BarChartScreen(
         ) {
             if (isPortrait) {
                 Row(
-                    Modifier
-                        .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(dimens.small)
+                    modifier = Modifier.fillMaxWidth().padding(top=dimens.medium, bottom = dimens.medium),
+                    horizontalArrangement = Arrangement.spacedBy(dimens.small),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    AccountSelector(
-                        title = stringResource(id = R.string.account),
-                        accountViewModel = accountViewModel,
+                    AccountSearchRecordsSelector(
+                        title = R.string.account,
+                        state.accounts,
+                        state.currencyCode,
+                        { barChartViewModel.onUserEvent(BarChartUiEvent.OnAccountSelected(it)) },
+                        false,
                         modifier = Modifier.weight(0.75f)
                     )
 
                     YearSelector(
-                        barChartViewModel = barChartViewModel,
+                        { barChartViewModel.onUserEvent(BarChartUiEvent.OnYearSelected(it)) },
                         modifier = Modifier.weight(0.25f)
                     )
                 }
@@ -121,7 +123,7 @@ fun BarChartScreen(
 fun BarChart(
     modifier: Modifier,
     context: Context,
-    data: MutableList<BarChartData>,
+    data: List<BarChartData>,
     isDarkTheme: Boolean
 ) {
     val months= mutableListOf<String>()
@@ -230,7 +232,7 @@ fun BarChart(
 fun BarChartResult(
     modifier: Modifier,
     context: Context,
-    data: MutableList<BarChartData>,
+    data: List<BarChartData>,
     isDarkTheme: Boolean
 ) {
     val months= mutableListOf<String>()
@@ -324,7 +326,7 @@ fun BarChartResult(
 }
 
 @Composable
-fun Table(modifier: Modifier,accountsViewModel: AccountsViewModel, data: MutableList<BarChartData>) {
+fun Table(modifier: Modifier,accountsViewModel: AccountsViewModel, data: List<BarChartData>) {
 
     val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
     // Encabezados de la tabla
