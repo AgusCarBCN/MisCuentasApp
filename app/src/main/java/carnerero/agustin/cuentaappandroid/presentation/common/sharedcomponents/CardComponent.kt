@@ -47,7 +47,7 @@ import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
@@ -451,7 +451,7 @@ fun AccountCardWithCheckbox(
 }
 @Composable
 fun EntryCardWithCheckBox(
-    entry: EntryDTO,
+    entry: RecordDTO,
     currencyCode: String,
     isChecked:Boolean,
     onSelectionChange: () -> Unit
@@ -553,7 +553,7 @@ fun EntryCardWithCheckBox(
 }
 @Composable
 fun EntryCardWithIcon(
-    entry: EntryDTO,
+    entry: RecordDTO,
     accountsViewModel: AccountsViewModel,
     entriesViewModel: EntriesViewModel,
     navController: NavController

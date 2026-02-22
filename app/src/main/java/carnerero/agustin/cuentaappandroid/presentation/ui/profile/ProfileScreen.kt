@@ -37,7 +37,7 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 fun ProfileScreen(profileViewModel: ProfileViewModel) {
     val isPortrait = orientation == OrientationApp.Portrait
     val state by profileViewModel.uiState.collectAsStateWithLifecycle()
-    val effects by profileViewModel.effect.collectAsStateWithLifecycle(initialValue = ProfileEffect.Idle)
+   // val effects by profileViewModel.effect.collectAsStateWithLifecycle(initialValue = ProfileEffect.Idle)
 
     val updatedMessages = listOf(
         stringResource(id = R.string.photoUpdated),
@@ -45,7 +45,19 @@ fun ProfileScreen(profileViewModel: ProfileViewModel) {
         stringResource(id = R.string.nameUpdated),
         stringResource(id = R.string.passwordUpdated)
     )
-    Log.d("ProfileData", "profileScreen: ${state.name} ${state.username}")
+    LaunchedEffect(Unit) {
+        profileViewModel.effect.collect { effect ->
+            when (effect) {
+                ProfileEffect.UpdateImagePhoto -> SnackBarController.sendEvent(SnackBarEvent(updatedMessages[0]))
+                ProfileEffect.UpdateUsernameMessage -> SnackBarController.sendEvent(SnackBarEvent(updatedMessages[1]))
+                ProfileEffect.UpdateNameMessage -> SnackBarController.sendEvent(SnackBarEvent(updatedMessages[2]))
+                ProfileEffect.UpdatePasswordMessage -> SnackBarController.sendEvent(SnackBarEvent(updatedMessages[3]))
+                else -> Unit
+            }
+        }
+    }
+
+/*
     LaunchedEffect(effects) {
         when (effects) {
             ProfileEffect.UpdateImagePhoto -> SnackBarController.sendEvent(
@@ -76,7 +88,7 @@ fun ProfileScreen(profileViewModel: ProfileViewModel) {
 
             }
         }
-    }
+    }*/
     Box(
         modifier = Modifier
             .fillMaxSize()

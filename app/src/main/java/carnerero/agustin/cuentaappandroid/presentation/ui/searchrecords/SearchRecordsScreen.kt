@@ -58,8 +58,22 @@ fun RecordSearchScreen(
     val enableSearchButton = state.enableSearchButton
     val messageAmountError = stringResource(R.string.amountfromoverdateto)
     val messageDateError = stringResource(R.string.datefromoverdateto)
-
-    LaunchedEffect(effects) {
+    LaunchedEffect(Unit) {
+        searchRecordsViewModel.effect.collect { effect ->
+            when (effect) {
+                SearchEffects.NavToRecordsScreen -> {
+                    navController.navigateTopLevel(state.route)
+                    Log.d("NAVIGATION", "Route from Search:${state.route}")
+                }
+                SearchEffects.MessageInvalidAmounts ->
+                    SnackBarController.sendEvent(SnackBarEvent(messageAmountError))
+                SearchEffects.MessageInvalidDates ->
+                    SnackBarController.sendEvent(SnackBarEvent(messageDateError))
+                else -> Unit
+            }
+        }
+    }
+   /* LaunchedEffect(effects) {
         when (effects) {
             SearchEffects.NavToRecordsScreen -> {
                 navController.navigateTopLevel(state.route)
@@ -78,7 +92,7 @@ fun RecordSearchScreen(
 
             }
         }
-    }
+    }*/
     if (isPortrait)
         Box(
             modifier = Modifier

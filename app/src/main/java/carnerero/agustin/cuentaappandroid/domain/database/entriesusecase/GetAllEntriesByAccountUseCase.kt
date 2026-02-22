@@ -1,12 +1,12 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.repository.EntryRepository
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.repository.RecordRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllEntriesByAccountUseCase   @Inject constructor(private val repository: EntryRepository) {
+class GetAllEntriesByAccountUseCase   @Inject constructor(private val repository: RecordRepository) {
 
-    operator fun invoke(accountId:Int): Flow<List<EntryDTO>> =
+    operator fun invoke(accountId:Int): Flow<List<RecordDTO>> =
         repository.getAllEntriesByAccount(accountId)
 }

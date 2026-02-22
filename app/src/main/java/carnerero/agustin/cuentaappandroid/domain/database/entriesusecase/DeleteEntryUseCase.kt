@@ -1,12 +1,12 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.repository.EntryRepository
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.repository.RecordRepository
 import javax.inject.Inject
 
-class DeleteEntryUseCase @Inject constructor(private val repository: EntryRepository){
+class DeleteEntryUseCase @Inject constructor(private val repository: RecordRepository){
 
-    suspend operator fun invoke(entryDTO: EntryDTO) {
+    suspend operator fun invoke(entryDTO: RecordDTO) {
         repository.deleteEntry(entryDTO)
     }
 }

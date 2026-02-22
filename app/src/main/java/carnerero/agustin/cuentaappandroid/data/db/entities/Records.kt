@@ -25,7 +25,7 @@ import java.util.Date
         )
     ]
 )
-data class Entry(
+data class Records(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "description") val description: String,

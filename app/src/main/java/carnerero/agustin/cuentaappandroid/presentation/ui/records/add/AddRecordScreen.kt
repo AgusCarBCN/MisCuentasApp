@@ -12,13 +12,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -29,14 +29,12 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.I
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
@@ -45,44 +43,83 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.util.Date
-/*
+
+
+@Composable
+
+fun ShowCategory(selectCategoriesViewModel: SelectCategoriesViewModel){
+
+    val state by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
+    val category=state.categorySelected
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 30.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        IconAnimated(
+            iconResource = category.iconResource,
+            sizeIcon = 120,
+            initColor = colors.incomeColor,
+            targetColor = colors.incomeColor
+        )
+
+        HeadSetting(
+            title = stringResource(id = category.nameResource),
+            MaterialTheme.typography.headlineMedium
+        )
+    }
+
+    }
+
 @Composable
 
 fun AddRecordsScreen(
+    selectCategoriesViewModel: SelectCategoriesViewModel,
     addRecordsViewModel: AddRecordsViewModel,
-    //entryViewModel: EntriesViewModel,
-    //categoriesViewModel: CategoriesViewModel,
-    //accountViewModel: AccountsViewModel,
     navToBack: () -> Unit,
-
 ) {
-
-    //val scope = rememberCoroutineScope()
-    //val descriptionEntry by entryViewModel.entryName.observeAsState("")
-    //val amountEntry by entryViewModel.entryAmount.observeAsState("")
-    //val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
-    //val enableConfirmButton by entryViewModel.enableConfirmButton.observeAsState(false)
-    //val accountSelected by accountViewModel.accountSelected.observeAsState()
-
-    //val idAccount = accountSelected?.id ?: 1
-    //val categoryId = categorySelected?.id ?: 1
-    val type = categorySelected?.type ?: CategoryType.INCOME
-    val iconResource = categorySelected?.iconResource ?: 0
-    val titleResource = categorySelected?.nameResource ?: 0
-    val amount = amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO
-    val negativeAmount = amountEntry.toBigDecimalOrNull()?.negate() ?: BigDecimal.ZERO
+    val categoryState by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
+    val addRecordState by addRecordsViewModel.uiState.collectAsStateWithLifecycle()
+    val category=categoryState.categorySelected
+    val amount=addRecordState.recordAmount
+    val recordDescription =addRecordState.recordDescription
+    val accountSelected=addRecordState.accountSelected
     //Snackbar messages
     val newIncomeMessage = message(resource = R.string.newincomecreated)
     val newExpenseMessage = message(resource = R.string.newexpensecreated)
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
-    val noAccounts = message(resource = R.string.noaccounts)
-    var operationStatus: Int
-    //val isValidAmount=accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)
+    val noAccountsMessage = message(resource = R.string.noaccounts)
+    val enableConfirmButton=addRecordState.enableConfirmButton
     val initColor =
-        if (type == CategoryType.INCOME) colors.iconIncomeInit
+        if (category.type == CategoryType.INCOME) colors.iconIncomeInit
         else colors.iconExpenseInit
-    val targetColor = if (type == CategoryType.INCOME) colors.iconIncomeTarget
+    val targetColor = if (category.type == CategoryType.INCOME) colors.iconIncomeTarget
     else colors.iconExpenseTarget
+
+    val iconResource = category.iconResource
+    val titleResource = category.nameResource
+    LaunchedEffect(Unit) {
+        addRecordsViewModel.effect.collect { effect ->
+            when(effect){
+                AddRecordsEffects.AccountsNotFoundMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(noAccountsMessage))
+                AddRecordsEffects.AmountOverBalanceMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(amountOverBalanceMessage))
+                AddRecordsEffects.NewExpenseMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(newExpenseMessage))
+                AddRecordsEffects.NewIncomeMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(newIncomeMessage))
+
+                AddRecordsEffects.NavToBack -> navToBack()
+                else ->{
+
+                }
+            }
+        }
+    }
 
     val isLandscape =
         orientation == OrientationApp.Landscape
@@ -118,26 +155,21 @@ fun AddRecordsScreen(
                         initColor = initColor,
                         targetColor = targetColor
                     )
-
                     /*HeadSetting(
                         title = stringResource(id = titleResource),
                         MaterialTheme.typography.headlineMedium
                     )*/
-
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.desamount),
-                        descriptionEntry,
+                        addRecordState.recordDescription,
                         onTextChange = {
-                            entryViewModel.onTextFieldsChanged(it, amountEntry)
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnDescriptionRecordChange(it))
                         },
                         BoardType.TEXT,
                         false
                     )
-
-
                 }
-
                 /** -------- RIGHT (ACTIONS) -------- */
                 Column(
                     modifier = Modifier
@@ -149,18 +181,22 @@ fun AddRecordsScreen(
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.enternote),
-                        amountEntry,
+                        addRecordState.recordAmount.toString(),
                         onTextChange = {
-                            entryViewModel.onTextFieldsChanged(descriptionEntry, it)
+                            addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAmountRecordChange(it.toBigDecimalOrNull()?: BigDecimal.ZERO))
                         },
                         BoardType.DECIMAL,
                         false
                     )
 
                     AccountSearchRecordsSelector(
-                        stringResource(id = R.string.selectanaccount),
-                        accountViewModel,
-                        modifier = fieldModifier
+                         R.string.selectanaccount,
+                        addRecordState.accounts,
+                        addRecordState.currencyCode,
+                        {
+                            addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(accountSelected))
+                        },
+                         modifier = fieldModifier
                     )
                     Row(
                         modifier = fieldModifier,
@@ -169,7 +205,7 @@ fun AddRecordsScreen(
                     ) {
                         ModelButton(
                             text = stringResource(
-                                id = if (type == CategoryType.INCOME)
+                                id = if (category.type == CategoryType.INCOME)
                                     R.string.newincome
                                 else
                                     R.string.newexpense
@@ -178,60 +214,9 @@ fun AddRecordsScreen(
                             modifier = fieldModifier.weight(1f),
                             enableConfirmButton,
                             onClickButton = {
-                                /*operationStatus =
-                                    if (type == CategoryType.EXPENSE) {
-                                        if (accountViewModel.isValidExpense(
-                                                amountEntry.toBigDecimalOrNull()
-                                                    ?: BigDecimal.ZERO
-                                            )
-                                        ) 1 else 0
-                                    } else 1*/
-
-                                scope.launch(Dispatchers.IO) {
-                                    if (isValidAmount) {
-                                        entryViewModel.addEntry(
-                                            Entry(
-                                                description = descriptionEntry,
-                                                amount = if (type == CategoryType.INCOME)
-                                                    amount else negativeAmount,
-                                                date = Date().dateFormat(),
-                                                categoryId = categoryId,
-                                                accountId = idAccount
-                                            )
-                                        )
-
-                                        accountViewModel.updateAccountBalance(
-                                            idAccount,
-                                            if (type == CategoryType.INCOME)
-                                                amount else negativeAmount,
-                                            false
-                                        )
-
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                SnackBarEvent(
-                                                    if (type == CategoryType.INCOME)
-                                                        newIncomeMessage
-                                                    else
-                                                        newExpenseMessage
-                                                )
-                                            )
-                                        }
-                                    } else if (accountSelected == null) {
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                SnackBarEvent(noAccounts)
-                                            )
-                                        }
-                                    } else {
-                                        withContext(Dispatchers.Main) {
-                                            SnackBarController.sendEvent(
-                                                SnackBarEvent(amountOverBalanceMessage)
-                                            )
-                                        }
-                                    }
-                                }
+                                addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
                             }
+
                         )
                         ModelButton(
                             text = stringResource(id = R.string.backButton),
@@ -269,13 +254,12 @@ fun AddRecordsScreen(
                     title = stringResource(id = titleResource),
                     MaterialTheme.typography.headlineMedium
                 )
-
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.desamount),
-                    descriptionEntry,
+                    addRecordState.recordDescription,
                     onTextChange = {
-                        entryViewModel.onTextFieldsChanged(it, amountEntry)
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnDescriptionRecordChange(it))
                     },
                     BoardType.TEXT,
                     false
@@ -284,23 +268,27 @@ fun AddRecordsScreen(
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.enternote),
-                    amountEntry,
+                    addRecordState.recordAmount.toString(),
                     onTextChange = {
-                        entryViewModel.onTextFieldsChanged(descriptionEntry, it)
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAmountRecordChange(it.toBigDecimalOrNull()?: BigDecimal.ZERO))
                     },
                     BoardType.DECIMAL,
                     false
                 )
 
-                AccountSelector(
-                    stringResource(id = R.string.selectanaccount),
-                    accountViewModel,
+                AccountSearchRecordsSelector(
+                    R.string.selectanaccount,
+                    addRecordState.accounts,
+                    addRecordState.currencyCode,
+                    {
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(accountSelected))
+                    },
                     modifier = fieldModifier
                 )
 
                 ModelButton(
                     text = stringResource(
-                        id = if (type == CategoryType.INCOME)
+                        id = if (category.type == CategoryType.INCOME)
                             R.string.newincome
                         else
                             R.string.newexpense
@@ -309,50 +297,7 @@ fun AddRecordsScreen(
                     modifier = fieldModifier,
                     enableConfirmButton,
                     onClickButton = {
-                        scope.launch(Dispatchers.IO) {
-                            if (isValidAmount) {
-                                entryViewModel.addEntry(
-                                    Entry(
-                                        description = descriptionEntry,
-                                        amount = if (type == CategoryType.INCOME)
-                                            amount else negativeAmount,
-                                        date = Date().dateFormat(),
-                                        categoryId = categoryId,
-                                        accountId = idAccount
-                                    )
-                                )
-
-                                accountViewModel.updateAccountBalance(
-                                    idAccount,
-                                    if (type == CategoryType.INCOME)
-                                        amount else negativeAmount,
-                                    false
-                                )
-
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        SnackBarEvent(
-                                            if (type == CategoryType.INCOME)
-                                                newIncomeMessage
-                                            else
-                                                newExpenseMessage
-                                        )
-                                    )
-                                }
-                            } else if (accountSelected == null) {
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        SnackBarEvent(noAccounts)
-                                    )
-                                }
-                            } else {
-                                withContext(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(
-                                        SnackBarEvent(amountOverBalanceMessage)
-                                    )
-                                }
-                            }
-                        }
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
                     }
                 )
 
@@ -369,7 +314,7 @@ fun AddRecordsScreen(
     }
 
 }
-/*
+
 /*fun NewEntry(
 
     entryViewModel: EntriesViewModel,

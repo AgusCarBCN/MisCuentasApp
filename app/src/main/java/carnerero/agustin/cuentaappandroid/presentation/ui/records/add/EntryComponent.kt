@@ -51,7 +51,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Hea
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithIcon
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
@@ -188,13 +188,13 @@ fun EntryList(
 @Composable
 fun EntryListV2(
     modifier: Modifier,
-    entries: List<EntryDTO>,
+    entries: List<RecordDTO>,
     currencyCode: String,
     enableByDate:Boolean,
     onEnableByDate:(Boolean)->Unit,
     onBackToHome:()->Unit,
 
-) {
+    ) {
 
     // Agrupar las entradas por fecha
     val groupedEntriesByDate = entries.groupBy { it.date }
@@ -322,7 +322,7 @@ fun EntryListV2(
 @Composable
 
 fun ItemEntry(
-    entry: EntryDTO,
+    entry: RecordDTO,
     currencyCode: String
 ) {
     val date = stringResource(id = R.string.fromdate)

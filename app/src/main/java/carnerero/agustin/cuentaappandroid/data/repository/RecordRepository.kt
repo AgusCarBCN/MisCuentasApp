@@ -2,8 +2,8 @@ package carnerero.agustin.cuentaappandroid.data.repository
 
 
 import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
@@ -14,18 +14,18 @@ import java.math.BigDecimal
 import java.util.Date
 import javax.inject.Inject
 
-class EntryRepository @Inject constructor(
+class RecordRepository @Inject constructor(
     private val entryDao: EntryDao,
     private val entryMapper: EntryMapper
 ) {
 
         // 1️⃣ Insert entry
-        suspend fun insertEntry(entry: Entry) {
-            entryDao.insertEntry(entry)
+        suspend fun insertEntry(record: Records) {
+            entryDao.insertEntry(record)
         }
 
-        suspend fun insertEntryDTO(entryDTO: EntryDTO) {
-            val entry = entryMapper.entryDtoToEntry(entryDTO)
+        suspend fun insertEntryDTO(recordDTO: RecordDTO) {
+            val entry = entryMapper.entryDtoToEntry(recordDTO)
             entryDao.insertEntry(entry)
         }
 
@@ -56,14 +56,14 @@ class EntryRepository @Inject constructor(
         suspend fun getSumOfExpensesEntriesForMonth(accountId: Int, month: String, year: String): BigDecimal =
             entryDao.getSumOfExpenseEntriesForMonth(accountId, month, year) ?: BigDecimal.ZERO
 
-        fun getAllEntriesDTO(): Flow<List<EntryDTO>> = entryDao.getAllEntriesDTO()
-        fun getAllIncomesDTO(): Flow<List<EntryDTO>> = entryDao.getAllIncomesDTO()
-        fun getAllExpensesDTO(): Flow<List<EntryDTO>> = entryDao.getAllExpensesDTO()
-        fun getAllEntriesByAccount(accountId: Int): Flow<List<EntryDTO>> =
+        fun getAllEntriesDTO(): Flow<List<RecordDTO>> = entryDao.getAllEntriesDTO()
+        fun getAllIncomesDTO(): Flow<List<RecordDTO>> = entryDao.getAllIncomesDTO()
+        fun getAllExpensesDTO(): Flow<List<RecordDTO>> = entryDao.getAllExpensesDTO()
+        fun getAllEntriesByAccount(accountId: Int): Flow<List<RecordDTO>> =
             entryDao.getAllEntriesByAccountDTO(accountId)
 
         // 4️⃣ Filtrado de entradas
-        fun getEntriesFiltered(filter: SearchFilter): Flow<List<EntryDTO>> {
+        fun getEntriesFiltered(filter: SearchFilter): Flow<List<RecordDTO>> {
 
             val searchPattern = filter.description
                 ?.takeIf { it.isNotBlank() }
@@ -102,7 +102,7 @@ class EntryRepository @Inject constructor(
     suspend fun getEntriesByDate(accountId:Int,
                                  fromDate: String=Date().dateFormat(),
                                  toDate: String=Date().dateFormat()
-    ):List<EntryDTO> =entryDao.getAllEntriesByDateDTO(accountId,
+    ):List<RecordDTO> =entryDao.getAllEntriesByDateDTO(accountId,
         fromDate,
         toDate)
 
@@ -120,7 +120,7 @@ class EntryRepository @Inject constructor(
          }
 
         // 6️⃣ Borrar entradas
-        suspend fun deleteEntry(entryDTO: EntryDTO) {
+        suspend fun deleteEntry(entryDTO: RecordDTO) {
             val entry = entryMapper.entryDtoToEntry(entryDTO)
             entryDao.deleteEntry(entry)
         }

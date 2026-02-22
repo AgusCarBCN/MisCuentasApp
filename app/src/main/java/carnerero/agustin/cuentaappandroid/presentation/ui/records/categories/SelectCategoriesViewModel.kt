@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.GetAllCategoriesByType
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +21,12 @@ class SelectCategoriesViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(SelectCategoriesUiState())
     val uiState: StateFlow<SelectCategoriesUiState> = _uiState
+
+    private val _effect = MutableSharedFlow<SelectCategoriesEffects>(
+        replay = 0,
+        extraBufferCapacity = 1
+    )
+    val effect = _effect.asSharedFlow()
 
     fun onUserEvent(event: SelectCategoriesUiEvent){
         when(event){
@@ -39,6 +46,8 @@ class SelectCategoriesViewModel @Inject constructor(
                     categorySelected = category
                 )
             }
+            _effect.emit(SelectCategoriesEffects.OnNavToAddRecordsScreen)
+
         }
     }
     fun showCategories(type: CategoryType) {

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteEntryUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
@@ -85,15 +85,15 @@ class EntriesViewModel @Inject constructor(
 
 
     // MutableStateFlow para la lista de entradas
-    private val _listOfEntriesDTO = MutableStateFlow<List<EntryDTO>>(emptyList())
-    val listOfEntriesDTO: StateFlow<List<EntryDTO>> = _listOfEntriesDTO.asStateFlow()
+    private val _listOfEntriesDTO = MutableStateFlow<List<RecordDTO>>(emptyList())
+    val listOfEntriesDTO: StateFlow<List<RecordDTO>> = _listOfEntriesDTO.asStateFlow()
 
     // MutableStateFlow para la lista de entradas
-    private val _listOfEntriesDB = MutableStateFlow<List<Entry>>(emptyList())
+    private val _listOfEntriesDB = MutableStateFlow<List<Records>>(emptyList())
 
     //MutableStateFlow de entrada seleccionada a modificar
-    private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
-    val entryDTOSelected: LiveData<EntryDTO?> = _entryDTOSelected
+    private val _entryDTOSelected = MutableLiveData<RecordDTO?>()
+    val entryDTOSelected: LiveData<RecordDTO?> = _entryDTOSelected
 
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
@@ -236,7 +236,7 @@ class EntriesViewModel @Inject constructor(
     }
 
 
-    fun addEntry(entry: Entry) {
+    fun addEntry(entry: Records) {
         viewModelScope.launch(Dispatchers.IO) {
 
                 addRecord.invoke(entry)
@@ -249,7 +249,7 @@ class EntriesViewModel @Inject constructor(
             getTotal()
         }
     }
-    fun deleteEntry(entry: EntryDTO) {
+    fun deleteEntry(entry: RecordDTO) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteEntry.invoke(entry)
             getTotal()
@@ -266,7 +266,7 @@ class EntriesViewModel @Inject constructor(
             }
         }
     }
-    fun updateEntries(entryID:Long,updatedEntryDTO: EntryDTO) {
+    fun updateEntries(entryID:Long,updatedEntryDTO: RecordDTO) {
         // Encuentra la entrada por ID y actualiza la lista
         val currentEntries = _listOfEntriesDTO.value.toMutableList()
         val entryIndex = currentEntries.indexOfFirst { it.id == entryID }
@@ -276,7 +276,7 @@ class EntriesViewModel @Inject constructor(
         _listOfEntriesDTO.value = currentEntries.toList() // Actualiza el estado
     }
 
-    fun onEntryDTOSelected(entryDTO: EntryDTO)
+    fun onEntryDTOSelected(entryDTO: RecordDTO)
     {
         _entryDTOSelected.value = entryDTO
     }
@@ -302,7 +302,7 @@ class EntriesViewModel @Inject constructor(
         _entryDescriptionModify.value=newDescription
 
     }
-    fun setInitialData(entryDTO: EntryDTO) {
+    fun setInitialData(entryDTO: RecordDTO) {
         _entryDescriptionModify.value = entryDTO.description
         _entryAmountModify.value = (entryDTO.amount.abs()).toString()
     }

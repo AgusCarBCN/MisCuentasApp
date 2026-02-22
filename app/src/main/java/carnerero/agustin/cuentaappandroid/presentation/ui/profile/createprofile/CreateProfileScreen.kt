@@ -35,15 +35,28 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 @Composable
 fun CreateProfileScreen(
-    createViewModel: ProfileViewModel,
+    profileViewModel: ProfileViewModel,
     navToCreateAccounts: () -> Unit
 ) {
-    val state by createViewModel.uiState.collectAsStateWithLifecycle()
-    val eventEffect by createViewModel.effect.collectAsState(initial = ProfileEffect.Idle)
+    val state by profileViewModel.uiState.collectAsStateWithLifecycle()
+    //val eventEffect by profileViewModel.effect.collectAsState(initial = ProfileEffect.Idle)
     val messageProfileCreated = message(resource = R.string.profileCreated)
     val isLandscape = orientation == OrientationApp.Landscape
     val enableButton=state.enableButton
-    LaunchedEffect(eventEffect) {
+    //Unit como key → LaunchedEffect se lanza una sola vez al montar el Composable.
+    LaunchedEffect(Unit) {
+        //collect → recoge todos los eventos emitidos por el SharedFlow, sin perder ninguno, al primer click.
+        //Navegación o Snackbar ocurre inmediatamente, sin depender de recomposición ni de cambios de variable.
+        profileViewModel.effect.collect { effect ->
+            when (effect) {
+                is ProfileEffect.NavigateToCreateAccounts -> navToCreateAccounts()
+                is ProfileEffect.ProfileSavedMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(messageProfileCreated))
+                else -> Unit
+            }
+        }
+    }
+    /*LaunchedEffect(eventEffect) {
         when (eventEffect) {
             is ProfileEffect.NavigateToCreateAccounts -> {
                 navToCreateAccounts()
@@ -53,7 +66,7 @@ fun CreateProfileScreen(
             }
             else -> {}
         }
-    }
+    }*/
     BoxWithConstraints(Modifier.fillMaxSize()) {
 
         val contentWidth=maxWidth*0.5f
@@ -69,7 +82,7 @@ fun CreateProfileScreen(
                         .wrapContentHeight()
                         .padding(top = 50.dp),
                         state.selectedImageUriSaved,
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))}
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))}
                     )
                 CreateContentSection(
                     Modifier
@@ -80,11 +93,11 @@ fun CreateProfileScreen(
                     state.username,
                     state.password,
                     state.repeatPassword,
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(it))},
                         enableButton
                 )
             }
@@ -103,7 +116,7 @@ fun CreateProfileScreen(
                         .wrapContentHeight()
                     .padding(bottom = 20.dp),
                     state.selectedImageUriSaved,
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))})
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))})
                 CreateContentSection(
                     Modifier
                         .verticalScroll(rememberScrollState()
@@ -112,11 +125,11 @@ fun CreateProfileScreen(
                     state.username,
                     state.password,
                     state.repeatPassword,
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnNameChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))},
-                    {createViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnNameChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnUserNameChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnPasswordChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnRepeatPasswordChange(it))},
+                    {profileViewModel.onUserEvent(ProfileUiEvent.OnCreateProfile(it))},
                     enableButton
                 )
             }

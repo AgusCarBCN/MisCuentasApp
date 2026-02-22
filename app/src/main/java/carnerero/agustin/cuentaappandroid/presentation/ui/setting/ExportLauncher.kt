@@ -1,7 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.documentfile.provider.DocumentFile
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
@@ -25,7 +24,6 @@ import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -120,7 +118,7 @@ fun ExportLauncher(
         })
 }
 @Composable
-private fun toEntryCSV(entries: List<EntryDTO>): MutableList<EntryCSV> {
+private fun toEntryCSV(entries: List<RecordDTO>): MutableList<EntryCSV> {
 
     val entriesCSV = mutableListOf<EntryCSV>()
     entries.forEach { entry ->

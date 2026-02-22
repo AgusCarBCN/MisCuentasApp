@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val selectedScreen: MutableStateFlow<IconOptions> = _selectedScreen
 
     //MutableStateFlow de entrada seleccionada a modificar
-    private val _entryDTOSelected = MutableLiveData<EntryDTO?>()
+    private val _entryDTOSelected = MutableLiveData<RecordDTO?>()
 
     private val _showExitDialog=MutableStateFlow(false)
     val showExitDialog: MutableStateFlow<Boolean> = _showExitDialog

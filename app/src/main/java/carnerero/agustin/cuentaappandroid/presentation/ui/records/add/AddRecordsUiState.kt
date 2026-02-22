@@ -6,11 +6,13 @@ import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import java.math.BigDecimal
 
 data class AddRecordsUiState(
-    val categories:List<Category> = emptyList(),
     val accounts:List<Account> = emptyList(),
-    val categorySelected: Int =0,
-    val accountSelected:Int=0,
+    val accountSelected:Account= Account(name=""),
+    val currencyCode:String="EUR",
     val recordDescription:String="",
-    val recordAmount: BigDecimal= BigDecimal.ZERO,
-    val enableConfirmButton:Boolean=false
-)
+    val recordAmount: BigDecimal= BigDecimal.ZERO
+){
+    val enableConfirmButton= accounts.isNotEmpty()
+            && recordDescription.isNotEmpty()
+            && recordAmount.toString().isNotEmpty()
+}

@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
@@ -20,31 +20,31 @@ interface EntryDao {
 
     // 1. Add a new entry
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEntry(entry: Entry)
+    suspend fun insertEntry(entry: Records)
 
     // 2. Delete entry
     @Delete
-    suspend fun deleteEntry(entry: Entry)
+    suspend fun deleteEntry(entry: Records)
 
     // 3. Modify entries
     @Update
-    suspend fun updateEntry(entry: Entry)
+    suspend fun updateEntry(entry: Records)
 
     // 4. Get all entries
     @Query("SELECT * FROM EntryEntity ORDER BY date DESC")
-    suspend fun getAllEntries(): List<Entry>
+    suspend fun getAllEntries(): List<Records>
 
     // 5. Get all incomes
     @Query("SELECT * FROM EntryEntity WHERE amount>=0")
-    suspend fun getAllIncomes(): List<Entry>
+    suspend fun getAllIncomes(): List<Records>
 
     // 6. Get all expenses
     @Query("SELECT * FROM EntryEntity WHERE amount<0")
-    suspend fun getAllExpenses(): List<Entry>
+    suspend fun getAllExpenses(): List<Records>
 
     // 7. Get entry by id
     @Query("SELECT * FROM EntryEntity WHERE id = :entryId")
-    suspend fun getEntryById(entryId: Long): Entry?
+    suspend fun getEntryById(entryId: Long): Records?
 
     // 8. Update All entries by exchange rate
     @Transaction
@@ -58,16 +58,16 @@ interface EntryDao {
     }
     // 9. Get all entries by date
     @Query("SELECT * FROM EntryEntity WHERE date = :specificDate ORDER BY date DESC")
-    suspend fun getEntriesByDate(specificDate: String): List<Entry>
+    suspend fun getEntriesByDate(specificDate: String): List<Records>
 
     // 10. Get entries by amount
     @Query("SELECT * FROM EntryEntity WHERE amount >= :minAmount ORDER BY date DESC")
-    suspend fun getEntriesByAmount(minAmount: BigDecimal): List<Entry>
+    suspend fun getEntriesByAmount(minAmount: BigDecimal): List<Records>
 
     // 11. Get all entries by category
     @Transaction
     @Query("SELECT * FROM EntryEntity WHERE categoryId = :categoryId ORDER BY date DESC")
-    suspend fun getEntriesByCategory(categoryId: Int): List<Entry>
+    suspend fun getEntriesByCategory(categoryId: Int): List<Records>
 
     // 12. Get sum of all incomes
     @Transaction
@@ -201,7 +201,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-     fun getAllIncomesDTO(): Flow<List<EntryDTO>>
+     fun getAllIncomesDTO(): Flow<List<RecordDTO>>
 
     // 23. Get all expenses
     @Query(
@@ -223,7 +223,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-     fun getAllExpensesDTO(): Flow<List<EntryDTO>>
+     fun getAllExpensesDTO(): Flow<List<RecordDTO>>
 
     // 24. Get all entries
     @Query(
@@ -244,7 +244,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-     fun getAllEntriesDTO(): Flow<List<EntryDTO>>
+     fun getAllEntriesDTO(): Flow<List<RecordDTO>>
 
     // 25. Get all entries by account
     @Query(
@@ -266,7 +266,7 @@ interface EntryDao {
     ORDER BY date DESC, e.id DESC
 """
     )
-    fun getAllEntriesByAccountDTO(accountId: Int): Flow<List<EntryDTO>>
+    fun getAllEntriesByAccountDTO(accountId: Int): Flow<List<RecordDTO>>
 
     @Query(
         """
@@ -291,7 +291,7 @@ ORDER BY date DESC, e.id DESC
     )
     suspend fun getAllEntriesByDateDTO(accountId: Int,
                                        dateFrom: String = Date().dateFormat(),
-                                       dateTo: String = Date().dateFormat() ): List<EntryDTO>
+                                       dateTo: String = Date().dateFormat() ): List<RecordDTO>
 
 
 
@@ -323,7 +323,7 @@ ORDER BY date DESC, e.id DESC
         descriptionAmount: String? = null,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): Flow<List<EntryDTO>>
+    ): Flow<List<RecordDTO>>
     // Método para actualizar solo los campos específicos de la entrada
     @Query(
         "UPDATE EntryEntity SET description = :description, amount = :amount, date = :date WHERE id = :id"

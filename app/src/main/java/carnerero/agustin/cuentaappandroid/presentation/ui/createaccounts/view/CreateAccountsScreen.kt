@@ -42,17 +42,26 @@ fun CreateAccountsScreen(
     navToBack: () -> Unit
 ) {
     val state by createAccountViewModel.uiState.collectAsStateWithLifecycle()
-    val effects by createAccountViewModel.effect.collectAsState(initial = CreateAccountEffect.Idle)
+    //val effects by createAccountViewModel.effect.collectAsState(initial = CreateAccountEffect.Idle)
     val isPortrait = orientation == OrientationApp.Portrait
     val isEnableFormButton = state.isFormValid
-    LaunchedEffect(effects) {
+    LaunchedEffect(Unit) {
+        createAccountViewModel.effect.collect { effect ->
+            when (effect) {
+                CreateAccountEffect.NavigateBack -> navToBack()
+                CreateAccountEffect.NavigateToLogin -> navToLogin()
+                else -> Unit
+            }
+        }
+    }
+    /*LaunchedEffect(effects) {
         when (effects) {
             CreateAccountEffect.NavigateBack -> navToBack()
             CreateAccountEffect.NavigateToLogin -> navToLogin()
             else -> {
             }
         }
-    }
+    }*/
     Box(
         modifier = Modifier
             .fillMaxSize()

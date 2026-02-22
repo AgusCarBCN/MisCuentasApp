@@ -2,7 +2,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.records.get
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
@@ -47,7 +47,7 @@ class GetRecordsViewModel @Inject constructor(
     }
     // Carga los registros según el filtro
     fun getRecords(filter: RecordsFilter) {
-        val recordsFlow: Flow<List<EntryDTO>> = when (filter) {
+        val recordsFlow: Flow<List<RecordDTO>> = when (filter) {
             RecordsFilter.Expenses -> getAllExpenses.invoke()
             RecordsFilter.Incomes -> getAllIncomes.invoke()
             is RecordsFilter.RecordsByAccount -> getAllRecordsByAccount.invoke(filter.accountId)

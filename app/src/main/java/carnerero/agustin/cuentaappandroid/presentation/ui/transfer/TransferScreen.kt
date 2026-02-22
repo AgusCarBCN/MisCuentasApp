@@ -30,7 +30,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
@@ -165,7 +165,7 @@ fun TransferScreen(
                                 scope.launch(Dispatchers.IO) {
                                     if (isValidExpense) {
                                         entryViewModel.addEntry(
-                                            Entry(
+                                            Records(
                                                 description = transferFrom,
                                                 amount = negativeAmount,
                                                 date = Date().dateFormat(),
@@ -174,7 +174,7 @@ fun TransferScreen(
                                             )
                                         )
                                         entryViewModel.addEntry(
-                                            Entry(
+                                            Records(
                                                 description = transferTo,
                                                 amount = amount,
                                                 date = Date().dateFormat(),
@@ -281,7 +281,7 @@ fun TransferScreen(
                         scope.launch(Dispatchers.IO) {
                             if (isValidExpense) {
                                 entryViewModel.addEntry(
-                                    Entry(
+                                    Records(
                                         description = transferFrom,
                                         amount = negativeAmount,
                                         date = Date().dateFormat(),
@@ -290,7 +290,7 @@ fun TransferScreen(
                                     )
                                 )
                                 entryViewModel.addEntry(
-                                    Entry(
+                                    Records(
                                         description = transferTo,
                                         amount = amount,
                                         date = Date().dateFormat(),

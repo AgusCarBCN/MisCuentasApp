@@ -2,13 +2,11 @@ package carnerero.agustin.cuentaappandroid.utils
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.documentfile.provider.DocumentFile
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.currencyLocales
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
@@ -160,8 +158,8 @@ class Utils {
         fun readCsvEntriesFile(
             context: Context,
             fileUri: Uri
-        ): MutableList<Entry> {
-            val entries = mutableListOf<Entry>()
+        ): MutableList<Records> {
+            val entries = mutableListOf<Records>()
 
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 val bufferedReader = BufferedReader(InputStreamReader(inputStream))
@@ -179,7 +177,7 @@ class Utils {
 
                         // Crear objeto route y agregarlo a lista
 
-                        val entry = Entry(
+                        val entry = Records(
                             description = description,
                             amount = amount,
                             date = date,
@@ -197,7 +195,7 @@ class Utils {
 
 
 
-        fun getMapOfEntriesByCategory(listOfEntries: List<EntryDTO>): Map<Int, Pair<Int?, BigDecimal?>> {
+        fun getMapOfEntriesByCategory(listOfEntries: List<RecordDTO>): Map<Int, Pair<Int?, BigDecimal?>> {
             val groupedEntriesByCategoryName = listOfEntries.groupBy { it.nameResource }
 
             val categoryIcons = groupedEntriesByCategoryName.mapValues { (_, entries) ->

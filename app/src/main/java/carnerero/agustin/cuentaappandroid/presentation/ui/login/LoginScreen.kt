@@ -49,8 +49,18 @@ fun LoginScreen(
         GreetingType.AFTERNOON -> stringResource(R.string.goodafternoon)+" ${state.name}"
         GreetingType.EVENING -> stringResource(R.string.goodevening)+" ${state.name}"
     }
-
-    LaunchedEffect(eventEffect) {
+    LaunchedEffect(Unit) {
+        loginViewModel.effect.collect { effect ->
+            when (effect) {
+                is LoginEffect.NavigateToMainScreen -> navToMainScreen()
+                is LoginEffect.ShowInvalidCredentialsMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(messageInvalidLogin))
+                is LoginEffect.ShowInvalidUserNameMessage ->
+                    SnackBarController.sendEvent(SnackBarEvent(messageInvalidUserName))
+            }
+        }
+    }
+    /*LaunchedEffect(eventEffect) {
         when (eventEffect) {
             is LoginEffect.NavigateToMainScreen -> {
                 navToMainScreen()
@@ -63,7 +73,7 @@ fun LoginScreen(
             ))
         }
 
-    }
+    }*/
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val imageHeight = maxHeight * 0.5f

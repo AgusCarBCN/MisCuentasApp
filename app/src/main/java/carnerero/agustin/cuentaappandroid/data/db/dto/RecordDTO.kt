@@ -5,7 +5,7 @@ import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal
 import java.util.Date
 
-data class EntryDTO(
+data class RecordDTO(
     val id:Long,
     val description: String,
     val amount: BigDecimal,

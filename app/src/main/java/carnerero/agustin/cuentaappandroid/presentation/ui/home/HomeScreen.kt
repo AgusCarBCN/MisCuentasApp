@@ -47,14 +47,30 @@ fun HomeScreen(
 ) {
 
     val state by homeViewModel.uiState.collectAsStateWithLifecycle()
-    val effects by homeViewModel.effect.collectAsStateWithLifecycle(initialValue = HomeEffects.Idle)
+    //val effects by homeViewModel.effect.collectAsStateWithLifecycle(initialValue = HomeEffects.Idle)
     val totalIncomes = state.totalIncomes
     val totalExpenses = state.totalExpenses
     val accounts = state.accounts
     val currencyCodeSelected = state.currencyCode
     val isLandscape =
         orientation == OrientationApp.Landscape
-    LaunchedEffect(effects) {
+    // se lanza una sola vez al crear el Composable.
+    LaunchedEffect(Unit) {
+        // collect: Recoge todos los eventos que el ViewModel emite.
+        homeViewModel.effect.collect { effect ->
+            when (effect) {
+                is HomeEffects.NavToRecordsScreen -> {
+                    navController.navigateTopLevel(
+                        Routes.GetRecords.createRoute(state.filter)
+                    )
+                    Log.d("NAVIGATION", "Route:${state.route}")
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    /*LaunchedEffect(effects) {
         when (effects) {
             is HomeEffects.NavToRecordsScreen -> {
                 navController.navigateTopLevel(Routes.GetRecords.createRoute(state.filter))
@@ -63,7 +79,7 @@ fun HomeScreen(
             }
             else -> {}
         }
-    }
+    }*/
 
         BoxWithConstraints(
             modifier = Modifier

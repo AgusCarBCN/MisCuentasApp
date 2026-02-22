@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SpacerApp
 import carnerero.agustin.cuentaappandroid.utils.Utils
@@ -46,7 +46,7 @@ import kotlin.collections.component2
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RecordsList(
-    listOfRecords:List<EntryDTO>,
+    listOfRecords:List<RecordDTO>,
     currencyCode:String,
     enableByDate: Boolean,
     onChangeEnableByDate:(Boolean)->Unit
@@ -167,7 +167,7 @@ fun RecordsList(
 @Composable
 
 private fun ItemRecord(
-    entry: EntryDTO,
+    entry: RecordDTO,
     currencyCode: String
 ) {
     val date = stringResource(id = R.string.fromdate)

@@ -10,7 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
@@ -40,6 +40,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScre
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.GetRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.ShowCategory
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
@@ -130,22 +131,26 @@ fun MainNavHost(
         // Drawer menu
         composable(Routes.NewIncome.route) {
             SelectCategoriesScreen(selectCategoriesViewModel, CategoryType.INCOME)
-            /*{
+            {
                 navController.navigate(Routes.NewEntry.route)
-            }*/
+            }
         }
         composable(Routes.NewExpense.route) {
-            SelectCategoriesScreen(selectCategoriesViewModel, CategoryType.EXPENSE)/* {
+            SelectCategoriesScreen(selectCategoriesViewModel, CategoryType.EXPENSE) {
                 navController.navigateTopLevel(Routes.NewEntry.route)
-            }*/
+            }
         }
-        composable(Routes.NewEntry.route) {
-           /* AddRecordsScreen(
-                entriesViewModel,
-                categoriesViewModel,
-                accountsViewModel
-            )
-            { navController.popBackStack() }*/
+        composable(Routes.NewEntry.route,
+
+        ) {
+            ShowCategory(selectCategoriesViewModel)
+
+            /* AddRecordsScreen(
+                 entriesViewModel,
+                 categoriesViewModel,
+                 accountsViewModel
+             )
+             { navController.popBackStack() }*/
         }
         composable(Routes.Statistics.route) {
             StatisticsScreen(
@@ -238,7 +243,7 @@ fun MainNavHost(
             arguments = listOf(navArgument("recordJson") { type = NavType.StringType })
         ) { backStackEntry ->
             val recordJson = backStackEntry.arguments?.getString("recordJson")
-            val entry = Gson().fromJson(recordJson, EntryDTO::class.java) // Deserialización
+            val entry = Gson().fromJson(recordJson, RecordDTO::class.java) // Deserialización
             // Obtener el parámetro
             ModifyEntry(
                 entry,

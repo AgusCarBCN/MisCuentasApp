@@ -9,9 +9,9 @@ import carnerero.agustin.cuentaappandroid.data.db.dao.CategoryDao
 import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.data.db.entities.Entry
+import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 
-@Database(entities=[Account::class, Entry::class, Category::class], version = 1)
+@Database(entities=[Account::class, Records::class, Category::class], version = 1)
 @TypeConverters(Converters::class) // Registrar los conversores
 abstract class AppDataBase:RoomDatabase(){
 

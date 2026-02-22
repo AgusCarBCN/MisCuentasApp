@@ -31,7 +31,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.I
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.data.db.dto.EntryDTO
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
@@ -45,7 +45,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun ModifyEntry(entryDTO: EntryDTO,
+fun ModifyEntry(entryDTO: RecordDTO,
                 entriesViewModel: EntriesViewModel,
                 searchViewModel: SearchViewModel,
                 accountsViewModel: AccountsViewModel,
@@ -161,7 +161,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
                                 val updateBalanceExpense =
                                     amountEntry.toBigDecimal().negate().add(amountBefore)
 
-                                val entryDTOUpdated = EntryDTO(
+                                val entryDTOUpdated = RecordDTO(
 
                                     entryDTO.id,
                                     descriptionEntry,
@@ -277,7 +277,7 @@ fun ModifyEntry(entryDTO: EntryDTO,
                         val updateBalanceExpense =
                             amountEntry.toBigDecimal().negate().add(amountBefore)
 
-                        val entryDTOUpdated = EntryDTO(
+                        val entryDTOUpdated = RecordDTO(
 
                             entryDTO.id,
                             descriptionEntry,
