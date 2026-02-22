@@ -77,4 +77,10 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     suspend fun updateAccountBalanceByExchangeRate(rate: BigDecimal) {
         accountDao.updateAllBalancesByExchangeRate(rate)
     }
+    suspend fun withDraw(accountId:Int, amount: BigDecimal){
+        accountDao.withdraw(accountId,amount)
+    }
+    suspend fun deposit(accountId:Int, amount: BigDecimal){
+        accountDao.deposit(accountId,amount)
+    }
 }

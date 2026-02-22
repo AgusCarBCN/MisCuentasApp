@@ -40,7 +40,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScre
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.GetRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.ShowCategory
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
@@ -81,6 +82,7 @@ fun MainNavHost(
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
+    val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -143,14 +145,12 @@ fun MainNavHost(
         composable(Routes.NewEntry.route,
 
         ) {
-            ShowCategory(selectCategoriesViewModel)
+           AddRecordsScreen(selectCategoriesViewModel,
+               addRecordsViewModel) {
+               navController.popBackStack()
+           }
 
-            /* AddRecordsScreen(
-                 entriesViewModel,
-                 categoriesViewModel,
-                 accountsViewModel
-             )
-             { navController.popBackStack() }*/
+
         }
         composable(Routes.Statistics.route) {
             StatisticsScreen(

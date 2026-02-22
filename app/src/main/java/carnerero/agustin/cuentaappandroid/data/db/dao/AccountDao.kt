@@ -46,6 +46,28 @@ interface AccountDao {
     @Query("UPDATE AccountEntity SET balance = :newBalance WHERE id = :accountId")
     suspend fun updateAccountBalance(accountId: Int, newBalance: BigDecimal)
 
+    @Transaction
+    suspend fun deposit(accountId: Int, amount: BigDecimal) {
+        val account = getAccountById(accountId) ?: throw Exception("Cuenta no encontrada")
+        require(amount > BigDecimal.ZERO) { "El monto debe ser positivo" }
+
+        val newBalance = account.balance.add(amount)
+        updateAccountBalance(accountId,newBalance)
+    }
+
+    @Transaction
+    suspend fun withdraw(accountId: Int, amount: BigDecimal) {
+        val account = getAccountById(accountId) ?: throw Exception("Cuenta no encontrada")
+        require(amount > BigDecimal.ZERO) { "El monto debe ser positivo" }
+
+        val newBalance = account.balance.subtract(amount)
+        if (newBalance < BigDecimal.ZERO) {
+            throw Exception("Saldo insuficiente")
+        }
+
+        updateAccountBalance(accountId,newBalance)
+    }
+
     // 8️⃣ Transferencia de fondos entre cuentas
     @Transaction
     suspend fun transferFunds(fromAccountId: Int, toAccountId: Int, amount: BigDecimal) {

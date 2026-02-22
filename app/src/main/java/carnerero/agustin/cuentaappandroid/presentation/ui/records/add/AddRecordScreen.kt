@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.add
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -45,34 +46,7 @@ import java.math.BigDecimal
 import java.util.Date
 
 
-@Composable
 
-fun ShowCategory(selectCategoriesViewModel: SelectCategoriesViewModel){
-
-    val state by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
-    val category=state.categorySelected
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        IconAnimated(
-            iconResource = category.iconResource,
-            sizeIcon = 120,
-            initColor = colors.incomeColor,
-            targetColor = colors.incomeColor
-        )
-
-        HeadSetting(
-            title = stringResource(id = category.nameResource),
-            MaterialTheme.typography.headlineMedium
-        )
-    }
-
-    }
 
 @Composable
 
@@ -215,6 +189,7 @@ fun AddRecordsScreen(
                             enableConfirmButton,
                             onClickButton = {
                                 addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
+
                             }
 
                         )
@@ -225,6 +200,7 @@ fun AddRecordsScreen(
                             true
                         ) {
                             navToBack()
+
                         }
                     }
 
@@ -298,6 +274,7 @@ fun AddRecordsScreen(
                     enableConfirmButton,
                     onClickButton = {
                         addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
+                        Log.d("RECORDS","$amount $recordDescription")
                     }
                 )
 

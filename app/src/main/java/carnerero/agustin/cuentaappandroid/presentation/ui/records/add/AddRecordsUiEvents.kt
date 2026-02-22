@@ -9,6 +9,6 @@ sealed class AddRecordsUiEvents {
 
     data class OnDescriptionRecordChange(val description: String) : AddRecordsUiEvents()
     data class OnAmountRecordChange(val amount: BigDecimal) : AddRecordsUiEvents()
-    data class OnAccountSelectedChange(val account: Account) : AddRecordsUiEvents()
+    data class OnAccountSelectedChange(val accountId: Int) : AddRecordsUiEvents()
     data class AddRecord(val category: Category): AddRecordsUiEvents()
 }

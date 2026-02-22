@@ -7,7 +7,7 @@ import java.math.BigDecimal
 
 data class AddRecordsUiState(
     val accounts:List<Account> = emptyList(),
-    val accountSelected:Account= Account(name=""),
+    val accountSelected:Int=1,
     val currencyCode:String="EUR",
     val recordDescription:String="",
     val recordAmount: BigDecimal= BigDecimal.ZERO
