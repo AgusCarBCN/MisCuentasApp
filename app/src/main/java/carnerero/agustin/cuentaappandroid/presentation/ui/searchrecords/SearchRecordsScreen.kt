@@ -220,7 +220,9 @@ fun RecordSearchScreen(
                     MaterialTheme.typography.labelLarge,
                     fieldModifier,
                     enableSearchButton
-                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch) }
+                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch)
+
+                }
             }
 
         } else {

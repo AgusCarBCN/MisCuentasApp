@@ -23,7 +23,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
@@ -31,19 +30,14 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.data.db.entities.Records
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
+
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigDecimal
-import java.util.Date
 
 
 
@@ -168,7 +162,7 @@ fun AddRecordsScreen(
                         addRecordState.accounts,
                         addRecordState.currencyCode,
                         {
-                            addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(accountSelected))
+                            addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(it))
                         },
                          modifier = fieldModifier
                     )
@@ -188,8 +182,8 @@ fun AddRecordsScreen(
                             modifier = fieldModifier.weight(1f),
                             enableConfirmButton,
                             onClickButton = {
-                                addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
-
+                                addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category,accountSelected))
+                                Log.d("ACCOUNT","${addRecordState.accountSelected}")
                             }
 
                         )
@@ -257,7 +251,7 @@ fun AddRecordsScreen(
                     addRecordState.accounts,
                     addRecordState.currencyCode,
                     {
-                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(accountSelected))
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.OnAccountSelectedChange(it))
                     },
                     modifier = fieldModifier
                 )
@@ -273,7 +267,7 @@ fun AddRecordsScreen(
                     modifier = fieldModifier,
                     enableConfirmButton,
                     onClickButton = {
-                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category))
+                        addRecordsViewModel.onEventUser(AddRecordsUiEvents.AddRecord(category,accountSelected))
                         Log.d("RECORDS","$amount $recordDescription")
                     }
                 )

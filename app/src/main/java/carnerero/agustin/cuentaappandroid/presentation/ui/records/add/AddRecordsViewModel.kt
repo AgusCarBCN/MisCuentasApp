@@ -59,7 +59,7 @@ class AddRecordsViewModel @Inject constructor(
 
     fun onEventUser(event: AddRecordsUiEvents){
         when(event){
-            is AddRecordsUiEvents.AddRecord -> addRecord(event.category)
+            is AddRecordsUiEvents.AddRecord -> addRecord(event.category,event.accountId)
             is AddRecordsUiEvents.OnAccountSelectedChange -> onAccountSelectedChange(event.accountId)
             is AddRecordsUiEvents.OnAmountRecordChange -> onAmountRecordChange(event.amount)
             is AddRecordsUiEvents.OnDescriptionRecordChange -> onDescriptionRecordChanged(event.description)
@@ -81,11 +81,11 @@ class AddRecordsViewModel @Inject constructor(
             current.copy(accountSelected =accountId)
         }
     }
-    fun addRecord(category:Category) {
+    fun addRecord(category:Category,accountId:Int) {
         viewModelScope.launch {
             val state = _uiState.value
             val recordAmount = state.recordAmount
-            val accountId = state.accountSelected
+
 
             // Construimos el record con la cantidad positiva o negativa según tipo
             val amountForRecord = if (category.type == CategoryType.INCOME) {
