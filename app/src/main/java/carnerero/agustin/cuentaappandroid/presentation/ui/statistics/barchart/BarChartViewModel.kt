@@ -38,18 +38,6 @@ class BarChartViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(BarChartUiState())
     val uiState: StateFlow<BarChartUiState> = _uiState
 
-    //private val _effect = MutableSharedFlow<SearchEffects>()
-    //val effect = _effect.asSharedFlow()
-
-    // MutableStateFlow para la lista de entradas
-    //private val _barChartData = MutableLiveData<MutableList<BarChartData>>(mutableListOf())
-    //val barChartData: LiveData<MutableList<BarChartData>> = _barChartData
-
-    //private val _showYearPicker = MutableLiveData<Boolean>()
-
-    //private val _selectedYear = MutableLiveData<String>("2024")
-    //val selectedYear: LiveData<String> = _selectedYear
-
     init {
         observeInitialData()
     }
@@ -92,9 +80,7 @@ class BarChartViewModel @Inject constructor(
             )
         }
     }
-    /*fun onSelectedYear(year: String) {
-        _selectedYear.value = year
-    }*/
+
 
     fun barChartDataByMonth(accountId: Int,year:String) {
         viewModelScope.launch(Dispatchers.IO) {

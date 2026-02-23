@@ -49,7 +49,7 @@ import kotlin.math.abs
 @Composable
 
 fun BarChartScreen(
-    accountViewModel: AccountsViewModel,
+    //accountViewModel: AccountsViewModel,
     barChartViewModel: BarChartViewModel
 ) {
     val state by barChartViewModel.uiState.collectAsStateWithLifecycle()
@@ -98,7 +98,7 @@ fun BarChartScreen(
                 BarChartResult(Modifier.fillMaxWidth().height(400.dp),context, data, isDarkTheme)
                 Table( Modifier
                     .fillMaxWidth()
-                    .padding(start = 15.dp),accountViewModel, data)
+                    .padding(start = 15.dp),state.currencyCode, data)
             }
         else {
             Row( Modifier
@@ -112,7 +112,7 @@ fun BarChartScreen(
             ){
                 Table( Modifier
                     .fillMaxWidth()
-                    .padding(start = 15.dp),accountViewModel, data)
+                    .padding(start = 15.dp),state.currencyCode, data)
             }
         }
     }
@@ -326,9 +326,9 @@ fun BarChartResult(
 }
 
 @Composable
-fun Table(modifier: Modifier,accountsViewModel: AccountsViewModel, data: List<BarChartData>) {
+fun Table(modifier:Modifier,currencyCodeSelected:String, data: List<BarChartData>) {
 
-    val currencyCodeSelected by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
+
     // Encabezados de la tabla
     val header = listOf(
         stringResource(id = R.string.months),

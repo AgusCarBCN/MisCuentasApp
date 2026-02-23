@@ -58,6 +58,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.Spendi
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.StatisticsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.PieChartUiEvents
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferScreen
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.google.gson.Gson
@@ -83,6 +85,7 @@ fun MainNavHost(
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
     val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
+    val pieChartViewModel: PieChartViewModel =hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -162,10 +165,10 @@ fun MainNavHost(
             }
         }
         composable(Routes.PieChart.route) {
-            PieChartScreen(entriesViewModel, accountsViewModel, searchViewModel)
+            PieChartScreen(pieChartViewModel)
         }
         composable(Routes.BarChart.route) {
-            BarChartScreen(accountsViewModel, barChartViewModel, settingViewModel)
+            BarChartScreen( barChartViewModel)
         }
         composable(Routes.Transfer.route) {
             TransferScreen(

@@ -22,9 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,47 +31,52 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.Legend
-
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
+import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.PieChartUiEvents
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.util.Date
 
 @Composable
 fun PieChartScreen(
-    entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel,
-    searchViewModel: SearchViewModel
+   pieChartViewModel: PieChartViewModel
 ) {
-
-    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
-    val accountSelected by accountViewModel.accountSelected.observeAsState()
-    val toDate by searchViewModel.selectedToDate.observeAsState(Date().dateFormat())
-    val fromDate by searchViewModel.selectedFromDate.observeAsState(Date().dateFormat())
+    val state by pieChartViewModel.uiState.collectAsStateWithLifecycle()
+    val accountId=state.accountSelected
+    val fromDate=state.fromDate
+    val toDate=state.toDate
+    val records=state.records
+    val messageRecordsEmpty=stringResource(R.string.noentries)
     val isPortrait = orientation == OrientationApp.Portrait
-    val idAccount = accountSelected?.id ?: 1
 
-    LaunchedEffect(idAccount, fromDate, toDate) {
-        entriesViewModel.getAllEntriesByDateDTO(idAccount, fromDate, toDate)
 
+    LaunchedEffect(accountId, fromDate, toDate) {
+         pieChartViewModel.getPieChartData (accountId, fromDate, toDate)
+    }
+    LaunchedEffect(Unit) {
+        pieChartViewModel.effect.collect { effect ->
+        when(effect){
+            PieChartEffects.MessageNoRecords -> SnackBarController.sendEvent(SnackBarEvent(messageRecordsEmpty))
+        }
+      }
     }
 
-
     // Agrupar por categoría
-    val categoryTotals = remember(listOfEntries) {
-        listOfEntries
+    val categoryTotals = remember(records) {
+        records
             .groupBy { it.nameResource }
             .mapValues { (_, entries) ->
                 entries.sumOf { it.amount }
@@ -105,11 +108,15 @@ fun PieChartScreen(
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AccountSelector(
-                    stringResource(id = R.string.selectanaccount),
-                    accountViewModel,
+                AccountSearchRecordsSelector(
+                    title = R.string.selectanaccount,
+                    state.accounts,
+                    state.currencyCode,
+                    {pieChartViewModel.onEventUser(PieChartUiEvents.OnAccountChange(it))},
+                    false,
                     modifier = Modifier.width(300.dp)
                 )
+
                 Row(
                     modifier = Modifier
                         .width(360.dp)
@@ -117,19 +124,41 @@ fun PieChartScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    DatePickerSearch(
+                    DatePickerSearchRecords(
                         modifier = Modifier.weight(0.5f)
                             .padding(10.dp),
                         R.string.fromdate,
-                        searchViewModel,
-                        true
+                        state.showDatePickerFrom,
+                        state.fromDate,
+                        {date ->
+                            pieChartViewModel.onEventUser(
+                                PieChartUiEvents.OnSelectDate(DateField.FROM, date)
+                            )
+                        },
+                        {visible ->
+                            pieChartViewModel.onEventUser(
+                                PieChartUiEvents.OnShowDatePicker(DateField.FROM, visible)
+                            )
+                        },
+                        DateField.FROM
                     )
-                    DatePickerSearch(
+                    DatePickerSearchRecords(
                         modifier = Modifier.weight(0.5f)
                             .padding(10.dp),
                         R.string.todate,
-                        searchViewModel,
-                        false
+                        state.showDatePickerTo,
+                        state.toDate,
+                        {date ->
+                            pieChartViewModel.onEventUser(
+                                PieChartUiEvents.OnSelectDate(DateField.TO, date)
+                            )
+                        },
+                        {visible ->
+                            pieChartViewModel.onEventUser(
+                                PieChartUiEvents.OnShowDatePicker(DateField.TO, visible)
+                            )
+                        },
+                        DateField.TO
                     )
                 }
                 if (incomeList.isNotEmpty()) {
@@ -163,19 +192,9 @@ fun PieChartScreen(
             }
 
         }
-        if (incomeList.isEmpty() && expenseList.isEmpty()) {
-            Text(
-                modifier = Modifier.padding(40.dp),
-                text = stringResource(id = R.string.noentries),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+
     }
 }
-
-
-
-
 
 @Composable
 fun ChartPie(modifier:Modifier,listOfEntries: List<Pair<BigDecimal, Int>>) {
