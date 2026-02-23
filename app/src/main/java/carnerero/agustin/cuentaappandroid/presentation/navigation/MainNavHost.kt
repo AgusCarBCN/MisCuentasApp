@@ -61,6 +61,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.StatisticsS
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.PieChartUiEvents
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferViewModel
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.google.gson.Gson
 
@@ -86,6 +87,7 @@ fun MainNavHost(
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
     val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
     val pieChartViewModel: PieChartViewModel =hiltViewModel()
+    val transferViewModel : TransferViewModel =hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -172,10 +174,11 @@ fun MainNavHost(
         }
         composable(Routes.Transfer.route) {
             TransferScreen(
-                accountsViewModel,
-                entriesViewModel
+                transferViewModel,
+                {navController.navigate(Routes.Home.route)}
+
             )
-            { navController.navigate(Routes.Home.route) }
+            {navController.popBackStack()  }
         }
         composable(Routes.Calculator.route) {
             CalculatorScreen(calculatorViewModel, accountsViewModel)

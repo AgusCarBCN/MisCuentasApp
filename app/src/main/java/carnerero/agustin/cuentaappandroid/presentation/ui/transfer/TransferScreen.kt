@@ -13,13 +13,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -29,46 +29,57 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.I
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.message
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.Records
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.math.BigDecimal
 import java.util.Date
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.AccountSearchRecordsSelector
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
 @Composable
 fun TransferScreen(
-    accountViewModel: AccountsViewModel,
-    entryViewModel: EntriesViewModel,
+    transferViewModel: TransferViewModel,
+    //accountViewModel: AccountsViewModel,
+    //entryViewModel: EntriesViewModel,
+    navToBack:()->Unit,
     navToHome: () -> Unit
 ) {
-    val accountFrom by accountViewModel.accountSelected.observeAsState()
-    val accountTo by accountViewModel.destinationAccount.observeAsState()
-    val amountTransfer by entryViewModel.entryAmount.observeAsState("0.0")
-    val confirmButton by entryViewModel.enableConfirmTransferButton.observeAsState(false)
-    val scope = rememberCoroutineScope()
-    val idAccountFrom = accountFrom?.id ?: 1
-    val idAccountTo = accountTo?.id ?: 1
-    val amount = amountTransfer.toBigDecimalOrNull() ?: BigDecimal.ZERO
-    val negativeAmount = amountTransfer.toBigDecimalOrNull()?.negate() ?: BigDecimal("1E10")
+    val state by transferViewModel.uiState.collectAsStateWithLifecycle()
+    //val accountFrom by accountViewModel.accountSelected.observeAsState()
+    // val accountTo by accountViewModel.destinationAccount.observeAsState()
+    // val amountTransfer by entryViewModel.entryAmount.observeAsState("0.0")
+    // val confirmButton by entryViewModel.enableConfirmTransferButton.observeAsState(false)
+    // val scope = rememberCoroutineScope()
+    // val idAccountFrom = accountFrom?.id ?: 1
+    // val idAccountTo = accountTo?.id ?: 1
+    // val amount = amountTransfer.toBigDecimalOrNull() ?: BigDecimal.ZERO
+    // val negativeAmount = amountTransfer.toBigDecimalOrNull()?.negate() ?: BigDecimal("1E10")
     //accountViewModel.isValidTransfer()
-    val transferFrom = stringResource(id = R.string.transferfrom)
-    val transferTo = stringResource(id = R.string.transferTo)
+    val labelTransferFrom = stringResource(id = R.string.transferfrom)
+    val labelTransferTo = stringResource(id = R.string.transferTo)
     //SnackBarMessage
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
     val transferSuccessMessage = message(resource = R.string.transferdone)
-
-    val isValidExpense=accountViewModel.isValidExpense(amount)
+    val confirmButton =state.enableConfirm
+    //val isValidExpense=accountViewModel.isValidExpense(amount)
     val isLandscape =
         orientation == OrientationApp.Landscape
+    LaunchedEffect(Unit) {
+        transferViewModel.effect.collect { effect ->
+            when (effect) {
+                TransferEffects.MessageSuccess -> SnackBarController.sendEvent(SnackBarEvent(transferSuccessMessage))
+                TransferEffects.NavBack -> navToBack()
+                TransferEffects.NavToHome ->navToHome()
+                TransferEffects.OverBalanceError ->  SnackBarController.sendEvent(SnackBarEvent(amountOverBalanceMessage))
+            }
+        }
+    }
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
@@ -107,19 +118,13 @@ fun TransferScreen(
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.amountentrie),
-                        amountTransfer,
+                        state.amount.toString(),
                         onTextChange = {
-                            entryViewModel.onAmountChanged(
-                                idAccountTo,
-                                idAccountFrom,
-                                it
-                            )
+                           transferViewModel.onUserEvent(TransferUiEvent.OnAmountChange(it))
                         },
                         BoardType.DECIMAL,
                         false
                     )
-
-
                 }
 
                 /** -------- RIGHT (ACTIONS) -------- */
@@ -130,7 +135,25 @@ fun TransferScreen(
                         .padding(top = 40.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AccountSelector(
+                    AccountSearchRecordsSelector(
+                        R.string.originaccount,
+                        state.accounts,
+                        state.currencyCode,
+                        {
+                            transferViewModel.onUserEvent(TransferUiEvent.OnAccountOriginChange(it)) },
+                        false,
+                        fieldModifier
+                    )
+                    AccountSearchRecordsSelector(
+                        R.string.destinationaccount,
+                        state.accounts,
+                        state.currencyCode,
+                        {
+                            transferViewModel.onUserEvent(TransferUiEvent.OnAccountDestinationChange(it))   },
+                        true,
+                        fieldModifier
+                    )
+                   /* AccountSelector(
                         stringResource(id = R.string.originaccount),
                         accountViewModel,
                         modifier = fieldModifier
@@ -141,10 +164,10 @@ fun TransferScreen(
                         accountViewModel,
                         true,
                         modifier = fieldModifier
-                    )
+                    )*/
 
                     /** --- lógica intacta --- */
-                    if ((accountTo == accountFrom) ||
+                   /* if ((accountTo == accountFrom) ||
                         (amountTransfer.isEmpty()
                                 || amountTransfer.toDoubleOrNull() == 0.0) ||
                         amountTransfer == "."
@@ -152,7 +175,7 @@ fun TransferScreen(
                         entryViewModel.onChangeTransferButton(false)
                     } else {
                         entryViewModel.onChangeTransferButton(true)
-                    }
+                    }*/
                     Row(modifier = fieldModifier,
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(dimens.medium)) {
@@ -162,7 +185,8 @@ fun TransferScreen(
                             modifier = fieldModifier.weight(1f),
                             confirmButton,
                             onClickButton = {
-                                scope.launch(Dispatchers.IO) {
+                                transferViewModel.onUserEvent(TransferUiEvent.OnConfirm(labelTransferFrom,labelTransferTo ))
+                              /*  scope.launch(Dispatchers.IO) {
                                     if (isValidExpense) {
                                         entryViewModel.addEntry(
                                             Records(
@@ -200,7 +224,7 @@ fun TransferScreen(
                                             )
                                         )
                                     }
-                                }
+                                }*/
                             }
                         )
 
@@ -210,7 +234,7 @@ fun TransferScreen(
                             modifier = fieldModifier.weight(1f),
                             true
                         ) {
-                            navToHome()
+                            transferViewModel.onUserEvent(TransferUiEvent.NavToBack)
                         }
                     }
                 }
@@ -236,33 +260,35 @@ fun TransferScreen(
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.amountentrie),
-                    amountTransfer,
+                    state.amount.toString(),
                     onTextChange = {
-                        entryViewModel.onAmountChanged(
-                            idAccountTo,
-                            idAccountFrom,
-                            it
-                        )
+                        transferViewModel.onUserEvent(TransferUiEvent.OnAmountChange(it))
                     },
                     BoardType.DECIMAL,
                     false
                 )
 
-                AccountSelector(
-                    stringResource(id = R.string.originaccount),
-                    accountViewModel,
-                    modifier = fieldModifier
+                AccountSearchRecordsSelector(
+                    R.string.originaccount,
+                    state.accounts,
+                    state.currencyCode,
+                    {
+                        transferViewModel.onUserEvent(TransferUiEvent.OnAccountOriginChange(it)) },
+                    false,
+                    fieldModifier
                 )
-
-                AccountSelector(
-                    stringResource(id = R.string.destinationaccount),
-                    accountViewModel,
+                AccountSearchRecordsSelector(
+                    R.string.destinationaccount,
+                    state.accounts,
+                    state.currencyCode,
+                    {
+                        transferViewModel.onUserEvent(TransferUiEvent.OnAccountDestinationChange(it))   },
                     true,
-                    modifier = fieldModifier
+                    fieldModifier
                 )
 
                 /** --- lógica intacta --- */
-                if ((accountTo == accountFrom) ||
+                /*if ((accountTo == accountFrom) ||
                     (amountTransfer.isEmpty()
                             || amountTransfer.toDoubleOrNull() == 0.0) ||
                     amountTransfer == "."
@@ -270,7 +296,7 @@ fun TransferScreen(
                     entryViewModel.onChangeTransferButton(false)
                 } else {
                     entryViewModel.onChangeTransferButton(true)
-                }
+                }*/
 
                 ModelButton(
                     text = stringResource(id = R.string.confirmButton),
@@ -278,11 +304,12 @@ fun TransferScreen(
                     modifier = fieldModifier,
                     confirmButton,
                     onClickButton = {
-                        scope.launch(Dispatchers.IO) {
+                        transferViewModel.onUserEvent(TransferUiEvent.OnConfirm(labelTransferFrom,labelTransferTo ))
+                        /*scope.launch(Dispatchers.IO) {
                             if (isValidExpense) {
                                 entryViewModel.addEntry(
                                     Records(
-                                        description = transferFrom,
+                                        description = labelTransferFrom,
                                         amount = negativeAmount,
                                         date = Date().dateFormat(),
                                         categoryId = 53,
@@ -291,7 +318,7 @@ fun TransferScreen(
                                 )
                                 entryViewModel.addEntry(
                                     Records(
-                                        description = transferTo,
+                                        description = labelTransferTo,
                                         amount = amount,
                                         date = Date().dateFormat(),
                                         categoryId = 53,
@@ -316,7 +343,7 @@ fun TransferScreen(
                                     )
                                 )
                             }
-                        }
+                        }*/
                     }
                 )
 
@@ -326,7 +353,7 @@ fun TransferScreen(
                     modifier = fieldModifier,
                     true
                 ) {
-                    navToHome()
+                    transferViewModel.onUserEvent(TransferUiEvent.NavToBack)
                 }
             }
         }
