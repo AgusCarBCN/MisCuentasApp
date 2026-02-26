@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,12 +53,14 @@ class SelectCategoriesViewModel @Inject constructor(
     }
     fun showCategories(type: CategoryType) {
         viewModelScope.launch {
-            val categories = getAllCategoriesByType.invoke(type)
-            _uiState.update {
-                it.copy(
-                    categories=categories
-                )
-            }
+            getAllCategoriesByType.invoke(type)
+                .collect { categories ->
+                    _uiState.update { current ->
+                        current.copy(
+                            categories = categories
+                        )
+                    }
+                }
         }
     }
 }

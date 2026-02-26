@@ -20,9 +20,11 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumO
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -320,8 +322,8 @@ class CategoriesViewModel @Inject constructor(
     val expensePercentageFlow: StateFlow<Map<Category, Float>> = _expensePercentageFlow.asStateFlow()
 
     //LiveData para la lista de Categorias de control de gasto
-    private val _listOfCategoriesChecked = MutableLiveData<List<Category>>()
-    val listOfCategoriesChecked: LiveData<List<Category>> = _listOfCategoriesChecked
+    private val _listOfCategoriesChecked = MutableLiveData<Flow<List<Category>>>()
+    val listOfCategoriesChecked: LiveData<Flow<List<Category>>> = _listOfCategoriesChecked
 
 
     //LiveData para la lista de Categorias
@@ -381,7 +383,7 @@ class CategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val categories = withContext(Dispatchers.IO) { getAllCategoriesByType.invoke(type) }
-                _listOfCategories.postValue(categories)
+                _listOfCategories.postValue(categories.first())
                 Log.d("Categories", "Fetched all categories successfully.Total categories: ${_listOfCategories.value?.size}" )
             } catch (e: Exception) {
                 Log.e("Categories", "Error fetching all categories: ${e.message}", e)
@@ -441,13 +443,13 @@ class CategoriesViewModel @Inject constructor(
         getAllCategoriesChecked(CategoryType.EXPENSE)
         val categories = _listOfCategoriesChecked.value // Método que obtiene todas las categorías
         // Verifica que las categorías no sean nulas
-        if (categories.isNullOrEmpty()) {
+        if (categories?.first().isNullOrEmpty()) {
             // Si las categorías son nulas o vacías, no se hace nada
             _expensePercentageFlow.value = emptyMap() // Asigna un mapa vacío
             return
         }
 
-        val expensePercentageMap = categories.associateWith { category ->
+        val expensePercentageMap = categories.first().associateWith { category ->
             val expenses = sumOfExpensesByCategory(category.id,category.fromDate,category.toDate) ?: 0.0
             val percentage = (abs(expenses.toDouble()) / abs(category.spendingLimit.toDouble())).toFloat().coerceIn(0.0f, 1.0f)
             percentage

@@ -1,6 +1,9 @@
 package carnerero.agustin.cuentaappandroid.utils
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Date
 import java.util.Locale
 
@@ -34,4 +37,9 @@ fun Date.dateFormatByLocale(): String {
     val formatter = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, locale)
     // Formateamos la fecha y la devolvemos
     return formatter.format(this)
+}
+fun LocalDate.dateFormatByLocale(): String {
+    val locale = Locale.getDefault()
+    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale)
+    return this.format(formatter)
 }

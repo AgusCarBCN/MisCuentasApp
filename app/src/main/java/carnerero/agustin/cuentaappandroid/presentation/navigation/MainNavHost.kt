@@ -53,13 +53,11 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccounts
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SelectAccountScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SelectCategoriesScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlByCategoriesScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesSpendingControlViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.StatisticsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.PieChartUiEvents
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.transfer.TransferViewModel
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
@@ -85,9 +83,11 @@ fun MainNavHost(
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
+    val selectCategoriesSpendingControlViewModel : SelectCategoriesSpendingControlViewModel=hiltViewModel()
     val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
     val pieChartViewModel: PieChartViewModel =hiltViewModel()
     val transferViewModel : TransferViewModel =hiltViewModel()
+
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -265,14 +265,14 @@ fun MainNavHost(
             SelectAccountScreen(accountsViewModel, searchViewModel)
         }
         composable(Routes.SpendingControlByAccount.route) {
-            SpendingControlByAccountsScreen(accountsViewModel)
+          //  SpendingControlByAccountsScreen(accountsViewModel)
         }
         composable(Routes.SelectCategories.route) {
-            SelectCategoriesScreen(categoriesViewModel, searchViewModel)
+            SelectCategoriesScreen(selectCategoriesSpendingControlViewModel)
 
         }
         composable(Routes.SpendingControlByCategory.route) {
-            SpendingControlByCategoriesScreen(categoriesViewModel, accountsViewModel)
+            //SpendingControlByCategoriesScreen(categoriesViewModel, accountsViewModel)
         }
 
         composable(

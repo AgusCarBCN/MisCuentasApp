@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.data.repository
 import carnerero.agustin.cuentaappandroid.data.db.dao.CategoryDao
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -15,12 +16,12 @@ class CategoryRepository  @Inject constructor(private val categoryDao: CategoryD
     }
 
     // 2. List all categories by type
-    suspend fun getAllCategories(type: CategoryType): List<Category> {
+    fun getAllCategories(type: CategoryType): Flow<List<Category>> {
         return categoryDao.getAllCategories(type)
     }
 
     // 3. List all categories checked
-    suspend fun getAllCategoriesChecked(type: CategoryType): List<Category> {
+    fun getAllCategoriesChecked(type: CategoryType): Flow<List<Category>> {
         return categoryDao.getAllCategoriesChecked(type)
     }
 

@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 
 @Dao
@@ -18,11 +19,11 @@ interface CategoryDao {
 
     // 2. Get all categories by type
     @Query("SELECT * FROM CategoryEntity WHERE categoryType= :type")
-    suspend fun getAllCategories(type: CategoryType): List<Category>
+    fun getAllCategories(type: CategoryType): Flow<List<Category>>
 
     // 3. Get all categories checked
     @Query("SELECT * FROM CategoryEntity WHERE isChecked= 1 AND categoryType= :type")
-    suspend fun getAllCategoriesChecked(type: CategoryType): List<Category>
+    fun getAllCategoriesChecked(type: CategoryType): Flow<List<Category>>
 
     // 4. Update checked state category
     @Query("UPDATE CategoryEntity SET isChecked = :newValueChecked WHERE id = :categoryId")
