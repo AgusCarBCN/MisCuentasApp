@@ -13,15 +13,12 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.Da
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.model.DialogUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model.SelectCategoriesUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model.SelectCategoriesUiState
-import carnerero.agustin.cuentaappandroid.utils.Utils
-import carnerero.agustin.cuentaappandroid.utils.dateFormatByLocale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -107,7 +104,7 @@ class SelectCategoriesSpendingControlViewModel @Inject constructor(
 
     fun onConfirm() {
         val dialog = _uiState.value.dialogUiState
-        val categoryId = dialog.categoryId
+        val categoryId = dialog.id
 
         viewModelScope.launch {
             upDateSpendingLimit(categoryId, dialog.spendLimit.toBigDecimalOrNull() ?: BigDecimal.ZERO)
@@ -117,11 +114,11 @@ class SelectCategoriesSpendingControlViewModel @Inject constructor(
             closeDialog()
         }
     }
-    fun openDialog(category: Category) {
+    fun openDialog(category:Category) {
         _uiState.update { current ->
             current.copy(
                 dialogUiState = current.dialogUiState.copy(
-                    categoryId = category.id,
+                    id = category.id,
                     showDialog = true,
                     spendLimit = category.spendingLimit.toPlainString(),
                     fromDate = category.fromDate,

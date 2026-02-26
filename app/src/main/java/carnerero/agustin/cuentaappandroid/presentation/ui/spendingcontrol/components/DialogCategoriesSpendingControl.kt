@@ -1,9 +1,7 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -18,20 +16,20 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.B
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.model.DialogUiState
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.model.SelectAccountsUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model.SelectCategoriesUiEvent
-import carnerero.agustin.cuentaappandroid.utils.dateFormatByLocale
 
 @Composable
-fun DialogSpendingControl(
+fun DialogCategoriesSpendingControl(
     name: String,
     dialogState: DialogUiState,
     onUserEvent: (SelectCategoriesUiEvent) -> Unit
 ) {
     AlertDialog(
+        containerColor = colors.backgroundPrimary,
         onDismissRequest = {
             onUserEvent(SelectCategoriesUiEvent.OnCloseDialog)
         },
@@ -129,104 +127,110 @@ fun DialogSpendingControl(
         }
     )
 }
-
-/*@Composable
-fun DialogSpendingControl(
-    name:String,
+@Composable
+fun DialogAccountsSpendingControl(
+    name: String,
     dialogState: DialogUiState,
-    categoryId:Int,
-    onUserEvent:(SelectCategoriesUiEvent)->Unit
+    onUserEvent: (SelectAccountsUiEvent) -> Unit
 ) {
-    if (dialogState.showDialog) {
-        AlertDialog(
-            containerColor = colors.backgroundPrimary,
-            onDismissRequest = { onUserEvent(SelectCategoriesUiEvent.OnCloseDialog) },
-            title = {
-                Text(
-                    name,
-                    color = colors.textHeadColor,
-                    style=MaterialTheme.typography.titleSmall
+    AlertDialog(
+        containerColor = colors.backgroundPrimary,
+        onDismissRequest = {
+            onUserEvent(SelectAccountsUiEvent.OnCloseDialog)
+        },
+        title = {
+            Text(name)
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                TextFieldComponent(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = stringResource(id = R.string.limitMax),
+                    inputText = dialogState.spendLimit,
+                    onTextChange = {
+                        onUserEvent(
+                            SelectAccountsUiEvent.OnSpendLimitChange(it)
+                        )
+                    },
+                    type = BoardType.DECIMAL,
+                    textInvisible = false
                 )
-            },
-            text = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.Center, // Espacio entre DatePickers
-                    horizontalAlignment = Alignment.CenterHorizontally
-
-                ) {
-
-                    TextFieldComponent(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(id = R.string.limitMax),
-                        dialogState.spendLimit.toString(),
-                        onTextChange = {onUserEvent(SelectCategoriesUiEvent.OnSpendLimitChange(it))},
-                        BoardType.DECIMAL,
-                        false
-                    )
-                    DatePickerSearchRecords(
-                        Modifier.width(240.dp)
-                        .padding(bottom = dimens.medium),
-                        R.string.fromdate,
-                        dialogState.showFromDatePicker,
-                        dialogState.fromDate,
-                        { date ->
-                            onUserEvent(
-                                SelectCategoriesUiEvent.OnSelectDate(DateField.FROM, date)
+                DatePickerSearchRecords(
+                    modifier = Modifier.width(240.dp),
+                    labelResource = R.string.fromdate,
+                    showDatePicker = dialogState.showFromDatePicker,
+                    selectedDate = dialogState.fromDate,
+                    onSelectedDate = { date ->
+                        onUserEvent(
+                            SelectAccountsUiEvent.OnSelectDate(
+                                DateField.FROM,
+                                date
                             )
-                        },
-                        { visible ->
-                            onUserEvent(
-                                SelectCategoriesUiEvent.OnShowDatePicker(DateField.FROM, visible)
+                        )
+                    },
+                    onShowDatePicker = { visible ->
+                        onUserEvent(
+                            SelectAccountsUiEvent.OnShowDatePicker(
+                                DateField.FROM,
+                                visible
                             )
-                        },
-                        dateField = DateField.FROM
-                    )
-                    DatePickerSearchRecords(
-                        Modifier.width(240.dp)
-                            .padding(bottom = dimens.medium),
-                        R.string.todate,
-                        dialogState.showToDatePicker,
-                        dialogState.toDate,
-                        { date ->
-                            onUserEvent(
-                                SelectCategoriesUiEvent.OnSelectDate(DateField.TO, date)
-                            )
-                        },
-                        { visible ->
-                            onUserEvent(
-                                SelectCategoriesUiEvent.OnShowDatePicker(DateField.TO, visible)
-                            )
-                        },
-                        dateField = DateField.FROM
-                    )
-                }
-
-
-            },
-            confirmButton = {
-                ModelButton(
-                    text = stringResource(id = R.string.confirmButton),
-                    MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.width(130.dp),
-                    true,
-                    onClickButton = {
-                        onUserEvent(SelectCategoriesUiEvent.OnConfirm)
-                    }
+                        )
+                    },
+                    dateField = DateField.FROM
                 )
-            },
-            dismissButton = {
-                ModelButton(
-                    text = stringResource(id = R.string.cancelButton),
-                    MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.width(130.dp),
-                    true,
-                    onClickButton = {
-                        onUserEvent(SelectCategoriesUiEvent.OnCloseDialog)
-                    }
+
+                DatePickerSearchRecords(
+                    modifier = Modifier.width(240.dp),
+                    labelResource = R.string.todate,
+                    showDatePicker = dialogState.showToDatePicker,
+                    selectedDate = dialogState.toDate,
+                    onSelectedDate = { date ->
+                        onUserEvent(
+                            SelectAccountsUiEvent.OnSelectDate(
+                                DateField.TO,
+                                date
+                            )
+                        )
+                    },
+                    onShowDatePicker = { visible ->
+                        onUserEvent(
+                            SelectAccountsUiEvent.OnShowDatePicker(
+                                DateField.TO,
+                                visible
+                            )
+                        )
+                    },
+                    dateField = DateField.TO
                 )
             }
-        )
-    }
-}*/
+        },
+        confirmButton = {
+            ModelButton(
+                text = stringResource(id = R.string.confirmButton),
+                textStyle = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.width(130.dp),
+                enabledButton = true,
+                onClickButton = {
+                    onUserEvent(SelectAccountsUiEvent.OnConfirm)
+                }
+            )
+        },
+        dismissButton = {
+            ModelButton(
+                text = stringResource(id = R.string.cancelButton),
+                textStyle =  MaterialTheme.typography.labelSmall,
+                modifier = Modifier.width(130.dp),
+                enabledButton = true,
+                onClickButton = {
+                    onUserEvent(SelectAccountsUiEvent.OnCloseDialog)
+                }
+            )
+        }
+    )
+}
+
+

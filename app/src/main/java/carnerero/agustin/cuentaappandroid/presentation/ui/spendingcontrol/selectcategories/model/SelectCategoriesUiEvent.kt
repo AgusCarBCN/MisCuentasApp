@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model
 
+import androidx.webkit.internal.ApiFeature
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import java.time.LocalDate

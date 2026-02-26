@@ -52,9 +52,10 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SelectAccountScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.SelectAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.SelectAccountsSpendingControlViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesSpendingControlViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.StatisticsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartViewModel
@@ -84,6 +85,7 @@ fun MainNavHost(
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
     val selectCategoriesSpendingControlViewModel : SelectCategoriesSpendingControlViewModel=hiltViewModel()
+    val selectAccountsSpendingControlViewModel: SelectAccountsSpendingControlViewModel =hiltViewModel()
     val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
     val pieChartViewModel: PieChartViewModel =hiltViewModel()
     val transferViewModel : TransferViewModel =hiltViewModel()
@@ -262,7 +264,7 @@ fun MainNavHost(
             SpendingControlOptionsScreen(navController)
         }
         composable(Routes.SelectAccounts.route) {
-            SelectAccountScreen(accountsViewModel, searchViewModel)
+            SelectAccountsScreen(selectAccountsSpendingControlViewModel)
         }
         composable(Routes.SpendingControlByAccount.route) {
           //  SpendingControlByAccountsScreen(accountsViewModel)
