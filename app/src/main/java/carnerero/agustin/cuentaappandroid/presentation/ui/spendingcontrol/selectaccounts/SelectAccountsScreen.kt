@@ -22,6 +22,7 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogAccountsSpendingControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogCategoriesSpendingControl
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogSpendingControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.components.AccountWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.model.SelectAccountsUiEvent
 
@@ -84,11 +85,22 @@ fun SelectAccountsScreen(
                         .firstOrNull { it.id == state.dialogUiState.id }
 
                     selectedAccount?.let { account ->
-                        DialogAccountsSpendingControl(
+                        DialogSpendingControl(
+                            name = account.name,
+                            dialogState = state.dialogUiState,
+                            onUserEvent = viewModel::onUserEvent,
+                            onConfirm = { SelectAccountsUiEvent.OnConfirm },
+                            onClose = { SelectAccountsUiEvent.OnCloseDialog },
+                            onSpendLimitChange = { SelectAccountsUiEvent.OnSpendLimitChange(it) },
+                            onSelectDate = { field, date -> SelectAccountsUiEvent.OnSelectDate(field, date) },
+                            onShowDatePicker = { field, visible -> SelectAccountsUiEvent.OnShowDatePicker(field, visible) }
+                        )
+
+                        /*DialogAccountsSpendingControl(
                             name = account.name,
                             dialogState = state.dialogUiState,
                             onUserEvent = { viewModel.onUserEvent(it) }
-                        )
+                        )*/
                     }
                 }
             }

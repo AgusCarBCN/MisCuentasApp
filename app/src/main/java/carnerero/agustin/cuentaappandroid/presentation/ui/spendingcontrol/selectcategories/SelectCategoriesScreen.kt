@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogCategoriesSpendingControl
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogSpendingControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.componets.CategoryWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model.SelectCategoriesUiEvent
 
@@ -90,11 +91,22 @@ fun SelectCategoriesScreen(
                 .firstOrNull { it.id == state.dialogUiState.id }
 
             selectedCategory?.let { category ->
-                DialogCategoriesSpendingControl(
+                DialogSpendingControl(
+                    name = stringResource(R.string.name),
+                    dialogState = state.dialogUiState,
+                    onUserEvent = viewModel::onUserEvent,
+                    onConfirm = { SelectCategoriesUiEvent.OnConfirm },
+                    onClose = { SelectCategoriesUiEvent.OnCloseDialog },
+                    onSpendLimitChange = { SelectCategoriesUiEvent.OnSpendLimitChange(it) },
+                    onSelectDate = { field, date -> SelectCategoriesUiEvent.OnSelectDate(field, date) },
+                    onShowDatePicker = { field, visible -> SelectCategoriesUiEvent.OnShowDatePicker(field, visible) }
+                )
+
+               /* DialogCategoriesSpendingControl(
                     name = stringResource(category.nameResource),
                     dialogState = state.dialogUiState,
                     onUserEvent = { viewModel.onUserEvent(it) }
-                )
+                )*/
             }
         }
     }

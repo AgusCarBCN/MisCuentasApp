@@ -15,26 +15,26 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.AccountBudgetItemControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.CategoryBudgetItemControl
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SpacerApp
 /*
 @Composable
 
-fun SpendingControlByCategoriesScreen(categoriesViewModel: CategoriesViewModel,
-                                      accountsViewModel: AccountsViewModel
+fun SpendingControlByCategoriesScreen(selectCategoriesViewModel: SelectCategoriesViewModel
 )
 
 {
-    // Observa la lista de categorías desde el ViewModel
-    val listOfCategoriesChecked by categoriesViewModel.listOfCategoriesChecked.observeAsState(emptyList())
+    val state by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
+    val categories=state.categories
+    val categoriesChecked = categories.filter { it.isChecked }
 
-    LaunchedEffect(Unit) {
-        categoriesViewModel.getAllCategoriesChecked(CategoryType.EXPENSE)
-    }
+
 
     Column(
         modifier = Modifier
@@ -51,7 +51,7 @@ fun SpendingControlByCategoriesScreen(categoriesViewModel: CategoriesViewModel,
                 .padding(bottom = 16.dp) // Espacio en la parte inferior
         ) {
 
-            items(listOfCategoriesChecked) { category ->
+            items(categoriesChecked) { category ->
                        CategoryBudgetItemControl(
                            category,
                            categoriesViewModel,
