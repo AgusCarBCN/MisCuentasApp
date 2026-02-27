@@ -82,12 +82,12 @@ interface EntryDao {
     // 14. Get sum of all expenses by category
     @Transaction
     @Query("SELECT SUM(amount) FROM EntryEntity WHERE amount >= 0 AND categoryId = :id")
-    suspend fun getSumOfIncomesByCategory(id: Int): BigDecimal?
+    fun getSumOfIncomesByCategory(id: Int): Flow<BigDecimal>
 
     // 15. Get sum of all expenses by category
     @Transaction
     @Query("SELECT SUM(amount) FROM EntryEntity WHERE amount < 0 AND categoryId = :id")
-    suspend fun getSumOfExpenseByCategory(id: Int): BigDecimal?
+    fun getSumOfExpenseByCategory(id: Int): Flow<BigDecimal?>
 
     // 16. Get sum of incomes by date
     @Transaction

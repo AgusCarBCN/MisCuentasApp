@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.navigation
 
+
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -54,6 +55,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.categories.CategoriesSpendingControlViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.categories.SpendingControlByCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.SelectAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.SelectAccountsSpendingControlViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesSpendingControlViewModel
@@ -89,7 +92,7 @@ fun MainNavHost(
     val addRecordsViewModel: AddRecordsViewModel=hiltViewModel()
     val pieChartViewModel: PieChartViewModel =hiltViewModel()
     val transferViewModel : TransferViewModel =hiltViewModel()
-
+    val categoriesViewModel: CategoriesSpendingControlViewModel=hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -268,6 +271,7 @@ fun MainNavHost(
         }
         composable(Routes.SpendingControlByAccount.route) {
           //  SpendingControlByAccountsScreen(accountsViewModel)
+
         }
         composable(Routes.SelectCategories.route) {
             SelectCategoriesScreen(selectCategoriesSpendingControlViewModel)
@@ -275,6 +279,7 @@ fun MainNavHost(
         }
         composable(Routes.SpendingControlByCategory.route) {
             //SpendingControlByCategoriesScreen(categoriesViewModel, accountsViewModel)
+            SpendingControlByCategoriesScreen(categoriesViewModel)
         }
 
         composable(

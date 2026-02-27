@@ -38,8 +38,8 @@ class RecordRepository @Inject constructor(
         entryDao.getSumOfExpenseEntries()
             .map { it ?: BigDecimal.ZERO }
 
-        suspend fun getSumOfExpensesEntriesByCategory(categoryId: Int): BigDecimal =
-            entryDao.getSumOfExpenseByCategory(categoryId) ?: BigDecimal.ZERO
+        fun getSumOfExpensesEntriesByCategory(categoryId: Int): Flow<BigDecimal?> =
+            entryDao.getSumOfExpenseByCategory(categoryId)
 
         suspend fun getSumOfExpensesByCategoryAndDate(categoryId: Int, fromDate: String, toDate: String): BigDecimal =
             entryDao.getSumOfExpensesByCategoryAndDate(categoryId, fromDate, toDate) ?: BigDecimal.ZERO

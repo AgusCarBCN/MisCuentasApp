@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.androidx.compose.material3.material3)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.protolite.well.known.types)
+    implementation(libs.androidx.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin annotation processing tool (kapt)
     ksp(libs.androidx.room.compiler)

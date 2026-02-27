@@ -16,8 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.AccountBudgetItemControl
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.CategoryBudgetItemControl
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType

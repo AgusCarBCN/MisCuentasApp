@@ -1,12 +1,13 @@
 package carnerero.agustin.cuentaappandroid.domain.database.entriesusecase
 
 import carnerero.agustin.cuentaappandroid.data.repository.RecordRepository
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class GetSumOfExpensesByCategoryUseCase @Inject constructor(private val repository: RecordRepository) {
 
-    suspend operator fun invoke(
+     operator fun invoke(
         categoryId: Int
-    ): BigDecimal = repository.getSumOfExpensesEntriesByCategory(categoryId)
+    ): Flow<BigDecimal?> = repository.getSumOfExpensesEntriesByCategory(categoryId)
 }

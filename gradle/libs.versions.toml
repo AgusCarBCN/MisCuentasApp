@@ -38,6 +38,7 @@ runtime = "1.10.2"
 material3 = "1.4.0"
 foundation = "1.10.2"
 protoliteWellKnownTypes = "18.0.1"
+runtimeVersion = "1.10.3"
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material-icons-extended-vversioncompose = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
@@ -90,6 +91,7 @@ androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime
 androidx-compose-material3-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 protolite-well-known-types = { group = "com.google.firebase", name = "protolite-well-known-types", version.ref = "protoliteWellKnownTypes" }
+androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtimeVersion" }
 [plugins]
 
 android-application = { id = "com.android.application", version.ref = "agp" }

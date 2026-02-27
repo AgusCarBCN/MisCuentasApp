@@ -21,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,10 +38,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.Da
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import java.util.Date
 
 
 @Composable
@@ -52,7 +49,6 @@ fun RecordSearchScreen(
 ) {
     val isPortrait = orientation == OrientationApp.Portrait
     val state by searchRecordsViewModel.uiState.collectAsStateWithLifecycle()
-    val effects by searchRecordsViewModel.effect.collectAsStateWithLifecycle(initialValue = SearchEffects.Idle)
 
     val searchFilter = state.searchFilter
     val enableSearchButton = state.enableSearchButton
@@ -73,26 +69,7 @@ fun RecordSearchScreen(
             }
         }
     }
-   /* LaunchedEffect(effects) {
-        when (effects) {
-            SearchEffects.NavToRecordsScreen -> {
-                navController.navigateTopLevel(state.route)
-                Log.d("NAVIGATION", "Route from Search:${state.route}")
-            }
 
-            SearchEffects.MessageInvalidAmounts -> {
-                SnackBarController.sendEvent(SnackBarEvent(messageAmountError))
-            }
-
-            SearchEffects.MessageInvalidDates -> {
-                SnackBarController.sendEvent(SnackBarEvent(messageDateError))
-            }
-
-            else -> {
-
-            }
-        }
-    }*/
     if (isPortrait)
         Box(
             modifier = Modifier
@@ -113,7 +90,7 @@ fun RecordSearchScreen(
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(R.string.searchentries),
-                    searchFilter?.description ?: "",
+                    searchFilter.description ?: "",
                     onTextChange = {
                         searchRecordsViewModel.onEvent(
                             SearchUiEvent.OnRecordDescriptionChange(
@@ -138,7 +115,7 @@ fun RecordSearchScreen(
                         modifier = Modifier.weight(1f),
                         R.string.fromdate,
                         state.showDatePickerFrom,
-                        state.searchFilter?.dateFrom ?: Date().dateFormat(),
+                        state.searchFilter.dateFrom ,
                         { date ->
                             searchRecordsViewModel.onEvent(
                                 SearchUiEvent.OnSelectDate(DateField.FROM, date)
@@ -155,7 +132,7 @@ fun RecordSearchScreen(
                         modifier = Modifier.weight(1f),
                         R.string.todate,
                         state.showDatePickerTo,
-                        state.searchFilter?.dateTo ?: Date().dateFormat(),
+                        state.searchFilter.dateTo,
                         { date ->
                             searchRecordsViewModel.onEvent(
                                 SearchUiEvent.OnSelectDate(DateField.TO, date)
@@ -273,7 +250,7 @@ fun RecordSearchScreen(
                         modifier = fieldModifierLandscape,
                         R.string.todate,
                         state.showDatePickerTo,
-                        state.searchFilter?.dateTo ?: Date().dateFormat(),
+                        state.searchFilter.dateTo,
                         { date ->
                             searchRecordsViewModel.onEvent(
                                 SearchUiEvent.OnSelectDate(DateField.TO, date)
