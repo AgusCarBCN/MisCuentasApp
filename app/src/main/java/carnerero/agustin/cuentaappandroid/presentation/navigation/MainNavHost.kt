@@ -55,6 +55,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.SpendingControlOptionsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accounts.AccountsSpendingControlViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accounts.SpendingControlByAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.categories.CategoriesSpendingControlViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.categories.SpendingControlByCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectaccounts.SelectAccountsScreen
@@ -93,6 +95,7 @@ fun MainNavHost(
     val pieChartViewModel: PieChartViewModel =hiltViewModel()
     val transferViewModel : TransferViewModel =hiltViewModel()
     val categoriesViewModel: CategoriesSpendingControlViewModel=hiltViewModel()
+    val accountsSpendingViewModelViewModel: AccountsSpendingControlViewModel=hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -115,23 +118,23 @@ fun MainNavHost(
 
         }
         composable(Routes.Settings.route) {
-            SettingScreen(
+           /* SettingScreen(
                 settingViewModel,
                 mainViewModel,
                 accountsViewModel,
                 entriesViewModel,
                 navController
-            )
+            )*/
 
         }
         composable(Routes.Profile.route) {
             ProfileScreen(profileViewModel)
         }
         composable(Routes.Records.route) {
-            EntryList(
+            /*EntryList(
                 entriesViewModel,
                 accountsViewModel
-            )
+            )*/
         }
         composable(Routes.RecordsToDelete.route) {
             EntriesWithCheckBox(entriesViewModel, accountsViewModel)
@@ -270,7 +273,7 @@ fun MainNavHost(
             SelectAccountsScreen(selectAccountsSpendingControlViewModel)
         }
         composable(Routes.SpendingControlByAccount.route) {
-          //  SpendingControlByAccountsScreen(accountsViewModel)
+          SpendingControlByAccountsScreen(accountsSpendingViewModelViewModel)
 
         }
         composable(Routes.SelectCategories.route) {

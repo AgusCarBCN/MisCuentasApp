@@ -22,8 +22,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,40 +85,37 @@ class BarChartViewModel @Inject constructor(
     }
 
 
-    fun barChartDataByMonth(accountId: Int,year:String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun barChartDataByMonth(accountId: Int, year: String) {
+        viewModelScope.launch {
+            // Creamos una lista de Flows para cada mes
+            val monthlyFlows = listOfMonths.mapIndexed { index, month ->
+                val monthValue = if (index < 9) "0${index + 1}" else "${index + 1}"
 
-            val data: MutableList<BarChartData> = mutableListOf()
-
-            listOfMonths.forEachIndexed { index, month ->
-                // Asegúrate de que el mes esté en el formato correcto
-                val monthValue:String = if(index<9){
-                    "0${(index+1)}"
-                }else{
-                    "${index+1}"
-                }
-                try {
-                    // Realiza llamadas asíncronas para ingresos y gastos
-                    val incomeAmountDeferred = async { sumIncomesByMonth.invoke(accountId, monthValue,year) }
-                    val expenseAmountDeferred = async { sumExpensesByMonth.invoke(accountId, monthValue,year) }
-
-                    // Espera los resultados
-                    val incomeAmount = incomeAmountDeferred.await().toFloat()
-                    val expenseAmount = expenseAmountDeferred.await().toFloat()
-                    val resultAmount = incomeAmount + expenseAmount
-                    // Agrega los datos a la lista
-                    data.add(
-                        BarChartData(month, incomeAmount, expenseAmount,
-                        resultAmount)
+                // Combinamos los Flows de ingreso y gasto por mes
+                combine(
+                    sumIncomesByMonth.invoke(accountId, monthValue, year)
+                        .map { it ?: BigDecimal.ZERO },
+                    sumExpensesByMonth.invoke(accountId, monthValue, year)
+                        .map { it ?: BigDecimal.ZERO }
+                ) { income, expense ->
+                    BarChartData(
+                        month = month,
+                        incomes = income.toFloat(),
+                        expenses = expense.toFloat(),
+                        result = income.add(expense).toFloat()
                     )
-                     } catch (e: Exception) {
-                    Log.e("ViewModel", "Error al obtener entradas para la cuenta $accountId para el mes $month: ${e.message}")
                 }
             }
-            _uiState.update { current ->
-                current.copy(
-                    barchartData = data
-                )
+
+            // Combinamos todos los meses en una lista completa
+            combine(monthlyFlows) { arrayOfBarChartData ->
+                arrayOfBarChartData.toList()
+            }.collect { data ->
+                _uiState.update { current ->
+                    current.copy(
+                        barchartData = data
+                    )
+                }
             }
         }
     }

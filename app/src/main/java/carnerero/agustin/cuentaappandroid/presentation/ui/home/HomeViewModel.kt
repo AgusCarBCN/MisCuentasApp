@@ -15,8 +15,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,15 +64,13 @@ class HomeViewModel @Inject constructor(
 
     private fun observeInitialData() {
         viewModelScope.launch {
-            // Obtenemos currencyCode solo una vez
             val currencyCode = getCurrencyCode.invoke()
-            // Combinamos los flows que cambian
+
             combine(
                 getAccounts.invoke(),
-                getTotalIncomes.invoke(),
-                getTotalExpenses.invoke()
+                getTotalIncomes.invoke().map { it ?: BigDecimal.ZERO },
+                getTotalExpenses.invoke().map { it ?: BigDecimal.ZERO }
             ) { accounts, totalIncomes, totalExpenses ->
-                // Creamos el nuevo UiState completo
                 _uiState.value.copy(
                     accounts = accounts,
                     totalIncomes = totalIncomes,

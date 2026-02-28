@@ -1,39 +1,55 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accounts
 
+import android.R.attr.contentDescription
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.model.BudgetUiState
+import carnerero.agustin.cuentaappandroid.utils.Utils
+import java.math.BigDecimal
 
-/*
-    @Composable
+
+@Composable
     fun AccountBudgetItemControl(
-        account: Account,
-        accountsViewModel: AccountsViewModel
+    account: Account,
+    currencyCode:String,
+    uiState: BudgetUiState?
+
     ) {
 
-        val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
+       // val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
         val expensePercent= stringResource(id = R.string.percentexpense)
         val currentExpense = stringResource(id = R.string.currentexpense)
         val expenseControlText= stringResource(id = R.string.expenseControl)
         val spendingLimitMessage= stringResource(id = R.string.limitMax)
-        // Estado para almacenar el total de gastos por categoría
-        var expensesByAccount by remember { mutableStateOf(BigDecimal.ZERO) }
 
-        // Cargar el total de gastos de la categoría cuando cambie el composable o la categoría
-        LaunchedEffect(Unit) {
-            expensesByAccount = accountsViewModel.sumOfExpensesByAccount(
-                account.id,
-                account.fromDate,
-                account.toDate
-            ) ?: BigDecimal.ZERO
-        }
+        val spendingLimit = account.spendingLimit
+        val spendingPercentage = uiState?.spendingPercentage?:0.0f
+        val spendingPercent = uiState?.spendingPercent?:0.0f
+        val expensesByAccount = uiState?.expenses?: BigDecimal.ZERO
 
-        // Variables de estado para el límite de gasto y porcentaje
-        val spendingLimit by remember { mutableStateOf(account.spendingLimit) }  // Límite de gasto inicial
-
-        val spendingPercentage =
-            (abs(expensesByAccount.toFloat()) / spendingLimit.toFloat()).coerceIn(
-                0.0f,
-                1.0f
-            ) // Porcentaje de gasto
-        val spendingPercent = (spendingPercentage * 100).roundToInt()
         // Color de la barra de progreso según el porcentaje
         val progressColor = when {
             spendingPercentage < 0.5f -> colors.progressBar50
@@ -45,9 +61,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accou
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .semantics {
-                    contentDescription = "$expenseControlText ${account.name}"
-                },
+                ,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -135,5 +149,5 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accou
 
         }
     }
-*/
+
 

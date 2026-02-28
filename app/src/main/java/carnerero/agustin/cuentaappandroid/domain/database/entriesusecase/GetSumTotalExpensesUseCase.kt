@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class GetSumTotalExpensesUseCase  @Inject constructor(private val repository: RecordRepository){
 
-    operator fun invoke(): Flow<BigDecimal> = repository.getSumExpenses()
+    operator fun invoke(): Flow<BigDecimal?> = repository.getSumExpenses()
 
 }

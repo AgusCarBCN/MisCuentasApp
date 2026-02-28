@@ -82,7 +82,7 @@ interface EntryDao {
     // 14. Get sum of all expenses by category
     @Transaction
     @Query("SELECT SUM(amount) FROM EntryEntity WHERE amount >= 0 AND categoryId = :id")
-    fun getSumOfIncomesByCategory(id: Int): Flow<BigDecimal>
+    fun getSumOfIncomesByCategory(id: Int): Flow<BigDecimal?>
 
     // 15. Get sum of all expenses by category
     @Transaction
@@ -97,11 +97,11 @@ interface EntryDao {
         AND date >= :dateFrom  
         AND date <= :dateTo"""
     )
-    suspend fun getSumOfIncomeEntriesByDate(
+    fun getSumOfIncomeEntriesByDate(
         accountId: Int,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
     // 17. Get sum of expenses by date
     @Transaction
@@ -111,11 +111,11 @@ interface EntryDao {
         AND date >= :dateFrom  
         AND date <= :dateTo"""
     )
-    suspend fun getSumOfExpensesEntriesByDate(
+    fun getSumOfExpensesByAccountAndDate(
         accountId: Int,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
     // 18. Get sum of incomes by category
     @Transaction
@@ -125,11 +125,11 @@ interface EntryDao {
         AND date >= :dateFrom  
         AND date <= :dateTo"""
     )
-    suspend fun getSumOfIncomesByCategoryAndDate(
+    fun getSumOfIncomesByCategoryAndDate(
         categoryId: Int,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
 
 
@@ -141,11 +141,11 @@ interface EntryDao {
         AND date >= :dateFrom  
         AND date <= :dateTo"""
     )
-    suspend fun getSumOfExpensesByCategoryAndDate(
+    fun getSumOfExpensesByCategoryAndDate(
         categoryId: Int,
         dateFrom: String = Date().dateFormat(),
         dateTo: String = Date().dateFormat()
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
     // 20. Get sum of incomes entries by month
     @Transaction
@@ -158,11 +158,11 @@ interface EntryDao {
     AND SUBSTR(date, 1, 4) = :year   -- Extrae el año
     """
     )
-    suspend fun getSumOfIncomeEntriesForMonth(
+    fun getSumOfIncomeEntriesForMonth(
         accountId: Int,
         month: String,  // '01' a '12'
         year: String    // 'YYYY'
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
     // 21. Get sum of expenses entries by month
     @Transaction
@@ -175,11 +175,11 @@ interface EntryDao {
     AND SUBSTR(date, 1, 4) = :year   -- Extrae el año
     """
     )
-    suspend fun getSumOfExpenseEntriesForMonth(
+    fun getSumOfExpenseEntriesForMonth(
         accountId: Int,
         month: String,  // '01' a '12'
         year: String    // 'YYYY'
-    ): BigDecimal?
+    ): Flow<BigDecimal?>
 
     // 22. Get all expenses
     @Query(

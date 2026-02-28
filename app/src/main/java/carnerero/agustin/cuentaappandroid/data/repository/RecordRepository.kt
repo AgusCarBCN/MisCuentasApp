@@ -41,20 +41,20 @@ class RecordRepository @Inject constructor(
         fun getSumOfExpensesEntriesByCategory(categoryId: Int): Flow<BigDecimal?> =
             entryDao.getSumOfExpenseByCategory(categoryId)
 
-        suspend fun getSumOfExpensesByCategoryAndDate(categoryId: Int, fromDate: String, toDate: String): BigDecimal =
-            entryDao.getSumOfExpensesByCategoryAndDate(categoryId, fromDate, toDate) ?: BigDecimal.ZERO
+        fun getSumOfExpensesByCategoryAndDate(categoryId: Int, fromDate: String, toDate: String): Flow<BigDecimal?> =
+            entryDao.getSumOfExpensesByCategoryAndDate(categoryId, fromDate, toDate)
 
-        suspend fun getSumIncomesByDate(accountId: Int, fromDate: String = Date().dateFormat(), toDate: String = Date().dateFormat()): BigDecimal =
-            entryDao.getSumOfIncomeEntriesByDate(accountId, fromDate, toDate) ?: BigDecimal.ZERO
+        fun getSumIncomesByDate(accountId: Int, fromDate: String = Date().dateFormat(), toDate: String = Date().dateFormat()): Flow<BigDecimal?> =
+            entryDao.getSumOfIncomeEntriesByDate(accountId, fromDate, toDate)
 
-        suspend fun getSumExpensesByDate(accountId: Int, fromDate: String = Date().dateFormat(), toDate: String = Date().dateFormat()): BigDecimal =
-            entryDao.getSumOfExpensesEntriesByDate(accountId, fromDate, toDate) ?: BigDecimal.ZERO
+        fun getSumExpensesByDate(accountId: Int, fromDate: String = Date().dateFormat(), toDate: String = Date().dateFormat()):Flow<BigDecimal?> =
+            entryDao.getSumOfExpensesByAccountAndDate(accountId, fromDate, toDate)
 
-        suspend fun getSumOfIncomeEntriesForMonth(accountId: Int, month: String, year: String): BigDecimal =
-            entryDao.getSumOfIncomeEntriesForMonth(accountId, month, year) ?: BigDecimal.ZERO
+        fun getSumOfIncomeEntriesForMonth(accountId: Int, month: String, year: String): Flow<BigDecimal?> =
+            entryDao.getSumOfIncomeEntriesForMonth(accountId, month, year)
 
-        suspend fun getSumOfExpensesEntriesForMonth(accountId: Int, month: String, year: String): BigDecimal =
-            entryDao.getSumOfExpenseEntriesForMonth(accountId, month, year) ?: BigDecimal.ZERO
+        fun getSumOfExpensesEntriesForMonth(accountId: Int, month: String, year: String): Flow<BigDecimal?> =
+            entryDao.getSumOfExpenseEntriesForMonth(accountId, month, year)
 
         fun getAllEntriesDTO(): Flow<List<RecordDTO>> = entryDao.getAllEntriesDTO()
         fun getAllIncomesDTO(): Flow<List<RecordDTO>> = entryDao.getAllIncomesDTO()

@@ -23,7 +23,7 @@ import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.UpdateA
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.UpdateAccountNameUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.UpdateCheckedAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.UpdateSpendingLimitAccountUseCase
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesByDateUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
@@ -53,14 +53,14 @@ class AccountsViewModel @Inject constructor(
     private val updateName: UpdateAccountNameUseCase,
     private val updateBalance: UpdateAccountBalanceUseCase,
     private val converterCurrency: ConvertCurrencyUseCase,
-    private val getSumExpensesByAccount: GetSumTotalExpensesByDateUseCase,
+    private val getSumExpensesByAccount: GetSumTotalExpensesByAccountUseCase,
     private val updateChecked: UpdateCheckedAccountUseCase,
     private val updateSpendingLimit: UpdateSpendingLimitAccountUseCase,
     private val updateFromDate: UpdateAccountDateFromUseCase,
     private val updateToDate: UpdateAccountDateToUseCase,
     private val updateAccountsBalanceByExchangeRate: UpdateAccountBalanceByExchangeRateUseCase,
 
-) : ViewModel() {
+    ) : ViewModel() {
     private val currencies=
         listOf(
             // Lista completa de todas las divisas del mundo, ordenadas alfabéticamente por código:
@@ -595,14 +595,15 @@ class AccountsViewModel @Inject constructor(
                                         fromDate:String,
                                         toDate:String): BigDecimal? {
 
-        return try {
+      /*  return try {
             withContext(Dispatchers.IO) {
                 val result=getSumExpensesByAccount.invoke(accountId,fromDate,toDate)
                 result
             }
         }catch(_: IOException) {
             null
-        }
+        }*/
+        return null
     }
 
     // Función que actualiza el flujo con el porcentaje de gasto para cada categoría

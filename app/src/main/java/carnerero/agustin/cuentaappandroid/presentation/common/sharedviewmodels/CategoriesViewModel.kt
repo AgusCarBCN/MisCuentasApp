@@ -428,14 +428,15 @@ class CategoriesViewModel @Inject constructor(
                                         fromDate:String,
                                         toDate:String): BigDecimal? {
 
-        return try {
+        /*return try {
             withContext(Dispatchers.IO) {
                 val result=getSumExpensesByCategory.invoke(categoryId,fromDate,toDate)
                 result
             }
         }catch(e: IOException) {
             null
-        }
+        }*/
+        return null
     }
 
     // Función que actualiza el flujo con el porcentaje de gasto para cada categoría

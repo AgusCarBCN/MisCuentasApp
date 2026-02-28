@@ -1,33 +1,30 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.categories
+package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accounts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.domain.database.categoryusecase.GetAllCategoriesByType
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumOfExpensesByCategoryAndDateUseCase
+import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumTotalExpensesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.model.BudgetUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
+import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-
 @HiltViewModel
-class CategoriesSpendingControlViewModel @Inject constructor(
+class AccountsSpendingControlViewModel @Inject constructor(
     private val getCurrencyCode: GetCurrencyCodeUseCase,
-    private val getAllCategoriesByType: GetAllCategoriesByType,
-    private val getSumExpensesByCategory: GetSumOfExpensesByCategoryAndDateUseCase
-): ViewModel() {
-
-    private val _uiState = MutableStateFlow(CategoriesUiState())
-    val uiState: StateFlow<CategoriesUiState> = _uiState
+    private val getAllAccounts: GetAllAccountsUseCase,
+    private val getSumExpensesByAccount: GetSumTotalExpensesByAccountUseCase)
+    : ViewModel() {
+    private val _uiState = MutableStateFlow(AccountsUiState())
+    val uiState: StateFlow<AccountsUiState> = _uiState
 
 
     init {
@@ -37,25 +34,25 @@ class CategoriesSpendingControlViewModel @Inject constructor(
     private fun observeInitialData() {
         viewModelScope.launch {
             val currencyCode=getCurrencyCode.invoke()
-            getAllCategoriesByType.invoke(CategoryType.EXPENSE)
-                .collect { categories ->
+            getAllAccounts.invoke()
+                .collect { accounts ->
                     _uiState.update { current ->
                         current.copy(
-                            categories= categories,
-                            currencyCode=currencyCode,
+                            accounts = accounts,
+                            currencyCode = currencyCode,
                         )
                     }
                 }
         }
     }
-    fun observeCategorySpending(category: Category) {
+    fun observeCategorySpending(account: Account) {
         viewModelScope.launch {
-            getSumExpensesByCategory
-                .invoke(category.id,category.fromDate,category.toDate)
+            getSumExpensesByAccount
+                .invoke(account.id,account.fromDate,account.toDate)
                 .collect { expense ->
 
                     val safeExpense = expense?: BigDecimal.ZERO
-                    val limit = category.spendingLimit
+                    val limit = account.spendingLimit
 
                     val percentage = if (limit > BigDecimal.ZERO) {
                         abs(safeExpense.toFloat() / limit.toFloat())
@@ -67,10 +64,10 @@ class CategoriesSpendingControlViewModel @Inject constructor(
                     val percent = (percentage * 100).roundToInt()
 
                     // 1️⃣ Crear un mapa mutable temporal
-                    val updatedMap = _uiState.value.categoryBudgetMap.toMutableMap()
+                    val updatedMap = _uiState.value.accountBudgetMap.toMutableMap()
 
                     // 2️⃣ Añadir/actualizar la categoría
-                    updatedMap[category.id] = BudgetUiState(
+                    updatedMap[account.id] = BudgetUiState(
                         expenses = safeExpense,
                         spendingPercentage = percentage,
                         spendingPercent = percent
@@ -78,7 +75,7 @@ class CategoriesSpendingControlViewModel @Inject constructor(
 
                     // 3️⃣ Actualizar el StateFlow
                     _uiState.update { current ->
-                        current.copy(categoryBudgetMap = updatedMap)
+                        current.copy(accountBudgetMap = updatedMap)
                     }
                 }
         }
