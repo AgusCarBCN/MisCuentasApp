@@ -17,19 +17,12 @@ sealed class SettingsUserEvents {
     ) : SettingsUserEvents()
 
     data class OnConfirmExport(
-        val uri: Uri,
-        val accounts: List<Account>,
-        val records: List<RecordDTO>,
-        val context: Context
+        val uri: Uri
     ): SettingsUserEvents()
     data class OnConfirmAccountImport(
-        val uri: Uri,
-        val accounts: List<Account>,
-        val context: Context
+        val uri: Uri
     ): SettingsUserEvents()
     data class OnConfirmRecordsImport(
-        val uri: Uri,
-        val accounts: List<RecordDTO>,
-        val context: Context
+        val uri: Uri
     ): SettingsUserEvents()
 }

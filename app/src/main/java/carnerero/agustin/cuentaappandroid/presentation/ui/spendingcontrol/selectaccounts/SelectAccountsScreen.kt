@@ -31,7 +31,6 @@ fun SelectAccountsScreen(
     viewModel: SelectAccountsSpendingControlViewModel
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
     val accounts=state.accounts
 
     BoxWithConstraints(Modifier.fillMaxSize()) {

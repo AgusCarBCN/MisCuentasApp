@@ -23,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
@@ -87,9 +88,9 @@ class MainActivity : ComponentActivity() {
             }
             val windowSize= rememberWindowSize()
             val navigationController = rememberNavController()
-            val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
+            val state by settingViewModel.uiState.collectAsStateWithLifecycle()
 
-            MisCuentasTheme(windowSize,darkTheme = switchDarkTheme) {
+            MisCuentasTheme(windowSize,darkTheme = state.switchDarkTheme) {
                 MobileAds.initialize(this) {
                     Log.d(TAG, "onCreate: initAds")
                 }

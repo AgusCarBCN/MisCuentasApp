@@ -61,6 +61,4 @@ class TutorialViewModel @Inject constructor(
             }
         }
     }
-
-
   }

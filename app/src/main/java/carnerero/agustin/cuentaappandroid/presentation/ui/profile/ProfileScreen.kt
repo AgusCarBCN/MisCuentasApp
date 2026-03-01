@@ -102,7 +102,7 @@ fun ProfileScreen(profileViewModel: ProfileViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ProfileImageSection(
-                    state.selectedImageUri,
+                    state.selectedImageUriSaved,
                     { profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it)) },
                     { profileViewModel.onUserEvent(ProfileUiEvent.UpdatePhotoProfile(it)) }
                 )

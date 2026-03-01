@@ -118,13 +118,11 @@ fun MainNavHost(
 
         }
         composable(Routes.Settings.route) {
-           /* SettingScreen(
+            SettingScreen(
                 settingViewModel,
                 mainViewModel,
-                accountsViewModel,
-                entriesViewModel,
                 navController
-            )*/
+            )
 
         }
         composable(Routes.Profile.route) {

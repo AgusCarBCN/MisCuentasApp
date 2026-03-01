@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
@@ -64,11 +65,12 @@ fun MainScreen(
     // Verifica si el contexto es una actividad
     val activity = context as? Activity
     val notificationService = NotificationService(context)
-    val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
+   // val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
+    val state by settingViewModel.uiState.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    if (enableNotifications) {
+    if (state.switchNotifications) {
         NotificationCategoriesObserver(
             categoriesViewModel,
             accountsViewModel,

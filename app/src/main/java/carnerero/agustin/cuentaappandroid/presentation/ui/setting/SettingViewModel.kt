@@ -11,6 +11,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllAccountsUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.InsertAccountUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesDatabaseUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.InsertRecordUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableDarkThemUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableNotificationsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableTutorialUseCase
@@ -28,6 +32,7 @@ import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,21 +49,23 @@ import javax.inject.Inject
 @HiltViewModel
 
 class SettingViewModel @Inject constructor(
-    private val getShowTutorial: GetShowTutorialUseCase,
-    private val setShowTutorial: SetShowTutorialUseCase,
+    private val allAccounts: GetAllAccountsUseCase,
+    private val allRecords: GetAllEntriesDatabaseUseCase,
     private val getSwitchTutorial: GetEnableTutorialUseCase,
     private val changeSwitchTutorial: SetEnableTutorialUseCase,
     private val getSwitchDarkTheme: GetEnableDarkThemUseCase,
     private val changeSwitchDarkTheme: SetEnableDarkThemeUseCase,
     private val getNotificationsTutorial: GetEnableNotificationsUseCase,
-    private val changeSwitchNotifications: SetEnableNotificationsUseCase
-
-) : ViewModel() {
+    private val changeSwitchNotifications: SetEnableNotificationsUseCase,
+    private val addAccount: InsertAccountUseCase,
+    private val addRecord: InsertRecordUseCase,
+    @param:ApplicationContext private val context: Context
+    ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SettingUiState())
     val uiState: StateFlow<SettingUiState> = _uiState
 
-    private val _effect = MutableSharedFlow<SettingUiState>()
+    private val _effect = MutableSharedFlow<SettingEffects>()
     val effect = _effect.asSharedFlow()
 
     init {
@@ -70,12 +77,16 @@ class SettingViewModel @Inject constructor(
             combine(
                 getSwitchDarkTheme.invoke(),
                 getSwitchTutorial.invoke(),
-                getNotificationsTutorial.invoke()
-            ) { enableDarkTheme, showTutorial, enableNotifications ->
+                getNotificationsTutorial.invoke(),
+                allAccounts.invoke(),
+                allRecords.invoke()
+            ) { enableDarkTheme, showTutorial, enableNotifications,accounts,records ->
                 _uiState.value.copy(
                     switchDarkTheme = enableDarkTheme,
                     switchTutorial = showTutorial,
-                    switchNotifications = enableNotifications
+                    switchNotifications = enableNotifications,
+                    accounts = accounts,
+                    records = records
                 )
             }.collect { newState ->
                 _uiState.value = newState
@@ -85,13 +96,14 @@ class SettingViewModel @Inject constructor(
 
     fun onEvenUser(event: SettingsUserEvents) {
         when (event) {
-            is SettingsUserEvents.OnShowLaunchersDialog -> TODO()
-            is SettingsUserEvents.OnSwitchDarkThemeChange -> TODO()
-            is SettingsUserEvents.OnSwitchShowNotificationsChange -> TODO()
-            is SettingsUserEvents.OnSwitchShowTutorialChange -> TODO()
-            is SettingsUserEvents.OnConfirmAccountImport -> TODO()
-            is SettingsUserEvents.OnConfirmExport -> TODO()
-            is SettingsUserEvents.OnConfirmRecordsImport -> TODO()
+            is SettingsUserEvents.OnShowLaunchersDialog -> onShowLauncherDialog(event.field,
+                event.visible)
+            is SettingsUserEvents.OnSwitchDarkThemeChange -> onSwitchDarkTheme(event.newValue)
+            is SettingsUserEvents.OnSwitchShowNotificationsChange -> onSwitchNotifications(event.newValue)
+            is SettingsUserEvents.OnSwitchShowTutorialChange -> onSwitchShowTutorial(event.newValue)
+            is SettingsUserEvents.OnConfirmAccountImport -> importAccountsData(event.uri)
+            is SettingsUserEvents.OnConfirmExport -> exportData(event.uri)
+            is SettingsUserEvents.OnConfirmRecordsImport -> importRecordsDate(event.uri)
         }
     }
 
@@ -104,23 +116,53 @@ class SettingViewModel @Inject constructor(
             )
         }
     }
-
+    fun onSwitchDarkTheme(newValue:Boolean){
+        viewModelScope.launch {
+            changeSwitchDarkTheme.invoke(newValue)
+            _uiState.update { current ->
+                current.copy(
+                    switchDarkTheme = newValue
+                )
+            }
+        }
+    }
+    fun onSwitchNotifications(newValue:Boolean){
+        viewModelScope.launch {
+            changeSwitchNotifications.invoke(newValue)
+            _uiState.update { current ->
+                current.copy(
+                    switchNotifications = newValue
+                )
+            }
+        }
+    }
+    fun onSwitchShowTutorial(newValue:Boolean){
+        viewModelScope.launch {
+            changeSwitchTutorial.invoke(newValue)
+            _uiState.update { current ->
+                current.copy(
+                    switchTutorial = newValue
+                )
+            }
+        }
+    }
     fun exportData(
-        uri: Uri,
-        entries: List<RecordDTO>,
-        accounts: List<Account>,
-        context: Context
+        uri: Uri
     ) {
+        val accounts=_uiState.value.accounts
+        val records=_uiState.value.records
         val date = Date().dateFormat()
         val fileRecordsName = "backupRecords$date"
         val fileAccountsName = "backupAccounts$date"
-        val entriesCSV = toEntryCSV(entries,context)
+        val entriesCSV = toEntryCSV(records,context)
         val accountsCSV = toAccountCSV(accounts)
+
         val directory = DocumentFile.fromTreeUri(context, uri) // Direct assignment
         if (directory != null && directory.isDirectory) {
             viewModelScope.launch(Dispatchers.IO) {
+
                 try {
-                    if (entries.isNotEmpty()) {
+                    if (records.isNotEmpty()) {
                         Utils.writeCsvEntriesFile(
                             entriesCSV,
                             context,
@@ -136,7 +178,8 @@ class SettingViewModel @Inject constructor(
                             directory
                         )
                     }
-                    if (entries.isNotEmpty() || accounts.isNotEmpty()) {
+                    if (records.isNotEmpty() || accounts.isNotEmpty()) {
+                        _effect.emit(SettingEffects.MessageExport)
                         /*withContext(Dispatchers.Main) {
                             SnackBarController.sendEvent(
                                 event = SnackBarEvent(
@@ -145,6 +188,7 @@ class SettingViewModel @Inject constructor(
                             )
                         }*/
                     } else {
+                        _effect.emit(SettingEffects.MessageNoRecords)
                         /* withContext(Dispatchers.Main) {
                             SnackBarController.sendEvent(
                                 event = SnackBarEvent(
@@ -155,6 +199,7 @@ class SettingViewModel @Inject constructor(
                     }
 
                 } catch (_: IOException) {
+                    _effect.emit(SettingEffects.ErrorExport)
                     /*withContext(Dispatchers.Main) {
                         SnackBarController.sendEvent(event = SnackBarEvent(errorExport))
                     }*/
@@ -162,6 +207,86 @@ class SettingViewModel @Inject constructor(
             }
 
         }
+    }
+    fun importAccountsData(uri:Uri){
+        val fileName = uri.path.toString()
+        // Lanzamiento de una corutina en un contexto de IO
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (fileName.contains("Accounts")) {
+                    val accountsToRead =
+                        Utils.readCsvAccountsFile(context, uri)
+                    for (account in accountsToRead) {
+                        addAccount(account)
+                    }
+                    _effect.emit(SettingEffects.MessageImport)
+                    // Cambiamos al hilo principal para mostrar el SnackBar
+                   /* withContext(Dispatchers.Main) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                    }*/
+                } else {
+                    _effect.emit(SettingEffects.MessageNoValidAccountFile)
+                   /* withContext(Dispatchers.Main) {
+                        SnackBarController.sendEvent(
+                            event = SnackBarEvent(
+                                messageNoValidAccountsFile
+                            )
+                        )
+                    }*/
+
+                }
+            } catch (_: IOException) {
+                _effect.emit(SettingEffects.ErrorImport)
+
+                /*withContext(Dispatchers.Main) {
+                    SnackBarController.sendEvent(
+                        event = SnackBarEvent(
+                            errorImport
+                        )
+                    )
+                }*/
+            }
+        }
+    }
+
+    fun importRecordsDate(uri:Uri){
+        val fileName = uri.path.toString()
+        // Lanzamiento de una corutina en un contexto de IO
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (fileName.contains("Records")) {
+                    val entriesToRead =
+                        Utils.readCsvEntriesFile(context, uri)
+                    for (entry in entriesToRead) {
+                       addRecord(entry)
+                    }
+                    _effect.emit(SettingEffects.MessageImport)
+                    // Cambiamos al hilo principal para mostrar el SnackBar
+                    /*withContext(Dispatchers.Main) {
+                        SnackBarController.sendEvent(event = SnackBarEvent(messageImport))
+                    }*/
+                } else {
+                    _effect.emit(SettingEffects.MessageNoValidRecordFile)
+                  /*  withContext(Dispatchers.Main) {
+                        SnackBarController.sendEvent(
+                            event = SnackBarEvent(
+                                messageNoValidEntriesFile
+                            )
+                        )
+                    }*/
+                }
+            } catch (_: IOException) {
+                _effect.emit(SettingEffects.ErrorImport)
+               /* withContext(Dispatchers.Main) {
+                    SnackBarController.sendEvent(
+                        event = SnackBarEvent(
+                            errorImport
+                        )
+                    )
+                }*/
+            }
+        }
+
     }
 
     private fun toEntryCSV(entries: List<RecordDTO>,context: Context): MutableList<EntryCSV> {

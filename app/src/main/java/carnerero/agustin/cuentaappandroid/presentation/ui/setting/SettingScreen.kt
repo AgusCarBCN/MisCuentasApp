@@ -19,15 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
@@ -35,6 +34,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Row
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.SwitchComponent
 import carnerero.agustin.cuentaappandroid.presentation.common.model.RowComponentItem
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
+import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.SettingsDialog
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 
@@ -44,11 +46,17 @@ import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 fun SettingScreen(
     settingViewModel: SettingViewModel ,
     mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
-    entriesViewModel: EntriesViewModel,
+
     navController: NavHostController
 ) {
-
+    val state by settingViewModel.uiState.collectAsStateWithLifecycle()
+    val messageExport = stringResource(id = R.string.exportData)
+    val errorExport = stringResource(id = R.string.errorexport)
+    val messageNoRecords = stringResource(id = R.string.noentries)
+    val messageImport = stringResource(id = R.string.loadbackup)
+    val messageNoValidAccountsFile = stringResource(id = R.string.novalidaccountscsv)
+    val errorImport = stringResource(id = R.string.errorimport)
+    val messageNoValidRecordsFile = stringResource(id = R.string.novalidrecordcsv)
 
     val configureAccountsItems = listOf(
         RowComponentItem(Routes.AddAccount, R.string.desadd_an_account),
@@ -59,17 +67,59 @@ fun SettingScreen(
         RowComponentItem(Routes.ChangeCurrency, R.string.deschangecurrency)
     )
     LaunchedEffect(Unit) {
-        entriesViewModel.getAllEntriesDTO()
+        settingViewModel.effect.collect { effect ->
+            when (effect) {
+                SettingEffects.ErrorExport -> SnackBarController.sendEvent(SnackBarEvent(errorExport))
+                SettingEffects.ErrorImport -> SnackBarController.sendEvent(SnackBarEvent(errorImport))
+                SettingEffects.MessageExport -> SnackBarController.sendEvent(SnackBarEvent(messageExport))
+                SettingEffects.MessageImport -> SnackBarController.sendEvent(SnackBarEvent(messageImport))
+                SettingEffects.MessageNoRecords -> SnackBarController.sendEvent(SnackBarEvent(messageNoRecords))
+                SettingEffects.MessageNoValidAccountFile -> SnackBarController.sendEvent(SnackBarEvent(messageNoValidAccountsFile))
+                SettingEffects.MessageNoValidRecordFile -> SnackBarController.sendEvent(SnackBarEvent(messageNoValidRecordsFile))
+            }
+        }
     }
 
     val permissionNotificationGranted by mainViewModel.notificationPermissionGranted.collectAsState()
-    val switchTutorial by settingViewModel.switchTutorial.observeAsState(true)
-    val switchDarkTheme by settingViewModel.switchDarkTheme.observeAsState(false)
-    val switchNotifications by settingViewModel.switchNotifications.observeAsState(false)
+
     stringResource(id = R.string.noaccounts)
-    ExportLauncher(entriesViewModel,accountsViewModel,settingViewModel)
-    ImportEntriesLauncher(accountsViewModel,entriesViewModel,settingViewModel)
-    ImportAccountsLauncher(accountsViewModel,settingViewModel)
+    ExportLauncher(state.showExportDialog,
+        { uri ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnConfirmExport(uri)
+            )
+        },
+        {visible ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnShowLaunchersDialog(SettingsDialog.EXPORT,visible)
+            )
+        })
+    ImportEntriesLauncher(
+        state.showImportRecordsDialog,
+        { uri ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnConfirmRecordsImport(uri)
+            )
+        },
+        {visible ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnShowLaunchersDialog(SettingsDialog.IMPORT_ENTRIES,visible)
+            )
+        }
+    )
+    ImportAccountsLauncher(
+        state.showImportAccountDialog,
+        { uri ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnConfirmAccountImport(uri)
+            )
+        },
+        {visible ->
+            settingViewModel.onEvenUser(
+                SettingsUserEvents.OnShowLaunchersDialog(SettingsDialog.IMPORT_ACCOUNT,visible)
+            )
+        }
+    )
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
 
@@ -94,25 +144,25 @@ fun SettingScreen(
                 fieldModifier,
                 title = stringResource(id = R.string.theme),
                 description = stringResource(id = R.string.destheme),
-                switchDarkTheme,
-                onClickSwitch = { settingViewModel.onSwitchDarkThemeClicked(it) }
+                state.switchDarkTheme,
+                onClickSwitch = { settingViewModel.onEvenUser(SettingsUserEvents.OnSwitchDarkThemeChange(it))}
             )
             SwitchComponent(
                 fieldModifier,
                 title = stringResource(id = R.string.enableonboarding),
                 description = stringResource(id = R.string.desenableonboarding),
-                switchTutorial,
-                onClickSwitch = { settingViewModel.onSwitchTutorialClicked(it) }
+                state.switchTutorial,
+                onClickSwitch = { settingViewModel.onEvenUser(SettingsUserEvents.OnSwitchShowTutorialChange(it))}
             )
             SwitchComponent(
                 fieldModifier,
                 title = stringResource(id = R.string.enablenotifications),
                 description = (if (permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
                 else stringResource(id = R.string.permissiondeny)),
-                isChecked = if (permissionNotificationGranted) switchNotifications
+                isChecked = if (permissionNotificationGranted) state.switchNotifications
                 else false,
                 onClickSwitch = {
-                    settingViewModel.onSwitchNotificationsClicked(it)
+                    settingViewModel.onEvenUser(SettingsUserEvents.OnSwitchShowNotificationsChange(it))
                 }
             )
 
@@ -129,7 +179,8 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desbackup),
                 iconResource = R.drawable.backup,
                 onClick = {
-                    settingViewModel.onChangeShowExportDialog(true)
+                    settingViewModel.onEvenUser(SettingsUserEvents.OnShowLaunchersDialog(
+                        SettingsDialog.EXPORT,true))
                 })
             RowComponent(
                 fieldModifier,
@@ -137,7 +188,8 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desload),
                 iconResource = R.drawable.download,
                 onClick = {
-                    settingViewModel.onChangeShowImportEntriesDialog(true)
+                    settingViewModel.onEvenUser(SettingsUserEvents.OnShowLaunchersDialog(
+                        SettingsDialog.IMPORT_ACCOUNT,true))
                 })
             RowComponent(
                 fieldModifier,
@@ -145,7 +197,8 @@ fun SettingScreen(
                 description = stringResource(id = R.string.desloadaccount),
                 iconResource = R.drawable.download,
                 onClick = {
-                    settingViewModel.onChangeShowImportAccountsDialog(true)
+                    settingViewModel.onEvenUser(SettingsUserEvents.OnShowLaunchersDialog(
+                        SettingsDialog.IMPORT_ENTRIES,true))
                 })
             SpacerApp()
             HeadSetting(

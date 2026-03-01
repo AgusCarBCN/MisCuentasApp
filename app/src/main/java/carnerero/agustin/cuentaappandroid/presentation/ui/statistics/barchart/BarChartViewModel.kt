@@ -48,17 +48,19 @@ class BarChartViewModel @Inject constructor(
     private fun observeInitialData() {
         viewModelScope.launch {
             val currencyCode = getCurrencyCode.invoke()
-            val isDarkTheme=getSwitchDarkTheme.invoke()
-            getAccounts()
-                .collect { accounts ->
-                    _uiState.update { current ->
-                        current.copy(
-                            accounts = accounts,
-                            currencyCode = currencyCode,
-                            isDarkTheme=isDarkTheme
-                        )
-                    }
-                }
+            combine(
+                getAccounts.invoke(),
+                getSwitchDarkTheme.invoke()
+
+            ) { accounts, switchDarkTheme ->
+                _uiState.value.copy(
+                    accounts = accounts,
+                    isDarkTheme = switchDarkTheme,
+                    currencyCode = currencyCode
+                )
+            }.collect { newState ->
+                _uiState.value = newState
+            }
         }
     }
 
