@@ -14,6 +14,8 @@ import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 import androidx.core.net.toUri
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class UserDataStoreRepository @Inject constructor(private val context: Context) :
@@ -107,14 +109,15 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
 
     override suspend fun getPhotoUri(): Uri {
 
-        val uriString=context.dataStore.data.first()[UserPreferencesKeys.PHOTO_URI] ?: ""
+        val uriString = context.dataStore.data.first()[UserPreferencesKeys.PHOTO_URI] ?: ""
 
         return uriString.toUri()
 
     }
+
     override suspend fun setPhotoUri(uri: Uri) {
 
-        if(uri!=Uri.EMPTY) {
+        if (uri != Uri.EMPTY) {
             val pathImageUri = saveUri(uri)
             context.dataStore.edit { preferences ->
                 preferences[UserPreferencesKeys.PHOTO_URI] = pathImageUri.toString()
@@ -122,17 +125,24 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
         }
     }
 
-    override suspend fun getEnableTutorial(): Boolean =
-        context.dataStore.data.first()[UserPreferencesKeys.ENABLE_SWITCH_TUTORIAL] ?: true
+    override  fun getEnableTutorial(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[UserPreferencesKeys.ENABLE_SWITCH_TUTORIAL] ?: true
+            }
 
     override suspend fun setEnableTutorial(newValue: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[UserPreferencesKeys.ENABLE_SWITCH_TUTORIAL] =newValue
+            preferences[UserPreferencesKeys.ENABLE_SWITCH_TUTORIAL] = newValue
         }
     }
 
-    override suspend fun getEnableDarkTheme(): Boolean =
-        context.dataStore.data.first()[UserPreferencesKeys.ENABLE_SWITCH_DARKTHEME] ?: false
+    override fun getEnableDarkTheme(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[UserPreferencesKeys.ENABLE_SWITCH_DARKTHEME] ?: true
+            }
+
 
     override suspend fun setEnableDarkTheme(newValue: Boolean) {
         context.dataStore.edit { preferences ->
@@ -140,8 +150,11 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
         }
     }
 
-    override suspend fun getEnableNotifications(): Boolean =
-        context.dataStore.data.first()[UserPreferencesKeys.ENABLE_SWITCH_NOTIFICATIONS] ?: false
+    override  fun getEnableNotifications(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[UserPreferencesKeys.ENABLE_SWITCH_NOTIFICATIONS] ?: true
+            }
 
     override suspend fun setEnableNotifications(newValue: Boolean) {
         context.dataStore.edit { preferences ->

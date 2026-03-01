@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableTutorialUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetShowTutorialUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetToLoginUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TutorialViewModel @Inject constructor(
     private val getLoginValue: GetToLoginUseCase,
-    private val getShowTutorial: GetShowTutorialUseCase
+    private val getShowTutorial: GetEnableTutorialUseCase
 ) :
     ViewModel() {
 
@@ -31,12 +32,23 @@ class TutorialViewModel @Inject constructor(
 
 
     init {
-        // Launch separate coroutines to manage the two LiveData values independently
-        loadToLoginValue()
-        getShowTutorialValue()
-
+        observeInitialData()
     }
 
+    private fun observeInitialData() {
+        viewModelScope.launch {
+            val login = getLoginValue.invoke()
+            getShowTutorial.invoke()
+                .collect { show ->
+                    _uiState.update { current ->
+                        current.copy(
+                            showTutorial = show,
+                            toLogin = login
+                        )
+                    }
+                }
+        }
+    }
 
     fun onFromOnBoardingClick() {
         val state = _uiState.value
@@ -50,21 +62,5 @@ class TutorialViewModel @Inject constructor(
         }
     }
 
-    // Load `toLogin` value separately
-    private fun loadToLoginValue() {
-        viewModelScope.launch {
-                _uiState.update {
-                    it.copy(toLogin =getLoginValue())
-                }
-        }
-    }
 
-    // Load `showTutorial` value separately
-    private fun getShowTutorialValue() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(showTutorial =getShowTutorial())
-            }
-        }
-    }
   }

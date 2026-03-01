@@ -2,6 +2,7 @@ package carnerero.agustin.cuentaappandroid.data.repository
 
 import android.net.Uri
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
+import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepository {
 
@@ -25,12 +26,12 @@ interface DataStoreRepository {
     suspend fun getPhotoUri(): Uri
     suspend fun setPhotoUri(uri: Uri)
 
-    suspend fun getEnableTutorial(): Boolean?
+    fun getEnableTutorial(): Flow<Boolean>
     suspend fun setEnableTutorial(newValue: Boolean)
 
-    suspend fun getEnableDarkTheme(): Boolean?
+    fun getEnableDarkTheme(): Flow<Boolean>
     suspend fun setEnableDarkTheme(newValue: Boolean)
 
-    suspend fun getEnableNotifications(): Boolean?
+    fun getEnableNotifications(): Flow<Boolean>
     suspend fun setEnableNotifications(newValue: Boolean)
 }
