@@ -140,7 +140,7 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
     override fun getEnableDarkTheme(): Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
-                preferences[UserPreferencesKeys.ENABLE_SWITCH_DARKTHEME] ?: true
+                preferences[UserPreferencesKeys.ENABLE_SWITCH_DARKTHEME] ?: false
             }
 
 
@@ -153,7 +153,7 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
     override  fun getEnableNotifications(): Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
-                preferences[UserPreferencesKeys.ENABLE_SWITCH_NOTIFICATIONS] ?: true
+                preferences[UserPreferencesKeys.ENABLE_SWITCH_NOTIFICATIONS] ?: false
             }
 
     override suspend fun setEnableNotifications(newValue: Boolean) {
