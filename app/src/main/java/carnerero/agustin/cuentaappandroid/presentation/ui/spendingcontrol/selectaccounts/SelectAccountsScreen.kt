@@ -94,12 +94,6 @@ fun SelectAccountsScreen(
                             onSelectDate = { field, date -> SelectAccountsUiEvent.OnSelectDate(field, date) },
                             onShowDatePicker = { field, visible -> SelectAccountsUiEvent.OnShowDatePicker(field, visible) }
                         )
-
-                        /*DialogAccountsSpendingControl(
-                            name = account.name,
-                            dialogState = state.dialogUiState,
-                            onUserEvent = { viewModel.onUserEvent(it) }
-                        )*/
                     }
                 }
             }

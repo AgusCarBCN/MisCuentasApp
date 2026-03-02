@@ -29,6 +29,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.delete.DeleteAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.delete.DeleteAccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
@@ -95,6 +97,7 @@ fun MainNavHost(
     val transferViewModel : TransferViewModel =hiltViewModel()
     val categoriesViewModel: CategoriesSpendingControlViewModel=hiltViewModel()
     val accountsSpendingViewModelViewModel: AccountsSpendingControlViewModel=hiltViewModel()
+    val deleteAccountsViewModel : DeleteAccountsViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -214,7 +217,7 @@ fun MainNavHost(
             AccountList(mainViewModel, accountsViewModel, false, navController)
         }
         composable(Routes.DeleteAccount.route) {
-            AccountList(mainViewModel, accountsViewModel, true, navController)
+            DeleteAccountsScreen(deleteAccountsViewModel)
         }
 
         composable(Routes.DeleteRecords.route) {
