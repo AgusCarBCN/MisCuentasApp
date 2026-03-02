@@ -49,10 +49,11 @@ class BarChartViewModel @Inject constructor(
         viewModelScope.launch {
             val currencyCode = getCurrencyCode.invoke()
             combine(
+                getCurrencyCode.invoke(),
                 getAccounts.invoke(),
                 getSwitchDarkTheme.invoke()
 
-            ) { accounts, switchDarkTheme ->
+            ) {currencyCode, accounts, switchDarkTheme ->
                 _uiState.value.copy(
                     accounts = accounts,
                     isDarkTheme = switchDarkTheme,

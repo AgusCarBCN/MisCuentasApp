@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -44,16 +45,17 @@ class AddRecordsViewModel @Inject constructor(
 
     private fun observeInitialData() {
         viewModelScope.launch {
-            val currencyCode = getCurrencyCode()
-            getAccounts()
-                .collect { accounts ->
-                    _uiState.update { current ->
-                        current.copy(
-                            accounts = accounts,
-                            currencyCode = currencyCode
-                        )
-                    }
-                }
+            combine(
+                getAccounts(),
+                getCurrencyCode()
+            ) { accounts, currencyCode ->
+                _uiState.value.copy(
+                    accounts = accounts,
+                    currencyCode = currencyCode
+                )
+            }.collect { newState ->
+                _uiState.value = newState
+            }
         }
     }
 

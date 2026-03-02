@@ -27,13 +27,12 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.Ba
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.view.CreateAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithEditIcon
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntryList
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
@@ -85,7 +84,7 @@ fun MainNavHost(
     val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchViewModel = hiltViewModel()
     val searchViewModel2: SearchRecordsViewModel = hiltViewModel()
-    val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
+    val createAccountViewModel: AddAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: GetRecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
@@ -113,6 +112,7 @@ fun MainNavHost(
         composable(Routes.Search.route) {
             RecordSearchScreen(
                 searchViewModel2,
+                carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch.GET,
                 navController
             )
 
@@ -203,7 +203,7 @@ fun MainNavHost(
         }
 
         composable(Routes.AddAccount.route) {
-            CreateAccountsScreen(
+            AddAccountsScreen(
                 createAccountViewModel,
                 navToLogin = { navController.navigate(Routes.Home.route) },
                 navToBack = { navController.popBackStack() }

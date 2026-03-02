@@ -35,16 +35,19 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.componen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.RadioButtonRecordsSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
+import java.lang.reflect.Type
 
 
 @Composable
 fun RecordSearchScreen(
     searchRecordsViewModel: SearchRecordsViewModel,
+    type: TypeOfSearch,
     navController: NavController
 ) {
     val isPortrait = orientation == OrientationApp.Portrait
@@ -197,7 +200,7 @@ fun RecordSearchScreen(
                     MaterialTheme.typography.labelLarge,
                     fieldModifier,
                     enableSearchButton
-                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch)
+                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch(type))
 
                 }
             }
@@ -344,7 +347,7 @@ fun RecordSearchScreen(
                     MaterialTheme.typography.labelLarge,
                     fieldModifierLandscape,
                     enableSearchButton
-                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch) }
+                ) { searchRecordsViewModel.onEvent(SearchUiEvent.ConfirmSearch(type)) }
 
             }
 

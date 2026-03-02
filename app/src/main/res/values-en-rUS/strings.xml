@@ -82,6 +82,9 @@
     <string name="selectcurrency">Select a currency for your accounts.</string>
     <string name="selectedcurrency">Selected currency: </string>
     <!--Settings-->
+    <string name="desadd_an_account">
+Add a new account and configure the currency format.
+</string>
     <string name="modifyButton">Modify</string>
     <string name="modifydes">Edit the description</string>
     <string name="labeldatemodify">Date</string>
@@ -131,7 +134,7 @@
     <string name="desdelete_data_account">Delete all the transactions you have made in an account.</string>
     <string name="desdelete_an_account">Delete an account along with all its records.</string>
     <string name="desdelete_all">Delete all accounts and all their records inside.</string>
-    <string name="desadd_an_account">Add a new account to the application.</string>
+
     <string name="changecurrency">Change currency</string>
     <string name="deschangecurrency">Change the currency of your accounts.</string>
     <string name="email">agusticar@gmail.com</string>

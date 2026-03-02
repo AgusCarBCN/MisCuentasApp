@@ -12,7 +12,7 @@ object UserPreferencesKeys {
     val NAME = stringPreferencesKey("name")
     val USERNAME = stringPreferencesKey("username")
     val PASSWORD = stringPreferencesKey("password")
-    val CURRENCY_SYMBOL=stringPreferencesKey("currency_symbol")
+
     val CURRENCY_CODE=stringPreferencesKey("currency_code")
     val PHOTO_URI = stringPreferencesKey("photo_uri")
     val ENABLE_SWITCH_TUTORIAL = booleanPreferencesKey("enable_switch_tutorial")

@@ -10,14 +10,17 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.Reco
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.lang.reflect.Type
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,23 +41,25 @@ class SearchRecordsViewModel @Inject constructor(
 
     private fun observeInitialData() {
         viewModelScope.launch {
-            val currencyCode = getCurrencyCode()
-            getAccounts()
-                .collect { accounts ->
-                    _uiState.update { current ->
-                        current.copy(
-                            accounts = accounts,
-                            currencyCode = currencyCode
-                        )
-                    }
-                }
+            combine(
+                getAccounts(),
+                getCurrencyCode()
+            ) { accounts, currencyCode ->
+                _uiState.value.copy(
+                    accounts = accounts,
+                    currencyCode = currencyCode
+                )
+            }.collect { newState ->
+                _uiState.value = newState
+            }
         }
     }
 
+
     fun onEvent(event: SearchUiEvent) {
         when (event) {
-            SearchUiEvent.ConfirmSearch -> {
-                navigateToRecords()
+           is SearchUiEvent.ConfirmSearch -> {
+                navigateToRecords(event.type)
                 resetFields()
             }
 
@@ -161,7 +166,7 @@ class SearchRecordsViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToRecords() {
+    private fun navigateToRecords(type: TypeOfSearch) {
         val searchFilter = _uiState.value.searchFilter
         Log.d("Filter",searchFilter.toString())
         // Validación de montos
@@ -185,13 +190,19 @@ class SearchRecordsViewModel @Inject constructor(
 
         // Construir filtro y ruta
         val recordsFilter = RecordsFilter.Search(searchFilter)
-        val route = Routes.GetRecords.createRoute(recordsFilter)
-
+        //val route = Routes.GetRecords.createRoute(recordsFilter)
+         val route = when(type){
+             TypeOfSearch.GET ->Routes.GetRecords.createRoute(recordsFilter)
+             TypeOfSearch.DELETE -> TODO()
+             TypeOfSearch.MODIFY -> TODO()
+         }
         // Actualizar estado y emitir efecto de navegación
         viewModelScope.launch {
-            _uiState.update { it.copy(route = route) }
+            _uiState.update { it.copy(route =
+                route) }
             _effect.emit(SearchEffects.NavToRecordsScreen)
 
         }
     }
+
 }

@@ -97,8 +97,12 @@ class UserDataStoreRepository @Inject constructor(private val context: Context) 
 
     }
 
-    override suspend fun getCurrencyCode(): String =
-        context.dataStore.data.first()[UserPreferencesKeys.CURRENCY_CODE] ?: "USD"
+    override fun getCurrencyCode(): Flow<String> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[UserPreferencesKeys.CURRENCY_CODE] ?: "EUR"
+            }
+
 
     override suspend fun setCurrencyCode(currencyCode: String) {
         context.dataStore.edit { preferences ->

@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -33,21 +34,22 @@ class CategoriesSpendingControlViewModel @Inject constructor(
     init {
         observeInitialData()
     }
-
     private fun observeInitialData() {
         viewModelScope.launch {
-            val currencyCode=getCurrencyCode.invoke()
-            getAllCategoriesByType.invoke(CategoryType.EXPENSE)
-                .collect { categories ->
-                    _uiState.update { current ->
-                        current.copy(
-                            categories= categories,
-                            currencyCode=currencyCode,
-                        )
-                    }
-                }
+            combine(
+                getAllCategoriesByType(CategoryType.EXPENSE),
+                getCurrencyCode()
+            ) { categories, currencyCode ->
+                _uiState.value.copy(
+                    categories = categories,
+                    currencyCode = currencyCode
+                )
+            }.collect { newState ->
+                _uiState.value = newState
+            }
         }
     }
+
     fun observeCategorySpending(category: Category) {
         viewModelScope.launch {
             getSumExpensesByCategory

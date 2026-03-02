@@ -64,13 +64,12 @@ class HomeViewModel @Inject constructor(
 
     private fun observeInitialData() {
         viewModelScope.launch {
-            val currencyCode = getCurrencyCode.invoke()
-
             combine(
+                getCurrencyCode.invoke(),
                 getAccounts.invoke(),
                 getTotalIncomes.invoke().map { it ?: BigDecimal.ZERO },
                 getTotalExpenses.invoke().map { it ?: BigDecimal.ZERO }
-            ) { accounts, totalIncomes, totalExpenses ->
+            ) { currencyCode,accounts, totalIncomes, totalExpenses ->
                 _uiState.value.copy(
                     accounts = accounts,
                     totalIncomes = totalIncomes,

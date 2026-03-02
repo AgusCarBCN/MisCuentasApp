@@ -1,6 +1,6 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model
 
-data class CreateAccountUiState(
+data class AddAccountUiState(
     val accountName: String = "",
     val balance: String = "",
     val currencies: List<Currency> = emptyList(),

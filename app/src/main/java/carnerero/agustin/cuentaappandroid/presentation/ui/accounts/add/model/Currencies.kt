@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model
 
 import carnerero.agustin.cuentaappandroid.R
 

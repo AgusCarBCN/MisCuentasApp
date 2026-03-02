@@ -3,7 +3,7 @@ package carnerero.agustin.cuentaappandroid.utils
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currency
 
 object AppDataList {
 

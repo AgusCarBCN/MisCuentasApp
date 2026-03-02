@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model
 
 data class Currency(private val code: String, private val description:String ,private val idResource:Int)
 

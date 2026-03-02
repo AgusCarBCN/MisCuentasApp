@@ -20,7 +20,7 @@ interface DataStoreRepository {
     suspend fun getToLogin(): Boolean?
     suspend fun setToLogin(toLogin: Boolean)
 
-    suspend fun getCurrencyCode(): String?
+    fun getCurrencyCode(): Flow<String>
     suspend fun setCurrencyCode(currencyCode: String)
 
     suspend fun getPhotoUri(): Uri

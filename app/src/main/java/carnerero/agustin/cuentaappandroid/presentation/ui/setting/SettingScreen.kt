@@ -46,7 +46,6 @@ import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 fun SettingScreen(
     settingViewModel: SettingViewModel ,
     mainViewModel: MainViewModel,
-
     navController: NavHostController
 ) {
     val state by settingViewModel.uiState.collectAsStateWithLifecycle()
@@ -64,7 +63,7 @@ fun SettingScreen(
         RowComponentItem(Routes.ModifyAccount, R.string.desedit_account),
         RowComponentItem(Routes.DeleteRecords, R.string.deleteentrydes),
         RowComponentItem(Routes.ModifyRecords, R.string.modifyentrydes),
-        RowComponentItem(Routes.ChangeCurrency, R.string.deschangecurrency)
+
     )
     LaunchedEffect(Unit) {
         settingViewModel.effect.collect { effect ->

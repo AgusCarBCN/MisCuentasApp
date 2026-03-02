@@ -124,7 +124,9 @@
     <string name="desdelete_data_account">Borrar todos los movimientos que has realizado en una cuenta.</string>
     <string name="desdelete_an_account">Borra una cuenta con todos sus registros.</string>
     <string name="desdelete_all">Borra todas las cuentas y todos sus registros dentro.</string>
-    <string name="desadd_an_account">Añade una nueva cuenta a la aplicación</string>
+    <string name="desadd_an_account">
+Añade una nueva cuenta y configura el formato de la divisa.
+</string>
     <string name="changecurrency">Cambia de divisa.</string>
     <string name="visitmygithubdes">Explora mis proyectos de programación y colabora en ellos</string>
     <string name="deschangecurrency">Cambia la divisa de tus cuentas.</string>

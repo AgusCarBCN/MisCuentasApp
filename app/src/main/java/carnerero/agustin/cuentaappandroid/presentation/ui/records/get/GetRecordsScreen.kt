@@ -15,8 +15,6 @@ fun RecordScreen(
     {
     LaunchedEffect(filter) {
         recordsViewModel.getRecords(filter)
-        Log.d("NAVIGATION", "Filter:${filter.routeName}")
-        Log.d("NAVIGATION", "Search:${filter}")
 
     }
     val state by recordsViewModel.uiState.collectAsStateWithLifecycle()

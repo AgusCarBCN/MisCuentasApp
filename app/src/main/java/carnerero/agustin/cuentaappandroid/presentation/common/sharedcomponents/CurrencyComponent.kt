@@ -21,9 +21,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,16 +28,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material3.Text
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currency
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.CreateAccountViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.CreateAccountEvent
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currencies
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currencies
 
 @Composable
 fun CurrencySelector(

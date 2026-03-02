@@ -37,7 +37,7 @@ class GetRecordsViewModel @Inject constructor(
     val effect = _effect.asSharedFlow()
 
     init {
-        loadCurrencyCode()
+        loadInitialData()
     }
     fun onEvent(event: GetRecordsUiEvents) {
         when (event) {
@@ -70,10 +70,18 @@ class GetRecordsViewModel @Inject constructor(
     }
 
     // Cargar currencyCode al iniciar
-    private fun loadCurrencyCode() {
+
+    private fun loadInitialData() {
+
         viewModelScope.launch {
-            val currencyCode = getCurrencyCode.invoke()
-            _uiState.update { it.copy(currencyCode = currencyCode) }
+            getCurrencyCode.invoke().collect { currencyCode ->
+                _uiState.update {
+                    it.copy(
+                       currencyCode = currencyCode
+                    )
+                }
+            }
         }
     }
+
 }

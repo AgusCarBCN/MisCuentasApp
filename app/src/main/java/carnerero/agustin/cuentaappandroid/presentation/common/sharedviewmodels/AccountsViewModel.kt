@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
 
-import carnerero.agustin.cuentaappandroid.presentation.ui.createaccounts.model.Currency
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currency
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
 import carnerero.agustin.cuentaappandroid.domain.apidata.ConvertCurrencyUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.DeleteAccountByIdUseCase
@@ -307,7 +307,7 @@ class AccountsViewModel @Inject constructor(
     // Cargar datos iniciales que no dependen de la UI ni de la composición.
     init {
         viewModelScope.launch {
-            _currencyCodeShowed.value =getCurrencyCode.invoke()
+            //_currencyCodeShowed.value =getCurrencyCode.invoke()
             getCurrencyCode()
             _isCurrencyExpanded.value = false
             onAccountUpdated()
@@ -441,7 +441,7 @@ class AccountsViewModel @Inject constructor(
     }
     fun getCurrencyCode(){
         viewModelScope.launch(Dispatchers.IO) {
-            _currencyCodeSelected.postValue(getCurrencyCode.invoke())
+      //      _currencyCodeSelected.postValue(getCurrencyCode.invoke())
         }
     }
 
