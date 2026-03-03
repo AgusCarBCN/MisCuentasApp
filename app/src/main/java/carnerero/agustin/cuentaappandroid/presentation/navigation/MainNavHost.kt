@@ -29,8 +29,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorV
 import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.delete.DeleteAccountsScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.delete.DeleteAccountsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.DeleteAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.AccountsManagementViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.ModifyAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
@@ -97,7 +98,7 @@ fun MainNavHost(
     val transferViewModel : TransferViewModel =hiltViewModel()
     val categoriesViewModel: CategoriesSpendingControlViewModel=hiltViewModel()
     val accountsSpendingViewModelViewModel: AccountsSpendingControlViewModel=hiltViewModel()
-    val deleteAccountsViewModel : DeleteAccountsViewModel = hiltViewModel()
+    val deleteAccountsViewModel : AccountsManagementViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -214,7 +215,8 @@ fun MainNavHost(
 
         }
         composable(Routes.ModifyAccount.route) {
-            AccountList(mainViewModel, accountsViewModel, false, navController)
+            //AccountList(mainViewModel, accountsViewModel, false, navController)
+            ModifyAccountsScreen(deleteAccountsViewModel)
         }
         composable(Routes.DeleteAccount.route) {
             DeleteAccountsScreen(deleteAccountsViewModel)

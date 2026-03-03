@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.delete
+package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,16 +16,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DeleteAccountsViewModel @Inject constructor(
+class AccountsManagementViewModel @Inject constructor(
     private val getAccounts: GetAllAccountsUseCase,
     private val getCurrencyCode: GetCurrencyCodeUseCase,
     private val deleteAccount: DeleteAccountByIdUseCase
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(DeleteAccountUiState())
-    val uiState: StateFlow<DeleteAccountUiState> = _uiState
+    private val _uiState = MutableStateFlow(AccountUiState())
+    val uiState: StateFlow<AccountUiState> = _uiState
 
-    private val _effect = MutableSharedFlow< DeleteAccountsEffect>()
+    private val _effect = MutableSharedFlow< AccountsEffect>()
     val effect = _effect.asSharedFlow()
 
     init {
@@ -47,11 +47,11 @@ class DeleteAccountsViewModel @Inject constructor(
             }
         }
     }
-    fun onEventUser(event: DeleteAccountUiEvent){
+    fun onEventUser(event: AccountUiEvent){
         when(event){
-            DeleteAccountUiEvent.OnCloseDialog -> closeDialog()
-            is DeleteAccountUiEvent.OnConfirm -> confirm(event.accountId)
-            is DeleteAccountUiEvent.OnOpenDialog -> openDialog(event.accountId)
+            AccountUiEvent.OnCloseDialog -> closeDialog()
+            is AccountUiEvent.OnConfirm -> confirm(event.accountId)
+            is AccountUiEvent.OnOpenDialog -> openDialog(event.accountId)
 
         }
     }
@@ -74,7 +74,7 @@ class DeleteAccountsViewModel @Inject constructor(
     fun confirm(accountId:Int){
         viewModelScope.launch {
             deleteAccount.invoke(accountId)
-            _effect.emit(DeleteAccountsEffect.MessageDeleteAccount)
+            _effect.emit(AccountsEffect.MessageDeleteAccount)
             closeDialog()
         }
     }
