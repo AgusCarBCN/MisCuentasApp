@@ -32,6 +32,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccoun
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.DeleteAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.AccountsManagementViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.ModifyAccountsScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.ModifyAccountDetailScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.ModifyAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
@@ -51,7 +53,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSe
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.AccountList
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
@@ -98,7 +99,8 @@ fun MainNavHost(
     val transferViewModel : TransferViewModel =hiltViewModel()
     val categoriesViewModel: CategoriesSpendingControlViewModel=hiltViewModel()
     val accountsSpendingViewModelViewModel: AccountsSpendingControlViewModel=hiltViewModel()
-    val deleteAccountsViewModel : AccountsManagementViewModel = hiltViewModel()
+    val managementAccountsViewModel : AccountsManagementViewModel = hiltViewModel()
+    val modifyAccountDetailViewModel: ModifyAccountViewModel=hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -216,10 +218,10 @@ fun MainNavHost(
         }
         composable(Routes.ModifyAccount.route) {
             //AccountList(mainViewModel, accountsViewModel, false, navController)
-            ModifyAccountsScreen(deleteAccountsViewModel)
+            ModifyAccountsScreen(managementAccountsViewModel,navController)
         }
         composable(Routes.DeleteAccount.route) {
-            DeleteAccountsScreen(deleteAccountsViewModel)
+            DeleteAccountsScreen(managementAccountsViewModel)
         }
 
         composable(Routes.DeleteRecords.route) {
@@ -252,8 +254,9 @@ fun MainNavHost(
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("id")
-            ModifyAccountsComponent(accountsViewModel, id)
-            { navController.navigateTopLevel(Routes.Home.route) }
+            ModifyAccountDetailScreen(modifyAccountDetailViewModel,id)
+           /* ModifyAccountsComponent(accountsViewModel, id)
+            { navController.navigateTopLevel(Routes.Home.route) }*/
         }
         composable(
             Routes.ModifyRecordItem.route,

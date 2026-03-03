@@ -9,4 +9,6 @@ sealed class AccountUiEvent {
 
     object OnCloseDialog : AccountUiEvent()
 
+    data class OnNavigateToAccountDetail(val accountId:Int): AccountUiEvent()
+
 }

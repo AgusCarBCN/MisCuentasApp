@@ -52,7 +52,17 @@ class AccountsManagementViewModel @Inject constructor(
             AccountUiEvent.OnCloseDialog -> closeDialog()
             is AccountUiEvent.OnConfirm -> confirm(event.accountId)
             is AccountUiEvent.OnOpenDialog -> openDialog(event.accountId)
-
+            is AccountUiEvent.OnNavigateToAccountDetail -> navigateToAccountDetail(event.accountId)
+        }
+    }
+    fun navigateToAccountDetail(accountId: Int){
+        viewModelScope.launch {
+             _uiState.update { current->
+                 current.copy(
+                     accountId=accountId
+                 )
+             }
+            _effect.emit(AccountsEffect.NavToAccountDetail)
         }
     }
 
