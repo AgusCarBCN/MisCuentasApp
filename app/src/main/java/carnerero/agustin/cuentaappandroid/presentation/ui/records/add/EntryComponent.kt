@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.EntryWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordDataCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
@@ -473,7 +473,7 @@ fun EntriesWithCheckBox(
     // - map crea una nueva lista de EntryWithCheckBox, donde cada elemento de listOfEntries se asocia a un checkbox inicializado en false.
     // - toMutableStateList convierte esa lista en un estado observable para que las actualizaciones dinámicas funcionen en la interfaz de manera reactiva.
     val listOfEntriesWithCheckBox = remember(listOfEntries) {
-        listOfEntries.map { EntryWithCheckBox(it, false) }.toMutableStateList()
+        listOfEntries.map { RecordDataCheckBox(it, false) }.toMutableStateList()
     }
     val scope = rememberCoroutineScope()
     val messageDeleteEntries = stringResource(id = R.string.deleteentries)

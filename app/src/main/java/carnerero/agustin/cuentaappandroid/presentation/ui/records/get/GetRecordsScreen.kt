@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.DeleteRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.GetRecords
@@ -17,6 +19,9 @@ fun RecordScreen(
     filter: RecordsFilter,
     mode: RecordsMode)
     {
+    val messageDeleteEntries = stringResource(id = R.string.deleteentries)
+    val messageNotSelectedEntries = stringResource(id = R.string.nodeleteentries)
+
     LaunchedEffect(filter) {
         recordsViewModel.getRecords(filter)
 
@@ -24,7 +29,7 @@ fun RecordScreen(
         Log.d("MODES","$mode")
 
     val state by recordsViewModel.uiState.collectAsStateWithLifecycle()
-    recordsViewModel.getRecords(filter)
+
     when(mode){
         RecordsMode.GET -> {
             GetRecords(state.listOfRecords,
@@ -34,7 +39,10 @@ fun RecordScreen(
 
         }
         RecordsMode.DELETE -> {
-            DeleteRecords(state.listOfRecords,state.currencyCode)
+            DeleteRecords(state.listOfRecords,
+                state.currencyCode,
+                {recordsViewModel.deleteRecord(it)}
+                )
         }
         RecordsMode.MODIFY -> {
             ModifyRecords(state.listOfRecords,state.currencyCode)

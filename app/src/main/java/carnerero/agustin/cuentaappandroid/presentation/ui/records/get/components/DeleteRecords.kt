@@ -28,13 +28,14 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.EntryWithCheckBox
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordDataCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 
 @Composable
 fun DeleteRecords(
    records:List<RecordDTO>,
-   currencyCode:String
+   currencyCode:String,
+   deleteRecord:(RecordDTO)->Unit
 ) {
 
     // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
@@ -45,7 +46,7 @@ fun DeleteRecords(
     // - map crea una nueva lista de EntryWithCheckBox, donde cada elemento de listOfEntries se asocia a un checkbox inicializado en false.
     // - toMutableStateList convierte esa lista en un estado observable para que las actualizaciones dinámicas funcionen en la interfaz de manera reactiva.
     val listOfEntriesWithCheckBox = remember(records) {
-        records.map { EntryWithCheckBox(it, false) }.toMutableStateList()
+        records.map { RecordDataCheckBox(it, false) }.toMutableStateList()
     }
     val scope = rememberCoroutineScope()
     val messageDeleteEntries = stringResource(id = R.string.deleteentries)
@@ -109,36 +110,15 @@ fun DeleteRecords(
                 modifier = Modifier.width(320.dp),
                 true,
                 onClickButton = {
-
                     val entriesToRemove =
                         listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
-                  /*  if (entriesToRemove.isEmpty()) {
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    messageNotSelectedEntries
-                                )
-                            )
-                        }
-                    } else {
-                        entriesToRemove.forEach { entryWithCheckBox ->
-                            val idAccount = entryWithCheckBox.entry.accountId
-                            val amount=entryWithCheckBox.entry.amount
-                            listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
-                            entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
-                            accountViewModel.updateAccountBalance(
-                                idAccount,
-                                amount.negate(),
-                                false
-                            )
+                    if (entriesToRemove.isNotEmpty()) {
+                         entriesToRemove.forEach { entryWithCheckBox ->
+                            deleteRecord(entryWithCheckBox.entry)
+                           // listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
 
                         }
-                        entriesViewModel.getTotal()
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageDeleteEntries))
-                        }
-
-                    }*/
+                    }
                 }
             )
         }

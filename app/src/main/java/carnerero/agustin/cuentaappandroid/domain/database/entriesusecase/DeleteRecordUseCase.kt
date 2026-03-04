@@ -4,7 +4,7 @@ import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.repository.RecordRepository
 import javax.inject.Inject
 
-class DeleteEntryUseCase @Inject constructor(private val repository: RecordRepository){
+class DeleteRecordUseCase @Inject constructor(private val repository: RecordRepository){
 
     suspend operator fun invoke(entryDTO: RecordDTO) {
         repository.deleteEntry(entryDTO)

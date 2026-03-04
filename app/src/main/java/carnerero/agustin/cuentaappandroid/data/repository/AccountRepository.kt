@@ -1,12 +1,21 @@
 package carnerero.agustin.cuentaappandroid.data.repository
 
+import androidx.room.Transaction
 import carnerero.agustin.cuentaappandroid.data.db.dao.AccountDao
+import carnerero.agustin.cuentaappandroid.data.db.dao.EntryDao
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.utils.mapper.EntryMapper
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class AccountRepository @Inject constructor(private val accountDao: AccountDao) {
+class AccountRepository @Inject constructor(
+    private val accountDao: AccountDao,
+    private val entryDao: EntryDao,
+    private val entryMapper: EntryMapper
+    ) {
 
 
     // 1. Insertar una cuenta
@@ -82,5 +91,15 @@ class AccountRepository @Inject constructor(private val accountDao: AccountDao) 
     }
     suspend fun deposit(accountId:Int, amount: BigDecimal){
         accountDao.deposit(accountId,amount)
+    }
+    @Transaction
+    suspend fun deleteRecordAndUpdateBalance(record: RecordDTO) {
+        if (record.categoryType == CategoryType.INCOME) {
+            accountDao.withdraw(record.accountId, record.amount)
+        } else {
+            accountDao.deposit(record.accountId, record.amount.negate())
+        }
+        val entry=entryMapper.entryDtoToEntry(record)
+        entryDao.deleteEntry(entry)
     }
 }

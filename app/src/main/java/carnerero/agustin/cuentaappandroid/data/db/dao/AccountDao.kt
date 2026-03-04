@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
+import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.forEach
@@ -117,6 +119,8 @@ interface AccountDao {
             updateAccountBalance(account.id, newBalance)
         }
     }*/
+
+
     @Transaction
     suspend fun updateAllBalancesByExchangeRate(rate: BigDecimal) {
         // Obtenemos la lista actual de cuentas de manera inmediata

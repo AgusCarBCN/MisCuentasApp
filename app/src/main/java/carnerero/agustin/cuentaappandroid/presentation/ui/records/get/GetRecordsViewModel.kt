@@ -3,6 +3,12 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.records.get
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
+import carnerero.agustin.cuentaappandroid.data.db.entities.Category
+import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.DeleteRecordAndUpdateBalanceUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.DepositUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.WithDrawUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteRecordUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllExpensesUseCase
@@ -27,7 +33,10 @@ class GetRecordsViewModel @Inject constructor(
     private val getAllExpenses: GetAllExpensesUseCase,
     private val getAllRecordsByAccount: GetAllEntriesByAccountUseCase,
     private val getCurrencyCode: GetCurrencyCodeUseCase,
-    private val getFilteredEntries: GetFilteredEntriesUseCase
+    private val getFilteredEntries: GetFilteredEntriesUseCase,
+    private val withDrawUseCase: WithDrawUseCase,
+    private val depositUseCase: DepositUseCase,
+    private val deleteRecord: DeleteRecordAndUpdateBalanceUseCase
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(GetRecordsUiState())
@@ -68,6 +77,13 @@ class GetRecordsViewModel @Inject constructor(
     fun switchEnableByDate(value: Boolean) {
         _uiState.update { it.copy(enableByDate = value) }
     }
+    fun deleteRecord(record: RecordDTO) {
+        viewModelScope.launch {
+                deleteRecord.invoke(record)
+        }
+    }
+
+
 
     // Cargar currencyCode al iniciar
 

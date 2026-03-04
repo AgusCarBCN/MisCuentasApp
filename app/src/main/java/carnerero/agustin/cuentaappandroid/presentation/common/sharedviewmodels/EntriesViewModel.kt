@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Records
-import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteEntryUseCase
+import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.DeleteRecordUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GeAllEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByAccountUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllEntriesByDateUseCase
@@ -45,7 +45,7 @@ class EntriesViewModel @Inject constructor(
     private val getAllEntriesByDate: GetAllEntriesByDateUseCase,
     private val getAllEntriesDTO: GeAllEntriesUseCase,
     private val updateEntriesAmountByExchangeRate: UpdateEntriesAmountByExchangeRateUseCase,
-    private val deleteEntry: DeleteEntryUseCase,
+    private val deleteEntry: DeleteRecordUseCase,
     private val updateEntry: UpdateEntryUseCase
 
     ) : ViewModel() {
