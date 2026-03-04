@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.DeleteRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.GetRecords
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.ModifyRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 
 @Composable
@@ -35,7 +36,9 @@ fun RecordScreen(
         RecordsMode.DELETE -> {
             DeleteRecords(state.listOfRecords,state.currencyCode)
         }
-        RecordsMode.MODIFY -> TODO()
+        RecordsMode.MODIFY -> {
+            ModifyRecords(state.listOfRecords,state.currencyCode)
+        }
     }
 
 }
