@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -45,7 +45,7 @@ import kotlin.collections.component2
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecordsList(
+fun GetRecords(
     listOfRecords:List<RecordDTO>,
     currencyCode:String,
     enableByDate: Boolean,

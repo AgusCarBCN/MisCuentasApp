@@ -48,6 +48,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
@@ -118,7 +119,7 @@ fun MainNavHost(
         composable(Routes.Search.route) {
             RecordSearchScreen(
                 searchViewModel2,
-                carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch.GET,
+                RecordsMode.GET,
                 navController
             )
 
@@ -225,23 +226,33 @@ fun MainNavHost(
         }
 
         composable(Routes.DeleteRecords.route) {
-            SearchScreen(
+            RecordSearchScreen(
+                searchViewModel2,
+                RecordsMode.DELETE,
+                navController
+            )
+           /* SearchScreen(
                 accountsViewModel,
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.DELETE,
                 navController
-            )
+            )*/
 
         }
         composable(Routes.ModifyRecords.route) {
-            SearchScreen(
+            RecordSearchScreen(
+                searchViewModel2,
+                RecordsMode.MODIFY,
+                navController
+            )
+          /*  SearchScreen(
                 accountsViewModel,
                 searchViewModel,
                 entriesViewModel,
                 TypeOfSearch.UPDATE,
                 navController
-            )
+            )*/
 
         }
         composable(Routes.ChangeCurrency.route) {
@@ -305,6 +316,9 @@ fun MainNavHost(
                     type = NavType.StringType
                     nullable = true
                     defaultValue = null
+                },
+                navArgument("mode") {
+                    type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
@@ -322,6 +336,8 @@ fun MainNavHost(
                 val decoded = Uri.decode(filterJson)
                 Gson().fromJson(decoded, SearchFilter::class.java)
             } else null
+            val modeName = backStackEntry.arguments?.getString("mode")
+            val mode = RecordsMode.valueOf(modeName ?: "GET") // fallback a GET
 
             val filter = when (filterName) {
 
@@ -344,7 +360,7 @@ fun MainNavHost(
                     RecordsFilter.All
             }
 
-            RecordScreen(recordsViewModel, filter)
+            RecordScreen(recordsViewModel, filter,mode)
         }
 
     }

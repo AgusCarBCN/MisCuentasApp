@@ -1,4 +1,4 @@
-package carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.model
+package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model
 
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 

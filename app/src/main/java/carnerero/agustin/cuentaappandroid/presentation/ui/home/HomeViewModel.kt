@@ -9,6 +9,8 @@ import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCas
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter.*
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScreen
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -84,13 +86,13 @@ class HomeViewModel @Inject constructor(
     private fun navigateToRecords(filter: RecordsFilter) {
         val route = when (filter) {
             Expenses ->
-                Routes.GetRecords.createRoute(Expenses)
+                Routes.GetRecords.createRoute(Expenses, RecordsMode.GET)
 
             Incomes ->
-                Routes.GetRecords.createRoute(Incomes)
+                Routes.GetRecords.createRoute(Incomes, RecordsMode.GET)
 
             is RecordsByAccount ->
-                Routes.GetRecords.createRoute(filter)
+                Routes.GetRecords.createRoute(filter, RecordsMode.GET)
 
             else-> ""
         }

@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.presentation.navigation
 import android.net.Uri
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import com.google.gson.Gson
 
 sealed class Routes(
@@ -108,28 +109,28 @@ sealed class Routes(
 
 
    data object GetRecords : Routes(
-       "records_screen/{filter}/{accountId}/{filterJson}",
+       "records_screen/{filter}/{accountId}/{filterJson}/{mode}",
        R.string.yourentries
    ) {
 
-       fun createRoute(recordFilter: RecordsFilter): String {
+       fun createRoute(recordFilter: RecordsFilter,recordMode: RecordsMode): String {
            return when (recordFilter) {
 
                is RecordsFilter.RecordsByAccount ->
-                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}/"
+                   "records_screen/${recordFilter.routeName}/${recordFilter.accountId}/null/$recordMode"
 
                RecordsFilter.Expenses ->
-                   "records_screen/${RecordsFilter.Expenses.routeName}/-1/"
+                   "records_screen/${RecordsFilter.Expenses.routeName}/-1/null/$recordMode"
 
                RecordsFilter.Incomes ->
-                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/"
+                   "records_screen/${RecordsFilter.Incomes.routeName}/-1/null/$recordMode"
 
                RecordsFilter.All ->
-                   "records_screen/${RecordsFilter.All.routeName}/-1/"
+                   "records_screen/${RecordsFilter.All.routeName}/-1/null/$recordMode"
 
                is RecordsFilter.Search -> {
                    val json = Uri.encode(Gson().toJson(recordFilter.searchFilter))
-                   "records_screen/${recordFilter.routeName}/-1/$json"
+                   "records_screen/${recordFilter.routeName}/-1/$json/$recordMode"
                }
            }
        }

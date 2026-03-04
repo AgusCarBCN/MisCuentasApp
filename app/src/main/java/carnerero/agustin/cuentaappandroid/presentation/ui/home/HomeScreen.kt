@@ -36,6 +36,7 @@ import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
@@ -61,7 +62,7 @@ fun HomeScreen(
             when (effect) {
                 is HomeEffects.NavToRecordsScreen -> {
                     navController.navigateTopLevel(
-                        Routes.GetRecords.createRoute(state.filter)
+                        Routes.GetRecords.createRoute(state.filter, RecordsMode.GET)
                     )
                     Log.d("NAVIGATION", "Route:${state.route}")
                 }

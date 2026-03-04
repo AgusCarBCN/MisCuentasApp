@@ -7,6 +7,7 @@ import carnerero.agustin.cuentaappandroid.domain.database.accountusecase.GetAllA
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
@@ -59,7 +60,7 @@ class SearchRecordsViewModel @Inject constructor(
     fun onEvent(event: SearchUiEvent) {
         when (event) {
            is SearchUiEvent.ConfirmSearch -> {
-                navigateToRecords(event.type)
+                navigateToRecords(event.recordMode)
                 resetFields()
             }
 
@@ -166,7 +167,7 @@ class SearchRecordsViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToRecords(type: TypeOfSearch) {
+    private fun navigateToRecords(recordMode: RecordsMode) {
         val searchFilter = _uiState.value.searchFilter
         Log.d("Filter",searchFilter.toString())
         // Validación de montos
@@ -190,12 +191,8 @@ class SearchRecordsViewModel @Inject constructor(
 
         // Construir filtro y ruta
         val recordsFilter = RecordsFilter.Search(searchFilter)
-        //val route = Routes.GetRecords.createRoute(recordsFilter)
-         val route = when(type){
-             TypeOfSearch.GET ->Routes.GetRecords.createRoute(recordsFilter)
-             TypeOfSearch.DELETE -> TODO()
-             TypeOfSearch.MODIFY -> TODO()
-         }
+        val route = Routes.GetRecords.createRoute(recordsFilter,recordMode)
+
         // Actualizar estado y emitir efecto de navegación
         viewModelScope.launch {
             _uiState.update { it.copy(route =

@@ -1,11 +1,12 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords
 
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch
 
 sealed class SearchUiEvent {
-    data class ConfirmSearch(val type: TypeOfSearch): SearchUiEvent()
+    data class ConfirmSearch(val recordMode: RecordsMode): SearchUiEvent()
     data class OnAccountSelect(val accountId: Int) : SearchUiEvent()
     data class OnTransactionSelect(val type: TransactionType) : SearchUiEvent()
     data class OnRecordDescriptionChange(val newDescription:String) : SearchUiEvent()
