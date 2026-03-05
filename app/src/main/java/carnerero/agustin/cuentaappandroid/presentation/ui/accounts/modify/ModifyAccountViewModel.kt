@@ -39,7 +39,7 @@ class ModifyAccountViewModel @Inject constructor(
         }
     }
 
-    fun onBalanceChange(balance: BigDecimal){
+    fun onBalanceChange(balance: String){
         _uiState.update { current->
             current.copy(
             balance=balance
@@ -71,7 +71,7 @@ class ModifyAccountViewModel @Inject constructor(
             _uiState.update { current->
                 current.copy(
                     name= account?.name ?: "",
-                    balance = account?.balance?: BigDecimal.ZERO
+                    balance = account?.balance.toString()
                 )
 
             }

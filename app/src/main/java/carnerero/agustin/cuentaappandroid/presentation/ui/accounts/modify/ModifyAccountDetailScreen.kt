@@ -94,7 +94,7 @@ fun ModifyAccountDetailScreen (
             stringResource(id = R.string.enteramount),
             state.balance.toString(),
             onTextChange = {
-                modifyAccountViewModel.onEventUser(ModifyAccountUserEvent.OnChangeBalance(it.toBigDecimal()))
+                modifyAccountViewModel.onEventUser(ModifyAccountUserEvent.OnChangeBalance(it))
 
             },
             BoardType.DECIMAL,
@@ -111,7 +111,7 @@ fun ModifyAccountDetailScreen (
             onClickButton = {
                 modifyAccountViewModel
                     .onEventUser(ModifyAccountUserEvent
-                        .UpdateBalance(accountId?:1,state.balance))
+                        .UpdateBalance(accountId?:1,state.balance.toBigDecimal()))
             }
         )
 

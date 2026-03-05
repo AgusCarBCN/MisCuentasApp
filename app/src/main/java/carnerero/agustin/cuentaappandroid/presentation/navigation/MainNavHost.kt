@@ -49,6 +49,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.RecordDetailViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
@@ -99,6 +100,7 @@ fun MainNavHost(
     val accountsSpendingViewModelViewModel: AccountsSpendingControlViewModel=hiltViewModel()
     val managementAccountsViewModel : AccountsManagementViewModel = hiltViewModel()
     val modifyAccountDetailViewModel: ModifyAccountViewModel=hiltViewModel()
+    val recordDetailViewModel : RecordDetailViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Home.route
@@ -275,10 +277,9 @@ fun MainNavHost(
             // Obtener el parámetro
             ModifyRecordScreen(
                 entry,
-                entriesViewModel,
-                searchViewModel,
-                accountsViewModel
-            ) { navController.navigateTopLevel(Routes.Home.route) }
+                recordDetailViewModel,
+
+            )
         }
         composable(Routes.SpendingControl.route) {
             SpendingControlOptionsScreen(navController)

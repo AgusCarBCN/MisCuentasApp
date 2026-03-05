@@ -102,4 +102,12 @@ class AccountRepository @Inject constructor(
         val entry=entryMapper.entryDtoToEntry(record)
         entryDao.deleteEntry(entry)
     }
+    @Transaction
+    suspend fun updateBalanceEditRecord(accountId: Int, diffAmount: BigDecimal) {
+        val account = getAccountById(accountId) ?: throw Exception("Cuenta no encontrada")
+
+        val newBalance = account.balance.add(diffAmount)
+
+        updateAccountBalance(accountId, newBalance)
+    }
 }

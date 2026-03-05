@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 data class ModifyAccountDetailUiState(
     val name:String="",
-    val balance: BigDecimal= BigDecimal.ZERO,
+    val balance: String="",
 
 ){
     val enableChangeButton=name.isNotBlank()

@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.modify
 
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -15,60 +14,61 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
+
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
+import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import com.google.gson.Gson
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun ModifyRecordScreen(entryDTO: RecordDTO,
-                       entriesViewModel: EntriesViewModel,
-                       searchViewModel: SearchViewModel,
-                       accountsViewModel: AccountsViewModel,
-                       navToHome:()->Unit,
-                )
-{
+fun ModifyRecordScreen(
+    recordDTO: RecordDTO,
+    recordDetailViewModel: RecordDetailViewModel
+) {
+    val messageModify = stringResource(id = R.string.modifyentrymsg)
+    val state by recordDetailViewModel.uiState.collectAsStateWithLifecycle()
+
     // Sincroniza los datos iniciales del ViewModel
-    LaunchedEffect(entryDTO) {
-        entriesViewModel.setInitialData(entryDTO)
+    LaunchedEffect(recordDTO) {
+        recordDetailViewModel.getInitValues(recordDTO)
     }
-    val description=entryDTO.description
-    val amount= entryDTO.amount.abs().toString()
-    val descriptionEntry by entriesViewModel.entryDescriptionModify.observeAsState(description)
-    val amountEntry by entriesViewModel.entryAmountModify.observeAsState(amount)
-    val dateSelected by searchViewModel.selectedFromDate.observeAsState(entryDTO.date)
-    val entryJson = Uri.encode(Gson().toJson(entryDTO))
-    val messageModify= stringResource(id = R.string.modifyentrymsg)
-    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        recordDetailViewModel.effect.collect { effect ->
+            when (effect) {
+                RecordDetailEffects.MessageUpdateRecord -> SnackBarController.sendEvent(
+                    SnackBarEvent(messageModify)
+                )
+            }
+        }
+    }
+
 
     val initColor =
-        if (entryDTO.categoryType== CategoryType.INCOME) colors.iconIncomeInit
+        if (recordDTO.categoryType == CategoryType.INCOME) colors.iconIncomeInit
         else colors.iconExpenseInit
-    val targetColor = if (entryDTO.categoryType== CategoryType.INCOME) colors.iconIncomeTarget
+    val targetColor = if (recordDTO.categoryType == CategoryType.INCOME) colors.iconIncomeTarget
     else colors.iconExpenseTarget
     val isLandscape =
         orientation == OrientationApp.Landscape
@@ -94,7 +94,7 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconAnimated(entryDTO.iconResource, 120, initColor, targetColor)
+                    IconAnimated(recordDTO.iconResource, 120, initColor, targetColor)
                     HeadSetting(
                         title = stringResource(R.string.modifydes),
                         MaterialTheme.typography.headlineMedium
@@ -102,8 +102,11 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.desamount),
-                        descriptionEntry,
-                        onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry) },
+                        state.description,
+                        onTextChange = {
+                           recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnDescriptionChange(it)
+                            )
+                        },
 
                         BoardType.TEXT,
                         false
@@ -121,11 +124,18 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                         title = stringResource(R.string.modifydate),
                         MaterialTheme.typography.headlineMedium
                     )
-                    DatePickerSearch(
+                    DatePickerSearchRecords(
                         modifier = fieldModifier,
-                        R.string.modifydate,
-                        searchViewModel,
-                        true
+                        R.string.fromdate,
+                        state.showDatePicker,
+                        state.date,
+                        {
+                            recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnDateChange(it))
+                        },
+                        {
+                            recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnShowDatePicker(it))
+                        },
+                        dateField = DateField.FROM
                     )
                     HeadSetting(
                         title = stringResource(R.string.modifyamount),
@@ -134,14 +144,10 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.modifyamount),
-                        amountEntry,
+                        state.amount,
                         onTextChange = {
-                            entriesViewModel.onTextFieldsChangedModify(
-                                descriptionEntry,
-                                it
-                            )
+                            recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnAmountChange(it))
                         },
-
                         BoardType.DECIMAL,
                         false
                     )
@@ -156,38 +162,39 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                             modifier = fieldModifier.weight(1f),
                             true,
                             onClickButton = {
-                                val amountBefore = entryDTO.amount
+                                recordDetailViewModel.onUserEvent(RecordDetailUiEvent.Modify(recordDTO))
+                                /*val amountBefore = recordDTO.amount
                                 val updateBalanceIncome = amountEntry.toBigDecimal() - amountBefore
                                 val updateBalanceExpense =
                                     amountEntry.toBigDecimal().negate().add(amountBefore)
 
                                 val entryDTOUpdated = RecordDTO(
 
-                                    entryDTO.id,
+                                    recordDTO.id,
                                     descriptionEntry,
-                                    if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                                    if (recordDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
                                     else amountEntry.toBigDecimal().negate(),
                                     dateSelected,
-                                    entryDTO.iconResource,
-                                    entryDTO.nameResource,
-                                    entryDTO.accountId,
-                                    entryDTO.name,
-                                    entryDTO.categoryId,
-                                    entryDTO.categoryType
+                                    recordDTO.iconResource,
+                                    recordDTO.nameResource,
+                                    recordDTO.accountId,
+                                    recordDTO.name,
+                                    recordDTO.categoryId,
+                                    recordDTO.categoryType
                                 )
                                 entriesViewModel.updateEntry(
-                                    entryDTO.id,
+                                    recordDTO.id,
                                     descriptionEntry,
-                                    if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
+                                    if (recordDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
                                     else amountEntry.toBigDecimal().negate(),
                                     dateSelected
                                 )
-                                entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
+                                entriesViewModel.updateEntries(recordDTO.id, entryDTOUpdated)
                                 //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
                                 //Actualiza balance de cuenta
                                 accountsViewModel.updateAccountBalance(
-                                    entryDTO.accountId,
-                                    if (entryDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
+                                    recordDTO.accountId,
+                                    if (recordDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
                                     else updateBalanceExpense,
                                     false
                                 )
@@ -196,18 +203,12 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                                 entriesViewModel.getTotal()
                                 scope.launch(Dispatchers.Main) {
                                     SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
-                                }
+                                }*/
                             }
+
+
                         )
-                        ModelButton(
-                            text = stringResource(id = R.string.backButton),
-                            MaterialTheme.typography.labelSmall,
-                            modifier = fieldModifier.weight(1f),
-                            true,
-                            onClickButton = {
-                                navToHome()
-                            }
-                        )
+
 
                     }
                 }
@@ -224,7 +225,7 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                IconAnimated(entryDTO.iconResource, 120, initColor, targetColor)
+                IconAnimated(recordDTO.iconResource, 120, initColor, targetColor)
                 HeadSetting(
                     title = stringResource(R.string.modifydes),
                     MaterialTheme.typography.headlineMedium
@@ -232,9 +233,8 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.desamount),
-                    descriptionEntry,
-                    onTextChange = { entriesViewModel.onTextFieldsChangedModify(it, amountEntry) },
-
+                    state.description,
+                    onTextChange = { recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnDescriptionChange(it))},
                     BoardType.TEXT,
                     false
                 )
@@ -242,11 +242,18 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                     title = stringResource(R.string.modifydate),
                     MaterialTheme.typography.headlineMedium
                 )
-                DatePickerSearch(
+                DatePickerSearchRecords(
                     modifier = fieldModifier,
-                    R.string.modifydate,
-                    searchViewModel,
-                    true
+                    R.string.fromdate,
+                    state.showDatePicker,
+                    state.date,
+                    {
+                        recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnDateChange(it))
+                    },
+                    {
+                        recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnShowDatePicker(it))
+                    },
+                    dateField = DateField.FROM
                 )
                 HeadSetting(
                     title = stringResource(R.string.modifyamount),
@@ -255,12 +262,9 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.modifyamount),
-                    amountEntry,
+                    state.amount.toString(),
                     onTextChange = {
-                        entriesViewModel.onTextFieldsChangedModify(
-                            descriptionEntry,
-                            it
-                        )
+                        recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnAmountChange(it))
                     },
 
                     BoardType.DECIMAL,
@@ -272,58 +276,10 @@ fun ModifyRecordScreen(entryDTO: RecordDTO,
                     modifier = fieldModifier,
                     true,
                     onClickButton = {
-                        val amountBefore = entryDTO.amount
-                        val updateBalanceIncome = amountEntry.toBigDecimal() - amountBefore
-                        val updateBalanceExpense =
-                            amountEntry.toBigDecimal().negate().add(amountBefore)
-
-                        val entryDTOUpdated = RecordDTO(
-
-                            entryDTO.id,
-                            descriptionEntry,
-                            if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
-                            else amountEntry.toBigDecimal().negate(),
-                            dateSelected,
-                            entryDTO.iconResource,
-                            entryDTO.nameResource,
-                            entryDTO.accountId,
-                            entryDTO.name,
-                            entryDTO.categoryId,
-                            entryDTO.categoryType
-                        )
-                        entriesViewModel.updateEntry(
-                            entryDTO.id,
-                            descriptionEntry,
-                            if (entryDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
-                            else amountEntry.toBigDecimal().negate(),
-                            dateSelected
-                        )
-                        entriesViewModel.updateEntries(entryDTO.id, entryDTOUpdated)
-                        //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
-                        //Actualiza balance de cuenta
-                        accountsViewModel.updateAccountBalance(
-                            entryDTO.accountId,
-                            if (entryDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
-                            else updateBalanceExpense,
-                            false
-                        )
-
-
-                        entriesViewModel.getTotal()
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
-                        }
+                        recordDetailViewModel.onUserEvent(RecordDetailUiEvent.Modify(recordDTO))
                     }
                 )
-                ModelButton(
-                    text = stringResource(id = R.string.backButton),
-                    MaterialTheme.typography.labelLarge,
-                    modifier = fieldModifier,
-                    true,
-                    onClickButton = {
-                        navToHome()
-                    }
-                )
+
 
             }
         }
