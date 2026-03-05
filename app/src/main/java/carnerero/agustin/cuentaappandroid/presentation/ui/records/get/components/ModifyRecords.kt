@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 
@@ -17,7 +18,8 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 @Composable
 fun ModifyRecords(
     records:List<RecordDTO>,
-    currecyCode:String
+    currencyCode:String,
+    onEditRecord: (RecordDTO) -> Unit
 
 ) {
 
@@ -32,11 +34,11 @@ fun ModifyRecords(
     ) {
         items(records) { record ->
             RecordWithIcon(record,
-                currecyCode)
+                currencyCode){
+                onEditRecord(record)
+            }
         }
     }
-
-
 }
 
 

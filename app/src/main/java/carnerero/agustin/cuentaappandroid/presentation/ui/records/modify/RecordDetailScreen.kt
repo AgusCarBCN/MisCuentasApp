@@ -45,11 +45,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun ModifyEntry(entryDTO: RecordDTO,
-                entriesViewModel: EntriesViewModel,
-                searchViewModel: SearchViewModel,
-                accountsViewModel: AccountsViewModel,
-                navToHome:()->Unit,
+fun ModifyRecordScreen(entryDTO: RecordDTO,
+                       entriesViewModel: EntriesViewModel,
+                       searchViewModel: SearchViewModel,
+                       accountsViewModel: AccountsViewModel,
+                       navToHome:()->Unit,
                 )
 {
     // Sincroniza los datos iniciales del ViewModel

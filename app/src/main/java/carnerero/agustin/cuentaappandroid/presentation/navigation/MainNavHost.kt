@@ -35,26 +35,23 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.Mo
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.ModifyAccountDetailScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.ModifyAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyEntry
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyRecordScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.GetRecordsViewModel
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.PieChartScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.AddRecordsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
-import carnerero.agustin.cuentaappandroid.presentation.ui.search.SearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.RecordSearchScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchRecordsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.ModifyAccountsComponent
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.SelectCategoriesScreen
@@ -91,7 +88,7 @@ fun MainNavHost(
     val searchViewModel2: SearchRecordsViewModel = hiltViewModel()
     val createAccountViewModel: AddAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
-    val recordsViewModel: GetRecordsViewModel = hiltViewModel()
+    val recordsViewModel: RecordsViewModel = hiltViewModel()
     val selectCategoriesViewModel: SelectCategoriesViewModel =hiltViewModel()
     val selectCategoriesSpendingControlViewModel : SelectCategoriesSpendingControlViewModel=hiltViewModel()
     val selectAccountsSpendingControlViewModel: SelectAccountsSpendingControlViewModel =hiltViewModel()
@@ -276,7 +273,7 @@ fun MainNavHost(
             val recordJson = backStackEntry.arguments?.getString("recordJson")
             val entry = Gson().fromJson(recordJson, RecordDTO::class.java) // Deserialización
             // Obtener el parámetro
-            ModifyEntry(
+            ModifyRecordScreen(
                 entry,
                 entriesViewModel,
                 searchViewModel,
@@ -360,7 +357,7 @@ fun MainNavHost(
                     RecordsFilter.All
             }
 
-            RecordScreen(recordsViewModel, filter,mode)
+            RecordScreen(navController,recordsViewModel, filter,mode)
         }
 
     }

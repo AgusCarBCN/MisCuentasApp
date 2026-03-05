@@ -39,7 +39,7 @@ import java.math.BigDecimal
 fun RecordWithIcon(
     entry: RecordDTO,
     currencyCode:String,
-   // navController: NavController
+    onEditClick: () -> Unit
 
 
 ) {
@@ -119,13 +119,10 @@ fun RecordWithIcon(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        //entriesViewModel.onEntryDTOSelected(entry)
-                        //navController.navigate(Routes.ModifyRecordItem.createRoute(entryJson))
+                        onEditClick()
 
                     }
             )
-
         }
     }
-
 }
