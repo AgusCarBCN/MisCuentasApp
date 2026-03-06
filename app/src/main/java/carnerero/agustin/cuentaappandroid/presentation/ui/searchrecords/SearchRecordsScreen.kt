@@ -36,7 +36,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.componen
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.RadioButtonRecordsSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent

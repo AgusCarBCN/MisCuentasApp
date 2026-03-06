@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
@@ -299,6 +298,7 @@ fun EntryCardWithCheckBox(
         }
     }
 }
+/*
 @Composable
 fun EntryCardWithIcon(
     entry: RecordDTO,
@@ -404,4 +404,4 @@ fun EntryCardWithIcon(
         }
     }
 
-}
+}*/

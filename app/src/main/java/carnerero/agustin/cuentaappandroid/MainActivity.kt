@@ -25,7 +25,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
@@ -47,7 +46,6 @@ class MainActivity : ComponentActivity() {
 
     private val settingViewModel: SettingViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
-    private val accountsViewModel: AccountsViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
     private val tutorialViewModel: TutorialViewModel by viewModels ()
 
@@ -98,7 +96,6 @@ class MainActivity : ComponentActivity() {
                     AppNavHost(
                         navigationController,
                         mainViewModel,
-                        accountsViewModel,
                         settingViewModel,
                         tutorialViewModel,
                         profileViewModel,

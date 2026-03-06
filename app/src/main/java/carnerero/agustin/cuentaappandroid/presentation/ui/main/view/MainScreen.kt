@@ -26,7 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
@@ -50,7 +49,6 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
     profileViewModel: ProfileViewModel,
     settingViewModel: SettingViewModel
 
@@ -130,7 +128,6 @@ fun MainScreen(
                         innerNavController,
                         settingViewModel,
                         mainViewModel,
-                        accountsViewModel,
                         profileViewModel
                     )
                 }

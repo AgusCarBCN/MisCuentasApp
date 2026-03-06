@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components
 
-import android.R.attr.contentDescription
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,16 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.wear.compose.material3.MaterialTheme
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.gson.Gson

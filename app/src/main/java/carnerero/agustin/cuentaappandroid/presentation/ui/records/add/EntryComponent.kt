@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -50,10 +48,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.Reco
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.EntryCardWithIcon
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
@@ -63,127 +59,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun EntryList(
-    entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel
-) {
-    val enableByDate by entriesViewModel.enableOptionList.observeAsState(true)
-    val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")
-    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
-
-    // Agrupar las entradas por fecha
-    val groupedEntriesByDate = listOfEntries.groupBy { it.date }
-    // Agrupar las entradas por categoría
-    val entriesByCategory = Utils.getMapOfEntriesByCategory(listOfEntries)
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val maxWidthDp = maxWidth*0.85f
-        val maxHeightDp = maxHeight
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.backgroundPrimary),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Row de botones By Date / By Category
-        if (listOfEntries.isNotEmpty()) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = { entriesViewModel.onEnableByDate(true) }) {
-                    Text(
-                        text = stringResource(id = R.string.bydate),
-                        color = if (enableByDate) colors.textHeadColor
-                        else colors.textColor,
-                        fontSize = 18.sp
-                    )
-                }
-                TextButton(onClick = { entriesViewModel.onEnableByDate(false) }) {
-                    Text(
-                        text = stringResource(id = R.string.bycategory),
-                        color = if (!enableByDate) colors.textHeadColor
-                        else colors.textColor,
-                        fontSize = 18.sp
-                    )
-                }
-            }
-        } else {
-            // Mensaje cuando no hay registros
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(id = R.string.recordsnotfound),
-                    color = colors.textColor,
-                    textAlign = TextAlign.Center,
-                    fontSize = with(LocalDensity.current) { dimensionResource(id = R.dimen.text_body_extra_large).toSp() }
-                )
-            }
-        }
-
-        // LazyColumn con los registros
-        LazyColumn(
-            modifier = Modifier
-                .width(maxWidthDp)
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (enableByDate) {
-                groupedEntriesByDate.forEach { (date, entries) ->
-                    // Sticky Header con la fecha
-                    stickyHeader {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp)
-                                .background(colors.backgroundPrimary),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            Text(
-                                text = Utils.toDateFormatDayMonth(date),
-                                color = colors.textColor,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(start = 16.dp)
-                            )
-                        }
-                    }
-                    items(entries) { entry ->
-                        ItemEntry(
-                            entry = entry,
-                            currencyCode = currencyCode
-                        )
-                    }
-                }
-            } else {
-                entriesByCategory.toList()
-                    .sortedByDescending { (_, info) -> info.second?.abs() }
-                    .forEach { (categoryName, info) ->
-                        val (icon, total) = info
-                        item {
-                            ItemCategory(
-                                categoryName = categoryName,
-                                categoryIcon = icon,
-                                amount = total,
-                                currencyCode = currencyCode
-                            )
-                        }
-                    }
-            }
-        }
-    }
-}
-}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EntryListV2(
@@ -457,151 +332,3 @@ fun ItemCategory(
     }
 
 }
-
-@Composable
-fun EntriesWithCheckBox(
-    entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel
-) {
-    val currencyCode by accountViewModel.currencyCodeSelected.observeAsState("EUR")
-    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
-    // Sincronizar listOfEntriesWithCheckBox con listOfEntries:
-    // remember(listOfEntries):
-    // - Al observar listOfEntries, remember reconstruye listOfEntriesWithCheckBox cada vez que listOfEntries cambia.
-    // - Esto asegura que los datos estén siempre sincronizados con la fuente original (listOfEntries).
-    // map y toMutableStateList:
-    // - map crea una nueva lista de EntryWithCheckBox, donde cada elemento de listOfEntries se asocia a un checkbox inicializado en false.
-    // - toMutableStateList convierte esa lista en un estado observable para que las actualizaciones dinámicas funcionen en la interfaz de manera reactiva.
-    val listOfEntriesWithCheckBox = remember(listOfEntries) {
-        listOfEntries.map { RecordDataCheckBox(it, false) }.toMutableStateList()
-    }
-    val scope = rememberCoroutineScope()
-    val messageDeleteEntries = stringResource(id = R.string.deleteentries)
-    val messageNotSelectedEntries = stringResource(id = R.string.nodeleteentries)
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (listOfEntries.isNotEmpty()) {
-            HeadSetting(
-                title = stringResource(id = R.string.selectentriesToDelete),
-                MaterialTheme.typography.titleLarge
-            )
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(id = R.string.recordsnotfound),
-                    color = colors.textColor,
-                    textAlign = TextAlign.Center,
-                    fontSize = with(LocalDensity.current) {
-                        dimensionResource(id = R.dimen.text_body_extra_large).toSp()
-                    }
-                )
-            }
-
-        }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(colors.backgroundPrimary)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
-            contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
-        ) {
-            items(listOfEntriesWithCheckBox) { entry ->
-                EntryCardWithCheckBox(
-                    entry.entry,
-                    currencyCode,
-                    entry.checkbox,
-                    onSelectionChange = {
-                        val index = listOfEntriesWithCheckBox.indexOf(entry)
-                        if (index != -1) {
-                            listOfEntriesWithCheckBox[index] =
-                                entry.copy(checkbox = !entry.checkbox)
-                        }
-
-                    }
-                )
-            }
-        }
-        if (listOfEntries.isNotEmpty()) {
-            ModelButton(
-                text = stringResource(
-                id = R.string.deleteButton
-            ),
-                MaterialTheme.typography.labelLarge,
-                modifier = Modifier.width(320.dp),
-                true,
-                onClickButton = {
-
-                    val entriesToRemove =
-                        listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
-                    if (entriesToRemove.isEmpty()) {
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    messageNotSelectedEntries
-                                )
-                            )
-                        }
-                    } else {
-                        entriesToRemove.forEach { entryWithCheckBox ->
-                            val idAccount = entryWithCheckBox.entry.accountId
-                            val amount=entryWithCheckBox.entry.amount
-                            listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
-                            entriesViewModel.deleteEntry(entryWithCheckBox.entry) // Borra de la base de datos
-                            accountViewModel.updateAccountBalance(
-                                                        idAccount,
-                                                        amount.negate(),
-                                                        false
-                                                    )
-
-                        }
-                        entriesViewModel.getTotal()
-                        scope.launch(Dispatchers.Main) {
-                            SnackBarController.sendEvent(event = SnackBarEvent(messageDeleteEntries))
-                        }
-
-                    }
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun EntriesWithEditIcon(
-    entriesViewModel: EntriesViewModel,
-    accountViewModel: AccountsViewModel,
-    navController: NavController
-
-) {
-
-    val listOfEntries by entriesViewModel.listOfEntriesDTO.collectAsState()
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(colors.backgroundPrimary)
-            .padding(bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
-        contentPadding = PaddingValues(16.dp) // Padding alrededor del contenido
-    ) {
-        items(listOfEntries) { entry ->
-            EntryCardWithIcon(
-                entry,
-                accountViewModel,
-                entriesViewModel,
-                navController,
-
-            )
-        }
-    }
-
-
-}
-
-

@@ -33,8 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.AccountSelector
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.DatePickerSearch
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.piechart.model.Legend
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors

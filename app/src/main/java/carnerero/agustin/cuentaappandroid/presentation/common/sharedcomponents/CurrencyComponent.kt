@@ -31,11 +31,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.wear.compose.material3.Text
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currency
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.model.Currencies
-
+/*
 @Composable
 fun CurrencySelector(
     accountsViewModel: AccountsViewModel,
@@ -74,7 +73,7 @@ fun CurrencySelector(
     if (isExpanded) {
         CurrencyDialog(accountsViewModel)
     }
-}
+}*/
 @Composable
 fun CurrencySelectorV2(
     onDropdownExpandedChange:(Boolean)->Unit,
@@ -178,7 +177,7 @@ private fun CurrencyListItem2(currency: Currency,
     }
 }
 
-
+/*
 @Composable
 private fun CurrencyDialog(accountsViewModel: AccountsViewModel) {
 
@@ -210,7 +209,7 @@ private fun CurrencyDialog(accountsViewModel: AccountsViewModel) {
         }
     }
 }
-
+*/
 @Composable
 private fun CurrencyListItem(currency: Currency,
                              onCurrencySelected: () -> Unit) {

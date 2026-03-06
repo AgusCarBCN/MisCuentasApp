@@ -14,9 +14,6 @@ import androidx.navigation.navArgument
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutApp
 import carnerero.agustin.cuentaappandroid.presentation.ui.about.AboutScreen
@@ -25,7 +22,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.Ba
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.BarChartViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.CalculatorViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.changecurrency.ChangeCurrencyScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountsScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.management.DeleteAccountsScreen
@@ -35,8 +31,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.Modify
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify.ModifyAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.categories.SelectCategoriesScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.modify.ModifyRecordScreen
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithCheckBox
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.add.EntriesWithEditIcon
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeScreen
 import carnerero.agustin.cuentaappandroid.presentation.ui.home.HomeViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
@@ -76,15 +70,12 @@ fun MainNavHost(
     navController: NavHostController,
     settingViewModel: SettingViewModel,
     mainViewModel: MainViewModel,
-    accountsViewModel: AccountsViewModel,
     profileViewModel: ProfileViewModel
 ) {
 
     val barChartViewModel: BarChartViewModel = hiltViewModel()
-    val entriesViewModel: EntriesViewModel = hiltViewModel()
     val calculatorViewModel: CalculatorViewModel = hiltViewModel()
-    val searchViewModel: SearchViewModel = hiltViewModel()
-    val searchViewModel2: SearchRecordsViewModel = hiltViewModel()
+    val searchViewModel: SearchRecordsViewModel = hiltViewModel()
     val createAccountViewModel: AddAccountViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val recordsViewModel: RecordsViewModel = hiltViewModel()
@@ -115,7 +106,7 @@ fun MainNavHost(
         }
         composable(Routes.Search.route) {
             RecordSearchScreen(
-                searchViewModel2,
+                searchViewModel,
                 RecordsMode.GET,
                 navController
             )
@@ -138,12 +129,12 @@ fun MainNavHost(
                 accountsViewModel
             )*/
         }
-        composable(Routes.RecordsToDelete.route) {
+        /*composable(Routes.RecordsToDelete.route) {
             EntriesWithCheckBox(entriesViewModel, accountsViewModel)
         }
         composable(Routes.RecordsToModify.route) {
             EntriesWithEditIcon(entriesViewModel, accountsViewModel, navController)
-        }
+        }*/
 
         // Drawer menu
         composable(Routes.NewIncome.route) {
@@ -191,7 +182,7 @@ fun MainNavHost(
             {navController.popBackStack()  }
         }
         composable(Routes.Calculator.route) {
-            CalculatorScreen(calculatorViewModel, accountsViewModel)
+            CalculatorScreen(calculatorViewModel)
         }
         composable(Routes.About.route) {
             AboutScreen({ navController.navigate(Routes.AboutDescription.route) })
@@ -224,7 +215,7 @@ fun MainNavHost(
 
         composable(Routes.DeleteRecords.route) {
             RecordSearchScreen(
-                searchViewModel2,
+                searchViewModel,
                 RecordsMode.DELETE,
                 navController
             )
@@ -239,7 +230,7 @@ fun MainNavHost(
         }
         composable(Routes.ModifyRecords.route) {
             RecordSearchScreen(
-                searchViewModel2,
+                searchViewModel,
                 RecordsMode.MODIFY,
                 navController
             )
@@ -252,10 +243,10 @@ fun MainNavHost(
             )*/
 
         }
-        composable(Routes.ChangeCurrency.route) {
+        /*composable(Routes.ChangeCurrency.route) {
             ChangeCurrencyScreen(accountsViewModel, entriesViewModel)
             { navController.navigate(Routes.Home.route) }
-        }
+        }*/
 
         composable(
             Routes.ModifyAccountItem.route,
