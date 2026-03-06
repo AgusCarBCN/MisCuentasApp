@@ -93,7 +93,7 @@ fun AddRecordsScreen(
         orientation == OrientationApp.Landscape
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
-        val maxWidthDp = maxWidth
+        maxWidth
         val fieldModifier = Modifier
             .fillMaxWidth(0.85f)
             .heightIn(min = 48.dp)
@@ -123,10 +123,7 @@ fun AddRecordsScreen(
                         initColor = initColor,
                         targetColor = targetColor
                     )
-                    /*HeadSetting(
-                        title = stringResource(id = titleResource),
-                        MaterialTheme.typography.headlineMedium
-                    )*/
+
                     TextFieldComponent(
                         modifier = fieldModifier,
                         stringResource(id = R.string.desamount),
@@ -286,147 +283,3 @@ fun AddRecordsScreen(
 
 }
 
-/*fun NewEntry(
-
-    entryViewModel: EntriesViewModel,
-    categoriesViewModel: CategoriesViewModel,
-    accountViewModel: AccountsViewModel,
-    navToBack:()->Unit
-) {
-    val scope = rememberCoroutineScope()
-    val descriptionEntry by entryViewModel.entryName.observeAsState("")
-    val amountEntry by entryViewModel.entryAmount.observeAsState("")
-    val categorySelected by categoriesViewModel.categorySelected.observeAsState(null)
-    val enableConfirmButton by entryViewModel.enableConfirmButton.observeAsState(false)
-    val accountSelected by accountViewModel.accountSelected.observeAsState()
-
-    val idAccount = accountSelected?.id ?: 1
-    val categoryId=categorySelected?.id?:1
-    val type = categorySelected?.type?: CategoryType.INCOME
-    val iconResource = categorySelected?.iconResource ?: 0
-    val titleResource = categorySelected?.nameResource ?: 0
-    val amount = amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO
-    val negativeAmount = amountEntry.toBigDecimalOrNull()?.negate() ?: BigDecimal.ZERO
-    //Snackbar messages
-    val newIncomeMessage = message(resource = R.string.newincomecreated)
-    val newExpenseMessage = message(resource = R.string.newexpensecreated)
-    val amountOverBalanceMessage = message(resource = R.string.overbalance)
-    val noAccounts = message(resource = R.string.noaccounts)
-    var operationStatus: Int
-
-    val initColor =
-        if (type== CategoryType.INCOME) colors.iconIncomeInit
-        else colors.iconExpenseInit
-    val targetColor = if (type== CategoryType.INCOME) colors.iconIncomeTarget
-    else colors.iconExpenseTarget
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp)
-            .verticalScroll(
-                rememberScrollState()
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        IconAnimated(iconResource = iconResource, sizeIcon = 120, initColor, targetColor)
-        HeadSetting(title = stringResource(id = titleResource), MaterialTheme.typography.headlineMedium
-        )
-        TextFieldComponent(
-            modifier = Modifier.width(320.dp),
-            stringResource(id = R.string.desamount),
-            descriptionEntry,
-            onTextChange = { entryViewModel.onTextFieldsChanged(it, amountEntry) },
-            BoardType.TEXT,
-            false
-        )
-        TextFieldComponent(
-            modifier = Modifier.width(320.dp),
-            stringResource(id = R.string.enternote),
-            amountEntry,
-            onTextChange = { entryViewModel.onTextFieldsChanged(descriptionEntry, it) },
-            BoardType.DECIMAL,
-            false
-        )
-        AccountSelector(stringResource(id = R.string.selectanaccount), accountViewModel, modifier = Modifier.width(300.dp))
-        ModelButton(text = stringResource(id = if (type== CategoryType.INCOME) R.string.newincome else R.string.newexpense),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(320.dp),
-            enableConfirmButton,
-            onClickButton = {
-                operationStatus = if (type== CategoryType.EXPENSE){
-                    if (accountViewModel.isValidExpense(amountEntry.toBigDecimalOrNull() ?: BigDecimal.ZERO)) {
-                        1
-                    } else {
-                        0
-                    }
-                } else {
-                    1
-                }
-                scope.launch(Dispatchers.IO) {
-                    if (operationStatus == 1) {
-                        entryViewModel.addEntry(
-                            Entry(
-                                description = descriptionEntry,
-                                amount = if (type== CategoryType.INCOME) amount
-                                else negativeAmount,
-                                date = Date().dateFormat(),
-                                categoryId = categoryId,
-                                accountId = idAccount
-                            )
-                        )
-                        accountViewModel.updateAccountBalance(
-                            idAccount,
-                            if (type== CategoryType.INCOME) amount else negativeAmount,
-                            false
-                        )
-
-                        if (type== CategoryType.INCOME) {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        newIncomeMessage
-                                    )
-                                )
-                            }
-                        } else {
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        newExpenseMessage
-                                    )
-                                )
-                            }
-                        }
-                    } else if (accountSelected == null) {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    noAccounts
-                                )
-                            )
-                        }
-
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    amountOverBalanceMessage
-                                )
-                            )
-                        }
-
-                    }
-                }
-            }
-        )
-        ModelButton(text = stringResource(id = R.string.backButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = Modifier.width(320.dp),
-            true,
-            onClickButton = {
-              navToBack
-            }
-        )
-    }
-}*/

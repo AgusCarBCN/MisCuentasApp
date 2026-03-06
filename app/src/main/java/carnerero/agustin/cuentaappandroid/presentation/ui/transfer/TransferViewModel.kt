@@ -85,15 +85,7 @@ class TransferViewModel @Inject constructor(
             )
         }
     }
-    fun resetFields(){
-        _uiState.update { current->
-            current.copy(
-                amount = BigDecimal.ZERO,
-                accountOriginSelected = 1,
-                accountDestinationSelected = 1
-            )
-        }
-    }
+
     fun onNavBack(){
         viewModelScope.launch {
             _effect.emit(TransferEffects.NavBack)
@@ -129,7 +121,7 @@ class TransferViewModel @Inject constructor(
                 _effect.emit(TransferEffects.MessageSuccess)
                 delay(1000)
                 _effect.emit(TransferEffects.NavToHome)
-            }catch (e: Exception){
+            }catch (_: Exception){
                 _effect.emit(TransferEffects.OverBalanceError)
 
             }

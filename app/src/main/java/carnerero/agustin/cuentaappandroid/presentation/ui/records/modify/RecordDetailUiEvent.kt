@@ -1,8 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.modify
 
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
-import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiEffects
-import java.math.BigDecimal
 
 sealed class RecordDetailUiEvent {
     data class OnAmountChange(val newAmount: String) : RecordDetailUiEvent()

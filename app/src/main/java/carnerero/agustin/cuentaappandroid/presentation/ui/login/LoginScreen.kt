@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -41,7 +40,7 @@ fun LoginScreen(
 
     val isLandscape = orientation== OrientationApp.Landscape
     val state by loginViewModel.uiState.collectAsStateWithLifecycle()
-    val eventEffect by loginViewModel.effect.collectAsState(initial = LoginEffect.Idle)
+
     val messageInvalidLogin = message(resource = R.string.inValidLogin)
     val messageInvalidUserName = message(resource = R.string.inValidUserName)
     val greeting = when(loginViewModel.getGreetingHour()) {

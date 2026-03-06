@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -124,51 +122,4 @@ fun FinanceFunctionsDialog(
             )
         }
     )
-}
-@Composable
-fun InfoText(
-    @StringRes titleRes: Int,
-    @StringRes infoRes: Int
-) {
-    // Estado para controlar si el diálogo está visible
-    var showDialog by remember { mutableStateOf(false) }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        // Texto principal
-        Text(
-            text = stringResource(id = titleRes),
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-            color = colors.textHeadColor
-        )
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        // Icono informativo
-        Icon(
-            imageVector = Icons.Default.Info,
-            contentDescription = "Info",
-            tint = colors.textHeadColor,
-            modifier = Modifier
-                .size(20.dp)
-                .clickable { showDialog = true }
-        )
-    }
-
-    // Dialogo que aparece al tocar el icono
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text(text = stringResource(id = titleRes)) },
-            text = { Text(text = stringResource(id = infoRes)) },
-            confirmButton = {
-                Button(onClick = { showDialog = false }) {
-                    Text("OK")
-                }
-            }
-        )
-    }
 }

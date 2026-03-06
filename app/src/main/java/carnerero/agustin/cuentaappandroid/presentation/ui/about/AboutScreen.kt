@@ -47,11 +47,11 @@ fun AboutScreen(navToAbout:()->Unit,
         "https://play.google.com/store/apps/details?id=carnerero.agustin.cuentaappandroid&hl=es&gl=US"
     val policyLink =
         "https://agusticar.blogspot.com/2024/01/politicas-de-privacidad.html"
-    val windows= rememberWindowSize()
+    rememberWindowSize()
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
-        val maxHeightDp = maxHeight
+        maxHeight
         val fieldModifier = Modifier
             .width(maxWidthDp * 0.85f) // mismo ancho para TODOS
             .heightIn(min = 48.dp)

@@ -129,12 +129,6 @@ fun MainNavHost(
                 accountsViewModel
             )*/
         }
-        /*composable(Routes.RecordsToDelete.route) {
-            EntriesWithCheckBox(entriesViewModel, accountsViewModel)
-        }
-        composable(Routes.RecordsToModify.route) {
-            EntriesWithEditIcon(entriesViewModel, accountsViewModel, navController)
-        }*/
 
         // Drawer menu
         composable(Routes.NewIncome.route) {
@@ -206,7 +200,7 @@ fun MainNavHost(
 
         }
         composable(Routes.ModifyAccount.route) {
-            //AccountList(mainViewModel, accountsViewModel, false, navController)
+
             ModifyAccountsScreen(managementAccountsViewModel,navController)
         }
         composable(Routes.DeleteAccount.route) {
@@ -219,13 +213,6 @@ fun MainNavHost(
                 RecordsMode.DELETE,
                 navController
             )
-           /* SearchScreen(
-                accountsViewModel,
-                searchViewModel,
-                entriesViewModel,
-                TypeOfSearch.DELETE,
-                navController
-            )*/
 
         }
         composable(Routes.ModifyRecords.route) {
@@ -234,19 +221,8 @@ fun MainNavHost(
                 RecordsMode.MODIFY,
                 navController
             )
-          /*  SearchScreen(
-                accountsViewModel,
-                searchViewModel,
-                entriesViewModel,
-                TypeOfSearch.UPDATE,
-                navController
-            )*/
 
         }
-        /*composable(Routes.ChangeCurrency.route) {
-            ChangeCurrencyScreen(accountsViewModel, entriesViewModel)
-            { navController.navigate(Routes.Home.route) }
-        }*/
 
         composable(
             Routes.ModifyAccountItem.route,
@@ -254,8 +230,7 @@ fun MainNavHost(
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("id")
             ModifyAccountDetailScreen(modifyAccountDetailViewModel,id)
-           /* ModifyAccountsComponent(accountsViewModel, id)
-            { navController.navigateTopLevel(Routes.Home.route) }*/
+
         }
         composable(
             Routes.ModifyRecordItem.route,
@@ -285,7 +260,7 @@ fun MainNavHost(
 
         }
         composable(Routes.SpendingControlByCategory.route) {
-            //SpendingControlByCategoriesScreen(categoriesViewModel, accountsViewModel)
+
             SpendingControlByCategoriesScreen(categoriesViewModel)
         }
 

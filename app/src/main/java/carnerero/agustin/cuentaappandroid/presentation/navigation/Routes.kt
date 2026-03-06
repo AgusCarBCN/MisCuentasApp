@@ -24,18 +24,12 @@ sealed class Routes(
 
     data object Home : Routes("home", R.string.home, R.drawable.home)
 
-    // data object Search : Routes("search",R.string.search,R.drawable.search)
-
     data object Search: Routes("search",R.string.search,R.drawable.search)
     data object Settings : Routes("settings", R.string.settings, R.drawable.settings)
 
     data object Profile : Routes("profile", R.string.profile, R.drawable.profile)
 
     data object Records : Routes("entries", R.string.yourentries)
-
-    data object RecordsToDelete : Routes("entries_delete", R.string.deleteentries)
-
-    data object RecordsToModify : Routes("entries_modify", R.string.modify)
 
     // Drawer content items
 
@@ -76,9 +70,6 @@ sealed class Routes(
 
     data object ModifyRecords :
         Routes("modify_records", R.string.searchtitlemodify, R.drawable.ic_databaseupdate)
-
-    data object ChangeCurrency :
-        Routes("change_currency", R.string.changeCurrency, R.drawable.exchange)
 
 
     data object ModifyAccountItem: Routes("modify_account/{id}",R.string.modify,R.drawable.configaccountoption){

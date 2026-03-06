@@ -29,12 +29,6 @@ class Utils {
 
     companion object {
 
-        fun isValidDecimal(text: String): Boolean {
-
-            return text.isEmpty() || text.matches(Regex("^([1-9]\\d*|0)?(\\.\\d*)?\$"))
-
-        }
-
 
         fun convertMillisToDate(millis: Long): String {
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -168,10 +162,10 @@ class Utils {
                 for (record in csvParser) {
                     try {
                         val description = record.get(0)
-                        val category = record.get(1)
+                        record.get(1)
                         val amount = record.get(2).toBigDecimalOrNull() ?: BigDecimal.ZERO
                         val date = record.get(3)
-                        val accountName = record.get(4)
+                        record.get(4)
                         val categoryId = record.get(5).toInt()
                         val accountId = record.get(6).toInt()
 

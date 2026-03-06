@@ -97,7 +97,7 @@ fun PieChartScreen(
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val layoutWidth = maxWidth * 0.85f
-        val layoutHeight=maxHeight
+        maxHeight
         if (isPortrait) {
             Column(
                 modifier = Modifier

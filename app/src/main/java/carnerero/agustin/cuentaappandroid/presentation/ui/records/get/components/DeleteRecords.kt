@@ -15,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,9 +47,7 @@ fun DeleteRecords(
     val listOfEntriesWithCheckBox = remember(records) {
         records.map { RecordDataCheckBox(it, false) }.toMutableStateList()
     }
-    val scope = rememberCoroutineScope()
-    val messageDeleteEntries = stringResource(id = R.string.deleteentries)
-    val messageNotSelectedEntries = stringResource(id = R.string.nodeleteentries)
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

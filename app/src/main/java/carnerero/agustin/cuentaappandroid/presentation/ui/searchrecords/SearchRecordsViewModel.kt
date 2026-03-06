@@ -11,7 +11,6 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.Reco
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.SearchFilter
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TransactionType
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.TypeOfSearch
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import javax.inject.Inject
 
 @HiltViewModel

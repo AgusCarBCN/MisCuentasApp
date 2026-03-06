@@ -2,7 +2,6 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.records.add
 
 
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
-import carnerero.agustin.cuentaappandroid.data.db.entities.Category
 import java.math.BigDecimal
 
 data class AddRecordsUiState(

@@ -1,11 +1,9 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.calculator
 
-import java.lang.Math.log
 import kotlin.math.sqrt
 import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.ln
-import kotlin.math.log2
 import kotlin.math.pow
 
 class ParserCalculator(private val input: String = "") {

@@ -94,9 +94,7 @@ fun BarChartScreen(
                 }
                 BarChart( Modifier.fillMaxWidth().height(400.dp),context, data, isDarkTheme)
                 BarChartResult(Modifier.fillMaxWidth().height(400.dp),context, data, isDarkTheme)
-                Table( Modifier
-                    .fillMaxWidth()
-                    .padding(start = 15.dp),state.currencyCode, data)
+                Table(state.currencyCode, data)
             }
         else {
             Row( Modifier
@@ -108,9 +106,7 @@ fun BarChartScreen(
             Row( Modifier
                     .fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
             ){
-                Table( Modifier
-                    .fillMaxWidth()
-                    .padding(start = 15.dp),state.currencyCode, data)
+                Table(state.currencyCode, data)
             }
         }
     }
@@ -324,7 +320,7 @@ fun BarChartResult(
 }
 
 @Composable
-fun Table(modifier:Modifier,currencyCodeSelected:String, data: List<BarChartData>) {
+fun Table(currencyCodeSelected:String, data: List<BarChartData>) {
 
 
     // Encabezados de la tabla

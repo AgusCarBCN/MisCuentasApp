@@ -112,7 +112,7 @@ class AddAccountViewModel @Inject constructor(
                     AddAccountEffect.ShowMessage(R.string.addAccount)
                 )
 
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _effect.emit(
                     AddAccountEffect.ShowMessage(
                         R.string.erroraccountcreated

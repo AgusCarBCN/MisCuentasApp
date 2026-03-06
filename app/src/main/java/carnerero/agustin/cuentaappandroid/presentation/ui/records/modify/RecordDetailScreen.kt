@@ -69,7 +69,7 @@ fun ModifyRecordScreen(
         orientation == OrientationApp.Landscape
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
-        val maxWidthDp = maxWidth
+        maxWidth
         val fieldModifier = Modifier
             .fillMaxWidth(0.85f)
             .heightIn(min = 48.dp)

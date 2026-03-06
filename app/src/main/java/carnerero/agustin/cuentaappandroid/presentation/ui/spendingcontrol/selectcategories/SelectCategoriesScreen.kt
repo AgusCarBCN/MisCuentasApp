@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
-import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogCategoriesSpendingControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.components.DialogSpendingControl
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.componets.CategoryWithCheckbox
 import carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.selectcategories.model.SelectCategoriesUiEvent

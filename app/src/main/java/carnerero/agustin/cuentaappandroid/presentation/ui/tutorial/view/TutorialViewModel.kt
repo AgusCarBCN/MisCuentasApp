@@ -4,7 +4,6 @@ package carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableTutorialUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.GetShowTutorialUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetToLoginUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialUiState

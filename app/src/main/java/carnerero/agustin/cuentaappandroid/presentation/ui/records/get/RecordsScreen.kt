@@ -15,6 +15,8 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.Reco
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.GetRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components.ModifyRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsMode
+import carnerero.agustin.cuentaappandroid.utils.SnackBarController
+import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import com.google.gson.Gson
 
 @Composable
@@ -25,7 +27,6 @@ fun RecordScreen(
     mode: RecordsMode)
     {
     val messageDeleteEntries = stringResource(id = R.string.deleteentries)
-    val messageNotSelectedEntries = stringResource(id = R.string.nodeleteentries)
 
     LaunchedEffect(filter) {
         recordsViewModel.loadInitialData(filter)
@@ -46,6 +47,10 @@ fun RecordScreen(
                                 Routes.ModifyRecordItem.createRoute(entryJson)
                             )
                         }
+
+                    RecordsUiEffects.MessageDeleteRecords -> {
+                        SnackBarController.sendEvent(SnackBarEvent(messageDeleteEntries))
+                    }
                 }
             }
         }
@@ -58,14 +63,13 @@ fun RecordScreen(
         RecordsMode.GET -> {
             GetRecords(state.listOfRecords,
                 state.currencyCode,
-                state.enableByDate,
-                {recordsViewModel.onEvent(RecordsUiEvents.ShowEnableByDate(it))})
+                state.enableByDate
+            ) { recordsViewModel.onEvent(RecordsUiEvents.ShowEnableByDate(it)) }
         }
         RecordsMode.DELETE -> {
             DeleteRecords(state.listOfRecords,
-                state.currencyCode,
-                {recordsViewModel.deleteRecord(it)}
-                )
+                state.currencyCode
+            ) { recordsViewModel.deleteRecord(it) }
         }
         RecordsMode.MODIFY -> {
             ModifyRecords(state.listOfRecords,

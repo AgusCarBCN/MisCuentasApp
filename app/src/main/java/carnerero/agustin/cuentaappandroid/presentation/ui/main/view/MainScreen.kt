@@ -27,7 +27,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
@@ -142,7 +141,7 @@ fun MainScreen(
         },
         onDismiss = {
             mainViewModel.showExitDialog(false)
-            mainViewModel.selectScreen(IconOptions.HOME)
+
         })
 }
 

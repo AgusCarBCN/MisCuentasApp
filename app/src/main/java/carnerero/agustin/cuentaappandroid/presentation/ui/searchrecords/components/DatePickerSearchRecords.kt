@@ -23,8 +23,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -32,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchUiEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp

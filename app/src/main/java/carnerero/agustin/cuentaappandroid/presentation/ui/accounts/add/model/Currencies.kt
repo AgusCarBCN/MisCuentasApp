@@ -4,7 +4,7 @@ import carnerero.agustin.cuentaappandroid.R
 
 object Currencies {
 
-    public val currencies=
+     val currencies=
         listOf(
             // Lista completa de todas las divisas del mundo, ordenadas alfabéticamente por código:
 

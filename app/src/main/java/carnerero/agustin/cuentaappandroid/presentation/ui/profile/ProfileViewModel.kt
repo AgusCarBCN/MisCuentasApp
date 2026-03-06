@@ -12,8 +12,6 @@ import carnerero.agustin.cuentaappandroid.domain.datastore.SetUserProfileDataUse
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateNameUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdatePasswordUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.UpdateUsernameUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileUiEvent
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.model.UserProfile
 import carnerero.agustin.cuentaappandroid.utils.AppDataList
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -100,7 +98,7 @@ class ProfileViewModel @Inject constructor(
                 updateName(event.newName)
 
             is ProfileUiEvent.UpdatePasswordProfile -> updatePassword(event.newPassword)
-            is ProfileUiEvent.UpdatePhotoProfile -> updateProfilePhoto(event.newPhoto)
+            is ProfileUiEvent.UpdatePhotoProfile -> updateProfilePhoto()
             is ProfileUiEvent.UpdateUsernameProfile -> updateUsername(event.newUsername)
             else -> {
 
@@ -214,7 +212,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
     fun updateProfilePhoto(
-        newImage: Uri?
     ) {
         viewModelScope.launch {
             _uiState.value.selectedImageUri?.let {

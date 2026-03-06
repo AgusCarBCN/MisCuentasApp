@@ -1,12 +1,8 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.setting
 
-import android.app.Application
 import android.content.Context
 import android.net.Uri
-import androidx.compose.ui.res.stringResource
 import androidx.documentfile.provider.DocumentFile
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
@@ -18,19 +14,14 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.InsertR
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableDarkThemUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableNotificationsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableTutorialUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.GetShowTutorialUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetEnableDarkThemeUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetEnableNotificationsUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.SetEnableTutorialUseCase
-import carnerero.agustin.cuentaappandroid.domain.datastore.SetShowTutorialUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.AccountCSV
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.EntryCSV
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.model.SettingsDialog
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +32,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.Date
 import javax.inject.Inject

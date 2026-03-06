@@ -15,7 +15,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,9 +80,8 @@ fun CreateProfileScreen(
                         .width(contentWidth)
                         .wrapContentHeight()
                         .padding(top = 50.dp),
-                        state.selectedImageUriSaved,
-                    {profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))}
-                    )
+                        state.selectedImageUriSaved
+                ) { profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it)) }
                 CreateContentSection(
                     Modifier
                         .width(contentWidth)
@@ -115,8 +113,8 @@ fun CreateProfileScreen(
                         .fillMaxWidth()
                         .wrapContentHeight()
                     .padding(bottom = 20.dp),
-                    state.selectedImageUriSaved,
-                    {profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it))})
+                    state.selectedImageUriSaved
+                ) { profileViewModel.onUserEvent(ProfileUiEvent.OnProfileImageChange(it)) }
                 CreateContentSection(
                     Modifier
                         .verticalScroll(rememberScrollState()

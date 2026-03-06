@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,24 +26,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CalculatorButton
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.CurrencyDialogConverter
 import carnerero.agustin.cuentaappandroid.presentation.ui.calculator.component.FinanceFunctionsDialog
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 @Composable
@@ -81,6 +73,7 @@ fun CalculatorLandscapeUI(
 
     // Definimos la grilla de botones ampliada para landscape
     val buttonRows = listOf(
+
         listOf("AC", "(", ")", "÷", "mod", "PVc", "FVc"),
         listOf("7", "8", "9", "×", "log", "PVs", "FVs"),
         listOf("4", "5", "6", "-", "√", "Rate", "Time"),
@@ -331,68 +324,3 @@ fun CalculatorLandscapeUI(
     }
 }
 
-private fun notImplement(
-    message: String,
-    scope: CoroutineScope
-) {
-    scope.launch(Dispatchers.Main) {
-        SnackBarController.sendEvent(
-            event = SnackBarEvent(
-                message
-            )
-        )
-    }
-}
-
-@Composable
-private fun ModelCurrencyDialog(
-    title: Int,
-    message: Int,
-    showDialog: Boolean,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
-
-    if (showDialog) {
-        AlertDialog(
-            containerColor = colors.drawerColor,
-            onDismissRequest = { onDismiss() },
-
-            title = {
-                Text(
-                    stringResource(id = title),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = colors.textHeadColor
-                )
-            },
-
-            text = {
-                Text(
-                    stringResource(id = message),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colors.textColor
-                )
-            },
-            confirmButton = {
-                ModelButton(
-                    text = stringResource(id = R.string.confirmButton),
-                    MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.width(130.dp),
-                    true,
-                    onClickButton = {
-                        onConfirm()
-                    })
-            },
-            dismissButton = {
-                ModelButton(
-                    text = stringResource(id = R.string.cancelButton),
-                    MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.width(130.dp),
-                    true,
-                    onClickButton = {
-                        onDismiss()
-                    })
-            }
-        )
-    }
-}

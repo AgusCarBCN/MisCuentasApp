@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.spendingcontrol.accounts
 
-import android.R.attr.contentDescription
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
@@ -42,7 +40,6 @@ import java.math.BigDecimal
        // val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("USD")
         val expensePercent= stringResource(id = R.string.percentexpense)
         val currentExpense = stringResource(id = R.string.currentexpense)
-        val expenseControlText= stringResource(id = R.string.expenseControl)
         val spendingLimitMessage= stringResource(id = R.string.limitMax)
 
         val spendingLimit = account.spendingLimit

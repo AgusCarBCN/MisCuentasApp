@@ -28,12 +28,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.TutorialEvent
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.TutorialViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun SplashScreen(

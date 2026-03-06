@@ -14,6 +14,7 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilt
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,24 +62,7 @@ class RecordsViewModel @Inject constructor(
             }
         }
     }
-    // Carga los registros según el filtro
-  /*  fun getRecords(filter: RecordsFilter) {
-        val recordsFlow: Flow<List<RecordDTO>> = when (filter) {
-            RecordsFilter.Expenses -> getAllExpenses.invoke()
-            RecordsFilter.Incomes -> getAllIncomes.invoke()
-            is RecordsFilter.RecordsByAccount -> getAllRecordsByAccount.invoke(filter.accountId)
-            is RecordsFilter.Search -> getFilteredEntries.invoke(filter.searchFilter)
-            RecordsFilter.All -> getAllEntriesDTO.invoke()
-        }
 
-        viewModelScope.launch {
-            recordsFlow.collect { list ->
-                _uiState.update { it.copy(listOfRecords = list) }
-                // Emitimos efecto si quieres notificar que hay registros
-                if (list.isNotEmpty()) _effect.emit(RecordsUiEffects.ShowRecords)
-            }
-        }
-    }*/
 
     // Cambiar vista ByDate / ByCategory
     fun switchEnableByDate(value: Boolean) {
@@ -86,13 +70,11 @@ class RecordsViewModel @Inject constructor(
     }
     fun deleteRecord(record: RecordDTO) {
         viewModelScope.launch {
-                deleteRecord.invoke(record)
+             deleteRecord.invoke(record)
+             delay(1000)
+             _effect.emit(RecordsUiEffects.MessageDeleteRecords)
         }
     }
-
-
-
-    // Cargar currencyCode al iniciar
 
     fun loadInitialData(filter: RecordsFilter) {
 

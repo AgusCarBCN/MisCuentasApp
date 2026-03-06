@@ -38,29 +38,18 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 @Composable
 fun TransferScreen(
     transferViewModel: TransferViewModel,
-    //accountViewModel: AccountsViewModel,
-    //entryViewModel: EntriesViewModel,
     navToBack:()->Unit,
     navToHome: () -> Unit
 ) {
     val state by transferViewModel.uiState.collectAsStateWithLifecycle()
-    //val accountFrom by accountViewModel.accountSelected.observeAsState()
-    // val accountTo by accountViewModel.destinationAccount.observeAsState()
-    // val amountTransfer by entryViewModel.entryAmount.observeAsState("0.0")
-    // val confirmButton by entryViewModel.enableConfirmTransferButton.observeAsState(false)
-    // val scope = rememberCoroutineScope()
-    // val idAccountFrom = accountFrom?.id ?: 1
-    // val idAccountTo = accountTo?.id ?: 1
-    // val amount = amountTransfer.toBigDecimalOrNull() ?: BigDecimal.ZERO
-    // val negativeAmount = amountTransfer.toBigDecimalOrNull()?.negate() ?: BigDecimal("1E10")
-    //accountViewModel.isValidTransfer()
+
     val labelTransferFrom = stringResource(id = R.string.transferfrom)
     val labelTransferTo = stringResource(id = R.string.transferTo)
     //SnackBarMessage
     val amountOverBalanceMessage = message(resource = R.string.overbalance)
     val transferSuccessMessage = message(resource = R.string.transferdone)
     val confirmButton =state.enableConfirm
-    //val isValidExpense=accountViewModel.isValidExpense(amount)
+
     val isLandscape =
         orientation == OrientationApp.Landscape
     LaunchedEffect(Unit) {
@@ -146,29 +135,7 @@ fun TransferScreen(
                         true,
                         fieldModifier
                     )
-                   /* AccountSelector(
-                        stringResource(id = R.string.originaccount),
-                        accountViewModel,
-                        modifier = fieldModifier
-                    )
 
-                    AccountSelector(
-                        stringResource(id = R.string.destinationaccount),
-                        accountViewModel,
-                        true,
-                        modifier = fieldModifier
-                    )*/
-
-                    /** --- lógica intacta --- */
-                   /* if ((accountTo == accountFrom) ||
-                        (amountTransfer.isEmpty()
-                                || amountTransfer.toDoubleOrNull() == 0.0) ||
-                        amountTransfer == "."
-                    ) {
-                        entryViewModel.onChangeTransferButton(false)
-                    } else {
-                        entryViewModel.onChangeTransferButton(true)
-                    }*/
                     Row(modifier = fieldModifier,
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(dimens.medium)) {
@@ -179,45 +146,7 @@ fun TransferScreen(
                             confirmButton,
                             onClickButton = {
                                 transferViewModel.onUserEvent(TransferUiEvent.OnConfirm(labelTransferFrom,labelTransferTo ))
-                              /*  scope.launch(Dispatchers.IO) {
-                                    if (isValidExpense) {
-                                        entryViewModel.addEntry(
-                                            Records(
-                                                description = transferFrom,
-                                                amount = negativeAmount,
-                                                date = Date().dateFormat(),
-                                                categoryId = 53,
-                                                accountId = idAccountFrom
-                                            )
-                                        )
-                                        entryViewModel.addEntry(
-                                            Records(
-                                                description = transferTo,
-                                                amount = amount,
-                                                date = Date().dateFormat(),
-                                                categoryId = 53,
-                                                accountId = idAccountTo
-                                            )
-                                        )
-                                        accountViewModel.transferAmount(
-                                            idAccountFrom,
-                                            idAccountTo,
-                                            amount
-                                        )
-                                        entryViewModel.onChangeTransferButton(false)
-                                    }
 
-                                    withContext(Dispatchers.Main) {
-                                        SnackBarController.sendEvent(
-                                            SnackBarEvent(
-                                                if (isValidExpense)
-                                                    transferSuccessMessage
-                                                else
-                                                    amountOverBalanceMessage
-                                            )
-                                        )
-                                    }
-                                }*/
                             }
                         )
 
@@ -280,17 +209,6 @@ fun TransferScreen(
                     fieldModifier
                 )
 
-                /** --- lógica intacta --- */
-                /*if ((accountTo == accountFrom) ||
-                    (amountTransfer.isEmpty()
-                            || amountTransfer.toDoubleOrNull() == 0.0) ||
-                    amountTransfer == "."
-                ) {
-                    entryViewModel.onChangeTransferButton(false)
-                } else {
-                    entryViewModel.onChangeTransferButton(true)
-                }*/
-
                 ModelButton(
                     text = stringResource(id = R.string.confirmButton),
                     MaterialTheme.typography.labelLarge,
@@ -298,45 +216,7 @@ fun TransferScreen(
                     confirmButton,
                     onClickButton = {
                         transferViewModel.onUserEvent(TransferUiEvent.OnConfirm(labelTransferFrom,labelTransferTo ))
-                        /*scope.launch(Dispatchers.IO) {
-                            if (isValidExpense) {
-                                entryViewModel.addEntry(
-                                    Records(
-                                        description = labelTransferFrom,
-                                        amount = negativeAmount,
-                                        date = Date().dateFormat(),
-                                        categoryId = 53,
-                                        accountId = idAccountFrom
-                                    )
-                                )
-                                entryViewModel.addEntry(
-                                    Records(
-                                        description = labelTransferTo,
-                                        amount = amount,
-                                        date = Date().dateFormat(),
-                                        categoryId = 53,
-                                        accountId = idAccountTo
-                                    )
-                                )
-                                accountViewModel.transferAmount(
-                                    idAccountFrom,
-                                    idAccountTo,
-                                    amount
-                                )
-                                entryViewModel.onChangeTransferButton(false)
-                            }
 
-                            withContext(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    SnackBarEvent(
-                                        if (isValidExpense)
-                                            transferSuccessMessage
-                                        else
-                                            amountOverBalanceMessage
-                                    )
-                                )
-                            }
-                        }*/
                     }
                 )
 
@@ -353,142 +233,3 @@ fun TransferScreen(
     }
 }
 
-
-/*
-@Composable
-
-fun TransferScreen(
-    accountViewModel: AccountsViewModel,
-    entryViewModel: EntriesViewModel,
-    navToHome:()->Unit
-) {
-
-    val accountFrom by accountViewModel.accountSelected.observeAsState()
-    val accountTo by accountViewModel.destinationAccount.observeAsState()
-    val amountTransfer by entryViewModel.entryAmount.observeAsState("0.0")
-    val confirmButton by entryViewModel.enableConfirmTransferButton.observeAsState(false)
-    val scope = rememberCoroutineScope()
-    val idAccountFrom = accountFrom?.id ?: 1
-    val idAccountTo = accountTo?.id ?: 1
-    val amount = amountTransfer.toBigDecimalOrNull() ?: BigDecimal.ZERO
-    val negativeAmount = amountTransfer.toBigDecimalOrNull()?.negate() ?: BigDecimal("1E10")
-    //accountViewModel.isValidTransfer()
-    val transferFrom = stringResource(id = R.string.transferfrom)
-    val transferTo = stringResource(id = R.string.transferTo)
-    //SnackBarMessage
-    val amountOverBalanceMessage = message(resource = R.string.overbalance)
-    val transferSuccessMessage = message(resource = R.string.transferdone)
-
-    val isValidExpense=accountViewModel.isValidExpense(amount)
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val maxWidthDp = maxWidth
-        val maxHeightDp = maxHeight
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-            .padding(dimens.small)
-    Column(
-        modifier = Modifier
-            .width(maxWidthDp)
-            .padding(top = dimens.extraLarge)
-            .verticalScroll(
-                rememberScrollState()
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ) {
-        IconAnimated(
-            R.drawable.transferoption,
-            120,
-            initColor = colors.buttonColorDefault,
-            targetColor = colors.buttonColorPressed
-        )
-
-        TextFieldComponent(
-            modifier = fieldModifier,
-            stringResource(id = R.string.amountentrie),
-            amountTransfer,
-            onTextChange = { entryViewModel.onAmountChanged(idAccountTo, idAccountFrom, it) },
-            BoardType.DECIMAL,
-            false
-        )
-        AccountSelector(stringResource(id = R.string.originaccount),
-            accountViewModel,
-            modifier=fieldModifier)
-        AccountSelector(
-            stringResource(id = R.string.destinationaccount),
-            accountViewModel,
-            true,
-            modifier = fieldModifier
-        )
-        Log.d("amount", amountTransfer)
-        if ((accountTo == accountFrom) ||
-            (amountTransfer.isEmpty() ||
-                    amountTransfer.toDoubleOrNull() == 0.0) ||
-            amountTransfer == "."
-        ) {
-            entryViewModel.onChangeTransferButton(false)
-        } else {
-            entryViewModel.onChangeTransferButton(true)
-        }
-        ModelButton(text = stringResource(id = R.string.confirmButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = fieldModifier,
-            confirmButton,
-            onClickButton = {
-                scope.launch(Dispatchers.IO) {
-                    if (isValidExpense) {
-                        entryViewModel.addEntry(
-                            Entry(
-                                description = transferFrom,
-                                amount = negativeAmount,
-                                date = Date().dateFormat(),
-                                categoryId = 53,
-                                accountId = idAccountFrom
-                            )
-                        )
-                        entryViewModel.addEntry(
-                            Entry(
-                                description = transferTo,
-                                amount = amount,
-                                date = Date().dateFormat(),
-                                categoryId = 53,
-                                accountId = idAccountTo
-                            )
-                        )
-                        accountViewModel.transferAmount(idAccountFrom, idAccountTo, amount)
-                        entryViewModel.onChangeTransferButton(false)
-                    }
-                    if (isValidExpense) {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    transferSuccessMessage
-                                )
-                            )
-                        }
-                    } else  {
-                        withContext(Dispatchers.Main) {
-                            SnackBarController.sendEvent(
-                                event = SnackBarEvent(
-                                    amountOverBalanceMessage
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        )
-        ModelButton(text = stringResource(id = R.string.backButton),
-            MaterialTheme.typography.labelLarge,
-            modifier = fieldModifier,
-            true,
-            onClickButton = {
-                navToHome()
-            }
-
-        )
-    }
-}
-}*/

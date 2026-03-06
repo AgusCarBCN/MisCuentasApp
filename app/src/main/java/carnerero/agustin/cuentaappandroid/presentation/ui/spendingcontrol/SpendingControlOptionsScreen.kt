@@ -24,7 +24,7 @@ import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 fun SpendingControlOptionsScreen(navController: NavController) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxWidthDp = maxWidth
-        val maxHeightDp = maxHeight
+        maxHeight
         val fieldModifier = Modifier
             .width(maxWidthDp * 0.85f) // mismo ancho para TODOS
             .heightIn(min = 48.dp)

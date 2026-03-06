@@ -1,9 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart
 
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
@@ -12,16 +9,10 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumE
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetSumIncomesByMonthUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableDarkThemUseCase
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchEffects
-import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.SearchUiState
 import carnerero.agustin.cuentaappandroid.presentation.ui.statistics.barchart.model.BarChartData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -47,7 +38,6 @@ class BarChartViewModel @Inject constructor(
 
     private fun observeInitialData() {
         viewModelScope.launch {
-            val currencyCode = getCurrencyCode.invoke()
             combine(
                 getCurrencyCode.invoke(),
                 getAccounts.invoke(),

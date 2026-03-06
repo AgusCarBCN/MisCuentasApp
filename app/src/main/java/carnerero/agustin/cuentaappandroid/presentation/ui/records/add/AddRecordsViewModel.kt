@@ -118,7 +118,7 @@ class AddRecordsViewModel @Inject constructor(
                 // Finalmente insertamos el record en la DB
                 insertRecord.invoke(record)
 
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // Emitir efecto de saldo insuficiente
                 _effect.emit(AddRecordsEffects.AmountOverBalanceMessage)
             }

@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.NotificationDialog
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -28,10 +27,10 @@ fun RequestNotificationPermissionDialog(mainViewModel: MainViewModel) {
             true,
             onDismiss = {
                 permissionState.launchPermissionRequest()
-                mainViewModel.selectScreen(IconOptions.SETTINGS)
+
             },
            onConfirm = {
-               mainViewModel.selectScreen(IconOptions.SETTINGS)
+               //mainViewModel.selectScreen(IconOptions.SETTINGS)
            })
     } else {
         // permission granted or forever denied

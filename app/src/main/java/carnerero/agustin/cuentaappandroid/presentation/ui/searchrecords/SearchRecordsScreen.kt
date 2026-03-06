@@ -41,7 +41,6 @@ import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import java.lang.reflect.Type
 
 
 @Composable
