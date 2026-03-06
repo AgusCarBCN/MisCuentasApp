@@ -23,23 +23,18 @@ import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.utils.SnackBarController
 import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.BoardType
-
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.IconAnimated
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.TextFieldComponent
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
-
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.components.DatePickerSearchRecords
 import carnerero.agustin.cuentaappandroid.presentation.ui.searchrecords.model.DateField
-import com.google.gson.Gson
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun ModifyRecordScreen(

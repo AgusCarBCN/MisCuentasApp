@@ -73,22 +73,17 @@ class RecordDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val state = _uiState.value
             val inputAmount = state.amount.toBigDecimal()
-
             // Convertimos a valor real según tipo
             val newAmount = if (record.categoryType == CategoryType.INCOME) {
                 inputAmount
             } else {
                 inputAmount.negate()
             }
-
             val amountBefore = record.amount
-
             // Si el valor no cambia, no hacemos nada
             if (newAmount.compareTo(amountBefore) != 0) {
-
                 val diffAmount = newAmount.subtract(amountBefore)
                 Log.d("MODIFY", "diff:$diffAmount")
-
                 // Actualizamos registro
                 updateRecord.invoke(
                     record.id,
@@ -96,7 +91,6 @@ class RecordDetailViewModel @Inject constructor(
                     newAmount,
                     state.date
                 )
-
                 // Actualizamos balance solo con la diferencia real
                 updateBalance.invoke(record.accountId, diffAmount)
 
