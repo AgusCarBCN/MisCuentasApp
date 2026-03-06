@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.accounts.add.AddAccountsScreen
@@ -30,7 +29,6 @@ fun AppNavHost(
     accountsViewModel: AccountsViewModel,
     settingViewModel: SettingViewModel,
     tutorialViewModel: TutorialViewModel,
-    categoriesViewModel: CategoriesViewModel,
     profileViewModel: ProfileViewModel,
     modifier: Modifier
 ) {
@@ -76,7 +74,6 @@ fun AppNavHost(
             MainScreen(
                 mainViewModel,
                 accountsViewModel,
-                categoriesViewModel,
                 profileViewModel ,
                 settingViewModel
             )

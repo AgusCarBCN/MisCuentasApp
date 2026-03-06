@@ -8,5 +8,5 @@ data class ModifyAccountDetailUiState(
 
 ){
     val enableChangeButton=name.isNotBlank()
-    val enableChangeBalance=balance.toString().isNotBlank()
+    val enableChangeBalance=balance.isNotBlank()
 }

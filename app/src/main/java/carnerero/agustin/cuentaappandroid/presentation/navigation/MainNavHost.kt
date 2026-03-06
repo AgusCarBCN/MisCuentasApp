@@ -15,7 +15,6 @@ import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.CategoryType
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
@@ -76,7 +75,6 @@ import com.google.gson.Gson
 fun MainNavHost(
     navController: NavHostController,
     settingViewModel: SettingViewModel,
-    categoriesViewModel: CategoriesViewModel,
     mainViewModel: MainViewModel,
     accountsViewModel: AccountsViewModel,
     profileViewModel: ProfileViewModel

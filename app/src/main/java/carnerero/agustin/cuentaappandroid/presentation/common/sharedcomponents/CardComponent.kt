@@ -28,7 +28,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -42,23 +41,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
-import carnerero.agustin.cuentaappandroid.utils.SnackBarController
-import carnerero.agustin.cuentaappandroid.utils.SnackBarEvent
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
-import carnerero.agustin.cuentaappandroid.data.db.entities.Category
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.SearchViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
-import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.iconSize
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 
@@ -206,249 +197,6 @@ fun AccountCard(
     }
 
 
-@Composable
-fun CategoryCardWithCheckbox(category: Category,
-                             categoriesViewModel: CategoriesViewModel,
-                             searchViewModel: SearchViewModel,
-                             onCheckBoxChange: (Boolean) -> Unit
-                             )
-{
-    val toDate by searchViewModel.selectedToDate.observeAsState(category.fromDate)
-    val fromDate by searchViewModel.selectedFromDate.observeAsState(category.toDate)
-    val showDialog by categoriesViewModel.enableDialog.observeAsState(false)
-    val spendingLimit by categoriesViewModel.spendingLimit.observeAsState(category.spendingLimit.toString())
-    val messageDateError = stringResource(id = R.string.datefromoverdateto)
-    val scope = rememberCoroutineScope()
-    val categoryName= stringResource(category.nameResource)
-    val checked=stringResource(R.string.ischecked)
-    val unchecked = stringResource(R.string.isunchecked)
-    val item= stringResource(id = R.string.item)
-    val iconItem= stringResource(id = R.string.itemicon)
-
-    ElevatedCard(
-
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        colors = CardColors(
-            containerColor = colors.drawerColor,
-            contentColor = colors.incomeColor,
-            disabledContainerColor = colors.drawerColor,
-            disabledContentColor = colors.incomeColor
-        ),   modifier = Modifier
-            .size(width = 360.dp, height = 80.dp)
-
-    ){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, end = 10.dp, start = 10.dp)
-                .semantics {
-                    contentDescription = "$item $categoryName"
-                },
-            horizontalArrangement = Arrangement.SpaceBetween, // Cambia a SpaceBetween
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Contenedor para el icono y el texto para que se agrupen en un extremo
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(id = category.iconResource),
-                    contentDescription = "$iconItem $categoryName",
-                    modifier = Modifier
-                        .size(iconSize.extraLarge)
-                        .padding(end = dimens.medium),
-                    tint = colors.textHeadColor
-                )
-                Column {
-                    Text(
-                        text = stringResource(id = category.nameResource),
-                        modifier = Modifier.padding(bottom = dimens.small),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colors.textColor
-                    )
-                    Text(
-                        text = if (category.isChecked) stringResource(id = R.string.categorychecked)
-
-                        else stringResource(id = R.string.categoryunchecked),
-                        modifier = Modifier.semantics {
-
-                            contentDescription = if(category.isChecked) "$categoryName $checked"
-                            else "$categoryName $unchecked"
-                        },
-                        color = colors.textColor,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-            }
-
-            // Checkbox al extremo opuesto
-            Checkbox(modifier = Modifier.semantics {
-                // Descripción única del Checkbox
-                contentDescription = "${category.nameResource}: ${if (category.isChecked) checked else unchecked}"
-            },
-                checked = category.isChecked,
-                onCheckedChange = onCheckBoxChange,
-                colors = CheckboxDefaults.colors(
-                    checkedColor = colors.drawerColor,
-                    uncheckedColor = colors.textColor,
-                    checkmarkColor = colors.incomeColor
-                )
-            )
-        }
-
-        if (category.isChecked) {
-                ModelDialogWithTextField(
-                    stringResource(category.nameResource),
-                    showDialog,
-                    spendingLimit,
-                    onValueChange = {categoriesViewModel.onChangeSpendingLimit(it) },
-                    onConfirm = {
-                        if (!searchViewModel.validateDates()) {
-                            scope.launch(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        messageDateError
-                                    )
-                                )
-                            }
-                            categoriesViewModel.updateCheckedCategory(category.id,false)
-                        } else {
-                            categoriesViewModel.upDateSpendingLimitCategory(
-                                category.id,
-                                spendingLimit.toBigDecimal()
-                            )
-                            categoriesViewModel.onEnableDialogChange(false)
-                            categoriesViewModel.upDateCategoryDates(category.id, fromDate, toDate)
-                        }
-                    },
-                    onDismiss = { categoriesViewModel.onEnableDialogChange(false)
-                        categoriesViewModel.updateCheckedCategory(category.id,false) }
-                    ,searchViewModel)
-
-            }
-        }
-    }
-
-
-
-
-@Composable
-fun AccountCardWithCheckbox(
-    account: Account,
-    currencyCode: String,
-    accountsViewModel: AccountsViewModel,
-    searchViewModel: SearchViewModel,
-    onCheckBoxChange: (Boolean) -> Unit
-) {
-    val toDate by searchViewModel.selectedToDate.observeAsState(account.fromDate)
-    val fromDate by searchViewModel.selectedFromDate.observeAsState(account.toDate)
-    val showDialog by accountsViewModel.enableDialog.observeAsState(false)
-    val spendingLimit by accountsViewModel.spendingLimit.observeAsState(account.spendingLimit.toString())
-    val messageDateError = stringResource(id = R.string.datefromoverdateto)
-    val scope = rememberCoroutineScope()
-
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        colors = CardColors(
-            containerColor = colors.drawerColor,
-            contentColor = colors.incomeColor,
-            disabledContainerColor = colors.drawerColor,
-            disabledContentColor = colors.incomeColor
-        ),
-        modifier = Modifier
-            .size(width = 360.dp, height = 120.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(5.dp)
-                .semantics {
-                    contentDescription = "$ entry.des"
-                },
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = account.name,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.6f),
-                textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.headlineSmall,
-                color = colors.textColor
-            )
-            Spacer(modifier = Modifier.height(12.dp)) // Espacio entre el texto y el botón
-            Text(
-                text = Utils.numberFormat(account.balance, currencyCode),
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.4f),
-                textAlign = TextAlign.End,
-                style=MaterialTheme.typography.headlineSmall
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp)) // Espacio entre el texto y el botón
-        Row(
-            modifier = Modifier.padding(5.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = if(account.isChecked) stringResource(id = R.string.accountchecked)
-                else stringResource(id = R.string.accountunchecked)  ,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.6f),
-                textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.bodyMedium,
-                color = colors.textColor
-            )
-            Checkbox(
-                modifier = Modifier.weight(0.2f), // Ajuste proporcional para el checkbox
-                checked = account.isChecked,
-                onCheckedChange = onCheckBoxChange,
-                colors = CheckboxDefaults.colors(
-                    checkedColor = colors.drawerColor,
-                    uncheckedColor = colors.textColor,
-                    checkmarkColor = colors.incomeColor
-                )
-            )
-            if (account.isChecked) {
-                ModelDialogWithTextField(
-                    account.name,
-                    showDialog,
-                    spendingLimit,
-                    onValueChange = {accountsViewModel.onChangeSpendingLimit(it) },
-                    onConfirm = {
-                        if (!searchViewModel.validateDates()) {
-                            scope.launch(Dispatchers.Main) {
-                                SnackBarController.sendEvent(
-                                    event = SnackBarEvent(
-                                        messageDateError
-                                    )
-                                )
-                            }
-                            accountsViewModel.updateCheckedAccount(account.id,false)
-                        } else {
-                            accountsViewModel.upDateSpendingLimitAccount(
-                                account.id,
-                                spendingLimit.toBigDecimal()
-                            )
-                            accountsViewModel.onEnableDialogChange(false)
-                            accountsViewModel.upDateAccountsDates(account.id, fromDate, toDate)
-                        }
-                    },
-                    onDismiss = { accountsViewModel.onEnableDialogChange(false)
-                                accountsViewModel.updateCheckedAccount(account.id,false) }
-                    ,searchViewModel)
-
-            }
-        }
-    }
-}
 @Composable
 fun EntryCardWithCheckBox(
     entry: RecordDTO,

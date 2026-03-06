@@ -257,7 +257,7 @@ fun ModifyRecordScreen(
                 TextFieldComponent(
                     modifier = fieldModifier,
                     stringResource(id = R.string.modifyamount),
-                    state.amount.toString(),
+                    state.amount,
                     onTextChange = {
                         recordDetailViewModel.onUserEvent(RecordDetailUiEvent.OnAmountChange(it))
                     },
