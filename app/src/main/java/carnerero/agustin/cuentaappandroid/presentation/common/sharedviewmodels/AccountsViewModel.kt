@@ -406,7 +406,7 @@ class AccountsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val accountsChecked = withContext(Dispatchers.IO) { getAccountsChecked.invoke() }
-                _listOfAccountsChecked.postValue(accountsChecked)
+                _listOfAccountsChecked.postValue(accountsChecked.first())
             } catch (e: Exception) {
                 Log.e("Accounts", "Error fetching all accounts checked: ${e.message}", e)
             }

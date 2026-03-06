@@ -106,7 +106,7 @@ interface AccountDao {
 
     // 1️⃣3️⃣ Listar todas las cuentas con isChecked = true
     @Query("SELECT * FROM AccountEntity WHERE isChecked=1")
-    suspend fun getAllAccountsChecked(): List<Account>
+    fun getAllAccountsChecked(): Flow<List<Account>>
 
     // 1️⃣4️⃣ Actualizar balance de todas las cuentas según tipo de cambio
     // NO se puede hacer directamente con BigDecimal en SQL, hacemos en Kotlin

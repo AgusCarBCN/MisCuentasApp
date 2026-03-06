@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -32,6 +33,7 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.main.model.IconOptions
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
+import carnerero.agustin.cuentaappandroid.notification.NotificationViewModel
 import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermissionDialog
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
@@ -69,15 +71,14 @@ fun MainScreen(
     val state by settingViewModel.uiState.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
+    val notificationViewModel: NotificationViewModel= hiltViewModel()
     if (state.switchNotifications) {
         NotificationCategoriesObserver(
-            categoriesViewModel,
-            accountsViewModel,
+            notificationViewModel,
             notificationService
         )
         NotificationAccountObserver(
-            accountsViewModel,
+            notificationViewModel,
             notificationService
         )
     }

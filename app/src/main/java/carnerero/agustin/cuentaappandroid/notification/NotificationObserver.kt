@@ -3,44 +3,38 @@ package carnerero.agustin.cuentaappandroid.notification
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.AccountsViewModel
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.CategoriesViewModel
 import carnerero.agustin.cuentaappandroid.utils.Utils
 import java.math.BigDecimal
 
 
 @Composable
 fun NotificationCategoriesObserver(
-    categoriesViewModel: CategoriesViewModel,
-    accountsViewModel: AccountsViewModel,
+    notificationViewModel: NotificationViewModel,
     notificationService: NotificationService
 ) {
+    val uiState by notificationViewModel.uiState.collectAsStateWithLifecycle()
     // Update expense percentage
-    categoriesViewModel.updateExpenseCategoryPercentage()
-    val expensePercentageMap by categoriesViewModel.expensePercentageFlow.collectAsState()
-    val codeCurrency by accountsViewModel.currencyCodeSelected.observeAsState("USD")
+    notificationViewModel.updateExpenseCategoriesPercentages()
 
     // Track categories that have already received a notification
     val notifiedCategories = remember { mutableSetOf<Int>() }
 
-    expensePercentageMap.forEach { (category, percentage) ->
+    uiState.expensePercentageByCategory.forEach { (category, percentage) ->
         // State to track the expenses by category and whether it has been loaded
         var expensesByCategory by remember { mutableStateOf<BigDecimal?>(null) }
 
         // Load expenses for each category when the category ID changes
         LaunchedEffect(category.id) {
-            expensesByCategory = categoriesViewModel.sumOfExpensesByCategory(category.id,
+            expensesByCategory = notificationViewModel.sumOfExpensesByCategories(category.id,
                 category.fromDate,
-                category.toDate) ?: BigDecimal.ZERO
-
+                category.toDate)
         }
 
         // Only proceed with notifications if expensesByCategory has been loaded
@@ -51,15 +45,15 @@ fun NotificationCategoriesObserver(
                 val message = when {
                     percentage > 0.8f && percentage < 1.0f -> {
                         "${stringResource(id = R.string.expenseslimit80)}\n" +
-                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                     percentage >= 1.0f -> {
                         "${stringResource(id = R.string.expenseslimit)}\n" +
-                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                     else -> {
                         "${stringResource(id = R.string.expenselimitOkCategory)} \n" +
-                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebycategory)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                 }
 
@@ -84,26 +78,26 @@ fun NotificationCategoriesObserver(
 @Composable
 fun NotificationAccountObserver(
 
-    accountsViewModel: AccountsViewModel,
+    notificationViewModel: NotificationViewModel,
     notificationService: NotificationService
 ) {
+    val uiState by notificationViewModel.uiState.collectAsStateWithLifecycle()
     // Update expense percentage
-    accountsViewModel.updateExpensePercentageFun()
-    val expensePercentageMap by accountsViewModel.expensePercentageFlow.collectAsState()
-    val codeCurrency by accountsViewModel.currencyCodeSelected.observeAsState("USD")
+    notificationViewModel.updateExpenseAccountsPercentages()
+
 
     // Track categories that have already received a notification
     val notifiedAccounts = remember { mutableSetOf<Int>() }
 
-    expensePercentageMap.forEach { (account, percentage) ->
+    uiState.expensePercentageByCategory.forEach { (account, percentage) ->
         // State to track the expenses by category and whether it has been loaded
         var expensesByAccounts by remember { mutableStateOf<BigDecimal?>(null) }
 
         // Load expenses for each category when the category ID changes
         LaunchedEffect(account.id) {
-            expensesByAccounts = accountsViewModel.sumOfExpensesByAccount(account.id,
+            expensesByAccounts = notificationViewModel.sumOfExpensesByAccount(account.id,
                 account.fromDate,
-                account.toDate) ?: BigDecimal.ZERO
+                account.toDate)
 
         }
 
@@ -115,20 +109,20 @@ fun NotificationAccountObserver(
                 val message = when {
                     percentage > 0.8f && percentage < 1.0f -> {
                         "${stringResource(id = R.string.expenseslimit80)}\n" +
-                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                     percentage >= 1.0f -> {
                         "${stringResource(id = R.string.expenseslimit)}\n" +
-                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                     else -> {
                         "${stringResource(id = R.string.expenselimitOkAccount)} \n" +
-                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, codeCurrency)}."
+                                "${stringResource(id = R.string.expensebyaccount)} ${Utils.numberFormat(expenses, uiState.currencyCode)}."
                     }
                 }
 
                 val accountControl = stringResource(id = R.string.accountespendingcontrol) +" "+
-                        account.name
+                        account.nameResource
 
 
                 // Send the notification

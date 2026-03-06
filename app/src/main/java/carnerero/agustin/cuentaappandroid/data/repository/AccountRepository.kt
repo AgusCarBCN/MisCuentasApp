@@ -79,7 +79,7 @@ class AccountRepository @Inject constructor(
 
     // 13. Get all accounts checked
 
-    suspend fun getAllAccountsChecked(): List<Account> {
+    fun getAllAccountsChecked(): Flow<List<Account>> {
         return accountDao.getAllAccountsChecked()
     }
     // 14. Update account balance by exchange rate

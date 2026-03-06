@@ -1,6 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.accounts.modify
 
-import java.math.BigDecimal
+
 
 data class ModifyAccountDetailUiState(
     val name:String="",
