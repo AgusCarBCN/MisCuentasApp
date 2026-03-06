@@ -211,16 +211,19 @@ class ProfileViewModel @Inject constructor(
             _effect.emit(ProfileEffect.UpdatePasswordMessage)
         }
     }
-    fun updateProfilePhoto(
-    ) {
+        fun updateProfilePhoto() {
         viewModelScope.launch {
-            _uiState.value.selectedImageUri?.let {
-                setUri(it)
+            _uiState.value.selectedImageUri?.let { uri ->
+                setUri(uri)   // guardar en DataStore / repo
+                _uiState.update {
+                    it.copy(
+                        selectedImageUriSaved = uri
+                    )
+                }
             }
             _effect.emit(ProfileEffect.UpdateImagePhoto)
         }
     }
-
     private fun populateCategories() {
         viewModelScope.launch(Dispatchers.IO)
         {

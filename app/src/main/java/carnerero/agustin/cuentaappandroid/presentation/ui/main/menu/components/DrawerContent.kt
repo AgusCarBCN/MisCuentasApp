@@ -46,15 +46,13 @@ fun DrawerMyAccountsContent(
     profileViewModel: ProfileViewModel,
     navController: NavController
 ) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth(0.75f)
             .padding(top = 62.dp)
             .background(color = Color.Transparent)
-
     ) {
-        val drawerMenuManageItems=listOf(
+        val drawerMenuManageItems = listOf(
             Routes.NewIncome,
             Routes.NewExpense,
             Routes.Transfer,
@@ -62,7 +60,7 @@ fun DrawerMyAccountsContent(
             Routes.SpendingControl,
             Routes.Calculator
         )
-        val about=Routes.About
+        val about = Routes.About
         HeadDrawerMenu(profileViewModel)
         Column(
             modifier = Modifier
@@ -73,25 +71,11 @@ fun DrawerMyAccountsContent(
             drawerMenuManageItems.forEach { item ->
                 ClickableRow(OptionItem(item.labelResource!!, item.iconResource!!), onClick = {
                     navController.navigateTopLevel(item.route)
-                    /*navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }*/
                 })
             }
             TitleOptions(R.string.aboutapp)
             ClickableRow(OptionItem(about.labelResource!!, about.iconResource!!), onClick = {
-               navController.navigateTopLevel(about.route)
-               /* navController.navigate(about.route) {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }*/
+                navController.navigateTopLevel(about.route)
             })
             ClickableRow(
                 OptionItem(R.string.exitapp, R.drawable.exitapp),
@@ -107,24 +91,18 @@ fun DrawerMyAccountsContent(
 fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
 
     val state by profileViewModel.uiState.collectAsStateWithLifecycle()
-   // val selectedImageUriSaved by profileViewModel.selectedImageUriSaved.observeAsState(null)
-
-    profileViewModel.loadImageUri()
+    //profileViewModel.loadImageUri()
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(colors.headDrawerColor),
         Arrangement.SpaceEvenly,
         Alignment.CenterVertically
-
-
     ) {
         Box(modifier = Modifier.weight(0.4f)) {
             state.selectedImageUriSaved?.let { UserImage(it, 80) }
         }
-
     }
-
 }
 
 
