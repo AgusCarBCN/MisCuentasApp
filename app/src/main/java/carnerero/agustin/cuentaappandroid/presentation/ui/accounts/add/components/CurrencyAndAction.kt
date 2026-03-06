@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CurrencySelectorV2
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.CurrencySelector
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
 
 @Composable
@@ -19,7 +19,7 @@ import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.M
     navToBack: () -> Unit
 ) {
 
-        CurrencySelectorV2(onDropdownExpandedChange,
+        CurrencySelector(onDropdownExpandedChange,
             onCurrencySelectChange,
             isDropdownExpanded,
             selectedCurrency,

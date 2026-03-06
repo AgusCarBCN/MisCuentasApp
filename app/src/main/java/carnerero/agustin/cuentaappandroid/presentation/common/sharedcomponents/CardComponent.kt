@@ -2,7 +2,6 @@ package carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents
 
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,8 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,17 +35,13 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import coil.compose.rememberAsyncImagePainter
-import carnerero.agustin.cuentaappandroid.presentation.common.sharedviewmodels.EntriesViewModel
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.data.db.entities.Account
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.dimens
 import carnerero.agustin.cuentaappandroid.utils.Utils
-import com.google.gson.Gson
 import java.math.BigDecimal
 
 
@@ -298,110 +291,3 @@ fun EntryCardWithCheckBox(
         }
     }
 }
-/*
-@Composable
-fun EntryCardWithIcon(
-    entry: RecordDTO,
-    accountsViewModel: AccountsViewModel,
-    entriesViewModel: EntriesViewModel,
-    navController: NavController
-
-
-) {
-    val currencyCode by accountsViewModel.currencyCodeSelected.observeAsState("EUR")
-    val entryJson = Uri.encode(Gson().toJson(entry))
-    val income= stringResource(id = R.string.incomeoption)
-    val expense= stringResource(id = R.string.expenseoption)
-    val edit=stringResource(id = R.string.modifyentry)
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        colors = CardColors(
-            containerColor = colors.drawerColor,
-            contentColor = colors.incomeColor,
-            disabledContainerColor = colors.drawerColor,
-            disabledContentColor = colors.incomeColor
-        ),
-        modifier = Modifier
-            .size(width = 360.dp, height = 120.dp)
-            .padding(bottom = 10.dp)
-            .semantics {
-                contentDescription = buildString {
-                    append(entry.description)
-                    append(". ")
-                    append(entry.amount)
-                    append(Utils.numberFormat(entry.amount, currencyCode))
-                    append(". ")
-                    append(
-                        if (entry.amount >= BigDecimal.ZERO) income
-                        else expense
-                    )
-                }
-            }
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(start = 15.dp, end = 20.dp, top = 5.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = entry.description,
-                modifier = Modifier
-                    .weight(0.6f),
-                textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge,
-                color = colors.textHeadColor
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = Utils.numberFormat(entry.amount, currencyCode),
-                modifier = Modifier
-                    .weight(0.4f),
-                color = if (entry.amount >= BigDecimal.ZERO) colors.incomeColor
-                else colors.expenseColor,
-                textAlign = TextAlign.End,
-                style=MaterialTheme.typography.bodyLarge
-            )
-
-        }
-        Row(
-            modifier = Modifier.padding(start = 15.dp, end = 20.dp, top = 5.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(id = entry.iconResource),
-                contentDescription = null,
-                tint = colors.textColor
-            )
-            Spacer(modifier = Modifier.height(20.dp)) // Espacio entre el texto y el botón
-            Text(
-                text = stringResource(id = entry.nameResource),
-                modifier = Modifier
-                    .padding(10.dp)
-                    .weight(0.4f)
-                ,
-                color = colors.textColor,
-                textAlign = TextAlign.Start,
-                style=MaterialTheme.typography.bodyLarge
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.edit),
-                contentDescription = "$edit ${entry.description}" ,
-                tint = colors.textColor,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        entriesViewModel.onEntryDTOSelected(entry)
-                        navController.navigate(Routes.ModifyRecordItem.createRoute(entryJson))
-
-                    }
-            )
-
-        }
-    }
-
-}*/

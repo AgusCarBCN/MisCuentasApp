@@ -9,7 +9,7 @@ import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.util.Date
 import javax.inject.Inject
 
-
+/*
 class SearchViewModel @Inject constructor() : ViewModel() {
 
     // Lista de opciones como identificadores de recursos
@@ -140,3 +140,4 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
 
 }
+*/
