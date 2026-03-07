@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components
 
+import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,8 +43,11 @@ import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 @Composable
 fun DrawerMyAccountsContent(
-    viewModel: MainViewModel,
-    profileViewModel: ProfileViewModel,
+    image: Uri?,
+    openDialog:()->Unit,
+
+    //viewModel: MainViewModel,
+    //profileViewModel: ProfileViewModel,
     navController: NavController
 ) {
     Card(
@@ -61,7 +65,7 @@ fun DrawerMyAccountsContent(
             Routes.Calculator
         )
         val about = Routes.About
-        HeadDrawerMenu(profileViewModel)
+        HeadDrawerMenu(image)
         Column(
             modifier = Modifier
                 .background(colors.drawerColor)
@@ -80,7 +84,7 @@ fun DrawerMyAccountsContent(
             ClickableRow(
                 OptionItem(R.string.exitapp, R.drawable.exitapp),
                 onClick = {
-                    viewModel.showExitDialog(true)
+                    openDialog()
                 })
         }
     }
@@ -88,9 +92,9 @@ fun DrawerMyAccountsContent(
 
 //Implementacion de la cabecerera del menu desplegable izquierda
 @Composable
-fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
+fun HeadDrawerMenu(image: Uri?) {
 
-    val state by profileViewModel.uiState.collectAsStateWithLifecycle()
+   // val state by profileViewModel.uiState.collectAsStateWithLifecycle()
 
     Row(
         modifier = Modifier
@@ -100,7 +104,7 @@ fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
         Alignment.CenterVertically
     ) {
         Box(modifier = Modifier.weight(0.4f)) {
-            state.selectedImageUriSaved?.let { UserImage(it, 80) }
+            image?.let { UserImage(it, 80) }
         }
     }
 }

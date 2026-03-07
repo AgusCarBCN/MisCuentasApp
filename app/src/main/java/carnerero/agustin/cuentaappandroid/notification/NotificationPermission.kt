@@ -18,7 +18,7 @@ fun RequestNotificationPermissionDialog(mainViewModel: MainViewModel) {
     val permissionState = rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
     // Actualizar el estado del permiso en el ViewModel
     LaunchedEffect(permissionState.status.isGranted) {
-        mainViewModel.updateNotificationPermission(permissionState.status.isGranted)
+        //mainViewModel.updateNotificationPermission(permissionState.status.isGranted)
     }
 
     if (!permissionState.status.isGranted && permissionState.status.shouldShowRationale) {

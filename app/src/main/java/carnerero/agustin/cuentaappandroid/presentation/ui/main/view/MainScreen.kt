@@ -52,8 +52,9 @@ fun MainScreen(
     settingViewModel: SettingViewModel
 
 ) {
-    val isLanScape=orientation== OrientationApp.Landscape
-    mainViewModel.isLandScape(isLanScape)
+    val state by mainViewModel.uiState.collectAsStateWithLifecycle()
+    //val isLanScape=orientation== OrientationApp.Landscape
+    //mainViewModel.isLandScape(isLanScape)
     // NavController para manejar la navegación entre pantallas
     val innerNavController = rememberNavController()
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
@@ -63,11 +64,11 @@ fun MainScreen(
     val activity = context as? Activity
     val notificationService = NotificationService(context)
    // val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
-    val state by settingViewModel.uiState.collectAsStateWithLifecycle()
+   // val state by settingViewModel.uiState.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val notificationViewModel: NotificationViewModel= hiltViewModel()
-    if (state.switchNotifications) {
+    if (state.isGranted) {
         NotificationCategoriesObserver(
             notificationViewModel,
             notificationService
@@ -79,8 +80,8 @@ fun MainScreen(
     }
 
 
-    val showExitDialog by mainViewModel.showExitDialog.collectAsState()
-    val title by mainViewModel.title.observeAsState(R.string.home)
+   // val showExitDialog by mainViewModel.showExitDialog.collectAsState()
+    //val title by mainViewModel.title.observeAsState(R.string.home)
     val isPortrait=orientation== OrientationApp.Portrait
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
     LaunchedEffect(key1 = navBackStackEntry,isPortrait) {
@@ -93,8 +94,8 @@ fun MainScreen(
         drawerContent = {
             if(isPortrait){
             DrawerMyAccountsContent(
-                mainViewModel,
-                profileViewModel,
+                state.image,
+                {mainViewModel.onUserEvent(MainUserEvents.OpenExitDialog)},
                 innerNavController
             )}
         },
@@ -105,7 +106,7 @@ fun MainScreen(
                 modifier = Modifier.fillMaxSize(),
                 {
                     if(isPortrait){TopMyAccountsBar(
-                        scope,drawerState,title
+                        scope,drawerState,state.resourceTitle
                     )}
                 },
                 {
@@ -135,12 +136,12 @@ fun MainScreen(
     )
     ModelDialog(R.string.exitapp,
         R.string.exitinfo,
-        showDialog = showExitDialog,
+        showDialog = state.showExitDialog,
         onConfirm = {
             activity?.finish()
         },
         onDismiss = {
-            mainViewModel.showExitDialog(false)
+            mainViewModel.onUserEvent(MainUserEvents.CloseExitDialog)
 
         })
 }

@@ -5,15 +5,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetEnableNotificationsUseCase
+import carnerero.agustin.cuentaappandroid.domain.datastore.GetPhotoFromUriUseCase
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 // Anotación para que Hilt pueda proporcionar esta clase como ViewModel.
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val getImage: GetPhotoFromUriUseCase,
+    private val getNotificationGranted: GetEnableNotificationsUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState
+
+    private val _effect = MutableSharedFlow<MainEffects>()
+    val effect = _effect.asSharedFlow()
 
 
     // MutableStateFlow que contiene el estado del permiso de notificaciones.
@@ -31,27 +47,60 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val title: LiveData<Int> = _title
 
     init {
-        _title.value = R.string.home
+        observeNotificationPermission()
     }
 
-        // Función que permite cambiar la pantalla seleccionada.
-    // Utiliza viewModelScope para lanzar una corrutina y emitir un nuevo valor.
-
-    fun isLandScape(isLandScape:Boolean):Boolean{
-        return isLandScape
-    }
-    fun updateTitle(newTitle: Int) {
-        _title.value = newTitle
-    }
-
-    fun showExitDialog(newValue:Boolean){
+    private fun observeNotificationPermission() {
         viewModelScope.launch {
-            _showExitDialog.emit(newValue)
+            val image=getImage.invoke()
+            getNotificationGranted().collect { isGranted ->
+                _uiState.update {
+                    it.copy(
+                        isGranted = isGranted,
+                        image = image)
+                }
+            }
+        }
+    }
+    fun onUserEvent(event: MainUserEvents){
+        when(event){
+            MainUserEvents.CloseExitDialog -> closeDialog()
+            is MainUserEvents.UpdateTitle -> updateTitle(event.newTitle)
+            MainUserEvents.OpenExitDialog -> openDialog()
+            is MainUserEvents.OnClickOption -> onClickOption(event.route)
         }
     }
 
-    fun updateNotificationPermission(isGranted: Boolean) {
-        _notificationPermissionGranted.value = isGranted
+    fun closeDialog(){
+        _uiState.update { current->
+            current.copy(
+                showExitDialog=false
+            )
+        }
     }
+
+    fun openDialog(){
+        _uiState.update { current->
+            current.copy(
+                showExitDialog=true
+            )
+        }
+    }
+
+    fun updateTitle(newTitle: Int) {
+       _uiState.update { current->
+           current.copy(
+               resourceTitle =newTitle
+           )
+       }
+    }
+
+    fun onClickOption(route: Routes){
+        viewModelScope.launch {
+            _effect.emit(MainEffects.NavToScreen(route))
+        }
+    }
+
+
 }
 
