@@ -91,7 +91,7 @@ fun DrawerMyAccountsContent(
 fun HeadDrawerMenu(profileViewModel: ProfileViewModel) {
 
     val state by profileViewModel.uiState.collectAsStateWithLifecycle()
-    //profileViewModel.loadImageUri()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
