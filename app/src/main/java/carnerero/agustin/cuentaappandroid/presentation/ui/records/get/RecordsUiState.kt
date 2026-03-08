@@ -5,5 +5,6 @@ import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 data class RecordsUiState (
     val listOfRecords:List<RecordDTO> = emptyList(),
     val enableByDate: Boolean=false,
-    val currencyCode: String = "EUR"
+    val currencyCode: String = "EUR",
+    val showInfoDeleteDialog:Boolean=false
 )

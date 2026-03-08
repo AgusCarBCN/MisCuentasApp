@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.data.db.dto.RecordDTO
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelButton
+import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordDataCheckBox
 import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.HeadSetting
@@ -34,6 +35,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.setting.components.Hea
 fun DeleteRecords(
    records:List<RecordDTO>,
    currencyCode:String,
+   showDialog:Boolean,
+   openDialog:()->Unit,
+   closeDialog:()->Unit,
    deleteRecord:(RecordDTO)->Unit
 ) {
 
@@ -107,17 +111,34 @@ fun DeleteRecords(
                 modifier = Modifier.width(320.dp),
                 true,
                 onClickButton = {
-                    val entriesToRemove =
+                    openDialog()
+                  /*  val entriesToRemove =
                         listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
                     if (entriesToRemove.isNotEmpty()) {
                          entriesToRemove.forEach { entryWithCheckBox ->
                             deleteRecord(entryWithCheckBox.entry)
-                           // listOfEntriesWithCheckBox.remove(entryWithCheckBox) // Modifica la lista original
 
                         }
-                    }
+                    }*/
                 }
+
             )
         }
+        ModelDialog(R.string.deleteentry,
+            R.string.deleteentrydes,
+            showDialog,
+            {
+                val entriesToRemove =
+                    listOfEntriesWithCheckBox.filter { it.checkbox } // Filtra los elementos a eliminar
+                if (entriesToRemove.isNotEmpty()) {
+                    entriesToRemove.forEach { entryWithCheckBox ->
+                        deleteRecord(entryWithCheckBox.entry)
+
+                    }
+                }
+                closeDialog()
+
+            }
+            ) {closeDialog() }
     }
 }

@@ -12,6 +12,7 @@ import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllE
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetAllIncomesUseCase
 import carnerero.agustin.cuentaappandroid.domain.database.entriesusecase.GetFilteredEntriesUseCase
 import carnerero.agustin.cuentaappandroid.domain.datastore.GetCurrencyCodeUseCase
+import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.RecordsUiEffects.*
 import carnerero.agustin.cuentaappandroid.presentation.ui.records.get.model.RecordsFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -33,8 +34,6 @@ class RecordsViewModel @Inject constructor(
     private val getAllRecordsByAccount: GetAllEntriesByAccountUseCase,
     private val getCurrencyCode: GetCurrencyCodeUseCase,
     private val getFilteredEntries: GetFilteredEntriesUseCase,
-    private val withDrawUseCase: WithDrawUseCase,
-    private val depositUseCase: DepositUseCase,
     private val deleteRecord: DeleteRecordAndUpdateBalanceUseCase
 ): ViewModel() {
 
@@ -53,12 +52,25 @@ class RecordsViewModel @Inject constructor(
             is RecordsUiEvents.OnEditRecord -> {
                 viewModelScope.launch {
                     _effect.emit(
-                        RecordsUiEffects.NavigateToEdit(event.record)
+                        NavigateToEdit(event.record)
                     )
                 }
             }
-            else ->{
-
+            RecordsUiEvents.CloseDialogDelete -> {
+                _uiState.update { current->
+                    current.copy(
+                        showInfoDeleteDialog = false
+                    )
+                }
+            }
+            RecordsUiEvents.OpenDialogDelete -> {
+                _uiState.update { current->
+                    current.copy(
+                        showInfoDeleteDialog = true
+                    )
+                }
+            }
+            else->{
             }
         }
     }

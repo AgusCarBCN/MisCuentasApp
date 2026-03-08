@@ -68,7 +68,10 @@ fun RecordScreen(
         }
         RecordsMode.DELETE -> {
             DeleteRecords(state.listOfRecords,
-                state.currencyCode
+                state.currencyCode,
+                state.showInfoDeleteDialog,
+                {recordsViewModel.onEvent(RecordsUiEvents.OpenDialogDelete)},
+                {recordsViewModel.onEvent(RecordsUiEvents.CloseDialogDelete)}
             ) { recordsViewModel.deleteRecord(it) }
         }
         RecordsMode.MODIFY -> {

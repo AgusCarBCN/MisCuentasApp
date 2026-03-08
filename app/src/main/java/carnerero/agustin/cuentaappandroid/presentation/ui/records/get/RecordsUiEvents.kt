@@ -6,6 +6,10 @@ sealed class  RecordsUiEvents {
 
     object Idle: RecordsUiEvents()
 
+    object CloseDialogDelete: RecordsUiEvents()
+
+    object OpenDialogDelete: RecordsUiEvents()
+
     data class ShowEnableByDate(val value:Boolean): RecordsUiEvents()
 
     data class OnEditRecord(val record: RecordDTO) : RecordsUiEvents()

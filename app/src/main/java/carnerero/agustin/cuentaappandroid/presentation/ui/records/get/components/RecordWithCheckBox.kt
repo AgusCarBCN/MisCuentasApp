@@ -1,6 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.get.components
 
-import android.R.attr.contentDescription
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material3.MaterialTheme
@@ -36,7 +34,7 @@ fun RecordWithCheckBox(
     isChecked:Boolean,
     onSelectionChange: () -> Unit
 ){
-    val item= stringResource(id = R.string.item)
+
     val entryDescription=entry.description
     val amount= stringResource(id = R.string.amountentrie)
     val checked="$entryDescription ${stringResource(R.string.ischeckedtodelete)}"
