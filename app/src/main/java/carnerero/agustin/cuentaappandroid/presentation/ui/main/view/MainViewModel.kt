@@ -18,7 +18,6 @@ import javax.inject.Inject
 // Anotación para que Hilt pueda proporcionar esta clase como ViewModel.
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getImage: GetPhotoFromUriUseCase,
     private val getNotificationGranted: GetEnableNotificationsUseCase
 ) : ViewModel() {
 
@@ -37,12 +36,11 @@ class MainViewModel @Inject constructor(
 
     private fun observeNotificationPermission() {
         viewModelScope.launch {
-            val image=getImage.invoke()
             getNotificationGranted().collect { isGranted ->
                 _uiState.update {
                     it.copy(
                         isGranted = isGranted,
-                        image = image)
+                        )
                 }
             }
         }

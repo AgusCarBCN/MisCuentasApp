@@ -56,38 +56,6 @@ fun ProfileScreen(profileViewModel: ProfileViewModel) {
         }
     }
 
-/*
-    LaunchedEffect(effects) {
-        when (effects) {
-            ProfileEffect.UpdateImagePhoto -> SnackBarController.sendEvent(
-                SnackBarEvent(
-                    updatedMessages[0]
-                )
-            )
-
-            ProfileEffect.UpdateUsernameMessage -> SnackBarController.sendEvent(
-                SnackBarEvent(
-                    updatedMessages[1]
-                )
-            )
-
-            ProfileEffect.UpdateNameMessage -> SnackBarController.sendEvent(
-                SnackBarEvent(
-                    updatedMessages[2]
-                )
-            )
-
-            ProfileEffect.UpdatePasswordMessage -> SnackBarController.sendEvent(
-                SnackBarEvent(
-                    updatedMessages[3]
-                )
-            )
-
-            else -> {
-
-            }
-        }
-    }*/
     Box(
         modifier = Modifier
             .fillMaxSize()

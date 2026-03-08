@@ -37,6 +37,7 @@ import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
+import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
@@ -45,7 +46,8 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel
+
 
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
@@ -96,7 +98,7 @@ fun MainScreen(
         drawerContent = {
             if(isPortrait){
             DrawerMyAccountsContent(
-                state.image,
+
                 {mainViewModel.onUserEvent(MainUserEvents.OpenExitDialog)},
                 onClickOption = {
                     mainViewModel.onUserEvent(

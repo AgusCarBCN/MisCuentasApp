@@ -38,13 +38,9 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionI
 
 @Composable
 fun DrawerMyAccountsContent(
-    image: Uri?,
     openDialog: () -> Unit,
     onClickOption:(Routes)-> Unit,
 
-    //viewModel: MainViewModel,
-    //profileViewModel: ProfileViewModel,
-    //navController: NavController
 ) {
     Card(
         modifier = Modifier
@@ -61,7 +57,7 @@ fun DrawerMyAccountsContent(
             Routes.Calculator
         )
         val about = Routes.About
-        HeadDrawerMenu(image)
+
         Column(
             modifier = Modifier
                 .background(colors.drawerColor)
@@ -89,23 +85,7 @@ fun DrawerMyAccountsContent(
 }
 
 //Implementacion de la cabecerera del menu desplegable izquierda
-@Composable
-fun HeadDrawerMenu(image: Uri?) {
 
-   // val state by profileViewModel.uiState.collectAsStateWithLifecycle()
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(colors.headDrawerColor),
-        Arrangement.SpaceEvenly,
-        Alignment.CenterVertically
-    ) {
-        Box(modifier = Modifier.weight(0.4f)) {
-            image?.let { UserImage(it, 80) }
-        }
-    }
-}
 
 
 // Implementación de Row clickable para cada opción del menú de la izquierda
