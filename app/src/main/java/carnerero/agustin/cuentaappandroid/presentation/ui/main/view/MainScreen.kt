@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
+import carnerero.agustin.cuentaappandroid.admob.AdmobBanner
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
@@ -131,7 +132,7 @@ fun MainScreen(
                     Modifier.padding(innerPadding)
                 )
                  {
-                    //AdmobBanner()
+                    AdmobBanner()
                     MainNavHost(
                         innerNavController,
                         mainViewModel
