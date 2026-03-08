@@ -49,45 +49,15 @@ fun MainScreen(
 
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
-    //val isLanScape=orientation== OrientationApp.Landscape
-    //mainViewModel.isLandScape(isLanScape)
-    // NavController para manejar la navegación entre pantallas
 
     val innerNavController = rememberNavController()
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
     val navBackStackEntry by innerNavController.currentBackStackEntryAsState()
 
-    val currentRoute = navBackStackEntry?.destination?.route
-    val allRoutes = listOf(
-        Routes.Home,
-        Routes.NewIncome,
-        Routes.NewExpense,
-        Routes.Transfer,
-        Routes.Statistics,
-        Routes.SpendingControl,
-        Routes.Calculator,
-        Routes.About,
-        Routes.Search,
-        Routes.Profile,
-        Routes.Settings,
-        Routes.ModifyRecords,
-        Routes.DeleteRecords,
-        Routes.ModifyAccount,
-        Routes.DeleteAccount,
-        Routes.AddAccount
-
-    )
-    val title = allRoutes
-        .find { it.route == currentRoute }
-        ?.labelResource
-        ?: R.string.home
-
     val context = LocalContext.current
     // Verifica si el contexto es una actividad
     val activity = context as? Activity
     val notificationService = NotificationService(context)
-   // val enableNotifications by settingViewModel.switchNotifications.observeAsState(false)
-   // val state by settingViewModel.uiState.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val notificationViewModel: NotificationViewModel= hiltViewModel()
@@ -102,15 +72,15 @@ fun MainScreen(
         )
     }
 
-
-   // val showExitDialog by mainViewModel.showExitDialog.collectAsState()
-    //val title by mainViewModel.title.observeAsState(R.string.home)
     val isPortrait=orientation== OrientationApp.Portrait
     // Usar LaunchedEffect para cerrar el drawer cuando cambia la pantalla seleccionada
+    //y actualizar titulo
     LaunchedEffect(key1 = navBackStackEntry,isPortrait) {
+        val currentRoute = navBackStackEntry?.destination?.route
         if (drawerState.isOpen) {
             drawerState.close() // Cierra el drawer cuando se selecciona una opción
         }
+        mainViewModel.onTitleChange(currentRoute?:"")
     }
 
     LaunchedEffect(Unit,) {
@@ -142,7 +112,7 @@ fun MainScreen(
                 modifier = Modifier.fillMaxSize(),
                 {
                     if(isPortrait){TopMyAccountsBar(
-                        scope,drawerState,title
+                        scope,drawerState,state.title
                     )}
                 },
                 {

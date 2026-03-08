@@ -48,6 +48,7 @@ fun SettingScreen(
     navController: NavHostController
 ) {
     val state by settingViewModel.uiState.collectAsStateWithLifecycle()
+    val stateMain by mainViewModel.uiState.collectAsStateWithLifecycle()
     val messageExport = stringResource(id = R.string.exportData)
     val errorExport = stringResource(id = R.string.errorexport)
     val messageNoRecords = stringResource(id = R.string.noentries)
@@ -78,7 +79,7 @@ fun SettingScreen(
         }
     }
 
-    val permissionNotificationGranted by mainViewModel.notificationPermissionGranted.collectAsState()
+    //val permissionNotificationGranted by mainViewModel.notificationPermissionGranted.collectAsState()
 
     stringResource(id = R.string.noaccounts)
     ExportLauncher(state.showExportDialog,
@@ -155,9 +156,9 @@ fun SettingScreen(
             SwitchComponent(
                 fieldModifier,
                 title = stringResource(id = R.string.enablenotifications),
-                description = (if (permissionNotificationGranted) stringResource(id = R.string.desenablenotifications)
+                description = (if (stateMain.isGranted) stringResource(id = R.string.desenablenotifications)
                 else stringResource(id = R.string.permissiondeny)),
-                isChecked = if (permissionNotificationGranted) state.switchNotifications
+                isChecked = if (stateMain.isGranted) state.switchNotifications
                 else false,
                 onClickSwitch = {
                     settingViewModel.onEvenUser(SettingsUserEvents.OnSwitchShowNotificationsChange(it))

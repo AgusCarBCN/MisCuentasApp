@@ -8,5 +8,6 @@ data class MainUiState(
     val image: Uri?=null,
     val isGranted:Boolean=false,
     val showExitDialog:Boolean=false,
-    val route: Routes=Routes.Home
+    val route: Routes=Routes.Home,
+    val title:Int=R.string.home
 )

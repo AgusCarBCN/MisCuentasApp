@@ -1,7 +1,5 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.main.view
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import carnerero.agustin.cuentaappandroid.R
@@ -13,7 +11,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,26 +22,14 @@ class MainViewModel @Inject constructor(
     private val getNotificationGranted: GetEnableNotificationsUseCase
 ) : ViewModel() {
 
+
+
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState
 
     private val _effect = MutableSharedFlow<MainEffects>()
     val effect = _effect.asSharedFlow()
 
-
-    // MutableStateFlow que contiene el estado del permiso de notificaciones.
-    private val _notificationPermissionGranted = MutableStateFlow(false)
-    val notificationPermissionGranted: StateFlow<Boolean> = _notificationPermissionGranted
-
-    private val _showExitDialog=MutableStateFlow(false)
-    val showExitDialog: MutableStateFlow<Boolean> = _showExitDialog
-
-    private val _isLandScape=MutableStateFlow(false)
-    val isLandScape: MutableStateFlow<Boolean> = _isLandScape
-
-
-    private val _title = MutableLiveData<Int>()
-    val title: LiveData<Int> = _title
 
     init {
         observeNotificationPermission()
@@ -86,9 +71,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-
     fun onClickOption(route:Routes){
+
         viewModelScope.launch {
              _uiState.update { current->
                  current.copy(
@@ -96,6 +80,38 @@ class MainViewModel @Inject constructor(
                  )
              }
             _effect.emit(MainEffects.NavToScreen(route.route))
+
+        }
+    }
+
+    fun onTitleChange (currentRoute:String){
+        val allRoutes = listOf(
+            Routes.Home,
+            Routes.NewIncome,
+            Routes.NewExpense,
+            Routes.Transfer,
+            Routes.Statistics,
+            Routes.SpendingControl,
+            Routes.Calculator,
+            Routes.About,
+            Routes.Search,
+            Routes.Profile,
+            Routes.Settings,
+            Routes.ModifyRecords,
+            Routes.DeleteRecords,
+            Routes.ModifyAccount,
+            Routes.DeleteAccount,
+            Routes.AddAccount
+
+        )
+        val title= allRoutes
+            .find { it.route == currentRoute }
+            ?.labelResource
+            ?: R.string.home
+        _uiState.update { current->
+            current.copy(
+                title=title
+            )
         }
     }
 
