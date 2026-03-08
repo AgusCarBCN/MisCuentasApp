@@ -3,6 +3,7 @@ package carnerero.agustin.cuentaappandroid.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import carnerero.agustin.cuentaappandroid.utils.dateFormat
 import java.math.BigDecimal
@@ -23,6 +24,11 @@ import java.util.Date
             childColumns = ["categoryId"], // Referencia a accountId en Entry
             onDelete = ForeignKey.CASCADE // Si se elimina una cuenta, se eliminan las entradas relacionadas
         )
+    ],
+    indices = [
+        Index(value = ["accountId"]),
+        Index(value = ["categoryId"]),
+        Index(value = ["date"])
     ]
 )
 data class Records(
