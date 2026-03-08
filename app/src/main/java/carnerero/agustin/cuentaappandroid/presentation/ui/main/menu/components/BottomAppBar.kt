@@ -40,8 +40,7 @@ import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 
 @Composable
-fun BottomMyAccountsBar(mainViewModel: MainViewModel,
-                 navController: NavHostController) {
+fun BottomMyAccountsBar( onClickOption:(Routes)-> Unit) {
     val bottomBarItems = listOf(
         Routes.Home,
         Routes.Search,
@@ -49,9 +48,9 @@ fun BottomMyAccountsBar(mainViewModel: MainViewModel,
         Routes.Profile
     )
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    //val navBackStackEntry by navController.currentBackStackEntryAsState()
     // Obtiene el destino actual de navegación (la ruta o identificador de la pantalla activa)
-    navBackStackEntry?.destination
+   // navBackStackEntry?.destination
     // Inicializa con el primer ícono
     BottomAppBar(
         modifier = Modifier
@@ -71,8 +70,8 @@ fun BottomMyAccountsBar(mainViewModel: MainViewModel,
             ) {
                 bottomBarItems.forEach { item ->
                     IconBottomBarApp(item.labelResource!!, item.iconResource!!) {
-                        mainViewModel.updateTitle(item.labelResource)
-                        navController.navigateTopLevel(item.route)
+
+                        onClickOption(item)
                         }
                     }
                 }

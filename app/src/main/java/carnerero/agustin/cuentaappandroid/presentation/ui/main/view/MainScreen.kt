@@ -14,9 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +24,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import carnerero.agustin.cuentaappandroid.R
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.notification.NotificationAccountObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationCategoriesObserver
 import carnerero.agustin.cuentaappandroid.notification.NotificationService
@@ -35,11 +32,12 @@ import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermis
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
+import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
-import carnerero.agustin.cuentaappandroid.presentation.ui.setting.SettingViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
+import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
 
@@ -48,17 +46,42 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel,
-    profileViewModel: ProfileViewModel,
-    settingViewModel: SettingViewModel
 
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
     //val isLanScape=orientation== OrientationApp.Landscape
     //mainViewModel.isLandScape(isLanScape)
     // NavController para manejar la navegación entre pantallas
+
     val innerNavController = rememberNavController()
     // Observa la entrada actual del back stack (la pantalla activa) como un estado observable
     val navBackStackEntry by innerNavController.currentBackStackEntryAsState()
+
+    val currentRoute = navBackStackEntry?.destination?.route
+    val allRoutes = listOf(
+        Routes.Home,
+        Routes.NewIncome,
+        Routes.NewExpense,
+        Routes.Transfer,
+        Routes.Statistics,
+        Routes.SpendingControl,
+        Routes.Calculator,
+        Routes.About,
+        Routes.Search,
+        Routes.Profile,
+        Routes.Settings,
+        Routes.ModifyRecords,
+        Routes.DeleteRecords,
+        Routes.ModifyAccount,
+        Routes.DeleteAccount,
+        Routes.AddAccount
+
+    )
+    val title = allRoutes
+        .find { it.route == currentRoute }
+        ?.labelResource
+        ?: R.string.home
+
     val context = LocalContext.current
     // Verifica si el contexto es una actividad
     val activity = context as? Activity
@@ -89,6 +112,15 @@ fun MainScreen(
             drawerState.close() // Cierra el drawer cuando se selecciona una opción
         }
     }
+
+    LaunchedEffect(Unit,) {
+        mainViewModel.effect.collect { effect ->
+            when (effect) {
+                is MainEffects.NavToScreen -> innerNavController.navigateTopLevel(effect.route)
+            }
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState ,
         drawerContent = {
@@ -96,7 +128,11 @@ fun MainScreen(
             DrawerMyAccountsContent(
                 state.image,
                 {mainViewModel.onUserEvent(MainUserEvents.OpenExitDialog)},
-                innerNavController
+                onClickOption = {
+                    mainViewModel.onUserEvent(
+                        MainUserEvents.OnClickOption(it)
+                    )
+                }
             )}
         },
         scrimColor = Color.Transparent,
@@ -106,19 +142,19 @@ fun MainScreen(
                 modifier = Modifier.fillMaxSize(),
                 {
                     if(isPortrait){TopMyAccountsBar(
-                        scope,drawerState,state.resourceTitle
+                        scope,drawerState,title
                     )}
                 },
                 {
                     if(isPortrait){
                     BottomMyAccountsBar(
-                        mainViewModel,
-                        innerNavController
+                        {mainViewModel.onUserEvent(MainUserEvents.OnClickOption(it))},
+
                     )}
                 },
                 containerColor = colors.backgroundPrimary
             ) { innerPadding ->
-                RequestNotificationPermissionDialog(mainViewModel)
+                RequestNotificationPermissionDialog(state.isGranted)
                 Column(
                     Modifier.padding(innerPadding)
                 )
@@ -126,9 +162,7 @@ fun MainScreen(
                     //AdmobBanner()
                     MainNavHost(
                         innerNavController,
-                        settingViewModel,
-                        mainViewModel,
-                        profileViewModel
+                        mainViewModel
                     )
                 }
             }
@@ -142,7 +176,6 @@ fun MainScreen(
         },
         onDismiss = {
             mainViewModel.onUserEvent(MainUserEvents.CloseExitDialog)
-
         })
 }
 

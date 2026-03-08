@@ -210,7 +210,7 @@ fun SettingScreen(
                     description = stringResource(id = item.description),
                     iconResource = item.itemRoute.iconResource!!,
                     onClick = {
-                        mainViewModel.updateTitle(item.itemRoute.labelResource)
+
                         navController.navigateTopLevel(item.itemRoute.route)
                     })
             }

@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
     private val settingViewModel: SettingViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
-    private val profileViewModel: ProfileViewModel by viewModels()
+
     private val tutorialViewModel: TutorialViewModel by viewModels ()
 
 
@@ -59,6 +59,7 @@ class MainActivity : ComponentActivity() {
         createChannel()
         enableEdgeToEdge()
         setContent {
+
             val scope = rememberCoroutineScope()
             val snackBarHostState = remember {
                 SnackbarHostState()
@@ -95,9 +96,7 @@ class MainActivity : ComponentActivity() {
                     AppNavHost(
                         navigationController,
                         mainViewModel,
-                        settingViewModel,
                         tutorialViewModel,
-                        profileViewModel,
                         Modifier.padding(innerPadding)
                         )
                 }

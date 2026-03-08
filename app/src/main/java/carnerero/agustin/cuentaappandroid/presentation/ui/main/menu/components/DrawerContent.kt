@@ -30,25 +30,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import carnerero.agustin.cuentaappandroid.R
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.UserImage
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
-import carnerero.agustin.cuentaappandroid.presentation.ui.main.view.MainViewModel
 import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.model.OptionItem
-import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 
 @Composable
 fun DrawerMyAccountsContent(
     image: Uri?,
-    openDialog:()->Unit,
+    openDialog: () -> Unit,
+    onClickOption:(Routes)-> Unit,
 
     //viewModel: MainViewModel,
     //profileViewModel: ProfileViewModel,
-    navController: NavController
+    //navController: NavController
 ) {
     Card(
         modifier = Modifier
@@ -74,12 +70,14 @@ fun DrawerMyAccountsContent(
 
             drawerMenuManageItems.forEach { item ->
                 ClickableRow(OptionItem(item.labelResource!!, item.iconResource!!), onClick = {
-                    navController.navigateTopLevel(item.route)
+                   onClickOption(item)
+                    //navController.navigateTopLevel(item.route)
                 })
             }
             TitleOptions(R.string.aboutapp)
             ClickableRow(OptionItem(about.labelResource!!, about.iconResource!!), onClick = {
-                navController.navigateTopLevel(about.route)
+                //navController.navigateTopLevel(about.route)
+                onClickOption(about)
             })
             ClickableRow(
                 OptionItem(R.string.exitapp, R.drawable.exitapp),

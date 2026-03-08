@@ -65,7 +65,6 @@ class MainViewModel @Inject constructor(
     fun onUserEvent(event: MainUserEvents){
         when(event){
             MainUserEvents.CloseExitDialog -> closeDialog()
-            is MainUserEvents.UpdateTitle -> updateTitle(event.newTitle)
             MainUserEvents.OpenExitDialog -> openDialog()
             is MainUserEvents.OnClickOption -> onClickOption(event.route)
         }
@@ -87,20 +86,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateTitle(newTitle: Int) {
-       _uiState.update { current->
-           current.copy(
-               resourceTitle =newTitle
-           )
-       }
-    }
 
-    fun onClickOption(route: Routes){
+
+    fun onClickOption(route:Routes){
         viewModelScope.launch {
-            _effect.emit(MainEffects.NavToScreen(route))
+             _uiState.update { current->
+                 current.copy(
+                     route=route
+                 )
+             }
+            _effect.emit(MainEffects.NavToScreen(route.route))
         }
     }
-
 
 }
 

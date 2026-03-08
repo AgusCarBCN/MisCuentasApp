@@ -68,11 +68,11 @@ import com.google.gson.Gson
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    settingViewModel: SettingViewModel,
-    mainViewModel: MainViewModel,
-    profileViewModel: ProfileViewModel
-) {
+    mainViewModel: MainViewModel
 
+) {
+    val settingViewModel: SettingViewModel=hiltViewModel()
+    val profileViewModel: ProfileViewModel=hiltViewModel()
     val barChartViewModel: BarChartViewModel = hiltViewModel()
     val calculatorViewModel: CalculatorViewModel = hiltViewModel()
     val searchViewModel: SearchRecordsViewModel = hiltViewModel()

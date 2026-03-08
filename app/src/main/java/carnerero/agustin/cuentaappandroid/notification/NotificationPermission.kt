@@ -14,6 +14,37 @@ import com.google.accompanist.permissions.shouldShowRationale
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
+fun RequestNotificationPermissionDialog(
+    isGranted: Boolean
+) {
+
+    val permissionState =
+        rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
+
+    if (!isGranted && permissionState.status.shouldShowRationale) {
+
+        NotificationDialog(
+            showDialog = true,
+            onDismiss = {
+                permissionState.launchPermissionRequest()
+            },
+            onConfirm = {
+                permissionState.launchPermissionRequest()
+            }
+        )
+
+    } else if (!isGranted) {
+
+        LaunchedEffect(Unit) {
+            permissionState.launchPermissionRequest()
+        }
+
+    }
+}
+/*
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
 fun RequestNotificationPermissionDialog(mainViewModel: MainViewModel) {
     val permissionState = rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
     // Actualizar el estado del permiso en el ViewModel
@@ -37,5 +68,5 @@ fun RequestNotificationPermissionDialog(mainViewModel: MainViewModel) {
         LaunchedEffect(key1 = Unit, block = { permissionState.launchPermissionRequest() })
 
     }
-}
+}*/
 

@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,12 +26,11 @@ import carnerero.agustin.cuentaappandroid.presentation.ui.tutorial.view.Tutorial
 fun AppNavHost(
     navController: NavHostController,
     mainViewModel: MainViewModel,
-    settingViewModel: SettingViewModel,
     tutorialViewModel: TutorialViewModel,
-    profileViewModel: ProfileViewModel,
     modifier: Modifier
 ) {
-    val createAccountViewModel: AddAccountViewModel = androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel()
+    val profileViewModel : ProfileViewModel= hiltViewModel()
+    val createAccountViewModel: AddAccountViewModel =hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = Routes.Splash.route
@@ -70,9 +70,8 @@ fun AppNavHost(
         }
         composable(Routes.Main.route) {
             MainScreen(
-                mainViewModel,
-                profileViewModel ,
-                settingViewModel
+                mainViewModel
+
             )
         }
     }
