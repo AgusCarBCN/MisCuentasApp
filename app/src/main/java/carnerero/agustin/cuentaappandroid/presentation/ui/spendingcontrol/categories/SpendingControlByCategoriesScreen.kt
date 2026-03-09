@@ -61,39 +61,3 @@ fun SpendingControlByCategoriesScreen(
     }
 }
 
-
-/*
-@Composable
-
-fun SpendingControlByCategoriesScreen(
-    categoriesViewModel: CategoriesViewModel
-) {
-    val state by categoriesViewModel.uiState.collectAsStateWithLifecycle()
-    val categories = state.categories
-    val categoriesChecked = categories.filter { it.isChecked }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 30.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Asegúrate de que la LazyColumn ocupa solo el espacio necesario
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f) // Permite que la columna ocupe el espacio disponible
-                .padding(bottom = 16.dp) // Espacio en la parte inferior
-        ) {
-            items(categoriesChecked) { category ->
-                CategoryBudgetItemControl(
-                    category,
-                    state.currencyCode,
-                    state
-                )
-                SpacerApp()
-            }
-        }
-    }
-}*/

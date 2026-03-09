@@ -155,10 +155,10 @@ fun MainNavHost(
         composable(Routes.Statistics.route) {
             StatisticsScreen(
                 navToBarChart = {
-                    navController.navigateTopLevel(Routes.BarChart.route)
+                    navController.navigate(Routes.BarChart.route)
 
                 }) {
-                navController.navigateTopLevel(Routes.PieChart.route)
+                navController.navigate(Routes.PieChart.route)
             }
         }
         composable(Routes.PieChart.route) {

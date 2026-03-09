@@ -54,7 +54,7 @@ fun SpendingControlOptionsScreen(navController: NavController) {
                     stringResource(item.description),
                     item.itemRoute.iconResource!!,
                     onClick = {
-                        navController.navigateTopLevel(item.itemRoute.route)
+                        navController.navigate(item.itemRoute.route)
                     })
             }
 

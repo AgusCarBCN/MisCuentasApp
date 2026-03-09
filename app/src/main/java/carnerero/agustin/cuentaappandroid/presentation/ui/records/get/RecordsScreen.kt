@@ -42,7 +42,6 @@ fun RecordScreen(
                         {
                             val entryJson =
                                 Uri.encode(Gson().toJson(effect.record))
-
                             navController.navigate(
                                 Routes.ModifyRecordItem.createRoute(entryJson)
                             )

@@ -100,63 +100,7 @@ fun SelectCategoriesScreen(
                     onSelectDate = { field, date -> SelectCategoriesUiEvent.OnSelectDate(field, date) },
                     onShowDatePicker = { field, visible -> SelectCategoriesUiEvent.OnShowDatePicker(field, visible) }
                 )
-
-               /* DialogCategoriesSpendingControl(
-                    name = stringResource(category.nameResource),
-                    dialogState = state.dialogUiState,
-                    onUserEvent = { viewModel.onUserEvent(it) }
-                )*/
             }
         }
     }
 }
-/*@Composable
-fun SelectCategoriesScreen(
-    selectCategoriesViewModel: SelectCategoriesSpendingControlViewModel
-
-) {
-    val state by selectCategoriesViewModel.uiState.collectAsStateWithLifecycle()
-    val context=LocalContext.current
-
-    // Lógica de negocio ya está afuera, solo se llama a Utils
-    val sortedCategories = remember(state.categories) {
-        Utils.getSortedCategories(state.categories, context)
-    }
-
-
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val maxWidthDp = maxWidth*0.85f
-        val maxLandscapeWidthDp = maxWidthDp*0.85f
-        val fieldModifier = Modifier
-            .fillMaxWidth(0.85f) // mismo ancho para TODOS
-            .heightIn(min = 48.dp)
-        Column(
-            modifier = Modifier.fillMaxSize(), // 🔥 imprescindible
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            HeadSetting(
-                title = stringResource(id = R.string.selectcategories),
-                MaterialTheme.typography.titleLarge
-            )
-
-            LazyColumn(
-                modifier = Modifier
-                    .width( maxWidthDp)
-                    .weight(1f)
-                    .padding(bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(16.dp)
-            ) {
-                items(sortedCategories) { (category,_) ->
-                    CategoryWithCheckbox(category,
-                        state.dialogUiState,
-                        {selectCategoriesViewModel.onUserEvent(SelectCategoriesUiEvent.OnCheckedChange(category.id,it))},
-                        {selectCategoriesViewModel::onUserEvent})
-
-                }
-            }
-        }
-    }
-}*/

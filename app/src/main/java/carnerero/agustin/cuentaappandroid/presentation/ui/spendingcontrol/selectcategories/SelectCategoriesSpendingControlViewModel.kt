@@ -110,7 +110,7 @@ class SelectCategoriesSpendingControlViewModel @Inject constructor(
             upDateSpendingLimit(categoryId, dialog.spendLimit.toBigDecimalOrNull() ?: BigDecimal.ZERO)
             upDateFromDate(categoryId, dialog.fromDate)
             upDateToDate(categoryId, dialog.toDate)
-            //onShowDialog(categoryId, false)
+
             closeDialog()
         }
     }

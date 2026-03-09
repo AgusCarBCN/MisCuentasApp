@@ -60,7 +60,7 @@ fun RecordSearchScreen(
         searchRecordsViewModel.effect.collect { effect ->
             when (effect) {
                 SearchEffects.NavToRecordsScreen -> {
-                    navController.navigateTopLevel(state.route)
+                    navController.navigate(state.route)
                     Log.d("NAVIGATION", "Route from Search:${state.route}")
                 }
                 SearchEffects.MessageInvalidAmounts ->

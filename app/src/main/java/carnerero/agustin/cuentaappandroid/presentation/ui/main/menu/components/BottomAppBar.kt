@@ -70,7 +70,6 @@ fun BottomMyAccountsBar( onClickOption:(Routes)-> Unit) {
             ) {
                 bottomBarItems.forEach { item ->
                     IconBottomBarApp(item.labelResource!!, item.iconResource!!) {
-
                         onClickOption(item)
                         }
                     }

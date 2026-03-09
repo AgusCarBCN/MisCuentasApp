@@ -159,13 +159,8 @@ fun ModifyRecordScreen(
                             true,
                             onClickButton = {
                                 recordDetailViewModel.onUserEvent(RecordDetailUiEvent.Modify(recordDTO))
-
                             }
-
-
                         )
-
-
                     }
                 }
             }
@@ -235,10 +230,7 @@ fun ModifyRecordScreen(
                         recordDetailViewModel.onUserEvent(RecordDetailUiEvent.Modify(recordDTO))
                     }
                 )
-
-
             }
         }
     }
-
 }
