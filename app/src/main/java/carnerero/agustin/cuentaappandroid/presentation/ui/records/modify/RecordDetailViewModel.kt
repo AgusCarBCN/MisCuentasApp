@@ -66,7 +66,7 @@ class RecordDetailViewModel @Inject constructor(
         }
     }
 
-    fun modifyRecord(record: RecordDTO) {
+    /*fun modifyRecord(record: RecordDTO) {
         viewModelScope.launch {
             val state = _uiState.value
             val inputAmount = state.amount.toBigDecimal()
@@ -94,6 +94,35 @@ class RecordDetailViewModel @Inject constructor(
                 // Emitimos efecto de éxito
                 _effect.emit(RecordDetailEffects.MessageUpdateRecord)
             }
+        }
+    }*/
+    fun modifyRecord(record: RecordDTO) {
+        viewModelScope.launch {
+
+            val state = _uiState.value
+            val inputAmount = state.amount.toBigDecimal()
+
+            val newAmount =
+                if (record.categoryType == CategoryType.INCOME) inputAmount
+                else inputAmount.negate()
+
+            val amountBefore = record.amount
+
+            // Siempre actualizamos el registro
+            updateRecord.invoke(
+                record.id,
+                state.description,
+                newAmount,
+                state.date
+            )
+
+            // Solo actualizamos balance si cambia el amount
+            if (newAmount.compareTo(amountBefore) != 0) {
+                val diffAmount = newAmount.subtract(amountBefore)
+                updateBalance.invoke(record.accountId, diffAmount)
+            }
+
+            _effect.emit(RecordDetailEffects.MessageUpdateRecord)
         }
     }
     fun getInitValues(record: RecordDTO){

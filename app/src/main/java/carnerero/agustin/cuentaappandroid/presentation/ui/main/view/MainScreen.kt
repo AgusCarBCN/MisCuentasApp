@@ -33,12 +33,10 @@ import carnerero.agustin.cuentaappandroid.notification.RequestNotificationPermis
 import carnerero.agustin.cuentaappandroid.presentation.common.sharedcomponents.ModelDialog
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.BottomMyAccountsBar
 import carnerero.agustin.cuentaappandroid.presentation.navigation.MainNavHost
-import carnerero.agustin.cuentaappandroid.presentation.navigation.Routes
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.colors
 import carnerero.agustin.cuentaappandroid.presentation.theme.AppTheme.orientation
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.DrawerMyAccountsContent
 import carnerero.agustin.cuentaappandroid.presentation.ui.main.menu.components.TopMyAccountsBar
-import carnerero.agustin.cuentaappandroid.presentation.ui.profile.ProfileViewModel
 import carnerero.agustin.cuentaappandroid.utils.navigateTopLevel
 import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 
@@ -86,7 +84,7 @@ fun MainScreen(
         mainViewModel.onTitleChange(currentRoute?:"")
     }
 
-    LaunchedEffect(Unit,) {
+    LaunchedEffect(Unit) {
         mainViewModel.effect.collect { effect ->
             when (effect) {
                 is MainEffects.NavToScreen -> innerNavController.navigateTopLevel(effect.route)
@@ -120,10 +118,8 @@ fun MainScreen(
                 },
                 {
                     if(isPortrait){
-                    BottomMyAccountsBar(
-                        {mainViewModel.onUserEvent(MainUserEvents.OnClickOption(it))},
-
-                    )}
+                    BottomMyAccountsBar { mainViewModel.onUserEvent(MainUserEvents.OnClickOption(it)) }
+                    }
                 },
                 containerColor = colors.backgroundPrimary
             ) { innerPadding ->

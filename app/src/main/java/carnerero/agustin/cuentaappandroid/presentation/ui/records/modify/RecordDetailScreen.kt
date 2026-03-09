@@ -1,5 +1,6 @@
 package carnerero.agustin.cuentaappandroid.presentation.ui.records.modify
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,7 @@ fun ModifyRecordScreen(
 ) {
     val messageModify = stringResource(id = R.string.modifyentrymsg)
     val state by recordDetailViewModel.uiState.collectAsStateWithLifecycle()
-
+    Log.d("MODIFY","$recordDTO")
     // Sincroniza los datos iniciales del ViewModel
     LaunchedEffect(recordDTO) {
         recordDetailViewModel.getInitValues(recordDTO)
@@ -158,47 +159,7 @@ fun ModifyRecordScreen(
                             true,
                             onClickButton = {
                                 recordDetailViewModel.onUserEvent(RecordDetailUiEvent.Modify(recordDTO))
-                                /*val amountBefore = recordDTO.amount
-                                val updateBalanceIncome = amountEntry.toBigDecimal() - amountBefore
-                                val updateBalanceExpense =
-                                    amountEntry.toBigDecimal().negate().add(amountBefore)
 
-                                val entryDTOUpdated = RecordDTO(
-
-                                    recordDTO.id,
-                                    descriptionEntry,
-                                    if (recordDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
-                                    else amountEntry.toBigDecimal().negate(),
-                                    dateSelected,
-                                    recordDTO.iconResource,
-                                    recordDTO.nameResource,
-                                    recordDTO.accountId,
-                                    recordDTO.name,
-                                    recordDTO.categoryId,
-                                    recordDTO.categoryType
-                                )
-                                entriesViewModel.updateEntry(
-                                    recordDTO.id,
-                                    descriptionEntry,
-                                    if (recordDTO.categoryType == CategoryType.INCOME) amountEntry.toBigDecimal()
-                                    else amountEntry.toBigDecimal().negate(),
-                                    dateSelected
-                                )
-                                entriesViewModel.updateEntries(recordDTO.id, entryDTOUpdated)
-                                //mainViewModel.selectScreen(IconOptions.ENTRIES_TO_UPDATE)
-                                //Actualiza balance de cuenta
-                                accountsViewModel.updateAccountBalance(
-                                    recordDTO.accountId,
-                                    if (recordDTO.categoryType == CategoryType.INCOME) updateBalanceIncome
-                                    else updateBalanceExpense,
-                                    false
-                                )
-
-
-                                entriesViewModel.getTotal()
-                                scope.launch(Dispatchers.Main) {
-                                    SnackBarController.sendEvent(event = SnackBarEvent(messageModify))
-                                }*/
                             }
 
 
