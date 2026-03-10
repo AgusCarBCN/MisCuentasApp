@@ -70,7 +70,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickOption(route:Routes){
-
         viewModelScope.launch {
              _uiState.update { current->
                  current.copy(

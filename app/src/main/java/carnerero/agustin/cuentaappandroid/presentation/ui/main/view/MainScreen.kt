@@ -47,7 +47,6 @@ import com.kapps.differentscreensizesyt.ui.theme.OrientationApp
 fun MainScreen(
     mainViewModel: MainViewModel
 
-
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
 
